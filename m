@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15831-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15832-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id BC468B2ED
-	for <lists+kernel-hardening@lfdr.de>; Sat, 27 Apr 2019 08:46:14 +0200 (CEST)
-Received: (qmail 5162 invoked by uid 550); 27 Apr 2019 06:43:35 -0000
+	by mail.lfdr.de (Postfix) with SMTP id AC364B2EE
+	for <lists+kernel-hardening@lfdr.de>; Sat, 27 Apr 2019 08:46:27 +0200 (CEST)
+Received: (qmail 5289 invoked by uid 550); 27 Apr 2019 06:43:37 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,33 +13,33 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 4017 invoked from network); 27 Apr 2019 06:43:34 -0000
+Received: (qmail 5166 invoked from network); 27 Apr 2019 06:43:35 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0/++kCIdz9NinK/+MFp07AkuSYwP6lr30tD8Xi+P1Ns=;
-        b=c8S+0EigCS6E8XvKa358lLe6LCVfzSFVuNJOVAHrtcVTOWv87dH8gGM88UuaQDW1Ql
-         IEkRJXiL08aosg7wFKjOifGHvdFqqFOyIVAPTy32+RTxwh4obVo1hvSc3VrfhbIWeRKu
-         ZJA1hj0UwfXTRnrJeU5WqlBmd3LvGogakdG6r5O5HCHdIZ01YxMYWq3GzL7qFIqoHj+M
-         ImxYzSZVWsC/5XsbT15MbduZoaGGNML2WLcc4snNS8OhI4V0R2fmhxvtsFVBQg8hBw68
-         V9bB/2b3yhVaonMZdGNuWp1CujPDm/DoQRIcyXEO1I8gk21/7x6PmT++18rtH9HSkyQc
-         PS4g==
+        bh=g3nO4xFM3yb0X+OIqTEtEp6LbffMj61RqStKCNeSSiM=;
+        b=IhMsROzOX/uvsuQybijdR85Kqaxq4yWzjUoagIOqk1LVY6OLTEXQbjBmXHD5WxbAzP
+         cmCoo1zMlycyEW/HfwZCgn/X+0dMFPFHyqqtEUKq6AZF6jWZrRVIUAiE8jxYjY0M9MT3
+         Ik7ZKhQeM7kg+3gB06XcTjx2xBZpPGhS55GH7o8s674YL85Zg5fEINa05kjxM9iG+Kfo
+         SEIwp8JxZ7vs+rhoqI+mg8MouUQf2Zul6cu4rspQPkk8FxQa/9RXPXX4OwkD3jy0+Z/+
+         SBrns4/qvGYQvjrl9OPoH7DBVBfA0arFpsKvUBwFWEn4L2+Z7qiKOGh0M4x1w7s8Fe9M
+         Y7uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=0/++kCIdz9NinK/+MFp07AkuSYwP6lr30tD8Xi+P1Ns=;
-        b=acxe2OE4qruZCNB/DY14PTFmh2qDyHnB7g3ynwtj8uNyihnSi7KPDQnPA5CeK2Rs+V
-         r6LoRTaLlLKp0RDnK2nesOM6+GBHsn6+Ml3V6EhuGw+gN5H8MJnGuygkyHdRq+MIre67
-         yByu7WyS3p90EolakNGile86fDm1ufMpnG43593Q6eZQ+vuBDopAo8mWnL8/+Hc/qYRv
-         XIZZoePm7yqGysq32kZJ+8o9y42gjW2PdKXV/Gpm0Qg+UsH0vcTSlYRvGTWiASc8g3vU
-         6p5neFF3Ocfr4UA7Bv7LzWT4PV1BMsc/qCzIosLbo3RgodKjrc6btEZilMxIzHzlSCoo
-         K7hA==
-X-Gm-Message-State: APjAAAXT2DT2U3bo2HgBk6lNmNNYWpkVvR6qB8B6saZMaaqmG4cSDjr9
-	4mowe7e74V4nUA0rImF65Fs=
-X-Google-Smtp-Source: APXvYqwD3aMW9+fxSDptS7zjHtrUL6axD8ahdhvdTbAECEHQ3uOfUvnD7wIP6ssynsnm5EaQ/VhgYw==
-X-Received: by 2002:a17:902:20c6:: with SMTP id v6mr48012719plg.276.1556347402023;
-        Fri, 26 Apr 2019 23:43:22 -0700 (PDT)
+        bh=g3nO4xFM3yb0X+OIqTEtEp6LbffMj61RqStKCNeSSiM=;
+        b=Z2ggl54odupGVs6OKbzLS8jN6yoOTIOcRE/GJnrZzA/rIN9pYwEI4JBrgqQhiyPVme
+         oazVWWAwvupNkyWZOJwgVhWL6RKBSV9BPBqkXyA9W/dvqJnLdhtt5WX62/wL+OzXh5n3
+         aEo8ciZwNlp4SblP5qVwU4TS5Uwg15aCit43EKFM26XGxvA1lGz6Cg0MThCugT6ePxyX
+         TX7mF0jy4yEQWuS5gnCn7NnGAiJnYYPh9SqVq3NW25/L+iBOTXO0mV+yQErpMwTz8k6z
+         7nbon/uMBxPrpSzQGjuQ11ulKmBoQTs4RvlmLqwgSjzdoG7HHXY4MWgWCpzOg1clhZtc
+         f1UA==
+X-Gm-Message-State: APjAAAX4m03PXb9y//wMeNuStX5qgowUsJUw0lCyzNfW20Jakv6sHn5O
+	23BXGMoM6DNC+uQeR4izWyo=
+X-Google-Smtp-Source: APXvYqyXozv8RJ3un5KRfku6J9oOZngaXmf1Y0t3bUJMwzL1TSTEhjmbFCgyEeDgaxJqumt2ZQ+7aA==
+X-Received: by 2002:a62:5fc7:: with SMTP id t190mr50793424pfb.191.1556347403359;
+        Fri, 26 Apr 2019 23:43:23 -0700 (PDT)
 From: nadav.amit@gmail.com
 To: Peter Zijlstra <peterz@infradead.org>,
 	Borislav Petkov <bp@alien8.de>,
@@ -65,134 +65,99 @@ Cc: linux-kernel@vger.kernel.org,
 	Nadav Amit <namit@vmware.com>,
 	Kees Cook <keescook@chromium.org>,
 	Dave Hansen <dave.hansen@intel.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Jessica Yu <jeyu@kernel.org>
-Subject: [PATCH v6 12/24] x86/module: Avoid breaking W^X while loading modules
-Date: Fri, 26 Apr 2019 16:22:51 -0700
-Message-Id: <20190426232303.28381-13-nadav.amit@gmail.com>
+	Masami Hiramatsu <mhiramat@kernel.org>
+Subject: [PATCH v6 13/24] x86/jump-label: Remove support for custom poker
+Date: Fri, 26 Apr 2019 16:22:52 -0700
+Message-Id: <20190426232303.28381-14-nadav.amit@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190426232303.28381-1-nadav.amit@gmail.com>
 References: <20190426232303.28381-1-nadav.amit@gmail.com>
 
 From: Nadav Amit <namit@vmware.com>
 
-When modules and BPF filters are loaded, there is a time window in
-which some memory is both writable and executable. An attacker that has
-already found another vulnerability (e.g., a dangling pointer) might be
-able to exploit this behavior to overwrite kernel code. Prevent having
-writable executable PTEs in this stage.
+There are only two types of poking: early and breakpoint based. The use
+of a function pointer to perform poking complicates the code and is
+probably inefficient due to the use of indirect branches.
 
-In addition, avoiding having W+X mappings can also slightly simplify the
-patching of modules code on initialization (e.g., by alternatives and
-static-key), as would be done in the next patch. This was actually the
-main motivation for this patch.
-
-To avoid having W+X mappings, set them initially as RW (NX) and after
-they are set as RO set them as X as well. Setting them as executable is
-done as a separate step to avoid one core in which the old PTE is cached
-(hence writable), and another which sees the updated PTE (executable),
-which would break the W^X protection.
-
+Cc: Andy Lutomirski <luto@kernel.org>
 Cc: Kees Cook <keescook@chromium.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
 Cc: Dave Hansen <dave.hansen@intel.com>
 Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Jessica Yu <jeyu@kernel.org>
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Suggested-by: Andy Lutomirski <luto@amacapital.net>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Nadav Amit <namit@vmware.com>
 Signed-off-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
 ---
- arch/x86/kernel/alternative.c | 28 +++++++++++++++++++++-------
- arch/x86/kernel/module.c      |  2 +-
- include/linux/filter.h        |  1 +
- kernel/module.c               |  5 +++++
- 4 files changed, 28 insertions(+), 8 deletions(-)
+ arch/x86/kernel/jump_label.c | 26 ++++++++++----------------
+ 1 file changed, 10 insertions(+), 16 deletions(-)
 
-diff --git a/arch/x86/kernel/alternative.c b/arch/x86/kernel/alternative.c
-index 599203876c32..3d2b6b6fb20c 100644
---- a/arch/x86/kernel/alternative.c
-+++ b/arch/x86/kernel/alternative.c
-@@ -668,15 +668,29 @@ void __init alternative_instructions(void)
-  * handlers seeing an inconsistent instruction while you patch.
-  */
- void *__init_or_module text_poke_early(void *addr, const void *opcode,
--					      size_t len)
-+				       size_t len)
- {
- 	unsigned long flags;
--	local_irq_save(flags);
--	memcpy(addr, opcode, len);
--	local_irq_restore(flags);
--	sync_core();
--	/* Could also do a CLFLUSH here to speed up CPU recovery; but
--	   that causes hangs on some VIA CPUs. */
-+
-+	if (boot_cpu_has(X86_FEATURE_NX) &&
-+	    is_module_text_address((unsigned long)addr)) {
-+		/*
-+		 * Modules text is marked initially as non-executable, so the
-+		 * code cannot be running and speculative code-fetches are
-+		 * prevented. Just change the code.
-+		 */
-+		memcpy(addr, opcode, len);
-+	} else {
-+		local_irq_save(flags);
-+		memcpy(addr, opcode, len);
-+		local_irq_restore(flags);
-+		sync_core();
-+
-+		/*
-+		 * Could also do a CLFLUSH here to speed up CPU recovery; but
-+		 * that causes hangs on some VIA CPUs.
-+		 */
-+	}
- 	return addr;
- }
+diff --git a/arch/x86/kernel/jump_label.c b/arch/x86/kernel/jump_label.c
+index e7d8c636b228..e631c358f7f4 100644
+--- a/arch/x86/kernel/jump_label.c
++++ b/arch/x86/kernel/jump_label.c
+@@ -37,7 +37,6 @@ static void bug_at(unsigned char *ip, int line)
  
-diff --git a/arch/x86/kernel/module.c b/arch/x86/kernel/module.c
-index b052e883dd8c..cfa3106faee4 100644
---- a/arch/x86/kernel/module.c
-+++ b/arch/x86/kernel/module.c
-@@ -87,7 +87,7 @@ void *module_alloc(unsigned long size)
- 	p = __vmalloc_node_range(size, MODULE_ALIGN,
- 				    MODULES_VADDR + get_module_load_offset(),
- 				    MODULES_END, GFP_KERNEL,
--				    PAGE_KERNEL_EXEC, 0, NUMA_NO_NODE,
-+				    PAGE_KERNEL, 0, NUMA_NO_NODE,
- 				    __builtin_return_address(0));
- 	if (p && (kasan_module_alloc(p, size) < 0)) {
- 		vfree(p);
-diff --git a/include/linux/filter.h b/include/linux/filter.h
-index 6074aa064b54..14ec3bdad9a9 100644
---- a/include/linux/filter.h
-+++ b/include/linux/filter.h
-@@ -746,6 +746,7 @@ static inline void bpf_prog_unlock_ro(struct bpf_prog *fp)
- static inline void bpf_jit_binary_lock_ro(struct bpf_binary_header *hdr)
+ static void __ref __jump_label_transform(struct jump_entry *entry,
+ 					 enum jump_label_type type,
+-					 void *(*poker)(void *, const void *, size_t),
+ 					 int init)
  {
- 	set_memory_ro((unsigned long)hdr, hdr->pages);
-+	set_memory_x((unsigned long)hdr, hdr->pages);
- }
+ 	union jump_code_union jmp;
+@@ -50,14 +49,6 @@ static void __ref __jump_label_transform(struct jump_entry *entry,
+ 	jmp.offset = jump_entry_target(entry) -
+ 		     (jump_entry_code(entry) + JUMP_LABEL_NOP_SIZE);
  
- static inline void bpf_jit_binary_unlock_ro(struct bpf_binary_header *hdr)
-diff --git a/kernel/module.c b/kernel/module.c
-index 0b9aa8ab89f0..2b2845ae983e 100644
---- a/kernel/module.c
-+++ b/kernel/module.c
-@@ -1950,8 +1950,13 @@ void module_enable_ro(const struct module *mod, bool after_init)
+-	/*
+-	 * As long as only a single processor is running and the code is still
+-	 * not marked as RO, text_poke_early() can be used; Checking that
+-	 * system_state is SYSTEM_BOOTING guarantees it.
+-	 */
+-	if (system_state == SYSTEM_BOOTING)
+-		poker = text_poke_early;
+-
+ 	if (type == JUMP_LABEL_JMP) {
+ 		if (init) {
+ 			expect = default_nop; line = __LINE__;
+@@ -80,16 +71,19 @@ static void __ref __jump_label_transform(struct jump_entry *entry,
+ 		bug_at((void *)jump_entry_code(entry), line);
+ 
+ 	/*
+-	 * Make text_poke_bp() a default fallback poker.
++	 * As long as only a single processor is running and the code is still
++	 * not marked as RO, text_poke_early() can be used; Checking that
++	 * system_state is SYSTEM_BOOTING guarantees it. It will be set to
++	 * SYSTEM_SCHEDULING before other cores are awaken and before the
++	 * code is write-protected.
+ 	 *
+ 	 * At the time the change is being done, just ignore whether we
+ 	 * are doing nop -> jump or jump -> nop transition, and assume
+ 	 * always nop being the 'currently valid' instruction
+-	 *
+ 	 */
+-	if (poker) {
+-		(*poker)((void *)jump_entry_code(entry), code,
+-			 JUMP_LABEL_NOP_SIZE);
++	if (init || system_state == SYSTEM_BOOTING) {
++		text_poke_early((void *)jump_entry_code(entry), code,
++				JUMP_LABEL_NOP_SIZE);
  		return;
+ 	}
  
- 	frob_text(&mod->core_layout, set_memory_ro);
-+	frob_text(&mod->core_layout, set_memory_x);
-+
- 	frob_rodata(&mod->core_layout, set_memory_ro);
-+
- 	frob_text(&mod->init_layout, set_memory_ro);
-+	frob_text(&mod->init_layout, set_memory_x);
-+
- 	frob_rodata(&mod->init_layout, set_memory_ro);
+@@ -101,7 +95,7 @@ void arch_jump_label_transform(struct jump_entry *entry,
+ 			       enum jump_label_type type)
+ {
+ 	mutex_lock(&text_mutex);
+-	__jump_label_transform(entry, type, NULL, 0);
++	__jump_label_transform(entry, type, 0);
+ 	mutex_unlock(&text_mutex);
+ }
  
- 	if (after_init)
+@@ -131,5 +125,5 @@ __init_or_module void arch_jump_label_transform_static(struct jump_entry *entry,
+ 			jlstate = JL_STATE_NO_UPDATE;
+ 	}
+ 	if (jlstate == JL_STATE_UPDATE)
+-		__jump_label_transform(entry, type, text_poke_early, 1);
++		__jump_label_transform(entry, type, 1);
+ }
 -- 
 2.17.1
 
