@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15824-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15825-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 167F7B2E6
-	for <lists+kernel-hardening@lfdr.de>; Sat, 27 Apr 2019 08:44:34 +0200 (CEST)
-Received: (qmail 3075 invoked by uid 550); 27 Apr 2019 06:43:23 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 3CB53B2E7
+	for <lists+kernel-hardening@lfdr.de>; Sat, 27 Apr 2019 08:44:47 +0200 (CEST)
+Received: (qmail 3249 invoked by uid 550); 27 Apr 2019 06:43:25 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,33 +13,33 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 1902 invoked from network); 27 Apr 2019 06:43:22 -0000
+Received: (qmail 3129 invoked from network); 27 Apr 2019 06:43:24 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gMfxobg7i1AP5PQ14JM+oGjrmklNXXx9IUFM/PW54zo=;
-        b=XKJ4fAeBY8aGdbJDn84dW83HzgSvQACPuhXWJHvF1CWt6rAKSo0+tUCXqeDEYn8KGx
-         u3zXII+RSuYhdLmlbo5/0feDTgEEs6/tOmzti0w5Pevv/8Nua7dmelg2Hg1YTOM0HPNp
-         IuB1XxBtPV5C1LDrt4HWOamCYTjBpu9Uc9bqXu6wh2x58Sr/Usj1f74P/vpY9jMFSCFS
-         THBbi+fo5P15SNYnnZLc+khNDUp7StdyPifYfNcqKpXcU/HGBdU106YbtBqZ2gBNSvKt
-         YTZSQ/QqPm8CwczIhg2BokKOhThemqJ36d1wwJl1ZB93G6rLPD545DygLOMnvs67gNXF
-         w1Rg==
+        bh=PqX9u33LMatWrF2rdzOLAo8PTOZ3S7r/OUOEdwJc/wY=;
+        b=dLUUcPucbWSjI0KF0GYdfa3//vc9Trf9GNL1Jxgol/lAzL/Qif+nwieAhan1enOtj9
+         IEvF0toGPmi5evSU5LGqWY70kCiO3p7KKseN+96U+aK7PFiGt1LmM5YwgAU+lA6dRruQ
+         txGFF06hrpSSsexZDBeyJTD8iZpafmkscb7dw3FJPuVKduR/83ccqIn9U64Bhl7mXai2
+         QvPXBsrBhxIENhDIjXt5l8fioHpUH4RBLdAlGLQjejsyatNlX3PJPjeZX8AdLYgJMv+s
+         txk3ENcm6pNvFPMHYkZ9djMndR8b2wvyhfIPdTbE4Wq/3iIH/ChGjSPLA1uzJUN9rbuN
+         8qpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=gMfxobg7i1AP5PQ14JM+oGjrmklNXXx9IUFM/PW54zo=;
-        b=oATs5081V8e8esjCNNQnXC7dxGY4KWZKEbYLMrHtcTj6UDE9L27HfBMS1mY7wMW2GV
-         sXPuj9WWiRla3+Bn6tB/x4Ohgtr60WcRc5AIgmcrTppQW1hwaxbNErvI/2aifp+eywfD
-         JPkdKwSGiET1YoJZ/VQq36QhpigN9IOoTi+78/juumgi4HqalzmYiWad5YfJwgPwRS5d
-         a/wlPTtSbZEM2riPIhjlhT4Tlt7tlbnhJbeFSctI0njbNf6sFz6OlnLQT1b2igquS5js
-         q/WXwXg6ADWxrCMYuW7T2mxYZ+AvUpCXXy6VEDWXRltjDZdFzABiGjXEq+qHKNsNwJQi
-         6DQg==
-X-Gm-Message-State: APjAAAXA5V6N8CiBP1ueuHlHKb3PNqd049GMzgeQ6kXuLwMW4SFrVwPI
-	97SZmfZVhtzAhiHPKPG7EHw=
-X-Google-Smtp-Source: APXvYqwk9lLXQyc9bNgKLLm6YtZMcI1PVJ4KR2rM1C+cN3nT9zotDQcbIXGbwEvAmUupbSpfYScE8w==
-X-Received: by 2002:a17:902:a7:: with SMTP id a36mr50206141pla.111.1556347390037;
-        Fri, 26 Apr 2019 23:43:10 -0700 (PDT)
+        bh=PqX9u33LMatWrF2rdzOLAo8PTOZ3S7r/OUOEdwJc/wY=;
+        b=D/S0UEAOToJjcb6o1vigYzKTlZnW6X+Ik06WYnIEdkX+TF2k5/nExwke2ReJ9yP8Jn
+         kCcsUw/2YyJbePCmjBiJSbZJ+03FM0pxloeGfaoQYGsN6mcaJE3u0P22M6yae0ct++gN
+         GsvxvPZJ9xE+TYkkSl0eqHkKBTw81GwFQsWh/bNPcUlppGixInQmhtxlYgDUQ46uyefw
+         FE4BQX/mQmNf3JukyKURq6G4WpEewJr02kMNf6nOLCsnc7wc9BfY3E3LNv9UpBfohzEh
+         fXp4rI9T8o4E402XGIa3fP6R+eCVpFe18HqVr66sqNk//UWDRrBeFZYrI0ekvPxe1gkp
+         Gk9Q==
+X-Gm-Message-State: APjAAAUY78vJNEzrwryP/2mS6adCyYx1LmewcSKZvv0rMLmmYGXYVAU5
+	XHin2FEM92yrLcSwwuIxmfk=
+X-Google-Smtp-Source: APXvYqwtiOYLXN6z+omvr9q5XmanCyE26RTxB/9RLJMeynpzcv4zb2Q6alFcE2kD+WU/ILJ0eVx92Q==
+X-Received: by 2002:aa7:920b:: with SMTP id 11mr49825084pfo.3.1556347392003;
+        Fri, 26 Apr 2019 23:43:12 -0700 (PDT)
 From: nadav.amit@gmail.com
 To: Peter Zijlstra <peterz@infradead.org>,
 	Borislav Petkov <bp@alien8.de>,
@@ -63,98 +63,96 @@ Cc: linux-kernel@vger.kernel.org,
 	deneen.t.dock@intel.com,
 	Rick Edgecombe <rick.p.edgecombe@intel.com>,
 	Nadav Amit <namit@vmware.com>,
-	Arnaldo Carvalho de Melo <acme@kernel.org>
-Subject: [PATCH v6 05/24] uprobes: Initialize uprobes earlier
-Date: Fri, 26 Apr 2019 16:22:44 -0700
-Message-Id: <20190426232303.28381-6-nadav.amit@gmail.com>
+	Kees Cook <keescook@chromium.org>,
+	Dave Hansen <dave.hansen@intel.com>
+Subject: [PATCH v6 06/24] fork: Provide a function for copying init_mm
+Date: Fri, 26 Apr 2019 16:22:45 -0700
+Message-Id: <20190426232303.28381-7-nadav.amit@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190426232303.28381-1-nadav.amit@gmail.com>
 References: <20190426232303.28381-1-nadav.amit@gmail.com>
 
 From: Nadav Amit <namit@vmware.com>
 
-In order to have a separate address space for text poking, we need to
-duplicate init_mm early during start_kernel(). This, however, introduces
-a problem since uprobes functions are called from dup_mmap(), but
-uprobes is still not initialized in this early stage.
+Provide a function for copying init_mm. This function will be later used
+for setting a temporary mm.
 
-Since uprobes initialization is necassary for fork, and since all the
-dependant initialization has been done when fork is initialized (percpu
-and vmalloc), move uprobes initialization to fork_init(). It does not
-seem uprobes introduces any security problem for the poking_mm.
-
-Crash and burn if uprobes initialization fails, similarly to other early
-initializations. Change the init_probes() name to probes_init() to match
-other early initialization functions name convention.
-
-Cc: Arnaldo Carvalho de Melo <acme@kernel.org>
-Reported-by: kernel test robot <lkp@intel.com>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Dave Hansen <dave.hansen@intel.com>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Masami Hiramatsu <mhiramat@kernel.org>
+Tested-by: Masami Hiramatsu <mhiramat@kernel.org>
 Signed-off-by: Nadav Amit <namit@vmware.com>
+Signed-off-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
 ---
- include/linux/uprobes.h | 5 +++++
- kernel/events/uprobes.c | 8 +++-----
- kernel/fork.c           | 1 +
- 3 files changed, 9 insertions(+), 5 deletions(-)
+ include/linux/sched/task.h |  1 +
+ kernel/fork.c              | 24 ++++++++++++++++++------
+ 2 files changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/uprobes.h b/include/linux/uprobes.h
-index 103a48a48872..12bf0b68ed92 100644
---- a/include/linux/uprobes.h
-+++ b/include/linux/uprobes.h
-@@ -115,6 +115,7 @@ struct uprobes_state {
- 	struct xol_area		*xol_area;
- };
+diff --git a/include/linux/sched/task.h b/include/linux/sched/task.h
+index 2e97a2227045..f1227f2c38a4 100644
+--- a/include/linux/sched/task.h
++++ b/include/linux/sched/task.h
+@@ -76,6 +76,7 @@ extern void exit_itimers(struct signal_struct *);
+ extern long _do_fork(unsigned long, unsigned long, unsigned long, int __user *, int __user *, unsigned long);
+ extern long do_fork(unsigned long, unsigned long, unsigned long, int __user *, int __user *);
+ struct task_struct *fork_idle(int);
++struct mm_struct *copy_init_mm(void);
+ extern pid_t kernel_thread(int (*fn)(void *), void *arg, unsigned long flags);
+ extern long kernel_wait4(pid_t, int __user *, int, struct rusage *);
  
-+extern void __init uprobes_init(void);
- extern int set_swbp(struct arch_uprobe *aup, struct mm_struct *mm, unsigned long vaddr);
- extern int set_orig_insn(struct arch_uprobe *aup, struct mm_struct *mm, unsigned long vaddr);
- extern bool is_swbp_insn(uprobe_opcode_t *insn);
-@@ -154,6 +155,10 @@ extern void arch_uprobe_copy_ixol(struct page *page, unsigned long vaddr,
- struct uprobes_state {
- };
- 
-+static inline void uprobes_init(void)
-+{
-+}
-+
- #define uprobe_get_trap_addr(regs)	instruction_pointer(regs)
- 
- static inline int
-diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
-index c5cde87329c7..e6a0d6be87e3 100644
---- a/kernel/events/uprobes.c
-+++ b/kernel/events/uprobes.c
-@@ -2294,16 +2294,14 @@ static struct notifier_block uprobe_exception_nb = {
- 	.priority		= INT_MAX-1,	/* notified after kprobes, kgdb */
- };
- 
--static int __init init_uprobes(void)
-+void __init uprobes_init(void)
- {
- 	int i;
- 
- 	for (i = 0; i < UPROBES_HASH_SZ; i++)
- 		mutex_init(&uprobes_mmap_mutex[i]);
- 
--	if (percpu_init_rwsem(&dup_mmap_sem))
--		return -ENOMEM;
-+	BUG_ON(percpu_init_rwsem(&dup_mmap_sem));
- 
--	return register_die_notifier(&uprobe_exception_nb);
-+	BUG_ON(register_die_notifier(&uprobe_exception_nb));
- }
--__initcall(init_uprobes);
 diff --git a/kernel/fork.c b/kernel/fork.c
-index 9dcd18aa210b..44fba5e5e916 100644
+index 44fba5e5e916..fbe9dfcd8680 100644
 --- a/kernel/fork.c
 +++ b/kernel/fork.c
-@@ -815,6 +815,7 @@ void __init fork_init(void)
- #endif
- 
- 	lockdep_init_task(&init_task);
-+	uprobes_init();
+@@ -1299,13 +1299,20 @@ void mm_release(struct task_struct *tsk, struct mm_struct *mm)
+ 		complete_vfork_done(tsk);
  }
  
- int __weak arch_dup_task_struct(struct task_struct *dst,
+-/*
+- * Allocate a new mm structure and copy contents from the
+- * mm structure of the passed in task structure.
++/**
++ * dup_mm() - duplicates an existing mm structure
++ * @tsk: the task_struct with which the new mm will be associated.
++ * @oldmm: the mm to duplicate.
++ *
++ * Allocates a new mm structure and duplicates the provided @oldmm structure
++ * content into it.
++ *
++ * Return: the duplicated mm or NULL on failure.
+  */
+-static struct mm_struct *dup_mm(struct task_struct *tsk)
++static struct mm_struct *dup_mm(struct task_struct *tsk,
++				struct mm_struct *oldmm)
+ {
+-	struct mm_struct *mm, *oldmm = current->mm;
++	struct mm_struct *mm;
+ 	int err;
+ 
+ 	mm = allocate_mm();
+@@ -1372,7 +1379,7 @@ static int copy_mm(unsigned long clone_flags, struct task_struct *tsk)
+ 	}
+ 
+ 	retval = -ENOMEM;
+-	mm = dup_mm(tsk);
++	mm = dup_mm(tsk, current->mm);
+ 	if (!mm)
+ 		goto fail_nomem;
+ 
+@@ -2187,6 +2194,11 @@ struct task_struct *fork_idle(int cpu)
+ 	return task;
+ }
+ 
++struct mm_struct *copy_init_mm(void)
++{
++	return dup_mm(NULL, &init_mm);
++}
++
+ /*
+  *  Ok, this is the main fork-routine.
+  *
 -- 
 2.17.1
 
