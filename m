@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15821-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15822-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 532B7B2E3
-	for <lists+kernel-hardening@lfdr.de>; Sat, 27 Apr 2019 08:44:04 +0200 (CEST)
-Received: (qmail 1715 invoked by uid 550); 27 Apr 2019 06:43:18 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 51109B2E4
+	for <lists+kernel-hardening@lfdr.de>; Sat, 27 Apr 2019 08:44:12 +0200 (CEST)
+Received: (qmail 1838 invoked by uid 550); 27 Apr 2019 06:43:20 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,33 +13,33 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 1557 invoked from network); 27 Apr 2019 06:43:17 -0000
+Received: (qmail 1720 invoked from network); 27 Apr 2019 06:43:19 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Y4ax2hOd4Buhijx/oNSuXPhWpslJbmlh2LJYha9eHFk=;
-        b=RYKIYvXmL5tJ4u/bU0iLk60YO+Ox59zCcKmrYcUn0L0mc7KUA8ZtJ2R4XNYjQk2a8B
-         DcQM399thIjNSjXHuZQ6k7afM/SMh1l1QYkf2D0hRQ+1xwvUSHZnrIJ4UJtkR2NL1yLe
-         l1RYwwd0hroNUCsKi5IV5ZZNm8YzK8J7h42F1sPN4gG9Y1ehTjsd+VC718e5LdQep+gS
-         k/OhJCSCkHRbcX+8zk8NtqDpMNtIV6Cqdz0zcbSsIjK/yzdPAJzadIJkFTsIuXX0ujKs
-         CagOndVrfBrJnKlvTuPVqrDmZeIo9JxoUR6B70xI9bSBAuYLVmprrE1fKIlJc4O0C9hS
-         uf2w==
+        bh=fM02CdP3EHsEznyJ/zI3DVkvywjW2Y0W5QE/m/kGqS8=;
+        b=Bic4fgDhw/zNUsH9AvCevjRRuqcBr7SeEwPi/mNBJHeVn3HWTtTQy0lqVBwB+uwJON
+         033sEQUJVf4JsE8w16M+5haGmPR56gXJit7dknF2eDmFepylyOdGJlykH0b1NW+PihEa
+         WnVuUa5XLxRLLr06QvgHjZbZbm6umZ2Z7Tk21XFYdu0XsSy3LVhSR76ovrEOyDS4RqXk
+         ethcFURK2XAu1qKbwE8JJm/EyYlwhoXg4rc/DRAR47BR1Lx07vr+RFt4HZ8bItbsDTBV
+         RxWJwnwgvwuNGmSEvPkHWRxMq59R7mUfHELo2gZLY6QtoYxwGmeesmwvk7AesQMYnBzh
+         N2AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Y4ax2hOd4Buhijx/oNSuXPhWpslJbmlh2LJYha9eHFk=;
-        b=XhErT59klaaU5Jw406PTC0i+CO/VHjT6MAjTdFKqLXTk01ypY6WwskWhCJFZ7zSoOO
-         LYD0dIhExIFQXj0fHo2X2DcZ8nL/Mm9H35su/qUF0adBlxgZJQvdPvyiaK9Hc/9Gf3CE
-         ZUcRjU03yB0YsktVQNKo9w+lsh5cVnKBlID8MnqARIrL3LJK4f2Yxlh5vfmT08bQeaBh
-         ma0YyocWio08BdHefvhK8YPuGy5pgvFZufOAN0x4kPbZnqOycEtEjuGbj81H0zKpWUon
-         9gcVa+YtJP/h3IX6+8jPh94yKig44qz1V//IYy67oaU5woQe+YYXEtI4d9jdfC7khmHP
-         O0UQ==
-X-Gm-Message-State: APjAAAUb7Jj/MsxmICO2/Yf3Jrzy6VxR8il2ihL5A57XHz7QWHZtvajy
-	W6AF5xE/spL7pBXGRgajDNg=
-X-Google-Smtp-Source: APXvYqzYil+3Ftso1TWpSV8095HGNQL/URTfcLD+HpGX4LAA48WZkM07V5HZ0EJt2GuXBL8qYa+EnA==
-X-Received: by 2002:a63:b0b:: with SMTP id 11mr12676888pgl.445.1556347385725;
-        Fri, 26 Apr 2019 23:43:05 -0700 (PDT)
+        bh=fM02CdP3EHsEznyJ/zI3DVkvywjW2Y0W5QE/m/kGqS8=;
+        b=VHxpFdxynn/etpweZgpXu6L+D5B4qewZuFwqQW8TjQD9sp2nmSI8zUbrk8uVPmhHqy
+         MbnhMJtqG1JPm8Q0TkXoghHdZ1wnkuEbZTN1nCmgVOv3jf8/5HpLUam8GYmXyEKsvFUb
+         yWfsSoaa3xa+u3uwgWaZGj5JU08ALPCCjIJlyBzO4Y7jxcVM71MSk6eDnjIRtCn/tRaw
+         dBLKZhro6jL5MgrjDfoFxzvDIZBGxSbH6jqP4RSkhzrV3cBZX1GjJT0otpzyphN4tNLD
+         0aH7P4hyCfEfckdfXHzhcg+ePXm7kB9qhn4Ig6Z3ziKjh6uofu/9DrjcsWSD/F7h36nf
+         Uuaw==
+X-Gm-Message-State: APjAAAUJmfNvGrMVEIz2yDWinK+uK68TitR1PQbwI/vapEB9kYBaWqCX
+	a1xAMTaaO7rbjkCFUh421yE=
+X-Google-Smtp-Source: APXvYqxN6NLybNs8lwtcaE7rd9moWK47+PtSS3OruWZmc0YNonCQSY0zJUJKCwxGbV5SIYzeiwOfdw==
+X-Received: by 2002:a17:902:d83:: with SMTP id 3mr52111624plv.125.1556347387028;
+        Fri, 26 Apr 2019 23:43:07 -0700 (PDT)
 From: nadav.amit@gmail.com
 To: Peter Zijlstra <peterz@infradead.org>,
 	Borislav Petkov <bp@alien8.de>,
@@ -62,56 +62,92 @@ Cc: linux-kernel@vger.kernel.org,
 	kristen@linux.intel.com,
 	deneen.t.dock@intel.com,
 	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Nadav Amit <namit@vmware.com>,
 	Kees Cook <keescook@chromium.org>,
 	Dave Hansen <dave.hansen@intel.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>
-Subject: [PATCH v6 02/24] x86/jump_label: Use text_poke_early() during early init
-Date: Fri, 26 Apr 2019 16:22:41 -0700
-Message-Id: <20190426232303.28381-3-nadav.amit@gmail.com>
+	Nadav Amit <namit@vmware.com>
+Subject: [PATCH v6 03/24] x86/mm: Introduce temporary mm structs
+Date: Fri, 26 Apr 2019 16:22:42 -0700
+Message-Id: <20190426232303.28381-4-nadav.amit@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190426232303.28381-1-nadav.amit@gmail.com>
 References: <20190426232303.28381-1-nadav.amit@gmail.com>
 
-From: Nadav Amit <namit@vmware.com>
+From: Andy Lutomirski <luto@kernel.org>
 
-There is no apparent reason not to use text_poke_early() during
-early-init, since no patching of code that might be on the stack is done
-and only a single core is running.
+Using a dedicated page-table for temporary PTEs prevents other cores
+from using - even speculatively - these PTEs, thereby providing two
+benefits:
 
-This is required for the next patches that would set a temporary mm for
-text poking, and this mm is only initialized after some static-keys are
-enabled/disabled.
+(1) Security hardening: an attacker that gains kernel memory writing
+abilities cannot easily overwrite sensitive data.
 
-Cc: Andy Lutomirski <luto@kernel.org>
+(2) Avoiding TLB shootdowns: the PTEs do not need to be flushed in
+remote page-tables.
+
+To do so a temporary mm_struct can be used. Mappings which are private
+for this mm can be set in the userspace part of the address-space.
+During the whole time in which the temporary mm is loaded, interrupts
+must be disabled.
+
+The first use-case for temporary mm struct, which will follow, is for
+poking the kernel text.
+
+[ Commit message was written by Nadav Amit ]
+
 Cc: Kees Cook <keescook@chromium.org>
 Cc: Dave Hansen <dave.hansen@intel.com>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Masami Hiramatsu <mhiramat@kernel.org>
+Tested-by: Masami Hiramatsu <mhiramat@kernel.org>
+Signed-off-by: Andy Lutomirski <luto@kernel.org>
 Signed-off-by: Nadav Amit <namit@vmware.com>
 Signed-off-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
 ---
- arch/x86/kernel/jump_label.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/mmu_context.h | 33 ++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
-diff --git a/arch/x86/kernel/jump_label.c b/arch/x86/kernel/jump_label.c
-index f99bd26bd3f1..e7d8c636b228 100644
---- a/arch/x86/kernel/jump_label.c
-+++ b/arch/x86/kernel/jump_label.c
-@@ -50,7 +50,12 @@ static void __ref __jump_label_transform(struct jump_entry *entry,
- 	jmp.offset = jump_entry_target(entry) -
- 		     (jump_entry_code(entry) + JUMP_LABEL_NOP_SIZE);
+diff --git a/arch/x86/include/asm/mmu_context.h b/arch/x86/include/asm/mmu_context.h
+index 19d18fae6ec6..24dc3b810970 100644
+--- a/arch/x86/include/asm/mmu_context.h
++++ b/arch/x86/include/asm/mmu_context.h
+@@ -356,4 +356,37 @@ static inline unsigned long __get_current_cr3_fast(void)
+ 	return cr3;
+ }
  
--	if (early_boot_irqs_disabled)
-+	/*
-+	 * As long as only a single processor is running and the code is still
-+	 * not marked as RO, text_poke_early() can be used; Checking that
-+	 * system_state is SYSTEM_BOOTING guarantees it.
-+	 */
-+	if (system_state == SYSTEM_BOOTING)
- 		poker = text_poke_early;
- 
- 	if (type == JUMP_LABEL_JMP) {
++typedef struct {
++	struct mm_struct *mm;
++} temp_mm_state_t;
++
++/*
++ * Using a temporary mm allows to set temporary mappings that are not accessible
++ * by other CPUs. Such mappings are needed to perform sensitive memory writes
++ * that override the kernel memory protections (e.g., W^X), without exposing the
++ * temporary page-table mappings that are required for these write operations to
++ * other CPUs. Using a temporary mm also allows to avoid TLB shootdowns when the
++ * mapping is torn down.
++ *
++ * Context: The temporary mm needs to be used exclusively by a single core. To
++ *          harden security IRQs must be disabled while the temporary mm is
++ *          loaded, thereby preventing interrupt handler bugs from overriding
++ *          the kernel memory protection.
++ */
++static inline temp_mm_state_t use_temporary_mm(struct mm_struct *mm)
++{
++	temp_mm_state_t temp_state;
++
++	lockdep_assert_irqs_disabled();
++	temp_state.mm = this_cpu_read(cpu_tlbstate.loaded_mm);
++	switch_mm_irqs_off(NULL, mm, current);
++	return temp_state;
++}
++
++static inline void unuse_temporary_mm(temp_mm_state_t prev_state)
++{
++	lockdep_assert_irqs_disabled();
++	switch_mm_irqs_off(NULL, prev_state.mm, current);
++}
++
+ #endif /* _ASM_X86_MMU_CONTEXT_H */
 -- 
 2.17.1
 
