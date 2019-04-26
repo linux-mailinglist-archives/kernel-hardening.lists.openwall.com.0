@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15822-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15823-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 51109B2E4
-	for <lists+kernel-hardening@lfdr.de>; Sat, 27 Apr 2019 08:44:12 +0200 (CEST)
-Received: (qmail 1838 invoked by uid 550); 27 Apr 2019 06:43:20 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 90A85B2E5
+	for <lists+kernel-hardening@lfdr.de>; Sat, 27 Apr 2019 08:44:24 +0200 (CEST)
+Received: (qmail 1888 invoked by uid 550); 27 Apr 2019 06:43:21 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,33 +13,33 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 1720 invoked from network); 27 Apr 2019 06:43:19 -0000
+Received: (qmail 1817 invoked from network); 27 Apr 2019 06:43:20 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fM02CdP3EHsEznyJ/zI3DVkvywjW2Y0W5QE/m/kGqS8=;
-        b=Bic4fgDhw/zNUsH9AvCevjRRuqcBr7SeEwPi/mNBJHeVn3HWTtTQy0lqVBwB+uwJON
-         033sEQUJVf4JsE8w16M+5haGmPR56gXJit7dknF2eDmFepylyOdGJlykH0b1NW+PihEa
-         WnVuUa5XLxRLLr06QvgHjZbZbm6umZ2Z7Tk21XFYdu0XsSy3LVhSR76ovrEOyDS4RqXk
-         ethcFURK2XAu1qKbwE8JJm/EyYlwhoXg4rc/DRAR47BR1Lx07vr+RFt4HZ8bItbsDTBV
-         RxWJwnwgvwuNGmSEvPkHWRxMq59R7mUfHELo2gZLY6QtoYxwGmeesmwvk7AesQMYnBzh
-         N2AQ==
+        bh=wqvLZPneRcLgxY6Wjfk6EEQBPauaGcOxn9fq0yjJ9xE=;
+        b=vdYahecrwl2Sp5UawSR3og0bnv/oKfDwV/Dqodp6SG75rtt3oI1BxkHqScjMRc/B0U
+         ndpm0CSM99X5DI5nXyZ0qilWlZ5y+YmffvE0rzTsPOh9Lg0wVC5gzIbXO3T2rI/43jKw
+         dSv/fQEMrgklgF9DfRp0UTkxOOmbTA2q76DVrniyNWh8V594RE3EBRYYfPR9C72DIbVe
+         QvUfF6WjCix52aEKKarcvG6J8JGMJ6kiAHPNxAecwgyTiM6P6ST8UlxjffLYXWC/UN5g
+         Hhv9thRtl94b6Emad3qIhmqwC571N8N4kkx/zbp3oEc24WAmffQk4ZXiiSSJrBGsI7VY
+         gu0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=fM02CdP3EHsEznyJ/zI3DVkvywjW2Y0W5QE/m/kGqS8=;
-        b=VHxpFdxynn/etpweZgpXu6L+D5B4qewZuFwqQW8TjQD9sp2nmSI8zUbrk8uVPmhHqy
-         MbnhMJtqG1JPm8Q0TkXoghHdZ1wnkuEbZTN1nCmgVOv3jf8/5HpLUam8GYmXyEKsvFUb
-         yWfsSoaa3xa+u3uwgWaZGj5JU08ALPCCjIJlyBzO4Y7jxcVM71MSk6eDnjIRtCn/tRaw
-         dBLKZhro6jL5MgrjDfoFxzvDIZBGxSbH6jqP4RSkhzrV3cBZX1GjJT0otpzyphN4tNLD
-         0aH7P4hyCfEfckdfXHzhcg+ePXm7kB9qhn4Ig6Z3ziKjh6uofu/9DrjcsWSD/F7h36nf
-         Uuaw==
-X-Gm-Message-State: APjAAAUJmfNvGrMVEIz2yDWinK+uK68TitR1PQbwI/vapEB9kYBaWqCX
-	a1xAMTaaO7rbjkCFUh421yE=
-X-Google-Smtp-Source: APXvYqxN6NLybNs8lwtcaE7rd9moWK47+PtSS3OruWZmc0YNonCQSY0zJUJKCwxGbV5SIYzeiwOfdw==
-X-Received: by 2002:a17:902:d83:: with SMTP id 3mr52111624plv.125.1556347387028;
-        Fri, 26 Apr 2019 23:43:07 -0700 (PDT)
+        bh=wqvLZPneRcLgxY6Wjfk6EEQBPauaGcOxn9fq0yjJ9xE=;
+        b=r4MB4mvf5KgyrIxkfgkdwMlwVF1bLj89PBDeQPeocEjBz3cPqMpIPsrmoGQ3sb2HI5
+         0/aIv5tjHQ+WBSsHafF9vxT+kdrS4GfhyE79xiV+P1lCwFiCdv79m6EzgdyEmTjoPjKz
+         R/nXtNdwY7yV8U+UjmYShQ0hcivpTxJ8Q9hrpNfA6no2IPfzCJe4OB8gY1IltdNRqXkd
+         WKgz2VHWjrJ/QcibC9Cb8le0picr0Sqew4zW8eRJ46mzL7NkDRfX4mMRabl0txHMkPgb
+         N4dOSc+MgIGzmcdgba1foyuX9rnE9yArxq3VDawXuQJWVPWgA7E+wiZRavpYf4U84KPs
+         i8Qg==
+X-Gm-Message-State: APjAAAWSugiKXWHtAQ2qyRLWcMyoJ3nkcFBMFbTOQoazVEuUkXleYhbf
+	i/HX8JMDAOQXuIhau3NzWJU=
+X-Google-Smtp-Source: APXvYqyiprnnWU4rXtsHhhC4I5UqVMx78ccNfm1X35wazpAaZSJma1EHcKW1CFUxAhCYo5lEBNcLEA==
+X-Received: by 2002:a17:902:aa83:: with SMTP id d3mr8074837plr.108.1556347388411;
+        Fri, 26 Apr 2019 23:43:08 -0700 (PDT)
 From: nadav.amit@gmail.com
 To: Peter Zijlstra <peterz@infradead.org>,
 	Borislav Petkov <bp@alien8.de>,
@@ -62,91 +62,76 @@ Cc: linux-kernel@vger.kernel.org,
 	kristen@linux.intel.com,
 	deneen.t.dock@intel.com,
 	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Kees Cook <keescook@chromium.org>,
-	Dave Hansen <dave.hansen@intel.com>,
 	Nadav Amit <namit@vmware.com>
-Subject: [PATCH v6 03/24] x86/mm: Introduce temporary mm structs
-Date: Fri, 26 Apr 2019 16:22:42 -0700
-Message-Id: <20190426232303.28381-4-nadav.amit@gmail.com>
+Subject: [PATCH v6 04/24] x86/mm: Save debug registers when loading a temporary mm
+Date: Fri, 26 Apr 2019 16:22:43 -0700
+Message-Id: <20190426232303.28381-5-nadav.amit@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190426232303.28381-1-nadav.amit@gmail.com>
 References: <20190426232303.28381-1-nadav.amit@gmail.com>
 
-From: Andy Lutomirski <luto@kernel.org>
+From: Nadav Amit <namit@vmware.com>
 
-Using a dedicated page-table for temporary PTEs prevents other cores
-from using - even speculatively - these PTEs, thereby providing two
-benefits:
+Prevent user watchpoints from mistakenly firing while the temporary mm
+is being used. As the addresses of the temporary mm might overlap those
+of the user-process, this is necessary to prevent wrong signals or worse
+things from happening.
 
-(1) Security hardening: an attacker that gains kernel memory writing
-abilities cannot easily overwrite sensitive data.
-
-(2) Avoiding TLB shootdowns: the PTEs do not need to be flushed in
-remote page-tables.
-
-To do so a temporary mm_struct can be used. Mappings which are private
-for this mm can be set in the userspace part of the address-space.
-During the whole time in which the temporary mm is loaded, interrupts
-must be disabled.
-
-The first use-case for temporary mm struct, which will follow, is for
-poking the kernel text.
-
-[ Commit message was written by Nadav Amit ]
-
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Dave Hansen <dave.hansen@intel.com>
+Cc: Andy Lutomirski <luto@kernel.org>
 Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Masami Hiramatsu <mhiramat@kernel.org>
-Tested-by: Masami Hiramatsu <mhiramat@kernel.org>
-Signed-off-by: Andy Lutomirski <luto@kernel.org>
 Signed-off-by: Nadav Amit <namit@vmware.com>
 Signed-off-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
 ---
- arch/x86/include/asm/mmu_context.h | 33 ++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ arch/x86/include/asm/mmu_context.h | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
 diff --git a/arch/x86/include/asm/mmu_context.h b/arch/x86/include/asm/mmu_context.h
-index 19d18fae6ec6..24dc3b810970 100644
+index 24dc3b810970..93dff1963337 100644
 --- a/arch/x86/include/asm/mmu_context.h
 +++ b/arch/x86/include/asm/mmu_context.h
-@@ -356,4 +356,37 @@ static inline unsigned long __get_current_cr3_fast(void)
- 	return cr3;
+@@ -13,6 +13,7 @@
+ #include <asm/tlbflush.h>
+ #include <asm/paravirt.h>
+ #include <asm/mpx.h>
++#include <asm/debugreg.h>
+ 
+ extern atomic64_t last_mm_ctx_id;
+ 
+@@ -380,6 +381,21 @@ static inline temp_mm_state_t use_temporary_mm(struct mm_struct *mm)
+ 	lockdep_assert_irqs_disabled();
+ 	temp_state.mm = this_cpu_read(cpu_tlbstate.loaded_mm);
+ 	switch_mm_irqs_off(NULL, mm, current);
++
++	/*
++	 * If breakpoints are enabled, disable them while the temporary mm is
++	 * used. Userspace might set up watchpoints on addresses that are used
++	 * in the temporary mm, which would lead to wrong signals being sent or
++	 * crashes.
++	 *
++	 * Note that breakpoints are not disabled selectively, which also causes
++	 * kernel breakpoints (e.g., perf's) to be disabled. This might be
++	 * undesirable, but still seems reasonable as the code that runs in the
++	 * temporary mm should be short.
++	 */
++	if (hw_breakpoint_active())
++		hw_breakpoint_disable();
++
+ 	return temp_state;
  }
  
-+typedef struct {
-+	struct mm_struct *mm;
-+} temp_mm_state_t;
+@@ -387,6 +403,13 @@ static inline void unuse_temporary_mm(temp_mm_state_t prev_state)
+ {
+ 	lockdep_assert_irqs_disabled();
+ 	switch_mm_irqs_off(NULL, prev_state.mm, current);
 +
-+/*
-+ * Using a temporary mm allows to set temporary mappings that are not accessible
-+ * by other CPUs. Such mappings are needed to perform sensitive memory writes
-+ * that override the kernel memory protections (e.g., W^X), without exposing the
-+ * temporary page-table mappings that are required for these write operations to
-+ * other CPUs. Using a temporary mm also allows to avoid TLB shootdowns when the
-+ * mapping is torn down.
-+ *
-+ * Context: The temporary mm needs to be used exclusively by a single core. To
-+ *          harden security IRQs must be disabled while the temporary mm is
-+ *          loaded, thereby preventing interrupt handler bugs from overriding
-+ *          the kernel memory protection.
-+ */
-+static inline temp_mm_state_t use_temporary_mm(struct mm_struct *mm)
-+{
-+	temp_mm_state_t temp_state;
-+
-+	lockdep_assert_irqs_disabled();
-+	temp_state.mm = this_cpu_read(cpu_tlbstate.loaded_mm);
-+	switch_mm_irqs_off(NULL, mm, current);
-+	return temp_state;
-+}
-+
-+static inline void unuse_temporary_mm(temp_mm_state_t prev_state)
-+{
-+	lockdep_assert_irqs_disabled();
-+	switch_mm_irqs_off(NULL, prev_state.mm, current);
-+}
-+
++	/*
++	 * Restore the breakpoints if they were disabled before the temporary mm
++	 * was loaded.
++	 */
++	if (hw_breakpoint_active())
++		hw_breakpoint_restore();
+ }
+ 
  #endif /* _ASM_X86_MMU_CONTEXT_H */
 -- 
 2.17.1
