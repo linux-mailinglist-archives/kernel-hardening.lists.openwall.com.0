@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15828-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15829-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 582B1B2EA
-	for <lists+kernel-hardening@lfdr.de>; Sat, 27 Apr 2019 08:45:27 +0200 (CEST)
-Received: (qmail 3639 invoked by uid 550); 27 Apr 2019 06:43:30 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 89778B2EB
+	for <lists+kernel-hardening@lfdr.de>; Sat, 27 Apr 2019 08:45:43 +0200 (CEST)
+Received: (qmail 3809 invoked by uid 550); 27 Apr 2019 06:43:32 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,33 +13,33 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 3471 invoked from network); 27 Apr 2019 06:43:28 -0000
+Received: (qmail 3680 invoked from network); 27 Apr 2019 06:43:31 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=3mFI7V2IpbwOhuCcp+g9CO2dE2meFXsvyyAeb18NWyo=;
-        b=JlRIHgbr6HB0GM/dfrBCsDnNLxTkOKzTB7qYCbAx4tDSjiPWdWErWZcgNMKz3646h4
-         C8cKj9bZkmi6cPWikKj5uJAC7SrSg/qfrmI03cXhBRcOJHEMan3BYUSQ1ScXOsNa4u3Z
-         IDQ4DfzWzmEsKN3rKTGM5uTvN695pUVNWWV4a8LMMvLzAhr7fWiHf2k7ZmkakgE11lMg
-         wbrOSfmIb0CTjB/azGiS0/j+OjbriGytqXhtU6Bd27x2yAPLaWXYIt792EgmySvUAGOQ
-         9VF/satnq8MCbRYyAQp+FRH27QsFCLaAp8PdnQobxJM8asT3n363jT4JX9FD5F/9ebkE
-         0Uqg==
+        bh=CLKl6NZzJuOK2yM4IgvyVy0XzBWA5gDBiZYSHfLNQ00=;
+        b=LWiWMfB1NCPlUWHzx7KNU9QCQPe3RdgA8qCNPze1WHQjmMq2EnzDsMlPceyPd+MHEm
+         QMnqsza7hwGkI6ZFGgTOeRjeOEfXCrRJYup1t+tZNnEBvqMdc01pTHEj2bJKvz7BRo7K
+         E/q3JXY24fjwRSyZU/Tw4XNKZ1nfyh4euDeX0+jZD8/F9QgFlj4BNpu6QQplyXiEhS74
+         PVZ8Bi1kj7P4bpKFaIDD7kzaPwPpjBstpFpZumGDsgFZsa4oA3jDKygoO8TIjMEYq1h+
+         8j/kDmbTP0+sW4oBzq9jDl4H2CBcWV2hkh9XtxTKhVDjbhF8cy7tl1t7BO8Iros2slYv
+         iP/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=3mFI7V2IpbwOhuCcp+g9CO2dE2meFXsvyyAeb18NWyo=;
-        b=rMNEqX/JppVddZAr0sjRTuGuRiwPntdRmCu5UJkz4/UYz7Tv6QYUNPsRXp0aISG9xY
-         NOVHmwxBwDsU9PYH1uYe1zmqNBxA7nmzYYRDX5MYT/ghqvF+YCPjP4H4TNmwqOjuo1X+
-         B4mUUnfJx7yOVDsX5YXJEjOl97ocgO3LMDWxZbOhOI2xmTq3+foqXHu9YnoH6csRzM3T
-         PUIrjdUvGW4zhpOIBNOeX7sRalCfkt0L0ohUEnP0KqfjA5WAkOI9lt74xIl9P6Yf4ugX
-         ixae2tS/cwWAOqBPnXuCLRdeV4uPS2OWklvids6QTAUhhG4dqjlTIzOt6KtJAuolb+I9
-         j66g==
-X-Gm-Message-State: APjAAAUvlqf6IfLPvqfsS061ULytmAL3O424pdmT9kFUZT4qdWY0uRfP
-	zntMURb4cG8QaUIgkRM8eW8=
-X-Google-Smtp-Source: APXvYqx2WhBZnJIn8mqH1b7ixt4GF/6k4yp110M4lMdf7eXq6Mz7eqmVNfTsfdPSyk5JMfubTGyIEQ==
-X-Received: by 2002:a17:902:2927:: with SMTP id g36mr48053244plb.6.1556347396829;
-        Fri, 26 Apr 2019 23:43:16 -0700 (PDT)
+        bh=CLKl6NZzJuOK2yM4IgvyVy0XzBWA5gDBiZYSHfLNQ00=;
+        b=fpOIJqU6xKS4qAxVrGI5rXVfYZU8t7tAwdKOzIbv4qViBEzzpyMvoedkvTg3xDzjbe
+         W8ksWMssyjuxR/+lxT3Y4g6NOnMA9jk83Fw16+tlUUuAhQmMNZeOH4lx9seJ+x2I51QX
+         WviHXo21Aq0bmr6BfESssGAUQY0UfQlfDFBkyk4Z9cMbWs+AZnB0DXT98ukbDJAKVDWa
+         yPI5H21Sv9dOlq8W+Wg5008lj6qbkF1tzPdQNS7xXUtKNvNYHaULEF9jqBRVmHC86zpk
+         JWdfoh6G0yDG9xrPNiN1ZAtGma5N6ZJGuoO6uBhgKHHBdlYJQy4xfvBIbeKjKk0r+l5B
+         wCGA==
+X-Gm-Message-State: APjAAAXMJevUAL6CwgPxAHJH1yb4UtV0UQtKkjKajkjJlmmlBiFE9e3W
+	N6+x6WKtvEN/7jRGt2CfFCU=
+X-Google-Smtp-Source: APXvYqx8IDeCvv7F4Tl+g2zi6Qtjw6+CBIajqUbAMvc7uvXy5z6A8pYUXx0y0vJXO744BzKTEFFO2g==
+X-Received: by 2002:aa7:91d6:: with SMTP id z22mr42068121pfa.242.1556347399283;
+        Fri, 26 Apr 2019 23:43:19 -0700 (PDT)
 From: nadav.amit@gmail.com
 To: Peter Zijlstra <peterz@infradead.org>,
 	Borislav Petkov <bp@alien8.de>,
@@ -63,72 +63,61 @@ Cc: linux-kernel@vger.kernel.org,
 	deneen.t.dock@intel.com,
 	Rick Edgecombe <rick.p.edgecombe@intel.com>,
 	Nadav Amit <namit@vmware.com>
-Subject: [PATCH v6 09/24] x86/kgdb: Avoid redundant comparison of patched code
-Date: Fri, 26 Apr 2019 16:22:48 -0700
-Message-Id: <20190426232303.28381-10-nadav.amit@gmail.com>
+Subject: [PATCH v6 10/24] x86/ftrace: Set trampoline pages as executable
+Date: Fri, 26 Apr 2019 16:22:49 -0700
+Message-Id: <20190426232303.28381-11-nadav.amit@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190426232303.28381-1-nadav.amit@gmail.com>
 References: <20190426232303.28381-1-nadav.amit@gmail.com>
 
 From: Nadav Amit <namit@vmware.com>
 
-text_poke() already ensures that the written value is the correct one
-and fails if that is not the case. There is no need for an additional
-comparison. Remove it.
+Since alloc_module() will not set the pages as executable soon, set
+ftrace trampoline pages as executable after they are allocated.
 
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+For the time being, do not change ftrace to use the text_poke()
+interface. As a result, ftrace still breaks W^X.
+
+Reviewed-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
 Signed-off-by: Nadav Amit <namit@vmware.com>
 Signed-off-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
 ---
- arch/x86/kernel/kgdb.c | 14 +-------------
- 1 file changed, 1 insertion(+), 13 deletions(-)
+ arch/x86/kernel/ftrace.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/x86/kernel/kgdb.c b/arch/x86/kernel/kgdb.c
-index 2b203ee5b879..13b13311b792 100644
---- a/arch/x86/kernel/kgdb.c
-+++ b/arch/x86/kernel/kgdb.c
-@@ -747,7 +747,6 @@ void kgdb_arch_set_pc(struct pt_regs *regs, unsigned long ip)
- int kgdb_arch_set_breakpoint(struct kgdb_bkpt *bpt)
- {
- 	int err;
--	char opc[BREAK_INSTR_SIZE];
+diff --git a/arch/x86/kernel/ftrace.c b/arch/x86/kernel/ftrace.c
+index ef49517f6bb2..53ba1aa3a01f 100644
+--- a/arch/x86/kernel/ftrace.c
++++ b/arch/x86/kernel/ftrace.c
+@@ -730,6 +730,7 @@ create_trampoline(struct ftrace_ops *ops, unsigned int *tramp_size)
+ 	unsigned long end_offset;
+ 	unsigned long op_offset;
+ 	unsigned long offset;
++	unsigned long npages;
+ 	unsigned long size;
+ 	unsigned long retq;
+ 	unsigned long *ptr;
+@@ -762,6 +763,7 @@ create_trampoline(struct ftrace_ops *ops, unsigned int *tramp_size)
+ 		return 0;
  
- 	bpt->type = BP_BREAKPOINT;
- 	err = probe_kernel_read(bpt->saved_instr, (char *)bpt->bpt_addr,
-@@ -766,11 +765,6 @@ int kgdb_arch_set_breakpoint(struct kgdb_bkpt *bpt)
- 		return -EBUSY;
- 	text_poke_kgdb((void *)bpt->bpt_addr, arch_kgdb_ops.gdb_bpt_instr,
- 		       BREAK_INSTR_SIZE);
--	err = probe_kernel_read(opc, (char *)bpt->bpt_addr, BREAK_INSTR_SIZE);
--	if (err)
--		return err;
--	if (memcmp(opc, arch_kgdb_ops.gdb_bpt_instr, BREAK_INSTR_SIZE))
--		return -EINVAL;
- 	bpt->type = BP_POKE_BREAKPOINT;
+ 	*tramp_size = size + RET_SIZE + sizeof(void *);
++	npages = DIV_ROUND_UP(*tramp_size, PAGE_SIZE);
  
- 	return err;
-@@ -778,9 +772,6 @@ int kgdb_arch_set_breakpoint(struct kgdb_bkpt *bpt)
+ 	/* Copy ftrace_caller onto the trampoline memory */
+ 	ret = probe_kernel_read(trampoline, (void *)start_offset, size);
+@@ -806,6 +808,12 @@ create_trampoline(struct ftrace_ops *ops, unsigned int *tramp_size)
+ 	/* ALLOC_TRAMP flags lets us know we created it */
+ 	ops->flags |= FTRACE_OPS_FL_ALLOC_TRAMP;
  
- int kgdb_arch_remove_breakpoint(struct kgdb_bkpt *bpt)
- {
--	int err;
--	char opc[BREAK_INSTR_SIZE];
--
- 	if (bpt->type != BP_POKE_BREAKPOINT)
- 		goto knl_write;
- 	/*
-@@ -791,10 +782,7 @@ int kgdb_arch_remove_breakpoint(struct kgdb_bkpt *bpt)
- 		goto knl_write;
- 	text_poke_kgdb((void *)bpt->bpt_addr, bpt->saved_instr,
- 		       BREAK_INSTR_SIZE);
--	err = probe_kernel_read(opc, (char *)bpt->bpt_addr, BREAK_INSTR_SIZE);
--	if (err || memcmp(opc, bpt->saved_instr, BREAK_INSTR_SIZE))
--		goto knl_write;
--	return err;
-+	return 0;
- 
- knl_write:
- 	return probe_kernel_write((char *)bpt->bpt_addr,
++	/*
++	 * Module allocation needs to be completed by making the page
++	 * executable. The page is still writable, which is a security hazard,
++	 * but anyhow ftrace breaks W^X completely.
++	 */
++	set_memory_x((unsigned long)trampoline, npages);
+ 	return (unsigned long)trampoline;
+ fail:
+ 	tramp_free(trampoline, *tramp_size);
 -- 
 2.17.1
 
