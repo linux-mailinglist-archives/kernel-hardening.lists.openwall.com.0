@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15853-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15858-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 4BCB3F5A6
-	for <lists+kernel-hardening@lfdr.de>; Tue, 30 Apr 2019 13:31:16 +0200 (CEST)
-Received: (qmail 21924 invoked by uid 550); 30 Apr 2019 11:30:14 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 960C8F5AB
+	for <lists+kernel-hardening@lfdr.de>; Tue, 30 Apr 2019 13:32:23 +0200 (CEST)
+Received: (qmail 24351 invoked by uid 550); 30 Apr 2019 11:30:36 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -14,36 +14,36 @@ List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
 Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 12109 invoked from network); 30 Apr 2019 11:19:12 -0000
-DKIM-Filter: OpenDKIM Filter v2.11.0 terminus.zytor.com x3UBIeWP1347157
+Received: (qmail 13758 invoked from network); 30 Apr 2019 11:20:37 -0000
+DKIM-Filter: OpenDKIM Filter v2.11.0 terminus.zytor.com x3UBK24T1347402
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
-	s=2019041745; t=1556623122;
-	bh=ZhGa5Rw2An+g9Pm5bMaZJRBKLbUWU/FVeTI2VZxezKQ=;
+	s=2019041745; t=1556623203;
+	bh=lcIqU8A5KOahzmd/io1oC+2K+Q39XY1YJ8FyUQkjU8g=;
 	h=Date:From:Cc:Reply-To:In-Reply-To:References:To:Subject:From;
-	b=MytLcW5D5rC54iKa5hv8XWJ21/xogRmGGierAS8SWy8Fp6CDz+kkTEtbhujPGefJw
-	 3rfxgycUOK3aIuSb+fTpgdFCOXboCHSb4/Nnn+qO/VExDNDKXzSmg7MjlsTDvqNqJw
-	 s2Q8eCh+rT//3EdhYwjC6bB3hEa7BTdGPHkkjANdp3QbwHWuFsXgYHoTVyrzccO+UM
-	 4bxOfzIDeM4sDRSKzAUmVsXIa63bjrDtqVCmP0Q/3mGVmn/dTBYa8yLRjsi7vcLLVU
-	 yZpeeSLPiMMBvCGRGDTnyzJib/5N+MzwiirQ/jwBJFN3hhBwtbllqT454YRl3sNSwG
-	 blhl0j03QEyLQ==
-Date: Tue, 30 Apr 2019 04:18:40 -0700
+	b=vF73XtcwN6O9MqlLGbfUvCJRMPCe9j3xIIF68UEmSbYhg8p+OMjm6qaKok5hE76GB
+	 nDbPoaI9E1IJarxEQsAcJGR9vBOXCpuqRH6CfHhFkoTT/AMl+baCfs0NUwDNl7EdU4
+	 l7ceerQRd7oAVeE7/wYogAhOsy7t3x191jTNkILBvHtk2wpysJzA2czEETeSxrOYpQ
+	 aITPSjcv130Sh6vR9uoRjEricTlnTt+uYRapveTw5kGwUgcjJDrAIK+1k/GSz1xbvO
+	 EtoyXz0e+obfThy4VtaM++NBGNvP85TBGlI/O2EfYs3Op8IKKswVxk0FZhbOO2VYfr
+	 EleHlsDDIS6fw==
+Date: Tue, 30 Apr 2019 04:20:02 -0700
 X-Authentication-Warning: terminus.zytor.com: tipbot set sender to tipbot@zytor.com using -f
 Sender: tip tree robot <tipbot@zytor.com>
 From: tip-bot for Nadav Amit <tipbot@zytor.com>
-Message-ID: <tip-13585fa0668c724efab9635aaeef6ec390217415@git.kernel.org>
-Cc: peterz@infradead.org, luto@kernel.org, mhiramat@kernel.org,
-        kristen@linux.intel.com, linux-kernel@vger.kernel.org, hpa@zytor.com,
-        deneen.t.dock@intel.com, namit@vmware.com, tglx@linutronix.de,
-        torvalds@linux-foundation.org, dave.hansen@intel.com, mingo@kernel.org,
-        linux_dti@icloud.com, kernel-hardening@lists.openwall.com,
-        will.deacon@arm.com, rick.p.edgecombe@intel.com, riel@surriel.com,
-        keescook@chromium.org, akpm@linux-foundation.org, bp@alien8.de,
-        ard.biesheuvel@linaro.org
-In-Reply-To: <20190426001143.4983-6-namit@vmware.com>
-References: <20190426001143.4983-6-namit@vmware.com>
+Message-ID: <tip-b3fd8e83ada0d51b71a84297480187e2d40e5ded@git.kernel.org>
+Cc: kernel-hardening@lists.openwall.com, ard.biesheuvel@linaro.org,
+        torvalds@linux-foundation.org, akpm@linux-foundation.org,
+        mingo@kernel.org, linux-kernel@vger.kernel.org, riel@surriel.com,
+        namit@vmware.com, linux_dti@icloud.com, keescook@chromium.org,
+        bp@alien8.de, hpa@zytor.com, mhiramat@kernel.org,
+        kristen@linux.intel.com, dave.hansen@intel.com, luto@kernel.org,
+        deneen.t.dock@intel.com, peterz@infradead.org, tglx@linutronix.de,
+        rick.p.edgecombe@intel.com, will.deacon@arm.com
+In-Reply-To: <20190426001143.4983-8-namit@vmware.com>
+References: <20190426001143.4983-8-namit@vmware.com>
 To: linux-tip-commits@vger.kernel.org
-Subject: [tip:x86/mm] fork: Provide a function for copying init_mm
-Git-Commit-ID: 13585fa0668c724efab9635aaeef6ec390217415
+Subject: [tip:x86/mm] x86/alternatives: Use temporary mm for text poking
+Git-Commit-ID: b3fd8e83ada0d51b71a84297480187e2d40e5ded
 X-Mailer: tip-git-log-daemon
 Robot-ID: <tip-bot.git.kernel.org>
 Robot-Unsubscribe: Contact <mailto:hpa@kernel.org> to get blacklisted from
@@ -58,23 +58,33 @@ X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED,BAYES_00,
 	autolearn_force=no version=3.4.2
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on terminus.zytor.com
 
-Commit-ID:  13585fa0668c724efab9635aaeef6ec390217415
-Gitweb:     https://git.kernel.org/tip/13585fa0668c724efab9635aaeef6ec390217415
+Commit-ID:  b3fd8e83ada0d51b71a84297480187e2d40e5ded
+Gitweb:     https://git.kernel.org/tip/b3fd8e83ada0d51b71a84297480187e2d40e5ded
 Author:     Nadav Amit <namit@vmware.com>
-AuthorDate: Thu, 25 Apr 2019 17:11:25 -0700
+AuthorDate: Thu, 25 Apr 2019 17:11:27 -0700
 Committer:  Ingo Molnar <mingo@kernel.org>
-CommitDate: Tue, 30 Apr 2019 12:37:51 +0200
+CommitDate: Tue, 30 Apr 2019 12:37:52 +0200
 
-fork: Provide a function for copying init_mm
+x86/alternatives: Use temporary mm for text poking
 
-Provide a function for copying init_mm. This function will be later used
-for setting a temporary mm.
+text_poke() can potentially compromise security as it sets temporary
+PTEs in the fixmap. These PTEs might be used to rewrite the kernel code
+from other cores accidentally or maliciously, if an attacker gains the
+ability to write onto kernel memory.
 
-Tested-by: Masami Hiramatsu <mhiramat@kernel.org>
+Moreover, since remote TLBs are not flushed after the temporary PTEs are
+removed, the time-window in which the code is writable is not limited if
+the fixmap PTEs - maliciously or accidentally - are cached in the TLB.
+To address these potential security hazards, use a temporary mm for
+patching the code.
+
+Finally, text_poke() is also not conservative enough when mapping pages,
+as it always tries to map 2 pages, even when a single one is sufficient.
+So try to be more conservative, and do not map more than needed.
+
 Signed-off-by: Nadav Amit <namit@vmware.com>
 Signed-off-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: <akpm@linux-foundation.org>
 Cc: <ard.biesheuvel@linaro.org>
 Cc: <deneen.t.dock@intel.com>
@@ -88,75 +98,179 @@ Cc: Dave Hansen <dave.hansen@intel.com>
 Cc: H. Peter Anvin <hpa@zytor.com>
 Cc: Kees Cook <keescook@chromium.org>
 Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: Rik van Riel <riel@surriel.com>
 Cc: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lkml.kernel.org/r/20190426001143.4983-6-namit@vmware.com
+Link: https://lkml.kernel.org/r/20190426001143.4983-8-namit@vmware.com
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
 ---
- include/linux/sched/task.h |  1 +
- kernel/fork.c              | 24 ++++++++++++++++++------
- 2 files changed, 19 insertions(+), 6 deletions(-)
+ arch/x86/include/asm/fixmap.h |   2 -
+ arch/x86/kernel/alternative.c | 108 +++++++++++++++++++++++++++++++++---------
+ arch/x86/xen/mmu_pv.c         |   2 -
+ 3 files changed, 86 insertions(+), 26 deletions(-)
 
-diff --git a/include/linux/sched/task.h b/include/linux/sched/task.h
-index 2e97a2227045..f1227f2c38a4 100644
---- a/include/linux/sched/task.h
-+++ b/include/linux/sched/task.h
-@@ -76,6 +76,7 @@ extern void exit_itimers(struct signal_struct *);
- extern long _do_fork(unsigned long, unsigned long, unsigned long, int __user *, int __user *, unsigned long);
- extern long do_fork(unsigned long, unsigned long, unsigned long, int __user *, int __user *);
- struct task_struct *fork_idle(int);
-+struct mm_struct *copy_init_mm(void);
- extern pid_t kernel_thread(int (*fn)(void *), void *arg, unsigned long flags);
- extern long kernel_wait4(pid_t, int __user *, int, struct rusage *);
+diff --git a/arch/x86/include/asm/fixmap.h b/arch/x86/include/asm/fixmap.h
+index 50ba74a34a37..9da8cccdf3fb 100644
+--- a/arch/x86/include/asm/fixmap.h
++++ b/arch/x86/include/asm/fixmap.h
+@@ -103,8 +103,6 @@ enum fixed_addresses {
+ #ifdef CONFIG_PARAVIRT
+ 	FIX_PARAVIRT_BOOTMAP,
+ #endif
+-	FIX_TEXT_POKE1,	/* reserve 2 pages for text_poke() */
+-	FIX_TEXT_POKE0, /* first page is last, because allocation is backward */
+ #ifdef	CONFIG_X86_INTEL_MID
+ 	FIX_LNW_VRTC,
+ #endif
+diff --git a/arch/x86/kernel/alternative.c b/arch/x86/kernel/alternative.c
+index 11d5c710a94f..599203876c32 100644
+--- a/arch/x86/kernel/alternative.c
++++ b/arch/x86/kernel/alternative.c
+@@ -12,6 +12,7 @@
+ #include <linux/slab.h>
+ #include <linux/kdebug.h>
+ #include <linux/kprobes.h>
++#include <linux/mmu_context.h>
+ #include <asm/text-patching.h>
+ #include <asm/alternative.h>
+ #include <asm/sections.h>
+@@ -684,41 +685,104 @@ __ro_after_init unsigned long poking_addr;
  
-diff --git a/kernel/fork.c b/kernel/fork.c
-index 44fba5e5e916..fbe9dfcd8680 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -1299,13 +1299,20 @@ void mm_release(struct task_struct *tsk, struct mm_struct *mm)
- 		complete_vfork_done(tsk);
- }
- 
--/*
-- * Allocate a new mm structure and copy contents from the
-- * mm structure of the passed in task structure.
-+/**
-+ * dup_mm() - duplicates an existing mm structure
-+ * @tsk: the task_struct with which the new mm will be associated.
-+ * @oldmm: the mm to duplicate.
-+ *
-+ * Allocates a new mm structure and duplicates the provided @oldmm structure
-+ * content into it.
-+ *
-+ * Return: the duplicated mm or NULL on failure.
-  */
--static struct mm_struct *dup_mm(struct task_struct *tsk)
-+static struct mm_struct *dup_mm(struct task_struct *tsk,
-+				struct mm_struct *oldmm)
+ static void *__text_poke(void *addr, const void *opcode, size_t len)
  {
--	struct mm_struct *mm, *oldmm = current->mm;
-+	struct mm_struct *mm;
- 	int err;
++	bool cross_page_boundary = offset_in_page(addr) + len > PAGE_SIZE;
++	struct page *pages[2] = {NULL};
++	temp_mm_state_t prev;
+ 	unsigned long flags;
+-	char *vaddr;
+-	struct page *pages[2];
+-	int i;
++	pte_t pte, *ptep;
++	spinlock_t *ptl;
++	pgprot_t pgprot;
  
- 	mm = allocate_mm();
-@@ -1372,7 +1379,7 @@ static int copy_mm(unsigned long clone_flags, struct task_struct *tsk)
+ 	/*
+-	 * While boot memory allocator is runnig we cannot use struct
+-	 * pages as they are not yet initialized.
++	 * While boot memory allocator is running we cannot use struct pages as
++	 * they are not yet initialized. There is no way to recover.
+ 	 */
+ 	BUG_ON(!after_bootmem);
+ 
+ 	if (!core_kernel_text((unsigned long)addr)) {
+ 		pages[0] = vmalloc_to_page(addr);
+-		pages[1] = vmalloc_to_page(addr + PAGE_SIZE);
++		if (cross_page_boundary)
++			pages[1] = vmalloc_to_page(addr + PAGE_SIZE);
+ 	} else {
+ 		pages[0] = virt_to_page(addr);
+ 		WARN_ON(!PageReserved(pages[0]));
+-		pages[1] = virt_to_page(addr + PAGE_SIZE);
++		if (cross_page_boundary)
++			pages[1] = virt_to_page(addr + PAGE_SIZE);
  	}
- 
- 	retval = -ENOMEM;
--	mm = dup_mm(tsk);
-+	mm = dup_mm(tsk, current->mm);
- 	if (!mm)
- 		goto fail_nomem;
- 
-@@ -2187,6 +2194,11 @@ struct task_struct *fork_idle(int cpu)
- 	return task;
- }
- 
-+struct mm_struct *copy_init_mm(void)
-+{
-+	return dup_mm(NULL, &init_mm);
-+}
+-	BUG_ON(!pages[0]);
++	/*
++	 * If something went wrong, crash and burn since recovery paths are not
++	 * implemented.
++	 */
++	BUG_ON(!pages[0] || (cross_page_boundary && !pages[1]));
 +
- /*
-  *  Ok, this is the main fork-routine.
-  *
+ 	local_irq_save(flags);
+-	set_fixmap(FIX_TEXT_POKE0, page_to_phys(pages[0]));
+-	if (pages[1])
+-		set_fixmap(FIX_TEXT_POKE1, page_to_phys(pages[1]));
+-	vaddr = (char *)fix_to_virt(FIX_TEXT_POKE0);
+-	memcpy(&vaddr[(unsigned long)addr & ~PAGE_MASK], opcode, len);
+-	clear_fixmap(FIX_TEXT_POKE0);
+-	if (pages[1])
+-		clear_fixmap(FIX_TEXT_POKE1);
+-	local_flush_tlb();
+-	sync_core();
+-	/* Could also do a CLFLUSH here to speed up CPU recovery; but
+-	   that causes hangs on some VIA CPUs. */
+-	for (i = 0; i < len; i++)
+-		BUG_ON(((char *)addr)[i] != ((char *)opcode)[i]);
++
++	/*
++	 * Map the page without the global bit, as TLB flushing is done with
++	 * flush_tlb_mm_range(), which is intended for non-global PTEs.
++	 */
++	pgprot = __pgprot(pgprot_val(PAGE_KERNEL) & ~_PAGE_GLOBAL);
++
++	/*
++	 * The lock is not really needed, but this allows to avoid open-coding.
++	 */
++	ptep = get_locked_pte(poking_mm, poking_addr, &ptl);
++
++	/*
++	 * This must not fail; preallocated in poking_init().
++	 */
++	VM_BUG_ON(!ptep);
++
++	pte = mk_pte(pages[0], pgprot);
++	set_pte_at(poking_mm, poking_addr, ptep, pte);
++
++	if (cross_page_boundary) {
++		pte = mk_pte(pages[1], pgprot);
++		set_pte_at(poking_mm, poking_addr + PAGE_SIZE, ptep + 1, pte);
++	}
++
++	/*
++	 * Loading the temporary mm behaves as a compiler barrier, which
++	 * guarantees that the PTE will be set at the time memcpy() is done.
++	 */
++	prev = use_temporary_mm(poking_mm);
++
++	kasan_disable_current();
++	memcpy((u8 *)poking_addr + offset_in_page(addr), opcode, len);
++	kasan_enable_current();
++
++	/*
++	 * Ensure that the PTE is only cleared after the instructions of memcpy
++	 * were issued by using a compiler barrier.
++	 */
++	barrier();
++
++	pte_clear(poking_mm, poking_addr, ptep);
++	if (cross_page_boundary)
++		pte_clear(poking_mm, poking_addr + PAGE_SIZE, ptep + 1);
++
++	/*
++	 * Loading the previous page-table hierarchy requires a serializing
++	 * instruction that already allows the core to see the updated version.
++	 * Xen-PV is assumed to serialize execution in a similar manner.
++	 */
++	unuse_temporary_mm(prev);
++
++	/*
++	 * Flushing the TLB might involve IPIs, which would require enabled
++	 * IRQs, but not if the mm is not used, as it is in this point.
++	 */
++	flush_tlb_mm_range(poking_mm, poking_addr, poking_addr +
++			   (cross_page_boundary ? 2 : 1) * PAGE_SIZE,
++			   PAGE_SHIFT, false);
++
++	/*
++	 * If the text does not match what we just wrote then something is
++	 * fundamentally screwy; there's nothing we can really do about that.
++	 */
++	BUG_ON(memcmp(addr, opcode, len));
++
++	pte_unmap_unlock(ptep, ptl);
+ 	local_irq_restore(flags);
+ 	return addr;
+ }
+diff --git a/arch/x86/xen/mmu_pv.c b/arch/x86/xen/mmu_pv.c
+index a21e1734fc1f..beb44e22afdf 100644
+--- a/arch/x86/xen/mmu_pv.c
++++ b/arch/x86/xen/mmu_pv.c
+@@ -2318,8 +2318,6 @@ static void xen_set_fixmap(unsigned idx, phys_addr_t phys, pgprot_t prot)
+ #elif defined(CONFIG_X86_VSYSCALL_EMULATION)
+ 	case VSYSCALL_PAGE:
+ #endif
+-	case FIX_TEXT_POKE0:
+-	case FIX_TEXT_POKE1:
+ 		/* All local page mappings */
+ 		pte = pfn_pte(phys, prot);
+ 		break;
