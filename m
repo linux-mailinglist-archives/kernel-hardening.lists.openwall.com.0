@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15860-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15864-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id D0F4BF5BA
-	for <lists+kernel-hardening@lfdr.de>; Tue, 30 Apr 2019 13:33:22 +0200 (CEST)
-Received: (qmail 27652 invoked by uid 550); 30 Apr 2019 11:31:01 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 2F334F5BE
+	for <lists+kernel-hardening@lfdr.de>; Tue, 30 Apr 2019 13:33:55 +0200 (CEST)
+Received: (qmail 28086 invoked by uid 550); 30 Apr 2019 11:31:09 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -14,36 +14,36 @@ List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
 Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 15613 invoked from network); 30 Apr 2019 11:22:21 -0000
-DKIM-Filter: OpenDKIM Filter v2.11.0 terminus.zytor.com x3UBLOdF1347765
+Received: (qmail 15857 invoked from network); 30 Apr 2019 11:22:37 -0000
+DKIM-Filter: OpenDKIM Filter v2.11.0 terminus.zytor.com x3UBM7bF1347865
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
-	s=2019041745; t=1556623285;
-	bh=MXsBRDRKJauN6z5k6R/bDOZGULB2Ad+70N9h6P0ENtM=;
+	s=2019041745; t=1556623328;
+	bh=eW2QjPgcBOv7jb4+wi9OFyDTbQHiXsewLb8jvdcZt7Y=;
 	h=Date:From:Cc:Reply-To:In-Reply-To:References:To:Subject:From;
-	b=wIbco+kaQEDNXehFk4GA8CAk2aOIV243zICGlYMC2RNLL3oYzybyEKRpqJv1/uYmI
-	 s5wmqxv/JbdeCxyuOj4TkvLRaXFPy+4XJFOHy/j1zTupASaYNktOYkJgsCbYjaZGDB
-	 Q9o+s9+fTMz3lUbojDi43QnrFR3y/66WOOXx48bFUG7NAXj/lOiu89NbN7OGSj3hpT
-	 2YxT0eIrwjRgQO8onIu0AFuQc+odnovb3Nd8CgEJEj0muP3+aiA5cmiUUT8mzdjUYZ
-	 8cYPh8vgEkWnvfmPq4mKYGs+5sUmaSH1+NOrtnBvEBbGLva/TLHPtqFiqE5EfH7f6p
-	 M3Dai51YDslBw==
-Date: Tue, 30 Apr 2019 04:21:23 -0700
+	b=g6o3owfUu+onMF7rUKsdIIIt443sw2VqCbd70IsLIgZaWT6fvFobjEeoF6YUauR/a
+	 O1Eyu1HdlCtRnNvg2GhMkaz03x2sj75Kp8G5IcG41YOrpyP583yIjnmRq4BDicjSLQ
+	 jjGyBTPsoH5kbhM8tSg0djlgp8acvnTYTeFi6r1g1U6L+JBSWBsxWDgvB7NH2vaMVC
+	 nFwwx2JeKaxcsR3lJxj5FJ0uz8uhIA9Mu468teylfcHpS8WwraXtmDYNpANE5iV14o
+	 kxAzzzx3YBSes4C+LjbqkaCyxUQeQUlPZ2xP13mrLgzHJDhJzh4mJ8fyYhzDhRhdIQ
+	 RdBvk5ejT8MYQ==
+Date: Tue, 30 Apr 2019 04:22:06 -0700
 X-Authentication-Warning: terminus.zytor.com: tipbot set sender to tipbot@zytor.com using -f
 Sender: tip tree robot <tipbot@zytor.com>
 From: tip-bot for Nadav Amit <tipbot@zytor.com>
-Message-ID: <tip-3c0dab44e22782359a0a706cbce72de99a22aa75@git.kernel.org>
-Cc: bp@alien8.de, linux-kernel@vger.kernel.org,
-        kernel-hardening@lists.openwall.com, luto@kernel.org,
-        ard.biesheuvel@linaro.org, akpm@linux-foundation.org,
-        linux_dti@icloud.com, dave.hansen@linux.intel.com, tglx@linutronix.de,
-        torvalds@linux-foundation.org, rick.p.edgecombe@intel.com,
-        will.deacon@arm.com, rostedt@goodmis.org, namit@vmware.com,
-        deneen.t.dock@intel.com, kristen@linux.intel.com, peterz@infradead.org,
-        mingo@kernel.org, hpa@zytor.com, riel@surriel.com
-In-Reply-To: <20190426001143.4983-10-namit@vmware.com>
-References: <20190426001143.4983-10-namit@vmware.com>
+Message-ID: <tip-7298e24f904224fa79eb8fd7e0fbd78950ccf2db@git.kernel.org>
+Cc: peterz@infradead.org, namit@vmware.com, mingo@kernel.org,
+        akpm@linux-foundation.org, tglx@linutronix.de,
+        rick.p.edgecombe@intel.com, hpa@zytor.com, ard.biesheuvel@linaro.org,
+        dave.hansen@linux.intel.com, torvalds@linux-foundation.org,
+        kristen@linux.intel.com, linux_dti@icloud.com, bp@alien8.de,
+        deneen.t.dock@intel.com, riel@surriel.com, luto@kernel.org,
+        will.deacon@arm.com, kernel-hardening@lists.openwall.com,
+        linux-kernel@vger.kernel.org
+In-Reply-To: <20190426001143.4983-11-namit@vmware.com>
+References: <20190426001143.4983-11-namit@vmware.com>
 To: linux-tip-commits@vger.kernel.org
-Subject: [tip:x86/mm] x86/ftrace: Set trampoline pages as executable
-Git-Commit-ID: 3c0dab44e22782359a0a706cbce72de99a22aa75
+Subject: [tip:x86/mm] x86/kprobes: Set instruction page as executable
+Git-Commit-ID: 7298e24f904224fa79eb8fd7e0fbd78950ccf2db
 X-Mailer: tip-git-log-daemon
 Robot-ID: <tip-bot.git.kernel.org>
 Robot-Unsubscribe: Contact <mailto:hpa@kernel.org> to get blacklisted from
@@ -58,25 +58,25 @@ X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED,BAYES_00,
 	autolearn_force=no version=3.4.2
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on terminus.zytor.com
 
-Commit-ID:  3c0dab44e22782359a0a706cbce72de99a22aa75
-Gitweb:     https://git.kernel.org/tip/3c0dab44e22782359a0a706cbce72de99a22aa75
+Commit-ID:  7298e24f904224fa79eb8fd7e0fbd78950ccf2db
+Gitweb:     https://git.kernel.org/tip/7298e24f904224fa79eb8fd7e0fbd78950ccf2db
 Author:     Nadav Amit <namit@vmware.com>
-AuthorDate: Thu, 25 Apr 2019 17:11:29 -0700
+AuthorDate: Thu, 25 Apr 2019 17:11:30 -0700
 Committer:  Ingo Molnar <mingo@kernel.org>
-CommitDate: Tue, 30 Apr 2019 12:37:53 +0200
+CommitDate: Tue, 30 Apr 2019 12:37:54 +0200
 
-x86/ftrace: Set trampoline pages as executable
+x86/kprobes: Set instruction page as executable
 
-Since alloc_module() will not set the pages as executable soon, set
-ftrace trampoline pages as executable after they are allocated.
+Set the page as executable after allocation.  This patch is a
+preparatory patch for a following patch that makes module allocated
+pages non-executable.
 
-For the time being, do not change ftrace to use the text_poke()
-interface. As a result, ftrace still breaks W^X.
+While at it, do some small cleanup of what appears to be unnecessary
+masking.
 
 Signed-off-by: Nadav Amit <namit@vmware.com>
 Signed-off-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
 Cc: <akpm@linux-foundation.org>
 Cc: <ard.biesheuvel@linaro.org>
 Cc: <deneen.t.dock@intel.com>
@@ -91,42 +91,51 @@ Cc: H. Peter Anvin <hpa@zytor.com>
 Cc: Linus Torvalds <torvalds@linux-foundation.org>
 Cc: Rik van Riel <riel@surriel.com>
 Cc: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lkml.kernel.org/r/20190426001143.4983-10-namit@vmware.com
+Link: https://lkml.kernel.org/r/20190426001143.4983-11-namit@vmware.com
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
 ---
- arch/x86/kernel/ftrace.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/x86/kernel/kprobes/core.c | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/kernel/ftrace.c b/arch/x86/kernel/ftrace.c
-index ef49517f6bb2..53ba1aa3a01f 100644
---- a/arch/x86/kernel/ftrace.c
-+++ b/arch/x86/kernel/ftrace.c
-@@ -730,6 +730,7 @@ create_trampoline(struct ftrace_ops *ops, unsigned int *tramp_size)
- 	unsigned long end_offset;
- 	unsigned long op_offset;
- 	unsigned long offset;
-+	unsigned long npages;
- 	unsigned long size;
- 	unsigned long retq;
- 	unsigned long *ptr;
-@@ -762,6 +763,7 @@ create_trampoline(struct ftrace_ops *ops, unsigned int *tramp_size)
- 		return 0;
+diff --git a/arch/x86/kernel/kprobes/core.c b/arch/x86/kernel/kprobes/core.c
+index fed46ddb1eef..06058c44ab57 100644
+--- a/arch/x86/kernel/kprobes/core.c
++++ b/arch/x86/kernel/kprobes/core.c
+@@ -431,8 +431,20 @@ void *alloc_insn_page(void)
+ 	void *page;
  
- 	*tramp_size = size + RET_SIZE + sizeof(void *);
-+	npages = DIV_ROUND_UP(*tramp_size, PAGE_SIZE);
- 
- 	/* Copy ftrace_caller onto the trampoline memory */
- 	ret = probe_kernel_read(trampoline, (void *)start_offset, size);
-@@ -806,6 +808,12 @@ create_trampoline(struct ftrace_ops *ops, unsigned int *tramp_size)
- 	/* ALLOC_TRAMP flags lets us know we created it */
- 	ops->flags |= FTRACE_OPS_FL_ALLOC_TRAMP;
- 
+ 	page = module_alloc(PAGE_SIZE);
+-	if (page)
+-		set_memory_ro((unsigned long)page & PAGE_MASK, 1);
++	if (!page)
++		return NULL;
++
 +	/*
-+	 * Module allocation needs to be completed by making the page
-+	 * executable. The page is still writable, which is a security hazard,
-+	 * but anyhow ftrace breaks W^X completely.
++	 * First make the page read-only, and only then make it executable to
++	 * prevent it from being W+X in between.
 +	 */
-+	set_memory_x((unsigned long)trampoline, npages);
- 	return (unsigned long)trampoline;
- fail:
- 	tramp_free(trampoline, *tramp_size);
++	set_memory_ro((unsigned long)page, 1);
++
++	/*
++	 * TODO: Once additional kernel code protection mechanisms are set, ensure
++	 * that the page was not maliciously altered and it is still zeroed.
++	 */
++	set_memory_x((unsigned long)page, 1);
+ 
+ 	return page;
+ }
+@@ -440,8 +452,12 @@ void *alloc_insn_page(void)
+ /* Recover page to RW mode before releasing it */
+ void free_insn_page(void *page)
+ {
+-	set_memory_nx((unsigned long)page & PAGE_MASK, 1);
+-	set_memory_rw((unsigned long)page & PAGE_MASK, 1);
++	/*
++	 * First make the page non-executable, and only then make it writable to
++	 * prevent it from being W+X in between.
++	 */
++	set_memory_nx((unsigned long)page, 1);
++	set_memory_rw((unsigned long)page, 1);
+ 	module_memfree(page);
+ }
+ 
