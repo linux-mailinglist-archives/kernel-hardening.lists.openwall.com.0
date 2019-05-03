@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15869-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15870-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id B41F512C4F
-	for <lists+kernel-hardening@lfdr.de>; Fri,  3 May 2019 13:26:34 +0200 (CEST)
-Received: (qmail 9898 invoked by uid 550); 3 May 2019 11:26:26 -0000
+	by mail.lfdr.de (Postfix) with SMTP id E7C331342B
+	for <lists+kernel-hardening@lfdr.de>; Fri,  3 May 2019 21:52:35 +0200 (CEST)
+Received: (qmail 32452 invoked by uid 550); 3 May 2019 19:52:28 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,1258 +13,365 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 9824 invoked from network); 3 May 2019 11:26:24 -0000
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.60,425,1549958400"; 
-   d="scan'208,217";a="343034933"
-From: "Reshetova, Elena" <elena.reshetova@intel.com>
-To: "linux-security-module@vger.kernel.org"
-	<linux-security-module@vger.kernel.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>
-CC: "lwn@lwn.net" <lwn@lwn.net>, "fedora-selinux-list@redhat.com"
-	<fedora-selinux-list@redhat.com>, Linux Security Summit Program Committee
-	<lss-pc@lists.linuxfoundation.org>, "linux-crypto@vger.kernel.org"
-	<linux-crypto@vger.kernel.org>, Audit-ML <linux-audit@redhat.com>,
-	"gentoo-hardened@gentoo.org" <gentoo-hardened@gentoo.org>,
-	"keyrings@linux-nfs.org" <keyrings@linux-nfs.org>,
-	"tpmdd-devel@lists.sourceforge.net" <tpmdd-devel@lists.sourceforge.net>,
-	"kernel-hardening@lists.openwall.com" <kernel-hardening@lists.openwall.com>,
-	"linux-integrity@vger.kernel.org" <linux-integrity@vger.kernel.org>,
-	"selinux@vger.kernel.org" <selinux@vger.kernel.org>
-Subject: [ANNOUNCE][CFP] Linux Security Summit Europe 2019
-Thread-Topic: [ANNOUNCE][CFP] Linux Security Summit Europe 2019
-Thread-Index: AdUBorN+FSlhBkZGRImuy4YKwRZZBA==
-Date: Fri, 3 May 2019 11:26:07 +0000
-Message-ID: <2236FBA76BA1254E88B949DDB74E612BA4C6F0E9@IRSMSX102.ger.corp.intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-dlp-product: dlpe-windows
-dlp-version: 11.0.600.7
-dlp-reaction: no-action
-x-ctpclassification: CTP_NT
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiZTI1ZTVhOGUtNDk2Ni00ZTE2LTk2YmQtMmRiZjk0MThkYjU0IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiMFlMd2FJMU5FVkFTT1RvZmZDUGZoS2xiRDROcUVySVFOSUdIVGdcL1o3Y3BRc1lrbWlCR0M5RUE1R2ZENiticFMifQ==
-x-originating-ip: [163.33.239.180]
-Content-Type: multipart/alternative;
-	boundary="_000_2236FBA76BA1254E88B949DDB74E612BA4C6F0E9IRSMSX102gercor_"
+Delivered-To: moderator for kernel-hardening@lists.openwall.com
+Received: (qmail 19941 invoked from network); 3 May 2019 19:37:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=upv.es; s=default;
+	t=1556912171; bh=5QRfcW/S26RayDBbj5AufsZRA6MXaNEaawE4b/38+5Q=;
+	h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+	b=OW/b0RYHVdHKrai4eS1q3mhOth6oNrOjhCxhbT6kZqLs++ZCv0hZKq/ZQUPVSzqjT
+	 cGJzORcuSTb5UX0olBuLU2VOFjXLn39/BSP7IP/UD6u427u/EkbMGgLvwvM/KDmLvw
+	 DUt9AR7xSgpSYZ2U3gc+JZ7UBjbFYUyVEoAKYzVIacNreJBsuo0bSZgR5MxnHedlBg
+	 SJ7GX+UH4JjzK4v6Hg+7RIZk3R/qmFR1D/QknRXxXW4IxzbbOaTkZsRgmvYh2l8kjl
+	 G4gzGMJrsKXAOTZ+cRTuq6yZBX8AU1SFQIgJuM06H3MI52IIUf/tutmYISXmgNlrJl
+	 RllpcZGMo2Zjg==
+Subject: Re: [PATCH v2] binfmt_elf: Update READ_IMPLIES_EXEC logic for modern
+ CPUs
+To: Kees Cook <keescook@chromium.org>
+Cc: Ingo Molnar <mingo@kernel.org>, Andrew Morton
+ <akpm@linux-foundation.org>,
+        Marc Gonzalez <marc.w.gonzalez@free.fr>,
+        Jason Gunthorpe <jgg@mellanox.com>, Will Deacon <will.deacon@arm.com>,
+        X86 ML <x86@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
+        Andy Lutomirski <luto@amacapital.net>,
+        Stephen Rothwell <sfr@canb.auug.org.au>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>, Arnd Bergmann <arnd@arndb.de>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Kernel Hardening <kernel-hardening@lists.openwall.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Borislav Petkov <bp@alien8.de>,
+        Peter Zijlstra <a.p.zijlstra@chello.nl>
+References: <20190424203408.GA11386@beast> <20190425054242.GA7816@gmail.com>
+ <CAGXu5jKWQtmt+tN9rwdCWP=7pL6GYU4DmDW4R7ViQV8r1m1J=g@mail.gmail.com>
+From: Hector Marco-Gisbert <hecmargi@upv.es>
+Openpgp: preference=signencrypt
+Autocrypt: addr=hecmargi@upv.es; prefer-encrypt=mutual; keydata=
+ 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
+ TiPGNW+rbprIn1ATeK/5p+yIJ7s=
+Message-ID: <d68f3836-ea36-dd07-773d-bb42e032ddcf@upv.es>
+Date: Fri, 3 May 2019 20:36:06 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-
---_000_2236FBA76BA1254E88B949DDB74E612BA4C6F0E9IRSMSX102gercor_
-Content-Type: text/plain; charset="us-ascii"
+In-Reply-To: <CAGXu5jKWQtmt+tN9rwdCWP=7pL6GYU4DmDW4R7ViQV8r1m1J=g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D
-                            ANNOUNCEMENT AND CALL FOR PARTICIPATION
+Hello Kees, all,
 
-                                LINUX SECURITY SUMMIT EUROPE 2019
-
-                                        31 October - 1 November
-                                                Lyon, France
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D
-
-DESCRIPTION
-
-The Linux Security Summit (LSS) is a technical forum for collaboration
-between Linux developers, researchers, and end users. Its primary aim is to
-foster community efforts in analyzing and solving Linux security challenges=
-.
-
-This year, for the second time, the Linux Security Summit is going to
-be also held in Europe (LSS-EU) in order to facilitate broader participatio=
-n
-in Linux security development.
-Similar to LSS-North America, LSS-EU provides a unique opportunity for to h=
-ave
-discussions and networking opportunities with key people in the Linux kerne=
-l
-security community, present your work and ideas and affect the future direc=
-tion
-of Linux security.
-
-The program committee currently seeks proposals for:
-
-    * Refereed Presentations:
-        45 minutes in length.
-
-    * Panel Discussion Topics:
-        45 minutes in length.
-
-    * Short Topics:
-        30 minutes in total, including at least 10 minutes discussion.
-
-    * BoF Sessions.
-
-    * Tutorials *NEW for 2019*:
-        90 minutes in length.
-        Tutorial sessions should be focused on advanced Linux security defe=
-nse
-        topics within areas such as the kernel, compiler, and security-rela=
-ted
-        libraries. Priority will be given to tutorials created for this con=
-ference.
-
-Topic areas include, but are not limited to:
-
-    * Kernel self-protection
-    * Access control
-    * Cryptography and key management
-    * Integrity control
-    * Hardware Security
-    * Iot and embedded security
-    * Virtualization and containers
-    * System-specific system hardening
-    * Case studies
-    * Security tools
-    * Security UX
-    * Emerging technologies, threats & techniques
-
-Proposals should be submitted via:
-https://linuxfoundation.smapply.io/prog/lss_eu_2019/
-
-DATES
-
-* CFP Close: Wednesday , July 31, 2019
-* CFP Notifications: Friday, August 9, 2019
-* Schedule Announced: Monday, August 19, 2019
-* Event: October 31 - November 1, 2019
-
-
-WHO SHOULD ATTEND
-
-We're seeking a diverse range of attendees, and welcome participation by
-people involved in Linux security development, operations, and research.
-
-The LSS is a unique global event which provides the opportunity to present
-and discuss your work or research with key Linux security community members
-and maintainers. It?s also useful for those who wish to keep up with the
-latest in Linux security development, and to provide input to the
-development process.
-
-WEB SITE
-
-https://events.linuxfoundation.org/events/linux-security-summit-europe-2019=
-/
-
-TWITTER
-
-For event updates and announcements, follow:
-
-https://twitter.com/LinuxSecSummit
-
-PROGRAM COMMITTEE
-
-The program committee for LSS-EU 2019 is:
-
-    * Elena Reshetova, Intel
-    * James Morris, Microsoft
-    * Serge Hallyn, Cisco
-    * Paul Moore, Cisco
-    * Stephen Smalley, NSA
-    * John Johansen, Canonical
-    * Kees Cook, Google
-    * Casey Schaufler, Intel
-    * Mimi Zohar, IBM
-    * David A. Wheeler, Institute for Defense Analyses
-
-The program committee may be contacted as a group via email:
-lss-pc () lists.linuxfoundation.org
+Sorry for the delayed response, I haven't had time to see this until now.=
 
 
 
 
---_000_2236FBA76BA1254E88B949DDB74E612BA4C6F0E9IRSMSX102gercor_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+On 25/04/2019 17:51, Kees Cook wrote:
+> On Wed, Apr 24, 2019 at 10:42 PM Ingo Molnar <mingo@kernel.org> wrote:
+>> Just to make clear, is the change from the old behavior, in essence:
+>>
+>>
+>>                CPU: | lacks NX  | has NX, ia32     | has NX, x86_64   =
+|
+>>   ELF:              |           |                  |                  =
+|
+>>   ------------------------------|------------------|------------------=
+|
+>>   missing GNU_STACK | exec-all  | exec-all         | exec-none        =
+|
+>> - GNU_STACK =3D=3D RWX  | exec-all  | exec-all         | exec-all     =
+    |
+>> + GNU_STACK =3D=3D RWX  | exec-all  | exec-stack       | exec-stack   =
+    |
+>>   GNU_STACK =3D=3D RW   | exec-all  | exec-none        | exec-none    =
+    |
+>> [...]
+>>    'exec-all'  : all user mappings are executable
+> For extreme clarity, this should be:
 >
-<meta name=3D"ProgId" content=3D"Word.Document">
-<meta name=3D"Generator" content=3D"Microsoft Word 15">
-<meta name=3D"Originator" content=3D"Microsoft Word 15">
-<link rel=3D"File-List" href=3D"cid:filelist.xml@01D501BC.24932480"><!--[if=
- gte mso 9]><xml>
-<o:OfficeDocumentSettings>
-<o:AllowPNG/>
-</o:OfficeDocumentSettings>
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<w:WordDocument>
-<w:SpellingState>Clean</w:SpellingState>
-<w:TrackMoves/>
-<w:TrackFormatting/>
-<w:EnvelopeVis/>
-<w:PunctuationKerning/>
-<w:ValidateAgainstSchemas/>
-<w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
-<w:IgnoreMixedContent>false</w:IgnoreMixedContent>
-<w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
-<w:DoNotPromoteQF/>
-<w:LidThemeOther>EN-US</w:LidThemeOther>
-<w:LidThemeAsian>X-NONE</w:LidThemeAsian>
-<w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>
-<w:Compatibility>
-<w:BreakWrappedTables/>
-<w:SnapToGridInCell/>
-<w:WrapTextWithPunct/>
-<w:UseAsianBreakRules/>
-<w:DontGrowAutofit/>
-<w:SplitPgBreakAndParaMark/>
-<w:EnableOpenTypeKerning/>
-<w:DontFlipMirrorIndents/>
-<w:OverrideTableStyleHps/>
-</w:Compatibility>
-<m:mathPr>
-<m:mathFont m:val=3D"Cambria Math"/>
-<m:brkBin m:val=3D"before"/>
-<m:brkBinSub m:val=3D"&#45;-"/>
-<m:smallFrac m:val=3D"off"/>
-<m:dispDef/>
-<m:lMargin m:val=3D"0"/>
-<m:rMargin m:val=3D"0"/>
-<m:defJc m:val=3D"centerGroup"/>
-<m:wrapIndent m:val=3D"1440"/>
-<m:intLim m:val=3D"subSup"/>
-<m:naryLim m:val=3D"undOvr"/>
-</m:mathPr></w:WordDocument>
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<w:LatentStyles DefLockedState=3D"false" DefUnhideWhenUsed=3D"false" DefSem=
-iHidden=3D"false" DefQFormat=3D"false" DefPriority=3D"99" LatentStyleCount=
-=3D"371">
-<w:LsdException Locked=3D"false" Priority=3D"0" QFormat=3D"true" Name=3D"No=
-rmal"/>
-<w:LsdException Locked=3D"false" Priority=3D"9" QFormat=3D"true" Name=3D"he=
-ading 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"9" SemiHidden=3D"true" UnhideW=
-henUsed=3D"true" QFormat=3D"true" Name=3D"heading 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"9" SemiHidden=3D"true" UnhideW=
-henUsed=3D"true" QFormat=3D"true" Name=3D"heading 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"9" SemiHidden=3D"true" UnhideW=
-henUsed=3D"true" QFormat=3D"true" Name=3D"heading 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"9" SemiHidden=3D"true" UnhideW=
-henUsed=3D"true" QFormat=3D"true" Name=3D"heading 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"9" SemiHidden=3D"true" UnhideW=
-henUsed=3D"true" QFormat=3D"true" Name=3D"heading 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"9" SemiHidden=3D"true" UnhideW=
-henUsed=3D"true" QFormat=3D"true" Name=3D"heading 7"/>
-<w:LsdException Locked=3D"false" Priority=3D"9" SemiHidden=3D"true" UnhideW=
-henUsed=3D"true" QFormat=3D"true" Name=3D"heading 8"/>
-<w:LsdException Locked=3D"false" Priority=3D"9" SemiHidden=3D"true" UnhideW=
-henUsed=3D"true" QFormat=3D"true" Name=3D"heading 9"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"index 1"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"index 2"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"index 3"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"index 4"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"index 5"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"index 6"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"index 7"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"index 8"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"index 9"/>
-<w:LsdException Locked=3D"false" Priority=3D"39" SemiHidden=3D"true" Unhide=
-WhenUsed=3D"true" Name=3D"toc 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"39" SemiHidden=3D"true" Unhide=
-WhenUsed=3D"true" Name=3D"toc 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"39" SemiHidden=3D"true" Unhide=
-WhenUsed=3D"true" Name=3D"toc 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"39" SemiHidden=3D"true" Unhide=
-WhenUsed=3D"true" Name=3D"toc 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"39" SemiHidden=3D"true" Unhide=
-WhenUsed=3D"true" Name=3D"toc 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"39" SemiHidden=3D"true" Unhide=
-WhenUsed=3D"true" Name=3D"toc 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"39" SemiHidden=3D"true" Unhide=
-WhenUsed=3D"true" Name=3D"toc 7"/>
-<w:LsdException Locked=3D"false" Priority=3D"39" SemiHidden=3D"true" Unhide=
-WhenUsed=3D"true" Name=3D"toc 8"/>
-<w:LsdException Locked=3D"false" Priority=3D"39" SemiHidden=3D"true" Unhide=
-WhenUsed=3D"true" Name=3D"toc 9"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Normal Indent"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"footnote text"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"annotation text"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"header"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"footer"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"index heading"/>
-<w:LsdException Locked=3D"false" Priority=3D"35" SemiHidden=3D"true" Unhide=
-WhenUsed=3D"true" QFormat=3D"true" Name=3D"caption"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"table of figures"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"envelope address"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"envelope return"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"footnote reference"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"annotation reference"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"line number"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"page number"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"endnote reference"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"endnote text"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"table of authorities"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"macro"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"toa heading"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"List"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"List Bullet"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"List Number"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"List 2"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"List 3"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"List 4"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"List 5"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"List Bullet 2"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"List Bullet 3"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"List Bullet 4"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"List Bullet 5"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"List Number 2"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"List Number 3"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"List Number 4"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"List Number 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"10" QFormat=3D"true" Name=3D"T=
-itle"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Closing"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Signature"/>
-<w:LsdException Locked=3D"false" Priority=3D"1" SemiHidden=3D"true" UnhideW=
-henUsed=3D"true" Name=3D"Default Paragraph Font"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Body Text"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Body Text Indent"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"List Continue"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"List Continue 2"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"List Continue 3"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"List Continue 4"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"List Continue 5"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Message Header"/>
-<w:LsdException Locked=3D"false" Priority=3D"11" QFormat=3D"true" Name=3D"S=
-ubtitle"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Salutation"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Date"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Body Text First Indent"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Body Text First Indent 2"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Note Heading"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Body Text 2"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Body Text 3"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Body Text Indent 2"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Body Text Indent 3"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Block Text"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Hyperlink"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"FollowedHyperlink"/>
-<w:LsdException Locked=3D"false" Priority=3D"22" QFormat=3D"true" Name=3D"S=
-trong"/>
-<w:LsdException Locked=3D"false" Priority=3D"20" QFormat=3D"true" Name=3D"E=
-mphasis"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Document Map"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Plain Text"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"E-mail Signature"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"HTML Top of Form"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"HTML Bottom of Form"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Normal (Web)"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"HTML Acronym"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"HTML Address"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"HTML Cite"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"HTML Code"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"HTML Definition"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"HTML Keyboard"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"HTML Preformatted"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"HTML Sample"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"HTML Typewriter"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"HTML Variable"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Normal Table"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"annotation subject"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"No List"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Outline List 1"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Outline List 2"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Outline List 3"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Simple 1"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Simple 2"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Simple 3"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Classic 1"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Classic 2"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Classic 3"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Classic 4"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Colorful 1"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Colorful 2"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Colorful 3"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Columns 1"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Columns 2"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Columns 3"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Columns 4"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Columns 5"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Grid 1"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Grid 2"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Grid 3"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Grid 4"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Grid 5"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Grid 6"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Grid 7"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Grid 8"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table List 1"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table List 2"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table List 3"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table List 4"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table List 5"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table List 6"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table List 7"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table List 8"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table 3D effects 1"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table 3D effects 2"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table 3D effects 3"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Contemporary"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Elegant"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Professional"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Subtle 1"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Subtle 2"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Web 1"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Web 2"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Web 3"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Balloon Text"/>
-<w:LsdException Locked=3D"false" Priority=3D"39" Name=3D"Table Grid"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" UnhideWhenUsed=3D"true=
-" Name=3D"Table Theme"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" Name=3D"Placeholder Te=
-xt"/>
-<w:LsdException Locked=3D"false" Priority=3D"1" QFormat=3D"true" Name=3D"No=
- Spacing"/>
-<w:LsdException Locked=3D"false" Priority=3D"60" Name=3D"Light Shading"/>
-<w:LsdException Locked=3D"false" Priority=3D"61" Name=3D"Light List"/>
-<w:LsdException Locked=3D"false" Priority=3D"62" Name=3D"Light Grid"/>
-<w:LsdException Locked=3D"false" Priority=3D"63" Name=3D"Medium Shading 1"/=
+> 'exec-all' : all PROT_READ user mappings are executable, except when
+> backed by files on a noexec-filesystem.
 >
-<w:LsdException Locked=3D"false" Priority=3D"64" Name=3D"Medium Shading 2"/=
+>>    'exec-none' : only PROT_EXEC user mappings are executable
+>>    'exec-stack': only the stack and PROT_EXEC user mappings are execut=
+able
+> Thanks for helping clarify this. I spent last evening trying to figure
+> out a better way to explain/illustrate this series; my prior patch
+> combines too many things into a single change. One thing I noticed is
+> the "lacks NX" column is wrong: for "lack NX", our current state is
+> "don't care". If we _add_ RIE for the "lacks NX" case unconditionally,
+> we may cause unexpected problems[1]. More on this below...
 >
-<w:LsdException Locked=3D"false" Priority=3D"65" Name=3D"Medium List 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"66" Name=3D"Medium List 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"67" Name=3D"Medium Grid 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"68" Name=3D"Medium Grid 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"69" Name=3D"Medium Grid 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"70" Name=3D"Dark List"/>
-<w:LsdException Locked=3D"false" Priority=3D"71" Name=3D"Colorful Shading"/=
+> But yes, your above diff for "has NX" is roughly correct. I'll walk
+> through each piece I'm thinking about. Here is the current state:
 >
-<w:LsdException Locked=3D"false" Priority=3D"72" Name=3D"Colorful List"/>
-<w:LsdException Locked=3D"false" Priority=3D"73" Name=3D"Colorful Grid"/>
-<w:LsdException Locked=3D"false" Priority=3D"60" Name=3D"Light Shading Acce=
-nt 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"61" Name=3D"Light List Accent =
-1"/>
-<w:LsdException Locked=3D"false" Priority=3D"62" Name=3D"Light Grid Accent =
-1"/>
-<w:LsdException Locked=3D"false" Priority=3D"63" Name=3D"Medium Shading 1 A=
-ccent 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"64" Name=3D"Medium Shading 2 A=
-ccent 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"65" Name=3D"Medium List 1 Acce=
-nt 1"/>
-<w:LsdException Locked=3D"false" SemiHidden=3D"true" Name=3D"Revision"/>
-<w:LsdException Locked=3D"false" Priority=3D"34" QFormat=3D"true" Name=3D"L=
-ist Paragraph"/>
-<w:LsdException Locked=3D"false" Priority=3D"29" QFormat=3D"true" Name=3D"Q=
-uote"/>
-<w:LsdException Locked=3D"false" Priority=3D"30" QFormat=3D"true" Name=3D"I=
-ntense Quote"/>
-<w:LsdException Locked=3D"false" Priority=3D"66" Name=3D"Medium List 2 Acce=
-nt 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"67" Name=3D"Medium Grid 1 Acce=
-nt 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"68" Name=3D"Medium Grid 2 Acce=
-nt 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"69" Name=3D"Medium Grid 3 Acce=
-nt 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"70" Name=3D"Dark List Accent 1=
-"/>
-<w:LsdException Locked=3D"false" Priority=3D"71" Name=3D"Colorful Shading A=
-ccent 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"72" Name=3D"Colorful List Acce=
-nt 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"73" Name=3D"Colorful Grid Acce=
-nt 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"60" Name=3D"Light Shading Acce=
-nt 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"61" Name=3D"Light List Accent =
-2"/>
-<w:LsdException Locked=3D"false" Priority=3D"62" Name=3D"Light Grid Accent =
-2"/>
-<w:LsdException Locked=3D"false" Priority=3D"63" Name=3D"Medium Shading 1 A=
-ccent 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"64" Name=3D"Medium Shading 2 A=
-ccent 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"65" Name=3D"Medium List 1 Acce=
-nt 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"66" Name=3D"Medium List 2 Acce=
-nt 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"67" Name=3D"Medium Grid 1 Acce=
-nt 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"68" Name=3D"Medium Grid 2 Acce=
-nt 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"69" Name=3D"Medium Grid 3 Acce=
-nt 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"70" Name=3D"Dark List Accent 2=
-"/>
-<w:LsdException Locked=3D"false" Priority=3D"71" Name=3D"Colorful Shading A=
-ccent 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"72" Name=3D"Colorful List Acce=
-nt 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"73" Name=3D"Colorful Grid Acce=
-nt 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"60" Name=3D"Light Shading Acce=
-nt 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"61" Name=3D"Light List Accent =
-3"/>
-<w:LsdException Locked=3D"false" Priority=3D"62" Name=3D"Light Grid Accent =
-3"/>
-<w:LsdException Locked=3D"false" Priority=3D"63" Name=3D"Medium Shading 1 A=
-ccent 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"64" Name=3D"Medium Shading 2 A=
-ccent 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"65" Name=3D"Medium List 1 Acce=
-nt 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"66" Name=3D"Medium List 2 Acce=
-nt 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"67" Name=3D"Medium Grid 1 Acce=
-nt 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"68" Name=3D"Medium Grid 2 Acce=
-nt 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"69" Name=3D"Medium Grid 3 Acce=
-nt 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"70" Name=3D"Dark List Accent 3=
-"/>
-<w:LsdException Locked=3D"false" Priority=3D"71" Name=3D"Colorful Shading A=
-ccent 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"72" Name=3D"Colorful List Acce=
-nt 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"73" Name=3D"Colorful Grid Acce=
-nt 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"60" Name=3D"Light Shading Acce=
-nt 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"61" Name=3D"Light List Accent =
-4"/>
-<w:LsdException Locked=3D"false" Priority=3D"62" Name=3D"Light Grid Accent =
-4"/>
-<w:LsdException Locked=3D"false" Priority=3D"63" Name=3D"Medium Shading 1 A=
-ccent 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"64" Name=3D"Medium Shading 2 A=
-ccent 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"65" Name=3D"Medium List 1 Acce=
-nt 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"66" Name=3D"Medium List 2 Acce=
-nt 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"67" Name=3D"Medium Grid 1 Acce=
-nt 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"68" Name=3D"Medium Grid 2 Acce=
-nt 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"69" Name=3D"Medium Grid 3 Acce=
-nt 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"70" Name=3D"Dark List Accent 4=
-"/>
-<w:LsdException Locked=3D"false" Priority=3D"71" Name=3D"Colorful Shading A=
-ccent 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"72" Name=3D"Colorful List Acce=
-nt 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"73" Name=3D"Colorful Grid Acce=
-nt 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"60" Name=3D"Light Shading Acce=
-nt 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"61" Name=3D"Light List Accent =
-5"/>
-<w:LsdException Locked=3D"false" Priority=3D"62" Name=3D"Light Grid Accent =
-5"/>
-<w:LsdException Locked=3D"false" Priority=3D"63" Name=3D"Medium Shading 1 A=
-ccent 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"64" Name=3D"Medium Shading 2 A=
-ccent 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"65" Name=3D"Medium List 1 Acce=
-nt 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"66" Name=3D"Medium List 2 Acce=
-nt 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"67" Name=3D"Medium Grid 1 Acce=
-nt 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"68" Name=3D"Medium Grid 2 Acce=
-nt 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"69" Name=3D"Medium Grid 3 Acce=
-nt 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"70" Name=3D"Dark List Accent 5=
-"/>
-<w:LsdException Locked=3D"false" Priority=3D"71" Name=3D"Colorful Shading A=
-ccent 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"72" Name=3D"Colorful List Acce=
-nt 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"73" Name=3D"Colorful Grid Acce=
-nt 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"60" Name=3D"Light Shading Acce=
-nt 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"61" Name=3D"Light List Accent =
-6"/>
-<w:LsdException Locked=3D"false" Priority=3D"62" Name=3D"Light Grid Accent =
-6"/>
-<w:LsdException Locked=3D"false" Priority=3D"63" Name=3D"Medium Shading 1 A=
-ccent 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"64" Name=3D"Medium Shading 2 A=
-ccent 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"65" Name=3D"Medium List 1 Acce=
-nt 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"66" Name=3D"Medium List 2 Acce=
-nt 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"67" Name=3D"Medium Grid 1 Acce=
-nt 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"68" Name=3D"Medium Grid 2 Acce=
-nt 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"69" Name=3D"Medium Grid 3 Acce=
-nt 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"70" Name=3D"Dark List Accent 6=
-"/>
-<w:LsdException Locked=3D"false" Priority=3D"71" Name=3D"Colorful Shading A=
-ccent 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"72" Name=3D"Colorful List Acce=
-nt 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"73" Name=3D"Colorful Grid Acce=
-nt 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"19" QFormat=3D"true" Name=3D"S=
-ubtle Emphasis"/>
-<w:LsdException Locked=3D"false" Priority=3D"21" QFormat=3D"true" Name=3D"I=
-ntense Emphasis"/>
-<w:LsdException Locked=3D"false" Priority=3D"31" QFormat=3D"true" Name=3D"S=
-ubtle Reference"/>
-<w:LsdException Locked=3D"false" Priority=3D"32" QFormat=3D"true" Name=3D"I=
-ntense Reference"/>
-<w:LsdException Locked=3D"false" Priority=3D"33" QFormat=3D"true" Name=3D"B=
-ook Title"/>
-<w:LsdException Locked=3D"false" Priority=3D"37" SemiHidden=3D"true" Unhide=
-WhenUsed=3D"true" Name=3D"Bibliography"/>
-<w:LsdException Locked=3D"false" Priority=3D"39" SemiHidden=3D"true" Unhide=
-WhenUsed=3D"true" QFormat=3D"true" Name=3D"TOC Heading"/>
-<w:LsdException Locked=3D"false" Priority=3D"41" Name=3D"Plain Table 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"42" Name=3D"Plain Table 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"43" Name=3D"Plain Table 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"44" Name=3D"Plain Table 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"45" Name=3D"Plain Table 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"40" Name=3D"Grid Table Light"/=
+>                CPU: | lacks NX*  | has NX, ia32     | has NX, x86_64 |
+>   ELF:              |            |                  |                |
+>   -------------------------------|------------------|----------------|
+>   missing GNU_STACK | exec-all   | exec-all         | exec-all       |
+>   GNU_STACK =3D=3D RWX  | exec-all   | exec-all         | exec-all     =
+  |
+>   GNU_STACK =3D=3D RW   | exec-none  | exec-none        | exec-none    =
+  |
 >
-<w:LsdException Locked=3D"false" Priority=3D"46" Name=3D"Grid Table 1 Light=
-"/>
-<w:LsdException Locked=3D"false" Priority=3D"47" Name=3D"Grid Table 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"48" Name=3D"Grid Table 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"49" Name=3D"Grid Table 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"50" Name=3D"Grid Table 5 Dark"=
-/>
-<w:LsdException Locked=3D"false" Priority=3D"51" Name=3D"Grid Table 6 Color=
-ful"/>
-<w:LsdException Locked=3D"false" Priority=3D"52" Name=3D"Grid Table 7 Color=
-ful"/>
-<w:LsdException Locked=3D"false" Priority=3D"46" Name=3D"Grid Table 1 Light=
- Accent 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"47" Name=3D"Grid Table 2 Accen=
-t 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"48" Name=3D"Grid Table 3 Accen=
-t 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"49" Name=3D"Grid Table 4 Accen=
-t 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"50" Name=3D"Grid Table 5 Dark =
-Accent 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"51" Name=3D"Grid Table 6 Color=
-ful Accent 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"52" Name=3D"Grid Table 7 Color=
-ful Accent 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"46" Name=3D"Grid Table 1 Light=
- Accent 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"47" Name=3D"Grid Table 2 Accen=
-t 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"48" Name=3D"Grid Table 3 Accen=
-t 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"49" Name=3D"Grid Table 4 Accen=
-t 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"50" Name=3D"Grid Table 5 Dark =
-Accent 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"51" Name=3D"Grid Table 6 Color=
-ful Accent 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"52" Name=3D"Grid Table 7 Color=
-ful Accent 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"46" Name=3D"Grid Table 1 Light=
- Accent 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"47" Name=3D"Grid Table 2 Accen=
-t 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"48" Name=3D"Grid Table 3 Accen=
-t 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"49" Name=3D"Grid Table 4 Accen=
-t 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"50" Name=3D"Grid Table 5 Dark =
-Accent 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"51" Name=3D"Grid Table 6 Color=
-ful Accent 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"52" Name=3D"Grid Table 7 Color=
-ful Accent 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"46" Name=3D"Grid Table 1 Light=
- Accent 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"47" Name=3D"Grid Table 2 Accen=
-t 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"48" Name=3D"Grid Table 3 Accen=
-t 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"49" Name=3D"Grid Table 4 Accen=
-t 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"50" Name=3D"Grid Table 5 Dark =
-Accent 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"51" Name=3D"Grid Table 6 Color=
-ful Accent 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"52" Name=3D"Grid Table 7 Color=
-ful Accent 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"46" Name=3D"Grid Table 1 Light=
- Accent 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"47" Name=3D"Grid Table 2 Accen=
-t 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"48" Name=3D"Grid Table 3 Accen=
-t 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"49" Name=3D"Grid Table 4 Accen=
-t 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"50" Name=3D"Grid Table 5 Dark =
-Accent 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"51" Name=3D"Grid Table 6 Color=
-ful Accent 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"52" Name=3D"Grid Table 7 Color=
-ful Accent 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"46" Name=3D"Grid Table 1 Light=
- Accent 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"47" Name=3D"Grid Table 2 Accen=
-t 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"48" Name=3D"Grid Table 3 Accen=
-t 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"49" Name=3D"Grid Table 4 Accen=
-t 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"50" Name=3D"Grid Table 5 Dark =
-Accent 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"51" Name=3D"Grid Table 6 Color=
-ful Accent 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"52" Name=3D"Grid Table 7 Color=
-ful Accent 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"46" Name=3D"List Table 1 Light=
-"/>
-<w:LsdException Locked=3D"false" Priority=3D"47" Name=3D"List Table 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"48" Name=3D"List Table 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"49" Name=3D"List Table 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"50" Name=3D"List Table 5 Dark"=
-/>
-<w:LsdException Locked=3D"false" Priority=3D"51" Name=3D"List Table 6 Color=
-ful"/>
-<w:LsdException Locked=3D"false" Priority=3D"52" Name=3D"List Table 7 Color=
-ful"/>
-<w:LsdException Locked=3D"false" Priority=3D"46" Name=3D"List Table 1 Light=
- Accent 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"47" Name=3D"List Table 2 Accen=
-t 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"48" Name=3D"List Table 3 Accen=
-t 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"49" Name=3D"List Table 4 Accen=
-t 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"50" Name=3D"List Table 5 Dark =
-Accent 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"51" Name=3D"List Table 6 Color=
-ful Accent 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"52" Name=3D"List Table 7 Color=
-ful Accent 1"/>
-<w:LsdException Locked=3D"false" Priority=3D"46" Name=3D"List Table 1 Light=
- Accent 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"47" Name=3D"List Table 2 Accen=
-t 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"48" Name=3D"List Table 3 Accen=
-t 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"49" Name=3D"List Table 4 Accen=
-t 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"50" Name=3D"List Table 5 Dark =
-Accent 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"51" Name=3D"List Table 6 Color=
-ful Accent 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"52" Name=3D"List Table 7 Color=
-ful Accent 2"/>
-<w:LsdException Locked=3D"false" Priority=3D"46" Name=3D"List Table 1 Light=
- Accent 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"47" Name=3D"List Table 2 Accen=
-t 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"48" Name=3D"List Table 3 Accen=
-t 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"49" Name=3D"List Table 4 Accen=
-t 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"50" Name=3D"List Table 5 Dark =
-Accent 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"51" Name=3D"List Table 6 Color=
-ful Accent 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"52" Name=3D"List Table 7 Color=
-ful Accent 3"/>
-<w:LsdException Locked=3D"false" Priority=3D"46" Name=3D"List Table 1 Light=
- Accent 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"47" Name=3D"List Table 2 Accen=
-t 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"48" Name=3D"List Table 3 Accen=
-t 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"49" Name=3D"List Table 4 Accen=
-t 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"50" Name=3D"List Table 5 Dark =
-Accent 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"51" Name=3D"List Table 6 Color=
-ful Accent 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"52" Name=3D"List Table 7 Color=
-ful Accent 4"/>
-<w:LsdException Locked=3D"false" Priority=3D"46" Name=3D"List Table 1 Light=
- Accent 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"47" Name=3D"List Table 2 Accen=
-t 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"48" Name=3D"List Table 3 Accen=
-t 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"49" Name=3D"List Table 4 Accen=
-t 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"50" Name=3D"List Table 5 Dark =
-Accent 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"51" Name=3D"List Table 6 Color=
-ful Accent 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"52" Name=3D"List Table 7 Color=
-ful Accent 5"/>
-<w:LsdException Locked=3D"false" Priority=3D"46" Name=3D"List Table 1 Light=
- Accent 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"47" Name=3D"List Table 2 Accen=
-t 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"48" Name=3D"List Table 3 Accen=
-t 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"49" Name=3D"List Table 4 Accen=
-t 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"50" Name=3D"List Table 5 Dark =
-Accent 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"51" Name=3D"List Table 6 Color=
-ful Accent 6"/>
-<w:LsdException Locked=3D"false" Priority=3D"52" Name=3D"List Table 7 Color=
-ful Accent 6"/>
-</w:LatentStyles>
-</xml><![endif]--><style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;
-	mso-font-alt:"Calisto MT";
-	mso-font-charset:0;
-	mso-generic-font-family:roman;
-	mso-font-pitch:variable;
-	mso-font-signature:-536869121 1107305727 33554432 0 415 0;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;
-	mso-font-alt:"Century Gothic";
-	mso-font-charset:0;
-	mso-generic-font-family:swiss;
-	mso-font-pitch:variable;
-	mso-font-signature:-536859905 -1073732485 9 0 511 0;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{mso-style-unhide:no;
-	mso-style-qformat:yes;
-	mso-style-parent:"";
-	margin:0cm;
-	margin-bottom:.0001pt;
-	mso-pagination:widow-orphan;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-ascii-font-family:Calibri;
-	mso-fareast-font-family:Calibri;
-	mso-hansi-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";}
-a:link, span.MsoHyperlink
-	{mso-style-noshow:yes;
-	mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;
-	text-underline:single;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-noshow:yes;
-	mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;
-	text-underline:single;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	mso-style-noshow:yes;
-	mso-style-unhide:no;
-	mso-ansi-font-size:11.0pt;
-	mso-bidi-font-size:11.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-ascii-font-family:Calibri;
-	mso-fareast-font-family:Calibri;
-	mso-hansi-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";
-	color:windowtext;}
-span.SpellE
-	{mso-style-name:"";
-	mso-spl-e:yes;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	mso-default-props:yes;
-	font-family:"Calibri",sans-serif;
-	mso-ascii-font-family:Calibri;
-	mso-fareast-font-family:Calibri;
-	mso-hansi-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";}
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 72.0pt 72.0pt 72.0pt;
-	mso-header-margin:36.0pt;
-	mso-footer-margin:36.0pt;
-	mso-paper-source:0;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 10]><style>/* Style Definitions */
-table.MsoNormalTable
-	{mso-style-name:"Table Normal";
-	mso-tstyle-rowband-size:0;
-	mso-tstyle-colband-size:0;
-	mso-style-noshow:yes;
-	mso-style-priority:99;
-	mso-style-parent:"";
-	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
-	mso-para-margin:0cm;
-	mso-para-margin-bottom:.0001pt;
-	mso-pagination:widow-orphan;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-ascii-font-family:Calibri;
-	mso-hansi-font-family:Calibri;
-	mso-bidi-font-family:"Times New Roman";}
-</style><![endif]--><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72" style=3D"tab-interv=
-al:36.0pt">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span=
+> *this column has no architecture effect: NX markings are ignored by
+> hardware, but may have behavioral effects when "wants X" collides with
+> "cannot be X" constraints in memory permission flags, as in [1].
 >
-ANNOUNCEMENT AND CALL FOR PARTICIPATION<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style=3D"mso-spacerun:yes">&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>LINUX SECU=
-RITY SUMMIT EUROPE 2019<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span>31 October &#8211; 1 November<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span>Lyon, France<o:p></o:p></p>
-<p class=3D"MsoNormal">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">DESCRIPTION<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">The Linux Security Summit (LSS) is a technical forum=
- for collaboration<o:p></o:p></p>
-<p class=3D"MsoNormal">between Linux developers, researchers, and end users=
-. Its primary aim is to<o:p></o:p></p>
-<p class=3D"MsoNormal">foster community efforts in analyzing and solving Li=
-nux security challenges.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">This year, for the second time, the Linux Security S=
-ummit is going to<o:p></o:p></p>
-<p class=3D"MsoNormal"><span class=3D"SpellE">be</span> also held in Europe=
- (LSS-EU) in order to facilitate broader participation<o:p></o:p></p>
-<p class=3D"MsoNormal">in Linux security development.<o:p></o:p></p>
-<p class=3D"MsoNormal">Similar to LSS-North America, LSS-EU provides a uniq=
-ue opportunity for to have<o:p></o:p></p>
-<p class=3D"MsoNormal">discussions and networking opportunities with key pe=
-ople in the Linux kernel<o:p></o:p></p>
-<p class=3D"MsoNormal">security community, present your work and ideas and =
-affect the future direction<o:p></o:p></p>
-<p class=3D"MsoNormal">of Linux security.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">The program committee currently seeks proposals for:=
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* Refereed Presentations:<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp; </span>45 minutes in length.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* Panel Discussion Topics:<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp; </span>45 minutes in length.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* Short Topics:<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp; </span>30 minutes in total, including at least 10 m=
-inutes discussion.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* <span class=3D"SpellE">
-BoF</span> Sessions.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* Tutorials *NEW for 2019*:<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp; </span>90 minutes in length.<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp; </span>Tutorial sessions should be focused on advan=
-ced Linux security defense<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp; </span>topics within areas such as the kernel, comp=
-iler, and security-related<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp; </span>libraries. Priority will be given to tutoria=
-ls created for this conference.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Topic areas include, but are not limited to:<o:p></o=
-:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* Kernel self-protection<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* Access control<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* Cryptography and key management<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* Integrity control<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* Hardware Security<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* <span class=3D"SpellE">
-Iot</span> and embedded security<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* Virtualization and containers<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* System-specific system hardening<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* Case studies<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* Security tools<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* Security UX<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* Emerging technologies, threats &amp; techniques
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Proposals should be submitted via:<o:p></o:p></p>
-<p class=3D"MsoNormal">https://linuxfoundation.smapply.io/prog/lss_eu_2019/=
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">DATES<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">* CFP Close: Wednesday , July 31, 2019<o:p></o:p></p=
 >
-<p class=3D"MsoNormal">* CFP Notifications: Friday, August 9, 2019<o:p></o:=
-p></p>
-<p class=3D"MsoNormal">* Schedule Announced: Monday, August 19, 2019<o:p></=
-o:p></p>
-<p class=3D"MsoNormal">* Event: October 31 &#8211; November 1, 2019<o:p></o=
-:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">WHO SHOULD ATTEND<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">We're seeking a diverse range of attendees, and welc=
-ome participation by<o:p></o:p></p>
-<p class=3D"MsoNormal">people involved in Linux security development, opera=
-tions, and research.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">The LSS is a unique global event which provides the =
-opportunity to present<o:p></o:p></p>
-<p class=3D"MsoNormal">and discuss your work or research with key Linux sec=
-urity community members<o:p></o:p></p>
-<p class=3D"MsoNormal">and maintainers. <span class=3D"SpellE">It?s</span> =
-also useful for those who wish to keep up with the<o:p></o:p></p>
-<p class=3D"MsoNormal">latest in Linux security development, and to provide=
- input to the<o:p></o:p></p>
-<p class=3D"MsoNormal">development process.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">WEB SITE<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">https://events.linuxfoundation.org/events/linux-secu=
-rity-summit-europe-2019/<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">TWITTER<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">For event updates and announcements, follow:<o:p></o=
-:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">https://twitter.com/LinuxSecSummit<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">PROGRAM COMMITTEE<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">The program committee for LSS-EU 2019 is:<o:p></o:p>=
-</p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* Elena Reshetova, Intel<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* James Morris, Microsoft<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* Serge Hallyn, Cisco<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* Paul Moore, Cisco<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* Stephen Smalley, NSA<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* John Johansen, Canonical<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* Kees Cook, Google<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* Casey Schaufler, Intel<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* Mimi Zohar, IBM<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"mso-spacerun:yes">&nbsp;&nbsp;&nbsp; =
-</span>* David A. Wheeler, Institute for Defense Analyses<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">The program committee may be contacted as a group vi=
-a email:<o:p></o:p></p>
-<p class=3D"MsoNormal"><span class=3D"SpellE">lss</span>-pc () lists.linuxf=
-oundation.org<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-</div>
-</body>
-</html>
+> I want to make three changes, listed in increasing risk levels.
+>
+> First, I want to split "missing GNU_STACK" and "GNU_STACK =3D=3D RWX",
+> which is currently causing expected behavior for driver mmap
+> regions[1], etc:
+>
+>                CPU: | lacks NX*  | has NX, ia32     | has NX, x86_64 |
+>   ELF:              |            |                  |                |
+>   -------------------------------|------------------|----------------|
+>   missing GNU_STACK | exec-all   | exec-all         | exec-all       |
+> - GNU_STACK =3D=3D RWX  | exec-all   | exec-all         | exec-all     =
+  |
+> + GNU_STACK =3D=3D RWX  | exec-stack | exec-stack       | exec-stack   =
+  |
+>   GNU_STACK =3D=3D RW   | exec-none  | exec-none        | exec-none    =
+  |
+>
+> AFAICT, this has the least risk. I'm not aware of any situation where
+> GNU_STACK=3D=3DRWX is supposed to mean MORE than that. As Jann research=
+ed,
+> even thread stacks will be treated correctly[2]. The risk would be
+> discovering some use-case where a program was executing memory that it
+> had not explicitly marked as executable. For ELFs marked with
+> GNU_STACK, this seems unlikely (I hope).
 
---_000_2236FBA76BA1254E88B949DDB74E612BA4C6F0E9IRSMSX102gercor_--
+I agree that "missing GNU_STACK" is not the same than GNU_STACK=3D=3DRWX =
+and=20
+this should be handled differently. There is a clear security benefit
+if we don't assume that GNU_STACK=3D=3DRWX means more than that.
+
+My initial patch intended to prevent that on modern 64-bit programs where=
+
+explicitly marked executable stack, they are forced to have the=20
+READ_IMPLIES_EXEC state when no such thing is needed.
+
+The read-implies-exec could be used via personality, so, such unlikely=20
+applications executing memory that it had not explicit marked as executab=
+le,=20
+could just use the READ_IMPLIES_EXEC personality, right?=20
+
+Adding a flag to prevent the core mm to call the driver with VM_EXEC can =
+prevent [1].
+So, I'm completely fine the "first" change.
+
+
+>
+>
+> Second, I want to split the behavior of "missing GNU_STACK" between
+> ia32 and x86_64. The reasonable(?) default for x86_64 memory is for it
+> to be NX. For the very rare x86_64 systems that do not have NX, this
+> shouldn't change anything because they still fall into the "don't
+> care" column. It would look like this:
+>
+>                CPU: | lacks NX*  | has NX, ia32     | has NX, x86_64 |
+>   ELF:              |            |                  |                |
+>   -------------------------------|------------------|----------------|
+> - missing GNU_STACK | exec-all   | exec-all         | exec-all       |
+> + missing GNU_STACK | exec-all  | exec-all         | exec-none      |
+>   GNU_STACK =3D=3D RWX  | exec-stack | exec-stack       | exec-stack   =
+  |
+>   GNU_STACK =3D=3D RW   | exec-none  | exec-none        | exec-none    =
+  |
+>
+> This carries some risk that there are ancient x86_64 binaries that
+> still behave like their even more ancient ia32 counterparts, and
+> expect to be able to execute any memory. I would _hope_ this is rare,
+> but I have no way to actually know if things like this exist in the
+> real world.
+
+This "second" change only affects "missing GNU_STACK" programs. So both, =
+the
+benefits and the risks are only for ancient applications. So, this is not=
+ a bid
+deal, I would go for apply this "second" change. Maybe I'm missing someth=
+ing,
+but why we can't use personalities for x86_64 ancient binaries that expec=
+t to
+execute any memory? Again, we can add a flag to prevent the core mm to ca=
+ll the
+driver with VM_EXEC.
+
+
+>
+>
+> Third, I want to have the "lacks NX" column actually reflect reality.
+> Right now on such a system, memory permissions will show "not
+> executable" but there is actually no architectural checking for these
+> permissions. I think the true nature of such a system should be
+> reflected in the reported permissions. It would look like this:
+>
+>                CPU: | lacks NX*  | has NX, ia32     | has NX, x86_64 |
+>   ELF:              |            |                  |                |
+>   -------------------------------|------------------|----------------|
+>   missing GNU_STACK | exec-all   | exec-all         | exec-none      |
+> - GNU_STACK =3D=3D RWX  | exec-stack | exec-stack       | exec-stack   =
+  |
+> - GNU_STACK =3D=3D RW   | exec-none  | exec-none        | exec-none    =
+  |
+> + GNU_STACK =3D=3D RWX  | exec-all   | exec-stack       | exec-stack   =
+  |
+> + GNU_STACK =3D=3D RW   | exec-all   | exec-none        | exec-none    =
+  |
+>
+> This carries the largest risk because it effectively enables
+> READ_IMPLIES_EXEC on all processes for such systems. I worry this
+> might trip as-yet-unseen problems like in [1], for only cosmetic
+> improvements.
+
+Also as you pointed out, if there are backed files on a nonexec-filesyste=
+ms,
+then should we remove the "x" to reflect reality?=20
+
+If we want to reflect reality, then there are other things we are missing=
+=2E
+For example on i386, a write-only memory region can be read. So, if we
+have a "write-only" memory region, should we expect "rw-" in systems with=
+ NX
+and "rwx" in systems that lacks NX? There are probably others situations =
+I'm
+not considering here.
+
+I'm not sure about the unseen issues that doing this can introduce but if=
+
+we want to reflect reality, why we shouldn't do the same for others=20
+permissions? I am not sure that it worth to it just for cosmetic reasons.=
+
+
+
+>
+> My intention was to split up the series and likely not even bother
+> with the third change, since it feels like too high a risk to me. What
+> do you think?
+>
+>> In particular, what is the policy for write-only and exec-only mapping=
+s,
+>> what does read-implies-exec do for them?
+> First it manifests here, which is used for stack and brk:
+>
+> #define VM_DATA_DEFAULT_FLAGS \
+>         (((current->personality & READ_IMPLIES_EXEC) ? VM_EXEC : 0 ) | =
+\
+>          VM_READ | VM_WRITE | VM_MAYREAD | VM_MAYWRITE | VM_MAYEXEC)
+>
+> above is used in do_brk_flags(), and is picked up by
+> VM_STACK_DEFAULT_FLAGS, visible in VM_STACK_FLAGS for
+> setup_arg_pages()'s stack creation.
+>
+> READ_IMPLIES_EXEC itself is checked directly in mmap, with noexec
+> checks that also clear VM_MAYEXEC:
+>
+>         if ((prot & PROT_READ) && (current->personality & READ_IMPLIES_=
+EXEC))
+>                 if (!(file && path_noexec(&file->f_path)))
+>                         prot |=3D PROT_EXEC;
+> ...
+>                         if (path_noexec(&file->f_path)) {
+>                                 if (vm_flags & VM_EXEC)
+>                                         return -EPERM;
+>                                 vm_flags &=3D ~VM_MAYEXEC;
+>
+> The above is where we discussed adding some kind of check for device
+> driver memory mapping in [1] (or getting distros to mount /dev noexec,
+> which seems to break other things...), but I'd rather just fix
+> READ_IMPLIES_EXEC.
+>
+> Write-only would ignore READ_IMPLIES_EXEC, but mprotect() rechecks it
+> if PROT_READ gets added later:
+>
+>         const bool rier =3D (current->personality & READ_IMPLIES_EXEC) =
+&&
+>                                 (prot & PROT_READ);
+> ...
+>                 /* Does the application expect PROT_READ to imply PROT_=
+EXEC */
+>                 if (rier && (vma->vm_flags & VM_MAYEXEC))
+>                         prot |=3D PROT_EXEC;
+>
+>> Also, it would be nice to define it precisely what 'stack' means in th=
+is
+>> context: it's only the ELF loader defined process stack - other stacks=
+
+>> such as any thread stacks, signal stacks or alt-stacks depend on the C=
+
+>> library - or does the kernel policy extend there too?
+> Correct: this is only the ELF loader stack. Thread stacks are (and
+> always have been) on their own. But as Jann found in [2], they should
+> be unchanged by anything here.
+>
+>> I.e. it would be nice to clarify all this, because it's still rather
+>> confusing and ambiguous right now.
+> Agreed. I've been trying to pick it apart too, hopefully this helps.
+>
+> -Kees
+>
+> [1] https://lkml.kernel.org/r/20190418055759.GA3155@mellanox.com
+> [2] https://lore.kernel.org/patchwork/patch/464875/
+>
+
+Anyway, thank you for handling this, I would like also to see this fixed.=
+
+
+Hector.
+
+
+
