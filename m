@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15875-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15876-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id E9906150F8
-	for <lists+kernel-hardening@lfdr.de>; Mon,  6 May 2019 18:12:04 +0200 (CEST)
-Received: (qmail 22413 invoked by uid 550); 6 May 2019 16:11:57 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 8CD4F15458
+	for <lists+kernel-hardening@lfdr.de>; Mon,  6 May 2019 21:20:21 +0200 (CEST)
+Received: (qmail 7563 invoked by uid 550); 6 May 2019 19:20:13 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,68 +13,71 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 22382 invoked from network); 6 May 2019 16:11:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VRLKxxZ6FvYNzup+p909sc/5M3c0/QHqqC7ELR0k26g=;
-        b=E3AVHE0wyNUli8mWyHnOuYA1FvAhRtnpPlDofZjEEEXZ+fzD8MT4rBQ1N5Jq2DM3he
-         soNc0eOJquzOCUgdI/Sz2WuGHDBczt60gFIgd/vB/fXg04abQzaP/CxxwyukG/wx7qu5
-         bRCZyTJGqxRc+Exw+QEOszcQNS4/pwRUUGdx8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VRLKxxZ6FvYNzup+p909sc/5M3c0/QHqqC7ELR0k26g=;
-        b=j+VtrkxUpCfCgIhUuhsZa+b7ah5XQQTLpElCxxotXtcJ2P7ajLUeXaS6IQidqBRIPb
-         SwG6iYnsIv3zzNTTEBFIGrng7g/p2A+Uz/Tq7LPDQLbQnTRphKcXAroZxOO8BrTbzLHr
-         A1KMEtSCRj61mdntpN2PsmhtOaXZIR0SS0MlJG6lxAT0R7oC8Uus30Dy/lDEkmNA+jjL
-         pHzk+o3iH/X0Bm8LG1Ux4bbdxOmtq5D1nqsvHpEBq6LSJQj7SwNnDGeCZJ9QuuGpShvQ
-         T4+e8Ksg8XXiyW3RN5rd8FtDkzV0S4Wan2qR3d+E3//TUMarHeteP8xGlJ4Z+5b2kJJO
-         V17w==
-X-Gm-Message-State: APjAAAU929DGErXiLSj3Jb66lT7pdS4HgBn1RdfQAQreDhCpIcjBHuo9
-	qj4reWemNrP2RCuxQRX04eFqUoYKeyg=
-X-Google-Smtp-Source: APXvYqxpG5jABkvzQAJhr9xcCy1EHcAyTn59+aGzLF83jN6LU9LKH20+Vdw+vrZVpjc91SWT2wA1qg==
-X-Received: by 2002:a1f:1604:: with SMTP id 4mr14332233vkw.3.1557159104428;
-        Mon, 06 May 2019 09:11:44 -0700 (PDT)
-X-Received: by 2002:a1f:3a14:: with SMTP id h20mr2052024vka.52.1557159102657;
- Mon, 06 May 2019 09:11:42 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAOMdWSLNUEMux1hXfWP+oxZ3YG=uycDmAomGA1iTxjfyOYA0WQ@mail.gmail.com>
-In-Reply-To: <CAOMdWSLNUEMux1hXfWP+oxZ3YG=uycDmAomGA1iTxjfyOYA0WQ@mail.gmail.com>
-From: Kees Cook <keescook@chromium.org>
-Date: Mon, 6 May 2019 09:11:30 -0700
-X-Gmail-Original-Message-ID: <CAGXu5j+Eo-ewWL2_RtBaVN9msAdA3Pgu8H7uBxVcc=b5DMBy5g@mail.gmail.com>
-Message-ID: <CAGXu5j+Eo-ewWL2_RtBaVN9msAdA3Pgu8H7uBxVcc=b5DMBy5g@mail.gmail.com>
-Subject: Re: [RFC] refactor tasklets to avoid unsigned long argument
-To: Allen <allen.lkml@gmail.com>
-Cc: Kernel Hardening <kernel-hardening@lists.openwall.com>, tglx@linuxtronix.de
-Content-Type: text/plain; charset="UTF-8"
+Received: (qmail 7543 invoked from network); 6 May 2019 19:20:13 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+From: Joao Moreira <jmoreira@suse.de>
+To: kernel-hardening@lists.openwall.com
+Cc: linux-kernel@vger.kernel.org,
+	x86@kernel.org,
+	herbert@gondor.apana.org.au,
+	davem@davemloft.net,
+	tglx@linutronix.de,
+	mingo@redhat.com,
+	hpa@zytor.com,
+	gregkh@linuxfoundation.org,
+	keescook@chromium.org
+Subject: [RFC PATCH v2 0/4] x86/crypto: Fix crypto function casts
+Date: Mon,  6 May 2019 16:19:46 -0300
+Message-Id: <20190506191950.9521-1-jmoreira@suse.de>
+X-Mailer: git-send-email 2.16.4
 
-On Mon, May 6, 2019 at 2:32 AM Allen <allen.lkml@gmail.com> wrote:
->   I have been toying with the idea of "refactor tasklets to avoid
-> unsigned long argument" since Kees listed on KSPP wiki. I wanted to
-> and have kept the implementation very simple. Let me know what you
-> guys think.
->
-> Note: I haven't really done much of testing besides boot testing with small
-> set of files moved to the new api.
->
->   My only concern with the implementation is, in the kernel the combination
-> of tasklet_init/DECLARE_TAKSLET is seen in over ~400 plus files.
-> With the change(dropping unsigned long argument) there will be huge list
-> of patches migrating to the new api.
+It is possible to indirectly invoke functions with prototypes that do not
+match those of the respectively used function pointers by using void types.
+This feature is frequently used as a way of relaxing function invocation,
+making it possible that different data structures are passed to different
+functions through the same pointer.
 
-Yeah, this is the main part of the work for making this change. When
-the timer API got changed, I had to do a two-stage change so we could
-convert the users incrementally, and then finalize the API change to
-drop the old style.
+Despite the benefits, this can lead to a situation where functions with a
+given prototype are invoked by pointers with a different prototype, what is
+undesirable as it may prevent the use of heuristics such as prototype
+matching-based Control-Flow Integrity, which can be used to prevent
+ROP-based attacks.
 
-Beyond that, yeah, everything you sent looks good. It's just the
-matter of building a series of patches to do it without breaking the
-world. (Though if it's small enough, maybe it could be a single patch?
-But I doubt that would be doable...)
+One way of fixing this situation is through the use of helper functions
+with prototypes that match the one in the respective invoking pointer.
+
+Given the above, the current efforts to improve the Linux security, and the
+upcoming kernel support to compilers with CFI features, fix the prototype
+casting of x86/crypto algorithms camellia, cast6, serpent and twofish with
+the use of a macro that generates the helper function.
+
+This patch does not introduce semantic changes to the cryptographic
+algorithms, yet, if someone finds relevant, the affected algorithms were
+tested with the help of tcrypt.ko without any visible harm.
+
+
+Joao Moreira (4):
+  Fix serpent crypto function prototypes
+  Fix camellia crypto function prototypes
+  Fix twofish crypto function prototypes
+  Fix cast6 crypto function prototypes
+
+ arch/x86/crypto/camellia_aesni_avx2_glue.c | 69 ++++++++--------------
+ arch/x86/crypto/camellia_aesni_avx_glue.c  | 45 +++++++--------
+ arch/x86/crypto/camellia_glue.c            | 19 +++---
+ arch/x86/crypto/cast6_avx_glue.c           | 54 +++++++----------
+ arch/x86/crypto/serpent_avx2_glue.c        | 68 ++++++++++------------
+ arch/x86/crypto/serpent_avx_glue.c         | 63 ++++++++------------
+ arch/x86/crypto/serpent_sse2_glue.c        | 24 +++++---
+ arch/x86/crypto/twofish_avx_glue.c         | 65 ++++++++++-----------
+ arch/x86/crypto/twofish_glue_3way.c        | 33 ++++++-----
+ arch/x86/include/asm/crypto/camellia.h     | 93 +++++++++++++++---------------
+ arch/x86/include/asm/crypto/serpent-avx.h  | 39 ++++++++-----
+ arch/x86/include/asm/crypto/serpent-sse2.h | 10 ++++
+ arch/x86/include/asm/crypto/twofish.h      | 33 ++++++++---
+ include/crypto/cast6.h                     | 23 +++++++-
+ 14 files changed, 320 insertions(+), 318 deletions(-)
 
 -- 
-Kees Cook
+2.16.4
+
