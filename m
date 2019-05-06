@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15874-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15875-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id F19A3148F5
-	for <lists+kernel-hardening@lfdr.de>; Mon,  6 May 2019 13:32:06 +0200 (CEST)
-Received: (qmail 11450 invoked by uid 550); 6 May 2019 11:32:00 -0000
+	by mail.lfdr.de (Postfix) with SMTP id E9906150F8
+	for <lists+kernel-hardening@lfdr.de>; Mon,  6 May 2019 18:12:04 +0200 (CEST)
+Received: (qmail 22413 invoked by uid 550); 6 May 2019 16:11:57 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,113 +13,68 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 1107 invoked from network); 6 May 2019 11:14:29 -0000
+Received: (qmail 22382 invoked from network); 6 May 2019 16:11:57 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=brauner.io; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=AkmqTqEpz+voJSE7sMPW3Gi4tqC4TWEBljJqM21xrPw=;
-        b=S7aN3yo3ww2JiP/hqx6XXUGhk1fKlBlH+TIVWOUqYPYGg/y33UdzCSGuusQRf4LpMk
-         MlNuuADDb/sID3+FjZmz/UyItxaTRo2s7nIK0pPICepuOnESDZ6MrHPENSpQ0aQGM9dn
-         yDHB5452A9lOipb17H20jQnyN5ujANgSGwmddZJ3OiMaNwfJ7g8zPzzqEhW7BjpS0bsD
-         GTj55Aumtbbo8yFJSPOQxC1ER6UIeIOLig18ff5eUDs2TJxjd9HpNwwBVhtdbfrvTpQj
-         XRV3hmi3eeJU3txXEonl/Vv11I0stzZdR+RMO/Vy5pF6OlR08lzwXu1j1T8V7m0c/Age
-         V+/A==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=VRLKxxZ6FvYNzup+p909sc/5M3c0/QHqqC7ELR0k26g=;
+        b=E3AVHE0wyNUli8mWyHnOuYA1FvAhRtnpPlDofZjEEEXZ+fzD8MT4rBQ1N5Jq2DM3he
+         soNc0eOJquzOCUgdI/Sz2WuGHDBczt60gFIgd/vB/fXg04abQzaP/CxxwyukG/wx7qu5
+         bRCZyTJGqxRc+Exw+QEOszcQNS4/pwRUUGdx8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=AkmqTqEpz+voJSE7sMPW3Gi4tqC4TWEBljJqM21xrPw=;
-        b=LxFC6BhRVTzVqSyblgGAJl6UU4GgyW9Ie2aMl00+D3UIpLmHqbewn58v2912OLhqnk
-         nKAWaLcxurHoDA5Rlu+PrDZy0AvTz+cYrbOaQBUTmigeo4eQB7n/2mrg+dHXnhLzJg15
-         UHoM4lpLOjp+JeIfv0qT8pwi2lrKxp2RgCL4PsmMCDgsDSJ0pM6abQc383NqkPTTdq7O
-         R3K6NqIjOdIf2FVpD0mra8yVtPZ2OS6PBcOoTsZJdMHCk1ArRbzHGWVaXbWh9btVVhHv
-         vtphO8IJYDd9FumbKf6Hs0bAmvxEKzcmaBoiCXdRYQtXV9pVM4PTGBvcYRhfhHjicgtl
-         Dl4A==
-X-Gm-Message-State: APjAAAXlrv9n/LucoSv+ghTiauh7Wnyaq9Oq5QFDjFWQyfrRxIIHcy0o
-	IFi2U923QcZooBvMhC4MgCCfDA==
-X-Google-Smtp-Source: APXvYqy9eq89Ab1H6LOMu0EOgIGQJxsJgn/o8ObMAkSa/CWL7uML2qdORRJ5YrDpUH+CtEmd2d+tfw==
-X-Received: by 2002:a17:906:3410:: with SMTP id c16mr19148972ejb.281.1557141257822;
-        Mon, 06 May 2019 04:14:17 -0700 (PDT)
-Date: Mon, 6 May 2019 13:14:16 +0200
-From: Christian Brauner <christian@brauner.io>
-To: Jann Horn <jannh@google.com>
-Cc: Solar Designer <solar@openwall.com>,
-	Kernel Hardening <kernel-hardening@lists.openwall.com>
-Subject: Re: race-free process signaling
-Message-ID: <20190506111415.mjznjwqzidvouqmj@brauner.io>
-References: <20190506102112.GA12668@openwall.com>
- <CAG48ez0MUSH5tJEm-6_rzj2RYTTrA=_W0K13g93Bak=QDb+bUg@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=VRLKxxZ6FvYNzup+p909sc/5M3c0/QHqqC7ELR0k26g=;
+        b=j+VtrkxUpCfCgIhUuhsZa+b7ah5XQQTLpElCxxotXtcJ2P7ajLUeXaS6IQidqBRIPb
+         SwG6iYnsIv3zzNTTEBFIGrng7g/p2A+Uz/Tq7LPDQLbQnTRphKcXAroZxOO8BrTbzLHr
+         A1KMEtSCRj61mdntpN2PsmhtOaXZIR0SS0MlJG6lxAT0R7oC8Uus30Dy/lDEkmNA+jjL
+         pHzk+o3iH/X0Bm8LG1Ux4bbdxOmtq5D1nqsvHpEBq6LSJQj7SwNnDGeCZJ9QuuGpShvQ
+         T4+e8Ksg8XXiyW3RN5rd8FtDkzV0S4Wan2qR3d+E3//TUMarHeteP8xGlJ4Z+5b2kJJO
+         V17w==
+X-Gm-Message-State: APjAAAU929DGErXiLSj3Jb66lT7pdS4HgBn1RdfQAQreDhCpIcjBHuo9
+	qj4reWemNrP2RCuxQRX04eFqUoYKeyg=
+X-Google-Smtp-Source: APXvYqxpG5jABkvzQAJhr9xcCy1EHcAyTn59+aGzLF83jN6LU9LKH20+Vdw+vrZVpjc91SWT2wA1qg==
+X-Received: by 2002:a1f:1604:: with SMTP id 4mr14332233vkw.3.1557159104428;
+        Mon, 06 May 2019 09:11:44 -0700 (PDT)
+X-Received: by 2002:a1f:3a14:: with SMTP id h20mr2052024vka.52.1557159102657;
+ Mon, 06 May 2019 09:11:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAG48ez0MUSH5tJEm-6_rzj2RYTTrA=_W0K13g93Bak=QDb+bUg@mail.gmail.com>
-User-Agent: NeoMutt/20180716
+References: <CAOMdWSLNUEMux1hXfWP+oxZ3YG=uycDmAomGA1iTxjfyOYA0WQ@mail.gmail.com>
+In-Reply-To: <CAOMdWSLNUEMux1hXfWP+oxZ3YG=uycDmAomGA1iTxjfyOYA0WQ@mail.gmail.com>
+From: Kees Cook <keescook@chromium.org>
+Date: Mon, 6 May 2019 09:11:30 -0700
+X-Gmail-Original-Message-ID: <CAGXu5j+Eo-ewWL2_RtBaVN9msAdA3Pgu8H7uBxVcc=b5DMBy5g@mail.gmail.com>
+Message-ID: <CAGXu5j+Eo-ewWL2_RtBaVN9msAdA3Pgu8H7uBxVcc=b5DMBy5g@mail.gmail.com>
+Subject: Re: [RFC] refactor tasklets to avoid unsigned long argument
+To: Allen <allen.lkml@gmail.com>
+Cc: Kernel Hardening <kernel-hardening@lists.openwall.com>, tglx@linuxtronix.de
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, May 06, 2019 at 12:45:14PM +0200, Jann Horn wrote:
-> +cc Christian Brauner (author of pidfd code)
-> 
-> On Mon, May 6, 2019 at 12:22 PM Solar Designer <solar@openwall.com> wrote:
-> > I totally missed the recent work in this area (I'm not on LKML),
-> 
-> FWIW, you don't usually need to actually read LKML to see when major
-> developments happen - I read LWN, which seems to work pretty well for
-> that purpose.
-> 
-> > and am
-> > now wondering whether the solution that got in ("use /proc/<pid> fds as
-> > stable handles on struct pid"):
-> >
-> > https://lwn.net/Articles/773459/
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a9dce6679d736cb3d612af39bab9f31f8db66f9b
-> >
-> > is better or worse than what I had proposed in 1999 and 2005 ("locking"
-> > of pids for the caller's own visibility only):
-> >
-> > https://marc.info/?l=linux-kernel&m=112784189115058
-> >
-> > [Subject starts with "PID reuse safety for userspace apps", in case MARC
-> > is ever gone and someone wants to look this up in another archive.
-> 
-> (The kernel people now have lore.kernel.org as an email archive, which
-> is much nicer to use IMO - it has search, it has a nice thread view,
-> and you can download raw mbox files if you want to reply to a mail:
-> <https://lore.kernel.org/lkml/20050927172048.GA3423@openwall.com/>)
-> 
-> > I proposed a lockpid syscall back then, but I'd use a mere prctl now.]
-> >
-> > I still like my proposal much better - no dependency on procfs, much
+On Mon, May 6, 2019 at 2:32 AM Allen <allen.lkml@gmail.com> wrote:
+>   I have been toying with the idea of "refactor tasklets to avoid
+> unsigned long argument" since Kees listed on KSPP wiki. I wanted to
+> and have kept the implementation very simple. Let me know what you
+> guys think.
+>
+> Note: I haven't really done much of testing besides boot testing with small
+> set of files moved to the new api.
+>
+>   My only concern with the implementation is, in the kernel the combination
+> of tasklet_init/DECLARE_TAKSLET is seen in over ~400 plus files.
+> With the change(dropping unsigned long argument) there will be huge list
+> of patches migrating to the new api.
 
-This has always been the goal and with the new CLONE_PIDFD flag we make
-this possible. I'm about to send the PR for this merge window.
-/proc/<pid> fds stay behind as a convenience for pidfd_send_signal()
-only with no new features added to them.
-There is some (tedious) historical context why it came to be that way.
-My original implementation was already different. 
-pidfd_send_signal() was basically based on /proc/<pid> fd because some
-developers had opposed other solutions since the /proc/<pid> idea seemed
-so "simple".
-The truth is it gets very very problematic when you think about
-returning fds at process creation time. This is why pidfds will be anon
-inodes.
+Yeah, this is the main part of the work for making this change. When
+the timer API got changed, I had to do a two-stage change so we could
+convert the users incrementally, and then finalize the API change to
+drop the old style.
 
-> > simpler implementation - but perhaps I'm missing the context here.
-> 
-> Actually, there is ongoing development of pidfd stuff, including
-> procfs-less pidfds. You may want to look through
-> <https://lore.kernel.org/lkml/?q=f%3Abrauner>, or something like that.
-> 
-> The following series adds anon-inode-based pidfds that can be returned
-> from sys_clone():
-> "[PATCH v3 2/4] clone: add CLONE_PIDFD"
-> <https://lore.kernel.org/lkml/20190419120904.27502-2-christian@brauner.io/>
-> "[PATCH v3 3/4] signal: support CLONE_PIDFD with pidfd_send_signal"
-> <https://lore.kernel.org/lkml/20190419120904.27502-4-christian@brauner.io/>
-> 
-> This patch adds process exit notifications that can be received
-> through the normal file polling syscalls (epoll/poll/select/...):
-> "[PATCH v2 1/2] Add polling support to pidfd"
-> <https://lore.kernel.org/lkml/20190430162154.61314-1-joel@joelfernandes.org/>
-> 
-> > Maybe I should have sent a patch back then.  Oh well.
+Beyond that, yeah, everything you sent looks good. It's just the
+matter of building a series of patches to do it without breaking the
+world. (Though if it's small enough, maybe it could be a single patch?
+But I doubt that would be doable...)
+
+-- 
+Kees Cook
