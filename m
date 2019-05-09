@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15904-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15905-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id E50BF1817C
-	for <lists+kernel-hardening@lfdr.de>; Wed,  8 May 2019 23:08:59 +0200 (CEST)
-Received: (qmail 1463 invoked by uid 550); 8 May 2019 21:08:54 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 293C318317
+	for <lists+kernel-hardening@lfdr.de>; Thu,  9 May 2019 03:05:26 +0200 (CEST)
+Received: (qmail 19988 invoked by uid 550); 9 May 2019 01:05:19 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,112 +13,77 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 1442 invoked from network); 8 May 2019 21:08:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=85jAqiZ3rdqGfRvDGF/DUutEfAhFjbADqQZ1rKThcjI=;
-        b=UwXq7RG5GbFeEc83Dhtk4yt40YEVN6o9JoBGv+9ERexPqq8oo2r5vW6MQbaxvQJruM
-         qVzsMwdsJFIKh1gnJ1TchbHrGKlvv65iFVA+AjaqqHluvK1ywrlFGVWuNt/JOMxqwlQU
-         IDVJi+FZd3XpMZTQkuqI4l6ltLywx1nG4LFLI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=85jAqiZ3rdqGfRvDGF/DUutEfAhFjbADqQZ1rKThcjI=;
-        b=Oq9+28UaRedX8ndBvBYU8wGI52BxC/VzxnRiS/2EQrhtJ0IeaxUUR/Mu7HFocWbSae
-         gJVHlu3u+ip4lskmPSdliVWoD7vv0VsdorVQkhwApvH9D1Bx3zD7V2kRXCnlIB9cS+gJ
-         2J+/YbnKqszt+ALiFo1Vad0q59gZUZ3fzVV5E+eMX7lTSPOnwF7QrlL8OWhyLmnyRhAs
-         KbCPNWgcFqVkgBuHjfTEKfykBj6OETjSfqAwMv+HyEXvZDHZ6VEXUv52/U5NYpCfLKpt
-         rVZd58rqgXOcY6O7pA6FVT5XBk+1fCQXeNuhx2e2JohzkBnoUa3wQ1th34bOXRM+zvcs
-         PpJw==
-X-Gm-Message-State: APjAAAXwD3+P5tUq0uEgj0rPWI6w9Ve6o8rgM0yXrj+l5F9AqiOVM8j5
-	bS8zsnl5qLHb/JyPYhC2VPFjdwnlhIw=
-X-Google-Smtp-Source: APXvYqzgj2qo3m8w+pD9oq7DKHSxVK310HazeDnqhlQ+qbwe+Pq2q1tzBSQnL4m+bLsnfL7sxY3TXA==
-X-Received: by 2002:a67:bd18:: with SMTP id y24mr251704vsq.36.1557349721291;
-        Wed, 08 May 2019 14:08:41 -0700 (PDT)
-X-Received: by 2002:a67:7c8a:: with SMTP id x132mr251877vsc.172.1557349719455;
- Wed, 08 May 2019 14:08:39 -0700 (PDT)
+Received: (qmail 19970 invoked from network); 9 May 2019 01:05:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20170209; h=Content-Transfer-Encoding:
+	Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:
+	Subject:Sender:Reply-To:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	 bh=G13SwZrvXQwLwqfSvC5cLaD8FJjp+bG9vvkSPGdxrhE=; b=b4bKpqtlBzzAQmT4dULJ60Wx/
+	4+mV8vaQI2ye68XjE42FuRpIw2V+NKJMAqALzmF4L45TsWnm64cyf9aZYpA8l8d1NVLuDS8uIeCMm
+	2B7tvT+bSk4czrUY6K7SQEb6YcRxEbbkhhUCmU6VEmkdwCO+ZFvwQ/ZUJqgP/w4jZo4iHlN3eaVL+
+	kK/r7hTkrByF/ZaNFivjTPBINatmyiTOXJz51A7fd2jgcAqqDsyZ7d8uJeCUAQmLsnA5elniY+wKR
+	sRgfHraFrxNNMgi36b/ZcrHq1Zw1KU7TahBjwB+7xbQIFWjjkzqDqw82hUi657MF+rES6DBkqzcCu
+	rbCtLeMpQ==;
+Subject: Re: [PATCH 1/4] mm: security: introduce init_on_alloc=1 and
+ init_on_free=1 boot options
+To: Alexander Potapenko <glider@google.com>, akpm@linux-foundation.org,
+ cl@linux.com, keescook@chromium.org, labbott@redhat.com
+Cc: linux-mm@kvack.org, linux-security-module@vger.kernel.org,
+ kernel-hardening@lists.openwall.com, yamada.masahiro@socionext.com,
+ jmorris@namei.org, serge@hallyn.com, ndesaulniers@google.com,
+ kcc@google.com, dvyukov@google.com, sspatil@android.com, jannh@google.com,
+ mark.rutland@arm.com
+References: <20190508153736.256401-1-glider@google.com>
+ <20190508153736.256401-2-glider@google.com>
+From: Randy Dunlap <rdunlap@infradead.org>
+Message-ID: <6e5ccf92-cc58-ab2b-d025-0f5642d5f4a6@infradead.org>
+Date: Wed, 8 May 2019 18:04:55 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <20190507161321.34611-1-keescook@chromium.org> <20190507170039.GB1399@sol.localdomain>
- <CAGXu5jL7pWWXuJMinghn+3GjQLLBYguEtwNdZSQy++XGpGtsHQ@mail.gmail.com>
- <20190507215045.GA7528@sol.localdomain> <20190508133606.nsrzthbad5kynavp@gondor.apana.org.au>
-In-Reply-To: <20190508133606.nsrzthbad5kynavp@gondor.apana.org.au>
-From: Kees Cook <keescook@chromium.org>
-Date: Wed, 8 May 2019 14:08:25 -0700
-X-Gmail-Original-Message-ID: <CAGXu5jKdsuzX6KF74zAYw3PpEf8DExS9P0Y_iJrJVS+goHFbcA@mail.gmail.com>
-Message-ID: <CAGXu5jKdsuzX6KF74zAYw3PpEf8DExS9P0Y_iJrJVS+goHFbcA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/7] crypto: x86: Fix indirect function call casts
-To: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: Eric Biggers <ebiggers@kernel.org>, Kees Cook <keescook@chromium.org>, 
-	Joao Moreira <jmoreira@suse.de>, Ingo Molnar <mingo@redhat.com>, 
-	Thomas Gleixner <tglx@linutronix.de>, Borislav Petkov <bp@alien8.de>, X86 ML <x86@kernel.org>, 
-	linux-crypto <linux-crypto@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>, 
-	Kernel Hardening <kernel-hardening@lists.openwall.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20190508153736.256401-2-glider@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 
-On Wed, May 8, 2019 at 6:36 AM Herbert Xu <herbert@gondor.apana.org.au> wrote:
-> On Tue, May 07, 2019 at 02:50:46PM -0700, Eric Biggers wrote:
-> >
-> > I don't know yet.  It's difficult to read the code with 2 layers of macros.
-> >
-> > Hence why I asked why you didn't just change the prototypes to be compatible.
->
-> I agree.  Kees, since you're changing this anyway please make it
-> look better not worse.
+On 5/8/19 8:37 AM, Alexander Potapenko wrote:
+> diff --git a/security/Kconfig.hardening b/security/Kconfig.hardening
+> index 0a1d4ca314f4..4a4001f5ad25 100644
+> --- a/security/Kconfig.hardening
+> +++ b/security/Kconfig.hardening
+> @@ -159,6 +159,22 @@ config STACKLEAK_RUNTIME_DISABLE
+>  	  runtime to control kernel stack erasing for kernels built with
+>  	  CONFIG_GCC_PLUGIN_STACKLEAK.
+>  
+> +config INIT_ON_ALLOC_DEFAULT_ON
+> +	bool "Set init_on_alloc=1 by default"
+> +	default false
 
-Do you mean I should use the typedefs in the new macros? I'm not aware
-of a way to use a typedef to declare a function body, so I had to
-repeat them. I'm open to suggestions!
+That should be spelled "default n" but since that is already the default,
+just omit the line completely.
 
-As far as "fixing the prototypes", the API is agnostic of the context
-type, and uses void *. And also it provides a way to call the same
-function with different pointer types on the other arguments:
+> +	help
+> +	  Enable init_on_alloc=1 by default, making the kernel initialize every
+> +	  page and heap allocation with zeroes.
+> +	  init_on_alloc can be overridden via command line.
+> +
+> +config INIT_ON_FREE_DEFAULT_ON
+> +	bool "Set init_on_free=1 by default"
+> +	default false
 
-For example, quoting the existing code:
+ditto.
 
-asmlinkage void twofish_dec_blk(struct twofish_ctx *ctx, u8 *dst,
-                                const u8 *src);
+> +	help
+> +	  Enable init_on_free=1 by default, making the kernel initialize freed
+> +	  pages and slab memory with zeroes.
+> +	  init_on_free can be overridden via command line.
+> +
+>  endmenu
+>  
+>  endmenu
 
-Which is used for ecb and cbc:
-
-#define GLUE_FUNC_CAST(fn) ((common_glue_func_t)(fn))
-#define GLUE_CBC_FUNC_CAST(fn) ((common_glue_cbc_func_t)(fn))
-...
-static const struct common_glue_ctx twofish_dec = {
-...
-                .fn_u = { .ecb = GLUE_FUNC_CAST(twofish_dec_blk) }
-
-static const struct common_glue_ctx twofish_dec_cbc = {
-...
-                .fn_u = { .cbc = GLUE_CBC_FUNC_CAST(twofish_dec_blk) }
-
-which have different prototypes:
-
-typedef void (*common_glue_func_t)(void *ctx, u8 *dst, const u8 *src);
-typedef void (*common_glue_cbc_func_t)(void *ctx, u128 *dst, const u128 *src);
-...
-struct common_glue_func_entry {
-        unsigned int num_blocks; /* number of blocks that @fn will process */
-        union {
-                common_glue_func_t ecb;
-                common_glue_cbc_func_t cbc;
-                common_glue_ctr_func_t ctr;
-                common_glue_xts_func_t xts;
-        } fn_u;
-};
-
-What CFI dislikes is calling a func(void *ctx, ...) when the actual
-function is, for example, func(struct twofish_ctx *ctx, ...).
-
-This needs to be fixed at the call site, not the static initializers,
-and since the call site is void, there needs to be a static inline
-that will satisfy the types.
-
-I'm open to suggestions! :)
-
-Thanks,
 
 -- 
-Kees Cook
+~Randy
