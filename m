@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15905-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15906-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 293C318317
-	for <lists+kernel-hardening@lfdr.de>; Thu,  9 May 2019 03:05:26 +0200 (CEST)
-Received: (qmail 19988 invoked by uid 550); 9 May 2019 01:05:19 -0000
+	by mail.lfdr.de (Postfix) with SMTP id C2A431833E
+	for <lists+kernel-hardening@lfdr.de>; Thu,  9 May 2019 03:39:41 +0200 (CEST)
+Received: (qmail 12160 invoked by uid 550); 9 May 2019 01:39:35 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,77 +13,46 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 19970 invoked from network); 9 May 2019 01:05:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20170209; h=Content-Transfer-Encoding:
-	Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:
-	Subject:Sender:Reply-To:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	 bh=G13SwZrvXQwLwqfSvC5cLaD8FJjp+bG9vvkSPGdxrhE=; b=b4bKpqtlBzzAQmT4dULJ60Wx/
-	4+mV8vaQI2ye68XjE42FuRpIw2V+NKJMAqALzmF4L45TsWnm64cyf9aZYpA8l8d1NVLuDS8uIeCMm
-	2B7tvT+bSk4czrUY6K7SQEb6YcRxEbbkhhUCmU6VEmkdwCO+ZFvwQ/ZUJqgP/w4jZo4iHlN3eaVL+
-	kK/r7hTkrByF/ZaNFivjTPBINatmyiTOXJz51A7fd2jgcAqqDsyZ7d8uJeCUAQmLsnA5elniY+wKR
-	sRgfHraFrxNNMgi36b/ZcrHq1Zw1KU7TahBjwB+7xbQIFWjjkzqDqw82hUi657MF+rES6DBkqzcCu
-	rbCtLeMpQ==;
-Subject: Re: [PATCH 1/4] mm: security: introduce init_on_alloc=1 and
- init_on_free=1 boot options
-To: Alexander Potapenko <glider@google.com>, akpm@linux-foundation.org,
- cl@linux.com, keescook@chromium.org, labbott@redhat.com
-Cc: linux-mm@kvack.org, linux-security-module@vger.kernel.org,
- kernel-hardening@lists.openwall.com, yamada.masahiro@socionext.com,
- jmorris@namei.org, serge@hallyn.com, ndesaulniers@google.com,
- kcc@google.com, dvyukov@google.com, sspatil@android.com, jannh@google.com,
- mark.rutland@arm.com
-References: <20190508153736.256401-1-glider@google.com>
- <20190508153736.256401-2-glider@google.com>
-From: Randy Dunlap <rdunlap@infradead.org>
-Message-ID: <6e5ccf92-cc58-ab2b-d025-0f5642d5f4a6@infradead.org>
-Date: Wed, 8 May 2019 18:04:55 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+Received: (qmail 12136 invoked from network); 9 May 2019 01:39:34 -0000
+Date: Thu, 9 May 2019 09:39:06 +0800
+From: Herbert Xu <herbert@gondor.apana.org.au>
+To: Kees Cook <keescook@chromium.org>
+Cc: Eric Biggers <ebiggers@kernel.org>, Joao Moreira <jmoreira@suse.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Borislav Petkov <bp@alien8.de>, X86 ML <x86@kernel.org>,
+	linux-crypto <linux-crypto@vger.kernel.org>,
+	LKML <linux-kernel@vger.kernel.org>,
+	Kernel Hardening <kernel-hardening@lists.openwall.com>
+Subject: Re: [PATCH v3 0/7] crypto: x86: Fix indirect function call casts
+Message-ID: <20190509013905.d3oflhz44lnqukzz@gondor.apana.org.au>
+References: <20190507161321.34611-1-keescook@chromium.org>
+ <20190507170039.GB1399@sol.localdomain>
+ <CAGXu5jL7pWWXuJMinghn+3GjQLLBYguEtwNdZSQy++XGpGtsHQ@mail.gmail.com>
+ <20190507215045.GA7528@sol.localdomain>
+ <20190508133606.nsrzthbad5kynavp@gondor.apana.org.au>
+ <CAGXu5jKdsuzX6KF74zAYw3PpEf8DExS9P0Y_iJrJVS+goHFbcA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20190508153736.256401-2-glider@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGXu5jKdsuzX6KF74zAYw3PpEf8DExS9P0Y_iJrJVS+goHFbcA@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
 
-On 5/8/19 8:37 AM, Alexander Potapenko wrote:
-> diff --git a/security/Kconfig.hardening b/security/Kconfig.hardening
-> index 0a1d4ca314f4..4a4001f5ad25 100644
-> --- a/security/Kconfig.hardening
-> +++ b/security/Kconfig.hardening
-> @@ -159,6 +159,22 @@ config STACKLEAK_RUNTIME_DISABLE
->  	  runtime to control kernel stack erasing for kernels built with
->  	  CONFIG_GCC_PLUGIN_STACKLEAK.
->  
-> +config INIT_ON_ALLOC_DEFAULT_ON
-> +	bool "Set init_on_alloc=1 by default"
-> +	default false
+On Wed, May 08, 2019 at 02:08:25PM -0700, Kees Cook wrote:
+>
+> For example, quoting the existing code:
+> 
+> asmlinkage void twofish_dec_blk(struct twofish_ctx *ctx, u8 *dst,
+>                                 const u8 *src);
 
-That should be spelled "default n" but since that is already the default,
-just omit the line completely.
+So just make it
 
-> +	help
-> +	  Enable init_on_alloc=1 by default, making the kernel initialize every
-> +	  page and heap allocation with zeroes.
-> +	  init_on_alloc can be overridden via command line.
-> +
-> +config INIT_ON_FREE_DEFAULT_ON
-> +	bool "Set init_on_free=1 by default"
-> +	default false
+	asmlinkage void twofish_dec_blk(void *ctx, u8 *dst, const u8 *src);
 
-ditto.
+and you won't need any of these casts.
 
-> +	help
-> +	  Enable init_on_free=1 by default, making the kernel initialize freed
-> +	  pages and slab memory with zeroes.
-> +	  init_on_free can be overridden via command line.
-> +
->  endmenu
->  
->  endmenu
-
-
+Cheers,
 -- 
-~Randy
+Email: Herbert Xu <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
