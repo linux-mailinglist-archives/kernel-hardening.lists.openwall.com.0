@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15912-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15913-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 75A0B18E03
-	for <lists+kernel-hardening@lfdr.de>; Thu,  9 May 2019 18:27:54 +0200 (CEST)
-Received: (qmail 5278 invoked by uid 550); 9 May 2019 16:27:47 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 495C918E54
+	for <lists+kernel-hardening@lfdr.de>; Thu,  9 May 2019 18:43:52 +0200 (CEST)
+Received: (qmail 20125 invoked by uid 550); 9 May 2019 16:43:46 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,68 +13,155 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 26166 invoked from network); 9 May 2019 15:38:47 -0000
+Received: (qmail 20105 invoked from network); 9 May 2019 16:43:45 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5YwQ7pSduzStb02SylGKVrjZm5E2uXA+GvWIb5JRr7I=;
-        b=H5YrD2LANg0XDBX7Y8dX3WkFbyNGuKqmc5AwTCh3L8XKM1fCfygAH6ZZiCtp9tqqlD
-         RxH8VecF/mXAPPFyCplZvNSO/9v006AbuWT/n6pPPRhI4nrP96doRX6Xq1znHbO4VVQ/
-         G3kcSqpeEXJBkxBuWZHB/O1+9AApxfAZUUs9ezP38DJDepTh3xANJ/OLFaHQBMLj9Wm5
-         MuJG8j7w2G1sbeBewcHXyCRfwk4iMjYXN1tb8k0QAz9IxchlTla8nJbb1BQ7G/YzDMOO
-         Y/KBoLfQw/G64pRnlHf18UE8WP4NpZegiPor/cUFu6kDqVkX1EEz1g1AITn6aA211vqv
-         Dzpg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=scoklaUKCwoyF6C6A+2vS8qnRMGu4PDFVwRfwqNtv98=;
+        b=W5NPu7UNCMvXR4FF+Orajnb/B6NZxQzAvi9Rnniu5D1QBMIj1zEd1ZOTFs7N0YCb4h
+         obNz04dmCAXeV8V10GEaxiDmcRhVkfNt0Sm9pD4dYF/C1vabNRy4tyw/q7pPU4tQMNfr
+         KhlKXF2buBmjsDZq5ypkF3nP3KBRvADS4tobRjqeogywxqaPTtWxqDz5C5JWDdqIo4q9
+         nGlCgGUJ8Vitujn2OgVQsAdeVHSP6yhMv9Ya4xWGm4t8jYixlVweNEFJSk9DnlVnYaO1
+         kTMxqWZfeq5kV4no0PIgvREzErEcSEXQqIUq8unew+2G0z3iFWyYgkfqg9umSa6KielS
+         6rXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5YwQ7pSduzStb02SylGKVrjZm5E2uXA+GvWIb5JRr7I=;
-        b=jIt+aaWibQbGvTlVVmTI1zWQTrfHM7CkAqNvgh8jRfzPovDo2Mq03eDeWfCcVi9AE3
-         FEDx9WsZO65QM0cKVYZKvALPJF4jf9+9nYgYOsZb0M83PFq66fuQE/Bt5ALRF6gLGcFZ
-         Kt9ohGsfd8J/2JEtglGQh33qqDjifMYyZkyDfrJTR2ehAOOBTO/79nNueUZsnWAO73MK
-         kF1SwpFbI7yIA1bi9ju/wp+7Sq3qLmERaaWt+Y4TSkfWqAJehKm40i0nE5tevuXfKxtH
-         Km7Q5v16tpR9rs6L1/OcsQzRGskDpr8JaNpCYAqiUhuyl8zKqniWI9siIua6HzZWsEvZ
-         WNfg==
-X-Gm-Message-State: APjAAAU1ss63gfCP6HX56/uYhVrvK9sd5nh0O3JuYiwFzP5X+dFdagX2
-	SJDAyxNABuGRH61PWFjqycFOFQ==
-X-Google-Smtp-Source: APXvYqxqQ737rcyEeTeKDmNxTm839RB0ZfC55simHYlp8b5BDIhwUb8yXIjBmSqvxOC2ppuwaQgrnQ==
-X-Received: by 2002:a62:2b43:: with SMTP id r64mr6112838pfr.210.1557416314921;
-        Thu, 09 May 2019 08:38:34 -0700 (PDT)
-Date: Thu, 9 May 2019 08:38:28 -0700
-From: Sami Tolvanen <samitolvanen@google.com>
-To: Eric Biggers <ebiggers@kernel.org>
-Cc: Kees Cook <keescook@chromium.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Joao Moreira <jmoreira@suse.de>, Ingo Molnar <mingo@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Borislav Petkov <bp@alien8.de>, X86 ML <x86@kernel.org>,
-	linux-crypto <linux-crypto@vger.kernel.org>,
-	LKML <linux-kernel@vger.kernel.org>,
-	Kernel Hardening <kernel-hardening@lists.openwall.com>
-Subject: Re: [PATCH v3 0/7] crypto: x86: Fix indirect function call casts
-Message-ID: <20190509153828.GA261205@google.com>
-References: <20190507161321.34611-1-keescook@chromium.org>
- <20190507170039.GB1399@sol.localdomain>
- <CAGXu5jL7pWWXuJMinghn+3GjQLLBYguEtwNdZSQy++XGpGtsHQ@mail.gmail.com>
- <20190507215045.GA7528@sol.localdomain>
- <20190508133606.nsrzthbad5kynavp@gondor.apana.org.au>
- <CAGXu5jKdsuzX6KF74zAYw3PpEf8DExS9P0Y_iJrJVS+goHFbcA@mail.gmail.com>
- <20190509020439.GB693@sol.localdomain>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=scoklaUKCwoyF6C6A+2vS8qnRMGu4PDFVwRfwqNtv98=;
+        b=SoAS85Y/XVO2h38Bf8CexJGK+UUGlOH3I21+98r+TElBew7vVCb6tJ5KxIiRrhEyT1
+         ccxcgttf+AL4waiTfiOQlyokRzMP0Wwb8jHVGM0f549FYk6lx/u8/RcKj/h/EjX209ne
+         vMcZU+zTQnKD1X9N8TrFVnrlv4Qdhoz9Dbi8hsCR8FiewTI8z5QqC8570bP7vv6AWfs8
+         rPyqy+n/GaWH6oZ3D2UT1MfQWoAyz+Md1ShLX1VAEENgBUlPKEjmWMJAwVqkTJ4k5I6i
+         54R8wqY+dTjWOixAD6xnDBlrLUGtbVYiHRqrZ2CbS1H3c1MrZs8Lk+zQrFKkzn7v1ITp
+         ndTA==
+X-Gm-Message-State: APjAAAUO4jXXk1ssInc+OmH8LaHORPZAG0uO1+fxqPSq+0rOYR6q92Eq
+	y1vJMzlyNVcD/TJs9itES4cUHiVIfzQLLGO2sYqmgw==
+X-Google-Smtp-Source: APXvYqyCrNILIPE1aM9yj+g5z6EqLOv3bZuyYJ/RoOpitBlKLPTF4cJxqZd//NaX8Rp91mG9W2FyALdArcIfwkl6nKs=
+X-Received: by 2002:a1f:ae4b:: with SMTP id x72mr2336739vke.29.1557420213429;
+ Thu, 09 May 2019 09:43:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190509020439.GB693@sol.localdomain>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20190508153736.256401-1-glider@google.com> <20190508153736.256401-2-glider@google.com>
+ <CAGXu5jKfxYfRQS+CouYZc8-BMEWR1U3kwshu4892pM0pmmACGw@mail.gmail.com>
+In-Reply-To: <CAGXu5jKfxYfRQS+CouYZc8-BMEWR1U3kwshu4892pM0pmmACGw@mail.gmail.com>
+From: Alexander Potapenko <glider@google.com>
+Date: Thu, 9 May 2019 18:43:21 +0200
+Message-ID: <CAG_fn=UDyVpZz5=oP4HHdYCB43NnXG1sLypRXopyEk9qgq471A@mail.gmail.com>
+Subject: Re: [PATCH 1/4] mm: security: introduce init_on_alloc=1 and
+ init_on_free=1 boot options
+To: Kees Cook <keescook@chromium.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, Christoph Lameter <cl@linux.com>, 
+	Laura Abbott <labbott@redhat.com>, Linux-MM <linux-mm@kvack.org>, 
+	linux-security-module <linux-security-module@vger.kernel.org>, 
+	Kernel Hardening <kernel-hardening@lists.openwall.com>, 
+	Masahiro Yamada <yamada.masahiro@socionext.com>, James Morris <jmorris@namei.org>, 
+	"Serge E. Hallyn" <serge@hallyn.com>, Nick Desaulniers <ndesaulniers@google.com>, 
+	Kostya Serebryany <kcc@google.com>, Dmitry Vyukov <dvyukov@google.com>, Sandeep Patil <sspatil@android.com>, 
+	Randy Dunlap <rdunlap@infradead.org>, Jann Horn <jannh@google.com>, 
+	Mark Rutland <mark.rutland@arm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 08, 2019 at 07:04:40PM -0700, Eric Biggers wrote:
-> And I also asked whether indirect calls to asm code are even allowed
-> with CFI. IIRC, the AOSP kernels have been patched to remove them from
-> arm64
+From: Kees Cook <keescook@chromium.org>
+Date: Wed, May 8, 2019 at 9:02 PM
+To: Alexander Potapenko
+Cc: Andrew Morton, Christoph Lameter, Kees Cook, Laura Abbott,
+Linux-MM, linux-security-module, Kernel Hardening, Masahiro Yamada,
+James Morris, Serge E. Hallyn, Nick Desaulniers, Kostya Serebryany,
+Dmitry Vyukov, Sandeep Patil, Randy Dunlap, Jann Horn, Mark Rutland
 
-At least with clang, indirect calls to stand-alone assembly functions
-trip CFI checks, which is why Android kernels use static inline stubs
-to convert these to direct calls instead.
+> On Wed, May 8, 2019 at 8:38 AM Alexander Potapenko <glider@google.com> wr=
+ote:
+> > The new options are needed to prevent possible information leaks and
+> > make control-flow bugs that depend on uninitialized values more
+> > deterministic.
+>
+> I like having this available on both alloc and free. This makes it
+> much more configurable for the end users who can adapt to their work
+> loads, etc.
+>
+> > Linux build with -j12, init_on_free=3D1:  +24.42% sys time (st.err 0.52=
+%)
+> > [...]
+> > Linux build with -j12, init_on_alloc=3D1: +0.57% sys time (st.err 0.40%=
+)
+>
+> Any idea why there is such a massive difference here? This seems to
+> high just for cache-locality effects of touching all the freed pages.
+I've measured a single `make -j12` again under perf stat.
 
-Sami
+The numbers for init_on_alloc=3D1 were:
+
+        4936513177      cache-misses              #    8.056 % of all
+cache refs      (44.44%)
+       61278262461      cache-references
+               (44.45%)
+          42844784      page-faults
+     1449630221347      L1-dcache-loads
+               (44.45%)
+       50569965485      L1-dcache-load-misses     #    3.49% of all
+L1-dcache hits    (44.44%)
+      299987258588      L1-icache-load-misses
+               (44.44%)
+     1449857258648      dTLB-loads
+               (44.45%)
+         826292490      dTLB-load-misses          #    0.06% of all
+dTLB cache hits   (44.44%)
+       22028472701      iTLB-loads
+               (44.44%)
+         858451905      iTLB-load-misses          #    3.90% of all
+iTLB cache hits   (44.45%)
+     162.120107145 seconds time elapsed
+
+, and for init_on_free=3D1:
+
+        6666716777      cache-misses              #   10.862 % of all
+cache refs      (44.45%)
+       61378258434      cache-references
+               (44.46%)
+          42850913      page-faults
+     1449986416063      L1-dcache-loads
+               (44.45%)
+       51277338771      L1-dcache-load-misses     #    3.54% of all
+L1-dcache hits    (44.45%)
+      298295905805      L1-icache-load-misses
+               (44.44%)
+     1450378031344      dTLB-loads
+               (44.43%)
+         807011341      dTLB-load-misses          #    0.06% of all
+dTLB cache hits   (44.44%)
+       22044976638      iTLB-loads
+               (44.44%)
+         846377845      iTLB-load-misses          #    3.84% of all
+iTLB cache hits   (44.45%)
+     164.427054893 seconds time elapsed
+
+
+(note that we don't see the speed difference under perf)
+
+init_on_free=3D1 causes 1.73B more cache misses than init_on_alloc=3D1.
+If I'm understanding correctly, a cache miss costs 12-14 cycles on my
+3GHz Skylake CPU, which can explain explain a 7-8-second difference
+between the two modes.
+But as I just realized this is both kernel and userspace, so while the
+difference is almost correct for wall time (120s for init_on_alloc,
+130s for init_on_free) this doesn't tell much about the time spent in
+the kernel.
+
+> --
+> Kees Cook
+
+
+
+--=20
+Alexander Potapenko
+Software Engineer
+
+Google Germany GmbH
+Erika-Mann-Stra=C3=9Fe, 33
+80636 M=C3=BCnchen
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
