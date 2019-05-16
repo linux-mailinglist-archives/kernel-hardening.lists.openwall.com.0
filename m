@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15927-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15928-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id CA0031FCE6
-	for <lists+kernel-hardening@lfdr.de>; Thu, 16 May 2019 03:02:22 +0200 (CEST)
-Received: (qmail 32624 invoked by uid 550); 16 May 2019 01:02:15 -0000
+	by mail.lfdr.de (Postfix) with SMTP id B51E020186
+	for <lists+kernel-hardening@lfdr.de>; Thu, 16 May 2019 10:47:40 +0200 (CEST)
+Received: (qmail 16338 invoked by uid 550); 16 May 2019 08:47:33 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,100 +13,79 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 32600 invoked from network); 16 May 2019 01:02:15 -0000
+Received: (qmail 16307 invoked from network); 16 May 2019 08:47:33 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=kB1kmUsnU0wPfFGEdIrU26lZ3ENdFfZVOF7R429DJpY=;
-        b=leKX6iwd+E3ikfGY1//ltoNgIH4UsQxaJiOP4LVdzgDaHwTPnmCflqgZj3iMSpPogi
-         PgC4m5zp6O/OVfdH+hwsuGJbVzzncxBPRxzYWSA2cFKS10nMMGAdTlvTBBz9PRWqBtXG
-         0IY/4ObX8iKZI38lWxYnqS+6NDlXUzJI3O9zY=
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=T67sSBYpxyMnMx5QAXMMq1F3JuIWuxSCHLtvQoMOPC8=;
+        b=hQ5iBqKw8w+CnbtvBQNCHowRf/7eqLIDLeSjRYUgZYVdCs2VYDfzQO0NredRP/+iaH
+         bmxXDx1ZZpxja1lFZ+aCKXXm97qhsynO6b9QLoSYyzVNHePnrXaM+euM7iqPRN3JnCu6
+         +JdUXHk6GQZAPqdrg/c/n9AF+WPWl6PK31LhJRhOwJY12J9yL7XXpwwmy8URwaATKMCS
+         ChSHszr09O/y8aJKwsccl4yQzWSDbhdXXRz8JNu+9Qjhup6JWnAGVmGo0J8dOJqjHO66
+         9pR+YuKZTZzI9tGG8jg45Fe2qhDVXzO9RoLbfNKCLB20kt8xuNKVsI1johJCKqKZj/2G
+         YqIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=kB1kmUsnU0wPfFGEdIrU26lZ3ENdFfZVOF7R429DJpY=;
-        b=AKtTuhA1ZtItg6xdEkvyFft3ijflfrIhBAk38FwVLrFax4GMB4daAk0LqHOWjHXkPV
-         1jguHwi0N7PEs7XS9bVkHeUnxHsBFlm7snKI1ahE/NPKIynUMmwhXUFAyDulrf7BVrdR
-         qZVHnd4yOiq2XvcULBCxkiHsYnvGoAjIoWgnFdsmWhz3rujzW38vsQo0mQr2IMcahf7E
-         cic74p7sKo+e6AJoJXmIYRsoyJMA+6fm/Fv40HGXV5gH8PgdUnllJtCZeC6vsnPBxykZ
-         9yJWJcaY35cpSPn59CXZiDR+v7vmnuZB7FeqyA3gGYS79ZFhQqztW3GXjPQiJnOoip1R
-         9B3A==
-X-Gm-Message-State: APjAAAUfirZhScse0cEjXzGMqSZ105u9cDkvIczK2besXlQz9Tdarb5N
-	YEhhdqqRyQV1oSuyotw8Y23Naw==
-X-Google-Smtp-Source: APXvYqwVz17Dgzf/syT6+WT0zM62IWrmEQAWI9YG2skem8A0ptTGY41DM3GMUa2e6NgcM+k+1vVkWw==
-X-Received: by 2002:a63:c046:: with SMTP id z6mr47778396pgi.387.1557968522985;
-        Wed, 15 May 2019 18:02:02 -0700 (PDT)
-Date: Wed, 15 May 2019 18:02:00 -0700
-From: Kees Cook <keescook@chromium.org>
-To: Alexander Potapenko <glider@google.com>
-Cc: akpm@linux-foundation.org, cl@linux.com,
-	kernel-hardening@lists.openwall.com,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Kostya Serebryany <kcc@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Sandeep Patil <sspatil@android.com>,
-	Laura Abbott <labbott@redhat.com>, Jann Horn <jannh@google.com>,
-	linux-mm@kvack.org, linux-security-module@vger.kernel.org
-Subject: Re: [PATCH v2 2/4] lib: introduce test_meminit module
-Message-ID: <201905151752.2BD430A@keescook>
-References: <20190514143537.10435-1-glider@google.com>
- <20190514143537.10435-3-glider@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=T67sSBYpxyMnMx5QAXMMq1F3JuIWuxSCHLtvQoMOPC8=;
+        b=RXyM9YP1GL9TsqvgeH4oG3Nyvtv+n6vVIsG9Zkypn/6AAxvO933Pci6HBxG8rqzs7M
+         KhNUSS+cp4WO6OjiipIYVRnp5btmp8rnWnl/QOlXH40W677yG2oryQrIRucJmO7lvlEG
+         42wVWCBczaSYm5ds3Wo2Ytvad2aDySBC+eobW0IO5H2RUPWDoi7jsCTpCIHICgIrorkZ
+         g2E1z7SR4o0OxmRkNRyEppB9xCqPXKxUboVpfVYiDVAerajLJSnsqxNHtNUcGBq0T+fG
+         O1uhBxluyLKm6bCIzz6VJa197QWy8ia9/XSCwJluoZPx9BfhAEoS9uhDidk94fkwH8N8
+         s5YQ==
+X-Gm-Message-State: APjAAAX3/UehhV3kA8zh+KgD4fzfk5sRDqerAetMqZQCi8W49aYc5d6r
+	IVcP0rPIq20RIf4Foe7yo0uuo8puZ+rfvG5K/KKvZA==
+X-Google-Smtp-Source: APXvYqzRWW5Vw8J/39xYKpC2Df9BAh9uNAvhSdajD9qOYt+HUvst57L/1O1ngpkWEYP6UmG2ye5WhE1hcP1xsks5uNY=
+X-Received: by 2002:a5d:93da:: with SMTP id j26mr26609941ioo.170.1557996441199;
+ Thu, 16 May 2019 01:47:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190514143537.10435-3-glider@google.com>
+References: <20190510090025.4680-1-chris.packham@alliedtelesis.co.nz> <CAD=FV=UN8rm_40eVz4YVVJ57d_BWkzxs1E4nYhX_mKWe2pwX0Q@mail.gmail.com>
+In-Reply-To: <CAD=FV=UN8rm_40eVz4YVVJ57d_BWkzxs1E4nYhX_mKWe2pwX0Q@mail.gmail.com>
+From: Ard Biesheuvel <ard.biesheuvel@linaro.org>
+Date: Thu, 16 May 2019 10:47:08 +0200
+Message-ID: <CAKv+Gu98jQA7XARghVNXq8qEBm4DG77q3K0j-zw-WX_w-4_Q-Q@mail.gmail.com>
+Subject: Re: [PATCH] gcc-plugins: arm_ssp_per_task_plugin: Fix for older GCC < 6
+To: Doug Anderson <dianders@chromium.org>
+Cc: Chris Packham <chris.packham@alliedtelesis.co.nz>, Kees Cook <keescook@chromium.org>, 
+	Emese Revfy <re.emese@gmail.com>, Kernel Hardening <kernel-hardening@lists.openwall.com>, 
+	LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 14, 2019 at 04:35:35PM +0200, Alexander Potapenko wrote:
-> Add tests for heap and pagealloc initialization.
-> These can be used to check init_on_alloc and init_on_free implementations
-> as well as other approaches to initialization.
+On Sat, 11 May 2019 at 00:42, Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
+> > Use gen_rtx_set instead of gen_rtx_SET. The former is a wrapper macro
+> > that handles the difference between GCC versions implementing
+> > the latter.
+> >
+> > This fixes the following error on my system with g++ 5.4.0 as the host
+> > compiler
+> >
+> >    HOSTCXX -fPIC scripts/gcc-plugins/arm_ssp_per_task_plugin.o
+> >  scripts/gcc-plugins/arm_ssp_per_task_plugin.c:42:14: error: macro "gen=
+_rtx_SET" requires 3 arguments, but only 2 given
+> >           mask)),
+> >                ^
+> >  scripts/gcc-plugins/arm_ssp_per_task_plugin.c: In function =E2=80=98un=
+signed int arm_pertask_ssp_rtl_execute()=E2=80=99:
+> >  scripts/gcc-plugins/arm_ssp_per_task_plugin.c:39:20: error: =E2=80=98g=
+en_rtx_SET=E2=80=99 was not declared in this scope
+> >     emit_insn_before(gen_rtx_SET
+> >
+> > Signed-off-by: Chris Packham <chris.packham@alliedtelesis.co.nz>
+> > ---
+> >  scripts/gcc-plugins/arm_ssp_per_task_plugin.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> I can confirm that I was getting compile errors before this patch and
+> applying it allowed me to compile and boot.  Thanks!  :-)
+>
+> Tested-by: Douglas Anderson <dianders@chromium.org>
+>
 
-This is nice! Easy way to test the results. It might be helpful to show
-here what to expect when loading this module:
-
-with either init_on_alloc=1 or init_on_free=1, I happily see:
-
-	test_meminit: all 10 tests in test_pages passed
-	test_meminit: all 40 tests in test_kvmalloc passed
-	test_meminit: all 20 tests in test_kmemcache passed
-	test_meminit: all 70 tests passed!
-
-and without:
-
-	test_meminit: test_pages failed 10 out of 10 times
-	test_meminit: test_kvmalloc failed 40 out of 40 times
-	test_meminit: test_kmemcache failed 10 out of 20 times
-	test_meminit: failures: 60 out of 70
-
-
-> 
-> Signed-off-by: Alexander Potapenko <glider@google.com>
-
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Tested-by: Kees Cook <keescook@chromium.org>
-
-note below...
-
-> [...]
-> diff --git a/lib/test_meminit.c b/lib/test_meminit.c
-> new file mode 100644
-> index 000000000000..67d759498030
-> --- /dev/null
-> +++ b/lib/test_meminit.c
-> @@ -0,0 +1,205 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> [...]
-> +module_init(test_meminit_init);
-
-I get a warning at build about missing the license:
-
-WARNING: modpost: missing MODULE_LICENSE() in lib/test_meminit.o
-
-So, following the SPDX line, just add:
-
-MODULE_LICENSE("GPL");
-
--- 
-Kees Cook
+Reviewed-by: Ard Biesheuvel <ard.biesheuvel@linaro.org>
