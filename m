@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15933-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15934-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 59DB721141
-	for <lists+kernel-hardening@lfdr.de>; Fri, 17 May 2019 02:26:31 +0200 (CEST)
-Received: (qmail 26167 invoked by uid 550); 17 May 2019 00:26:25 -0000
+	by mail.lfdr.de (Postfix) with SMTP id CF30021176
+	for <lists+kernel-hardening@lfdr.de>; Fri, 17 May 2019 02:50:42 +0200 (CEST)
+Received: (qmail 22144 invoked by uid 550); 17 May 2019 00:50:37 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,32 +13,32 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 26090 invoked from network); 17 May 2019 00:26:24 -0000
+Received: (qmail 22126 invoked from network); 17 May 2019 00:50:36 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ilDv0+YTa/WnY3XhZH80fN4U1WpmetjpQlVMabTh6tw=;
-        b=ASs9/AsKmgukkUd8ZkGKrmFLrJLHhcmjh9zttsNZWu9UiLxwGqq+jTPLZfvADEE6BT
-         0wo7n9b7ck3n1cRmgHDKeiMzhg+VhnE8FHKem/W4KuR+HtEfYDi+njtYVyXvv+cb4FKI
-         TheGLDDVwvh9uyy0Qq5Jox9zPBUe3teBFpXhw=
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :in-reply-to;
+        bh=NL+2xCgkdZjiZqCBPfjZBo7z+6ErcBZumRMPeJ0EeFQ=;
+        b=CSOy8X4is2wKO5Rx00RuxmgXP2xZ/JC0zjufsNKTddwrxwO2WKPgOuXTHfERCHP17t
+         /NQWFMlmPsBYSh7Egh8kIVJpTxtTFcLIzeZM2jDOqcOiXqopm11/OjGDq01Su5EXxkTb
+         1ghHfV+1HedbTD3CkcfjioeNBQtpo4hTUV65U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ilDv0+YTa/WnY3XhZH80fN4U1WpmetjpQlVMabTh6tw=;
-        b=jSY68AzNfa+FxaTLsNB5RctDjzEA6spYrRL5jUQ4g6/Gbwwl6jaT1YHB96qo3utZZ/
-         2lw10XFWPd1ZLhqplCS+2LxbxKUvLw9jhaiwtDHSsY6MR8QC9EQsH00D0vEKMDBEXImZ
-         rdFm6wUxQWMIKIbXyM4fcVclVdr/s4Bjq2aqGYFuc1++QmQBTt8zmUJd+4Yg8nJm+IS+
-         4Gcl1HxebK1GFWiyyTMwvoJuIlxa/L5juglA8y+2INAiOcNO2CMlGGn+tVTW0xDwkAiw
-         /KQjdwJfH+5zMY3EIoZLColTVeYOLjX07dRsHNCBceShz4v6asTOLaZCtBGYWpQtEL5f
-         AlGw==
-X-Gm-Message-State: APjAAAXBLX84HM3bOgGg6W0Jo9lgcEvuRlkb8Buq/sV37SBeLtVygll7
-	u9Mu5kmZKN2NHPvQw1NbR6r7cQ==
-X-Google-Smtp-Source: APXvYqwlMKqnUliknBdwEvFPxguLJNac2aseYZx+RJq6e02esXvj8m81/U384KtDWip6FxOC9kYkMg==
-X-Received: by 2002:a63:ef56:: with SMTP id c22mr2023348pgk.13.1558052772428;
-        Thu, 16 May 2019 17:26:12 -0700 (PDT)
-Date: Thu, 16 May 2019 17:26:09 -0700
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:in-reply-to;
+        bh=NL+2xCgkdZjiZqCBPfjZBo7z+6ErcBZumRMPeJ0EeFQ=;
+        b=FE1ULKhbIAoLveAwipU0brJO/V8T6FWEjtnZ8Kpt5lsisPSUC1KfKGHw5GDvZufRtb
+         Bl/lJrGRxCDn5inZPhVIeIqDcs/XcIZU5/jAd0gViBZLN5457r+QrUZRJEkePR055WtM
+         NcG0MjoegEmSQpgxkRZF7SAoxD5pIwbwNC6mEW+C3Njn6GV8oDMXNaJcxgAol2ofH2nT
+         KTAVqajLO3wxWWlaxVnFABRNEaAWye6S4B8AGhFJEmTDexrr9LpXJrfKS/JChxKjSNVn
+         uvS5usPAMMCCtTSgxLn2aj/UGdlKvJq2df9uPZTcucQuPcO6urJB0EHDE6+s/WhOLHzM
+         v+eA==
+X-Gm-Message-State: APjAAAU+jIR15vBBOIyrOeuAZDBq3qfTbgQXdsMWHb88T7I5gTJlLxLO
+	2e+1YT+XPUaHk+vc/gAwKWcOdA==
+X-Google-Smtp-Source: APXvYqybqaQ0dXdhVwgFoK8fD+r7lJjBN2v7ErsEC2WUSyLWan6WZ1LYFWJpqOYM54Zi1kkADEi3gw==
+X-Received: by 2002:a63:fb02:: with SMTP id o2mr52230505pgh.357.1558054224431;
+        Thu, 16 May 2019 17:50:24 -0700 (PDT)
+Date: Thu, 16 May 2019 17:50:22 -0700
 From: Kees Cook <keescook@chromium.org>
 To: Alexander Potapenko <glider@google.com>
 Cc: akpm@linux-foundation.org, cl@linux.com,
@@ -54,70 +54,161 @@ Cc: akpm@linux-foundation.org, cl@linux.com,
 	Randy Dunlap <rdunlap@infradead.org>, Jann Horn <jannh@google.com>,
 	Mark Rutland <mark.rutland@arm.com>, linux-mm@kvack.org,
 	linux-security-module@vger.kernel.org
-Subject: Re: [PATCH v2 4/4] net: apply __GFP_NO_AUTOINIT to AF_UNIX sk_buff
- allocations
-Message-ID: <201905161714.A53D472D9@keescook>
-References: <20190514143537.10435-1-glider@google.com>
- <20190514143537.10435-5-glider@google.com>
- <201905160923.BD3E530EFC@keescook>
+Subject: [PATCH 5/4] mm: Introduce SLAB_NO_FREE_INIT and mark excluded caches
+Message-ID: <201905161746.16E885F@keescook>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <201905160923.BD3E530EFC@keescook>
+In-Reply-To: <20190514143537.10435-5-glider@google.com>
 
-On Thu, May 16, 2019 at 09:53:01AM -0700, Kees Cook wrote:
-> On Tue, May 14, 2019 at 04:35:37PM +0200, Alexander Potapenko wrote:
-> > Add sock_alloc_send_pskb_noinit(), which is similar to
-> > sock_alloc_send_pskb(), but allocates with __GFP_NO_AUTOINIT.
-> > This helps reduce the slowdown on hackbench in the init_on_alloc mode
-> > from 6.84% to 3.45%.
-> 
-> Out of curiosity, why the creation of the new function over adding a
-> gfp flag argument to sock_alloc_send_pskb() and updating callers? (There
-> are only 6 callers, and this change already updates 2 of those.)
-> 
-> > Slowdown for the initialization features compared to init_on_free=0,
-> > init_on_alloc=0:
-> > 
-> > hackbench, init_on_free=1:  +7.71% sys time (st.err 0.45%)
-> > hackbench, init_on_alloc=1: +3.45% sys time (st.err 0.86%)
+In order to improve the init_on_free performance, some frequently
+freed caches with less sensitive contents can be excluded from the
+init_on_free behavior.
 
-So I've run some of my own wall-clock timings of kernel builds (which
-should be an pretty big "worst case" situation, and I see much smaller
-performance changes:
+This patch is modified from Brad Spengler/PaX Team's code in the
+last public patch of grsecurity/PaX based on my understanding of the
+code. Changes or omissions from the original code are mine and don't
+reflect the original grsecurity/PaX code.
 
-everything off
-	Run times: 289.18 288.61 289.66 287.71 287.67
-	Min: 287.67 Max: 289.66 Mean: 288.57 Std Dev: 0.79
-		baseline
+Signed-off-by: Kees Cook <keescook@chromium.org>
+---
+ fs/buffer.c          | 2 +-
+ fs/dcache.c          | 3 ++-
+ include/linux/slab.h | 3 +++
+ kernel/fork.c        | 6 ++++--
+ mm/rmap.c            | 5 +++--
+ mm/slab.h            | 5 +++--
+ net/core/skbuff.c    | 6 ++++--
+ 7 files changed, 20 insertions(+), 10 deletions(-)
 
-init_on_alloc=1
-	Run times: 289.72 286.95 287.87 287.34 287.35
-	Min: 286.95 Max: 289.72 Mean: 287.85 Std Dev: 0.98
-		0.25% faster (within the std dev noise)
+diff --git a/fs/buffer.c b/fs/buffer.c
+index 0faa41fb4c88..04a85bd4cf2e 100644
+--- a/fs/buffer.c
++++ b/fs/buffer.c
+@@ -3457,7 +3457,7 @@ void __init buffer_init(void)
+ 	bh_cachep = kmem_cache_create("buffer_head",
+ 			sizeof(struct buffer_head), 0,
+ 				(SLAB_RECLAIM_ACCOUNT|SLAB_PANIC|
+-				SLAB_MEM_SPREAD),
++				SLAB_MEM_SPREAD|SLAB_NO_FREE_INIT),
+ 				NULL);
+ 
+ 	/*
+diff --git a/fs/dcache.c b/fs/dcache.c
+index 8136bda27a1f..323b039accba 100644
+--- a/fs/dcache.c
++++ b/fs/dcache.c
+@@ -3139,7 +3139,8 @@ void __init vfs_caches_init_early(void)
+ void __init vfs_caches_init(void)
+ {
+ 	names_cachep = kmem_cache_create_usercopy("names_cache", PATH_MAX, 0,
+-			SLAB_HWCACHE_ALIGN|SLAB_PANIC, 0, PATH_MAX, NULL);
++			SLAB_HWCACHE_ALIGN|SLAB_PANIC|SLAB_NO_FREE_INIT, 0,
++			PATH_MAX, NULL);
+ 
+ 	dcache_init();
+ 	inode_init();
+diff --git a/include/linux/slab.h b/include/linux/slab.h
+index 9449b19c5f10..7eba9ad8830d 100644
+--- a/include/linux/slab.h
++++ b/include/linux/slab.h
+@@ -92,6 +92,9 @@
+ /* Avoid kmemleak tracing */
+ #define SLAB_NOLEAKTRACE	((slab_flags_t __force)0x00800000U)
+ 
++/* Exclude slab from zero-on-free when init_on_free is enabled */
++#define SLAB_NO_FREE_INIT	((slab_flags_t __force)0x01000000U)
++
+ /* Fault injection mark */
+ #ifdef CONFIG_FAILSLAB
+ # define SLAB_FAILSLAB		((slab_flags_t __force)0x02000000U)
+diff --git a/kernel/fork.c b/kernel/fork.c
+index b4cba953040a..9868585f5520 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -2550,11 +2550,13 @@ void __init proc_caches_init(void)
+ 
+ 	mm_cachep = kmem_cache_create_usercopy("mm_struct",
+ 			mm_size, ARCH_MIN_MMSTRUCT_ALIGN,
+-			SLAB_HWCACHE_ALIGN|SLAB_PANIC|SLAB_ACCOUNT,
++			SLAB_HWCACHE_ALIGN|SLAB_PANIC|SLAB_ACCOUNT|
++			SLAB_NO_FREE_INIT,
+ 			offsetof(struct mm_struct, saved_auxv),
+ 			sizeof_field(struct mm_struct, saved_auxv),
+ 			NULL);
+-	vm_area_cachep = KMEM_CACHE(vm_area_struct, SLAB_PANIC|SLAB_ACCOUNT);
++	vm_area_cachep = KMEM_CACHE(vm_area_struct, SLAB_PANIC|SLAB_ACCOUNT|
++						    SLAB_NO_FREE_INIT);
+ 	mmap_init();
+ 	nsproxy_cache_init();
+ }
+diff --git a/mm/rmap.c b/mm/rmap.c
+index e5dfe2ae6b0d..b7b8013eeb0a 100644
+--- a/mm/rmap.c
++++ b/mm/rmap.c
+@@ -432,10 +432,11 @@ static void anon_vma_ctor(void *data)
+ void __init anon_vma_init(void)
+ {
+ 	anon_vma_cachep = kmem_cache_create("anon_vma", sizeof(struct anon_vma),
+-			0, SLAB_TYPESAFE_BY_RCU|SLAB_PANIC|SLAB_ACCOUNT,
++			0, SLAB_TYPESAFE_BY_RCU|SLAB_PANIC|SLAB_ACCOUNT|
++			SLAB_NO_FREE_INIT,
+ 			anon_vma_ctor);
+ 	anon_vma_chain_cachep = KMEM_CACHE(anon_vma_chain,
+-			SLAB_PANIC|SLAB_ACCOUNT);
++			SLAB_PANIC|SLAB_ACCOUNT|SLAB_NO_FREE_INIT);
+ }
+ 
+ /*
+diff --git a/mm/slab.h b/mm/slab.h
+index 24ae887359b8..f95b4f03c57b 100644
+--- a/mm/slab.h
++++ b/mm/slab.h
+@@ -129,7 +129,8 @@ static inline slab_flags_t kmem_cache_flags(unsigned int object_size,
+ /* Legal flag mask for kmem_cache_create(), for various configurations */
+ #define SLAB_CORE_FLAGS (SLAB_HWCACHE_ALIGN | SLAB_CACHE_DMA | \
+ 			 SLAB_CACHE_DMA32 | SLAB_PANIC | \
+-			 SLAB_TYPESAFE_BY_RCU | SLAB_DEBUG_OBJECTS )
++			 SLAB_TYPESAFE_BY_RCU | SLAB_DEBUG_OBJECTS | \
++			 SLAB_NO_FREE_INIT)
+ 
+ #if defined(CONFIG_DEBUG_SLAB)
+ #define SLAB_DEBUG_FLAGS (SLAB_RED_ZONE | SLAB_POISON | SLAB_STORE_USER)
+@@ -535,7 +536,7 @@ static inline bool slab_want_init_on_alloc(gfp_t flags, struct kmem_cache *c)
+ static inline bool slab_want_init_on_free(struct kmem_cache *c)
+ {
+ 	if (static_branch_unlikely(&init_on_free))
+-		return !(c->ctor);
++		return !(c->ctor) && ((c->flags & SLAB_NO_FREE_INIT) == 0);
+ 	else
+ 		return false;
+ }
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index e89be6282693..b65902d2c042 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -3981,14 +3981,16 @@ void __init skb_init(void)
+ 	skbuff_head_cache = kmem_cache_create_usercopy("skbuff_head_cache",
+ 					      sizeof(struct sk_buff),
+ 					      0,
+-					      SLAB_HWCACHE_ALIGN|SLAB_PANIC,
++					      SLAB_HWCACHE_ALIGN|SLAB_PANIC|
++					      SLAB_NO_FREE_INIT,
+ 					      offsetof(struct sk_buff, cb),
+ 					      sizeof_field(struct sk_buff, cb),
+ 					      NULL);
+ 	skbuff_fclone_cache = kmem_cache_create("skbuff_fclone_cache",
+ 						sizeof(struct sk_buff_fclones),
+ 						0,
+-						SLAB_HWCACHE_ALIGN|SLAB_PANIC,
++						SLAB_HWCACHE_ALIGN|SLAB_PANIC|
++						SLAB_NO_FREE_INIT,
+ 						NULL);
+ 	skb_extensions_init();
+ }
+-- 
+2.17.1
 
-init_on_free=1
-	Run times: 303.26 301.44 301.19 301.55 301.39
-	Min: 301.19 Max: 303.26 Mean: 301.77 Std Dev: 0.75
-		4.57% slower
-
-init_on_free=1 with the PAX_MEMORY_SANITIZE slabs excluded:
-	Run times: 299.19 299.85 298.95 298.23 298.64
-	Min: 298.23 Max: 299.85 Mean: 298.97 Std Dev: 0.55
-		3.60% slower
-
-So the tuning certainly improved things by 1%. My perf numbers don't
-show the 24% hit you were seeing at all, though.
-
-> In the commit log it might be worth mentioning that this is only
-> changing the init_on_alloc case (in case it's not already obvious to
-> folks). Perhaps there needs to be a split of __GFP_NO_AUTOINIT into
-> __GFP_NO_AUTO_ALLOC_INIT and __GFP_NO_AUTO_FREE_INIT? Right now
-> __GFP_NO_AUTOINIT is only checked for init_on_alloc:
-
-I was obviously crazy here. :) GFP isn't present for free(), but a SLAB
-flag works (as was done in PAX_MEMORY_SANITIZE). I'll send the patch I
-used for the above timing test.
 
 -- 
 Kees Cook
