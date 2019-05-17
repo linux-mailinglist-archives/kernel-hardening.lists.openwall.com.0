@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15950-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15951-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 7A5C221B37
-	for <lists+kernel-hardening@lfdr.de>; Fri, 17 May 2019 18:13:35 +0200 (CEST)
-Received: (qmail 24151 invoked by uid 550); 17 May 2019 16:13:29 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 2472D21B9D
+	for <lists+kernel-hardening@lfdr.de>; Fri, 17 May 2019 18:28:15 +0200 (CEST)
+Received: (qmail 5561 invoked by uid 550); 17 May 2019 16:28:09 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,35 +13,36 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 24097 invoked from network); 17 May 2019 16:13:28 -0000
+Received: (qmail 5442 invoked from network); 17 May 2019 16:28:07 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=m02iPOvo556PAupUnS9qzquFGaL67NVm3EjfgL2dy5A=;
-        b=dxB5PWDK5Ubq2UYGrAtUPASDCX1nBouaHJnYPPCDht/KwMlctyK5LwRI6KbDJjVvbI
-         HqXHsPePvPX1QWUDr1d9ekMHs0Zj5byZfC4wEAdxVtQcEXr/Wtj5v6/zHjqcimjzICBF
-         Yvt8t2d/Y9dZzZnkJh8xnV/qjGuh6UppseOIg=
+        bh=iWEen/ZJGfJ/91ljuOGunKKjV2wkX9buixAuCmp2VbQ=;
+        b=BrIhPn8ivTpMxlGPBk6IKIJLDMLnaVlDNMmu/vyM0gUSzZQvMLtGhLveRkfKi2vAM6
+         +YkxY+z/cz2xTsv4w3Vlqtv9pbXvDXBqlfpTdOthbYK93wuom517jGpjWySLJNPNrOSc
+         h8Jjt1InPKK6ea8zEWJIYE8CvdlJcSCOeFKdo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=m02iPOvo556PAupUnS9qzquFGaL67NVm3EjfgL2dy5A=;
-        b=D865MX8uYgqcXT48AD2mx1W2HWdphu8fQY//hIiPNPj5LODIsc+fL6qyI/spagLscL
-         ugMAvfQSpC6mTtlequjiXddm0jg1IgF8e/NskmJzGM7JXfyQ6pk8KOtSA77J4Gctmm80
-         nQzFHSTEz7fnnfCanonJOTI5YqK5Lb61K9VNu2yQE1vYdMdR86n1tzBi3g0t6aM19CN4
-         1sY2SnAPyv871toZIVNOGH1TaHO6TfUmMzNt5TjmUlMlmrdecSIRf34rWp8jdzvuDPUo
-         JkX5GQEBGUzbQxaCO/0zxcOD1dbE71w3ks4df9o1bYupXlu2R+O9hhg8BCQUYRUqZoEP
-         hxFw==
-X-Gm-Message-State: APjAAAUUzowR8ywMVxvBY9atgQSfct7W087d5HYhWj4152AxHAbbcd7y
-	CRGbHJtMz29pAHcGTBeYXGAvGg==
-X-Google-Smtp-Source: APXvYqzxdYYkC4Vm6qLkhkpXpaHS6hS+/bNgbbir5gqCgNKRQ20zMhl2VQQoGk52iRa1FhEBt45aSg==
-X-Received: by 2002:a17:902:8214:: with SMTP id x20mr35601151pln.308.1558109597070;
-        Fri, 17 May 2019 09:13:17 -0700 (PDT)
-Date: Fri, 17 May 2019 09:13:14 -0700
+        bh=iWEen/ZJGfJ/91ljuOGunKKjV2wkX9buixAuCmp2VbQ=;
+        b=BAL0GOwPzp+7n3kSQE1gIpFIras9nioS20/QOs2kCiI7U8n5YPsZleE/vkHJFeEVI+
+         6WHg0C/b+K4kXI2fYaaeNmoJk9LlFc+5a7c88IW97tisQws8zthCLeCExhMBTh7wrl1+
+         Zlu1gZKyMh+I1HiGPAxdI+uDTOqZOhnJM9yuM7U9+K5xhtMh2/U5BQu1FcDj+ju5aU4w
+         vQVtchBDWkKFB7h7p7T9T1ZaxGh5LrsdK1z6XoRLCNore/EDuL5NzkdXgZIWiY9QSy1q
+         zylMmmcvZ+Mr3cwNsVsAUuiq7mZQqdbqovxQPuW+mIdUQiTT+Pb9Pb6M5sb17G0ogPH1
+         sfdg==
+X-Gm-Message-State: APjAAAXVB9gE5VjqFh4stJYbAp/TZYAZZz7A1nv+70UB+OsTQkpC2pFt
+	VVgB0g7c8RrF1Jenqdt7B5cu1g==
+X-Google-Smtp-Source: APXvYqzdfBNgSus/Lm8itRXOgphQ1CTGG6b41OjNny+0hxO3EQG2Jz/Uzp0pZo6RricP0oBOyE23uA==
+X-Received: by 2002:a17:902:7d90:: with SMTP id a16mr56467129plm.122.1558110476011;
+        Fri, 17 May 2019 09:27:56 -0700 (PDT)
+Date: Fri, 17 May 2019 09:27:54 -0700
 From: Kees Cook <keescook@chromium.org>
-To: Alexander Potapenko <glider@google.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
+To: Michal Hocko <mhocko@kernel.org>
+Cc: Alexander Potapenko <glider@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Christoph Lameter <cl@linux.com>,
 	Kernel Hardening <kernel-hardening@lists.openwall.com>,
 	Masahiro Yamada <yamada.masahiro@socionext.com>,
@@ -54,70 +55,87 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	Laura Abbott <labbott@redhat.com>,
 	Randy Dunlap <rdunlap@infradead.org>, Jann Horn <jannh@google.com>,
 	Mark Rutland <mark.rutland@arm.com>,
+	Souptick Joarder <jrdr.linux@gmail.com>,
+	Matthew Wilcox <willy@infradead.org>,
 	Linux Memory Management List <linux-mm@kvack.org>,
 	linux-security-module <linux-security-module@vger.kernel.org>
-Subject: Re: [PATCH v2 4/4] net: apply __GFP_NO_AUTOINIT to AF_UNIX sk_buff
- allocations
-Message-ID: <201905170900.BFA80ED@keescook>
+Subject: Re: [PATCH v2 3/4] gfp: mm: introduce __GFP_NO_AUTOINIT
+Message-ID: <201905170925.6FD47DDFFF@keescook>
 References: <20190514143537.10435-1-glider@google.com>
- <20190514143537.10435-5-glider@google.com>
- <201905160923.BD3E530EFC@keescook>
- <201905161714.A53D472D9@keescook>
- <CAG_fn=Vj6Jk_DY_-0+x6EpbsVh+abpEVcjycBhJxeMH3wuy9rw@mail.gmail.com>
+ <20190514143537.10435-4-glider@google.com>
+ <20190517125916.GF1825@dhcp22.suse.cz>
+ <CAG_fn=VG6vrCdpEv0g73M-Au4wW07w8g0uydEiHA96QOfcCVhA@mail.gmail.com>
+ <20190517132542.GJ6836@dhcp22.suse.cz>
+ <CAG_fn=Ve88z2ezFjV6CthufMUhJ-ePNMT2=3m6J3nHWh9iSgsg@mail.gmail.com>
+ <20190517140108.GK6836@dhcp22.suse.cz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAG_fn=Vj6Jk_DY_-0+x6EpbsVh+abpEVcjycBhJxeMH3wuy9rw@mail.gmail.com>
+In-Reply-To: <20190517140108.GK6836@dhcp22.suse.cz>
 
-On Fri, May 17, 2019 at 10:49:03AM +0200, Alexander Potapenko wrote:
-> On Fri, May 17, 2019 at 2:26 AM Kees Cook <keescook@chromium.org> wrote:
-> > On Thu, May 16, 2019 at 09:53:01AM -0700, Kees Cook wrote:
-> > > On Tue, May 14, 2019 at 04:35:37PM +0200, Alexander Potapenko wrote:
-> > > > Add sock_alloc_send_pskb_noinit(), which is similar to
-> > > > sock_alloc_send_pskb(), but allocates with __GFP_NO_AUTOINIT.
-> > > > This helps reduce the slowdown on hackbench in the init_on_alloc mode
-> > > > from 6.84% to 3.45%.
+On Fri, May 17, 2019 at 04:01:08PM +0200, Michal Hocko wrote:
+> On Fri 17-05-19 15:37:14, Alexander Potapenko wrote:
+> > > > > Freeing a memory is an opt-in feature and the slab allocator can already
+> > > > > tell many (with constructor or GFP_ZERO) do not need it.
+> > > > Sorry, I didn't understand this piece. Could you please elaborate?
 > > >
-> > > Out of curiosity, why the creation of the new function over adding a
-> > > gfp flag argument to sock_alloc_send_pskb() and updating callers? (There
-> > > are only 6 callers, and this change already updates 2 of those.)
-> > >
-> > > > Slowdown for the initialization features compared to init_on_free=0,
-> > > > init_on_alloc=0:
+> > > The allocator can assume that caches with a constructor will initialize
+> > > the object so additional zeroying is not needed. GFP_ZERO should be self
+> > > explanatory.
+> > Ah, I see. We already do that, see the want_init_on_alloc()
+> > implementation here: https://patchwork.kernel.org/patch/10943087/
+> > > > > So can we go without this gfp thing and see whether somebody actually
+> > > > > finds a performance problem with the feature enabled and think about
+> > > > > what can we do about it rather than add this maint. nightmare from the
+> > > > > very beginning?
 > > > >
-> > > > hackbench, init_on_free=1:  +7.71% sys time (st.err 0.45%)
-> > > > hackbench, init_on_alloc=1: +3.45% sys time (st.err 0.86%)
-> >
-> > So I've run some of my own wall-clock timings of kernel builds (which
-> > should be an pretty big "worst case" situation, and I see much smaller
-> > performance changes:
-> How many cores were you using? I suspect the numbers may vary a bit
-> depending on that.
+> > > > There were two reasons to introduce this flag initially.
+> > > > The first was double initialization of pages allocated for SLUB.
+> > >
+> > > Could you elaborate please?
+> > When the kernel allocates an object from SLUB, and SLUB happens to be
+> > short on free pages, it requests some from the page allocator.
+> > Those pages are initialized by the page allocator
+> 
+> ... when the feature is enabled ...
+> 
+> > and split into objects. Finally SLUB initializes one of the available
+> > objects and returns it back to the kernel.
+> > Therefore the object is initialized twice for the first time (when it
+> > comes directly from the page allocator).
+> > This cost is however amortized by SLUB reusing the object after it's been freed.
+> 
+> OK, I see what you mean now. Is there any way to special case the page
+> allocation for this feature? E.g. your implementation tries to make this
+> zeroying special but why cannot you simply do this
+> 
+> 
+> struct page *
+> ____alloc_pages_nodemask(gfp_t gfp_mask, unsigned int order, int preferred_nid,
+> 							nodemask_t *nodemask)
+> {
+> 	//current implementation
+> }
+> 
+> struct page *
+> __alloc_pages_nodemask(gfp_t gfp_mask, unsigned int order, int preferred_nid,
+> 							nodemask_t *nodemask)
+> {
+> 	if (your_feature_enabled)
+> 		gfp_mask |= __GFP_ZERO;
+> 	return ____alloc_pages_nodemask(gfp_mask, order, preferred_nid,
+> 					nodemask);
+> }
+> 
+> and use ____alloc_pages_nodemask from the slab or other internal
+> allocators?
 
-I was using 4.
+If an additional allocator function is preferred over a new GFP flag, then
+I don't see any reason not to do this. (Though adding more "__"s seems
+a bit unfriendly to code-documentation.) What might be better naming?
 
-> > init_on_alloc=1
-> >         Run times: 289.72 286.95 287.87 287.34 287.35
-> >         Min: 286.95 Max: 289.72 Mean: 287.85 Std Dev: 0.98
-> >                 0.25% faster (within the std dev noise)
-> >
-> > init_on_free=1
-> >         Run times: 303.26 301.44 301.19 301.55 301.39
-> >         Min: 301.19 Max: 303.26 Mean: 301.77 Std Dev: 0.75
-> >                 4.57% slower
-> >
-> > init_on_free=1 with the PAX_MEMORY_SANITIZE slabs excluded:
-> >         Run times: 299.19 299.85 298.95 298.23 298.64
-> >         Min: 298.23 Max: 299.85 Mean: 298.97 Std Dev: 0.55
-> >                 3.60% slower
-> >
-> > So the tuning certainly improved things by 1%. My perf numbers don't
-> > show the 24% hit you were seeing at all, though.
-> Note that 24% is the _sys_ time slowdown. The wall time slowdown seen
-> in this case was 8.34%
-
-Ah! Gotcha. Yeah, seems the impact for init_on_free is pretty
-variable. The init_on_alloc appears close to free, though.
+This would mean that the skb changes later in the series would use the
+"no auto init" version of the allocator too, then.
 
 -- 
 Kees Cook
