@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15953-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15954-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id D61CA21BBC
-	for <lists+kernel-hardening@lfdr.de>; Fri, 17 May 2019 18:38:02 +0200 (CEST)
-Received: (qmail 15886 invoked by uid 550); 17 May 2019 16:37:57 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 48B3421C40
+	for <lists+kernel-hardening@lfdr.de>; Fri, 17 May 2019 19:11:27 +0200 (CEST)
+Received: (qmail 8045 invoked by uid 550); 17 May 2019 17:11:20 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,71 +13,117 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 15863 invoked from network); 17 May 2019 16:37:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=VgMR8fw/3btcfeCqUg+SAAzIGGZgPBuWMbQyEv64ZSw=;
-        b=VsbWyvJhK63OLyZtQo8OaklsBhS46OZmNozcVmNGar+obQPJhvlUBVqOtwGNUSk1eg
-         XQLDrD2d4ySpIj+jC/9WTu8arAVvxo1JKc+nmnC7ij3hJEvOBgk1CqWeKXnT7VCYKeoC
-         VGVRU6vvl7th23Ka2qGEjSEJ0XcL1IbV/xwEs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=VgMR8fw/3btcfeCqUg+SAAzIGGZgPBuWMbQyEv64ZSw=;
-        b=gaUem0yvYxnohg8XJMxA8sdB5J4XxqGM8wcCWC0o0O95TyL4LpwXAKlyn6IJOQZqUx
-         YdPhVRHBZz9NjNc3+fFT9WMQExzz60zJ1Y8Xl5aC5Xht2epQTPcxnfMDA/FS/ms2WVVE
-         sV4kUEa9OVjuUGUfqqst47EYZ4KrEx8sI+KMriqbtLlb8eglgfzK2PSAoT+/XA7LQK2r
-         Gjx0vcCM9uyx6dBpxKsZZJEXODNDHW9xX6RlPFUxWu7J/BG1iPj6bghobHZVigCKuLA8
-         ChTE2kiLG3jtCtpFCWK1IzccLq7jpNnE8LADXLbnUFKI4MX7NdwiY2+kXdVJPhCXGCAy
-         GmAA==
-X-Gm-Message-State: APjAAAUNXbsQ5CAXOfBlpqRBEujL+Mm7892021fts5F07kS1JGqLla0H
-	r1gDbmmi8U2xtyWBMWX/Ugv00A==
-X-Google-Smtp-Source: APXvYqwFidnBAPTL+woN/ou51mJsyoX35Z9berovyuDT4vsLcTEwjuG1xg0yIHCeu2pFUSIcHbV0oQ==
-X-Received: by 2002:a63:4342:: with SMTP id q63mr57175169pga.435.1558111065442;
-        Fri, 17 May 2019 09:37:45 -0700 (PDT)
-Date: Fri, 17 May 2019 09:37:43 -0700
-From: Kees Cook <keescook@chromium.org>
-To: Alexander Potapenko <glider@google.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
+Received: (qmail 8024 invoked from network); 17 May 2019 17:11:19 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Fri, 17 May 2019 19:11:05 +0200
+From: Michal Hocko <mhocko@kernel.org>
+To: Kees Cook <keescook@chromium.org>
+Cc: Alexander Potapenko <glider@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Christoph Lameter <cl@linux.com>,
 	Kernel Hardening <kernel-hardening@lists.openwall.com>,
+	Masahiro Yamada <yamada.masahiro@socionext.com>,
+	James Morris <jmorris@namei.org>,
+	"Serge E. Hallyn" <serge@hallyn.com>,
 	Nick Desaulniers <ndesaulniers@google.com>,
 	Kostya Serebryany <kcc@google.com>,
 	Dmitry Vyukov <dvyukov@google.com>,
 	Sandeep Patil <sspatil@android.com>,
-	Laura Abbott <labbott@redhat.com>, Jann Horn <jannh@google.com>,
+	Laura Abbott <labbott@redhat.com>,
+	Randy Dunlap <rdunlap@infradead.org>, Jann Horn <jannh@google.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Souptick Joarder <jrdr.linux@gmail.com>,
+	Matthew Wilcox <willy@infradead.org>,
 	Linux Memory Management List <linux-mm@kvack.org>,
 	linux-security-module <linux-security-module@vger.kernel.org>
-Subject: Re: [PATCH v2 2/4] lib: introduce test_meminit module
-Message-ID: <201905170937.7A1E646F61@keescook>
+Subject: Re: [PATCH v2 3/4] gfp: mm: introduce __GFP_NO_AUTOINIT
+Message-ID: <20190517171105.GT6836@dhcp22.suse.cz>
 References: <20190514143537.10435-1-glider@google.com>
- <20190514143537.10435-3-glider@google.com>
- <201905151752.2BD430A@keescook>
- <CAG_fn=VVZ1FBygbAeTbdo2U2d2Zga6Z7wVitkqZB0YffCKYzag@mail.gmail.com>
+ <20190514143537.10435-4-glider@google.com>
+ <20190517125916.GF1825@dhcp22.suse.cz>
+ <CAG_fn=VG6vrCdpEv0g73M-Au4wW07w8g0uydEiHA96QOfcCVhA@mail.gmail.com>
+ <20190517132542.GJ6836@dhcp22.suse.cz>
+ <CAG_fn=Ve88z2ezFjV6CthufMUhJ-ePNMT2=3m6J3nHWh9iSgsg@mail.gmail.com>
+ <20190517140108.GK6836@dhcp22.suse.cz>
+ <201905170925.6FD47DDFFF@keescook>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAG_fn=VVZ1FBygbAeTbdo2U2d2Zga6Z7wVitkqZB0YffCKYzag@mail.gmail.com>
+In-Reply-To: <201905170925.6FD47DDFFF@keescook>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Fri, May 17, 2019 at 05:51:17PM +0200, Alexander Potapenko wrote:
-> On Thu, May 16, 2019 at 3:02 AM Kees Cook <keescook@chromium.org> wrote:
-> >
-> > On Tue, May 14, 2019 at 04:35:35PM +0200, Alexander Potapenko wrote:
-> > > Add tests for heap and pagealloc initialization.
-> > > These can be used to check init_on_alloc and init_on_free implementations
-> > > as well as other approaches to initialization.
-> >
-> > This is nice! Easy way to test the results. It might be helpful to show
-> > here what to expect when loading this module:
->
-> Do you want me to add the expected output to the patch description?
+On Fri 17-05-19 09:27:54, Kees Cook wrote:
+> On Fri, May 17, 2019 at 04:01:08PM +0200, Michal Hocko wrote:
+> > On Fri 17-05-19 15:37:14, Alexander Potapenko wrote:
+> > > > > > Freeing a memory is an opt-in feature and the slab allocator can already
+> > > > > > tell many (with constructor or GFP_ZERO) do not need it.
+> > > > > Sorry, I didn't understand this piece. Could you please elaborate?
+> > > >
+> > > > The allocator can assume that caches with a constructor will initialize
+> > > > the object so additional zeroying is not needed. GFP_ZERO should be self
+> > > > explanatory.
+> > > Ah, I see. We already do that, see the want_init_on_alloc()
+> > > implementation here: https://patchwork.kernel.org/patch/10943087/
+> > > > > > So can we go without this gfp thing and see whether somebody actually
+> > > > > > finds a performance problem with the feature enabled and think about
+> > > > > > what can we do about it rather than add this maint. nightmare from the
+> > > > > > very beginning?
+> > > > >
+> > > > > There were two reasons to introduce this flag initially.
+> > > > > The first was double initialization of pages allocated for SLUB.
+> > > >
+> > > > Could you elaborate please?
+> > > When the kernel allocates an object from SLUB, and SLUB happens to be
+> > > short on free pages, it requests some from the page allocator.
+> > > Those pages are initialized by the page allocator
+> > 
+> > ... when the feature is enabled ...
+> > 
+> > > and split into objects. Finally SLUB initializes one of the available
+> > > objects and returns it back to the kernel.
+> > > Therefore the object is initialized twice for the first time (when it
+> > > comes directly from the page allocator).
+> > > This cost is however amortized by SLUB reusing the object after it's been freed.
+> > 
+> > OK, I see what you mean now. Is there any way to special case the page
+> > allocation for this feature? E.g. your implementation tries to make this
+> > zeroying special but why cannot you simply do this
+> > 
+> > 
+> > struct page *
+> > ____alloc_pages_nodemask(gfp_t gfp_mask, unsigned int order, int preferred_nid,
+> > 							nodemask_t *nodemask)
+> > {
+> > 	//current implementation
+> > }
+> > 
+> > struct page *
+> > __alloc_pages_nodemask(gfp_t gfp_mask, unsigned int order, int preferred_nid,
+> > 							nodemask_t *nodemask)
+> > {
+> > 	if (your_feature_enabled)
+> > 		gfp_mask |= __GFP_ZERO;
+> > 	return ____alloc_pages_nodemask(gfp_mask, order, preferred_nid,
+> > 					nodemask);
+> > }
+> > 
+> > and use ____alloc_pages_nodemask from the slab or other internal
+> > allocators?
+> 
+> If an additional allocator function is preferred over a new GFP flag, then
+> I don't see any reason not to do this. (Though adding more "__"s seems
+> a bit unfriendly to code-documentation.) What might be better naming?
 
-Yes, I think it's worth having, as a way to show people what to expect
-when running the test, without having to actually enable, build, and
-run it themselves.
+The naminig is the last thing I would be worried about. Let's focus on
+the most simplistic implementation first. And means, can we really make
+it as simple as above? At least on the page allocator level.
 
+> This would mean that the skb changes later in the series would use the
+> "no auto init" version of the allocator too, then.
+
+No, this would be an internal function to MM. I would really like to
+optimize once there are numbers from _real_ workloads to base those
+optimizations.
 -- 
-Kees Cook
+Michal Hocko
+SUSE Labs
