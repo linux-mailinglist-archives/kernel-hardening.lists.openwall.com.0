@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15932-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15933-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 1E14C20DAD
-	for <lists+kernel-hardening@lfdr.de>; Thu, 16 May 2019 19:03:39 +0200 (CEST)
-Received: (qmail 22487 invoked by uid 550); 16 May 2019 17:03:32 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 59DB721141
+	for <lists+kernel-hardening@lfdr.de>; Fri, 17 May 2019 02:26:31 +0200 (CEST)
+Received: (qmail 26167 invoked by uid 550); 17 May 2019 00:26:25 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,37 +13,36 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 22434 invoked from network); 16 May 2019 17:03:31 -0000
+Received: (qmail 26090 invoked from network); 17 May 2019 00:26:24 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=2OkSls3BBuVCd2Q9OzzUfEJIECS5yJPO8xcocfnTaN4=;
-        b=Ros4p2hkOqmoHbdixDDcfrW1H7jyK9zIQYjqlUFzXr5CiZP+1t7cTKrai4i8J8Q1Jc
-         TzF8dMleKNk7RbmmoaakWyHRVMp2G/Ig5tkzDXUlXt800e0jwOfhD+WEBmHapdlbmP4M
-         EBbEoq8OjOlQ/XJdZ16uZvhYu/dMHPBTDkc+c=
+        bh=ilDv0+YTa/WnY3XhZH80fN4U1WpmetjpQlVMabTh6tw=;
+        b=ASs9/AsKmgukkUd8ZkGKrmFLrJLHhcmjh9zttsNZWu9UiLxwGqq+jTPLZfvADEE6BT
+         0wo7n9b7ck3n1cRmgHDKeiMzhg+VhnE8FHKem/W4KuR+HtEfYDi+njtYVyXvv+cb4FKI
+         TheGLDDVwvh9uyy0Qq5Jox9zPBUe3teBFpXhw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=2OkSls3BBuVCd2Q9OzzUfEJIECS5yJPO8xcocfnTaN4=;
-        b=NfT2zJBrqM2QcTrEm8MNM16iVQHs8Kop2aO/yFJTQFUe3dXESIjcTdYy/co0o7ffCK
-         QAgkVjNBB8BQz2kQVEGm899YEeG9JNUK1IzvlupveEld7Xwz80pBjhQw9zs2pKcspWEC
-         n0Vbf4e7U+FQyd+NKhCEZ7OKfBK3/pnKY+bpRiqtlEhjlm/cBt3wLUqcePCF3evADO5P
-         GmJ7XUlp1fCcVDOgp6SqsGJZjzo8wWDiD8xJkqBc/CbBXmnTg8PtFW8Z6FDhWevQFRs4
-         c1v97DlJtgv2BccpFApCMEnSaciboTDS8ol3EZ5NfcXXlP9D+/dkMjCIzmGC22L5gGjN
-         egKw==
-X-Gm-Message-State: APjAAAVhiKCOCm0Q8VE5fGFt6DmqOh/o5rFyGdsQbLMpAlzYhVW8j8nI
-	clKwpYEYNKEE9+RCSJL4oeuJ/w==
-X-Google-Smtp-Source: APXvYqxf86X0I5LWFcSKWu+jd0qD6qpD2y7bXzGg9HBoYqsOh3qhcsFm36RFG3tU2Ws97h56kHXWnw==
-X-Received: by 2002:aa7:9a8c:: with SMTP id w12mr54743779pfi.187.1558026193892;
-        Thu, 16 May 2019 10:03:13 -0700 (PDT)
-Date: Thu, 16 May 2019 10:03:11 -0700
+        bh=ilDv0+YTa/WnY3XhZH80fN4U1WpmetjpQlVMabTh6tw=;
+        b=jSY68AzNfa+FxaTLsNB5RctDjzEA6spYrRL5jUQ4g6/Gbwwl6jaT1YHB96qo3utZZ/
+         2lw10XFWPd1ZLhqplCS+2LxbxKUvLw9jhaiwtDHSsY6MR8QC9EQsH00D0vEKMDBEXImZ
+         rdFm6wUxQWMIKIbXyM4fcVclVdr/s4Bjq2aqGYFuc1++QmQBTt8zmUJd+4Yg8nJm+IS+
+         4Gcl1HxebK1GFWiyyTMwvoJuIlxa/L5juglA8y+2INAiOcNO2CMlGGn+tVTW0xDwkAiw
+         /KQjdwJfH+5zMY3EIoZLColTVeYOLjX07dRsHNCBceShz4v6asTOLaZCtBGYWpQtEL5f
+         AlGw==
+X-Gm-Message-State: APjAAAXBLX84HM3bOgGg6W0Jo9lgcEvuRlkb8Buq/sV37SBeLtVygll7
+	u9Mu5kmZKN2NHPvQw1NbR6r7cQ==
+X-Google-Smtp-Source: APXvYqwlMKqnUliknBdwEvFPxguLJNac2aseYZx+RJq6e02esXvj8m81/U384KtDWip6FxOC9kYkMg==
+X-Received: by 2002:a63:ef56:: with SMTP id c22mr2023348pgk.13.1558052772428;
+        Thu, 16 May 2019 17:26:12 -0700 (PDT)
+Date: Thu, 16 May 2019 17:26:09 -0700
 From: Kees Cook <keescook@chromium.org>
 To: Alexander Potapenko <glider@google.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	Christoph Lameter <cl@linux.com>,
-	Kernel Hardening <kernel-hardening@lists.openwall.com>,
+Cc: akpm@linux-foundation.org, cl@linux.com,
+	kernel-hardening@lists.openwall.com,
 	Masahiro Yamada <yamada.masahiro@socionext.com>,
 	James Morris <jmorris@namei.org>,
 	"Serge E. Hallyn" <serge@hallyn.com>,
@@ -53,74 +52,72 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	Sandeep Patil <sspatil@android.com>,
 	Laura Abbott <labbott@redhat.com>,
 	Randy Dunlap <rdunlap@infradead.org>, Jann Horn <jannh@google.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Linux Memory Management List <linux-mm@kvack.org>,
-	linux-security-module <linux-security-module@vger.kernel.org>
-Subject: Re: [PATCH v2 1/4] mm: security: introduce init_on_alloc=1 and
- init_on_free=1 boot options
-Message-ID: <201905160953.903FD364BC@keescook>
+	Mark Rutland <mark.rutland@arm.com>, linux-mm@kvack.org,
+	linux-security-module@vger.kernel.org
+Subject: Re: [PATCH v2 4/4] net: apply __GFP_NO_AUTOINIT to AF_UNIX sk_buff
+ allocations
+Message-ID: <201905161714.A53D472D9@keescook>
 References: <20190514143537.10435-1-glider@google.com>
- <20190514143537.10435-2-glider@google.com>
- <201905160907.92FAC880@keescook>
- <CAG_fn=VsJmyuEUYy16R_M5Hu2CX-PJkz9Kw4rdy9XUCAYHwV5g@mail.gmail.com>
+ <20190514143537.10435-5-glider@google.com>
+ <201905160923.BD3E530EFC@keescook>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAG_fn=VsJmyuEUYy16R_M5Hu2CX-PJkz9Kw4rdy9XUCAYHwV5g@mail.gmail.com>
+In-Reply-To: <201905160923.BD3E530EFC@keescook>
 
-On Thu, May 16, 2019 at 06:42:37PM +0200, Alexander Potapenko wrote:
-> I suspect the slowdown of init_on_free is bigger than that of
-> PAX_SANITIZE_MEMORY, as we've set the goal to have fully zeroed memory
-> at alloc time.
-> If we want a mode that only wipes the user data upon free() but
-> doesn't eliminate all uninit memory, then we can make it faster.
+On Thu, May 16, 2019 at 09:53:01AM -0700, Kees Cook wrote:
+> On Tue, May 14, 2019 at 04:35:37PM +0200, Alexander Potapenko wrote:
+> > Add sock_alloc_send_pskb_noinit(), which is similar to
+> > sock_alloc_send_pskb(), but allocates with __GFP_NO_AUTOINIT.
+> > This helps reduce the slowdown on hackbench in the init_on_alloc mode
+> > from 6.84% to 3.45%.
+> 
+> Out of curiosity, why the creation of the new function over adding a
+> gfp flag argument to sock_alloc_send_pskb() and updating callers? (There
+> are only 6 callers, and this change already updates 2 of those.)
+> 
+> > Slowdown for the initialization features compared to init_on_free=0,
+> > init_on_alloc=0:
+> > 
+> > hackbench, init_on_free=1:  +7.71% sys time (st.err 0.45%)
+> > hackbench, init_on_alloc=1: +3.45% sys time (st.err 0.86%)
 
-Yeah, I sent a separate email that discusses this a bit more.
+So I've run some of my own wall-clock timings of kernel builds (which
+should be an pretty big "worst case" situation, and I see much smaller
+performance changes:
 
-I think the goals of init_on_alloc and init_on_free are likely a bit
-different. Given init_on_alloc's much more cache-friendly performance,
-I think that it's likely the right way forward for getting to fully zeroed
-memory at alloc time. (Though I note that it already includes exclusions:
-such tradeoffs won't be unique to init_on_free.)
+everything off
+	Run times: 289.18 288.61 289.66 287.71 287.67
+	Min: 287.67 Max: 289.66 Mean: 288.57 Std Dev: 0.79
+		baseline
 
-init_on_free appears to give us similar coverage (but also reduces the
-lifetime of unused data), but isn't cache-friendly so it looks to need
-a lot more tuning/trade-offs. (Not that we shouldn't include it! It'll
-just need a bit more care to be reasonable.)
+init_on_alloc=1
+	Run times: 289.72 286.95 287.87 287.34 287.35
+	Min: 286.95 Max: 289.72 Mean: 287.85 Std Dev: 0.98
+		0.25% faster (within the std dev noise)
 
-> > +void __init report_meminit(void)
-> > +{
-> > +       const char *stack;
-> > +
-> > +       if (IS_ENABLED(CONFIG_INIT_STACK_ALL))
-> > +               stack = "all";
-> > +       else if (IS_ENABLED(CONFIG_GCC_PLUGIN_STRUCTLEAK_BYREF_ALL))
-> > +               stack = "byref_all";
-> > +       else if (IS_ENABLED(CONFIG_GCC_PLUGIN_STRUCTLEAK_BYREF))
-> > +               stack = "byref";
-> > +       else if (IS_ENABLED(CONFIG_GCC_PLUGIN_STRUCTLEAK_USER))
-> > +               stack = "__user";
-> > +       else
-> > +               stack = "off";
-> > +
-> > +       /* Report memory auto-initialization states for this boot. */
-> > +       pr_info("mem auto-init: stack:%s, heap alloc:%s, heap free:%s\n",
-> > +               stack, want_init_on_alloc(GFP_KERNEL) ? "on" : "off",
-> > +               want_init_on_free() ? "on" : "off");
-> > +}
-> >
-> > To get a boot line like:
-> >
-> >         mem auto-init: stack:off, heap alloc:off, heap free:on
-> For stack there's no binary on/off, as you can potentially build half
-> of the kernel with stack instrumentation and another half without it.
-> We could make the instrumentation insert a static global flag into
-> each translation unit, but this won't give us any interesting info.
+init_on_free=1
+	Run times: 303.26 301.44 301.19 301.55 301.39
+	Min: 301.19 Max: 303.26 Mean: 301.77 Std Dev: 0.75
+		4.57% slower
 
-Well, yes, that's technically true, but I think reporting the kernel
-config here would make sense. If someone intentionally bypasses the
-stack auto-init for portions of the kernel, we can't meaningfully report
-it here. There will be exceptions for stack auto-init and heap auto-init.
+init_on_free=1 with the PAX_MEMORY_SANITIZE slabs excluded:
+	Run times: 299.19 299.85 298.95 298.23 298.64
+	Min: 298.23 Max: 299.85 Mean: 298.97 Std Dev: 0.55
+		3.60% slower
+
+So the tuning certainly improved things by 1%. My perf numbers don't
+show the 24% hit you were seeing at all, though.
+
+> In the commit log it might be worth mentioning that this is only
+> changing the init_on_alloc case (in case it's not already obvious to
+> folks). Perhaps there needs to be a split of __GFP_NO_AUTOINIT into
+> __GFP_NO_AUTO_ALLOC_INIT and __GFP_NO_AUTO_FREE_INIT? Right now
+> __GFP_NO_AUTOINIT is only checked for init_on_alloc:
+
+I was obviously crazy here. :) GFP isn't present for free(), but a SLAB
+flag works (as was done in PAX_MEMORY_SANITIZE). I'll send the patch I
+used for the above timing test.
 
 -- 
 Kees Cook
