@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15957-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15958-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 5800C23CEF
-	for <lists+kernel-hardening@lfdr.de>; Mon, 20 May 2019 18:12:36 +0200 (CEST)
-Received: (qmail 7207 invoked by uid 550); 20 May 2019 16:12:28 -0000
+	by mail.lfdr.de (Postfix) with SMTP id E8548240D1
+	for <lists+kernel-hardening@lfdr.de>; Mon, 20 May 2019 21:02:11 +0200 (CEST)
+Received: (qmail 20460 invoked by uid 550); 20 May 2019 19:02:05 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,237 +13,142 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 7189 invoked from network); 20 May 2019 16:12:27 -0000
+Received: (qmail 20423 invoked from network); 20 May 2019 19:02:04 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=if4GvDTlkLUHFwbpOP4ccx+furWZ2hKY8dlwncweNiM=;
-        b=h2hFjpxRSc9i6XfAPwfX7okGeUZy2dbzpXO4dt/9o53cdPnASNHB5OSq/WlLMteR6l
-         u9EZDByLBaFbtqIr2C9h99V+QU4dvu0z9n1Jdh2GRSlgQ+jNg37VDyA0HEIfdheVt7Qb
-         VldgQA4un9H40DroPz6x31dJd8oOovfsiI8Sc=
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=F69iDImotxuTAm6wy0ebz1yovGRwlcZgZEQYTdY+Nig=;
+        b=YTFH3ttTDdv6KZrIn/iVYhARLXFGsMteP1u+DsIbYebG+aBbWSJO+1SuC2lZjSk6FB
+         N+8rf/G9/jhldzbUhxZ6iVxYmgXukroaNqHZDrl470mjgFK6kdDmt+icjr9SzxxvkGRO
+         lfhtGGpGY5f/ln4PAe5M0BD+55tHZPSkllpBhdV3Haz+Zofbg23CZNvO2/dgpYdwR/Se
+         oaVRjIrqLZYyatXVELpkpGalzRP6eZwRhNSkPE2VNfF3n9MK3YiMd03LJsdC/nmsvnzr
+         gOJcMNx8sN/2J7C4R02nwDGiCHLwAxv7165aoW82GwHqkLxGCtv9ticCDlZJSKvNOKoa
+         04Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=if4GvDTlkLUHFwbpOP4ccx+furWZ2hKY8dlwncweNiM=;
-        b=eHdnD7ub8m30Pz1K5Ih4HoFH72GjGfGdp/5X3ZXZTD6x4UjwYFcpux1njtMD+x2WQt
-         xU0LIsfB6hS0CBjtLivWd1TUorA9aAaCYRrNM2BvAtnPKnr24JfsqB4o9DPrb1hbzqoY
-         h12jm8SqkuxpXelnbKNcU+5/xedu/4o0B4P9GMarTfMceI7wj04s7sxJMQgPwngqU/uF
-         vI2NcqlNb5Q2pbuEBHt4PL7D3z7tI6AL6wGnm0OZILAXexl7E5YvyaoNkBjlJSk1zCma
-         iLZzDJtK3noRKhUpuRdJu9OUdoTW87h/oHHUGm6hs13i9+EAlsReP34EAlygYuRagU+f
-         jxjQ==
-X-Gm-Message-State: APjAAAU+lCwGUTY5X/y/oO+jYifqT4uV+JEFbpdoWnmAnUAIZScGvOvu
-	b2qT2nOfKJ7Nrha/tjZPvCLSyw==
-X-Google-Smtp-Source: APXvYqzHyBj57UOrrBpIt6RQmX7JQTb9PtdoCux39wxuPfKCfZ2k9olwrFNgb7vgdG+OQjxgXKco/g==
-X-Received: by 2002:a17:902:e492:: with SMTP id cj18mr19427174plb.341.1558368735635;
-        Mon, 20 May 2019 09:12:15 -0700 (PDT)
-Date: Mon, 20 May 2019 09:12:13 -0700
-From: Kees Cook <keescook@chromium.org>
-To: Mathias Krause <minipli@googlemail.com>
-Cc: Alexander Potapenko <glider@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Christoph Lameter <cl@linux.com>,
-	kernel-hardening@lists.openwall.com,
-	Masahiro Yamada <yamada.masahiro@socionext.com>,
-	James Morris <jmorris@namei.org>,
-	"Serge E. Hallyn" <serge@hallyn.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Kostya Serebryany <kcc@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Sandeep Patil <sspatil@android.com>,
-	Laura Abbott <labbott@redhat.com>,
-	Randy Dunlap <rdunlap@infradead.org>, Jann Horn <jannh@google.com>,
-	Mark Rutland <mark.rutland@arm.com>, linux-mm@kvack.org,
-	linux-security-module@vger.kernel.org
-Subject: Re: [PATCH 5/4] mm: Introduce SLAB_NO_FREE_INIT and mark excluded
- caches
-Message-ID: <201905200902.68FD66AD9E@keescook>
-References: <20190514143537.10435-5-glider@google.com>
- <201905161746.16E885F@keescook>
- <CA+rthh9bLiohU78PBMonji_LPjj756rhTy22v9nL8LpL0cTb5g@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=F69iDImotxuTAm6wy0ebz1yovGRwlcZgZEQYTdY+Nig=;
+        b=coGpDnl7CSIBT1P3OAg8F2RPqvGTLWdKZGPxyoByupqldS43GF7RiKExmjZGGBdlPl
+         z6r9kVn0vz2/Pcd1/Ah8omgyLQlG9xIIprhQF2EkT8R/WCLE9SfQznq24ETdk34Kk8XC
+         rK8WxZIj1Xn2FsKGFqfufVke9yFPpP9nq8arI+hhhrs+WAY/hQ0DfNjpwBg1DAOa54Kr
+         25YxXkZ02aWQCbmJM/i8l37cyVXQSKkyUNn0PlXhJHke+bReK3cMTQBAyJSQYxJ/ZHgR
+         HLvgUgPUBu0u0ZxM6bXb7eckU86fuYx3eC+G9EMQvMxFZRY9Tkpg2eHkv94R3790d/KR
+         hXgw==
+X-Gm-Message-State: APjAAAXo8Ci32f9ZAZqM2Qz3qX2IdukzOuR52iFeqC5Zgo+XPOIDLQPR
+	H4mImPg8YcNz3Z7yQAdhtAjr7HVC6NZ2R4cT9rXvCg==
+X-Google-Smtp-Source: APXvYqwnXC40i2ZERRBYZME5fM77ZHe9vh+qgSrD+CkJUsfmCca2HUBC1RzfPYMTw4UkADMQsUd3aA5NFwKHRcykhxI=
+X-Received: by 2002:a9d:148:: with SMTP id 66mr41507267otu.32.1558378912281;
+ Mon, 20 May 2019 12:01:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+rthh9bLiohU78PBMonji_LPjj756rhTy22v9nL8LpL0cTb5g@mail.gmail.com>
+References: <20190520164214.GA14656@himanshu-Vostro-3559>
+In-Reply-To: <20190520164214.GA14656@himanshu-Vostro-3559>
+From: Jann Horn <jannh@google.com>
+Date: Mon, 20 May 2019 21:01:26 +0200
+Message-ID: <CAG48ez2+NoQ4mtm=PCyz005O4Efmszxo3Z7wgaF_5xx1nYO8dQ@mail.gmail.com>
+Subject: Re: Sparse context checking Vs Clang Thread Safety analysis
+To: Himanshu Jha <himanshujha199640@gmail.com>
+Cc: linux-sparse@vger.kernel.org, Johannes Berg <johannes@sipsolutions.net>, 
+	Philipp Reisner <philipp.reisner@linbit.com>, Lukas Bulwahn <lukas.bulwahn@gmail.com>, 
+	clang-built-linux <clang-built-linux@googlegroups.com>, 
+	Kernel Hardening <kernel-hardening@lists.openwall.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, May 20, 2019 at 08:10:19AM +0200, Mathias Krause wrote:
-> Hi Kees,
-> 
-> On Fri, 17 May 2019 at 02:50, Kees Cook <keescook@chromium.org> wrote:
-> > In order to improve the init_on_free performance, some frequently
-> > freed caches with less sensitive contents can be excluded from the
-> > init_on_free behavior.
-> >
-> > This patch is modified from Brad Spengler/PaX Team's code in the
-> > last public patch of grsecurity/PaX based on my understanding of the
-> > code. Changes or omissions from the original code are mine and don't
-> > reflect the original grsecurity/PaX code.
-> 
-> you might want to give secunet credit for this one, as can be seen here:
-> 
->   https://github.com/minipli/linux-grsec/commit/309d494e7a3f6533ca68fc8b3bd89fa76fd2c2df
-> 
-> However, please keep the "Changes or omissions from the original
-> code..." part as your version slightly differs.
++kernel-hardening
 
-Ah-ha! Thanks for finding the specific commit; I'll adjust
-attribution. Are you able to describe how you chose the various excluded
-kmem caches? (I assume it wasn't just "highest numbers in the stats
-reporting".) And why run the ctor after wipe? Doesn't that means you're
-just running the ctor again at the next allocation time?
+On Mon, May 20, 2019 at 6:42 PM Himanshu Jha
+<himanshujha199640@gmail.com> wrote:
+> I'm an undergrad student working on Google Summer of Code'19 Project[1]
+> to apply clang thread safety analysis feature on linux kernel to find bugs
+> related to concurrency/race condtions with Lukas & clangbuiltlinux
+> community.
+>
+> Since sparse has similar context checking feature, I started
+> investigating by looking the source and some other resources such as
+> LWN[2] about the internals.
+>
+> `-Wcontext` is my prime focus for now and currently we have:
+>
+> himanshu@himanshu-Vostro-3559:~/linux-next$ make C=2 CF="-Wcontext" 2>&1 >/dev/null | grep -w 'context' | wc -l
+> 772
+>
+> o Why do we have so many open warnings for context imbalance ? Or
+>   Why did we stop at some point annotating the codebase ?
 
-Thanks!
+Many developers don't use sparse, and sparse doesn't support some
+locking patterns that the kernel uses.
 
--Kees
+> o Does sparse stores some sort of context counter since we didn't get
+> any warnings for `bad_difflocks` which locks 'lock1' and unlocks 'lock2'
+> ?
 
-> 
-> Thanks,
-> Mathias
-> 
-> >
-> > Signed-off-by: Kees Cook <keescook@chromium.org>
-> > ---
-> >  fs/buffer.c          | 2 +-
-> >  fs/dcache.c          | 3 ++-
-> >  include/linux/slab.h | 3 +++
-> >  kernel/fork.c        | 6 ++++--
-> >  mm/rmap.c            | 5 +++--
-> >  mm/slab.h            | 5 +++--
-> >  net/core/skbuff.c    | 6 ++++--
-> >  7 files changed, 20 insertions(+), 10 deletions(-)
-> >
-> > diff --git a/fs/buffer.c b/fs/buffer.c
-> > index 0faa41fb4c88..04a85bd4cf2e 100644
-> > --- a/fs/buffer.c
-> > +++ b/fs/buffer.c
-> > @@ -3457,7 +3457,7 @@ void __init buffer_init(void)
-> >         bh_cachep = kmem_cache_create("buffer_head",
-> >                         sizeof(struct buffer_head), 0,
-> >                                 (SLAB_RECLAIM_ACCOUNT|SLAB_PANIC|
-> > -                               SLAB_MEM_SPREAD),
-> > +                               SLAB_MEM_SPREAD|SLAB_NO_FREE_INIT),
-> >                                 NULL);
-> >
-> >         /*
-> > diff --git a/fs/dcache.c b/fs/dcache.c
-> > index 8136bda27a1f..323b039accba 100644
-> > --- a/fs/dcache.c
-> > +++ b/fs/dcache.c
-> > @@ -3139,7 +3139,8 @@ void __init vfs_caches_init_early(void)
-> >  void __init vfs_caches_init(void)
-> >  {
-> >         names_cachep = kmem_cache_create_usercopy("names_cache", PATH_MAX, 0,
-> > -                       SLAB_HWCACHE_ALIGN|SLAB_PANIC, 0, PATH_MAX, NULL);
-> > +                       SLAB_HWCACHE_ALIGN|SLAB_PANIC|SLAB_NO_FREE_INIT, 0,
-> > +                       PATH_MAX, NULL);
-> >
-> >         dcache_init();
-> >         inode_init();
-> > diff --git a/include/linux/slab.h b/include/linux/slab.h
-> > index 9449b19c5f10..7eba9ad8830d 100644
-> > --- a/include/linux/slab.h
-> > +++ b/include/linux/slab.h
-> > @@ -92,6 +92,9 @@
-> >  /* Avoid kmemleak tracing */
-> >  #define SLAB_NOLEAKTRACE       ((slab_flags_t __force)0x00800000U)
-> >
-> > +/* Exclude slab from zero-on-free when init_on_free is enabled */
-> > +#define SLAB_NO_FREE_INIT      ((slab_flags_t __force)0x01000000U)
-> > +
-> >  /* Fault injection mark */
-> >  #ifdef CONFIG_FAILSLAB
-> >  # define SLAB_FAILSLAB         ((slab_flags_t __force)0x02000000U)
-> > diff --git a/kernel/fork.c b/kernel/fork.c
-> > index b4cba953040a..9868585f5520 100644
-> > --- a/kernel/fork.c
-> > +++ b/kernel/fork.c
-> > @@ -2550,11 +2550,13 @@ void __init proc_caches_init(void)
-> >
-> >         mm_cachep = kmem_cache_create_usercopy("mm_struct",
-> >                         mm_size, ARCH_MIN_MMSTRUCT_ALIGN,
-> > -                       SLAB_HWCACHE_ALIGN|SLAB_PANIC|SLAB_ACCOUNT,
-> > +                       SLAB_HWCACHE_ALIGN|SLAB_PANIC|SLAB_ACCOUNT|
-> > +                       SLAB_NO_FREE_INIT,
-> >                         offsetof(struct mm_struct, saved_auxv),
-> >                         sizeof_field(struct mm_struct, saved_auxv),
-> >                         NULL);
-> > -       vm_area_cachep = KMEM_CACHE(vm_area_struct, SLAB_PANIC|SLAB_ACCOUNT);
-> > +       vm_area_cachep = KMEM_CACHE(vm_area_struct, SLAB_PANIC|SLAB_ACCOUNT|
-> > +                                                   SLAB_NO_FREE_INIT);
-> >         mmap_init();
-> >         nsproxy_cache_init();
-> >  }
-> > diff --git a/mm/rmap.c b/mm/rmap.c
-> > index e5dfe2ae6b0d..b7b8013eeb0a 100644
-> > --- a/mm/rmap.c
-> > +++ b/mm/rmap.c
-> > @@ -432,10 +432,11 @@ static void anon_vma_ctor(void *data)
-> >  void __init anon_vma_init(void)
-> >  {
-> >         anon_vma_cachep = kmem_cache_create("anon_vma", sizeof(struct anon_vma),
-> > -                       0, SLAB_TYPESAFE_BY_RCU|SLAB_PANIC|SLAB_ACCOUNT,
-> > +                       0, SLAB_TYPESAFE_BY_RCU|SLAB_PANIC|SLAB_ACCOUNT|
-> > +                       SLAB_NO_FREE_INIT,
-> >                         anon_vma_ctor);
-> >         anon_vma_chain_cachep = KMEM_CACHE(anon_vma_chain,
-> > -                       SLAB_PANIC|SLAB_ACCOUNT);
-> > +                       SLAB_PANIC|SLAB_ACCOUNT|SLAB_NO_FREE_INIT);
-> >  }
-> >
-> >  /*
-> > diff --git a/mm/slab.h b/mm/slab.h
-> > index 24ae887359b8..f95b4f03c57b 100644
-> > --- a/mm/slab.h
-> > +++ b/mm/slab.h
-> > @@ -129,7 +129,8 @@ static inline slab_flags_t kmem_cache_flags(unsigned int object_size,
-> >  /* Legal flag mask for kmem_cache_create(), for various configurations */
-> >  #define SLAB_CORE_FLAGS (SLAB_HWCACHE_ALIGN | SLAB_CACHE_DMA | \
-> >                          SLAB_CACHE_DMA32 | SLAB_PANIC | \
-> > -                        SLAB_TYPESAFE_BY_RCU | SLAB_DEBUG_OBJECTS )
-> > +                        SLAB_TYPESAFE_BY_RCU | SLAB_DEBUG_OBJECTS | \
-> > +                        SLAB_NO_FREE_INIT)
-> >
-> >  #if defined(CONFIG_DEBUG_SLAB)
-> >  #define SLAB_DEBUG_FLAGS (SLAB_RED_ZONE | SLAB_POISON | SLAB_STORE_USER)
-> > @@ -535,7 +536,7 @@ static inline bool slab_want_init_on_alloc(gfp_t flags, struct kmem_cache *c)
-> >  static inline bool slab_want_init_on_free(struct kmem_cache *c)
-> >  {
-> >         if (static_branch_unlikely(&init_on_free))
-> > -               return !(c->ctor);
-> > +               return !(c->ctor) && ((c->flags & SLAB_NO_FREE_INIT) == 0);
-> >         else
-> >                 return false;
-> >  }
-> > diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-> > index e89be6282693..b65902d2c042 100644
-> > --- a/net/core/skbuff.c
-> > +++ b/net/core/skbuff.c
-> > @@ -3981,14 +3981,16 @@ void __init skb_init(void)
-> >         skbuff_head_cache = kmem_cache_create_usercopy("skbuff_head_cache",
-> >                                               sizeof(struct sk_buff),
-> >                                               0,
-> > -                                             SLAB_HWCACHE_ALIGN|SLAB_PANIC,
-> > +                                             SLAB_HWCACHE_ALIGN|SLAB_PANIC|
-> > +                                             SLAB_NO_FREE_INIT,
-> >                                               offsetof(struct sk_buff, cb),
-> >                                               sizeof_field(struct sk_buff, cb),
-> >                                               NULL);
-> >         skbuff_fclone_cache = kmem_cache_create("skbuff_fclone_cache",
-> >                                                 sizeof(struct sk_buff_fclones),
-> >                                                 0,
-> > -                                               SLAB_HWCACHE_ALIGN|SLAB_PANIC,
-> > +                                               SLAB_HWCACHE_ALIGN|SLAB_PANIC|
-> > +                                               SLAB_NO_FREE_INIT,
-> >                                                 NULL);
-> >         skb_extensions_init();
-> >  }
-> > --
-> > 2.17.1
-> >
-> >
-> > --
-> > Kees Cook
+Yes. Sparse currently ignores the context and only has a simple
+counter shared by all locks.
 
--- 
-Kees Cook
+> o What exactly the usage of `__acquire/__release` ?
+> I have used it to shut up the warning for lockfn & unlockfn above.
+
+You use those to inform sparse where you're taking a lock or releasing
+a lock; and some parts of the kernel also use it to inform sparse of
+places where a lock is effectively taken, even though there is no
+actual locking call (e.g. when two pointers point to the same object,
+and therefore you only need to actually call the locking function once
+instead of twice).
+
+[...]
+> So, clang thread safety analysis[3] follows a different mechanism
+> to overcome what we have observed above.
+>
+> I did small analysis on a C program[4] and a device driver[5].
+>
+> Clang analysis has many annotations available to suitable annotate the
+> codebase which can be found in the documentation[3].
+>
+> Quite surprisingly, Philipp proposed[6] `__protected_by` feature which is
+> very similar to `guarded_by`[7] feature implemented in Clang.
+>
+> Similarly, Johannes proposed[8] the same with a different implementation.
+>
+> Questions from both you:
+>
+> o Why was it not deployed in sparse ?
+>
+> o Does the lock protecting the data should be a global variable ?
+>
+> ie.,
+>
+> struct foo {
+>         struct mutex lock;
+>         int balance __protected_by(lock);
+> }
+>
+> Can this be done ? Or lock should be global ?
+>
+> Because clang analysis wants it to be global!
+>
+> There are other attribute restrictions as well for clang analysis:
+> https://github.com/llvm-mirror/clang/blob/master/test/Sema/attr-capabilities.c
+>
+>
+> *Most Important*
+> Could you please point me some critical data examples that you know in
+> the kernel source which should be protected. This would help us a lot!
+
+The complicated thing in the kernel is that almost any structure
+member can be accessed without locking under some circumstances - for
+example, when a structure is initialized, or when the structure is
+being freed and all other references to the object have gone away. On
+top of that, many fields can be accessed under multiple locking
+mechanisms - e.g. many fields can be read under either a
+spinlock/mutex or in an RCU read-critical section. And there are
+functions that conditionally acquire a lock and signal the state of
+the lock through their return value - for example,
+mutex_lock_killable() and mutex_lock_interruptible().
+
+I think that static analysis of locking is a great thing, but the
+kernel doesn't exactly make it easy. In particular, I think it is
+going to require annotations that you can use to tell the compiler
+which state of its lifecycle an object is in (since that can influence
+locking rules), and annotations that tell the compiler what the
+semantics of functions like mutex_lock_killable() are.
