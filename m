@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15969-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15970-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 2F81F2443A
-	for <lists+kernel-hardening@lfdr.de>; Tue, 21 May 2019 01:22:22 +0200 (CEST)
-Received: (qmail 3846 invoked by uid 550); 20 May 2019 23:20:32 -0000
+	by mail.lfdr.de (Postfix) with SMTP id E48962443B
+	for <lists+kernel-hardening@lfdr.de>; Tue, 21 May 2019 01:22:33 +0200 (CEST)
+Received: (qmail 3993 invoked by uid 550); 20 May 2019 23:20:33 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,48 +13,47 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 3770 invoked from network); 20 May 2019 23:20:31 -0000
+Received: (qmail 3847 invoked from network); 20 May 2019 23:20:32 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=1tp0hWg+Fv4tFS/1ogVPOUXaReV0m0NPqcPhlDEcA4M=;
-        b=V2XT6VyD2+DXGZSgdKWFvfyai33es5DC+pNYfU1uPcQQUXoX4sf/c4bDjhULluZD/c
-         MfaAquz2qQ7KJQkg9vWSvHcjVIvgRjEQ2Gqt453NVNd8pDuqKvbFpR3SRpLoo9Fhn3Bn
-         YPOOGVv69va+6L6dfkLJtQqk9v+n5hsgQ/cqw=
+        bh=M1E8RaUn9zcJYuZZG/7uL4HyNdEDRlNB8oeiw9QadoE=;
+        b=BcEzpaCtHDeErP/BWLjRyK7fBTLMOKLcQuvK1NL+Ewf75ZVTEmchKagvJas138fFpL
+         etBB19RzMP4xlK44gIOaNkXNur2K5KlwyPYFy+UCAR8CYMqPnPkHC5ZRIuwT9tVZI1X7
+         SEpRCJTIhgZIMaMDFFfQ6unPUoEFaArraP16M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=1tp0hWg+Fv4tFS/1ogVPOUXaReV0m0NPqcPhlDEcA4M=;
-        b=tQy9k/ZBfv7Kv1kPG/rJoF6WKtaXp5aSeHc4ITWJC45inLGxkV+wv75xmRsom+AW+a
-         RjET/+eaG6hJ8D51ndz/nwpri5y8007xaAic6u0LRi1XRsspdKoy7DTED9wKYZu3xwHy
-         SeVGwKNt7RIEYabgghZlNVIDfNfGju6/xHtFYwbyARGC0qeQVAeHJBBetH8/dVK6LVDV
-         3XoOgQpXm7nl7i/nPPribVEYF01KkuRkTC6sDl+kQFOr0mHlW+GpxuuJSXnnQY0Z3ZZI
-         uL9nsV0Xf/MZbxGIvmgYEZm+zctgxlIkjenTzkH+j3mT6Jab76o5MShTEtVmTAQBJKa/
-         eQGQ==
-X-Gm-Message-State: APjAAAVz1HiZkAjR1asmknp3jJlcMlLOxbAMpuRn+A1asIXCzVgKc+rB
-	ARp02k6NclsxpwIBMgingyayNKtMs5s=
-X-Google-Smtp-Source: APXvYqzGnLop82FsJKmnNwPR3WWLt5KGSTjBnQrRed8+UZU4RsaefgYELhyIPHlFuCzzzBwKRGJPNA==
-X-Received: by 2002:a17:902:9348:: with SMTP id g8mr36216437plp.174.1558394419565;
-        Mon, 20 May 2019 16:20:19 -0700 (PDT)
+        bh=M1E8RaUn9zcJYuZZG/7uL4HyNdEDRlNB8oeiw9QadoE=;
+        b=RKzi9XNyy0/Qkv/7UWc7nR4P5QwovwpUZF0bm2KXeqlmmVG8NtyfHFwz/2eOwsy4vJ
+         kg0L5O8yrd3/PTYDTVzN47hS8eUOU2LvEyITl1xt6xh7ACdwAUj54hnAKXB/t+7jBilY
+         PKdDfjiXgpPb14kg/459JI6m5qQYZVw/Sx280wqhTWqa0Cw6fk8BCWEyF5wToJYlhrVP
+         Tq9Y85YqZBkE310DAjG/8Sp0ZjgJMt+/p4agXmjbPLA0hTVDu4o9fKSxxSdk8fhs1Oq4
+         nykjkl5dqlszvejW5nYN9dzCpXyDzM9Ns56H2Q9YnOsKIJhcP/xLmk6DDTSoppZ7kCnY
+         DGWQ==
+X-Gm-Message-State: APjAAAWf8M7urf1AAGomdVEJmoc5feW3n9OTBOWAVcQglJ0i0ZRqNGpm
+	WEIjwbRH95o3Zm37ct/OUugLjq6yfKc=
+X-Google-Smtp-Source: APXvYqyT2kryQV+6jF2IYoOf+x3y5b6AlPsCieYaesFkPafg3IMH+szJ+l/D5ocyk156zDt8vQJpkA==
+X-Received: by 2002:a63:730f:: with SMTP id o15mr78268823pgc.315.1558394420454;
+        Mon, 20 May 2019 16:20:20 -0700 (PDT)
 From: Thomas Garnier <thgarnie@chromium.org>
 To: kernel-hardening@lists.openwall.com
 Cc: kristen@linux.intel.com,
 	Thomas Garnier <thgarnie@google.com>,
-	Pavel Machek <pavel@ucw.cz>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
-	"Rafael J. Wysocki" <rjw@rjwysocki.net>,
+	Juergen Gross <jgross@suse.com>,
+	Alok Kataria <akataria@vmware.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Ingo Molnar <mingo@redhat.com>,
 	Borislav Petkov <bp@alien8.de>,
 	"H. Peter Anvin" <hpa@zytor.com>,
 	x86@kernel.org,
-	linux-pm@vger.kernel.org,
+	virtualization@lists.linux-foundation.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v7 10/12] x86/power/64: Adapt assembly for PIE support
-Date: Mon, 20 May 2019 16:19:35 -0700
-Message-Id: <20190520231948.49693-11-thgarnie@chromium.org>
+Subject: [PATCH v7 11/12] x86/paravirt: Adapt assembly for PIE support
+Date: Mon, 20 May 2019 16:19:36 -0700
+Message-Id: <20190520231948.49693-12-thgarnie@chromium.org>
 X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
 In-Reply-To: <20190520231948.49693-1-thgarnie@chromium.org>
 References: <20190520231948.49693-1-thgarnie@chromium.org>
@@ -63,41 +62,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Garnier <thgarnie@google.com>
 
-Change the assembly code to use only relative references of symbols for the
-kernel to be PIE compatible.
+if PIE is enabled, switch the paravirt assembly constraints to be
+compatible. The %c/i constrains generate smaller code so is kept by
+default.
 
 Position Independent Executable (PIE) support will allow to extend the
 KASLR randomization range below 0xffffffff80000000.
 
 Signed-off-by: Thomas Garnier <thgarnie@google.com>
-Acked-by: Pavel Machek <pavel@ucw.cz>
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 ---
- arch/x86/power/hibernate_asm_64.S | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/include/asm/paravirt_types.h | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/power/hibernate_asm_64.S b/arch/x86/power/hibernate_asm_64.S
-index 3008baa2fa95..9ed980efef72 100644
---- a/arch/x86/power/hibernate_asm_64.S
-+++ b/arch/x86/power/hibernate_asm_64.S
-@@ -24,7 +24,7 @@
- #include <asm/frame.h>
+diff --git a/arch/x86/include/asm/paravirt_types.h b/arch/x86/include/asm/paravirt_types.h
+index 2474e434a6f7..93be18bdb63e 100644
+--- a/arch/x86/include/asm/paravirt_types.h
++++ b/arch/x86/include/asm/paravirt_types.h
+@@ -343,9 +343,17 @@ extern struct paravirt_patch_template pv_ops;
+ #define PARAVIRT_PATCH(x)					\
+ 	(offsetof(struct paravirt_patch_template, x) / sizeof(void *))
  
- ENTRY(swsusp_arch_suspend)
--	movq	$saved_context, %rax
-+	leaq	saved_context(%rip), %rax
- 	movq	%rsp, pt_regs_sp(%rax)
- 	movq	%rbp, pt_regs_bp(%rax)
- 	movq	%rsi, pt_regs_si(%rax)
-@@ -115,7 +115,7 @@ ENTRY(restore_registers)
- 	movq	%rax, %cr4;  # turn PGE back on
++#ifdef CONFIG_X86_PIE
++#define paravirt_opptr_call "a"
++#define paravirt_opptr_type "p"
++#else
++#define paravirt_opptr_call "c"
++#define paravirt_opptr_type "i"
++#endif
++
+ #define paravirt_type(op)				\
+ 	[paravirt_typenum] "i" (PARAVIRT_PATCH(op)),	\
+-	[paravirt_opptr] "i" (&(pv_ops.op))
++	[paravirt_opptr] paravirt_opptr_type (&(pv_ops.op))
+ #define paravirt_clobber(clobber)		\
+ 	[paravirt_clobber] "i" (clobber)
  
- 	/* We don't restore %rax, it must be 0 anyway */
--	movq	$saved_context, %rax
-+	leaq	saved_context(%rip), %rax
- 	movq	pt_regs_sp(%rax), %rsp
- 	movq	pt_regs_bp(%rax), %rbp
- 	movq	pt_regs_si(%rax), %rsi
+@@ -393,7 +401,7 @@ int paravirt_disable_iospace(void);
+  */
+ #define PARAVIRT_CALL					\
+ 	ANNOTATE_RETPOLINE_SAFE				\
+-	"call *%c[paravirt_opptr];"
++	"call *%" paravirt_opptr_call "[paravirt_opptr];"
+ 
+ /*
+  * These macros are intended to wrap calls through one of the paravirt
 -- 
 2.21.0.1020.gf2820cf01a-goog
 
