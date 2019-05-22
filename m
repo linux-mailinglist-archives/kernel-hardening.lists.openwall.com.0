@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15978-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15981-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 005B12678C
-	for <lists+kernel-hardening@lfdr.de>; Wed, 22 May 2019 17:58:06 +0200 (CEST)
-Received: (qmail 29985 invoked by uid 550); 22 May 2019 15:57:59 -0000
+	by mail.lfdr.de (Postfix) with SMTP id BFCD726B7B
+	for <lists+kernel-hardening@lfdr.de>; Wed, 22 May 2019 21:28:06 +0200 (CEST)
+Received: (qmail 30373 invoked by uid 550); 22 May 2019 19:27:47 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,84 +13,117 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 29961 invoked from network); 22 May 2019 15:57:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=csIO6/r6boDgls5PxYVv4WnR4nG5C2hWLcsvu4wXyRE=;
-        b=I5c1PJ8QlNgcKHXLHGh8brj9dKeIc23jMxGlGishmc7jg0dw/3WNuuAICPR4vHase6
-         PXKRpc3p3PBlZCgxRTvLDlTyAmIMxmJ7uAylqP0Oum+ZxW7HPwc5ZhsSqR+PuIQLF2kn
-         rmWAp7Sa8igzbVYZCptsBDsyBpbNGWwDEp1Gg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=csIO6/r6boDgls5PxYVv4WnR4nG5C2hWLcsvu4wXyRE=;
-        b=cf5Otqqfdgtqc76U8gZ+bgnu3mpLSvFupgkOF7dMSmqR6pB0UH+5rRAHkRxHrROMgX
-         6r/48RalrGJq1ncfLY6nAjYv1A/KuS4ndXzjLT7w001cVrBAqWYhfEGOoHEyB64Ipzuh
-         PwvKdSS63EKJpbKtzoW3PV2c2mXIdW7C5VHWryP9GgsqbE+gm6U7ZnfwBfGPPHMmhf+9
-         nR7ARDQFeb9pjIkjUxGaFEMc51CbJZZaXubddtdtXD3C/uIo+TrXvAEDODe0/OY8XhyC
-         RQL7dnkGrl+fB97To2doUSxo+Jy1eJRawVDozxzsINkMZPq0s0nHaHJnIUmezdqu7gjH
-         wITQ==
-X-Gm-Message-State: APjAAAUZRIZvTAlfAMUbOgsdZL+pU0SDQRQ3HOBuoO7Nylwu6uwaWR7y
-	roNn7upvtV3bZPLXBjtMG/ONF4jW3ZM=
-X-Google-Smtp-Source: APXvYqz353D9QmKFCDvV7NmW82YP0mBKN087O69TfzyOtUGCNxN1srZfp/GOugZM4/t4papFjlsk9g==
-X-Received: by 2002:a02:6209:: with SMTP id d9mr9347158jac.34.1558540666993;
-        Wed, 22 May 2019 08:57:46 -0700 (PDT)
-X-Received: by 2002:a02:5143:: with SMTP id s64mr8139039jaa.54.1558540664324;
- Wed, 22 May 2019 08:57:44 -0700 (PDT)
+Delivered-To: moderator for kernel-hardening@lists.openwall.com
+Received: (qmail 23663 invoked from network); 22 May 2019 19:22:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1558552960;
+	bh=BtJ2PSA7lzUFglQbHDLlvlNIJuTaiwvd4PSRXSs8TB0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Z5WYyBLIEAfogPVLNb8MlDYBrbocmIusxj2TnDPhBgS0upC3yra2a5SrttBryrvCH
+	 C5JrH1fXvtGXbctXGT2ZxbD82jGrHA6f4FiNpFJLlGgfG3O9VvV38g8b8cbZx6CkTI
+	 wKM0CPe5DRHzDtVcsd7wAI0G0mCs7239C5O6ET2E=
+From: Sasha Levin <sashal@kernel.org>
+To: linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Cc: Nadav Amit <namit@vmware.com>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	akpm@linux-foundation.org,
+	ard.biesheuvel@linaro.org,
+	deneen.t.dock@intel.com,
+	kernel-hardening@lists.openwall.com,
+	kristen@linux.intel.com,
+	linux_dti@icloud.com,
+	will.deacon@arm.com,
+	Andy Lutomirski <luto@kernel.org>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H . Peter Anvin" <hpa@zytor.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Rik van Riel <riel@surriel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.1 048/375] x86/ftrace: Set trampoline pages as executable
+Date: Wed, 22 May 2019 15:15:48 -0400
+Message-Id: <20190522192115.22666-48-sashal@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190522192115.22666-1-sashal@kernel.org>
+References: <20190522192115.22666-1-sashal@kernel.org>
 MIME-Version: 1.0
-References: <20190520231948.49693-1-thgarnie@chromium.org> <20190520231948.49693-4-thgarnie@chromium.org>
- <FF111368-9173-4AC2-9A79-E79A52B104DD@zytor.com>
-In-Reply-To: <FF111368-9173-4AC2-9A79-E79A52B104DD@zytor.com>
-From: Thomas Garnier <thgarnie@chromium.org>
-Date: Wed, 22 May 2019 08:57:33 -0700
-X-Gmail-Original-Message-ID: <CAJcbSZEYZLj_UQCQZzqxiOJEoWb2EzuUgaaFCkUBBFuKepHh8w@mail.gmail.com>
-Message-ID: <CAJcbSZEYZLj_UQCQZzqxiOJEoWb2EzuUgaaFCkUBBFuKepHh8w@mail.gmail.com>
-Subject: Re: [PATCH v7 03/12] x86: Add macro to get symbol address for PIE support
-To: "H . Peter Anvin" <hpa@zytor.com>
-Cc: Kernel Hardening <kernel-hardening@lists.openwall.com>, 
-	Kristen Carlson Accardi <kristen@linux.intel.com>, Thomas Gleixner <tglx@linutronix.de>, 
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
-	"the arch/x86 maintainers" <x86@kernel.org>, Peter Zijlstra <peterz@infradead.org>, Nadav Amit <namit@vmware.com>, 
-	Jann Horn <jannh@google.com>, LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 
-On Mon, May 20, 2019 at 8:13 PM <hpa@zytor.com> wrote:
->
-> On May 20, 2019 4:19:28 PM PDT, Thomas Garnier <thgarnie@chromium.org> wrote:
-> >From: Thomas Garnier <thgarnie@google.com>
-> >
-> >Add a new _ASM_MOVABS macro to fetch a symbol address. It will be used
-> >to replace "_ASM_MOV $<symbol>, %dst" code construct that are not
-> >compatible with PIE.
-> >
-> >Signed-off-by: Thomas Garnier <thgarnie@google.com>
-> >---
-> > arch/x86/include/asm/asm.h | 1 +
-> > 1 file changed, 1 insertion(+)
-> >
-> >diff --git a/arch/x86/include/asm/asm.h b/arch/x86/include/asm/asm.h
-> >index 3ff577c0b102..3a686057e882 100644
-> >--- a/arch/x86/include/asm/asm.h
-> >+++ b/arch/x86/include/asm/asm.h
-> >@@ -30,6 +30,7 @@
-> > #define _ASM_ALIGN    __ASM_SEL(.balign 4, .balign 8)
-> >
-> > #define _ASM_MOV      __ASM_SIZE(mov)
-> >+#define _ASM_MOVABS   __ASM_SEL(movl, movabsq)
-> > #define _ASM_INC      __ASM_SIZE(inc)
-> > #define _ASM_DEC      __ASM_SIZE(dec)
-> > #define _ASM_ADD      __ASM_SIZE(add)
->
-> This is just about *always* wrong on x86-86. We should be using leaq sym(%rip),%reg. If it isn't reachable by leaq, then it is a non-PIE symbol like percpu. You do have to keep those distinct!
+From: Nadav Amit <namit@vmware.com>
 
-Yes, I agree. This patch is just having a shortcut when it is a
-non-PIE symbol. The other patches try to separate the use cases where
-a leaq sym(%rip) would work versus the need for a movabsq. There are
-multiple cases where relative references are not possible because the
-memory layout is different (hibernation, early boot or others).
+[ Upstream commit 3c0dab44e22782359a0a706cbce72de99a22aa75 ]
 
-> --
-> Sent from my Android device with K-9 Mail. Please excuse my brevity.
+Since alloc_module() will not set the pages as executable soon, set
+ftrace trampoline pages as executable after they are allocated.
+
+For the time being, do not change ftrace to use the text_poke()
+interface. As a result, ftrace still breaks W^X.
+
+Signed-off-by: Nadav Amit <namit@vmware.com>
+Signed-off-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
+Cc: <akpm@linux-foundation.org>
+Cc: <ard.biesheuvel@linaro.org>
+Cc: <deneen.t.dock@intel.com>
+Cc: <kernel-hardening@lists.openwall.com>
+Cc: <kristen@linux.intel.com>
+Cc: <linux_dti@icloud.com>
+Cc: <will.deacon@arm.com>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lkml.kernel.org/r/20190426001143.4983-10-namit@vmware.com
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ arch/x86/kernel/ftrace.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/arch/x86/kernel/ftrace.c b/arch/x86/kernel/ftrace.c
+index ef49517f6bb24..53ba1aa3a01f8 100644
+--- a/arch/x86/kernel/ftrace.c
++++ b/arch/x86/kernel/ftrace.c
+@@ -730,6 +730,7 @@ create_trampoline(struct ftrace_ops *ops, unsigned int *tramp_size)
+ 	unsigned long end_offset;
+ 	unsigned long op_offset;
+ 	unsigned long offset;
++	unsigned long npages;
+ 	unsigned long size;
+ 	unsigned long retq;
+ 	unsigned long *ptr;
+@@ -762,6 +763,7 @@ create_trampoline(struct ftrace_ops *ops, unsigned int *tramp_size)
+ 		return 0;
+ 
+ 	*tramp_size = size + RET_SIZE + sizeof(void *);
++	npages = DIV_ROUND_UP(*tramp_size, PAGE_SIZE);
+ 
+ 	/* Copy ftrace_caller onto the trampoline memory */
+ 	ret = probe_kernel_read(trampoline, (void *)start_offset, size);
+@@ -806,6 +808,12 @@ create_trampoline(struct ftrace_ops *ops, unsigned int *tramp_size)
+ 	/* ALLOC_TRAMP flags lets us know we created it */
+ 	ops->flags |= FTRACE_OPS_FL_ALLOC_TRAMP;
+ 
++	/*
++	 * Module allocation needs to be completed by making the page
++	 * executable. The page is still writable, which is a security hazard,
++	 * but anyhow ftrace breaks W^X completely.
++	 */
++	set_memory_x((unsigned long)trampoline, npages);
+ 	return (unsigned long)trampoline;
+ fail:
+ 	tramp_free(trampoline, *tramp_size);
+-- 
+2.20.1
+
