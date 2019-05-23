@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15990-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15986-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 39227281D8
-	for <lists+kernel-hardening@lfdr.de>; Thu, 23 May 2019 17:54:20 +0200 (CEST)
-Received: (qmail 18203 invoked by uid 550); 23 May 2019 15:54:05 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 39A2D27EFD
+	for <lists+kernel-hardening@lfdr.de>; Thu, 23 May 2019 16:02:19 +0200 (CEST)
+Received: (qmail 32495 invoked by uid 550); 23 May 2019 14:02:08 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,335 +13,654 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 28094 invoked from network); 23 May 2019 12:42:50 -0000
+Received: (qmail 32470 invoked from network); 23 May 2019 14:02:07 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=GrPd0Ehzkwgs8flG0McuJvkTnr/DIjfrIhDeOSvXnoY=;
-        b=c4PTxt6GbbkKh29sih5enoKVGyMiYVYDStyGmFdx5QefGnvHTake1qlrYrHoHEQrCE
-         ++1kksetXbRrLBsUzGoBPVIMAAMNahTmjf785FIERAu9VEACDN6Dz1mlWOxOGpbeA7pb
-         j/fU9z5gy2GIxuhbsTrOsbsC5W7GBJTGTn7dwa9/LCuRdsWwyAmoyq3PDyg5GU2ug5s+
-         HLYCxfheuLXUX4xre/bvMAurMTrcffJpEMMKp+j6Wtq8qnswrfxvwcbQ75DKYA0YMApY
-         vroFWYFkyIu9Htfdesto2WrVrIfrGq7SCiUXYBDLUYAih13Eo2rIPWIc+nwn32ib129k
-         jpNw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=IIOB1t1FkNf6mOVNCzglBhBc8jtAT8Cy9RVUg2rAsIE=;
+        b=kUHCFpt5bxEpXWPKItqmPLdfLbqNcT+Vr5yr9ptKmO28e6W9umhktpDBEGAA7D6IUm
+         Uua2aCGsoEx8UO3IKywyfFB7Qo3QMTpsb8Ki8Ny3DM5bFWxusb/lMVvr0hRUIxLzzqgz
+         tEd0hTuIr/4vvNdRvFDb2Rzr4tcZVEUBOsg2ZeLGI24iAOpHzJkBWLD9bzfswgtUXHfj
+         Ke7Prk+mZgK3TkSgGh5hUKTSCutVEx2l20ViBdAuEGK5TH8YSsiO9w2jz5xoSlhsRPdF
+         D3iaNhfoCkdJNDzb7Cn/0QPEWsjb56PGt8pWlaAkxmslGKltHRXTeqXfw1l1cNihPa0q
+         kAqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=GrPd0Ehzkwgs8flG0McuJvkTnr/DIjfrIhDeOSvXnoY=;
-        b=ilx9QodUH01JyTOF0Q3xKVtaljAmkaNxcUXrVQkgyxSgLq4aMWV8hHhJbYVPX39d3l
-         nixNvBW+jituulEEff9HuH4nL9j0Bi4DncmdvPEYPPXtO4ZQyf7UjAWYq7fQxRDel2dU
-         OMbs+XdhMFW+ov+EOEM7yxDtzmW/m1q3YJp40YYdZmWNa4lrr6HGj6pLWHHC1brGai1v
-         ShE5ozqBEZ23zHMzlWO5tNlGqtJ/SIg9Bi6tw489XGTkpOaCwFlB9U4bTB7aaDKWNwsI
-         98isgZU/3mzJ09pmuyeJYkGL7d7SzMdT5TdgirfMc0nQDLUX2FXl9NF6Tvr0UHe/xKms
-         LE8g==
-X-Gm-Message-State: APjAAAWM7TmU758QNj6G5+gUaf8gAKZNp25ZC0VsjzNNk/u09ff/q26S
-	R9LVRTkUL7rpboahk72+e/iKClCE4zk=
-X-Google-Smtp-Source: APXvYqx6+4Lx9KEyyCmocn+ERDYmrBvW59FCcdrGthGBmVTyeg7hNq7ggY14xUbi5JovTOJdj/wBvcGas8A=
-X-Received: by 2002:a5b:888:: with SMTP id e8mr12252456ybq.505.1558615359109;
- Thu, 23 May 2019 05:42:39 -0700 (PDT)
-Date: Thu, 23 May 2019 14:42:16 +0200
-In-Reply-To: <20190523124216.40208-1-glider@google.com>
-Message-Id: <20190523124216.40208-4-glider@google.com>
-Mime-Version: 1.0
-References: <20190523124216.40208-1-glider@google.com>
-X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
-Subject: [PATCH 3/3] lib: introduce test_meminit module
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=IIOB1t1FkNf6mOVNCzglBhBc8jtAT8Cy9RVUg2rAsIE=;
+        b=kuSx11pEmBTGVSB7G5m66Ap0LNfr+h/h6NIBVsSW29enCfiTAuS+r/tTe0i97DWlTu
+         4lJhhFnsgSWqGvrwQlRI2+EyFsrq8X7j/WQW8nh8LikjkC42ABkHgvDebHjTDc+ISiHZ
+         5hE4vWtvAT9yAECW1LkyWRlybvSjgpM3vNE0dRZRJFStnk/8yRxogvwY8yDzPjtlTEpn
+         /CZKWjpZluY0aMTmdpoTPa5pfIQ2TLpWgq79AqelpUnE4x7v/KR/2huiye5CxylGrQCS
+         pzumcKe7cK+P6vMLox5pOCoSiSBsnjKrbffdDe1F7EuTtlPqi3gW/Qjjk2xtWYSbhZKD
+         q1dg==
+X-Gm-Message-State: APjAAAU+UsP7yU9gyt98lVBSfx+bNCOo+ixV6/FjdldDAQR9GVbw5CG0
+	XvuQAxGzIyzmszyUOp+MxTV6sEMPxnc9bEKReHHuRg==
+X-Google-Smtp-Source: APXvYqwXnhs5LkUXx7b12uPcCaGOHXGAt9A3Q07XAu4LUfNepUqY6TZU9gtT6a5XMczbGivAhA6z0zr954FlsG73Pac=
+X-Received: by 2002:ab0:1d8e:: with SMTP id l14mr8256173uak.72.1558620114901;
+ Thu, 23 May 2019 07:01:54 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190523124216.40208-1-glider@google.com> <20190523124216.40208-2-glider@google.com>
+In-Reply-To: <20190523124216.40208-2-glider@google.com>
 From: Alexander Potapenko <glider@google.com>
-To: akpm@linux-foundation.org, cl@linux.com, keescook@chromium.org
-Cc: kernel-hardening@lists.openwall.com, linux-mm@kvack.org, 
-	linux-security-module@vger.kernel.org, 
+Date: Thu, 23 May 2019 16:01:43 +0200
+Message-ID: <CAG_fn=VHwEsbBVynYWhaMkzdP4VHfMtmKsVttVRSTEKy4aYwwg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] mm: security: introduce init_on_alloc=1 and
+ init_on_free=1 boot options
+To: Andrew Morton <akpm@linux-foundation.org>, Christoph Lameter <cl@linux.com>, 
+	Kees Cook <keescook@chromium.org>
+Cc: Kernel Hardening <kernel-hardening@lists.openwall.com>, 
+	Linux Memory Management List <linux-mm@kvack.org>, 
+	linux-security-module <linux-security-module@vger.kernel.org>, 
+	Masahiro Yamada <yamada.masahiro@socionext.com>, Michal Hocko <mhocko@kernel.org>, 
+	James Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>, 
 	Nick Desaulniers <ndesaulniers@google.com>, Kostya Serebryany <kcc@google.com>, 
 	Dmitry Vyukov <dvyukov@google.com>, Sandeep Patil <sspatil@android.com>, 
-	Laura Abbott <labbott@redhat.com>, Jann Horn <jannh@google.com>
+	Laura Abbott <labbott@redhat.com>, Randy Dunlap <rdunlap@infradead.org>, Jann Horn <jannh@google.com>, 
+	Mark Rutland <mark.rutland@arm.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Add tests for heap and pagealloc initialization.
-These can be used to check init_on_alloc and init_on_free implementations
-as well as other approaches to initialization.
+On Thu, May 23, 2019 at 2:42 PM Alexander Potapenko <glider@google.com> wro=
+te:
+>
+> The new options are needed to prevent possible information leaks and
+> make control-flow bugs that depend on uninitialized values more
+> deterministic.
+>
+> init_on_alloc=3D1 makes the kernel initialize newly allocated pages and h=
+eap
+> objects with zeroes. Initialization is done at allocation time at the
+> places where checks for __GFP_ZERO are performed.
+>
+> init_on_free=3D1 makes the kernel initialize freed pages and heap objects
+> with zeroes upon their deletion. This helps to ensure sensitive data
+> doesn't leak via use-after-free accesses.
+>
+> Both init_on_alloc=3D1 and init_on_free=3D1 guarantee that the allocator
+> returns zeroed memory. The only exception is slab caches with
+> constructors. Those are never zero-initialized to preserve their semantic=
+s.
+>
+> For SLOB allocator init_on_free=3D1 also implies init_on_alloc=3D1 behavi=
+or,
+> i.e. objects are zeroed at both allocation and deallocation time.
+> This is done because SLOB may otherwise return multiple freelist pointers
+> in the allocated object. For SLAB and SLUB enabling either init_on_alloc
+> or init_on_free leads to one-time initialization of the object.
+>
+> Both init_on_alloc and init_on_free default to zero, but those defaults
+> can be overridden with CONFIG_INIT_ON_ALLOC_DEFAULT_ON and
+> CONFIG_INIT_ON_FREE_DEFAULT_ON.
+>
+> Slowdown for the new features compared to init_on_free=3D0,
+> init_on_alloc=3D0:
+>
+> hackbench, init_on_free=3D1:  +7.62% sys time (st.err 0.74%)
+> hackbench, init_on_alloc=3D1: +7.75% sys time (st.err 2.14%)
+>
+> Linux build with -j12, init_on_free=3D1:  +8.38% wall time (st.err 0.39%)
+> Linux build with -j12, init_on_free=3D1:  +24.42% sys time (st.err 0.52%)
+> Linux build with -j12, init_on_alloc=3D1: -0.13% wall time (st.err 0.42%)
+> Linux build with -j12, init_on_alloc=3D1: +0.57% sys time (st.err 0.40%)
+>
+> The slowdown for init_on_free=3D0, init_on_alloc=3D0 compared to the
+> baseline is within the standard error.
+>
+> The new features are also going to pave the way for hardware memory
+> tagging (e.g. arm64's MTE), which will require both on_alloc and on_free
+> hooks to set the tags for heap objects. With MTE, tagging will have the
+> same cost as memory initialization.
+>
+> Although init_on_free is rather costly, there are paranoid use-cases wher=
+e
+> in-memory data lifetime is desired to be minimized. There are various
+> arguments for/against the realism of the associated threat models, but
+> given that we'll need the infrastructre for MTE anyway, and there are
+> people who want wipe-on-free behavior no matter what the performance cost=
+,
+> it seems reasonable to include it in this series.
+>
+> Signed-off-by: Alexander Potapenko <glider@google.com>
+> To: Andrew Morton <akpm@linux-foundation.org>
+> To: Christoph Lameter <cl@linux.com>
+> To: Kees Cook <keescook@chromium.org>
+> Cc: Masahiro Yamada <yamada.masahiro@socionext.com>
+> Cc: Michal Hocko <mhocko@kernel.org>
+> Cc: James Morris <jmorris@namei.org>
+> Cc: "Serge E. Hallyn" <serge@hallyn.com>
+> Cc: Nick Desaulniers <ndesaulniers@google.com>
+> Cc: Kostya Serebryany <kcc@google.com>
+> Cc: Dmitry Vyukov <dvyukov@google.com>
+> Cc: Sandeep Patil <sspatil@android.com>
+> Cc: Laura Abbott <labbott@redhat.com>
+> Cc: Randy Dunlap <rdunlap@infradead.org>
+> Cc: Jann Horn <jannh@google.com>
+> Cc: Mark Rutland <mark.rutland@arm.com>
+> Cc: linux-mm@kvack.org
+> Cc: linux-security-module@vger.kernel.org
+> Cc: kernel-hardening@lists.openwall.com
+> ---
+>  v2:
+>   - unconditionally initialize pages in kernel_init_free_pages()
+>   - comment from Randy Dunlap: drop 'default false' lines from Kconfig.ha=
+rdening
+>  v3:
+>   - don't call kernel_init_free_pages() from memblock_free_pages()
+>   - adopted some Kees' comments for the patch description
+> ---
+>  .../admin-guide/kernel-parameters.txt         |  8 +++
+>  drivers/infiniband/core/uverbs_ioctl.c        |  2 +-
+>  include/linux/mm.h                            | 22 +++++++
+>  kernel/kexec_core.c                           |  2 +-
+>  mm/dmapool.c                                  |  2 +-
+>  mm/page_alloc.c                               | 63 ++++++++++++++++---
+>  mm/slab.c                                     | 16 ++++-
+>  mm/slab.h                                     | 16 +++++
+>  mm/slob.c                                     | 22 ++++++-
+>  mm/slub.c                                     | 27 ++++++--
+>  net/core/sock.c                               |  2 +-
+>  security/Kconfig.hardening                    | 14 +++++
+>  12 files changed, 175 insertions(+), 21 deletions(-)
+>
+> diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentat=
+ion/admin-guide/kernel-parameters.txt
+> index 52e6fbb042cc..68fb6fa41cc1 100644
+> --- a/Documentation/admin-guide/kernel-parameters.txt
+> +++ b/Documentation/admin-guide/kernel-parameters.txt
+> @@ -1673,6 +1673,14 @@
+>
+>         initrd=3D         [BOOT] Specify the location of the initial ramd=
+isk
+>
+> +       init_on_alloc=3D  [MM] Fill newly allocated pages and heap object=
+s with
+> +                       zeroes.
+> +                       Format: 0 | 1
+> +                       Default set by CONFIG_INIT_ON_ALLOC_DEFAULT_ON.
+> +       init_on_free=3D   [MM] Fill freed pages and heap objects with zer=
+oes.
+> +                       Format: 0 | 1
+> +                       Default set by CONFIG_INIT_ON_FREE_DEFAULT_ON.
+> +
+>         init_pkru=3D      [x86] Specify the default memory protection key=
+s rights
+>                         register contents for all processes.  0x55555554 =
+by
+>                         default (disallow access to all but pkey 0).  Can
+> diff --git a/drivers/infiniband/core/uverbs_ioctl.c b/drivers/infiniband/=
+core/uverbs_ioctl.c
+> index 829b0c6944d8..61758201d9b2 100644
+> --- a/drivers/infiniband/core/uverbs_ioctl.c
+> +++ b/drivers/infiniband/core/uverbs_ioctl.c
+> @@ -127,7 +127,7 @@ __malloc void *_uverbs_alloc(struct uverbs_attr_bundl=
+e *bundle, size_t size,
+>         res =3D (void *)pbundle->internal_buffer + pbundle->internal_used=
+;
+>         pbundle->internal_used =3D
+>                 ALIGN(new_used, sizeof(*pbundle->internal_buffer));
+> -       if (flags & __GFP_ZERO)
+> +       if (want_init_on_alloc(flags))
+>                 memset(res, 0, size);
+>         return res;
+>  }
+> diff --git a/include/linux/mm.h b/include/linux/mm.h
+> index 0e8834ac32b7..7733a341c0c4 100644
+> --- a/include/linux/mm.h
+> +++ b/include/linux/mm.h
+> @@ -2685,6 +2685,28 @@ static inline void kernel_poison_pages(struct page=
+ *page, int numpages,
+>                                         int enable) { }
+>  #endif
+>
+> +#ifdef CONFIG_INIT_ON_ALLOC_DEFAULT_ON
+> +DECLARE_STATIC_KEY_TRUE(init_on_alloc);
+> +#else
+> +DECLARE_STATIC_KEY_FALSE(init_on_alloc);
+> +#endif
+> +static inline bool want_init_on_alloc(gfp_t flags)
+> +{
+> +       if (static_branch_unlikely(&init_on_alloc))
+> +               return true;
+> +       return flags & __GFP_ZERO;
+> +}
+> +
+> +#ifdef CONFIG_INIT_ON_FREE_DEFAULT_ON
+> +DECLARE_STATIC_KEY_TRUE(init_on_free);
+> +#else
+> +DECLARE_STATIC_KEY_FALSE(init_on_free);
+> +#endif
+> +static inline bool want_init_on_free(void)
+> +{
+> +       return static_branch_unlikely(&init_on_free);
+> +}
+> +
+>  extern bool _debug_pagealloc_enabled;
+>
+>  static inline bool debug_pagealloc_enabled(void)
+> diff --git a/kernel/kexec_core.c b/kernel/kexec_core.c
+> index fd5c95ff9251..2f75dd0d0d81 100644
+> --- a/kernel/kexec_core.c
+> +++ b/kernel/kexec_core.c
+> @@ -315,7 +315,7 @@ static struct page *kimage_alloc_pages(gfp_t gfp_mask=
+, unsigned int order)
+>                 arch_kexec_post_alloc_pages(page_address(pages), count,
+>                                             gfp_mask);
+>
+> -               if (gfp_mask & __GFP_ZERO)
+> +               if (want_init_on_alloc(gfp_mask))
+>                         for (i =3D 0; i < count; i++)
+>                                 clear_highpage(pages + i);
+>         }
+> diff --git a/mm/dmapool.c b/mm/dmapool.c
+> index 76a160083506..493d151067cb 100644
+> --- a/mm/dmapool.c
+> +++ b/mm/dmapool.c
+> @@ -381,7 +381,7 @@ void *dma_pool_alloc(struct dma_pool *pool, gfp_t mem=
+_flags,
+>  #endif
+>         spin_unlock_irqrestore(&pool->lock, flags);
+>
+> -       if (mem_flags & __GFP_ZERO)
+> +       if (want_init_on_alloc(mem_flags))
+>                 memset(retval, 0, pool->size);
+>
+>         return retval;
+> diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+> index 3b13d3914176..14ded6620aa0 100644
+> --- a/mm/page_alloc.c
+> +++ b/mm/page_alloc.c
+> @@ -135,6 +135,48 @@ unsigned long totalcma_pages __read_mostly;
+>
+>  int percpu_pagelist_fraction;
+>  gfp_t gfp_allowed_mask __read_mostly =3D GFP_BOOT_MASK;
+> +#ifdef CONFIG_INIT_ON_ALLOC_DEFAULT_ON
+> +DEFINE_STATIC_KEY_TRUE(init_on_alloc);
+> +#else
+> +DEFINE_STATIC_KEY_FALSE(init_on_alloc);
+> +#endif
+> +#ifdef CONFIG_INIT_ON_FREE_DEFAULT_ON
+> +DEFINE_STATIC_KEY_TRUE(init_on_free);
+> +#else
+> +DEFINE_STATIC_KEY_FALSE(init_on_free);
+> +#endif
+> +
+> +static int __init early_init_on_alloc(char *buf)
+> +{
+> +       int ret;
+> +       bool bool_result;
+> +
+> +       if (!buf)
+> +               return -EINVAL;
+> +       ret =3D kstrtobool(buf, &bool_result);
+> +       if (bool_result)
+> +               static_branch_enable(&init_on_alloc);
+> +       else
+> +               static_branch_disable(&init_on_alloc);
+> +       return ret;
+> +}
+> +early_param("init_on_alloc", early_init_on_alloc);
+> +
+> +static int __init early_init_on_free(char *buf)
+> +{
+> +       int ret;
+> +       bool bool_result;
+> +
+> +       if (!buf)
+> +               return -EINVAL;
+> +       ret =3D kstrtobool(buf, &bool_result);
+> +       if (bool_result)
+> +               static_branch_enable(&init_on_free);
+> +       else
+> +               static_branch_disable(&init_on_free);
+> +       return ret;
+> +}
+> +early_param("init_on_free", early_init_on_free);
+>
+>  /*
+>   * A cached value of the page's pageblock's migratetype, used when the p=
+age is
+> @@ -1089,6 +1131,14 @@ static int free_tail_pages_check(struct page *head=
+_page, struct page *page)
+>         return ret;
+>  }
+>
+> +static void kernel_init_free_pages(struct page *page, int numpages)
+> +{
+> +       int i;
+> +
+> +       for (i =3D 0; i < numpages; i++)
+> +               clear_highpage(page + i);
+> +}
+> +
+>  static __always_inline bool free_pages_prepare(struct page *page,
+>                                         unsigned int order, bool check_fr=
+ee)
+>  {
+> @@ -1141,6 +1191,8 @@ static __always_inline bool free_pages_prepare(stru=
+ct page *page,
+>         }
+>         arch_free_page(page, order);
+>         kernel_poison_pages(page, 1 << order, 0);
+> +       if (want_init_on_free())
+> +               kernel_init_free_pages(page, 1 << order);
+>         if (debug_pagealloc_enabled())
+>                 kernel_map_pages(page, 1 << order, 0);
+>
+> @@ -2019,8 +2071,8 @@ static inline int check_new_page(struct page *page)
+>
+>  static inline bool free_pages_prezeroed(void)
+>  {
+> -       return IS_ENABLED(CONFIG_PAGE_POISONING_ZERO) &&
+> -               page_poisoning_enabled();
+> +       return (IS_ENABLED(CONFIG_PAGE_POISONING_ZERO) &&
+> +               page_poisoning_enabled()) || want_init_on_free();
+>  }
+>
+>  #ifdef CONFIG_DEBUG_VM
+> @@ -2074,13 +2126,10 @@ inline void post_alloc_hook(struct page *page, un=
+signed int order,
+>  static void prep_new_page(struct page *page, unsigned int order, gfp_t g=
+fp_flags,
+>                                                         unsigned int allo=
+c_flags)
+>  {
+> -       int i;
+> -
+>         post_alloc_hook(page, order, gfp_flags);
+>
+> -       if (!free_pages_prezeroed() && (gfp_flags & __GFP_ZERO))
+> -               for (i =3D 0; i < (1 << order); i++)
+> -                       clear_highpage(page + i);
+> +       if (!free_pages_prezeroed() && want_init_on_alloc(gfp_flags))
+> +               kernel_init_free_pages(page, 1 << order);
+>
+>         if (order && (gfp_flags & __GFP_COMP))
+>                 prep_compound_page(page, order);
+> diff --git a/mm/slab.c b/mm/slab.c
+> index 2915d912e89a..d42eb11f8f50 100644
+> --- a/mm/slab.c
+> +++ b/mm/slab.c
+> @@ -1853,6 +1853,14 @@ static bool set_objfreelist_slab_cache(struct kmem=
+_cache *cachep,
+>
+>         cachep->num =3D 0;
+>
+> +       /*
+> +        * If slab auto-initialization on free is enabled, store the free=
+list
+> +        * off-slab, so that its contents don't end up in one of the allo=
+cated
+> +        * objects.
+> +        */
+> +       if (unlikely(slab_want_init_on_free(cachep)))
+> +               return false;
+> +
+>         if (cachep->ctor || flags & SLAB_TYPESAFE_BY_RCU)
+>                 return false;
+>
+> @@ -3293,7 +3301,7 @@ slab_alloc_node(struct kmem_cache *cachep, gfp_t fl=
+ags, int nodeid,
+>         local_irq_restore(save_flags);
+>         ptr =3D cache_alloc_debugcheck_after(cachep, flags, ptr, caller);
+>
+> -       if (unlikely(flags & __GFP_ZERO) && ptr)
+> +       if (unlikely(slab_want_init_on_alloc(flags, cachep)) && ptr)
+>                 memset(ptr, 0, cachep->object_size);
+>
+>         slab_post_alloc_hook(cachep, flags, 1, &ptr);
+> @@ -3350,7 +3358,7 @@ slab_alloc(struct kmem_cache *cachep, gfp_t flags, =
+unsigned long caller)
+>         objp =3D cache_alloc_debugcheck_after(cachep, flags, objp, caller=
+);
+>         prefetchw(objp);
+>
+> -       if (unlikely(flags & __GFP_ZERO) && objp)
+> +       if (unlikely(slab_want_init_on_alloc(flags, cachep)) && objp)
+>                 memset(objp, 0, cachep->object_size);
+>
+>         slab_post_alloc_hook(cachep, flags, 1, &objp);
+> @@ -3471,6 +3479,8 @@ void ___cache_free(struct kmem_cache *cachep, void =
+*objp,
+>         struct array_cache *ac =3D cpu_cache_get(cachep);
+>
+>         check_irq_off();
+> +       if (unlikely(slab_want_init_on_free(cachep)))
+> +               memset(objp, 0, cachep->object_size);
+>         kmemleak_free_recursive(objp, cachep->flags);
+>         objp =3D cache_free_debugcheck(cachep, objp, caller);
+>
+> @@ -3558,7 +3568,7 @@ int kmem_cache_alloc_bulk(struct kmem_cache *s, gfp=
+_t flags, size_t size,
+>         cache_alloc_debugcheck_after_bulk(s, flags, size, p, _RET_IP_);
+>
+>         /* Clear memory outside IRQ disabled section */
+> -       if (unlikely(flags & __GFP_ZERO))
+> +       if (unlikely(slab_want_init_on_alloc(flags, s)))
+>                 for (i =3D 0; i < size; i++)
+>                         memset(p[i], 0, s->object_size);
+>
+> diff --git a/mm/slab.h b/mm/slab.h
+> index 43ac818b8592..24ae887359b8 100644
+> --- a/mm/slab.h
+> +++ b/mm/slab.h
+> @@ -524,4 +524,20 @@ static inline int cache_random_seq_create(struct kme=
+m_cache *cachep,
+>  static inline void cache_random_seq_destroy(struct kmem_cache *cachep) {=
+ }
+>  #endif /* CONFIG_SLAB_FREELIST_RANDOM */
+>
+> +static inline bool slab_want_init_on_alloc(gfp_t flags, struct kmem_cach=
+e *c)
+> +{
+> +       if (static_branch_unlikely(&init_on_alloc))
+> +               return !(c->ctor);
+> +       else
+> +               return flags & __GFP_ZERO;
+> +}
+> +
+> +static inline bool slab_want_init_on_free(struct kmem_cache *c)
+> +{
+> +       if (static_branch_unlikely(&init_on_free))
+> +               return !(c->ctor);
+> +       else
+> +               return false;
+> +}
+> +
+>  #endif /* MM_SLAB_H */
+> diff --git a/mm/slob.c b/mm/slob.c
+> index 84aefd9b91ee..1b565ee7f479 100644
+> --- a/mm/slob.c
+> +++ b/mm/slob.c
+> @@ -212,6 +212,19 @@ static void slob_free_pages(void *b, int order)
+>         free_pages((unsigned long)b, order);
+>  }
+>
+> +/*
+> + * init_on_free=3D1 also implies initialization at allocation time.
+> + * This is because newly allocated objects may contain freelist pointers
+> + * somewhere in the middle.
+> + */
+> +static inline bool slob_want_init_on_alloc(gfp_t flags, struct kmem_cach=
+e *c)
+> +{
+> +       if (static_branch_unlikely(&init_on_alloc) ||
+> +           static_branch_unlikely(&init_on_free))
+> +               return c ? (!c->ctor) : true;
+> +       return flags & __GFP_ZERO;
+> +}
+> +
+>  /*
+>   * slob_page_alloc() - Allocate a slob block within a given slob_page sp=
+.
+>   * @sp: Page to look in.
+> @@ -353,8 +366,6 @@ static void *slob_alloc(size_t size, gfp_t gfp, int a=
+lign, int node)
+>                 BUG_ON(!b);
+>                 spin_unlock_irqrestore(&slob_lock, flags);
+>         }
+> -       if (unlikely(gfp & __GFP_ZERO))
+> -               memset(b, 0, size);
+>         return b;
+>  }
+>
+> @@ -389,6 +400,9 @@ static void slob_free(void *block, int size)
+>                 return;
+>         }
+>
+> +       if (unlikely(want_init_on_free()))
+> +               memset(block, 0, size);
+> +
+>         if (!slob_page_free(sp)) {
+>                 /* This slob page is about to become partially free. Easy=
+! */
+>                 sp->units =3D units;
+> @@ -484,6 +498,8 @@ __do_kmalloc_node(size_t size, gfp_t gfp, int node, u=
+nsigned long caller)
+>         }
+>
+>         kmemleak_alloc(ret, size, 1, gfp);
+> +       if (unlikely(slob_want_init_on_alloc(gfp, 0)))
+> +               memset(ret, 0, size);
+>         return ret;
+>  }
+>
+> @@ -582,6 +598,8 @@ static void *slob_alloc_node(struct kmem_cache *c, gf=
+p_t flags, int node)
+>                 WARN_ON_ONCE(flags & __GFP_ZERO);
+>                 c->ctor(b);
+>         }
+> +       if (unlikely(slob_want_init_on_alloc(flags, c)))
+> +               memset(b, 0, c->size);
+>
+>         kmemleak_alloc_recursive(b, c->size, 1, c->flags, flags);
+>         return b;
+> diff --git a/mm/slub.c b/mm/slub.c
+> index cd04dbd2b5d0..5fcb3f71cf84 100644
+> --- a/mm/slub.c
+> +++ b/mm/slub.c
+> @@ -1424,6 +1424,19 @@ static __always_inline bool slab_free_hook(struct =
+kmem_cache *s, void *x)
+>  static inline bool slab_free_freelist_hook(struct kmem_cache *s,
+>                                            void **head, void **tail)
+>  {
+> +
+> +       void *object;
+> +       void *next =3D *head;
+> +       void *old_tail =3D *tail ? *tail : *head;
+> +
+> +       if (slab_want_init_on_free(s))
+> +               do {
+> +                       object =3D next;
+> +                       next =3D get_freepointer(s, object);
+> +                       memset(object, 0, s->size);
+> +                       set_freepointer(s, object, next);
+> +               } while (object !=3D old_tail);
+> +
+>  /*
+>   * Compiler cannot detect this function can be removed if slab_free_hook=
+()
+>   * evaluates to nothing.  Thus, catch all relevant config debug options =
+here.
+> @@ -1433,9 +1446,7 @@ static inline bool slab_free_freelist_hook(struct k=
+mem_cache *s,
+>         defined(CONFIG_DEBUG_OBJECTS_FREE) ||   \
+>         defined(CONFIG_KASAN)
+>
+> -       void *object;
+> -       void *next =3D *head;
+> -       void *old_tail =3D *tail ? *tail : *head;
+> +       next =3D *head;
+>
+>         /* Head and tail of the reconstructed freelist */
+>         *head =3D NULL;
+> @@ -2741,8 +2752,14 @@ static __always_inline void *slab_alloc_node(struc=
+t kmem_cache *s,
+>                 prefetch_freepointer(s, next_object);
+>                 stat(s, ALLOC_FASTPATH);
+>         }
+> +       /*
+> +        * If the object has been wiped upon free, make sure it's fully
+> +        * initialized by zeroing out freelist pointer.
+> +        */
+> +       if (slab_want_init_on_free(s))
+> +               *(void **)object =3D 0;
+Ugh, I forgot to s/0/NULL/ here.
+There also must be a check for object being nonnull itself.
+I'll send a follow-up.
+>
+> -       if (unlikely(gfpflags & __GFP_ZERO) && object)
+> +       if (unlikely(slab_want_init_on_alloc(gfpflags, s)) && object)
+>                 memset(object, 0, s->object_size);
+>
+>         slab_post_alloc_hook(s, gfpflags, 1, &object);
+> @@ -3163,7 +3180,7 @@ int kmem_cache_alloc_bulk(struct kmem_cache *s, gfp=
+_t flags, size_t size,
+>         local_irq_enable();
+>
+>         /* Clear memory outside IRQ disabled fastpath loop */
+> -       if (unlikely(flags & __GFP_ZERO)) {
+> +       if (unlikely(slab_want_init_on_alloc(flags, s))) {
+>                 int j;
+>
+>                 for (j =3D 0; j < i; j++)
+> diff --git a/net/core/sock.c b/net/core/sock.c
+> index 75b1c950b49f..9ceb90c875bc 100644
+> --- a/net/core/sock.c
+> +++ b/net/core/sock.c
+> @@ -1602,7 +1602,7 @@ static struct sock *sk_prot_alloc(struct proto *pro=
+t, gfp_t priority,
+>                 sk =3D kmem_cachffffff80081dd078e_alloc(slab, priority & =
+~__GFP_ZERO);
+>                 if (!sk)
+>                         return sk;
+> -               if (priority & __GFP_ZERO)
+> +               if (want_init_on_alloc(priority))
+>                         sk_prot_clear_nulls(sk, prot->obj_size);
+>         } else
+>                 sk =3D kmalloc(prot->obj_size, priority);
+> diff --git a/security/Kconfig.hardening b/security/Kconfig.hardening
+> index 0a1d4ca314f4..87883e3e3c2a 100644
+> --- a/security/Kconfig.hardening
+> +++ b/security/Kconfig.hardening
+> @@ -159,6 +159,20 @@ config STACKLEAK_RUNTIME_DISABLE
+>           runtime to control kernel stack erasing for kernels built with
+>           CONFIG_GCC_PLUGIN_STACKLEAK.
+>
+> +config INIT_ON_ALLOC_DEFAULT_ON
+> +       bool "Set init_on_alloc=3D1 by default"
+> +       help
+> +         Enable init_on_alloc=3D1 by default, making the kernel initiali=
+ze every
+> +         page and heap allocation with zeroes.
+> +         init_on_alloc can be overridden via command line.
+> +
+> +config INIT_ON_FREE_DEFAULT_ON
+> +       bool "Set init_on_free=3D1 by default"
+> +       help
+> +         Enable init_on_free=3D1 by default, making the kernel initializ=
+e freed
+> +         pages and slab memory with zeroes.
+> +         init_on_free can be overridden via command line.
+> +
+>  endmenu
+>
+>  endmenu
+> --
+> 2.21.0.1020.gf2820cf01a-goog
+>
 
-Expected test output in the case the kernel provides heap initialization
-(e.g. when running with either init_on_alloc=1 or init_on_free=1):
 
-  test_meminit: all 10 tests in test_pages passed
-  test_meminit: all 40 tests in test_kvmalloc passed
-  test_meminit: all 20 tests in test_kmemcache passed
-  test_meminit: all 70 tests passed!
+--=20
+Alexander Potapenko
+Software Engineer
 
-Signed-off-by: Alexander Potapenko <glider@google.com>
-To: Kees Cook <keescook@chromium.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-To: Christoph Lameter <cl@linux.com>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Kostya Serebryany <kcc@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Sandeep Patil <sspatil@android.com>
-Cc: Laura Abbott <labbott@redhat.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: linux-mm@kvack.org
-Cc: linux-security-module@vger.kernel.org
-Cc: kernel-hardening@lists.openwall.com
----
- v3:
-  - added example test output to the description
-  - fixed a missing include spotted by kbuild test robot <lkp@intel.com>
-  - added a missing MODULE_LICENSE
-  - call do_kmem_cache_size() with size >= sizeof(void*) to unbreak
-  debug builds
----
- lib/Kconfig.debug  |   8 ++
- lib/Makefile       |   1 +
- lib/test_meminit.c | 208 +++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 217 insertions(+)
- create mode 100644 lib/test_meminit.c
+Google Germany GmbH
+Erika-Mann-Stra=C3=9Fe, 33
+80636 M=C3=BCnchen
 
-diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index fdfa173651eb..036e8ef03831 100644
---- a/lib/Kconfig.debug
-+++ b/lib/Kconfig.debug
-@@ -2043,6 +2043,14 @@ config TEST_STACKINIT
- 
- 	  If unsure, say N.
- 
-+config TEST_MEMINIT
-+	tristate "Test level of heap/page initialization"
-+	help
-+	  Test if the kernel is zero-initializing heap and page allocations.
-+	  This can be useful to test init_on_alloc and init_on_free features.
-+
-+	  If unsure, say N.
-+
- endif # RUNTIME_TESTING_MENU
- 
- config MEMTEST
-diff --git a/lib/Makefile b/lib/Makefile
-index fb7697031a79..05980c802500 100644
---- a/lib/Makefile
-+++ b/lib/Makefile
-@@ -91,6 +91,7 @@ obj-$(CONFIG_TEST_DEBUG_VIRTUAL) += test_debug_virtual.o
- obj-$(CONFIG_TEST_MEMCAT_P) += test_memcat_p.o
- obj-$(CONFIG_TEST_OBJAGG) += test_objagg.o
- obj-$(CONFIG_TEST_STACKINIT) += test_stackinit.o
-+obj-$(CONFIG_TEST_MEMINIT) += test_meminit.o
- 
- obj-$(CONFIG_TEST_LIVEPATCH) += livepatch/
- 
-diff --git a/lib/test_meminit.c b/lib/test_meminit.c
-new file mode 100644
-index 000000000000..d46e2b8c8e8e
---- /dev/null
-+++ b/lib/test_meminit.c
-@@ -0,0 +1,208 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Test cases for SL[AOU]B/page initialization at alloc/free time.
-+ */
-+#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
-+
-+#include <linux/init.h>
-+#include <linux/kernel.h>
-+#include <linux/mm.h>
-+#include <linux/module.h>
-+#include <linux/slab.h>
-+#include <linux/string.h>
-+#include <linux/vmalloc.h>
-+
-+#define GARBAGE_INT (0x09A7BA9E)
-+#define GARBAGE_BYTE (0x9E)
-+
-+#define REPORT_FAILURES_IN_FN() \
-+	do {	\
-+		if (failures)	\
-+			pr_info("%s failed %d out of %d times\n",	\
-+				__func__, failures, num_tests);		\
-+		else		\
-+			pr_info("all %d tests in %s passed\n",		\
-+				num_tests, __func__);			\
-+	} while (0)
-+
-+/* Calculate the number of uninitialized bytes in the buffer. */
-+static int count_nonzero_bytes(void *ptr, size_t size)
-+{
-+	int i, ret = 0;
-+	unsigned char *p = (unsigned char *)ptr;
-+
-+	for (i = 0; i < size; i++)
-+		if (p[i])
-+			ret++;
-+	return ret;
-+}
-+
-+static void fill_with_garbage(void *ptr, size_t size)
-+{
-+	unsigned int *p = (unsigned int *)ptr;
-+	int i = 0;
-+
-+	while (size >= sizeof(*p)) {
-+		p[i] = GARBAGE_INT;
-+		i++;
-+		size -= sizeof(*p);
-+	}
-+	if (size)
-+		memset(&p[i], GARBAGE_BYTE, size);
-+}
-+
-+static int __init do_alloc_pages_order(int order, int *total_failures)
-+{
-+	struct page *page;
-+	void *buf;
-+	size_t size = PAGE_SIZE << order;
-+
-+	page = alloc_pages(GFP_KERNEL, order);
-+	buf = page_address(page);
-+	fill_with_garbage(buf, size);
-+	__free_pages(page, order);
-+
-+	page = alloc_pages(GFP_KERNEL, order);
-+	buf = page_address(page);
-+	if (count_nonzero_bytes(buf, size))
-+		(*total_failures)++;
-+	fill_with_garbage(buf, size);
-+	__free_pages(page, order);
-+	return 1;
-+}
-+
-+static int __init test_pages(int *total_failures)
-+{
-+	int failures = 0, num_tests = 0;
-+	int i;
-+
-+	for (i = 0; i < 10; i++)
-+		num_tests += do_alloc_pages_order(i, &failures);
-+
-+	REPORT_FAILURES_IN_FN();
-+	*total_failures += failures;
-+	return num_tests;
-+}
-+
-+static int __init do_kmalloc_size(size_t size, int *total_failures)
-+{
-+	void *buf;
-+
-+	buf = kmalloc(size, GFP_KERNEL);
-+	fill_with_garbage(buf, size);
-+	kfree(buf);
-+
-+	buf = kmalloc(size, GFP_KERNEL);
-+	if (count_nonzero_bytes(buf, size))
-+		(*total_failures)++;
-+	fill_with_garbage(buf, size);
-+	kfree(buf);
-+	return 1;
-+}
-+
-+static int __init do_vmalloc_size(size_t size, int *total_failures)
-+{
-+	void *buf;
-+
-+	buf = vmalloc(size);
-+	fill_with_garbage(buf, size);
-+	vfree(buf);
-+
-+	buf = vmalloc(size);
-+	if (count_nonzero_bytes(buf, size))
-+		(*total_failures)++;
-+	fill_with_garbage(buf, size);
-+	vfree(buf);
-+	return 1;
-+}
-+
-+static int __init test_kvmalloc(int *total_failures)
-+{
-+	int failures = 0, num_tests = 0;
-+	int i, size;
-+
-+	for (i = 0; i < 20; i++) {
-+		size = 1 << i;
-+		num_tests += do_kmalloc_size(size, &failures);
-+		num_tests += do_vmalloc_size(size, &failures);
-+	}
-+
-+	REPORT_FAILURES_IN_FN();
-+	*total_failures += failures;
-+	return num_tests;
-+}
-+
-+#define CTOR_BYTES 4
-+/* Initialize the first 4 bytes of the object. */
-+void some_ctor(void *obj)
-+{
-+	memset(obj, 'A', CTOR_BYTES);
-+}
-+
-+static int __init do_kmem_cache_size(size_t size, bool want_ctor,
-+				     int *total_failures)
-+{
-+	struct kmem_cache *c;
-+	void *buf;
-+	int iter, bytes = 0;
-+	int fail = 0;
-+
-+	c = kmem_cache_create("test_cache", size, 1, 0,
-+			      want_ctor ? some_ctor : NULL);
-+	for (iter = 0; iter < 10; iter++) {
-+		buf = kmem_cache_alloc(c, GFP_KERNEL);
-+		if (!want_ctor || iter == 0)
-+			bytes = count_nonzero_bytes(buf, size);
-+		if (want_ctor) {
-+			/*
-+			 * Newly initialized memory must be initialized using
-+			 * the constructor.
-+			 */
-+			if (iter == 0 && bytes < CTOR_BYTES)
-+				fail = 1;
-+		} else {
-+			if (bytes)
-+				fail = 1;
-+		}
-+		fill_with_garbage(buf, size);
-+		kmem_cache_free(c, buf);
-+	}
-+	kmem_cache_destroy(c);
-+
-+	*total_failures += fail;
-+	return 1;
-+}
-+
-+static int __init test_kmemcache(int *total_failures)
-+{
-+	int failures = 0, num_tests = 0;
-+	int i, size;
-+
-+	for (i = 0; i < 10; i++) {
-+		size = 8 << i;
-+		num_tests += do_kmem_cache_size(size, false, &failures);
-+		num_tests += do_kmem_cache_size(size, true, &failures);
-+	}
-+	REPORT_FAILURES_IN_FN();
-+	*total_failures += failures;
-+	return num_tests;
-+}
-+
-+static int __init test_meminit_init(void)
-+{
-+	int failures = 0, num_tests = 0;
-+
-+	num_tests += test_pages(&failures);
-+	num_tests += test_kvmalloc(&failures);
-+	num_tests += test_kmemcache(&failures);
-+
-+	if (failures == 0)
-+		pr_info("all %d tests passed!\n", num_tests);
-+	else
-+		pr_info("failures: %d out of %d\n", failures, num_tests);
-+
-+	return failures ? -EINVAL : 0;
-+}
-+module_init(test_meminit_init);
-+
-+MODULE_LICENSE("GPL");
--- 
-2.21.0.1020.gf2820cf01a-goog
-
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
