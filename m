@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15994-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15995-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 90965281E5
-	for <lists+kernel-hardening@lfdr.de>; Thu, 23 May 2019 17:55:55 +0200 (CEST)
-Received: (qmail 25804 invoked by uid 550); 23 May 2019 15:55:40 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 4F00E28E26
+	for <lists+kernel-hardening@lfdr.de>; Fri, 24 May 2019 02:05:16 +0200 (CEST)
+Received: (qmail 3293 invoked by uid 550); 24 May 2019 00:05:04 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,335 +13,140 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 7883 invoked from network); 23 May 2019 14:09:23 -0000
+Received: (qmail 3270 invoked from network); 24 May 2019 00:05:03 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=GrPd0Ehzkwgs8flG0McuJvkTnr/DIjfrIhDeOSvXnoY=;
-        b=HxdHAURkSl4n27A0yrQIRU1ITTYPBWK1In1KGlmB43xzTe8tfXSa/dWul7q4I/3UzU
-         zAXTkoEFSDGlQlwPxRKEPIsS4gx1GWROBjhSdaDe+osjq2IOHCxE8AK8vVLls9jsiCni
-         Ah0o+mZ5lkt/KWNdF1YGyCq0Tn9kR2BizpDzBrgZFEG+PKOtey/cz+kMH+/+NJpItHf2
-         vzgiCe1wjnIMjaRo26wo/zwzLMMxV+51y6MNX1nzooG5KC1QggYgSZIVxhYV85G0/IFG
-         eyM/9zRs+5DIGCsdt23RjOyg9gSR0BPyH9rKZ0GdAzhvalKjcPMUFbug9urWslsi51qX
-         M31w==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Bg3lp1cp1YsHZIAZ+WZ5FtPbgNHk60LZKuR1dQM5X0o=;
+        b=mmoVsIwHReQDPhkE8pfZYV7WXqnOV5tXm/Zklyw0xJ+ipTIIWge6M4WmPf43jJn3Ku
+         wNC+tgP1Y9/6J2WES4ibeG2Hlp7iGy/v9AnM7BXbJMKkW4roaMU7xT6Dhyq1lNn2mIen
+         RxLb0WX+C2o54dluBacYUimfY7Ll09hMwa7dU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=GrPd0Ehzkwgs8flG0McuJvkTnr/DIjfrIhDeOSvXnoY=;
-        b=ToOc9JIdZg8fszEFaKa4Iy1H004bD9FO1VMi7dcmTD8hr9hlmAUShg9kMzUSLpkvo3
-         F6CSi1E3dCn3i+WpP0MiLkzvbSpu8/u70eB3IftUhDzoCZ3s3TRyUToBk96b/6GUVxe5
-         aOeDKCadkM/HIb56xpO2VR8cmlM3tDDO+TIB/Xro/zYpNm7wC6RRcMqFBD+EB9dFkEB4
-         +5MdlZahxCTffOwokPI0zu+4jXAOo4C0NGQu8hgppe4jUutgXqO+J29gLSWEbMUdvE2N
-         TM58GFYp4eXNReVFgIGzlCJ3rOxjcOyl9SJFdTt+D5h7Bx8fy46sfZt32NN3r4UUJ/bm
-         8cdQ==
-X-Gm-Message-State: APjAAAVVsyR8KXoXXCO6g/0V9u1M3rHL8vy4HDu+2MnNuHUwwSc6jrhq
-	3uqHhCA2R2raWw8WyEQZaoaWuo45t6A=
-X-Google-Smtp-Source: APXvYqwTc2z+TMaFN0UPPlnm9rius4RP7zoq7ED5Y5T2qgqHTis5h9UUibnhY+/7LWm7HuiK8P97MvS3qoo=
-X-Received: by 2002:a0c:95d5:: with SMTP id t21mr70859708qvt.215.1558620551451;
- Thu, 23 May 2019 07:09:11 -0700 (PDT)
-Date: Thu, 23 May 2019 16:08:44 +0200
-In-Reply-To: <20190523140844.132150-1-glider@google.com>
-Message-Id: <20190523140844.132150-4-glider@google.com>
-Mime-Version: 1.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Bg3lp1cp1YsHZIAZ+WZ5FtPbgNHk60LZKuR1dQM5X0o=;
+        b=RMUL3edUuJNp0BeKcPsHePiLxih3esjLSg4U91QQMY7XlcMdGr6Z88vBJGG2fEqHis
+         wsevj+UIJ6XCiqhBtH8UWj19WWwa3bDFrFZ2rFPP3stH90fMObE2ThNT84rvDMacs0wX
+         9wDrn92pS4EQREM0cojTeZ89eZsEgh9hRGsiYrRo7V6ccB5NGgSxIQtrLjORBGj/yzM3
+         EAPQuctg4br7rhChDmKSgYgGd5PekJQzqw+zaLV2vqNlHBPvliDGWHyYOamR+jKSF6PK
+         qGewdEwGS7r3g115qpsAie7slnhGD9X1agEWX1srGpX/jRRPJ/PSlRMlxonod0SDYHAH
+         Xjrw==
+X-Gm-Message-State: APjAAAUZOfqDk/w+bOFH+PH0Ny/Gppl8lEFuMiBLHU4L7M/E80R4MLuj
+	RGL1gZWvaKgY9lHgsc8az3Vu+Q==
+X-Google-Smtp-Source: APXvYqyctB5V+K3NG1DpFLMcyJb93jrwPDhvUf/DwGjUNUzz8Ua+BzD11CKG169jmEoBbkZnJd67Uw==
+X-Received: by 2002:a63:1c16:: with SMTP id c22mr41564941pgc.333.1558656291059;
+        Thu, 23 May 2019 17:04:51 -0700 (PDT)
+Date: Thu, 23 May 2019 17:04:48 -0700
+From: Kees Cook <keescook@chromium.org>
+To: Alexander Potapenko <glider@google.com>
+Cc: akpm@linux-foundation.org, cl@linux.com,
+	kernel-hardening@lists.openwall.com, linux-mm@kvack.org,
+	linux-security-module@vger.kernel.org,
+	Masahiro Yamada <yamada.masahiro@socionext.com>,
+	Michal Hocko <mhocko@kernel.org>, James Morris <jmorris@namei.org>,
+	"Serge E. Hallyn" <serge@hallyn.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Kostya Serebryany <kcc@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Sandeep Patil <sspatil@android.com>,
+	Laura Abbott <labbott@redhat.com>,
+	Randy Dunlap <rdunlap@infradead.org>, Jann Horn <jannh@google.com>,
+	Mark Rutland <mark.rutland@arm.com>
+Subject: Re: [PATCH v4 1/3] mm: security: introduce init_on_alloc=1 and
+ init_on_free=1 boot options
+Message-ID: <201905231647.ED31A5FE30@keescook>
 References: <20190523140844.132150-1-glider@google.com>
-X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
-Subject: [PATCH v4 3/3] lib: introduce test_meminit module
-From: Alexander Potapenko <glider@google.com>
-To: akpm@linux-foundation.org, cl@linux.com, keescook@chromium.org
-Cc: kernel-hardening@lists.openwall.com, linux-mm@kvack.org, 
-	linux-security-module@vger.kernel.org, 
-	Nick Desaulniers <ndesaulniers@google.com>, Kostya Serebryany <kcc@google.com>, 
-	Dmitry Vyukov <dvyukov@google.com>, Sandeep Patil <sspatil@android.com>, 
-	Laura Abbott <labbott@redhat.com>, Jann Horn <jannh@google.com>
-Content-Type: text/plain; charset="UTF-8"
+ <20190523140844.132150-2-glider@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190523140844.132150-2-glider@google.com>
 
-Add tests for heap and pagealloc initialization.
-These can be used to check init_on_alloc and init_on_free implementations
-as well as other approaches to initialization.
+On Thu, May 23, 2019 at 04:08:42PM +0200, Alexander Potapenko wrote:
+> diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+> index 52e6fbb042cc..68fb6fa41cc1 100644
+> --- a/Documentation/admin-guide/kernel-parameters.txt
+> +++ b/Documentation/admin-guide/kernel-parameters.txt
+> @@ -1673,6 +1673,14 @@
+>  
+>  	initrd=		[BOOT] Specify the location of the initial ramdisk
+>  
+> +	init_on_alloc=	[MM] Fill newly allocated pages and heap objects with
+> +			zeroes.
+> +			Format: 0 | 1
+> +			Default set by CONFIG_INIT_ON_ALLOC_DEFAULT_ON.
+> +	init_on_free=	[MM] Fill freed pages and heap objects with zeroes.
+> +			Format: 0 | 1
+> +			Default set by CONFIG_INIT_ON_FREE_DEFAULT_ON.
+> +
+>  	init_pkru=	[x86] Specify the default memory protection keys rights
+>  			register contents for all processes.  0x55555554 by
+>  			default (disallow access to all but pkey 0).  Can
 
-Expected test output in the case the kernel provides heap initialization
-(e.g. when running with either init_on_alloc=1 or init_on_free=1):
+Nit: add a blank line between these new options' documentation to match
+the others.
 
-  test_meminit: all 10 tests in test_pages passed
-  test_meminit: all 40 tests in test_kvmalloc passed
-  test_meminit: all 20 tests in test_kmemcache passed
-  test_meminit: all 70 tests passed!
+> diff --git a/security/Kconfig.hardening b/security/Kconfig.hardening
+> index 0a1d4ca314f4..87883e3e3c2a 100644
+> --- a/security/Kconfig.hardening
+> +++ b/security/Kconfig.hardening
+> @@ -159,6 +159,20 @@ config STACKLEAK_RUNTIME_DISABLE
+>  	  runtime to control kernel stack erasing for kernels built with
+>  	  CONFIG_GCC_PLUGIN_STACKLEAK.
+>  
+> +config INIT_ON_ALLOC_DEFAULT_ON
+> +	bool "Set init_on_alloc=1 by default"
+> +	help
+> +	  Enable init_on_alloc=1 by default, making the kernel initialize every
+> +	  page and heap allocation with zeroes.
+> +	  init_on_alloc can be overridden via command line.
+> +
+> +config INIT_ON_FREE_DEFAULT_ON
+> +	bool "Set init_on_free=1 by default"
+> +	help
+> +	  Enable init_on_free=1 by default, making the kernel initialize freed
+> +	  pages and slab memory with zeroes.
+> +	  init_on_free can be overridden via command line.
+> +
 
-Signed-off-by: Alexander Potapenko <glider@google.com>
-To: Kees Cook <keescook@chromium.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-To: Christoph Lameter <cl@linux.com>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Kostya Serebryany <kcc@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Sandeep Patil <sspatil@android.com>
-Cc: Laura Abbott <labbott@redhat.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: linux-mm@kvack.org
-Cc: linux-security-module@vger.kernel.org
-Cc: kernel-hardening@lists.openwall.com
----
- v3:
-  - added example test output to the description
-  - fixed a missing include spotted by kbuild test robot <lkp@intel.com>
-  - added a missing MODULE_LICENSE
-  - call do_kmem_cache_size() with size >= sizeof(void*) to unbreak
-  debug builds
----
- lib/Kconfig.debug  |   8 ++
- lib/Makefile       |   1 +
- lib/test_meminit.c | 208 +++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 217 insertions(+)
- create mode 100644 lib/test_meminit.c
+I think these could use a lot more detail. How about something like
+these, with more details and performance notes:
 
-diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index fdfa173651eb..036e8ef03831 100644
---- a/lib/Kconfig.debug
-+++ b/lib/Kconfig.debug
-@@ -2043,6 +2043,14 @@ config TEST_STACKINIT
- 
- 	  If unsure, say N.
- 
-+config TEST_MEMINIT
-+	tristate "Test level of heap/page initialization"
-+	help
-+	  Test if the kernel is zero-initializing heap and page allocations.
-+	  This can be useful to test init_on_alloc and init_on_free features.
-+
-+	  If unsure, say N.
-+
- endif # RUNTIME_TESTING_MENU
- 
- config MEMTEST
-diff --git a/lib/Makefile b/lib/Makefile
-index fb7697031a79..05980c802500 100644
---- a/lib/Makefile
-+++ b/lib/Makefile
-@@ -91,6 +91,7 @@ obj-$(CONFIG_TEST_DEBUG_VIRTUAL) += test_debug_virtual.o
- obj-$(CONFIG_TEST_MEMCAT_P) += test_memcat_p.o
- obj-$(CONFIG_TEST_OBJAGG) += test_objagg.o
- obj-$(CONFIG_TEST_STACKINIT) += test_stackinit.o
-+obj-$(CONFIG_TEST_MEMINIT) += test_meminit.o
- 
- obj-$(CONFIG_TEST_LIVEPATCH) += livepatch/
- 
-diff --git a/lib/test_meminit.c b/lib/test_meminit.c
-new file mode 100644
-index 000000000000..d46e2b8c8e8e
---- /dev/null
-+++ b/lib/test_meminit.c
-@@ -0,0 +1,208 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Test cases for SL[AOU]B/page initialization at alloc/free time.
-+ */
-+#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
-+
-+#include <linux/init.h>
-+#include <linux/kernel.h>
-+#include <linux/mm.h>
-+#include <linux/module.h>
-+#include <linux/slab.h>
-+#include <linux/string.h>
-+#include <linux/vmalloc.h>
-+
-+#define GARBAGE_INT (0x09A7BA9E)
-+#define GARBAGE_BYTE (0x9E)
-+
-+#define REPORT_FAILURES_IN_FN() \
-+	do {	\
-+		if (failures)	\
-+			pr_info("%s failed %d out of %d times\n",	\
-+				__func__, failures, num_tests);		\
-+		else		\
-+			pr_info("all %d tests in %s passed\n",		\
-+				num_tests, __func__);			\
-+	} while (0)
-+
-+/* Calculate the number of uninitialized bytes in the buffer. */
-+static int count_nonzero_bytes(void *ptr, size_t size)
-+{
-+	int i, ret = 0;
-+	unsigned char *p = (unsigned char *)ptr;
-+
-+	for (i = 0; i < size; i++)
-+		if (p[i])
-+			ret++;
-+	return ret;
-+}
-+
-+static void fill_with_garbage(void *ptr, size_t size)
-+{
-+	unsigned int *p = (unsigned int *)ptr;
-+	int i = 0;
-+
-+	while (size >= sizeof(*p)) {
-+		p[i] = GARBAGE_INT;
-+		i++;
-+		size -= sizeof(*p);
-+	}
-+	if (size)
-+		memset(&p[i], GARBAGE_BYTE, size);
-+}
-+
-+static int __init do_alloc_pages_order(int order, int *total_failures)
-+{
-+	struct page *page;
-+	void *buf;
-+	size_t size = PAGE_SIZE << order;
-+
-+	page = alloc_pages(GFP_KERNEL, order);
-+	buf = page_address(page);
-+	fill_with_garbage(buf, size);
-+	__free_pages(page, order);
-+
-+	page = alloc_pages(GFP_KERNEL, order);
-+	buf = page_address(page);
-+	if (count_nonzero_bytes(buf, size))
-+		(*total_failures)++;
-+	fill_with_garbage(buf, size);
-+	__free_pages(page, order);
-+	return 1;
-+}
-+
-+static int __init test_pages(int *total_failures)
-+{
-+	int failures = 0, num_tests = 0;
-+	int i;
-+
-+	for (i = 0; i < 10; i++)
-+		num_tests += do_alloc_pages_order(i, &failures);
-+
-+	REPORT_FAILURES_IN_FN();
-+	*total_failures += failures;
-+	return num_tests;
-+}
-+
-+static int __init do_kmalloc_size(size_t size, int *total_failures)
-+{
-+	void *buf;
-+
-+	buf = kmalloc(size, GFP_KERNEL);
-+	fill_with_garbage(buf, size);
-+	kfree(buf);
-+
-+	buf = kmalloc(size, GFP_KERNEL);
-+	if (count_nonzero_bytes(buf, size))
-+		(*total_failures)++;
-+	fill_with_garbage(buf, size);
-+	kfree(buf);
-+	return 1;
-+}
-+
-+static int __init do_vmalloc_size(size_t size, int *total_failures)
-+{
-+	void *buf;
-+
-+	buf = vmalloc(size);
-+	fill_with_garbage(buf, size);
-+	vfree(buf);
-+
-+	buf = vmalloc(size);
-+	if (count_nonzero_bytes(buf, size))
-+		(*total_failures)++;
-+	fill_with_garbage(buf, size);
-+	vfree(buf);
-+	return 1;
-+}
-+
-+static int __init test_kvmalloc(int *total_failures)
-+{
-+	int failures = 0, num_tests = 0;
-+	int i, size;
-+
-+	for (i = 0; i < 20; i++) {
-+		size = 1 << i;
-+		num_tests += do_kmalloc_size(size, &failures);
-+		num_tests += do_vmalloc_size(size, &failures);
-+	}
-+
-+	REPORT_FAILURES_IN_FN();
-+	*total_failures += failures;
-+	return num_tests;
-+}
-+
-+#define CTOR_BYTES 4
-+/* Initialize the first 4 bytes of the object. */
-+void some_ctor(void *obj)
-+{
-+	memset(obj, 'A', CTOR_BYTES);
-+}
-+
-+static int __init do_kmem_cache_size(size_t size, bool want_ctor,
-+				     int *total_failures)
-+{
-+	struct kmem_cache *c;
-+	void *buf;
-+	int iter, bytes = 0;
-+	int fail = 0;
-+
-+	c = kmem_cache_create("test_cache", size, 1, 0,
-+			      want_ctor ? some_ctor : NULL);
-+	for (iter = 0; iter < 10; iter++) {
-+		buf = kmem_cache_alloc(c, GFP_KERNEL);
-+		if (!want_ctor || iter == 0)
-+			bytes = count_nonzero_bytes(buf, size);
-+		if (want_ctor) {
-+			/*
-+			 * Newly initialized memory must be initialized using
-+			 * the constructor.
-+			 */
-+			if (iter == 0 && bytes < CTOR_BYTES)
-+				fail = 1;
-+		} else {
-+			if (bytes)
-+				fail = 1;
-+		}
-+		fill_with_garbage(buf, size);
-+		kmem_cache_free(c, buf);
-+	}
-+	kmem_cache_destroy(c);
-+
-+	*total_failures += fail;
-+	return 1;
-+}
-+
-+static int __init test_kmemcache(int *total_failures)
-+{
-+	int failures = 0, num_tests = 0;
-+	int i, size;
-+
-+	for (i = 0; i < 10; i++) {
-+		size = 8 << i;
-+		num_tests += do_kmem_cache_size(size, false, &failures);
-+		num_tests += do_kmem_cache_size(size, true, &failures);
-+	}
-+	REPORT_FAILURES_IN_FN();
-+	*total_failures += failures;
-+	return num_tests;
-+}
-+
-+static int __init test_meminit_init(void)
-+{
-+	int failures = 0, num_tests = 0;
-+
-+	num_tests += test_pages(&failures);
-+	num_tests += test_kvmalloc(&failures);
-+	num_tests += test_kmemcache(&failures);
-+
-+	if (failures == 0)
-+		pr_info("all %d tests passed!\n", num_tests);
-+	else
-+		pr_info("failures: %d out of %d\n", failures, num_tests);
-+
-+	return failures ? -EINVAL : 0;
-+}
-+module_init(test_meminit_init);
-+
-+MODULE_LICENSE("GPL");
+config INIT_ON_ALLOC_DEFAULT_ON
+	bool "Enable heap memory zeroing on allocation by default"
+	help
+	  This has the effect of setting "init_on_alloc=1" on the kernel
+	  command line. This can be disabled with "init_on_alloc=0".
+	  When "init_on_alloc" is enabled, all page allocator and slab
+	  allocator memory will be zeroed when allocated, eliminating
+	  many kinds of "uninitialized heap memory" flaws, especially
+	  heap content exposures. The performance impact varies by
+	  workload, but most cases see <1% impact. Some synthetic
+	  workloads have measured as high as 7%.
+
+config INIT_ON_FREE_DEFAULT_ON
+	bool "Enable heap memory zeroing on free by default"
+	help
+	  This has the effect of setting "init_on_free=1" on the kernel
+	  command line. This can be disabled with "init_on_free=0".
+	  Similar to "init_on_alloc", when "init_on_free" is enabled,
+	  all page allocator and slab allocator memory will be zeroed
+	  when freed, eliminating many kinds of "uninitialized heap memory"
+	  flaws, especially heap content exposures. The primary difference
+	  with "init_on_free" is that data lifetime in memory is reduced,
+	  as anything freed is wiped immediately, making live forensics or
+	  cold boot memory attacks unable to recover freed memory contents.
+	  The performance impact varies by workload, but is more expensive
+	  than "init_on_alloc" due to the negative cache effects of
+	  touching "cold" memory areas. Most cases see 3-5% impact. Some
+	  synthetic workloads have measured as high as 8%.
+
+
 -- 
-2.21.0.1020.gf2820cf01a-goog
+Kees Cook
 
+
+-- 
+Kees Cook
