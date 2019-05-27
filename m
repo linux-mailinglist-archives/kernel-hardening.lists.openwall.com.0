@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-15996-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-15997-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 4570A29873
-	for <lists+kernel-hardening@lfdr.de>; Fri, 24 May 2019 15:03:15 +0200 (CEST)
-Received: (qmail 19586 invoked by uid 550); 24 May 2019 13:03:08 -0000
+	by mail.lfdr.de (Postfix) with SMTP id EE0952B1F7
+	for <lists+kernel-hardening@lfdr.de>; Mon, 27 May 2019 12:17:54 +0200 (CEST)
+Received: (qmail 14106 invoked by uid 550); 27 May 2019 10:17:45 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -14,190 +14,74 @@ List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
 Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 26379 invoked from network); 24 May 2019 12:37:29 -0000
-From: "Christopher M. Riedl" <cmr@informatik.wtf>
-To: linuxppc-dev@ozlabs.org,
-	kernel-hardening@lists.openwall.com
-Cc: ajd@linux.ibm.com,
-	mjg59@google.com,
-	dja@axtens.net,
-	"Christopher M. Riedl" <cmr@informatik.wtf>
-Subject: [RFC PATCH v2] powerpc/xmon: restrict when kernel is locked down
-Date: Fri, 24 May 2019 07:38:18 -0500
-Message-Id: <20190524123816.1773-1-cmr@informatik.wtf>
-X-Mailer: git-send-email 2.21.0
+Received: (qmail 30651 invoked from network); 27 May 2019 05:47:26 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Subject: Re: [PATCH v7 11/12] x86/paravirt: Adapt assembly for PIE support
+To: Thomas Garnier <thgarnie@chromium.org>,
+ kernel-hardening@lists.openwall.com
+Cc: kristen@linux.intel.com, Thomas Garnier <thgarnie@google.com>,
+ Alok Kataria <akataria@vmware.com>, Thomas Gleixner <tglx@linutronix.de>,
+ Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+ "H. Peter Anvin" <hpa@zytor.com>, x86@kernel.org,
+ virtualization@lists.linux-foundation.org, linux-kernel@vger.kernel.org
+References: <20190520231948.49693-1-thgarnie@chromium.org>
+ <20190520231948.49693-12-thgarnie@chromium.org>
+From: Juergen Gross <jgross@suse.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=jgross@suse.com; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <1b53b8eb-5dd3-fb57-d8db-06eedd0ce49f@suse.com>
+Date: Mon, 27 May 2019 07:47:10 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP
+In-Reply-To: <20190520231948.49693-12-thgarnie@chromium.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: de-DE
+Content-Transfer-Encoding: 7bit
 
-Xmon should be either fully or partially disabled depending on the
-kernel lockdown state.
+On 21/05/2019 01:19, Thomas Garnier wrote:
+> From: Thomas Garnier <thgarnie@google.com>
+> 
+> if PIE is enabled, switch the paravirt assembly constraints to be
+> compatible. The %c/i constrains generate smaller code so is kept by
+> default.
+> 
+> Position Independent Executable (PIE) support will allow to extend the
+> KASLR randomization range below 0xffffffff80000000.
+> 
+> Signed-off-by: Thomas Garnier <thgarnie@google.com>
 
-Put xmon into read-only mode for lockdown=integrity and completely
-disable xmon when lockdown=confidentiality. Xmon checks the lockdown
-state and takes appropriate action:
+Acked-by: Juergen Gross <jgross@suse.com>
 
- (1) during xmon_setup to prevent early xmon'ing
 
- (2) when triggered via sysrq
-
- (3) when toggled via debugfs
-
- (4) when triggered via a previously enabled breakpoint
-
-The following lockdown state transitions are handled:
-
- (1) lockdown=none -> lockdown=integrity
-     clear all breakpoints, set xmon read-only mode
-
- (2) lockdown=none -> lockdown=confidentiality
-     clear all breakpoints, prevent re-entry into xmon
-
- (3) lockdown=integrity -> lockdown=confidentiality
-     prevent re-entry into xmon
-
-Suggested-by: Andrew Donnellan <ajd@linux.ibm.com>
-Signed-off-by: Christopher M. Riedl <cmr@informatik.wtf>
----
-
-Applies on top of this series:
-	https://patchwork.kernel.org/cover/10884631/
-
-I've done some limited testing of the scenarios mentioned in the commit
-message on a single CPU QEMU config.
-
-v1->v2:
-	Fix subject line
-	Submit to linuxppc-dev and kernel-hardening
-
- arch/powerpc/xmon/xmon.c | 56 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 55 insertions(+), 1 deletion(-)
-
-diff --git a/arch/powerpc/xmon/xmon.c b/arch/powerpc/xmon/xmon.c
-index 3e7be19aa208..8c4a5a0c28f0 100644
---- a/arch/powerpc/xmon/xmon.c
-+++ b/arch/powerpc/xmon/xmon.c
-@@ -191,6 +191,9 @@ static void dump_tlb_44x(void);
- static void dump_tlb_book3e(void);
- #endif
- 
-+static void clear_all_bpt(void);
-+static void xmon_init(int);
-+
- #ifdef CONFIG_PPC64
- #define REG		"%.16lx"
- #else
-@@ -291,6 +294,39 @@ Commands:\n\
-   zh	halt\n"
- ;
- 
-+#ifdef CONFIG_LOCK_DOWN_KERNEL
-+static bool xmon_check_lockdown(void)
-+{
-+	static bool lockdown = false;
-+
-+	if (!lockdown) {
-+		lockdown = kernel_is_locked_down("Using xmon",
-+						 LOCKDOWN_CONFIDENTIALITY);
-+		if (lockdown) {
-+			printf("xmon: Disabled by strict kernel lockdown\n");
-+			xmon_on = 0;
-+			xmon_init(0);
-+		}
-+	}
-+
-+	if (!xmon_is_ro) {
-+		xmon_is_ro = kernel_is_locked_down("Using xmon write-access",
-+						   LOCKDOWN_INTEGRITY);
-+		if (xmon_is_ro) {
-+			printf("xmon: Read-only due to kernel lockdown\n");
-+			clear_all_bpt();
-+		}
-+	}
-+
-+	return lockdown;
-+}
-+#else
-+inline static bool xmon_check_lockdown(void)
-+{
-+	return false;
-+}
-+#endif /* CONFIG_LOCK_DOWN_KERNEL */
-+
- static struct pt_regs *xmon_regs;
- 
- static inline void sync(void)
-@@ -708,6 +744,9 @@ static int xmon_bpt(struct pt_regs *regs)
- 	struct bpt *bp;
- 	unsigned long offset;
- 
-+	if (xmon_check_lockdown())
-+		return 0;
-+
- 	if ((regs->msr & (MSR_IR|MSR_PR|MSR_64BIT)) != (MSR_IR|MSR_64BIT))
- 		return 0;
- 
-@@ -739,6 +778,9 @@ static int xmon_sstep(struct pt_regs *regs)
- 
- static int xmon_break_match(struct pt_regs *regs)
- {
-+	if (xmon_check_lockdown())
-+		return 0;
-+
- 	if ((regs->msr & (MSR_IR|MSR_PR|MSR_64BIT)) != (MSR_IR|MSR_64BIT))
- 		return 0;
- 	if (dabr.enabled == 0)
-@@ -749,6 +791,9 @@ static int xmon_break_match(struct pt_regs *regs)
- 
- static int xmon_iabr_match(struct pt_regs *regs)
- {
-+	if (xmon_check_lockdown())
-+		return 0;
-+
- 	if ((regs->msr & (MSR_IR|MSR_PR|MSR_64BIT)) != (MSR_IR|MSR_64BIT))
- 		return 0;
- 	if (iabr == NULL)
-@@ -3742,6 +3787,9 @@ static void xmon_init(int enable)
- #ifdef CONFIG_MAGIC_SYSRQ
- static void sysrq_handle_xmon(int key)
- {
-+	if (xmon_check_lockdown())
-+		return;
-+
- 	/* ensure xmon is enabled */
- 	xmon_init(1);
- 	debugger(get_irq_regs());
-@@ -3763,7 +3811,6 @@ static int __init setup_xmon_sysrq(void)
- device_initcall(setup_xmon_sysrq);
- #endif /* CONFIG_MAGIC_SYSRQ */
- 
--#ifdef CONFIG_DEBUG_FS
- static void clear_all_bpt(void)
- {
- 	int i;
-@@ -3785,8 +3832,12 @@ static void clear_all_bpt(void)
- 	printf("xmon: All breakpoints cleared\n");
- }
- 
-+#ifdef CONFIG_DEBUG_FS
- static int xmon_dbgfs_set(void *data, u64 val)
- {
-+	if (xmon_check_lockdown())
-+		return 0;
-+
- 	xmon_on = !!val;
- 	xmon_init(xmon_on);
- 
-@@ -3845,6 +3896,9 @@ early_param("xmon", early_parse_xmon);
- 
- void __init xmon_setup(void)
- {
-+	if (xmon_check_lockdown())
-+		return;
-+
- 	if (xmon_on)
- 		xmon_init(1);
- 	if (xmon_early)
--- 
-2.21.0
-
+Juergen
