@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16011-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16012-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id CE6682EB85
-	for <lists+kernel-hardening@lfdr.de>; Thu, 30 May 2019 05:13:59 +0200 (CEST)
-Received: (qmail 30151 invoked by uid 550); 30 May 2019 03:13:51 -0000
+	by mail.lfdr.de (Postfix) with SMTP id E12962EBEA
+	for <lists+kernel-hardening@lfdr.de>; Thu, 30 May 2019 05:17:05 +0200 (CEST)
+Received: (qmail 1745 invoked by uid 550); 30 May 2019 03:17:00 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,14 +13,14 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 29996 invoked from network); 30 May 2019 03:13:50 -0000
+Received: (qmail 1701 invoked from network); 30 May 2019 03:16:59 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1559186018;
-	bh=0ZyHSlCkH4hMMhVXlzS7zN8qUQtcSbf3X3O4Q4YUuQY=;
+	s=default; t=1559186207;
+	bh=n+mQP6Ot/bSNwz8Z1NLu1w72gjU1a7QBXhVgmvvJSEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T0pupV8Ue5UBwO38QzWL2JtdjBoDWA3IXYTrO2Nl/sAVxs1Ui8q9aYHIa0F63mXLb
-	 1fbCFyojsqjEHitQuB8x9zAfqk14TUOCrBJnxsXINnglHnq/Voij8gyx737ocXI5Cv
-	 bLbVzDrbVpp6k+Jcn48ybwwn8cGKZPGT7fNpUZYU=
+	b=atqCpRwY9Yc7Gg4jFZ0ruHrpfDw5TrJVNIIxX3mvPome4YrCwW6Z1BCsMm0ltYUrd
+	 pLyT3UUTAtP0WcdKd20qo92HXe96LC+c0vRa+lZ0nJbx9J6h3lOzmdpIc34XKLNZwg
+	 wJiyXesycslhSFDM9Jp8ybVSfP5vrQegcHudJVpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: linux-kernel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -48,12 +48,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rik van Riel <riel@surriel.com>,
 	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.0 086/346] x86/modules: Avoid breaking W^X while loading modules
-Date: Wed, 29 May 2019 20:02:39 -0700
-Message-Id: <20190530030545.523019342@linuxfoundation.org>
+Subject: [PATCH 4.19 079/276] x86/modules: Avoid breaking W^X while loading modules
+Date: Wed, 29 May 2019 20:03:57 -0700
+Message-Id: <20190530030531.331779845@linuxfoundation.org>
 X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190530030540.363386121@linuxfoundation.org>
-References: <20190530030540.363386121@linuxfoundation.org>
+In-Reply-To: <20190530030523.133519668@linuxfoundation.org>
+References: <20190530030523.133519668@linuxfoundation.org>
 User-Agent: quilt/0.66
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -110,10 +110,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  4 files changed, 28 insertions(+), 8 deletions(-)
 
 diff --git a/arch/x86/kernel/alternative.c b/arch/x86/kernel/alternative.c
-index ebeac487a20c7..2db985513917a 100644
+index b9d5e7c9ef43e..918a23704c0c5 100644
 --- a/arch/x86/kernel/alternative.c
 +++ b/arch/x86/kernel/alternative.c
-@@ -666,15 +666,29 @@ void __init alternative_instructions(void)
+@@ -662,15 +662,29 @@ void __init alternative_instructions(void)
   * handlers seeing an inconsistent instruction while you patch.
   */
  void *__init_or_module text_poke_early(void *addr, const void *opcode,
@@ -151,7 +151,7 @@ index ebeac487a20c7..2db985513917a 100644
  }
  
 diff --git a/arch/x86/kernel/module.c b/arch/x86/kernel/module.c
-index b052e883dd8cc..cfa3106faee42 100644
+index f58336af095c9..6645f123419c6 100644
 --- a/arch/x86/kernel/module.c
 +++ b/arch/x86/kernel/module.c
 @@ -87,7 +87,7 @@ void *module_alloc(unsigned long size)
@@ -164,10 +164,10 @@ index b052e883dd8cc..cfa3106faee42 100644
  	if (p && (kasan_module_alloc(p, size) < 0)) {
  		vfree(p);
 diff --git a/include/linux/filter.h b/include/linux/filter.h
-index 3358646a8e7a7..42513fa6846c9 100644
+index 6ecef32fd8bcd..d52a7484aeb2d 100644
 --- a/include/linux/filter.h
 +++ b/include/linux/filter.h
-@@ -709,6 +709,7 @@ static inline void bpf_prog_unlock_ro(struct bpf_prog *fp)
+@@ -684,6 +684,7 @@ static inline void bpf_prog_unlock_ro(struct bpf_prog *fp)
  static inline void bpf_jit_binary_lock_ro(struct bpf_binary_header *hdr)
  {
  	set_memory_ro((unsigned long)hdr, hdr->pages);
@@ -176,10 +176,10 @@ index 3358646a8e7a7..42513fa6846c9 100644
  
  static inline void bpf_jit_binary_unlock_ro(struct bpf_binary_header *hdr)
 diff --git a/kernel/module.c b/kernel/module.c
-index 2ad1b52399109..ae1b77da6a200 100644
+index 38bf28b5cc202..f797c6ace7121 100644
 --- a/kernel/module.c
 +++ b/kernel/module.c
-@@ -1950,8 +1950,13 @@ void module_enable_ro(const struct module *mod, bool after_init)
+@@ -1949,8 +1949,13 @@ void module_enable_ro(const struct module *mod, bool after_init)
  		return;
  
  	frob_text(&mod->core_layout, set_memory_ro);
