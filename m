@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16028-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16029-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 33FD431BF3
-	for <lists+kernel-hardening@lfdr.de>; Sat,  1 Jun 2019 15:18:52 +0200 (CEST)
-Received: (qmail 11747 invoked by uid 550); 1 Jun 2019 13:18:45 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 4ACCE31C60
+	for <lists+kernel-hardening@lfdr.de>; Sat,  1 Jun 2019 15:21:27 +0200 (CEST)
+Received: (qmail 15472 invoked by uid 550); 1 Jun 2019 13:21:22 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,14 +13,14 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 11712 invoked from network); 1 Jun 2019 13:18:44 -0000
+Received: (qmail 15417 invoked from network); 1 Jun 2019 13:21:21 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1559395112;
+	s=default; t=1559395269;
 	bh=ovK+AB50RkngX4ySnqrgWIrQ10Rt36zLYGZVQ5jDaEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UOoX3RVSC2czln8hXAFsYlqAA9ywtxCUbgqthgcsFAcFMhBZjV9Z/9FB/jwjk5gX0
-	 /li0cRVty374P7gtvQ3yNUWlCndYmdo2iiV7G4bmnR5dun9+hPairYLFmZXNH21STR
-	 dAAAVv94lsdp/Ulh9cnrjS3D5FTJ//eVQofdBh6I=
+	b=z/yKsNj1nueg8nCIqgBq6xlYh6diCWex/riOg7Ne0ViA5EpLL0LXCFcXpfzahnV8o
+	 LbkorczrkUbrhsW1CnBd20FF49TGBmMWZ4Ql0BaArEPnaK/+YV+jD0x3w9dmg4Ge8u
+	 A5b2lDH9acIJWUpD6yz+p7uIvJUnRF6CcVRJ7Cls=
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -29,12 +29,12 @@ Cc: Chris Packham <chris.packham@alliedtelesis.co.nz>,
 	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>,
 	kernel-hardening@lists.openwall.com
-Subject: [PATCH AUTOSEL 5.1 037/186] gcc-plugins: arm_ssp_per_task_plugin: Fix for older GCC < 6
-Date: Sat,  1 Jun 2019 09:14:13 -0400
-Message-Id: <20190601131653.24205-37-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.0 034/173] gcc-plugins: arm_ssp_per_task_plugin: Fix for older GCC < 6
+Date: Sat,  1 Jun 2019 09:17:06 -0400
+Message-Id: <20190601131934.25053-34-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190601131653.24205-1-sashal@kernel.org>
-References: <20190601131653.24205-1-sashal@kernel.org>
+In-Reply-To: <20190601131934.25053-1-sashal@kernel.org>
+References: <20190601131934.25053-1-sashal@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 X-stable: review
