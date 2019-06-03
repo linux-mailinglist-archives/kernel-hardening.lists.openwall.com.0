@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16041-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16042-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 02F9232A4A
-	for <lists+kernel-hardening@lfdr.de>; Mon,  3 Jun 2019 10:03:04 +0200 (CEST)
-Received: (qmail 7880 invoked by uid 550); 3 Jun 2019 08:02:54 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 15DF332CCA
+	for <lists+kernel-hardening@lfdr.de>; Mon,  3 Jun 2019 11:25:20 +0200 (CEST)
+Received: (qmail 7692 invoked by uid 550); 3 Jun 2019 09:25:14 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,82 +13,109 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 7861 invoked from network); 3 Jun 2019 08:02:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=merlin.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	 bh=YGw/VDsnOloIaXgrEbA/FOCyBbJYxl2QNc1vAYVXNY0=; b=Kh81Fh/GkYy+PcGkyTuRLYqJr
-	5d3meB8Iu/apofeU9LBaVTbdU34exlCBZ6/cvkSTsWYbCITa+85dcFdl1TuwCCRcbBbbBHcmz79tU
-	YNA75f//Beu0qWv4xrOjE3yCBU/h7Wpdldb8AXCdnFyE/xt6GG7X5SHHOhvkwxY2EDPpuVJ40I8NT
-	ZcmLp7vu3BxxYFbsJSX2sSX4rHSTxLEQ0MZogDpDfR8tMLBVyzA2HGhhcxPa3RuWryoN7hsbltCid
-	ApVADLC1Be6a9Xztz6ysLp/Pg3F0N3np5vQaItnOalc4ycKqr7JKLLA3Zs069bXnA/w4o4wPQqclC
-	BYeGsVrnQ==;
-Date: Mon, 3 Jun 2019 10:01:28 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: "Joel Fernandes (Google)" <joel@joelfernandes.org>
-Cc: linux-kernel@vger.kernel.org, Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>,
-	Bjorn Helgaas <bhelgaas@google.com>, Borislav Petkov <bp@alien8.de>,
-	"David S. Miller" <davem@davemloft.net>, edumazet@google.com,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Hideaki YOSHIFUJI <yoshfuji@linux-ipv6.org>,
-	"H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@redhat.com>,
-	Josh Triplett <josh@joshtriplett.org>, keescook@chromium.org,
-	kernel-hardening@lists.openwall.com,
-	Lai Jiangshan <jiangshanlai@gmail.com>, Len Brown <lenb@kernel.org>,
-	linux-acpi@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, neilb@suse.com,
-	netdev@vger.kernel.org, oleg@redhat.com,
-	"Paul E. McKenney" <paulmck@linux.ibm.com>,
-	Pavel Machek <pavel@ucw.cz>,
-	"Rafael J. Wysocki" <rjw@rjwysocki.net>, rcu@vger.kernel.org,
-	Steven Rostedt <rostedt@goodmis.org>, Tejun Heo <tj@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT)" <x86@kernel.org>
-Subject: Re: [RFC 1/6] rcu: Add support for consolidated-RCU reader checking
-Message-ID: <20190603080128.GA3436@hirez.programming.kicks-ass.net>
-References: <20190601222738.6856-1-joel@joelfernandes.org>
- <20190601222738.6856-2-joel@joelfernandes.org>
+Received: (qmail 7674 invoked from network); 3 Jun 2019 09:25:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=w8FJ04SPncA3GGt4qcZJVbuvO4+vsSKpHoksXqQuYUI=;
+        b=OMLIbGGF4iqU/3IBxXXOo51Z1Gh2iX+jT/XJanv3y/0Mlanl8zJA2fHTPptaNqwAy/
+         wCPISvYJLg8glT89EOkSCGrUEwLbQNGSsPQB3xP0gjI7Qnoj9v/0iNfgM4mS6UVs1cdI
+         ASiojU2tdAvCieLPAYfFUbKUwAx39XfYmeDORSJzdkuJ3vkYOm8FZf+sap+UctIi5Inl
+         AgNqY79mVOQvJbxNLvSndWErvOsmI5+gxjsaG/j0cl6rh4ldiKUw56A3oejSuCOFbFTv
+         5Lkaj44XlpdgfkLJZbb89pa8zO7s4vqoneWdvi7fIrUzKI7kgDAV+syf1sGfWPpsVjG/
+         PAzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=w8FJ04SPncA3GGt4qcZJVbuvO4+vsSKpHoksXqQuYUI=;
+        b=p608CQMTXQVepohPLKBvRzKLWdPwS3HSAD5QrQQT7AreBd7KHbOs5QySg7ZCapoLv3
+         aBVgvhbi/IavHHB1VroxGxK4e7UebhGPVe8gVhB/NZuM7f6ocnNrmdH8Eexu1K079ssf
+         b3C2DRa2+pM+tvoGWgFHVS8uWSPrW8/TKBF46Wl0Tl23aMInGcIS8ArvXJvJlEUqFia5
+         k7Mnt3Zis4Mt8i8rENmIxwTB3ZZnULXWZ9nW1nBRKfBz2MFU93uBBB3ybL3ocb3mjlf2
+         65lZtm1e07TeN6MRkwwBizlDs66krWtFqKzRxdVInKjO/DTQOu7x/2wmbva/egS+4AwU
+         4ztg==
+X-Gm-Message-State: APjAAAVTVd7dKoYBbS7fvBIjYtxilm9Tt+iVTchsDmr/AvKfJZpOE6I+
+	yn6gCfKYnTbjhgeswVJpOMNyMw+7LnjbyOGUdeEqkg==
+X-Google-Smtp-Source: APXvYqyh6QlCEo0EU+R0uj2OfHoB0V/HJYqXE1klW7h8DXFh/JtB716lws+dopD6Xp86RJPH8UG3RqT+AAiUP3DAyxA=
+X-Received: by 2002:ab0:c11:: with SMTP id a17mr8422532uak.3.1559553901030;
+ Mon, 03 Jun 2019 02:25:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190601222738.6856-2-joel@joelfernandes.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20190529123812.43089-1-glider@google.com> <20190529123812.43089-3-glider@google.com>
+ <20190531181832.e7c3888870ce9e50db9f69e6@linux-foundation.org>
+In-Reply-To: <20190531181832.e7c3888870ce9e50db9f69e6@linux-foundation.org>
+From: Alexander Potapenko <glider@google.com>
+Date: Mon, 3 Jun 2019 11:24:49 +0200
+Message-ID: <CAG_fn=XBq-ipvZng3hEiGwyQH2rRNFbN_Cj0r+5VoJqou0vovA@mail.gmail.com>
+Subject: Re: [PATCH v5 2/3] mm: init: report memory auto-initialization
+ features at boot time
+To: Andrew Morton <akpm@linux-foundation.org>, Kees Cook <keescook@chromium.org>
+Cc: Christoph Lameter <cl@linux.com>, Dmitry Vyukov <dvyukov@google.com>, James Morris <jmorris@namei.org>, 
+	Jann Horn <jannh@google.com>, Kostya Serebryany <kcc@google.com>, Laura Abbott <labbott@redhat.com>, 
+	Mark Rutland <mark.rutland@arm.com>, Masahiro Yamada <yamada.masahiro@socionext.com>, 
+	Matthew Wilcox <willy@infradead.org>, Nick Desaulniers <ndesaulniers@google.com>, 
+	Randy Dunlap <rdunlap@infradead.org>, Sandeep Patil <sspatil@android.com>, 
+	"Serge E. Hallyn" <serge@hallyn.com>, Souptick Joarder <jrdr.linux@gmail.com>, Marco Elver <elver@google.com>, 
+	Kernel Hardening <kernel-hardening@lists.openwall.com>, 
+	Linux Memory Management List <linux-mm@kvack.org>, 
+	linux-security-module <linux-security-module@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jun 01, 2019 at 06:27:33PM -0400, Joel Fernandes (Google) wrote:
-> +#define list_for_each_entry_rcu(pos, head, member, cond...)		\
-> +	if (COUNT_VARGS(cond) != 0) {					\
-> +		__list_check_rcu_cond(0, ## cond);			\
-> +	} else {							\
-> +		__list_check_rcu();					\
-> +	}								\
-> +	for (pos = list_entry_rcu((head)->next, typeof(*pos), member);	\
-> +		&pos->member != (head);					\
->  		pos = list_entry_rcu(pos->member.next, typeof(*pos), member))
->  
->  /**
-> @@ -621,7 +648,12 @@ static inline void hlist_add_behind_rcu(struct hlist_node *n,
->   * the _rcu list-mutation primitives such as hlist_add_head_rcu()
->   * as long as the traversal is guarded by rcu_read_lock().
->   */
-> +#define hlist_for_each_entry_rcu(pos, head, member, cond...)		\
-> +	if (COUNT_VARGS(cond) != 0) {					\
-> +		__list_check_rcu_cond(0, ## cond);			\
-> +	} else {							\
-> +		__list_check_rcu();					\
-> +	}								\
->  	for (pos = hlist_entry_safe (rcu_dereference_raw(hlist_first_rcu(head)),\
->  			typeof(*(pos)), member);			\
->  		pos;							\
+On Sat, Jun 1, 2019 at 3:18 AM Andrew Morton <akpm@linux-foundation.org> wr=
+ote:
+>
+> On Wed, 29 May 2019 14:38:11 +0200 Alexander Potapenko <glider@google.com=
+> wrote:
+>
+> > Print the currently enabled stack and heap initialization modes.
+> >
+> > The possible options for stack are:
+> >  - "all" for CONFIG_INIT_STACK_ALL;
+> >  - "byref_all" for CONFIG_GCC_PLUGIN_STRUCTLEAK_BYREF_ALL;
+> >  - "byref" for CONFIG_GCC_PLUGIN_STRUCTLEAK_BYREF;
+> >  - "__user" for CONFIG_GCC_PLUGIN_STRUCTLEAK_USER;
+> >  - "off" otherwise.
+> >
+> > Depending on the values of init_on_alloc and init_on_free boottime
+> > options we also report "heap alloc" and "heap free" as "on"/"off".
+>
+> Why?
+>
+> Please fully describe the benefit to users so that others can judge the
+> desirability of the patch.  And so they can review it effectively, etc.
+I'm going to update the description with the following passage:
+
+    Print the currently enabled stack and heap initialization modes.
+
+    Stack initialization is enabled by a config flag, while heap
+    initialization is configured at boot time with defaults being set
+    in the config. It's more convenient for the user to have all informatio=
+n
+    about these hardening measures in one place.
+
+Does this make sense?
+> Always!
+>
+> > In the init_on_free mode initializing pages at boot time may take some
+> > time, so print a notice about that as well.
+>
+> How much time?
+I've seen pauses up to 1 second, not actually sure they're worth a
+separate line in the log.
+Kees, how long were the delays in your case?
 
 
-This breaks code like:
 
-	if (...)
-		list_for_each_entry_rcu(...);
+--=20
+Alexander Potapenko
+Software Engineer
 
-as they are no longer a single statement. You'll have to frob it into
-the initializer part of the for statement.
+Google Germany GmbH
+Erika-Mann-Stra=C3=9Fe, 33
+80636 M=C3=BCnchen
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
