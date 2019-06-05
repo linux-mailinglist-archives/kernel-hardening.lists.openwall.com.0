@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16060-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16061-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id E1236356E5
-	for <lists+kernel-hardening@lfdr.de>; Wed,  5 Jun 2019 08:21:15 +0200 (CEST)
-Received: (qmail 11669 invoked by uid 550); 5 Jun 2019 06:21:08 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 8A75635D78
+	for <lists+kernel-hardening@lfdr.de>; Wed,  5 Jun 2019 15:05:14 +0200 (CEST)
+Received: (qmail 5312 invoked by uid 550); 5 Jun 2019 13:05:07 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,130 +13,85 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 11634 invoked from network); 5 Jun 2019 06:21:08 -0000
+Received: (qmail 5288 invoked from network); 5 Jun 2019 13:05:07 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=joelfernandes.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=AtqHgH8AzfqBusRXColLPq524pdyprOlKwBMhdGimOs=;
-        b=fd/jFlYC3NKCnlc10GNS/xXh9Mu8jhirQNjNqRwQ/3oWrENyNxUUvb7jukL+cJ8nOr
-         0PeUOMwn3wjpv/MP5l8IeFEc0KjgSwJV3wmT9pj+2q3d2pK7p9SB/8qyp96wR2qKgU4Q
-         lHisNH/bC4oxyGBh7finpaMpQbGtUd6Pj1Ta8jwitm8bDl/sz7aKwT8U1p4pVBLDuIy6
-         GtLWeIUC6V+BH2bVSMY2thRJoBHSUgRdwNFSTaoagBpYEVDTR/BNQTG2E4hodA0SCwrA
-         xYQJuqb7vjP3YuWW8Xz7JUeWts1b5tamD2b2r8o+XYdXTBEnmgL6TFu04xyJuea0hTPt
-         i/vA==
+        bh=NRvNKqXzZztvQh3qtkPJBNz3Y41PCmY2mwresCdihvw=;
+        b=Dvb5lvHNFy/YlX9VOpbVuAXgLc/Bkqb9FHL1QfulyPL3Nfu7LNFUDi2bdtRN38UIDB
+         kpsq1w0ZNYuzjO5QiRB/VNBh4B2zYpwznNXZ2BcTi+m6xeubmV2GNyYxBYFe52W8b6at
+         WcDyZ7BR4dByy2KBn+q2kg8uW24xdyRPcakrY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=AtqHgH8AzfqBusRXColLPq524pdyprOlKwBMhdGimOs=;
-        b=Lddf89J8rb9D/xEw118a8tHSwx00Jp0912WLxw9CQ+UT9qSQvQM69Yst7pnKc1CCeW
-         ksnUInN0nYoK35WF5KWdydLNt2ZkYvh1akJEZThuGPU4BWDWFHi0P1OBWG42V6hQ5oza
-         3D2hned3RnsaMhQmTLyXl70gtphxcK+K0ZVd3SQQRKTHaVbVYNgAhVUFsWyk8xfOvxxb
-         grQMWs5g3ShKVcPjBlDKWeZrr9r/6mLlt2aXYNYYHVxCltVOF7PtXTZENB1heDU09gK9
-         rQhIHzOOLWRzwoHUzeY/zEnzQnJnK2/Clo3RT/HMO3Ya39vtrIDj4LdpFW6o2ciou6/x
-         19yQ==
-X-Gm-Message-State: APjAAAX3ZqDEaCDu2W5PK7cYCTg7lk4wqdmFSfVc9kqdyPCbm6Ymwn2p
-	q7R8jp7zNQclQ6S1LLL35sskFSoKanwFoFDg6tTZdA==
-X-Google-Smtp-Source: APXvYqzlkR0mSGTo4qj6zCzfKyaEQVD5KunaL/j2L2/jGoUBjIoSTeh8jGEtvNNxjrzNn8XcY+RumpVbcR/wbdYMgp0=
-X-Received: by 2002:a24:6b86:: with SMTP id v128mr18073861itc.104.1559715656168;
- Tue, 04 Jun 2019 23:20:56 -0700 (PDT)
+        bh=NRvNKqXzZztvQh3qtkPJBNz3Y41PCmY2mwresCdihvw=;
+        b=e30maHCUm6Iu1TUnW1nPX+PYVgC7B0P1U+vgVted6U0GpyinslQh1rAiWQtmrvTdiw
+         iQkXBoKVUXGwrSpkPkmpw+rRQbYee8xQajTnFWNMeY8sHup3xyMoL77rCM/en/rH9AEF
+         IN6MYrOtjeGfUPcjAMJSKawPQgjJwG+ehZOnU0GoHfBEqwM/ty1VAkThdtRRHiAUotQz
+         b52KWwYfH7IOdyuuYtUKDJvExHWXEQlpwFu5+kox6WBeEObwfXebSMpKTIUdX7NQ0skh
+         51PzBZUcDrb+A7rWh2Yen1tX9M2UZU7mtlFzS7T7429ZmN2AtSnkkXyEbtQJvfYZ3mNO
+         iTBw==
+X-Gm-Message-State: APjAAAUTf7Iokv4U7YZUQxRIdHHMT+wG9uqvI1RDlL41zM2coPsY/8+g
+	Qd3YtsZCaiIkNYzkTHTutQx/B68dP9qPB9a+zqEMpQ==
+X-Google-Smtp-Source: APXvYqyt7OLKBZ4DAerRqhiAeTPqPshOGmAnuk0KkZaQmyvMV/dwuVHzpUT44mnRI2A50tJlbF4XhdP85jTinsVz67M=
+X-Received: by 2002:a05:651c:87:: with SMTP id 7mr3383290ljq.184.1559739895494;
+ Wed, 05 Jun 2019 06:04:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <201906042224.42A2CCB2BE@keescook>
-In-Reply-To: <201906042224.42A2CCB2BE@keescook>
-From: Ard Biesheuvel <ard.biesheuvel@linaro.org>
-Date: Wed, 5 Jun 2019 08:20:44 +0200
-Message-ID: <CAKv+Gu8m=6BgqfjrvrGEjX1Z3=W-YJhv-jrDXhC5+EoRuOG3qA@mail.gmail.com>
-Subject: Re: [PATCH] lib/test_stackinit: Handle Clang auto-initialization pattern
-To: Kees Cook <keescook@chromium.org>
-Cc: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Alexander Potapenko <glider@google.com>, 
-	Kernel Hardening <kernel-hardening@lists.openwall.com>
+References: <20190601222738.6856-1-joel@joelfernandes.org> <20190601222738.6856-5-joel@joelfernandes.org>
+ <20190605012429.wmlvlgn4mb4jkvua@ca-dmjordan1.us.oracle.com>
+In-Reply-To: <20190605012429.wmlvlgn4mb4jkvua@ca-dmjordan1.us.oracle.com>
+From: Joel Fernandes <joel@joelfernandes.org>
+Date: Wed, 5 Jun 2019 09:04:44 -0400
+Message-ID: <CAEXW_YTsT5BY5Qbc6Jju2XmbHSQFELrGM9UaPPXY-ETmJaBrsA@mail.gmail.com>
+Subject: Re: [RFC 4/6] workqueue: Convert for_each_wq to use built-in list check
+To: Daniel Jordan <daniel.m.jordan@oracle.com>
+Cc: LKML <linux-kernel@vger.kernel.org>, Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Borislav Petkov <bp@alien8.de>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Hideaki YOSHIFUJI <yoshfuji@linux-ipv6.org>, 
+	"H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@redhat.com>, Josh Triplett <josh@joshtriplett.org>, 
+	Kees Cook <keescook@chromium.org>, 
+	Kernel Hardening <kernel-hardening@lists.openwall.com>, 
+	Lai Jiangshan <jiangshanlai@gmail.com>, Len Brown <lenb@kernel.org>, linux-acpi@vger.kernel.org, 
+	linux-pci@vger.kernel.org, Linux PM <linux-pm@vger.kernel.org>, 
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, Neil Brown <neilb@suse.com>, 
+	netdev <netdev@vger.kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
+	"Paul E. McKenney" <paulmck@linux.ibm.com>, Pavel Machek <pavel@ucw.cz>, 
+	Peter Zilstra <peterz@infradead.org>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, rcu <rcu@vger.kernel.org>, 
+	Steven Rostedt <rostedt@goodmis.org>, Tejun Heo <tj@kernel.org>, 
+	Thomas Gleixner <tglx@linutronix.de>, 
+	"maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT)" <x86@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 5 Jun 2019 at 07:25, Kees Cook <keescook@chromium.org> wrote:
+On Tue, Jun 4, 2019 at 9:25 PM Daniel Jordan <daniel.m.jordan@oracle.com> wrote:
 >
-> While the gcc plugin for automatic stack variable initialization (i.e.
-> CONFIG_GCC_PLUGIN_STRUCTLEAK_BYREF_ALL) performs initialization with
-> 0x00 bytes, the Clang automatic stack variable initialization (i.e.
-> CONFIG_INIT_STACK_ALL) uses various type-specific patterns that are
-> typically 0xAA. Therefore the stackinit selftest has been fixed to check
-> that bytes are no longer the test fill pattern of 0xFF (instead of looking
-> for bytes that have become 0x00). This retains the test coverage for the
-> 0x00 pattern of the gcc plugin while adding coverage for the mostly 0xAA
-> pattern of Clang.
+> On Sat, Jun 01, 2019 at 06:27:36PM -0400, Joel Fernandes (Google) wrote:
+> > list_for_each_entry_rcu now has support to check for RCU reader sections
+> > as well as lock. Just use the support in it, instead of explictly
+> > checking in the caller.
+> >
+> > Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+> > ---
+> >  kernel/workqueue.c | 5 ++---
+> >  1 file changed, 2 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/kernel/workqueue.c b/kernel/workqueue.c
+> > index 9657315405de..91ed7aca16e5 100644
+> > --- a/kernel/workqueue.c
+> > +++ b/kernel/workqueue.c
+> > @@ -424,9 +424,8 @@ static void workqueue_sysfs_unregister(struct workqueue_struct *wq);
+> >   * ignored.
+> >   */
+> >  #define for_each_pwq(pwq, wq)                                                \
+> > -     list_for_each_entry_rcu((pwq), &(wq)->pwqs, pwqs_node)          \
+> > -             if (({ assert_rcu_or_wq_mutex(wq); false; })) { }       \
+> > -             else
+> > +     list_for_each_entry_rcu((pwq), &(wq)->pwqs, pwqs_node,          \
+> > +                              lock_is_held(&(wq->mutex).dep_map))
+> >
 >
-> Signed-off-by: Kees Cook <keescook@chromium.org>
+> I think the definition of assert_rcu_or_wq_mutex can also be deleted.
 
-Acked-by: Ard Biesheuvel <ard.biesheuvel@linaro.org>
-
-> ---
->  lib/test_stackinit.c | 21 +++++++++++++++------
->  1 file changed, 15 insertions(+), 6 deletions(-)
->
-> diff --git a/lib/test_stackinit.c b/lib/test_stackinit.c
-> index e97dc54b4fdf..2d7d257a430e 100644
-> --- a/lib/test_stackinit.c
-> +++ b/lib/test_stackinit.c
-> @@ -12,7 +12,7 @@
->
->  /* Exfiltration buffer. */
->  #define MAX_VAR_SIZE   128
-> -static char check_buf[MAX_VAR_SIZE];
-> +static u8 check_buf[MAX_VAR_SIZE];
->
->  /* Character array to trigger stack protector in all functions. */
->  #define VAR_BUFFER      32
-> @@ -106,9 +106,18 @@ static noinline __init int test_ ## name (void)                    \
->                                                                 \
->         /* Fill clone type with zero for per-field init. */     \
->         memset(&zero, 0x00, sizeof(zero));                      \
-> +       /* Clear entire check buffer for 0xFF overlap test. */  \
-> +       memset(check_buf, 0x00, sizeof(check_buf));             \
->         /* Fill stack with 0xFF. */                             \
->         ignored = leaf_ ##name((unsigned long)&ignored, 1,      \
->                                 FETCH_ARG_ ## which(zero));     \
-> +       /* Verify all bytes overwritten with 0xFF. */           \
-> +       for (sum = 0, i = 0; i < target_size; i++)              \
-> +               sum += (check_buf[i] != 0xFF);                  \
-> +       if (sum) {                                              \
-> +               pr_err(#name ": leaf fill was not 0xFF!?\n");   \
-> +               return 1;                                       \
-> +       }                                                       \
->         /* Clear entire check buffer for later bit tests. */    \
->         memset(check_buf, 0x00, sizeof(check_buf));             \
->         /* Extract stack-defined variable contents. */          \
-> @@ -126,9 +135,9 @@ static noinline __init int test_ ## name (void)                     \
->                 return 1;                                       \
->         }                                                       \
->                                                                 \
-> -       /* Look for any set bits in the check region. */        \
-> -       for (i = 0; i < sizeof(check_buf); i++)                 \
-> -               sum += (check_buf[i] != 0);                     \
-> +       /* Look for any bytes still 0xFF in check region. */    \
-> +       for (sum = 0, i = 0; i < target_size; i++)              \
-> +               sum += (check_buf[i] == 0xFF);                  \
->                                                                 \
->         if (sum == 0)                                           \
->                 pr_info(#name " ok\n");                         \
-> @@ -162,13 +171,13 @@ static noinline __init int leaf_ ## name(unsigned long sp,        \
->          * Keep this buffer around to make sure we've got a     \
->          * stack frame of SOME kind...                          \
->          */                                                     \
-> -       memset(buf, (char)(sp && 0xff), sizeof(buf));           \
-> +       memset(buf, (char)(sp & 0xff), sizeof(buf));            \
->         /* Fill variable with 0xFF. */                          \
->         if (fill) {                                             \
->                 fill_start = &var;                              \
->                 fill_size = sizeof(var);                        \
->                 memset(fill_start,                              \
-> -                      (char)((sp && 0xff) | forced_mask),      \
-> +                      (char)((sp & 0xff) | forced_mask),       \
->                        fill_size);                              \
->         }                                                       \
->                                                                 \
-> --
-> 2.17.1
->
->
-> --
-> Kees Cook
+Sure, will do. Thank you.
