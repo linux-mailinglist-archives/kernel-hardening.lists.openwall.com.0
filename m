@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16069-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16070-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id DF44A38FCA
-	for <lists+kernel-hardening@lfdr.de>; Fri,  7 Jun 2019 17:46:58 +0200 (CEST)
-Received: (qmail 16342 invoked by uid 550); 7 Jun 2019 15:46:43 -0000
+	by mail.lfdr.de (Postfix) with SMTP id A341B3904B
+	for <lists+kernel-hardening@lfdr.de>; Fri,  7 Jun 2019 17:50:58 +0200 (CEST)
+Received: (qmail 26037 invoked by uid 550); 7 Jun 2019 15:50:53 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,14 +13,14 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 16077 invoked from network); 7 Jun 2019 15:46:42 -0000
+Received: (qmail 26001 invoked from network); 7 Jun 2019 15:50:52 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1559922390;
-	bh=jvTtpQzbG1cEkU2B5JHc/GMR/EeiGG8BhcO0B2EMUYk=;
+	s=default; t=1559922640;
+	bh=cd/ev9VaIWkYNYVnJKhJjuJBTw0BlAWFxLbrCgag56A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yxMBQTHt23EGSUv07w7Co1XOTr25WXvCJaq2htMeqNKzNLdIgjc65cAVryTL+hCZw
-	 78kFvQZE0GEmM8Hv+3G/+ZpdbORjDXuQjhq3BX4ZpBJ0noc/ztLGRSCYKMVLl55GzX
-	 bRhl1KbEj+bH4/KdB/+SwYsOCNJ5TLiFG9dKsQBQ=
+	b=ThUi9svs6vijyCILYkhcgNiYwi4lKkr/EOz265TC7Dc3+5LXz07kjbn2b6Ac/aeAG
+	 BlbbADdg/lleLNo/J28USUNgd7xVxF3VpYBwvELO7o7V77UywhCg3k8Eb2ooaxOZDD
+	 2bofmGaZPfuUW9C+7R6fZMcrbBxqQwajnK6w7LSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: linux-kernel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,12 +44,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 69/73] x86/kprobes: Set instruction page as executable
-Date: Fri,  7 Jun 2019 17:39:56 +0200
-Message-Id: <20190607153856.531407540@linuxfoundation.org>
+Subject: [PATCH 5.1 85/85] x86/kprobes: Set instruction page as executable
+Date: Fri,  7 Jun 2019 17:40:10 +0200
+Message-Id: <20190607153858.186248816@linuxfoundation.org>
 X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190607153848.669070800@linuxfoundation.org>
-References: <20190607153848.669070800@linuxfoundation.org>
+In-Reply-To: <20190607153849.101321647@linuxfoundation.org>
+References: <20190607153849.101321647@linuxfoundation.org>
 User-Agent: quilt/0.66
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -89,7 +89,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 20 insertions(+), 4 deletions(-)
 
 diff --git a/arch/x86/kernel/kprobes/core.c b/arch/x86/kernel/kprobes/core.c
-index 544bc2dfe408..e83a057564d1 100644
+index fed46ddb1eef..06058c44ab57 100644
 --- a/arch/x86/kernel/kprobes/core.c
 +++ b/arch/x86/kernel/kprobes/core.c
 @@ -431,8 +431,20 @@ void *alloc_insn_page(void)
