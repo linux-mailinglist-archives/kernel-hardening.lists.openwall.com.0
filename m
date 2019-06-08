@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16073-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16074-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 4003C39418
-	for <lists+kernel-hardening@lfdr.de>; Fri,  7 Jun 2019 20:17:12 +0200 (CEST)
-Received: (qmail 6072 invoked by uid 550); 7 Jun 2019 18:17:07 -0000
+	by mail.lfdr.de (Postfix) with SMTP id D074E39B08
+	for <lists+kernel-hardening@lfdr.de>; Sat,  8 Jun 2019 06:32:22 +0200 (CEST)
+Received: (qmail 11997 invoked by uid 550); 8 Jun 2019 04:32:15 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,72 +13,91 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 6037 invoked from network); 7 Jun 2019 18:17:06 -0000
+Received: (qmail 11964 invoked from network); 8 Jun 2019 04:32:14 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=cz7wB840rhvGfTaJuW2ip1j1KZYOFHK49UBpev/BcHM=;
-        b=ikZc/8nFpixEX2ZbuEMnqcygaNyQXVa6Gh8BgbmKC9Ze8D6XBeOARiiZthZmdJ9AfN
-         2p/2koZwg6qB4kc0py56OzD1MFBqgeiCgfulsYSyv1Mhzk6cXQNsgiM105aJQlCy2pIs
-         YakY3HpPrG63ZFVr1tzV6V3hCahHfzGR0f6QmSQpPH18cU1RnqOpXIVWpVXr8Xr4nBVC
-         YmBUcxr5O41F2wUYj+A2XIIMQeV1QgFtDTXxWELOy1jrrP+9+6QeieRf9yRHY7Mz2HLX
-         eA879aObAKveYRCka5ESHBUb6bmgHCwXJMyALI9S3mwMeX4884L6HOL5nxCJHMfHfA3j
-         PpRQ==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=yjh1zYzaoG1at1rH8FiT6vjLog0lbXyR57eX3mI8RWU=;
+        b=caKHMyw7CKhNBoh8+uD8iWldTaFNU7mgpUoQcT5cZWa57bvFXUypbqC9UuZA+o/1Th
+         HrAQxMHVqSIe84G97GnjpXRWVOQgsVZNdOja08NiXb27xJYrnjs/TVXYK71ZV06RzRta
+         FUh5UsLnrE3Yll2X0tVnoig0ej/Dg0hboiq3I=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=cz7wB840rhvGfTaJuW2ip1j1KZYOFHK49UBpev/BcHM=;
-        b=j4VcW5F8aAsnuhlw8JhIryXc+tyUhcztncb2Uwq3JM+Gh9njd1Au+m9oRRlAFPeqRm
-         2M1BSiHDlRxMQjDuRCbqrQo/P6BPW0h/xlyB/CAL4BKdpeV3iSekwFMsgkjdi88hxML2
-         tu2Vovu9gi+dSINInbUZzgzX+F08GpypC7BsrlXc6y1WkiNmqKl4rNav1Hkafqqc7qll
-         X2cQ8wzAGahil1jm03OYKgHVor/3d7c7+tRzumk7eFf6exFHlCgqgQ/L5i8a3JwNApdT
-         HNmRRnPW8iGanrBsC6xK70mJRiUhBAsBJ4un4CkB0Az4JgxpUzOKo5I2VhiSV6pyj7as
-         +u9A==
-X-Gm-Message-State: APjAAAWDvPaquDuEcZIeIp1Cyn2gnApyyCrhd8jkXkRQaemweDRu2Nno
-	RX8HQzAGT4LrQVzGkb/f0Au4x/Ug8OMjPQk7GbqPbg==
-X-Google-Smtp-Source: APXvYqzmtMW+GsiveHeIMJQTCFzGWYSCgxsAa92pkxR0AeVuvMELFXuazhBaklmu4ti1y1xkb3X4wyUcMoy0yfWoFuY=
-X-Received: by 2002:a65:4349:: with SMTP id k9mr4155348pgq.243.1559931414403;
- Fri, 07 Jun 2019 11:16:54 -0700 (PDT)
-MIME-Version: 1.0
-References: <CABgxDo+x3r=8HFxyM89HAc_FdY6+kBpJR5RpAgpOYsu0xZtshQ@mail.gmail.com>
- <CABgxDoJ-ue6HKyBR_q8cmbOp8DFnZDVf7zbxv8_wmHh7uis_vw@mail.gmail.com> <CAOfkYf4OxG-vkCOoWvmGxyRg3UVFcGszkdStKSoXf5qqyF_RQA@mail.gmail.com>
-In-Reply-To: <CAOfkYf4OxG-vkCOoWvmGxyRg3UVFcGszkdStKSoXf5qqyF_RQA@mail.gmail.com>
-From: Romain Perier <romain.perier@gmail.com>
-Date: Fri, 7 Jun 2019 20:16:42 +0200
-Message-ID: <CABgxDoLe3fXNLob3pnj7Nn2v54Htqr+cg5gRRQPxFK7HPX85=Q@mail.gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=yjh1zYzaoG1at1rH8FiT6vjLog0lbXyR57eX3mI8RWU=;
+        b=kjsN80PYopEUiV1eAtFx8h4zm5SzGMcQ7No6x+Fp3DkL9LqIejfZ/WUiWq3PjAHH3H
+         BxkU2yNxFZFtLf4c/JIeUTW0eJ5gLDMjYlR2K+OF+t95Z92CgQ2Yg3Qh7OBDTh240uwZ
+         B6eguTwiR/cRASwXop4Y6sHV2tVw6QeNAxuX0XZvdNNxQP60kdHkgDgW023+Inpvsmgs
+         YIqMyp9WwAvdQNH0GjAnUbMH8V+FoK00mAxf3+vY7fnfgQM6eU+D/bcTqPLBl+5JAbEm
+         Ye9G2/YXFQoHoTB3tZAT9CApTDIoXw66t7wVX3Vpy+xp5AL4o0ZLv03hT0kGm4fO4IqA
+         o3qw==
+X-Gm-Message-State: APjAAAUyfp0yii6W9zR9hUhB/t3abjOKSkedltY+kz4m7Q1OOBAU/p4v
+	rMRX2w/mENpgIoVg/mUnm/Zdog==
+X-Google-Smtp-Source: APXvYqzKf+YgeQAHUTRfi7wKWBZYUr8JctGMzGm1jKwC1I9aMfwRbYFBvrA3T+gvDBsHqT3A4qaCZQ==
+X-Received: by 2002:a17:902:8ec7:: with SMTP id x7mr18234973plo.50.1559968322409;
+        Fri, 07 Jun 2019 21:32:02 -0700 (PDT)
+Date: Fri, 7 Jun 2019 21:32:00 -0700
+From: Kees Cook <keescook@chromium.org>
+To: Romain Perier <romain.perier@gmail.com>
+Cc: Shyam Saini <mayhs11saini@gmail.com>,
+	Kernel Hardening <kernel-hardening@lists.openwall.com>
 Subject: Re: Get involved
-To: Shyam Saini <mayhs11saini@gmail.com>
-Cc: Kernel Hardening <kernel-hardening@lists.openwall.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <201906072117.A1C045C@keescook>
+References: <CABgxDo+x3r=8HFxyM89HAc_FdY6+kBpJR5RpAgpOYsu0xZtshQ@mail.gmail.com>
+ <CABgxDoJ-ue6HKyBR_q8cmbOp8DFnZDVf7zbxv8_wmHh7uis_vw@mail.gmail.com>
+ <CAOfkYf4OxG-vkCOoWvmGxyRg3UVFcGszkdStKSoXf5qqyF_RQA@mail.gmail.com>
+ <CABgxDoLe3fXNLob3pnj7Nn2v54Htqr+cg5gRRQPxFK7HPX85=Q@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABgxDoLe3fXNLob3pnj7Nn2v54Htqr+cg5gRRQPxFK7HPX85=Q@mail.gmail.com>
 
-Hi,
+On Fri, Jun 07, 2019 at 08:16:42PM +0200, Romain Perier wrote:
+> Hi,
 
-Okay, np. I will select another one then :) (hehe that's the game ;) )
+Hi! Sorry for the late reply: I've been travelling this week. :P
 
-@Kees: do you have something in mind (as a new task) ?
+> Okay, np. I will select another one then :) (hehe that's the game ;) )
+> 
+> @Kees: do you have something in mind (as a new task) ?
 
-Thanks,
-Regards,
-Romain
+Shyam, you'd also started FIELD_SIZEOF refactoring, but never sent a v2
+patch if I was following correctly? Is there one or the other of these
+tasks you'd like help with?  https://patchwork.kernel.org/patch/10900187/
+
+Romain, what do you think about reviewing NLA code? I'd mentioned a
+third task here:
+https://www.openwall.com/lists/kernel-hardening/2019/04/17/8
+
+Quoting...
 
 
-Le ven. 7 juin 2019 =C3=A0 20:04, Shyam Saini <mayhs11saini@gmail.com> a =
-=C3=A9crit :
->
-> Hi Roman,
->
-> > I will probably take the task "WARN on kfree() of ERR_PTR range" , and
-> > then help to port to refcount_t   (I plan to use linux-next).
-> > I have asked for an account to jmorris, so I can mark the task as "WIP"=
-.
->
->
-> I'm already on that task, would you mind to proceed with some other task.
-> Kees suggested me this task sometime ago.
-> I'll be sending patches this weekend.
->
-> Thanks a lot,
-> Shyam
+- audit and fix all misuse of NLA_STRING
+
+This is a following up on noticing the misuse of NLA_STRING (no NUL
+terminator), getting used with regular string functions (that expect a
+NUL termination):
+https://lore.kernel.org/lkml/1519329289.2637.12.camel@sipsolutions.net/T/#u
+
+It'd be nice if someone could inspect all the NLA_STRING
+representations and find if there are any other problems like this
+(and see if there was a good way to systemically fix the problem).
+
+
+
+For yet another idea would be to get syzkaller[1] set up and enable
+integer overflow detection (by adding "-fsanitize=signed-integer-overflow"
+to KBUILD_CFLAGS) and start finding and fixes cases like this[2].
+
+Thanks and let me know what you think!
+
+-Kees
+
+[1] https://github.com/google/syzkaller/blob/master/docs/linux/setup.md
+[2] https://lore.kernel.org/lkml/20180824215439.GA46785@beast/
+
+
+-- 
+Kees Cook
