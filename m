@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16086-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16087-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 980F23BDB0
-	for <lists+kernel-hardening@lfdr.de>; Mon, 10 Jun 2019 22:44:14 +0200 (CEST)
-Received: (qmail 32474 invoked by uid 550); 10 Jun 2019 20:44:09 -0000
+	by mail.lfdr.de (Postfix) with SMTP id E947C3BDB3
+	for <lists+kernel-hardening@lfdr.de>; Mon, 10 Jun 2019 22:45:13 +0200 (CEST)
+Received: (qmail 1975 invoked by uid 550); 10 Jun 2019 20:45:09 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,32 +13,32 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 32439 invoked from network); 10 Jun 2019 20:44:09 -0000
+Received: (qmail 1936 invoked from network); 10 Jun 2019 20:45:08 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=gGkvTXexIvtGceUSn9utzUe5r2LZ4KzdTUdP48ifM+M=;
-        b=Bb8kTA6m4nCVFqOZtIEow9B13diQQNAYO8m9rlqG++JOoSNrXLWXby9ed3Bni8SyO1
-         bq6hT7oA7piaplqbJyrPVSnzDlVIh+ZOAWXVQ2dZ80jC1vxUnBIWgrLFhzzmqzKjchm7
-         Is84tMr3rRtCEV29RhB4YU6BwQ8ZLetMaY8RY=
+        bh=gFNF363RDc/XdYA/qTwjgCIxHifrzxkDYNHAq+P6+0s=;
+        b=e2CZUihYvTafnYYHa056o7+bSSzfL1Ff4bnwCZJQJRYmAZXuNLs4PAqpQu2Hc877TH
+         oVAuevfcQD/nV5NtqR0pXt0JiPAQE1f+NvWQAA/cDZJNvE1WXgUMc4qET2B9/WPz4AZI
+         JaHy3eRaR0YvxNOAZ1ua6HxHSX0pLNCycB4r0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=gGkvTXexIvtGceUSn9utzUe5r2LZ4KzdTUdP48ifM+M=;
-        b=owbI1cVSCgOcmdfLirbtexBizWBWQ6XmUEVYNaHY1r/kPoRpLSzxaJ+j5mccYY/AbW
-         mP/K4Hn0CdOZI1zSPxepY3SM0sUO2e6K0Smw9PBLFUS+u8HgudvRefXvU0IEtM2cLaZh
-         3BmcOX85ggx25hsbVe+rjRP0YkXypObdDxT259g3RYcQTxhajk0IZK01cGTbeIaqp/L9
-         aOaAdQ2vMCPLowZsXIlIxkLpAlo3OQ4lgU12SkXahER5D7AdzyapvscjJo6AGNQCgoyO
-         BCoTL+V472AxAkKqtyJQjPxstdnHB85w+WysSoVGwk3E3a6kSJdJaH3HxkaHbeBelcsM
-         ELXg==
-X-Gm-Message-State: APjAAAXals0SVq9zyexJTiZ0ufHmnSbRr8mbrWQRzD/RZqE5Judyqczy
-	kiRT3r9qyo3MkdRFYNuNCOKtHg==
-X-Google-Smtp-Source: APXvYqy7M61GS3qaZ6++vW5tfTL75JMbeYx+TwRj+kwl4qiCMPZwUchxHuhnjBXiQZmwgvCv0DGxvg==
-X-Received: by 2002:a17:90a:f488:: with SMTP id bx8mr22845554pjb.91.1560199437374;
-        Mon, 10 Jun 2019 13:43:57 -0700 (PDT)
-Date: Mon, 10 Jun 2019 13:43:55 -0700
+        bh=gFNF363RDc/XdYA/qTwjgCIxHifrzxkDYNHAq+P6+0s=;
+        b=fBk1dDk3AHft23NGT8375MQeXMgPnQkTZIV1VkJ8lG1SjC7t4fUYJ3ZxN7LX9/zP/8
+         wzvzAsR+5GeAB4pgMxoZwbp7rPyn9OdjfM2dfhrmzeP8Sw0MCwFiz4uT7hCfDJ1bhPDZ
+         jmgF3mdxC9c/S+7uFcRkeKhYbZGCtjBFNf01tENFnD2tPN+FYIzq44hZHKeURWYTD+Yh
+         YhxCL55/pfAAsgYhp3XLp16nskDs+sjW5IQIig91OuGR7Iqy97xw3uqkcr91aKIdv4hH
+         MpJCD1BjaErHHPIBcjavct1hh8xfjDjBy+7iDTpFWTMbAaL6C2lduvzeNwDobwmRxuF9
+         G8Ig==
+X-Gm-Message-State: APjAAAWPmWIJ4e1x93paaVz1WTPiuhBI/t7xveN4dq9/03ReJ8C4VnEp
+	NXzCnAXlEmLj1AOnwbu1WhFGkQ==
+X-Google-Smtp-Source: APXvYqybNR2PIaiWpTHApIK7YBw6IPSSen1QXNs1Vc9JJjXcnCU9uxUQ/3zVX0wDRddk2VworcnaBw==
+X-Received: by 2002:a17:90a:b00b:: with SMTP id x11mr23332542pjq.120.1560199496619;
+        Mon, 10 Jun 2019 13:44:56 -0700 (PDT)
+Date: Mon, 10 Jun 2019 13:44:55 -0700
 From: Kees Cook <keescook@chromium.org>
 To: Andy Lutomirski <luto@kernel.org>
 Cc: x86@kernel.org, LKML <linux-kernel@vger.kernel.org>,
@@ -46,47 +46,50 @@ Cc: x86@kernel.org, LKML <linux-kernel@vger.kernel.org>,
 	Kernel Hardening <kernel-hardening@lists.openwall.com>,
 	Peter Zijlstra <peterz@infradead.org>,
 	Thomas Gleixner <tglx@linutronix.de>
-Subject: Re: [PATCH 2/5] x86/vsyscall: Add a new vsyscall=xonly mode
-Message-ID: <201906101342.B8A938BB@keescook>
+Subject: Re: [PATCH 5/5] x86/vsyscall: Change the default vsyscall mode to
+ xonly
+Message-ID: <201906101344.018BE4C5C1@keescook>
 References: <cover.1560198181.git.luto@kernel.org>
- <131caabf9d127db1a077525f978e1f1f74f9088f.1560198181.git.luto@kernel.org>
+ <25fd7036cefca16c68ecd990e05e05a8ad8fe8b2.1560198181.git.luto@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <131caabf9d127db1a077525f978e1f1f74f9088f.1560198181.git.luto@kernel.org>
+In-Reply-To: <25fd7036cefca16c68ecd990e05e05a8ad8fe8b2.1560198181.git.luto@kernel.org>
 
-On Mon, Jun 10, 2019 at 01:25:28PM -0700, Andy Lutomirski wrote:
-> With vsyscall emulation on, we still expose a readable vsyscall page
-> that contains syscall instructions that validly implement the
-> vsyscalls.  We need this because certain dynamic binary
-> instrumentation tools attempt to read the call targets of call
-> instructions in the instrumented code.  If the instrumented code
-> uses vsyscalls, then the vsyscal page needs to contain readable
-> code.
-> 
-> Unfortunately, leaving readable memory at a deterministic address
-> can be used to help various ASLR bypasses, so we gain some hardening
-> value if we disallow vsyscall reads.
-> 
-> Given how rarely the vsyscall page needs to be readable, add a
-> mechanism to make the vsyscall page be execute only.
+On Mon, Jun 10, 2019 at 01:25:31PM -0700, Andy Lutomirski wrote:
+> The use case for full emulation over xonly is very esoteric.  Let's
+> change the default to the safer xonly mode.
 
-Should the commit log mention that the VVAR portion goes away under
-xonly? (Since it's not executable.)
-
-Otherwise, yay! Looks good to me and thanks for updating the selftests!
+Perhaps describe the esoteric cases here (and maybe in the Kconfig help
+text)? That should a user determine if they actually need it. (What
+would the failure under xonly look like for someone needing emulate?)
 
 -Kees
 
-> @@ -357,7 +368,7 @@ void __init map_vsyscall(void)
->  	extern char __vsyscall_page;
->  	unsigned long physaddr_vsyscall = __pa_symbol(&__vsyscall_page);
->  
-> -	if (vsyscall_mode != NONE) {
-> +	if (vsyscall_mode == EMULATE) {
->  		__set_fixmap(VSYSCALL_PAGE, physaddr_vsyscall,
->  			     PAGE_KERNEL_VVAR);
->  		set_vsyscall_pgtable_user_bits(swapper_pg_dir);
+> 
+> Cc: Kees Cook <keescook@chromium.org>
+> Cc: Borislav Petkov <bp@alien8.de>
+> Cc: Kernel Hardening <kernel-hardening@lists.openwall.com>
+> Cc: Peter Zijlstra <peterz@infradead.org>
+> Cc: Thomas Gleixner <tglx@linutronix.de>
+> Signed-off-by: Andy Lutomirski <luto@kernel.org>
+> ---
+>  arch/x86/Kconfig | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
+> index 054033cc4b1b..e56f33e6b045 100644
+> --- a/arch/x86/Kconfig
+> +++ b/arch/x86/Kconfig
+> @@ -2280,7 +2280,7 @@ config COMPAT_VDSO
+>  choice
+>  	prompt "vsyscall table for legacy applications"
+>  	depends on X86_64
+> -	default LEGACY_VSYSCALL_EMULATE
+> +	default LEGACY_VSYSCALL_XONLY
+>  	help
+>  	  Legacy user code that does not know how to find the vDSO expects
+>  	  to be able to issue three syscalls by calling fixed addresses in
 > -- 
 > 2.21.0
 > 
