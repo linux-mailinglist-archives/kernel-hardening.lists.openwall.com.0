@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16101-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16104-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 80B174193C
-	for <lists+kernel-hardening@lfdr.de>; Wed, 12 Jun 2019 02:05:37 +0200 (CEST)
-Received: (qmail 7640 invoked by uid 550); 12 Jun 2019 00:05:30 -0000
+	by mail.lfdr.de (Postfix) with SMTP id DAD9942D08
+	for <lists+kernel-hardening@lfdr.de>; Wed, 12 Jun 2019 19:10:11 +0200 (CEST)
+Received: (qmail 23945 invoked by uid 550); 12 Jun 2019 17:10:04 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,63 +13,109 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 7609 invoked from network); 12 Jun 2019 00:05:29 -0000
+Delivered-To: moderator for kernel-hardening@lists.openwall.com
+Received: (qmail 22263 invoked from network); 12 Jun 2019 17:09:07 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=twnhTVYd7tn35O7vvlIa3XEgKYk2/zieh7kgQ5Ms1VY=;
-        b=iDBd+Nyh60vWHvSGtVHWVETugM2fnnm+FqmmiJZ56NZHl6V9Aty9AmjFW8CRdEnVVB
-         aGKuXc3BMI1WRmMN59ZmT1r6kVO7qzb4q1bDpYmpS/ZUrVuenxbQGoF2Qv4WS5P5xTYu
-         MgUGL2vvXlsZ04GvxKv4oWOnyz8mNGE24H+bdBFJTo0aHTJ0k0u+7bh9tcE9VNAMwAtH
-         iKtxqCy1DSmKDdJUUU93WbsyygyX8RtwvZ5Owd5cCDJ9ZU6yAlx8+gKU6PDNIGy1Yrds
-         5FOvUqOWwAWAd5bt0eEYz6DGK7Ot7sHrl6lNbuwYOmPXTEQ7T1WTuP7Qnyr0A/A07xpx
-         QkCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=twnhTVYd7tn35O7vvlIa3XEgKYk2/zieh7kgQ5Ms1VY=;
-        b=PL+gDD7LEvbGT1TEMDxKbJEr5dXL6RhPoCSxa1G6cYLTj2mU+vC1dVJvC+kDC9rcFd
-         DomrCA1LxddgPBQUe7sMr9LxmW6Dv5lKHScnemjoA/8s5Ihsnyjx/MgyI2unEl3tWObi
-         +8deYhluv6uHFM32lis5OlnbU84iVuyDxj//oYi+PxIIpj4ukmJ+BUTJkilwoCXEhcb6
-         rhmuJXQ1dKz4h2qiS69HvSFNeZjATqAJQB0xEBKP58WoB9fAOUCSPu6Q/Ub6sXvJM+Y3
-         17lyd/kbFhB/MhxZM/9tUmWUbqIjIx4fv50c8rRXf+iP6ZReow7//MoIRNmE9Yo7rfXW
-         M1wg==
-X-Gm-Message-State: APjAAAVOQSbJZKk6qVoRaD56mpcEEJ2EjIT4QuK9nwABfchtnGViHHoh
-	6C9O3maB/iO8Xf7D0yzQMtZh8EarTsNEWdV0mYY=
-X-Google-Smtp-Source: APXvYqyO/Oi3PmoK5iJ0YzdPrMw5xZcqUF1R75rhMCOs6SLJy8NUkUXX4LUB1wFJr6ZxPQT0SJAlgxYZrwxAPMCixo8=
-X-Received: by 2002:a2e:298a:: with SMTP id p10mr12710225ljp.74.1560297918252;
- Tue, 11 Jun 2019 17:05:18 -0700 (PDT)
+  d=amazon.de; i=@amazon.de; q=dns/txt; s=amazon201209;
+  t=1560359347; x=1591895347;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=fPeaXeipXyI0A+eKQSQDQfcK52xXXH3ZvhYN21vIRx0=;
+  b=Jd82N+6tul5xBmaigkpxw6xCafh3RI0GRRTuVd7O4fEx1JDVf1DY9nTC
+   mF4FdBrfCeCDY/VEBZrui22DuzReqzxv+YNmPACXD755DsC/Q9feUEuhH
+   T6owDHPeHAAosAhHwXY6UTU1HWo1Z3yHhvDtljZoUwc5Jp447puG8LL8+
+   0=;
+X-IronPort-AV: E=Sophos;i="5.62,366,1554768000"; 
+   d="scan'208";a="679555407"
+From: Marius Hillenbrand <mhillenb@amazon.de>
+To: kvm@vger.kernel.org
+Cc: Marius Hillenbrand <mhillenb@amazon.de>, linux-kernel@vger.kernel.org,
+        kernel-hardening@lists.openwall.com, linux-mm@kvack.org,
+        Alexander Graf <graf@amazon.de>, David Woodhouse <dwmw@amazon.co.uk>
+Subject: [RFC 00/10] Process-local memory allocations for hiding KVM secrets
+Date: Wed, 12 Jun 2019 19:08:24 +0200
+Message-Id: <20190612170834.14855-1-mhillenb@amazon.de>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-References: <20190611193836.2772-1-shyam.saini@amarulasolutions.com>
-In-Reply-To: <20190611193836.2772-1-shyam.saini@amarulasolutions.com>
-From: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Date: Tue, 11 Jun 2019 17:05:06 -0700
-Message-ID: <CAADnVQKwvfuoyDEu+rB8=btOi33LdrUvk4EkQM86sDpDG61kew@mail.gmail.com>
-Subject: Re: [PATCH V2] include: linux: Regularise the use of FIELD_SIZEOF macro
-To: Shyam Saini <shyam.saini@amarulasolutions.com>
-Cc: Kernel Hardening <kernel-hardening@lists.openwall.com>, 
-	LKML <linux-kernel@vger.kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
-	Kees Cook <keescook@chromium.org>, linux-arm-kernel@lists.infradead.org, 
-	linux-mips@vger.kernel.org, intel-gvt-dev@lists.freedesktop.org, 
-	intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
-	Network Development <netdev@vger.kernel.org>, linux-ext4@vger.kernel.org, 
-	devel@lists.orangefs.org, linux-mm <linux-mm@kvack.org>, linux-sctp@vger.kernel.org, 
-	bpf <bpf@vger.kernel.org>, kvm@vger.kernel.org, mayhs11saini@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jun 11, 2019 at 5:00 PM Shyam Saini
-<shyam.saini@amarulasolutions.com> wrote:
->
-> Currently, there are 3 different macros, namely sizeof_field, SIZEOF_FIELD
-> and FIELD_SIZEOF which are used to calculate the size of a member of
-> structure, so to bring uniformity in entire kernel source tree lets use
-> FIELD_SIZEOF and replace all occurrences of other two macros with this.
->
-> For this purpose, redefine FIELD_SIZEOF in include/linux/stddef.h and
-> tools/testing/selftests/bpf/bpf_util.h and remove its defination from
-> include/linux/kernel.h
+The Linux kernel has a global address space that is the same for any
+kernel code. This address space becomes a liability in a world with
+processor information leak vulnerabilities, such as L1TF. With the right
+cache load gadget, an attacker-controlled hyperthread pair can leak
+arbitrary data via L1TF. Disabling hyperthreading is one recommended
+mitigation, but it comes with a large performance hit for a wide range
+of workloads.
 
-please dont. bpf_util.h is a user space header.
-Please leave it as-is.
+An alternative mitigation is to not make certain data in the kernel
+globally visible, but only when the kernel executes in the context of
+the process where this data belongs to.
+
+This patch series proposes to introduce a region for what we call
+process-local memory into the kernel's virtual address space. Page
+tables and mappings in that region will be exclusive to one address
+space, instead of implicitly shared between all kernel address spaces.
+Any data placed in that region will be out of reach of cache load
+gadgets that execute in different address spaces. To implement
+process-local memory, we introduce a new interface kmalloc_proclocal() /
+kfree_proclocal() that allocates and maps pages exclusively into the
+current kernel address space. As a first use case, we move architectural
+state of guest CPUs in KVM out of reach of other kernel address spaces.
+
+The patch set is a prototype for x86-64 that we have developed on top of
+kernel 4.20.17 (with cherry-picked commit d253ca0c3865 "x86/mm/cpa: Add
+set_direct_map_*() functions"). I am aware that the integration with KVM
+will see some changes while rebasing to 5.x. Patches 7 and 8, in
+particular, help make patch 9 more readable, but will be dropped in
+rebasing. We have tested the code on both Intel and AMDs, launching VMs
+in a loop. So far, we have not done in-depth performance evaluation.
+Impact on starting VMs was within measurement noise.
+
+---
+
+Julian Stecklina (2):
+  kvm, vmx: move CR2 context switch out of assembly path
+  kvm, vmx: move register clearing out of assembly path
+
+Marius Hillenbrand (8):
+  x86/mm/kaslr: refactor to use enum indices for regions
+  x86/speculation, mm: add process local virtual memory region
+  x86/mm, mm,kernel: add teardown for process-local memory to mm cleanup
+  mm: allocate virtual space for process-local memory
+  mm: allocate/release physical pages for process-local memory
+  kvm/x86: add support for storing vCPU state in process-local memory
+  kvm, vmx: move gprs to process local memory
+  kvm, x86: move guest FPU state into process local memory
+
+ Documentation/x86/x86_64/mm.txt         |  11 +-
+ arch/x86/Kconfig                        |   1 +
+ arch/x86/include/asm/kvm_host.h         |  40 ++-
+ arch/x86/include/asm/page_64.h          |   4 +
+ arch/x86/include/asm/pgtable_64_types.h |  12 +
+ arch/x86/include/asm/proclocal.h        |  11 +
+ arch/x86/kernel/head64.c                |   8 +
+ arch/x86/kvm/Kconfig                    |  10 +
+ arch/x86/kvm/kvm_cache_regs.h           |   4 +-
+ arch/x86/kvm/svm.c                      | 104 +++++--
+ arch/x86/kvm/vmx.c                      | 213 ++++++++++-----
+ arch/x86/kvm/x86.c                      |  31 ++-
+ arch/x86/mm/Makefile                    |   1 +
+ arch/x86/mm/dump_pagetables.c           |   9 +
+ arch/x86/mm/fault.c                     |  19 ++
+ arch/x86/mm/kaslr.c                     |  63 ++++-
+ arch/x86/mm/proclocal.c                 | 136 +++++++++
+ include/linux/mm_types.h                |  13 +
+ include/linux/proclocal.h               |  35 +++
+ kernel/fork.c                           |   6 +
+ mm/Makefile                             |   1 +
+ mm/proclocal.c                          | 348 ++++++++++++++++++++++++
+ security/Kconfig                        |  18 ++
+ 23 files changed, 978 insertions(+), 120 deletions(-)
+ create mode 100644 arch/x86/include/asm/proclocal.h
+ create mode 100644 arch/x86/mm/proclocal.c
+ create mode 100644 include/linux/proclocal.h
+ create mode 100644 mm/proclocal.c
+
+-- 
+2.21.0
+
