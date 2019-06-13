@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16125-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16126-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 66BB543552
-	for <lists+kernel-hardening@lfdr.de>; Thu, 13 Jun 2019 12:55:23 +0200 (CEST)
-Received: (qmail 29984 invoked by uid 550); 13 Jun 2019 10:55:16 -0000
+	by mail.lfdr.de (Postfix) with SMTP id A737A43588
+	for <lists+kernel-hardening@lfdr.de>; Thu, 13 Jun 2019 13:32:12 +0200 (CEST)
+Received: (qmail 18119 invoked by uid 550); 13 Jun 2019 11:32:06 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,160 +13,57 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 29945 invoked from network); 13 Jun 2019 10:55:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=content-type :
- mime-version : subject : from : in-reply-to : date : cc :
- content-transfer-encoding : message-id : references : to;
- s=corp-2018-07-02; bh=wgp7cj5gIWhGNVKXNvU3r2tQN8cWgiUhKrlM8F56c+g=;
- b=Zf/du4Xdcj4gMvx8OhplpKEfYVBLca2/955+Ow9J7w7ql/yYy+w7xZL8YUNzcyB2mvEK
- 7pDp4e9JVNj16ftv9sNC1+v+RRS5y2uGhXKU7cyUyMULXuVwIBPUFsq9Y9L5vqZF5SCm
- x6WS7uorSc7OpBdGEfDcTifKJKIYNkLQXE69y2Ic0ilg5X2/28VKDvPJH6e1DqmRjFwL
- dl4E6pn6m0n6cQ6PhamH/Ocao65dEVuH/VcchqJUDjJyrRvbtmErBOzQs7QtIpx5zTf/
- cmkGRaoFrSbmrlEvXpmyzWThl0y8+EIgb6HjpBiCMzTkOYX3uNVRGGEimLeW9iDcecMw kA== 
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 11.1 \(3445.4.7\))
-Subject: Re: [RFC 00/10] Process-local memory allocations for hiding KVM
- secrets
-From: Liran Alon <liran.alon@oracle.com>
-In-Reply-To: <20190612182550.GI20308@linux.intel.com>
-Date: Thu, 13 Jun 2019 13:54:51 +0300
-Cc: Marius Hillenbrand <mhillenb@amazon.de>, kvm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel-hardening@lists.openwall.com,
-        linux-mm@kvack.org, Alexander Graf <graf@amazon.de>,
-        David Woodhouse <dwmw@amazon.co.uk>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <65D4DBEB-5A9A-457D-909B-2D31A3031607@oracle.com>
-References: <20190612170834.14855-1-mhillenb@amazon.de>
- <20190612182550.GI20308@linux.intel.com>
-To: Sean Christopherson <sean.j.christopherson@intel.com>
-X-Mailer: Apple Mail (2.3445.4.7)
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9286 signatures=668687
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 mlxscore=0 mlxlogscore=707
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1810050000 definitions=main-1906130085
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9286 signatures=668687
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 priorityscore=1501 malwarescore=0
- suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1011
- lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=756 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1810050000
- definitions=main-1906130085
+Delivered-To: moderator for kernel-hardening@lists.openwall.com
+Received: (qmail 9271 invoked from network); 13 Jun 2019 11:26:21 -0000
+From: Yann Droneaud <ydroneaud@opteya.com>
+To: linux-kernel@vger.kernel.org,
+	kernel-hardening@lists.openwall.com
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	Kees Cook <keescook@chromium.org>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Yann Droneaud <ydroneaud@opteya.com>
+Date: Thu, 13 Jun 2019 13:26:03 +0200
+Message-Id: <cover.1560423331.git.ydroneaud@opteya.com>
+X-Mailer: git-send-email 2.21.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a01:e35:39f2:1220:9dd7:c176:119b:4c9d
+X-SA-Exim-Mail-From: ydroneaud@opteya.com
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on ou.quest-ce.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.3.2
+Subject: [PATCH 0/3] ELF interpretor info: align and add random padding
+X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:24:06 +0000)
+X-SA-Exim-Scanned: Yes (on ou.quest-ce.net)
 
+Hi,
 
+The following patches are mostly focused on ensuring AT_RANDOM array is
+aligned on 16bytes boundary, and while being located at a pseudo-random
+offset on stack (at most 256 bytes).
 
-> On 12 Jun 2019, at 21:25, Sean Christopherson =
-<sean.j.christopherson@intel.com> wrote:
->=20
-> On Wed, Jun 12, 2019 at 07:08:24PM +0200, Marius Hillenbrand wrote:
->> The Linux kernel has a global address space that is the same for any
->> kernel code. This address space becomes a liability in a world with
->> processor information leak vulnerabilities, such as L1TF. With the =
-right
->> cache load gadget, an attacker-controlled hyperthread pair can leak
->> arbitrary data via L1TF. Disabling hyperthreading is one recommended
->> mitigation, but it comes with a large performance hit for a wide =
-range
->> of workloads.
->>=20
->> An alternative mitigation is to not make certain data in the kernel
->> globally visible, but only when the kernel executes in the context of
->> the process where this data belongs to.
->>=20
->> This patch series proposes to introduce a region for what we call
->> process-local memory into the kernel's virtual address space. Page
->> tables and mappings in that region will be exclusive to one address
->> space, instead of implicitly shared between all kernel address =
-spaces.
->> Any data placed in that region will be out of reach of cache load
->> gadgets that execute in different address spaces. To implement
->> process-local memory, we introduce a new interface =
-kmalloc_proclocal() /
->> kfree_proclocal() that allocates and maps pages exclusively into the
->> current kernel address space. As a first use case, we move =
-architectural
->> state of guest CPUs in KVM out of reach of other kernel address =
-spaces.
->=20
-> Can you briefly describe what types of attacks this is intended to
-> mitigate?  E.g. guest-guest, userspace-guest, etc...  I don't want to
-> make comments based on my potentially bad assumptions.
+This patchset also insert a random sized (at most 15 bytes) padding between
+AT_RANDOM and AT_PLATFORM and/or AT_BASE_PLATFORM.
 
-I think I can assist in the explanation.
+It also insert a random sized padding (at most 256 bytes) between those
+data and the arrays passed to userspace (argv[] + environ[] + auxv[])
+as defined by ABI.
 
-Consider the following scenario:
-1) Hyperthread A in CPU core runs in guest and triggers a VMExit which =
-is handled by host kernel.
-While hyperthread A runs VMExit handler, it populates CPU core cache / =
-internal-resources (e.g. MDS buffers)
-with some sensitive data it have speculatively/architecturally access.
-2) During hyperthread A running on host kernel, hyperthread B on same =
-CPU core runs in guest and use
-some CPU speculative execution vulnerability to leak the sensitive host =
-data populated by hyperthread A
-in CPU core cache / internal-resources.
+Adding random padding around AT_RANDOM, AT_PLATFORM, AT_BASE_PLATEFORM
+should be viewed as an exercise of cargo-cult security as I'm not aware
+of any attack that can be prevented with this mechanism in place.
 
-Current CPU microcode mitigations (L1D/MDS flush) only handle the case =
-of a single hyperthread and don=E2=80=99t
-provide a mechanism to mitigate this hyperthreading attack scenario.
+Regards.
 
-Assuming there is some guest triggerable speculative load gadget in some =
-VMExit path,
-it can be used to force any data that is mapped into kernel address =
-space to be loaded into CPU resource that is subject to leak.
-Therefore, there were multiple attempts to reduce sensitive information =
-from being mapped into the kernel address space
-that is accessible by this VMExit path.
+Yann Droneaud (3):
+  binfmt/elf: use functions for stack manipulation
+  binfmt/elf: align AT_RANDOM array
+  binfmt/elf: randomize padding between ELF interp info
 
-One attempt was XPFO which attempts to remove from kernel direct-map any =
-page that is currently used only by userspace.
-Unfortunately, XPFO currently exhibits multiple performance issues that =
-*currently* makes it impractical as far as I know.
+ fs/binfmt_elf.c | 110 +++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 86 insertions(+), 24 deletions(-)
 
-Another attempt is this patch-series which attempts to remove from one =
-vCPU thread host kernel address space,
-the state of vCPUs of other guests. Which is very specific but I =
-personally have additional ideas on how this patch series can be further =
-used.
-For example, vhost-net needs to kmap entire guest memory into =
-kernel-space to write ingress packets data into guest memory.
-Thus, vCPU thread kernel address space now maps entire other guest =
-memory which can be leaked using the technique described above.
-Therefore, it should be useful to also move this kmap() to happen on =
-process-local kernel virtual address region.
-
-One could argue however that there is still a much bigger issue because =
-of kernel direct-map that maps all physical pages that kernel
-manage (i.e. have struct page) in kernel virtual address space. And all =
-of those pages can theoretically be leaked.
-However, this could be handled by complementary techniques such as =
-booting host kernel with =E2=80=9Cmem=3DX=E2=80=9D and mapping guest =
-memory
-by directly mmap relevant portion of /dev/mem.
-Which is probably what AWS does given these upstream KVM patches they =
-have contributed:
-bd53cb35a3e9 X86/KVM: Handle PFNs outside of kernel reach when touching =
-GPTEs
-e45adf665a53 KVM: Introduce a new guest mapping API
-0c55671f84ff kvm, x86: Properly check whether a pfn is an MMIO or not
-
-Also note that when using such =E2=80=9Cmem=3DX=E2=80=9D technique, you =
-can also avoid performance penalties introduced by CPU microcode =
-mitigations.
-E.g. You can avoid doing L1D flush on VMEntry if VMExit handler run only =
-in kernel and didn=E2=80=99t context-switch as you assume kernel address
-space don=E2=80=99t map any host sensitive data.
-
-It=E2=80=99s also worth mentioning that another alternative that I have =
-attempted to this =E2=80=9Cmem=3DX=E2=80=9D technique
-was to create an isolated address space that is only used when running =
-KVM VMExit handlers.
-For more information, refer to:
-https://lkml.org/lkml/2019/5/13/515
-(See some of my comments on that thread)
-
-This is my 2cents on this at least.
-
--Liran
-
+-- 
+2.21.0
 
