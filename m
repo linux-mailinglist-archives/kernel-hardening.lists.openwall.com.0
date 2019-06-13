@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16137-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16138-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 8DCD944BBA
-	for <lists+kernel-hardening@lfdr.de>; Thu, 13 Jun 2019 21:08:13 +0200 (CEST)
-Received: (qmail 25688 invoked by uid 550); 13 Jun 2019 19:08:07 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 47F1344BBE
+	for <lists+kernel-hardening@lfdr.de>; Thu, 13 Jun 2019 21:09:09 +0200 (CEST)
+Received: (qmail 27884 invoked by uid 550); 13 Jun 2019 19:09:04 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,42 +13,54 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 25633 invoked from network); 13 Jun 2019 19:08:06 -0000
+Received: (qmail 27849 invoked from network); 13 Jun 2019 19:09:03 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1560452874;
-	bh=QLdqDQmRPxVrCZYy0W6he9k6Fiy66AEvu4ykWlMqvl8=;
+	s=default; t=1560452931;
+	bh=M5fVHuz7GM200rX+um5CG9lWSJ5LN83V9cleMiqSr0w=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=x60ZbHpp223igiSLc5q5Jj7ywt5bmr2i+DpWOt3w2VDiy6oOaYuDQuGUd3pt2pzSI
-	 HFExm7CghqlSXWJV1cLBsxD9UuIATWdZdRLFwqbpIpj2gJW67/yItx+gqkVZLccQKb
-	 52VZHWhallDLgiKJwP1WcfbYzlnm3VXZB/v8hOFw=
-X-Gm-Message-State: APjAAAXW0+A3nfDbNEJaYBW5DtTJv8xhipJxhpeyWyMlE3ID5mrxJWG+
-	9qLcK93CBXHldQVpkYqgiHcxELo2cZkdCn7CI8CtOw==
-X-Google-Smtp-Source: APXvYqyB56oi15p6KqGsR+j3YdT44dOp7+9anVhd6nyuR9Jr9zxwY+DcMwh0aHg4dnVuT/1cPNjKuq28mw8Me6ERQRw=
-X-Received: by 2002:a1c:a942:: with SMTP id s63mr4888086wme.76.1560452872970;
- Thu, 13 Jun 2019 12:07:52 -0700 (PDT)
+	b=0mQsma9LhbSOHNzZVajdIzZemifGcr2vm+eoDvWHCFOu5QioUwGz0anWuVUWjWkCm
+	 nJ2OatAf+pOKXIw9oXDAR6BG5giv/GHzyV1s4G6AnzAxmMFcbuDj45BtghRwzKjtDj
+	 iUxkLEHdfoknLzxjSezsgwAGu+bJbg1lOdbn+e8w=
+X-Gm-Message-State: APjAAAWp3LE3QE9+803MJoVL/OUWUpFETcLxs28RQovf3uLOqpah54vw
+	dUER/F1camDm/Njr8jduHh8roKQ1lPsPSE91TLQs7Q==
+X-Google-Smtp-Source: APXvYqztejRGvq27Iw+y0cfs1NyXH8Lm8jD6LvUHm3icGIgaUgnfnhaK9ERONLPuzbZ61xdPyrlnbiBZJeMMJtqJK0w=
+X-Received: by 2002:a1c:6242:: with SMTP id w63mr5199746wmb.161.1560452929712;
+ Thu, 13 Jun 2019 12:08:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1560198181.git.luto@kernel.org> <d28856fff74a385f88c493dafb9d96d2c38d91a2.1560198181.git.luto@kernel.org>
- <201906101340.AE18F49@keescook>
-In-Reply-To: <201906101340.AE18F49@keescook>
+References: <cover.1560198181.git.luto@kernel.org> <131caabf9d127db1a077525f978e1f1f74f9088f.1560198181.git.luto@kernel.org>
+ <201906101342.B8A938BB@keescook>
+In-Reply-To: <201906101342.B8A938BB@keescook>
 From: Andy Lutomirski <luto@kernel.org>
-Date: Thu, 13 Jun 2019 12:07:40 -0700
-X-Gmail-Original-Message-ID: <CALCETrVOzGCN+pjgsdd+x3APsrSGJzngfGeSWvqWy=XTQj3EiA@mail.gmail.com>
-Message-ID: <CALCETrVOzGCN+pjgsdd+x3APsrSGJzngfGeSWvqWy=XTQj3EiA@mail.gmail.com>
-Subject: Re: [PATCH 3/5] x86/vsyscall: Document odd #PF's error code for vsyscalls
+Date: Thu, 13 Jun 2019 12:08:38 -0700
+X-Gmail-Original-Message-ID: <CALCETrXJA2ws=M_RBge1+nVGkDR0qX-jdFypYxuE3yDiikt46w@mail.gmail.com>
+Message-ID: <CALCETrXJA2ws=M_RBge1+nVGkDR0qX-jdFypYxuE3yDiikt46w@mail.gmail.com>
+Subject: Re: [PATCH 2/5] x86/vsyscall: Add a new vsyscall=xonly mode
 To: Kees Cook <keescook@chromium.org>
 Cc: Andy Lutomirski <luto@kernel.org>, X86 ML <x86@kernel.org>, LKML <linux-kernel@vger.kernel.org>, 
 	Borislav Petkov <bp@alien8.de>, Kernel Hardening <kernel-hardening@lists.openwall.com>, 
 	Peter Zijlstra <peterz@infradead.org>, Thomas Gleixner <tglx@linutronix.de>
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Jun 10, 2019 at 1:40 PM Kees Cook <keescook@chromium.org> wrote:
+On Mon, Jun 10, 2019 at 1:43 PM Kees Cook <keescook@chromium.org> wrote:
 >
-> On Mon, Jun 10, 2019 at 01:25:29PM -0700, Andy Lutomirski wrote:
-> >  tools/testing/selftests/x86/test_vsyscall.c | 9 ++++++++-
+> On Mon, Jun 10, 2019 at 01:25:28PM -0700, Andy Lutomirski wrote:
+> > With vsyscall emulation on, we still expose a readable vsyscall page
+> > that contains syscall instructions that validly implement the
+> > vsyscalls.  We need this because certain dynamic binary
+> > instrumentation tools attempt to read the call targets of call
+> > instructions in the instrumented code.  If the instrumented code
+> > uses vsyscalls, then the vsyscal page needs to contain readable
+> > code.
+> >
+> > Unfortunately, leaving readable memory at a deterministic address
+> > can be used to help various ASLR bypasses, so we gain some hardening
+> > value if we disallow vsyscall reads.
+> >
+> > Given how rarely the vsyscall page needs to be readable, add a
+> > mechanism to make the vsyscall page be execute only.
 >
-> Did this hunk end up in the wrong patch? (It's not mentioned in the
-> commit log and the next patch has other selftest changes...)
->
+> Should the commit log mention that the VVAR portion goes away under
+> xonly? (Since it's not executable.)
 
-It was intentional -- you can run the improved selftest and observe
-the oddity for yourself :)  I'll improve the changelog.
+No, because vsyscall VVAR is long gone no matter what.  Even the old
+vsyscall=native didn't have it.
