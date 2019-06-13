@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16131-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16132-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 0B7CA43729
-	for <lists+kernel-hardening@lfdr.de>; Thu, 13 Jun 2019 16:19:22 +0200 (CEST)
-Received: (qmail 19723 invoked by uid 550); 13 Jun 2019 14:19:16 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 28CD34415A
+	for <lists+kernel-hardening@lfdr.de>; Thu, 13 Jun 2019 18:13:52 +0200 (CEST)
+Received: (qmail 22246 invoked by uid 550); 13 Jun 2019 16:13:45 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,88 +13,189 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 19689 invoked from network); 13 Jun 2019 14:19:16 -0000
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-X-ExtLoop1: 1
-Subject: Re: [RFC 00/10] Process-local memory allocations for hiding KVM
- secrets
-To: Alexander Graf <graf@amazon.com>, Marius Hillenbrand
- <mhillenb@amazon.de>, kvm@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org, kernel-hardening@lists.openwall.com,
- linux-mm@kvack.org, Alexander Graf <graf@amazon.de>,
- David Woodhouse <dwmw@amazon.co.uk>,
- the arch/x86 maintainers <x86@kernel.org>, Andy Lutomirski
- <luto@kernel.org>, Peter Zijlstra <peterz@infradead.org>
-References: <20190612170834.14855-1-mhillenb@amazon.de>
- <eecc856f-7f3f-ed11-3457-ea832351e963@intel.com>
- <54a4d14c-b19b-339e-5a15-adb10297cb30@amazon.com>
-From: Dave Hansen <dave.hansen@intel.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=dave.hansen@intel.com; keydata=
- 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
-Message-ID: <7b17ff38-b505-74c6-d773-8ab5e000be10@intel.com>
-Date: Thu, 13 Jun 2019 07:19:02 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+Received: (qmail 22213 invoked from network); 13 Jun 2019 16:13:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1560442411;
+	bh=RT5ARPzRqXVzJnJRWsb4aSjhGlmdp5Dxz378/CaIaL8=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=jWx9jUqtLSoaTp6fq+ZAAyQ249hwyTuIESHQFGBVCjKixn7/1ja8wEJimcZC/RHpn
+	 pCBiMesN1fFQLGNQ8iuL4wl4nlAaSxRT83DkPLRTkxS+bcrGL0KrOidd2suiElr21e
+	 M90biM2nPQBDCFYQ8S8h4xN5nWWeR+4zq6h/Nm8Y=
+X-Gm-Message-State: APjAAAUP4sX1mdJHru+qA/H2YIq5tTvCqyumetPw60V12ffsM64OSSuJ
+	SxWevx9bjOjaSTsZqvL+MW4OsMLpTve7m2UuBuWRHw==
+X-Google-Smtp-Source: APXvYqxORucqKuGLKjes9H2wam29KDoQdYjsLf9dyQzWSteNOhlzCVgUt/QAWlV6lgXowPWhEDBN5CK0AZlXmczTjmM=
+X-Received: by 2002:a7b:cd84:: with SMTP id y4mr4464357wmj.79.1560442410236;
+ Thu, 13 Jun 2019 09:13:30 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <54a4d14c-b19b-339e-5a15-adb10297cb30@amazon.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <20190612170834.14855-1-mhillenb@amazon.de> <eecc856f-7f3f-ed11-3457-ea832351e963@intel.com>
+ <A542C98B-486C-4849-9DAC-2355F0F89A20@amacapital.net> <CALCETrXHbS9VXfZ80kOjiTrreM2EbapYeGp68mvJPbosUtorYA@mail.gmail.com>
+ <459e2273-bc27-f422-601b-2d6cdaf06f84@amazon.com>
+In-Reply-To: <459e2273-bc27-f422-601b-2d6cdaf06f84@amazon.com>
+From: Andy Lutomirski <luto@kernel.org>
+Date: Thu, 13 Jun 2019 09:13:19 -0700
+X-Gmail-Original-Message-ID: <CALCETrVRuQb-P7auHCgxzs5L=qA2_qHzVGTtRMAqoMAut0ETFw@mail.gmail.com>
+Message-ID: <CALCETrVRuQb-P7auHCgxzs5L=qA2_qHzVGTtRMAqoMAut0ETFw@mail.gmail.com>
+Subject: Re: [RFC 00/10] Process-local memory allocations for hiding KVM secrets
+To: Alexander Graf <graf@amazon.com>, Nadav Amit <namit@vmware.com>
+Cc: Andy Lutomirski <luto@kernel.org>, Dave Hansen <dave.hansen@intel.com>, 
+	Marius Hillenbrand <mhillenb@amazon.de>, kvm list <kvm@vger.kernel.org>, 
+	LKML <linux-kernel@vger.kernel.org>, 
+	Kernel Hardening <kernel-hardening@lists.openwall.com>, Linux-MM <linux-mm@kvack.org>, 
+	Alexander Graf <graf@amazon.de>, David Woodhouse <dwmw@amazon.co.uk>, 
+	"the arch/x86 maintainers" <x86@kernel.org>, Peter Zijlstra <peterz@infradead.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 6/13/19 12:27 AM, Alexander Graf wrote:
->> Where's the context-switching code?  Did I just miss it?
-> 
-> I'm not sure I understand the question. With this mechanism, the global
-> linear map pages are just not present anymore, so there is no context
-> switching needed. For the process local memory, the page table is
-> already mm local, so we don't need to do anything special during context
-> switch, no?
+On Thu, Jun 13, 2019 at 12:53 AM Alexander Graf <graf@amazon.com> wrote:
+>
+>
+> On 13.06.19 03:30, Andy Lutomirski wrote:
+> > On Wed, Jun 12, 2019 at 1:27 PM Andy Lutomirski <luto@amacapital.net> w=
+rote:
+> >>
+> >>
+> >>> On Jun 12, 2019, at 12:55 PM, Dave Hansen <dave.hansen@intel.com> wro=
+te:
+> >>>
+> >>>> On 6/12/19 10:08 AM, Marius Hillenbrand wrote:
+> >>>> This patch series proposes to introduce a region for what we call
+> >>>> process-local memory into the kernel's virtual address space.
+> >>> It might be fun to cc some x86 folks on this series.  They might have
+> >>> some relevant opinions. ;)
+> >>>
+> >>> A few high-level questions:
+> >>>
+> >>> Why go to all this trouble to hide guest state like registers if all =
+the
+> >>> guest data itself is still mapped?
+> >>>
+> >>> Where's the context-switching code?  Did I just miss it?
+> >>>
+> >>> We've discussed having per-cpu page tables where a given PGD is only =
+in
+> >>> use from one CPU at a time.  I *think* this scheme still works in suc=
+h a
+> >>> case, it just adds one more PGD entry that would have to context-swit=
+ched.
+> >> Fair warning: Linus is on record as absolutely hating this idea. He mi=
+ght change his mind, but it=E2=80=99s an uphill battle.
+> > I looked at the patch, and it (sensibly) has nothing to do with
+> > per-cpu PGDs.  So it's in great shape!
+>
+>
+> Thanks a lot for the very timely review!
+>
+>
+> >
+> > Seriously, though, here are some very high-level review comments:
+> >
+> > Please don't call it "process local", since "process" is meaningless.
+> > Call it "mm local" or something like that.
+>
+>
+> Naming is hard, yes :). Is "mmlocal" obvious enough to most readers? I'm
+> not fully convinced, but I don't find it better or worse than proclocal.
+> So whatever flies with the majority works for me :).
 
-Thanks for explaining, I was just confused.
+My objection to "proc" is that we have many concepts of "process" in
+the kernel: task, mm, signal handling context, etc.  These memory
+ranges are specifically local to the mm.  Admittedly, it would be very
+surprising to have memory that is local to a signal handling context,
+but still.
 
-Andy reminded me when comparing it to the LDT area: since this area is
-per-mm/pgd and we context switch that *obviously* there's no extra work
-to do at context switch time, as long as the area is marked non-Global.
+>
+>
+> > We already have a per-mm kernel mapping: the LDT.  So please nix all
+> > the code that adds a new VA region, etc, except to the extent that
+> > some of it consists of valid cleanups in and of itself.  Instead,
+> > please refactor the LDT code (arch/x86/kernel/ldt.c, mainly) to make
+> > it use a more general "mm local" address range, and then reuse the
+> > same infrastructure for other fancy things.  The code that makes it
+>
+>
+> I don't fully understand how those two are related. Are you referring to
+> the KPTI enabling code in there? That just maps the LDT at the same
+> address in both kernel and user mappings, no?
+
+The relevance here is that, when KPTI is on, the exact same address
+refers to a different LDT in different mms, so it's genuinely an
+mm-local mapping.  It works just like yours: a whole top-level paging
+entry is reserved for it.  What I'm suggesting is that, when you're
+all done, the LDT should be more or less just one more mm-local
+mapping, with two caveats.  First, the LDT needs special KPTI
+handling, but that's fine.  Second, the LDT address is visible to user
+code on non-UMIP systems, so you'll have to decide if that's okay.  My
+suggestion is to have the LDT be the very first address in the
+mm-local range and then to randomize everything else in the mm-local
+range.
+
+>
+> So you're suggesting we use the new mm local address as LDT address
+> instead and have that mapped in both kernel and user space? This patch
+> set today maps "mm local" data only in kernel space, not in user space,
+> as it's meant for kernel data structures.
+
+Yes, exactly.
+
+>
+> So I'm not really seeing the path to adapt any of the LDT logic to this.
+> Could you please elaborate?
+>
+>
+> > KASLR-able should be in its very own patch that applies *after* the
+> > code that makes it all work so that, when the KASLR part causes a
+> > crash, we can bisect it.
+>
+>
+> That sounds very reasonable, yes.
+>
+>
+> >
+> > + /*
+> > + * Faults in process-local memory may be caused by process-local
+> > + * addresses leaking into other contexts.
+> > + * tbd: warn and handle gracefully.
+> > + */
+> > + if (unlikely(fault_in_process_local(address))) {
+> > + pr_err("page fault in PROCLOCAL at %lx", address);
+> > + force_sig_fault(SIGSEGV, SEGV_MAPERR, (void __user *)address, current=
+);
+> > + }
+> > +
+> >
+> > Huh?  Either it's an OOPS or you shouldn't print any special
+> > debugging.  As it is, you're just blatantly leaking the address of the
+> > mm-local range to malicious user programs.
+>
+>
+> Yes, this is a left over bit from an idea that we discussed and rejected
+> yesterday. The idea was to have a DEBUG config option that allows
+> proclocal memory to leak into other processes, but print debug output so
+> that it's easier to catch bugs. After discussion, I think we managed to
+> convince everyone that an OOPS is the better tool to find bugs :).
+>
+> Any trace of this will disappear in the next version.
+>
+>
+> >
+> > Also, you should IMO consider using this mechanism for kmap_atomic().
+>
+>
+> It might make sense to use it for kmap_atomic() for debug purposes, as
+> it ensures that other users can no longer access the same mapping
+> through the linear map. However, it does come at quite a big cost, as we
+> need to shoot down the TLB of all other threads in the system. So I'm
+> not sure it's of general value?
+
+What I meant was that kmap_atomic() could use mm-local memory so that
+it doesn't need to do a global shootdown.  But I guess it's not
+actually used for real on 64-bit, so this is mostly moot.  Are you
+planning to support mm-local on 32-bit?
+
+--Andy
+>
+>
+> Alex
+>
+>
+> > Hi, Nadav!
