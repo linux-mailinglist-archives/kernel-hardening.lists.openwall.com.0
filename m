@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16122-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16123-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 0810C433D5
-	for <lists+kernel-hardening@lfdr.de>; Thu, 13 Jun 2019 09:45:56 +0200 (CEST)
-Received: (qmail 20068 invoked by uid 550); 13 Jun 2019 07:45:49 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 0CD35433D6
+	for <lists+kernel-hardening@lfdr.de>; Thu, 13 Jun 2019 09:46:07 +0200 (CEST)
+Received: (qmail 20410 invoked by uid 550); 13 Jun 2019 07:45:52 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -14,80 +14,73 @@ List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
 Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 13653 invoked from network); 13 Jun 2019 07:20:59 -0000
+Received: (qmail 21615 invoked from network); 13 Jun 2019 07:27:23 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1560410459; x=1591946459;
+  t=1560410843; x=1591946843;
   h=subject:to:cc:references:from:message-id:date:
    mime-version:in-reply-to:content-transfer-encoding;
-  bh=dhmXrepDAZcjXkpQs5VfxOBzitc3aINuYRH8cXmOgbc=;
-  b=KWMoXJ2MuJEdpYKD7xUoakZN2kd99WuKht1vrcgdJlNRvh113bn+PEFS
-   zxfRu2Pfo4L+/3qlGuYmjjDh1l75PMSNXMX/yZ53BTZmDvKkmk2HS0KyO
-   9iwx+Koo5hYGHLVf4nlUEW/MUYW/oISn5apsbOG3x3feyj1eHxmCIq/tr
-   Q=;
+  bh=Laetec4ccSCBOw8YMZruaBJ+PWt1iLta0CpWlGDAXuM=;
+  b=AGQI7+SWOEFKmWwYcSTzDUAf3i/voDjo3oIAI/+96UkKnzSMZrbT1sxe
+   GhdeWILp7Ga/TWr3O8TkaAJkD5EBEzLqOyBksVFJXOHL7SZBiHg+f+B7C
+   4O2WRdSFDE6JGzQeFYeczssYqa1SIjwpivWZoHyfGbnZweQGrAQ34GJNM
+   g=;
 X-IronPort-AV: E=Sophos;i="5.62,368,1554768000"; 
-   d="scan'208";a="737272759"
+   d="scan'208";a="679674698"
 Subject: Re: [RFC 00/10] Process-local memory allocations for hiding KVM
  secrets
-To: Sean Christopherson <sean.j.christopherson@intel.com>, Marius Hillenbrand
-	<mhillenb@amazon.de>
-CC: <kvm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<kernel-hardening@lists.openwall.com>, <linux-mm@kvack.org>, Alexander Graf
-	<graf@amazon.de>, David Woodhouse <dwmw@amazon.co.uk>
+To: Dave Hansen <dave.hansen@intel.com>, Marius Hillenbrand
+	<mhillenb@amazon.de>, <kvm@vger.kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <kernel-hardening@lists.openwall.com>,
+	<linux-mm@kvack.org>, Alexander Graf <graf@amazon.de>, David Woodhouse
+	<dwmw@amazon.co.uk>, the arch/x86 maintainers <x86@kernel.org>, "Andy
+ Lutomirski" <luto@kernel.org>, Peter Zijlstra <peterz@infradead.org>
 References: <20190612170834.14855-1-mhillenb@amazon.de>
- <20190612182550.GI20308@linux.intel.com>
+ <eecc856f-7f3f-ed11-3457-ea832351e963@intel.com>
 From: Alexander Graf <graf@amazon.com>
-Message-ID: <7162182f-74e5-9be7-371d-48ee483206c2@amazon.com>
-Date: Thu, 13 Jun 2019 09:20:40 +0200
+Message-ID: <54a4d14c-b19b-339e-5a15-adb10297cb30@amazon.com>
+Date: Thu, 13 Jun 2019 09:27:00 +0200
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
  Gecko/20100101 Thunderbird/60.7.0
 MIME-Version: 1.0
-In-Reply-To: <20190612182550.GI20308@linux.intel.com>
+In-Reply-To: <eecc856f-7f3f-ed11-3457-ea832351e963@intel.com>
 Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
-X-Originating-IP: [10.43.160.69]
-X-ClientProxiedBy: EX13D22UWC001.ant.amazon.com (10.43.162.192) To
+X-Originating-IP: [10.43.160.177]
+X-ClientProxiedBy: EX13D01UWA003.ant.amazon.com (10.43.160.107) To
  EX13D20UWC001.ant.amazon.com (10.43.162.244)
 
 
-On 12.06.19 20:25, Sean Christopherson wrote:
-> On Wed, Jun 12, 2019 at 07:08:24PM +0200, Marius Hillenbrand wrote:
->> The Linux kernel has a global address space that is the same for any
->> kernel code. This address space becomes a liability in a world with
->> processor information leak vulnerabilities, such as L1TF. With the right
->> cache load gadget, an attacker-controlled hyperthread pair can leak
->> arbitrary data via L1TF. Disabling hyperthreading is one recommended
->> mitigation, but it comes with a large performance hit for a wide range
->> of workloads.
->>
->> An alternative mitigation is to not make certain data in the kernel
->> globally visible, but only when the kernel executes in the context of
->> the process where this data belongs to.
->>
+On 12.06.19 21:55, Dave Hansen wrote:
+> On 6/12/19 10:08 AM, Marius Hillenbrand wrote:
 >> This patch series proposes to introduce a region for what we call
->> process-local memory into the kernel's virtual address space. Page
->> tables and mappings in that region will be exclusive to one address
->> space, instead of implicitly shared between all kernel address spaces.
->> Any data placed in that region will be out of reach of cache load
->> gadgets that execute in different address spaces. To implement
->> process-local memory, we introduce a new interface kmalloc_proclocal() /
->> kfree_proclocal() that allocates and maps pages exclusively into the
->> current kernel address space. As a first use case, we move architectural
->> state of guest CPUs in KVM out of reach of other kernel address spaces.
-> Can you briefly describe what types of attacks this is intended to
-> mitigate?  E.g. guest-guest, userspace-guest, etc...  I don't want to
-> make comments based on my potentially bad assumptions.
+>> process-local memory into the kernel's virtual address space.
+> It might be fun to cc some x86 folks on this series.  They might have
+> some relevant opinions. ;)
+>
+> A few high-level questions:
+>
+> Why go to all this trouble to hide guest state like registers if all the
+> guest data itself is still mapped?
 
 
-(quickly jumping in for Marius, he's offline today)
+(jumping in for Marius, he's offline today)
 
-The main purpose of this is to protect from leakage of data from one 
-guest into another guest using speculation gadgets on the host.
+Glad you asked :). I hope this cover letter explains well how to achieve 
+guest data not being mapped:
 
-The same mechanism can be used to prevent leakage of secrets from one 
-host process into another host process though, as host processes 
-potentially have access to gadgets via the syscall interface.
+https://lkml.org/lkml/2019/1/31/933
+
+
+> Where's the context-switching code?  Did I just miss it?
+
+
+I'm not sure I understand the question. With this mechanism, the global 
+linear map pages are just not present anymore, so there is no context 
+switching needed. For the process local memory, the page table is 
+already mm local, so we don't need to do anything special during context 
+switch, no?
 
 
 Alex
