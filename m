@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16151-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16152-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id EC45E46F7F
-	for <lists+kernel-hardening@lfdr.de>; Sat, 15 Jun 2019 12:14:07 +0200 (CEST)
-Received: (qmail 1861 invoked by uid 550); 15 Jun 2019 10:14:00 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 1329F47719
+	for <lists+kernel-hardening@lfdr.de>; Mon, 17 Jun 2019 00:18:36 +0200 (CEST)
+Received: (qmail 3102 invoked by uid 550); 16 Jun 2019 22:18:27 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,77 +13,73 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 1360 invoked from network); 15 Jun 2019 10:13:29 -0000
-X-Originating-IP: 93.29.109.196
-Message-ID: <deb847beb643d43e6617f52eae7b15ee368d7ff8.camel@bootlin.com>
-Subject: Re: [PATCH] security: do not enable CONFIG_GCC_PLUGINS by default
-From: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
-To: Denis 'GNUtoo' Carikli <GNUtoo@cyberdimension.org>, Russell King - ARM
-	Linux admin <linux@armlinux.org.uk>
-Cc: Jann Horn <jannh@google.com>, Kees Cook <keescook@chromium.org>, Emese
- Revfy <re.emese@gmail.com>, Kernel Hardening
- <kernel-hardening@lists.openwall.com>,  linux-arm-kernel@lists.infradead.org
-Date: Sat, 15 Jun 2019 12:13:15 +0200
-In-Reply-To: <20190614201434.3fa4bb6d@primarylaptop.localdomain>
-References: <20190614145755.10926-1-GNUtoo@cyberdimension.org>
-	 <CAG48ez30+VOj78rCiWMKtm0tHdVR67CcrHVCV-FFCfK-nRQTOw@mail.gmail.com>
-	 <20190614162811.o33yeq65ythjumrh@shell.armlinux.org.uk>
-	 <20190614201434.3fa4bb6d@primarylaptop.localdomain>
-Organization: Bootlin
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.32.2 
+Received: (qmail 2019 invoked from network); 16 Jun 2019 22:18:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1560723493;
+	bh=O1ycWhUilyVeZV1l4Vcdv51ZM55dvixJqHvFqBWW/UQ=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=uPTQWy7A2IaMi2VBKyydX6tBMS0ETwgHQLORn92D5Ob77cz9VH+Q0CCsmmQuAjDST
+	 Wlrjhv1YwjNqUQj+5SQpca8XI46FMMLkmV/MP22m2HnBN6RXFL9a06Y8VMioCARb0h
+	 eq9dGVqnSe0ejcfAgRvWxQLa0KPBAe617qplclt0=
+X-Gm-Message-State: APjAAAXMRgQY3ft6XlcS/5hGUj6lyGQxCiOIDNUGCrf0Hz5rt3kgTRGE
+	GzlGDxFKeNtmB9bwkpTqSGPY6gYdqe0Z/ykpIpaaQw==
+X-Google-Smtp-Source: APXvYqzLtLrlyAc4h7N2S7ze6VO2usm4Gpw8733KZc+aAYCc4lsGwCtnws1ou95toQgBrBXzSaYCX/qQON0xFktvLrY=
+X-Received: by 2002:a1c:6242:: with SMTP id w63mr17250060wmb.161.1560723492077;
+ Sun, 16 Jun 2019 15:18:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+References: <20190612170834.14855-1-mhillenb@amazon.de> <eecc856f-7f3f-ed11-3457-ea832351e963@intel.com>
+ <A542C98B-486C-4849-9DAC-2355F0F89A20@amacapital.net> <alpine.DEB.2.21.1906141618000.1722@nanos.tec.linutronix.de>
+In-Reply-To: <alpine.DEB.2.21.1906141618000.1722@nanos.tec.linutronix.de>
+From: Andy Lutomirski <luto@kernel.org>
+Date: Sun, 16 Jun 2019 15:18:00 -0700
+X-Gmail-Original-Message-ID: <CALCETrWZ4qUW+A+YqE36ZJHqJAzxwDgq77bL99BEKQx-=JYAtA@mail.gmail.com>
+Message-ID: <CALCETrWZ4qUW+A+YqE36ZJHqJAzxwDgq77bL99BEKQx-=JYAtA@mail.gmail.com>
+Subject: Re: [RFC 00/10] Process-local memory allocations for hiding KVM secrets
+To: Thomas Gleixner <tglx@linutronix.de>
+Cc: Dave Hansen <dave.hansen@intel.com>, Marius Hillenbrand <mhillenb@amazon.de>, 
+	kvm list <kvm@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>, 
+	Kernel Hardening <kernel-hardening@lists.openwall.com>, Linux-MM <linux-mm@kvack.org>, 
+	Alexander Graf <graf@amazon.de>, David Woodhouse <dwmw@amazon.co.uk>, 
+	"the arch/x86 maintainers" <x86@kernel.org>, Andy Lutomirski <luto@kernel.org>, Peter Zijlstra <peterz@infradead.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Fri, Jun 14, 2019 at 7:21 AM Thomas Gleixner <tglx@linutronix.de> wrote:
+>
+> On Wed, 12 Jun 2019, Andy Lutomirski wrote:
+> > > On Jun 12, 2019, at 12:55 PM, Dave Hansen <dave.hansen@intel.com> wro=
+te:
+> > >
+> > >> On 6/12/19 10:08 AM, Marius Hillenbrand wrote:
+> > >> This patch series proposes to introduce a region for what we call
+> > >> process-local memory into the kernel's virtual address space.
+> > >
+> > > It might be fun to cc some x86 folks on this series.  They might have
+> > > some relevant opinions. ;)
+> > >
+> > > A few high-level questions:
+> > >
+> > > Why go to all this trouble to hide guest state like registers if all =
+the
+> > > guest data itself is still mapped?
+> > >
+> > > Where's the context-switching code?  Did I just miss it?
+> > >
+> > > We've discussed having per-cpu page tables where a given PGD is only =
+in
+> > > use from one CPU at a time.  I *think* this scheme still works in suc=
+h a
+> > > case, it just adds one more PGD entry that would have to context-swit=
+ched.
+> >
+> > Fair warning: Linus is on record as absolutely hating this idea. He mig=
+ht
+> > change his mind, but it=E2=80=99s an uphill battle.
+>
+> Yes I know, but as a benefit we could get rid of all the GSBASE horrors i=
+n
+> the entry code as we could just put the percpu space into the local PGD.
+>
 
-On Fri, 2019-06-14 at 20:14 +0200, Denis 'GNUtoo' Carikli wrote:
-> On Fri, 14 Jun 2019 17:28:11 +0100
-> Russell King - ARM Linux admin <linux@armlinux.org.uk> wrote:
-> > I'm wondering whether this is sloppy wording or whether the author is
-> > really implying that they call the kernel decompressor with the MMU
-> > enabled, against the express instructions in
-> > Documentation/arm/Booting.
-> According to [1]
-> > If they are going against the express instructions, all bets are off.
-> 
-> More background on the decompressor patch:
-> - The "ANDROID: arm: decompressor: Flush tlb before swiching domain 0 to
->   client mode" patch is needed anyway since 3.4 in any case, and
->   according to the thread about it [1], the MMU is on at boot.
-> - There is a downstream u-boot port for the Galaxy SIII and other very
->   similar devices, which doesn't setup the MMU at boot, but I'm not
->   confident enough to test in on the devices I have. To test with
->   u-boot I'd need to find a new device.
-> - If I don't manage to find a new device to test on, since there is
->   already some setup code like arch/arm/boot/compressed/head-sa1100.S
->   that deal with MMU that are enabled with the bootloader, are patches
->   to add a new file like that still accepted? The big downside is that
->   using something like that is probably incompatible with
->   ARCH_MULTIPLATFORM.
-
-Maybe we could also consider having a shim that is executed before the
-kernel in order to sanitize things and allow booting a mainline kernel,
-which would be less invasive than a full U-Boot port.
-
-Other than that, we can probably manage keeping a tree around (at the
-Replicant project) with mainline and this patch (enabled through a
-dedicated config option). As long as it's not horrible to rebase, it
-can work well enough for us. 
-
-I'm also not sure about the state of Android support in mainline today,
-but there's a chance we'll need to pick a few patches on top of
-mainline anyway.
-
-What do you think?
-
-Cheers,
-
-Paul
-
--- 
-Paul Kocialkowski, Bootlin
-Embedded Linux and kernel engineering
-https://bootlin.com
-
+I have personally suggested this to Linus on a couple of occasions,
+and he seemed quite skeptical.
