@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16157-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16158-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 462FF486B9
-	for <lists+kernel-hardening@lfdr.de>; Mon, 17 Jun 2019 17:12:54 +0200 (CEST)
-Received: (qmail 7183 invoked by uid 550); 17 Jun 2019 15:12:29 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 7D495487D4
+	for <lists+kernel-hardening@lfdr.de>; Mon, 17 Jun 2019 17:50:54 +0200 (CEST)
+Received: (qmail 17837 invoked by uid 550); 17 Jun 2019 15:50:48 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,160 +13,89 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 3952 invoked from network); 17 Jun 2019 15:11:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=J2xlT5BkG4PHe/4/nJk7BmFqwoJl9sRtUfXxrBXjMCQ=;
-        b=p3ae0HY/O3HHcM6wSMM9Tz76pUtauWYXmpaYWMuj4cFJ05HA65ucJNAlfWzvMGlmaS
-         lxOyugNBCdTPBRgvKdpVxDPPMXLwju022Pe2+adIc0cy/7WN15Piv/GRhyXgOlK1N9zO
-         Qt2SUknDwSdhIbbMc5QJx9l8NVVrJY3o1UR5JRK4IgEsJvZln9vb6KepjjdnvNbApfcs
-         9jLqp/1MVZVCrmLGqeLqmR5Z+Lsh9JlA14qkOfLbd3vfbUIUl6HfJLDZnERhBTPjT9L6
-         HBY80N8ck39V/TG1wmfxgzmwWsr1L0U03y9/v2GIsZIlHX+iQS46D3BFyn2y3Orggm40
-         ws8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=J2xlT5BkG4PHe/4/nJk7BmFqwoJl9sRtUfXxrBXjMCQ=;
-        b=oJNZMKfNyeU5piLIdORxt8qQxIDxbvZkh4Mfy/VwTUaoa3FAoTdCVCaUvi1feaqNry
-         U3KpL6iYwkX6/3XcdOvywTbdNDWF+TvLNd6m52zXPVQz0o9/xWfLAlU0nbzDekleAT34
-         D2zayxGxA0Kiqg23dfmM8yy1FxZuJl6tCdh+5wIlP/AIsZW8/KAcf9don/q67UCdxR6j
-         3IVuNV4qzSGKaAh/gpPNeUIcG5dqrXo4+GnQrNBSEvl4Bcjy8pwvSRZ1z9MuQ/y/smkf
-         FPj7j+8j/DXrclmJlUNXCNcgaNXfjKX6a6v+kENG5OfmlY614pb9pPx2tJDpqEinupCS
-         lsVA==
-X-Gm-Message-State: APjAAAUbQq9+ASC6ASNVjC+qWWWaCI9A25rpvTmuFWZO/x5FxTmITpmX
-	fjFE6iFDo96NQpGH+scjSEJsO5f66bU=
-X-Google-Smtp-Source: APXvYqwW8bb+vtL/Lysm9EpPCmcTXzOQ2ut1uDpyQmfhMuaCptVMX9tFM6WT2buC0hsqYxHSzW//c6xIsSk=
-X-Received: by 2002:ac8:394b:: with SMTP id t11mr73550464qtb.286.1560784265391;
- Mon, 17 Jun 2019 08:11:05 -0700 (PDT)
-Date: Mon, 17 Jun 2019 17:10:50 +0200
-In-Reply-To: <20190617151050.92663-1-glider@google.com>
-Message-Id: <20190617151050.92663-3-glider@google.com>
-Mime-Version: 1.0
-References: <20190617151050.92663-1-glider@google.com>
-X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
-Subject: [PATCH v7 2/2] mm: init: report memory auto-initialization features
- at boot time
-From: Alexander Potapenko <glider@google.com>
-To: Andrew Morton <akpm@linux-foundation.org>, Christoph Lameter <cl@linux.com>
-Cc: Alexander Potapenko <glider@google.com>, Kees Cook <keescook@chromium.org>, 
-	Dmitry Vyukov <dvyukov@google.com>, James Morris <jmorris@namei.org>, Jann Horn <jannh@google.com>, 
-	Kostya Serebryany <kcc@google.com>, Laura Abbott <labbott@redhat.com>, Mark Rutland <mark.rutland@arm.com>, 
-	Masahiro Yamada <yamada.masahiro@socionext.com>, Matthew Wilcox <willy@infradead.org>, 
-	Nick Desaulniers <ndesaulniers@google.com>, Randy Dunlap <rdunlap@infradead.org>, 
-	Sandeep Patil <sspatil@android.com>, "Serge E. Hallyn" <serge@hallyn.com>, 
-	Souptick Joarder <jrdr.linux@gmail.com>, Marco Elver <elver@google.com>, 
-	Kaiwan N Billimoria <kaiwan@kaiwantech.com>, kernel-hardening@lists.openwall.com, 
-	linux-mm@kvack.org, linux-security-module@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Received: (qmail 17805 invoked from network); 17 Jun 2019 15:50:48 -0000
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+X-ExtLoop1: 1
+Subject: Re: [RFC 00/10] Process-local memory allocations for hiding KVM
+ secrets
+To: Alexander Graf <graf@amazon.com>, Thomas Gleixner <tglx@linutronix.de>,
+ Andy Lutomirski <luto@amacapital.net>
+Cc: Marius Hillenbrand <mhillenb@amazon.de>, kvm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, kernel-hardening@lists.openwall.com,
+ linux-mm@kvack.org, Alexander Graf <graf@amazon.de>,
+ David Woodhouse <dwmw@amazon.co.uk>,
+ the arch/x86 maintainers <x86@kernel.org>, Andy Lutomirski
+ <luto@kernel.org>, Peter Zijlstra <peterz@infradead.org>
+References: <20190612170834.14855-1-mhillenb@amazon.de>
+ <eecc856f-7f3f-ed11-3457-ea832351e963@intel.com>
+ <A542C98B-486C-4849-9DAC-2355F0F89A20@amacapital.net>
+ <alpine.DEB.2.21.1906141618000.1722@nanos.tec.linutronix.de>
+ <58788f05-04c3-e71c-12c3-0123be55012c@amazon.com>
+From: Dave Hansen <dave.hansen@intel.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=dave.hansen@intel.com; keydata=
+ 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
+Message-ID: <63b1b249-6bc7-ffd9-99db-d36dd3f1a962@intel.com>
+Date: Mon, 17 Jun 2019 08:50:35 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
+MIME-Version: 1.0
+In-Reply-To: <58788f05-04c3-e71c-12c3-0123be55012c@amazon.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 
-Print the currently enabled stack and heap initialization modes.
+On 6/17/19 12:38 AM, Alexander Graf wrote:
+>> Yes I know, but as a benefit we could get rid of all the GSBASE
+>> horrors in
+>> the entry code as we could just put the percpu space into the local PGD.
+> 
+> Would that mean that with Meltdown affected CPUs we open speculation
+> attacks against the mmlocal memory from KVM user space?
 
-Stack initialization is enabled by a config flag, while heap
-initialization is configured at boot time with defaults being set
-in the config. It's more convenient for the user to have all information
-about these hardening measures in one place at boot, so the user can
-reason about the expected behavior of the running system.
-
-The possible options for stack are:
- - "all" for CONFIG_INIT_STACK_ALL;
- - "byref_all" for CONFIG_GCC_PLUGIN_STRUCTLEAK_BYREF_ALL;
- - "byref" for CONFIG_GCC_PLUGIN_STRUCTLEAK_BYREF;
- - "__user" for CONFIG_GCC_PLUGIN_STRUCTLEAK_USER;
- - "off" otherwise.
-
-Depending on the values of init_on_alloc and init_on_free boottime
-options we also report "heap alloc" and "heap free" as "on"/"off".
-
-In the init_on_free mode initializing pages at boot time may take a
-while, so print a notice about that as well. This depends on how much
-memory is installed, the memory bandwidth, etc.
-On a relatively modern x86 system, it takes about 0.75s/GB to wipe all
-memory:
-
-  [    0.418722] mem auto-init: stack:byref_all, heap alloc:off, heap free:on
-  [    0.419765] mem auto-init: clearing system memory may take some time...
-  [   12.376605] Memory: 16408564K/16776672K available (14339K kernel code, 1397K rwdata, 3756K rodata, 1636K init, 11460K bss, 368108K reserved, 0K cma-reserved)
-
-Signed-off-by: Alexander Potapenko <glider@google.com>
-Suggested-by: Kees Cook <keescook@chromium.org>
-Acked-by: Kees Cook <keescook@chromium.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-To: Christoph Lameter <cl@linux.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: James Morris <jmorris@namei.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Kostya Serebryany <kcc@google.com>
-Cc: Laura Abbott <labbott@redhat.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Masahiro Yamada <yamada.masahiro@socionext.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Randy Dunlap <rdunlap@infradead.org>
-Cc: Sandeep Patil <sspatil@android.com>
-Cc: "Serge E. Hallyn" <serge@hallyn.com>
-Cc: Souptick Joarder <jrdr.linux@gmail.com>
-Cc: Marco Elver <elver@google.com>
-Cc: Kaiwan N Billimoria <kaiwan@kaiwantech.com>
-Cc: kernel-hardening@lists.openwall.com
-Cc: linux-mm@kvack.org
-Cc: linux-security-module@vger.kernel.org
----
- v6:
- - update patch description, fixed message about clearing memory
- v7:
- - rebase the patch, add the Acked-by: tag;
- - more description updates as suggested by Kees;
- - make report_meminit() static.
----
- init/main.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
-
-diff --git a/init/main.c b/init/main.c
-index 66a196c5e4c3..ff5803b0841c 100644
---- a/init/main.c
-+++ b/init/main.c
-@@ -520,6 +520,29 @@ static inline void initcall_debug_enable(void)
- }
- #endif
- 
-+/* Report memory auto-initialization states for this boot. */
-+static void __init report_meminit(void)
-+{
-+	const char *stack;
-+
-+	if (IS_ENABLED(CONFIG_INIT_STACK_ALL))
-+		stack = "all";
-+	else if (IS_ENABLED(CONFIG_GCC_PLUGIN_STRUCTLEAK_BYREF_ALL))
-+		stack = "byref_all";
-+	else if (IS_ENABLED(CONFIG_GCC_PLUGIN_STRUCTLEAK_BYREF))
-+		stack = "byref";
-+	else if (IS_ENABLED(CONFIG_GCC_PLUGIN_STRUCTLEAK_USER))
-+		stack = "__user";
-+	else
-+		stack = "off";
-+
-+	pr_info("mem auto-init: stack:%s, heap alloc:%s, heap free:%s\n",
-+		stack, want_init_on_alloc(GFP_KERNEL) ? "on" : "off",
-+		want_init_on_free() ? "on" : "off");
-+	if (want_init_on_free())
-+		pr_info("mem auto-init: clearing system memory may take some time...\n");
-+}
-+
- /*
-  * Set up kernel memory allocators
-  */
-@@ -530,6 +553,7 @@ static void __init mm_init(void)
- 	 * bigger than MAX_ORDER unless SPARSEMEM.
- 	 */
- 	page_ext_init_flatmem();
-+	report_meminit();
- 	mem_init();
- 	kmem_cache_init();
- 	pgtable_init();
--- 
-2.22.0.410.gd8fdbe21b5-goog
+Not necessarily.  There would likely be a _set_ of local PGDs.  We could
+still have pair of PTI PGDs just like we do know, they'd just be a local
+PGD pair.
 
