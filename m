@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16180-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16181-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 2EAA549D93
-	for <lists+kernel-hardening@lfdr.de>; Tue, 18 Jun 2019 11:38:49 +0200 (CEST)
-Received: (qmail 11327 invoked by uid 550); 18 Jun 2019 09:38:42 -0000
+	by mail.lfdr.de (Postfix) with SMTP id E0D0349F0E
+	for <lists+kernel-hardening@lfdr.de>; Tue, 18 Jun 2019 13:20:46 +0200 (CEST)
+Received: (qmail 18293 invoked by uid 550); 18 Jun 2019 11:19:01 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,96 +13,90 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 11295 invoked from network); 18 Jun 2019 09:38:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7fLDkKRkgzc7eE1dlOkMBAFp8cWuW8s86ixr8n9TiM8=;
-        b=AmE9Y07JUBPxzGcD1J9f0LpoVT6BW4XFItWxQtWsq1bOY1uSmIME0YmGeM/JuFbck/
-         mFMt7hKWfsAFi3I9jHY8FyMesDuRlcSkqWgUAvggg6+SIBx0jkwrKFPuGSs+2N6hVVrw
-         up5JrKDu8F2SS9VITpTPV7YlmjOiBwrkYBWGe7B8hlglXyYjYFND8YLX4qfXfiL060Y0
-         TnKu57Az1hM5oyh54Erg+zAJHBIEfPfm51z/MWNjRy0LuylnMJYM5JjwpPAwOgbqzEVV
-         lor1NIUfbs7NPp+NyNQ5OsK/xDhaGmzixxZUM8eEJTFfp9YayDBVVCUnv9wjiRQ8u2Ti
-         k3Ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7fLDkKRkgzc7eE1dlOkMBAFp8cWuW8s86ixr8n9TiM8=;
-        b=EEDmkvY+I89G5m5+G+541KFSTtGU1qGda/FDIaqRpPqkOXsmW4jjXEd5uKnrfOefZS
-         lJs3QMCeW8suekY14Gz+YqT0Okiiu/f4+cDf9zZR54hTNZ7KFUy+egGsy7bVCiYt2yF1
-         VGnXeFitXTAPmyP/IySSda39flyFDewbb7KHDPXBk38tCkt72BuvmERjTVhuKOljl4ay
-         2jGv0Ki5b/g2ImTpcT1sWZQ8lwn7nR7XcJ0TTgmYG22lBBifXG0myvECAcg1Hs5+8wOz
-         9+Lf67MG6F94zzC7Njncuvf8Q2XfSHih/lhwwJkJojmjo3UYK2m+n9yAHwNYIAufGpL1
-         dYQA==
-X-Gm-Message-State: APjAAAUJceuNBHhR9mAmseAaVUzwDS41VCW/pggYfFae9A8iFxq0W/kZ
-	EYmtJSMys/Gf/RI56Ciz6qiMSs7gFqw+0tEow2NtUg==
-X-Google-Smtp-Source: APXvYqzDTLUQp01oTuXLSmw8BKDNfkPPwQAiDJmWwDWKcEFSmmLud111OCXmNXIGf5wq52BLBj3yiVgE6U8RxoSEHSc=
-X-Received: by 2002:a9d:12b7:: with SMTP id g52mr32902066otg.32.1560850708603;
- Tue, 18 Jun 2019 02:38:28 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190618045503.39105-1-keescook@chromium.org> <20190618045503.39105-4-keescook@chromium.org>
-In-Reply-To: <20190618045503.39105-4-keescook@chromium.org>
-From: Jann Horn <jannh@google.com>
-Date: Tue, 18 Jun 2019 11:38:02 +0200
-Message-ID: <CAG48ez37iY3pfTWn4wiqdt7zdkSPpOcvz3gtwjTWAYz9qKbBNA@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] x86/asm: Pin sensitive CR0 bits
+Delivered-To: moderator for kernel-hardening@lists.openwall.com
+Received: (qmail 10227 invoked from network); 18 Jun 2019 10:36:51 -0000
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.63,388,1557212400"; 
+   d="scan'208";a="358211953"
+From: "Gote, Nitin R" <nitin.r.gote@intel.com>
 To: Kees Cook <keescook@chromium.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>, Linus Torvalds <torvalds@linux-foundation.org>, 
-	"the arch/x86 maintainers" <x86@kernel.org>, Peter Zijlstra <peterz@infradead.org>, 
-	Dave Hansen <dave.hansen@intel.com>, kernel list <linux-kernel@vger.kernel.org>, 
-	Kernel Hardening <kernel-hardening@lists.openwall.com>
-Content-Type: text/plain; charset="UTF-8"
+CC: Kernel Hardening <kernel-hardening@lists.openwall.com>, Shyam Saini
+	<mayhs11saini@gmail.com>
+Subject: RE: Get involved
+Date: Tue, 18 Jun 2019 10:36:35 +0000
+Message-ID: <12356C813DFF6F479B608F81178A5615869EB0@BGSMSX101.gar.corp.intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+dlp-product: dlpe-windows
+dlp-version: 11.0.600.7
+dlp-reaction: no-action
+x-ctpclassification: CTP_NT
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiNjk3ZTIzNWMtMjgwMi00NDFiLWJkYTAtMTIwOTgyNzY5MjIwIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiV0g2dmI3ZHoyTDZOT3RGRXZIWDhCYTZwQlp3QnBxNFdSdTMrWkczZ1wvTGltSWVFdERFc3lQMzBsSndkN1wvYUEyIn0=
+x-originating-ip: [10.223.10.10]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
 
-On Tue, Jun 18, 2019 at 6:55 AM Kees Cook <keescook@chromium.org> wrote:
-> With sensitive CR4 bits pinned now, it's possible that the WP bit for
-> CR0 might become a target as well. Following the same reasoning for
-> the CR4 pinning, this pins CR0's WP bit (but this can be done with a
-> static value).
->
-> Suggested-by: Peter Zijlstra <peterz@infradead.org>
-> Signed-off-by: Kees Cook <keescook@chromium.org>
-> ---
->  arch/x86/include/asm/special_insns.h | 15 ++++++++++++++-
->  1 file changed, 14 insertions(+), 1 deletion(-)
->
-> diff --git a/arch/x86/include/asm/special_insns.h b/arch/x86/include/asm/special_insns.h
-> index c8c8143ab27b..b2e84d113f2a 100644
-> --- a/arch/x86/include/asm/special_insns.h
-> +++ b/arch/x86/include/asm/special_insns.h
-> @@ -31,7 +31,20 @@ static inline unsigned long native_read_cr0(void)
->
->  static inline void native_write_cr0(unsigned long val)
->  {
-
-So, assuming a legitimate call to native_write_cr0(), we come in here...
-
-> -       asm volatile("mov %0,%%cr0": : "r" (val), "m" (__force_order));
-> +       unsigned long bits_missing = 0;
-> +
-> +set_register:
-> +       asm volatile("mov %0,%%cr0": "+r" (val), "+m" (__force_order));
-
-... here we've updated CR0...
-
-> +       if (static_branch_likely(&cr_pinning)) {
-
-... this branch is taken, since cr_pinning is set to true after boot...
-
-> +               if (unlikely((val & X86_CR0_WP) != X86_CR0_WP)) {
-
-... this branch isn't taken, because a legitimate update preserves the WP bit...
-
-> +                       bits_missing = X86_CR0_WP;
-> +                       val |= bits_missing;
-> +                       goto set_register;
-> +               }
-> +               /* Warn after we've set the missing bits. */
-> +               WARN_ONCE(bits_missing, "CR0 WP bit went missing!?\n");
-
-... and we reach this WARN_ONCE()? Am I missing something, or does
-every legitimate CR0 write after early boot now trigger a warning?
-
-> +       }
->  }
+SGkgS2VlcywNCg0KSSB3b3VsZCBsaWtlIHRvIGJlIGludm9sdmVkIG9uIHVwc3RyZWFtIG9uIHNl
+Y3VyaXR5IHJlbGF0ZWQgdG9waWNzLg0KSSdtIHBsYW5uaW5nIHRvIHdvcmsgb24gYmVsb3cgaXRl
+bXMgZnJvbSBLU1BQIHRvIGRvIGxpc3Q6DQoJMS4gZGVwcmVjYXRlIHN0cmNweSgpIGluIGZhdm9y
+IG9mIHN0cnNjcHkoKS4NCgkyLiBkZXByZWNhdGUgc3RybGNweSgpIGluIGZhdm9yIG9mIHN0cnNj
+cHkoKS4NCgkzLiBkZXByZWNhdGUgc3RybmNweSgpIGluIGZhdm9yIG9mIHN0cnNjcHkoKSwgc3Ry
+c2NweV9wYWQoKSwgb3Igc3RyMm1lbV9wYWQoKS4NCg0KSSdtIHRoaW5raW5nIG9mIGZvbGxvd2lu
+ZyBhcHByb2FjaCBmb3IgYWJvdmUgaXRlbXMgOg0KDQpBcHByb2FjaCAxIDogRG8gd2UgbmVlZCB0
+byBibGluZGx5IHJlcGxhY2Ugc3RyY3B5KCkgb3Igc3RybGNweSgpIG9yIHN0cm5jcHkoKSB3aXRo
+IHN0cnNjcHkoKSBpbiBlbnRpcmUgbGludXgga2VybmVsIHRyZWUgPw0KCSAgICAgICAgIChUaGlz
+IGFwcHJvYWNoIGlzIHRpbWUgY29uc3VtaW5nIGFzIGxvdHMgb2YgY2hhbmdlcyBuZWVkIHRvIGRv
+IGluIHNpbmdsZSBwYXRjaCBvciBtdWx0aXBsZSBwYXRjaCkNCg0KQXBwcm9hY2ggMiA6IERvIHdl
+IG5lZWQgdG8gaW1wbGVtZW50IHNjcmlwdCBvciBzb21lIG1lY2hhbmlzbSB3aGljaCBjaGVja3Mg
+Zm9yIGZ1bmN0aW9ucyBsaWtlcyBzdHJjcHkoKSwgc3RybGNweSgpIG9yIHN0cm5jcHkoKSBhbmQg
+DQoJICAgICAgICAgdGhyb3cgc29tZSBkZXByZWNhdGUgZXJyb3IsIGlmIHRoZXNlIGZ1bmN0aW9u
+cyBmb3VuZCBhbmQgc3VnZ2VzdCB0byB1c2Ugc3Ryc2NweSgpID8gDQoNCkNvdWxkIHlvdSBwbGVh
+c2UgcHJvdmlkZSBzb21lIHBvaW50IG9uIHRoZXNlID8gDQoNCklmIG5vbmUgb2YgYWJvdmUgYXBw
+cm9hY2ggaXMgY29ycmVjdCwgQ291bGQgeW91IHBsZWFzZSBnaXZlIHNvbWUgaWRlYSwgU28gdGhh
+dCBJIGNhbiBzdGFydCB3b3JrIG9uIG1lbnRpb25lZCBpdGVtcyA/DQpPbmUgbW9yZSBxdWVzdGlv
+biwgSXMgdGhlcmUgYW55IENJIGlzIG1haW50YWluZWQgZm9yIEtTUFAgPyBJZiB5ZXMsIGhvdyB0
+byBjaGVjayBDSSBjdXJyZW50IHN0YXR1cyA/DQoNClRoYW5rcyBhbmQgUmVnYXJkcywNCk5pdGlu
+IEdvdGUuDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBTaHlhbSBTYWluaSBb
+bWFpbHRvOm1heWhzMTFzYWluaUBnbWFpbC5jb21dIA0KU2VudDogU2F0dXJkYXksIEp1bmUgOCwg
+MjAxOSAxMTozMiBBTQ0KVG86IEtlZXMgQ29vayA8a2Vlc2Nvb2tAY2hyb21pdW0ub3JnPg0KQ2M6
+IFJvbWFpbiBQZXJpZXIgPHJvbWFpbi5wZXJpZXJAZ21haWwuY29tPjsgS2VybmVsIEhhcmRlbmlu
+ZyA8a2VybmVsLWhhcmRlbmluZ0BsaXN0cy5vcGVud2FsbC5jb20+DQpTdWJqZWN0OiBSZTogR2V0
+IGludm9sdmVkDQoNCkhpIEtlZXMsDQoNCg0KDQo+DQo+IEhpISBTb3JyeSBmb3IgdGhlIGxhdGUg
+cmVwbHk6IEkndmUgYmVlbiB0cmF2ZWxsaW5nIHRoaXMgd2Vlay4gOlANCg0KPiA+IE9rYXksIG5w
+LiBJIHdpbGwgc2VsZWN0IGFub3RoZXIgb25lIHRoZW4gOikgKGhlaGUgdGhhdCdzIHRoZSBnYW1l
+IDspIA0KPiA+ICkNCj4gPg0KPiA+IEBLZWVzOiBkbyB5b3UgaGF2ZSBzb21ldGhpbmcgaW4gbWlu
+ZCAoYXMgYSBuZXcgdGFzaykgPw0KPiBTaHlhbSwgeW91J2QgYWxzbyBzdGFydGVkIEZJRUxEX1NJ
+WkVPRiByZWZhY3RvcmluZywgYnV0IG5ldmVyIHNlbnQgYSANCj4gdjIgcGF0Y2ggaWYgSSB3YXMg
+Zm9sbG93aW5nIGNvcnJlY3RseT8gSXMgdGhlcmUgb25lIG9yIHRoZSBvdGhlciBvZiANCj4gdGhl
+c2UgdGFza3MgeW91J2QgbGlrZSBoZWxwIHdpdGg/ICANCj4gaHR0cHM6Ly9wYXRjaHdvcmsua2Vy
+bmVsLm9yZy9wYXRjaC8xMDkwMDE4Ny8NCg0Kc29ycnkgZm9yIGJlaW5nIHRvbyBsYXRlLg0KDQpZ
+b3UgYXNzaWduZWQgbWUgMyB0YXNrcw0KMSkgRklFTERfU0laRU9GDQoyKSBXQVJOIG9uIGtmcmVl
+KCkgb2YgRVJSX1BUUiByYW5nZQ0KMykgTkxBX1NUUklORw0KDQpJJ2xsIHNlbmQgcGF0Y2hlcyBm
+b3IgdGFzayAxIGFuZCAyIHRvZGF5IG9yIHRvbW9ycm93Lg0KDQpJZiBSb21hbiBpcyB0YWtpbmcg
+TkxBX1NUUklORyB0YXNrLCBJJ2QgcGljayBzb21lIG90aGVyIG9uY2UgaSBzZW5kIHBhdGNoZXMg
+Zm9yIDEgYW5kIDIuDQoNCg0KPiBSb21haW4sIHdoYXQgZG8geW91IHRoaW5rIGFib3V0IHJldmll
+d2luZyBOTEEgY29kZT8gSSdkIG1lbnRpb25lZCBhIA0KPiB0aGlyZCB0YXNrIGhlcmU6DQo+IGh0
+dHBzOi8vd3d3Lm9wZW53YWxsLmNvbS9saXN0cy9rZXJuZWwtaGFyZGVuaW5nLzIwMTkvMDQvMTcv
+OA0KPg0KPiBRdW90aW5nLi4uDQo+DQo+DQo+IC0gYXVkaXQgYW5kIGZpeCBhbGwgbWlzdXNlIG9m
+IE5MQV9TVFJJTkcNCj4NCj4gVGhpcyBpcyBhIGZvbGxvd2luZyB1cCBvbiBub3RpY2luZyB0aGUg
+bWlzdXNlIG9mIE5MQV9TVFJJTkcgKG5vIE5VTCANCj4gdGVybWluYXRvciksIGdldHRpbmcgdXNl
+ZCB3aXRoIHJlZ3VsYXIgc3RyaW5nIGZ1bmN0aW9ucyAodGhhdCBleHBlY3QgYSANCj4gTlVMIHRl
+cm1pbmF0aW9uKToNCj4gaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvbGttbC8xNTE5MzI5Mjg5LjI2
+MzcuMTIuY2FtZWxAc2lwc29sdXRpb25zLm5ldA0KPiAvVC8jdQ0KPg0KPiBJdCdkIGJlIG5pY2Ug
+aWYgc29tZW9uZSBjb3VsZCBpbnNwZWN0IGFsbCB0aGUgTkxBX1NUUklORyANCj4gcmVwcmVzZW50
+YXRpb25zIGFuZCBmaW5kIGlmIHRoZXJlIGFyZSBhbnkgb3RoZXIgcHJvYmxlbXMgbGlrZSB0aGlz
+IA0KPiAoYW5kIHNlZSBpZiB0aGVyZSB3YXMgYSBnb29kIHdheSB0byBzeXN0ZW1pY2FsbHkgZml4
+IHRoZSBwcm9ibGVtKS4NCj4NCj4NCj4NCj4gRm9yIHlldCBhbm90aGVyIGlkZWEgd291bGQgYmUg
+dG8gZ2V0IHN5emthbGxlclsxXSBzZXQgdXAgYW5kIGVuYWJsZSANCj4gaW50ZWdlciBvdmVyZmxv
+dyBkZXRlY3Rpb24gKGJ5IGFkZGluZyAiLWZzYW5pdGl6ZT1zaWduZWQtaW50ZWdlci1vdmVyZmxv
+dyINCj4gdG8gS0JVSUxEX0NGTEFHUykgYW5kIHN0YXJ0IGZpbmRpbmcgYW5kIGZpeGVzIGNhc2Vz
+IGxpa2UgdGhpc1syXS4NCj4NCj4gVGhhbmtzIGFuZCBsZXQgbWUga25vdyB3aGF0IHlvdSB0aGlu
+ayENCj4NCj4gLUtlZXMNCj4NCj4gWzFdIA0KPiBodHRwczovL2dpdGh1Yi5jb20vZ29vZ2xlL3N5
+emthbGxlci9ibG9iL21hc3Rlci9kb2NzL2xpbnV4L3NldHVwLm1kDQo+IFsyXSBodHRwczovL2xv
+cmUua2VybmVsLm9yZy9sa21sLzIwMTgwODI0MjE1NDM5LkdBNDY3ODVAYmVhc3QvDQo+DQo+DQo+
+IC0tDQo+IEtlZXMgQ29vaw0K
