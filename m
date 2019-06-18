@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16171-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16175-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id B69CC49876
-	for <lists+kernel-hardening@lfdr.de>; Tue, 18 Jun 2019 06:55:31 +0200 (CEST)
-Received: (qmail 19726 invoked by uid 550); 18 Jun 2019 04:55:21 -0000
+	by mail.lfdr.de (Postfix) with SMTP id D28DF4988F
+	for <lists+kernel-hardening@lfdr.de>; Tue, 18 Jun 2019 07:08:00 +0200 (CEST)
+Received: (qmail 7637 invoked by uid 550); 18 Jun 2019 05:07:55 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,83 +13,91 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 19631 invoked from network); 18 Jun 2019 04:55:19 -0000
+Received: (qmail 7608 invoked from network); 18 Jun 2019 05:07:54 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=QsQC2UzpT6NyTsbVwUSVvnO0Ud1PYkMdAize/TKgzcI=;
-        b=nhXQMKA3pqnFMskPYlyfzfiZ0m1EDAn1/34A37MARMPc0vR6VdJcP0BLE/CZWd3K4G
-         MV5zR19K/bY3u5fi7NY094sNRBhUptzdF+DEyNdptTYK+e8hw1nlN6XpuTFbcUGTB68s
-         3p5aDl6HPjUBNt8/I3w6OE5IVo6Xj4pFf93yo=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=jnbiF6PM75BR23D0fug4o/KmiVF/a7iA4ZJbUbk0ou8=;
+        b=le3JAsoW0dSW819/UcwrgN8EH4ftLCyDsaZAgc7BOsWEPsmUX0qr3b1uAwcH5U9Ht1
+         rYLqymUfXJnabzvyyX1WX3d/KTwGSvrT8fnKeDa6nGKyqmaAbpptt0uOXdARKhOgLrZp
+         er1miUtYnUqo/19kfQnQOzsv/7Dso4BiTuyW0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=QsQC2UzpT6NyTsbVwUSVvnO0Ud1PYkMdAize/TKgzcI=;
-        b=BmWEpKBGRrNEgX4pRNPH+xOA3VR2ZOTfjSLMn1rvPG8Mxbj9IMSDwvfYKXzMhkR/y7
-         cD8a6aHJXGminQLrJYvaQuQBmZ5aMBWf1Tvv+BwJoyZaeArBKKQsBlN9X2xzAJTfRGGD
-         5Z/lMiPIidJANQtLLda+z8NXhEAMwb8uR95s/V1YW8n9QCngyyXV2ZHl1fQp7ydT8oIN
-         jTfjqeTBz3BiwZrVaftnIrzSiUkPxe3eB/menGvfZB5MMCU/sMRMNvi5JOH6/tme5kyK
-         pvdVACPN85go4fUKLSyKhE1lLoNnVYS2BlHUnSfHkCj/eINURb6xJRINbpIpQZra3WkM
-         Ds7w==
-X-Gm-Message-State: APjAAAVC8wF+YFniFxelnNcV4t1BD/0Yh1vyVOScaN3rY5Cpva35zyWC
-	cRgyRL7KZjag5WtBOC53/GWe2A==
-X-Google-Smtp-Source: APXvYqzvoUCCIV/j/VUYbcljjbnLQAQDKu3Bb56KK/h8GtlbpUAufcbOlyMYfYfo58429sKdsQp80g==
-X-Received: by 2002:a17:90a:1785:: with SMTP id q5mr2950312pja.106.1560833708115;
-        Mon, 17 Jun 2019 21:55:08 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=jnbiF6PM75BR23D0fug4o/KmiVF/a7iA4ZJbUbk0ou8=;
+        b=d1ZTK0eUGjPG4TdxzV/qg6tBGUIHd2ctrg0WszPp8PlEpJI+DsAVbleOth/FA/KkWo
+         nB81q82dgeK5XeaBCt6wMWrhVeK+SaQfyb65T5Ey/EVgCxYgk7d9dx60HBgkCkrCG2OP
+         MBaMFvA59hv3hDM9+PYT47qTjh6NoKUUYdkqcFx3Y5sZXpkZ2h1Qt5mAYiMgDhYN7yY3
+         7UAcqSusAh8XWTaPFa6GM/wXl9riKL7IJdOTj+1jQ5EgsfaT1Vi3RgDKDG3m56OylTGh
+         b93kSsVH0kEWU++1hKIMenr0UfZZaHOW6JUcjKTu8yS+XojiYOultqUzJW05hV4vv3c7
+         pBuQ==
+X-Gm-Message-State: APjAAAX5VMq4tmjKzmY9alWm5Yn12G6lXJqOw1be6OYhahWIK+f/r16o
+	YnFr0+SreM8FJQmRg1ZEMwruhz/IXGMeYg==
+X-Google-Smtp-Source: APXvYqzorbbiv4F/V5ltmPIt8/jvpUkr2OK7EJlOoHFOkJ7aNwm7NJJnDee7dkk++naciFbEgk4+6w==
+X-Received: by 2002:a17:902:704a:: with SMTP id h10mr4439628plt.337.1560834463257;
+        Mon, 17 Jun 2019 22:07:43 -0700 (PDT)
+Date: Mon, 17 Jun 2019 22:07:41 -0700
 From: Kees Cook <keescook@chromium.org>
-To: Thomas Gleixner <tglx@linutronix.de>
-Cc: Kees Cook <keescook@chromium.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	x86@kernel.org,
-	Peter Zijlstra <peterz@infradead.org>,
-	Dave Hansen <dave.hansen@intel.com>,
-	linux-kernel@vger.kernel.org,
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: Alexander Potapenko <glider@google.com>,
+	Christoph Lameter <cl@linux.com>,
+	Masahiro Yamada <yamada.masahiro@socionext.com>,
+	Michal Hocko <mhocko@kernel.org>, James Morris <jmorris@namei.org>,
+	"Serge E. Hallyn" <serge@hallyn.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Kostya Serebryany <kcc@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Sandeep Patil <sspatil@android.com>,
+	Laura Abbott <labbott@redhat.com>,
+	Randy Dunlap <rdunlap@infradead.org>, Jann Horn <jannh@google.com>,
+	Mark Rutland <mark.rutland@arm.com>, Marco Elver <elver@google.com>,
+	linux-mm@kvack.org, linux-security-module@vger.kernel.org,
 	kernel-hardening@lists.openwall.com
-Subject: [PATCH v3 3/3] x86/asm: Pin sensitive CR0 bits
-Date: Mon, 17 Jun 2019 21:55:03 -0700
-Message-Id: <20190618045503.39105-4-keescook@chromium.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190618045503.39105-1-keescook@chromium.org>
-References: <20190618045503.39105-1-keescook@chromium.org>
+Subject: Re: [PATCH v7 1/2] mm: security: introduce init_on_alloc=1 and
+ init_on_free=1 boot options
+Message-ID: <201906172157.8E88196@keescook>
+References: <20190617151050.92663-1-glider@google.com>
+ <20190617151050.92663-2-glider@google.com>
+ <20190617151027.6422016d74a7dc4c7a562fc6@linux-foundation.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190617151027.6422016d74a7dc4c7a562fc6@linux-foundation.org>
 
-With sensitive CR4 bits pinned now, it's possible that the WP bit for
-CR0 might become a target as well. Following the same reasoning for
-the CR4 pinning, this pins CR0's WP bit (but this can be done with a
-static value).
+On Mon, Jun 17, 2019 at 03:10:27PM -0700, Andrew Morton wrote:
+> On Mon, 17 Jun 2019 17:10:49 +0200 Alexander Potapenko <glider@google.com> wrote:
+> 
+> > Slowdown for the new features compared to init_on_free=0,
+> > init_on_alloc=0:
+> > 
+> > hackbench, init_on_free=1:  +7.62% sys time (st.err 0.74%)
+> > hackbench, init_on_alloc=1: +7.75% sys time (st.err 2.14%)
+> 
+> Sanity check time.  Is anyone really going to use this?  Seriously,
+> honestly, for real?  If "yes" then how did we determine that?
 
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
----
- arch/x86/include/asm/special_insns.h | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+Absolutely! This is expected to be on-by-default on Android and Chrome
+OS. And it gives the opportunity for anyone else to use it under distros
+too via the boot args. (The init_on_free feature is regularly requested
+by folks where memory forensics is included in their thread models.)
 
-diff --git a/arch/x86/include/asm/special_insns.h b/arch/x86/include/asm/special_insns.h
-index c8c8143ab27b..b2e84d113f2a 100644
---- a/arch/x86/include/asm/special_insns.h
-+++ b/arch/x86/include/asm/special_insns.h
-@@ -31,7 +31,20 @@ static inline unsigned long native_read_cr0(void)
- 
- static inline void native_write_cr0(unsigned long val)
- {
--	asm volatile("mov %0,%%cr0": : "r" (val), "m" (__force_order));
-+	unsigned long bits_missing = 0;
-+
-+set_register:
-+	asm volatile("mov %0,%%cr0": "+r" (val), "+m" (__force_order));
-+
-+	if (static_branch_likely(&cr_pinning)) {
-+		if (unlikely((val & X86_CR0_WP) != X86_CR0_WP)) {
-+			bits_missing = X86_CR0_WP;
-+			val |= bits_missing;
-+			goto set_register;
-+		}
-+		/* Warn after we've set the missing bits. */
-+		WARN_ONCE(bits_missing, "CR0 WP bit went missing!?\n");
-+	}
- }
- 
- static inline unsigned long native_read_cr2(void)
+As for the performance implications, the request during review was to
+do that separately.
+
+> Also, a bit of a nit: "init_on_alloc" and "init_on_free" aren't very
+> well chosen names for the boot options - they could refer to any kernel
+> object at all, really.  init_pages_on_alloc would be better?  I don't think
+> this matters much - the boot options are already chaotic.  But still...
+
+I agree; it's awkward. It covers both the page allocator and the slab
+allocator, though, so naming it "page" seems not great. It's part of
+a larger effort to auto-initialize all memory (stack auto-init has
+been around in a few forms with the Clang support now in Linus's tree
+for v5.2), and the feature has kind of ended up with the short name
+of "meminit". As this is the "heap" side of "meminit", what about
+"meminit.alloc=..." and "meminit.free=..." as alternative straw-men?
+
 -- 
-2.17.1
-
+Kees Cook
