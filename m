@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16189-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16191-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 5A2264B447
-	for <lists+kernel-hardening@lfdr.de>; Wed, 19 Jun 2019 10:43:24 +0200 (CEST)
-Received: (qmail 7249 invoked by uid 550); 19 Jun 2019 08:42:33 -0000
+	by mail.lfdr.de (Postfix) with SMTP id E1F764B4A3
+	for <lists+kernel-hardening@lfdr.de>; Wed, 19 Jun 2019 11:06:28 +0200 (CEST)
+Received: (qmail 1231 invoked by uid 550); 19 Jun 2019 09:06:22 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,361 +13,110 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 18069 invoked from network); 19 Jun 2019 08:24:42 -0000
+Received: (qmail 1212 invoked from network); 19 Jun 2019 09:06:21 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=/98dZl/QYDOPqWKKOl2HaSCiOXFKyFays/J24VboxLU=;
-        b=HiMjmVaijaGwuMSPz3atmX2vClH7S8/v+xsA7HSy2EtlJUUNSLiwqavkBgfjMmx9TB
-         stjQ12IGFxZvS/vKabHXUd0lsjpqCceYDRJ9CIdytHaWz1GpLj9cXo4rggvsYryCohos
-         XKzp5GSTUlEdNqW3qCe3WQRLGDMsfSMTlRVimIkMdSPiDjJbmuVKwkSIlFzUCJxUo5Js
-         yxy0OOneR5zf6cmoDRn0naf7zm1XAMACXCSl3gXvDlOgHsD1U7HgL5RW7/h9A9cKjDcX
-         c74xWAp2oOUqrs2c8Wg91mzrxDq6tgz2aWZ2UtDJdNdHozkvBbvo7eIUTG8nTKRupX2H
-         agyA==
+        d=ffwll.ch; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=u3kWunp1yg8qsBlz075d3zHcl3e5zCJuL+usdOTYmOc=;
+        b=gnP9HHMGYKwK9IsnAHwypqrW+QHPyyxL5VsMOQFqOBt9sxJJN5Q28pik6LLPgli2C3
+         8U4+LuFuA2pG4azWksKAC4dzSQH2hr74fm1ub0T1PmruwOzmCDKQaqlsvoLqIxDcuIwv
+         c4hN54DM8GwFFMGvP3sPTRofnN8sE6FGqYkHE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/98dZl/QYDOPqWKKOl2HaSCiOXFKyFays/J24VboxLU=;
-        b=OYauDN92QWTv9oO2GYFEwvWcVeKz+JMuPlqZTJ6wPqZgWmjkzlVDgtzfaOZI95zHMU
-         OsINZIkZfSIbJk+Csr8ES1tml9EfKpxnJXiFvee2PHUv+/W+YFe1M7I7KcyQXPBE+ecq
-         p65WuOmwuQZwcey8zaTZKjOnN0mJER8onHoVG7ZGZA0I9PcoWLN758XxFAJFp1XuGxuM
-         ohYZZCdq9BV4WP/DBqVt8cnanpdU8GAcTYNy3F+m8kEolh3qBxnPOkcvAR86X3BbXv6w
-         gdWgKlMKYEjzwSGVzVcW5GphjKwAPA5gRDHnlx4i4m6f57rKPjUtrYbDY6Tybj5NpFCH
-         J5WA==
-X-Gm-Message-State: APjAAAVtY1JifwezbyVI3coCUGqVqF8+eKZdS97bW/1mOgLGvKCc/mLg
-	jBLSFA/VpeuXHkWXWSlEo7Y=
-X-Google-Smtp-Source: APXvYqzxYVPAvy8Dt6ptkYtk9+znALGifqlNvIKr1C1dC6cBg0kQdYFadAZvYmsVqdHoWNM8ga8S0g==
-X-Received: by 2002:a5d:5702:: with SMTP id a2mr42959389wrv.89.1560932670425;
-        Wed, 19 Jun 2019 01:24:30 -0700 (PDT)
-Date: Wed, 19 Jun 2019 10:24:28 +0200
-From: Thierry Reding <thierry.reding@gmail.com>
-To: Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
-Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>,
-	Mauro Carvalho Chehab <mchehab@infradead.org>,
-	linux-kernel@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Kurt Schwemmer <kurt.schwemmer@microsemi.com>,
-	Logan Gunthorpe <logang@deltatee.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Andrea Parri <andrea.parri@amarulasolutions.com>,
-	Will Deacon <will.deacon@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Jade Alglave <j.alglave@ucl.ac.uk>,
-	Luc Maranget <luc.maranget@inria.fr>,
-	"Paul E. McKenney" <paulmck@linux.ibm.com>,
-	Akira Yokosawa <akiyks@gmail.com>,
-	Daniel Lustig <dlustig@nvidia.com>,
-	Stuart Hayes <stuart.w.hayes@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>, Darren Hart <dvhart@infradead.org>,
-	Kees Cook <keescook@chromium.org>, Emese Revfy <re.emese@gmail.com>,
-	Ohad Ben-Cohen <ohad@wizery.com>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
-	Corey Minyard <minyard@acm.org>,
-	Marc Zyngier <marc.zyngier@arm.com>,
-	William Breathitt Gray <vilhelm.gray@gmail.com>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	"Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
-	Anil S Keshavamurthy <anil.s.keshavamurthy@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Johannes Thumshirn <morbidrsa@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Sudip Mukherjee <sudipm.mukherjee@gmail.com>,
-	Andreas =?utf-8?Q?F=C3=A4rber?= <afaerber@suse.de>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Rodolfo Giometti <giometti@enneenne.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	Gustavo Padovan <gustavo@padovan.org>,
-	Jens Wiklander <jens.wiklander@linaro.org>,
-	Kirti Wankhede <kwankhede@nvidia.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Cornelia Huck <cohuck@redhat.com>,
-	Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
-	David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <maxime.ripard@bootlin.com>,
-	Sean Paul <sean@poorly.run>, Farhan Ali <alifm@linux.ibm.com>,
-	Eric Farman <farman@linux.ibm.com>,
-	Halil Pasic <pasic@linux.ibm.com>,
-	Heiko Carstens <heiko.carstens@de.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@de.ibm.com>,
-	Harry Wei <harryxiyou@gmail.com>,
-	Alex Shi <alex.shi@linux.alibaba.com>,
-	Evgeniy Polyakov <zbr@ioremap.net>,
-	Jerry Hoemann <jerry.hoemann@hpe.com>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
-	Guenter Roeck <linux@roeck-us.net>, Guan Xuetao <gxt@pku.edu.cn>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bgolaszewski@baylibre.com>,
-	Andy Shevchenko <andy@infradead.org>, Jiri Slaby <jslaby@suse.com>,
-	linux-wireless@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-arch@vger.kernel.org, platform-driver-x86@vger.kernel.org,
-	kernel-hardening@lists.openwall.com,
-	linux-remoteproc@vger.kernel.org,
-	openipmi-developer@lists.sourceforge.net,
-	linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	netdev@vger.kernel.org, linux-pwm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org, kvm@vger.kernel.org,
-	linux-fbdev@vger.kernel.org, linux-s390@vger.kernel.org,
-	linux-watchdog@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
-	linux-gpio@vger.kernel.org, linux-mm@kvack.org
-Subject: Re: [PATCH v1 12/22] docs: driver-api: add .rst files from the main
- dir
-Message-ID: <20190619082428.GK3187@ulmo>
-References: <cover.1560890771.git.mchehab+samsung@kernel.org>
- <b0d24e805d5368719cc64e8104d64ee9b5b89dd0.1560890772.git.mchehab+samsung@kernel.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=u3kWunp1yg8qsBlz075d3zHcl3e5zCJuL+usdOTYmOc=;
+        b=SnvXzQKPurtcm4N1AciTodiIBRf8zKMjC+0RZgRz+H8UEuw0FuJV/xPG+/bSYb6EPw
+         S6IiROAyOsx9y+m7onYROyB/RBvSGxWMEGcgFAFWMZxKSJFGhg0IGT2g1MBFAjERuvd4
+         xbf/rKueMCnUc0mhTAFRhxvscDnFGvkr3wABWMQR+q8R1eXIm55/I8eZuVg6dX3JZNiI
+         sbqlBn3XLLCK1l/t0sQ51LHlJfTzUW+21L59GNneQTCptdaZ6+EbqgbF73aHXqZnmTbi
+         mSdCIsPQn/sA3qqPwsHiXQURn3RsmqCaYkM9MAnPLy8DjRz+c+tnfAkI4tfTWKBBg02q
+         72+w==
+X-Gm-Message-State: APjAAAUIA5lyg6wvF+Nksx8mP4x4i1X8V507Kjs5QL1uJXzBC0++CRY9
+	fmiJy6gqSBFOfz8rUGaZuAr2kn5lfCEo/Xi2yA1jKg==
+X-Google-Smtp-Source: APXvYqzG/v8GSMVQIarAoClCL4IFuEHrrKyRFYYJXnbvihoMS3DzXDAwuocRw/1b+9yFPJR2Hoa9o9P/lmOprXYAeyI=
+X-Received: by 2002:a9d:4b95:: with SMTP id k21mr21462009otf.281.1560935169757;
+ Wed, 19 Jun 2019 02:06:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="x1F0m3RQhDZyj8sd"
-Content-Disposition: inline
+References: <cover.1560890771.git.mchehab+samsung@kernel.org> <b0d24e805d5368719cc64e8104d64ee9b5b89dd0.1560890772.git.mchehab+samsung@kernel.org>
 In-Reply-To: <b0d24e805d5368719cc64e8104d64ee9b5b89dd0.1560890772.git.mchehab+samsung@kernel.org>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+From: Daniel Vetter <daniel@ffwll.ch>
+Date: Wed, 19 Jun 2019 11:05:57 +0200
+Message-ID: <CAKMK7uGM1aZz9yg1kYM8w2gw_cS6Eaynmar-uVurXjK5t6WouQ@mail.gmail.com>
+Subject: Re: [PATCH v1 12/22] docs: driver-api: add .rst files from the main dir
+To: Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
+Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, 
+	Mauro Carvalho Chehab <mchehab@infradead.org>, 
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
+	Johannes Berg <johannes@sipsolutions.net>, Kurt Schwemmer <kurt.schwemmer@microsemi.com>, 
+	Logan Gunthorpe <logang@deltatee.com>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Alan Stern <stern@rowland.harvard.edu>, 
+	Andrea Parri <andrea.parri@amarulasolutions.com>, Will Deacon <will.deacon@arm.com>, 
+	Peter Zijlstra <peterz@infradead.org>, Boqun Feng <boqun.feng@gmail.com>, 
+	Nicholas Piggin <npiggin@gmail.com>, David Howells <dhowells@redhat.com>, 
+	Jade Alglave <j.alglave@ucl.ac.uk>, Luc Maranget <luc.maranget@inria.fr>, 
+	"Paul E. McKenney" <paulmck@linux.ibm.com>, Akira Yokosawa <akiyks@gmail.com>, 
+	Daniel Lustig <dlustig@nvidia.com>, Stuart Hayes <stuart.w.hayes@gmail.com>, 
+	Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, 
+	Darren Hart <dvhart@infradead.org>, Kees Cook <keescook@chromium.org>, 
+	Emese Revfy <re.emese@gmail.com>, Ohad Ben-Cohen <ohad@wizery.com>, 
+	Bjorn Andersson <bjorn.andersson@linaro.org>, Corey Minyard <minyard@acm.org>, 
+	Marc Zyngier <marc.zyngier@arm.com>, William Breathitt Gray <vilhelm.gray@gmail.com>, 
+	Jaroslav Kysela <perex@perex.cz>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	"Rafael J. Wysocki" <rafael@kernel.org>, "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>, 
+	Anil S Keshavamurthy <anil.s.keshavamurthy@intel.com>, "David S. Miller" <davem@davemloft.net>, 
+	Masami Hiramatsu <mhiramat@kernel.org>, Johannes Thumshirn <morbidrsa@gmail.com>, 
+	Steffen Klassert <steffen.klassert@secunet.com>, Sudip Mukherjee <sudipm.mukherjee@gmail.com>, 
+	=?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>, 
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Rodolfo Giometti <giometti@enneenne.com>, 
+	Richard Cochran <richardcochran@gmail.com>, Thierry Reding <thierry.reding@gmail.com>, 
+	Sumit Semwal <sumit.semwal@linaro.org>, Gustavo Padovan <gustavo@padovan.org>, 
+	Jens Wiklander <jens.wiklander@linaro.org>, Kirti Wankhede <kwankhede@nvidia.com>, 
+	Alex Williamson <alex.williamson@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
+	Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>, David Airlie <airlied@linux.ie>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <maxime.ripard@bootlin.com>, Sean Paul <sean@poorly.run>, 
+	Farhan Ali <alifm@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, 
+	Halil Pasic <pasic@linux.ibm.com>, Heiko Carstens <heiko.carstens@de.ibm.com>, 
+	Vasily Gorbik <gor@linux.ibm.com>, Christian Borntraeger <borntraeger@de.ibm.com>, 
+	Harry Wei <harryxiyou@gmail.com>, Alex Shi <alex.shi@linux.alibaba.com>, 
+	Evgeniy Polyakov <zbr@ioremap.net>, Jerry Hoemann <jerry.hoemann@hpe.com>, 
+	Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck <linux@roeck-us.net>, 
+	Guan Xuetao <gxt@pku.edu.cn>, Arnd Bergmann <arnd@arndb.de>, Linus Walleij <linus.walleij@linaro.org>, 
+	Bartosz Golaszewski <bgolaszewski@baylibre.com>, Andy Shevchenko <andy@infradead.org>, 
+	Jiri Slaby <jslaby@suse.com>, linux-wireless@vger.kernel.org, 
+	Linux PCI <linux-pci@vger.kernel.org>, 
+	"open list:GENERIC INCLUDE/A..." <linux-arch@vger.kernel.org>, platform-driver-x86@vger.kernel.org, 
+	Kernel Hardening <kernel-hardening@lists.openwall.com>, linux-remoteproc@vger.kernel.org, 
+	openipmi-developer@lists.sourceforge.net, linux-crypto@vger.kernel.org, 
+	Linux ARM <linux-arm-kernel@lists.infradead.org>, netdev <netdev@vger.kernel.org>, 
+	linux-pwm <linux-pwm@vger.kernel.org>, dri-devel <dri-devel@lists.freedesktop.org>, 
+	kvm@vger.kernel.org, 
+	Linux Fbdev development list <linux-fbdev@vger.kernel.org>, linux-s390@vger.kernel.org, 
+	linux-watchdog@vger.kernel.org, 
+	"moderated list:DMA BUFFER SHARING FRAMEWORK" <linaro-mm-sig@lists.linaro.org>, linux-gpio <linux-gpio@vger.kernel.org>, 
+	Linux MM <linux-mm@kvack.org>
+Content-Type: text/plain; charset="UTF-8"
 
+On Tue, Jun 18, 2019 at 10:55 PM Mauro Carvalho Chehab
+<mchehab+samsung@kernel.org> wrote:
+> diff --git a/Documentation/gpu/drm-mm.rst b/Documentation/gpu/drm-mm.rst
+> index fa30dfcfc3c8..b0f948d8733b 100644
+> --- a/Documentation/gpu/drm-mm.rst
+> +++ b/Documentation/gpu/drm-mm.rst
+> @@ -320,7 +320,7 @@ struct :c:type:`struct file_operations <file_operations>` get_unmapped_area
+>  field with a pointer on :c:func:`drm_gem_cma_get_unmapped_area`.
+>
+>  More detailed information about get_unmapped_area can be found in
+> -Documentation/nommu-mmap.rst
+> +Documentation/driver-api/nommu-mmap.rst
 
---x1F0m3RQhDZyj8sd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Jun 18, 2019 at 05:53:17PM -0300, Mauro Carvalho Chehab wrote:
-> Those files belong to the driver-api guide. Add them to the
-> driver-api book.
->=20
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
-> ---
->  Documentation/ABI/removed/sysfs-class-rfkill  |  2 +-
->  Documentation/ABI/stable/sysfs-class-rfkill   |  2 +-
->  .../ABI/testing/sysfs-class-switchtec         |  2 +-
->  Documentation/PCI/pci.rst                     |  2 +-
->  Documentation/admin-guide/hw-vuln/l1tf.rst    |  2 +-
->  .../admin-guide/kernel-parameters.txt         |  4 +-
->  .../admin-guide/kernel-per-cpu-kthreads.rst   |  2 +-
->  .../{ =3D> driver-api}/atomic_bitops.rst        |  2 -
->  Documentation/{ =3D> driver-api}/bt8xxgpio.rst  |  2 -
->  .../bus-virt-phys-mapping.rst                 |  2 -
->  .../{connector =3D> driver-api}/connector.rst   |  2 -
->  .../{console =3D> driver-api}/console.rst       |  2 -
->  Documentation/{ =3D> driver-api}/crc32.rst      |  2 -
->  Documentation/{ =3D> driver-api}/dcdbas.rst     |  2 -
->  .../{ =3D> driver-api}/debugging-modules.rst    |  2 -
->  .../debugging-via-ohci1394.rst                |  2 -
->  Documentation/{ =3D> driver-api}/dell_rbu.rst   |  2 -
->  Documentation/{ =3D> driver-api}/digsig.rst     |  2 -
->  .../{EDID/howto.rst =3D> driver-api/edid.rst}   |  2 -
->  Documentation/{ =3D> driver-api}/eisa.rst       |  2 -
->  .../{ =3D> driver-api}/futex-requeue-pi.rst     |  2 -
->  .../{ =3D> driver-api}/gcc-plugins.rst          |  2 -
->  Documentation/{ =3D> driver-api}/hwspinlock.rst |  2 -
->  Documentation/driver-api/index.rst            | 66 +++++++++++++++++++
->  Documentation/{ =3D> driver-api}/io-mapping.rst |  2 -
->  .../{ =3D> driver-api}/io_ordering.rst          |  2 -
->  .../{IPMI.rst =3D> driver-api/ipmi.rst}         |  2 -
->  .../irq-affinity.rst}                         |  2 -
->  .../irq-domain.rst}                           |  2 -
->  Documentation/{IRQ.rst =3D> driver-api/irq.rst} |  2 -
->  .../{ =3D> driver-api}/irqflags-tracing.rst     |  2 -
->  Documentation/{ =3D> driver-api}/isa.rst        |  2 -
->  Documentation/{ =3D> driver-api}/isapnp.rst     |  2 -
->  Documentation/{ =3D> driver-api}/kobject.rst    |  4 +-
->  Documentation/{ =3D> driver-api}/kprobes.rst    |  2 -
->  Documentation/{ =3D> driver-api}/kref.rst       |  2 -
->  .../pblk.txt =3D> driver-api/lightnvm-pblk.rst} |  0
->  Documentation/{ =3D> driver-api}/lzo.rst        |  2 -
->  Documentation/{ =3D> driver-api}/mailbox.rst    |  2 -
->  .../{ =3D> driver-api}/men-chameleon-bus.rst    |  2 -
->  Documentation/{ =3D> driver-api}/nommu-mmap.rst |  2 -
->  Documentation/{ =3D> driver-api}/ntb.rst        |  2 -
->  Documentation/{nvmem =3D> driver-api}/nvmem.rst |  2 -
->  Documentation/{ =3D> driver-api}/padata.rst     |  2 -
->  .../{ =3D> driver-api}/parport-lowlevel.rst     |  2 -
->  .../{ =3D> driver-api}/percpu-rw-semaphore.rst  |  2 -
->  Documentation/{ =3D> driver-api}/pi-futex.rst   |  2 -
->  Documentation/driver-api/pps.rst              |  2 -
->  .../{ =3D> driver-api}/preempt-locking.rst      |  2 -
->  .../{pti =3D> driver-api}/pti_intel_mid.rst     |  2 -
->  Documentation/driver-api/ptp.rst              |  2 -
->  Documentation/{ =3D> driver-api}/pwm.rst        |  2 -
->  Documentation/{ =3D> driver-api}/rbtree.rst     |  2 -
->  Documentation/{ =3D> driver-api}/remoteproc.rst |  4 +-
->  Documentation/{ =3D> driver-api}/rfkill.rst     |  2 -
->  .../{ =3D> driver-api}/robust-futex-ABI.rst     |  2 -
->  .../{ =3D> driver-api}/robust-futexes.rst       |  2 -
->  Documentation/{ =3D> driver-api}/rpmsg.rst      |  2 -
->  Documentation/{ =3D> driver-api}/sgi-ioc4.rst   |  2 -
->  .../{SM501.rst =3D> driver-api/sm501.rst}       |  2 -
->  .../{ =3D> driver-api}/smsc_ece1099.rst         |  2 -
->  .../{ =3D> driver-api}/speculation.rst          |  8 +--
->  .../{ =3D> driver-api}/static-keys.rst          |  2 -
->  Documentation/{ =3D> driver-api}/switchtec.rst  |  4 +-
->  Documentation/{ =3D> driver-api}/sync_file.rst  |  2 -
->  Documentation/{ =3D> driver-api}/tee.rst        |  2 -
->  .../{ =3D> driver-api}/this_cpu_ops.rst         |  2 -
->  .../unaligned-memory-access.rst               |  2 -
->  .../{ =3D> driver-api}/vfio-mediated-device.rst |  4 +-
->  Documentation/{ =3D> driver-api}/vfio.rst       |  2 -
->  Documentation/{ =3D> driver-api}/xillybus.rst   |  2 -
->  Documentation/{ =3D> driver-api}/xz.rst         |  2 -
->  Documentation/{ =3D> driver-api}/zorro.rst      |  2 -
->  Documentation/driver-model/device.rst         |  2 +-
->  Documentation/fb/fbcon.rst                    |  4 +-
->  Documentation/filesystems/sysfs.txt           |  2 +-
->  Documentation/gpu/drm-mm.rst                  |  2 +-
->  Documentation/ia64/irq-redir.rst              |  2 +-
->  Documentation/laptops/thinkpad-acpi.rst       |  6 +-
->  Documentation/locking/rt-mutex.rst            |  2 +-
->  Documentation/networking/scaling.rst          |  4 +-
->  Documentation/s390/vfio-ccw.rst               |  6 +-
->  Documentation/sysctl/kernel.rst               |  2 +-
->  Documentation/sysctl/vm.rst                   |  2 +-
->  Documentation/trace/kprobetrace.rst           |  2 +-
->  Documentation/translations/zh_CN/IRQ.txt      |  4 +-
->  .../translations/zh_CN/filesystems/sysfs.txt  |  2 +-
->  .../translations/zh_CN/io_ordering.txt        |  4 +-
->  Documentation/w1/w1.netlink                   |  2 +-
->  Documentation/watchdog/hpwdt.rst              |  2 +-
->  MAINTAINERS                                   | 46 ++++++-------
->  arch/Kconfig                                  |  4 +-
->  arch/unicore32/include/asm/io.h               |  2 +-
->  drivers/base/core.c                           |  2 +-
->  drivers/char/ipmi/Kconfig                     |  2 +-
->  drivers/char/ipmi/ipmi_si_hotmod.c            |  2 +-
->  drivers/char/ipmi/ipmi_si_intf.c              |  2 +-
->  drivers/dma-buf/Kconfig                       |  2 +-
->  drivers/gpio/Kconfig                          |  2 +-
->  drivers/gpu/drm/Kconfig                       |  2 +-
->  drivers/pci/switch/Kconfig                    |  2 +-
->  drivers/platform/x86/Kconfig                  |  4 +-
->  drivers/platform/x86/dcdbas.c                 |  2 +-
->  drivers/platform/x86/dell_rbu.c               |  2 +-
->  drivers/pnp/isapnp/Kconfig                    |  2 +-
->  drivers/tty/Kconfig                           |  2 +-
->  drivers/vfio/Kconfig                          |  2 +-
->  drivers/vfio/mdev/Kconfig                     |  2 +-
->  drivers/w1/Kconfig                            |  2 +-
->  include/asm-generic/bitops/atomic.h           |  2 +-
->  include/linux/io-mapping.h                    |  2 +-
->  include/linux/jump_label.h                    |  2 +-
->  include/linux/kobject.h                       |  2 +-
->  include/linux/kobject_ns.h                    |  2 +-
->  include/linux/rbtree.h                        |  2 +-
->  include/linux/rbtree_augmented.h              |  2 +-
->  init/Kconfig                                  |  2 +-
->  kernel/padata.c                               |  2 +-
->  lib/Kconfig                                   |  2 +-
->  lib/Kconfig.debug                             |  2 +-
->  lib/crc32.c                                   |  2 +-
->  lib/kobject.c                                 |  4 +-
->  lib/lzo/lzo1x_decompress_safe.c               |  2 +-
->  lib/xz/Kconfig                                |  2 +-
->  mm/Kconfig                                    |  2 +-
->  mm/nommu.c                                    |  2 +-
->  samples/Kconfig                               |  2 +-
->  samples/kprobes/kprobe_example.c              |  2 +-
->  samples/kprobes/kretprobe_example.c           |  2 +-
->  scripts/gcc-plugins/Kconfig                   |  2 +-
->  tools/include/linux/rbtree.h                  |  2 +-
->  tools/include/linux/rbtree_augmented.h        |  2 +-
->  132 files changed, 173 insertions(+), 235 deletions(-)
->  rename Documentation/{ =3D> driver-api}/atomic_bitops.rst (99%)
->  rename Documentation/{ =3D> driver-api}/bt8xxgpio.rst (99%)
->  rename Documentation/{ =3D> driver-api}/bus-virt-phys-mapping.rst (99%)
->  rename Documentation/{connector =3D> driver-api}/connector.rst (99%)
->  rename Documentation/{console =3D> driver-api}/console.rst (99%)
->  rename Documentation/{ =3D> driver-api}/crc32.rst (99%)
->  rename Documentation/{ =3D> driver-api}/dcdbas.rst (99%)
->  rename Documentation/{ =3D> driver-api}/debugging-modules.rst (98%)
->  rename Documentation/{ =3D> driver-api}/debugging-via-ohci1394.rst (99%)
->  rename Documentation/{ =3D> driver-api}/dell_rbu.rst (99%)
->  rename Documentation/{ =3D> driver-api}/digsig.rst (99%)
->  rename Documentation/{EDID/howto.rst =3D> driver-api/edid.rst} (99%)
->  rename Documentation/{ =3D> driver-api}/eisa.rst (99%)
->  rename Documentation/{ =3D> driver-api}/futex-requeue-pi.rst (99%)
->  rename Documentation/{ =3D> driver-api}/gcc-plugins.rst (99%)
->  rename Documentation/{ =3D> driver-api}/hwspinlock.rst (99%)
->  rename Documentation/{ =3D> driver-api}/io-mapping.rst (99%)
->  rename Documentation/{ =3D> driver-api}/io_ordering.rst (99%)
->  rename Documentation/{IPMI.rst =3D> driver-api/ipmi.rst} (99%)
->  rename Documentation/{IRQ-affinity.rst =3D> driver-api/irq-affinity.rst}=
- (99%)
->  rename Documentation/{IRQ-domain.rst =3D> driver-api/irq-domain.rst} (99=
-%)
->  rename Documentation/{IRQ.rst =3D> driver-api/irq.rst} (99%)
->  rename Documentation/{ =3D> driver-api}/irqflags-tracing.rst (99%)
->  rename Documentation/{ =3D> driver-api}/isa.rst (99%)
->  rename Documentation/{ =3D> driver-api}/isapnp.rst (98%)
->  rename Documentation/{ =3D> driver-api}/kobject.rst (99%)
->  rename Documentation/{ =3D> driver-api}/kprobes.rst (99%)
->  rename Documentation/{ =3D> driver-api}/kref.rst (99%)
->  rename Documentation/{lightnvm/pblk.txt =3D> driver-api/lightnvm-pblk.rs=
-t} (100%)
->  rename Documentation/{ =3D> driver-api}/lzo.rst (99%)
->  rename Documentation/{ =3D> driver-api}/mailbox.rst (99%)
->  rename Documentation/{ =3D> driver-api}/men-chameleon-bus.rst (99%)
->  rename Documentation/{ =3D> driver-api}/nommu-mmap.rst (99%)
->  rename Documentation/{ =3D> driver-api}/ntb.rst (99%)
->  rename Documentation/{nvmem =3D> driver-api}/nvmem.rst (99%)
->  rename Documentation/{ =3D> driver-api}/padata.rst (99%)
->  rename Documentation/{ =3D> driver-api}/parport-lowlevel.rst (99%)
->  rename Documentation/{ =3D> driver-api}/percpu-rw-semaphore.rst (99%)
->  rename Documentation/{ =3D> driver-api}/pi-futex.rst (99%)
->  rename Documentation/{ =3D> driver-api}/preempt-locking.rst (99%)
->  rename Documentation/{pti =3D> driver-api}/pti_intel_mid.rst (99%)
->  rename Documentation/{ =3D> driver-api}/pwm.rst (99%)
->  rename Documentation/{ =3D> driver-api}/rbtree.rst (99%)
->  rename Documentation/{ =3D> driver-api}/remoteproc.rst (99%)
->  rename Documentation/{ =3D> driver-api}/rfkill.rst (99%)
->  rename Documentation/{ =3D> driver-api}/robust-futex-ABI.rst (99%)
->  rename Documentation/{ =3D> driver-api}/robust-futexes.rst (99%)
->  rename Documentation/{ =3D> driver-api}/rpmsg.rst (99%)
->  rename Documentation/{ =3D> driver-api}/sgi-ioc4.rst (99%)
->  rename Documentation/{SM501.rst =3D> driver-api/sm501.rst} (99%)
->  rename Documentation/{ =3D> driver-api}/smsc_ece1099.rst (99%)
->  rename Documentation/{ =3D> driver-api}/speculation.rst (99%)
->  rename Documentation/{ =3D> driver-api}/static-keys.rst (99%)
->  rename Documentation/{ =3D> driver-api}/switchtec.rst (97%)
->  rename Documentation/{ =3D> driver-api}/sync_file.rst (99%)
->  rename Documentation/{ =3D> driver-api}/tee.rst (99%)
->  rename Documentation/{ =3D> driver-api}/this_cpu_ops.rst (99%)
->  rename Documentation/{ =3D> driver-api}/unaligned-memory-access.rst (99%)
->  rename Documentation/{ =3D> driver-api}/vfio-mediated-device.rst (99%)
->  rename Documentation/{ =3D> driver-api}/vfio.rst (99%)
->  rename Documentation/{ =3D> driver-api}/xillybus.rst (99%)
->  rename Documentation/{ =3D> driver-api}/xz.rst (99%)
->  rename Documentation/{ =3D> driver-api}/zorro.rst (99%)
-
-Acked-by: Thierry Reding <thierry.reding@gmail.com>
-
---x1F0m3RQhDZyj8sd
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAl0J8TwACgkQ3SOs138+
-s6FwnBAAgAw4Y4VTIu9fC7EKqGeq67QHb5tbw5DZb3z2ZbpFT2k82eX/X5PTclLE
-yPDjKTqXPGwQ7MnAmYqcMZGlWdrkYXS0/n/nEQ7cpbpzVaOA7NJzs58dgr48qAb0
-bWHbIpuKXs5LAQp/JjrW1bLYDZOSFf3QKpOYJ999lI6qo5peqP+Oi5kIZuob/RYe
-MayT0gsMmjD39kEVWQny/DchbJj+oa4US5kw3mo3JgYdbIDGgj28urwUBCBOgBsH
-IkWf/8NdCW0ypWrTonk0jxmEZy9MAhW8XkIQ/Xu5VzOWVomXOK8KF2SIczESlGSr
-HpZSWhxgu1/sGitcWoPlQM6H2nFOOQIPRLAR53vzCc1KMeYfQ5uBDqsCw8im+lkw
-qkXrljQ5mmFmFN0eVt38/hR/LzEofvCOF8LySe4+Ho5jZj0Fkr3istEObrFfks7l
-CAhqy+UEYLxujLZ95dHPq3vvKSq56XQj4xmSZ3QCB2PJ9xAgGXywCURXN+euFk2r
-JX6l+AVuQrNJy8sffyugZO1QX7AjcuDYScZsuKn6w/J1jih9NmpPe0UMbYXDHoJ/
-ZSIYMZgi4RMjlmh71fAg4ClUsQ5G5UPwAlUm2CcmAfrFKZJfkUu1SnI406y0xe0Y
-n/mzJsnMuPU8hgQkzfBGPpEInrOG3Bqr+G9L80TZR/7j+sBFBlA=
-=iOMR
------END PGP SIGNATURE-----
-
---x1F0m3RQhDZyj8sd--
+Random drive-by comment: Could we convert these into hyperlinks within
+sphinx somehow, without making them less useful as raw file references
+(with vim I can just type 'gf' and it works, emacs probably the same).
+-Daniel
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
++41 (0) 79 365 57 48 - http://blog.ffwll.ch
