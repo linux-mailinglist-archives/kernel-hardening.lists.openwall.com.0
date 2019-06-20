@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16201-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16202-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id B460E4CBD8
-	for <lists+kernel-hardening@lfdr.de>; Thu, 20 Jun 2019 12:28:27 +0200 (CEST)
-Received: (qmail 22335 invoked by uid 550); 20 Jun 2019 10:28:20 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 486BC4D370
+	for <lists+kernel-hardening@lfdr.de>; Thu, 20 Jun 2019 18:16:08 +0200 (CEST)
+Received: (qmail 5271 invoked by uid 550); 20 Jun 2019 16:16:01 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,95 +13,70 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 21700 invoked from network); 20 Jun 2019 10:27:26 -0000
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.63,396,1557212400"; 
-   d="scan'208";a="165280150"
-From: "Gote, Nitin R" <nitin.r.gote@intel.com>
-To: Jann Horn <jannh@google.com>
-CC: Kees Cook <keescook@chromium.org>, Kernel Hardening
-	<kernel-hardening@lists.openwall.com>
-Subject: RE: Get involved
-Thread-Topic: Get involved
-Thread-Index: AQHVHVo0BwcLDIaDOkeqa7K+CkAJCKaQH/yAgAADbACAAKvqAIAAGSUAgBBOcuD//8YlgIADbJKg
-Date: Thu, 20 Jun 2019 10:27:09 +0000
-Message-ID: <12356C813DFF6F479B608F81178A561586A45E@BGSMSX101.gar.corp.intel.com>
-References: <12356C813DFF6F479B608F81178A5615869EB0@BGSMSX101.gar.corp.intel.com>
- <CAG48ez1fGhPmARDo9F_h=aX5G4eS8ti76678ynrEF0=mqXH02Q@mail.gmail.com>
-In-Reply-To: <CAG48ez1fGhPmARDo9F_h=aX5G4eS8ti76678ynrEF0=mqXH02Q@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-dlp-product: dlpe-windows
-dlp-version: 11.0.600.7
-dlp-reaction: no-action
-x-ctpclassification: CTP_NT
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiZWRjOGNkOTUtZDZlNy00NWFmLTg0MjktZmUxYjkxNmIwNTU5IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiOHVkeFFVaWxpSDI4RkI0TzljSk9xZ1BuZEpMaCtDXC9iVzVUcXhhXC9lRU1oWktcL2VKb0hYV0dST1FLV3hyaHRwTCJ9
-x-originating-ip: [10.223.10.10]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Received: (qmail 5237 invoked from network); 20 Jun 2019 16:16:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=nsq9m+RydRP+UlZvf2IzXrK4/1lZHyenXYJPwSxJ9W4=;
+        b=DxOiO2xD59iUl0COzdH4utRYVIqNakxud+Cq6eQ0lcRjmL6scrPZQD1+qNIw5fFhwB
+         hfpjmQ5wC3TxaeAX+hWv5LNP06/POTlCzsrMAeNFmrbwQfjbxgV1udIX9xYuzwo0BYGB
+         fqpXBv0PHIPd7lKVpy4HBUWYjuQ4l8YjJlX2c=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=nsq9m+RydRP+UlZvf2IzXrK4/1lZHyenXYJPwSxJ9W4=;
+        b=TFtyb7t7g+QtLPEkWXnour4+6lL7hGse1NSqZYHKAMB7UEOMWJ5ik/3rissfgI1lN0
+         rUOQ+YC234menYk1sHsuF9Q+bucoxPQpYG04wD+QzkIr6W1of5hkqRCEPekEuhfoVONI
+         9crovvflVISuZwhbaDAjbDw0y93fA8wLZTovL4zc3X1wXf1nqB9g9XstLdHHSVODaSzU
+         7MEqD0MFGD7oRHixCHAaxlk6L7wGMcgOYkd29gG8sbqkGKfdKJm+HlCj704rZnQ30Boz
+         AtcyBtgLFP1daACZR9b24syqi4TQIXXcGR241g5+VyVgTvrYfnv1MP16hSab69IhDsp6
+         hlnQ==
+X-Gm-Message-State: APjAAAWblGiM7DLLNhk/kdqgFRVjOqzqqX3PD/KRNJf5NDyEfJI7nJeq
+	utn6WWo5q9RB8aa9nXAfbgAIhA==
+X-Google-Smtp-Source: APXvYqzLMra1QrKzoafWgGcgrSTCVYNxP99z6mFNUnM95tGX8hEid+fJXa4859vjK4FfnlKuZTRpLw==
+X-Received: by 2002:a17:902:e082:: with SMTP id cb2mr7673096plb.274.1561047348118;
+        Thu, 20 Jun 2019 09:15:48 -0700 (PDT)
+Date: Thu, 20 Jun 2019 09:15:46 -0700
+From: Kees Cook <keescook@chromium.org>
+To: Romain Perier <romain.perier@gmail.com>
+Cc: Kernel Hardening <kernel-hardening@lists.openwall.com>
+Subject: Re: Audit and fix all misuse of NLA_STRING: STATUS
+Message-ID: <201906200913.D2698BD0@keescook>
+References: <CABgxDoLSzkVJ7Vh8mLiZySz6uS+VEu+GUxRqX8EWHKQDyz2fSg@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABgxDoLSzkVJ7Vh8mLiZySz6uS+VEu+GUxRqX8EWHKQDyz2fSg@mail.gmail.com>
 
-SGkgSmFubiwNCg0KVGhhbmsgeW91IGZvciB0aGUgaW5wdXQuDQpJIGhhdmUgc3RhcnRlZCB3b3Jr
-aW5nIG9uIHRoZXNlIGFuZCBJIHdpbGwgc2VuZCBhIHBhdGNoIGZvciByZXZpZXcgc29vbi4NCg0K
-QmVzdCBSZWdhcmRzLA0KTml0aW4gR290ZS4gDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0t
-DQpGcm9tOiBKYW5uIEhvcm4gW21haWx0bzpqYW5uaEBnb29nbGUuY29tXSANClNlbnQ6IFR1ZXNk
-YXksIEp1bmUgMTgsIDIwMTkgNTowNiBQTQ0KVG86IEdvdGUsIE5pdGluIFIgPG5pdGluLnIuZ290
-ZUBpbnRlbC5jb20+DQpDYzogS2VlcyBDb29rIDxrZWVzY29va0BjaHJvbWl1bS5vcmc+OyBLZXJu
-ZWwgSGFyZGVuaW5nIDxrZXJuZWwtaGFyZGVuaW5nQGxpc3RzLm9wZW53YWxsLmNvbT47IFNoeWFt
-IFNhaW5pIDxtYXloczExc2FpbmlAZ21haWwuY29tPg0KU3ViamVjdDogUmU6IEdldCBpbnZvbHZl
-ZA0KDQpPbiBUdWUsIEp1biAxOCwgMjAxOSBhdCAxOjIwIFBNIEdvdGUsIE5pdGluIFIgPG5pdGlu
-LnIuZ290ZUBpbnRlbC5jb20+IHdyb3RlOg0KPg0KPiBIaSBLZWVzLA0KPg0KPiBJIHdvdWxkIGxp
-a2UgdG8gYmUgaW52b2x2ZWQgb24gdXBzdHJlYW0gb24gc2VjdXJpdHkgcmVsYXRlZCB0b3BpY3Mu
-DQo+IEknbSBwbGFubmluZyB0byB3b3JrIG9uIGJlbG93IGl0ZW1zIGZyb20gS1NQUCB0byBkbyBs
-aXN0Og0KPiAgICAgICAgIDEuIGRlcHJlY2F0ZSBzdHJjcHkoKSBpbiBmYXZvciBvZiBzdHJzY3B5
-KCkuDQo+ICAgICAgICAgMi4gZGVwcmVjYXRlIHN0cmxjcHkoKSBpbiBmYXZvciBvZiBzdHJzY3B5
-KCkuDQo+ICAgICAgICAgMy4gZGVwcmVjYXRlIHN0cm5jcHkoKSBpbiBmYXZvciBvZiBzdHJzY3B5
-KCksIHN0cnNjcHlfcGFkKCksIG9yIHN0cjJtZW1fcGFkKCkuDQo+DQo+IEknbSB0aGlua2luZyBv
-ZiBmb2xsb3dpbmcgYXBwcm9hY2ggZm9yIGFib3ZlIGl0ZW1zIDoNCj4NCj4gQXBwcm9hY2ggMSA6
-IERvIHdlIG5lZWQgdG8gYmxpbmRseSByZXBsYWNlIHN0cmNweSgpIG9yIHN0cmxjcHkoKSBvciBz
-dHJuY3B5KCkgd2l0aCBzdHJzY3B5KCkgaW4gZW50aXJlIGxpbnV4IGtlcm5lbCB0cmVlID8NCj4g
-ICAgICAgICAgICAgICAgICAoVGhpcyBhcHByb2FjaCBpcyB0aW1lIGNvbnN1bWluZyBhcyBsb3Rz
-IG9mIGNoYW5nZXMgDQo+IG5lZWQgdG8gZG8gaW4gc2luZ2xlIHBhdGNoIG9yIG11bHRpcGxlIHBh
-dGNoKQ0KDQpMaW51cyB3cm90ZSBhdCA8aHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvbGttbC9DQSs1
-NWFGd0hDUG5QZl94czZHSnUzN1VCdmdfQlNpRlBIMnVRcHM3cU5ORlY4RWotU0FAbWFpbC5nbWFp
-bC5jb20vPjoNCg0KfCBJIHdyb3RlIGEgbG9uZ2lzaCBtZXJnZSBtZXNzYWdlIGFib3V0IHdoeSAt
-IGJ1dCBpdCBib2lscyBkb3duIHRvIG1lIA0KfCBoYXRpbmcgdGhlIG1pbmRsZXNzIHRyaXZpYWwg
-Y29udmVyc2lvbiBwYXRjaGVzLiBXaGljaCB3ZXJlIG5vdCBpbiB0aGUgDQp8IHB1bGwgcmVxdWVz
-dCwgYnV0IEkgd2FudCB0byBtYWtlIGl0IGNsZWFyIHRvIGV2ZXJ5Ym9keSB0aGF0IEkgaGF2ZSAN
-CnwgYWJzb2x1dGVseSB6ZXJvIGludGVyZXN0IGluIHNlZWluZyBzdWNoIHBhdGNoZXMuIEkgd2Fu
-dCB0byBlbmNvdXJhZ2UgDQp8IGp1ZGljaW91cyB1c2Ugb2Ygc3Ryc2NweSgpIGluIG5ldyBjb2Rl
-LCBvciBpbiBjb2RlIHRoYXQgZ2V0cyBtb2RpZmllZCANCnwgYmVjYXVzZSBpdCBpcyBidWdneSBv
-ciBpcyB1cGRhdGVkIGZvciBvdGhlciByZWFzb25zIChhbmQgdGh1cyB0aG91Z2h0IA0KfCBhYm91
-dCBhbmQgdGVzdGVkKSwgYnV0IEkgYW0gKm5vdCogZ29pbmcgdG8gYWNjZXB0IHBhdGNoZXMgdGhh
-dCBkbyBtYXNzIA0KfCBjb252ZXJzaW9ucyBvZiBzdHJsY3B5IG9yIHN0cm5jcHkgdG8gdGhlIG5l
-dyBpbnRlcmZhY2UuDQoNCkZyb20gdGhlICJsb25naXNoIG1lcmdlIG1lc3NhZ2UiIGF0DQo8aHR0
-cHM6Ly9naXQua2VybmVsLm9yZy9wdWIvc2NtL2xpbnV4L2tlcm5lbC9naXQvdG9ydmFsZHMvbGlu
-dXguZ2l0L2NvbW1pdC8/aWQ9MzBjNDQ2NTlmNGEzZTdlMWY5ZjQ3ZTg5NTU5MWI0YjQwYmY2MjY3
-MT46DQoNCnwgRXZlcnkgdGltZSB3ZSBpbnRyb2R1Y2UgYSBuZXctYW5kLWltcHJvdmVkIGludGVy
-ZmFjZSwgcGVvcGxlIHN0YXJ0IA0KfCBkb2luZyB0aGVzZSBpbnRlcm1pbmFibGUgc2VyaWVzIG9m
-IHRyaXZpYWwgY29udmVyc2lvbiBwYXRjaGVzLg0KfA0KfCBBbmQgZXZlcnkgdGltZSB0aGF0IGhh
-cHBlbnMsIHNvbWVib2R5IGRvZXMgc29tZSBzaWxseSBtaXN0YWtlLCBhbmQgdGhlIA0KfCBjb252
-ZXJzaW9uIHBhdGNoIHRvIHRoZSBpbXByb3ZlZCBpbnRlcmZhY2UgYWN0dWFsbHkgbWFrZXMgdGhp
-bmdzIHdvcnNlLg0KfCBCZWNhdXNlIHRoZSBwYXRjaCBpcyBtaW5kbnVtYmluZyBhbmQgdHJpdmlh
-bCwgbm9ib2R5IGhhcyB0aGUgYXR0ZW50aW9uIA0KfCBzcGFuIHRvIGxvb2sgYXQgaXQgY2FyZWZ1
-bGx5LCBhbmQgaXQncyB1c3VhbGx5IGRvbmUgb3ZlciBsYXJnZSANCnwgc3dhdGNoZXMgb2Ygc291
-cmNlIGNvZGUgd2hpY2ggbWVhbnMgdGhhdCBub3QgZXZlcnkgY29udmVyc2lvbiBnZXRzIHRlc3Rl
-ZC4NCnwNCnwgU28gSSdtIHB1bGxpbmcgdGhlIHN0cnNjcHkoKSBzdXBwb3J0IGJlY2F1c2UgaXQg
-KmlzKiBhIGJldHRlciBpbnRlcmZhY2UuDQp8IEJ1dCBJIHdpbGwgcmVmdXNlIHRvIHB1bGwgbWlu
-ZGxlc3MgY29udmVyc2lvbiBwYXRjaGVzLiAgVXNlIHRoaXMgaW4gDQp8IHBsYWNlcyB3aGVyZSBp
-dCBtYWtlcyBzZW5zZSwgYnV0IGRvbid0IGRvIHRyaXZpYWwgcGF0Y2hlcyB0byBmaXggDQp8IHRo
-aW5ncyB0aGF0IGFyZW4ndCBhY3R1YWxseSBrbm93biB0byBiZSBicm9rZW4uDQoNClVubGVzcyBM
-aW51cyBjaGFuZ2VkIGhpcyBtaW5kIGFib3V0IHRoYXQgaW4gdGhlIHllYXJzIHNpbmNlIHRoZW4s
-IHlvdSBwcm9iYWJseSBkb24ndCB3YW50IHRvIHNwZW5kIHlvdXIgdGltZSB3cml0aW5nIGEgcGF0
-Y2ggTGludXMgZG9lc24ndCB3YW50Lg0KDQo+IEFwcHJvYWNoIDIgOiBEbyB3ZSBuZWVkIHRvIGlt
-cGxlbWVudCBzY3JpcHQgb3Igc29tZSBtZWNoYW5pc20gd2hpY2ggY2hlY2tzIGZvciBmdW5jdGlv
-bnMgbGlrZXMgc3RyY3B5KCksIHN0cmxjcHkoKSBvciBzdHJuY3B5KCkgYW5kDQo+ICAgICAgICAg
-ICAgICAgICAgdGhyb3cgc29tZSBkZXByZWNhdGUgZXJyb3IsIGlmIHRoZXNlIGZ1bmN0aW9ucyBm
-b3VuZCBhbmQgc3VnZ2VzdCB0byB1c2Ugc3Ryc2NweSgpID8NCg0KSXQgd291bGQgcHJvYmFibHkg
-bWFrZSBzZW5zZSB0byBhZGQgd2FybmluZ3MgZm9yIHN0cmxjcHkoKSBhbmQNCnN0cm5jcHkoKSBp
-biBzY3JpcHRzL2NoZWNrcGF0Y2gucGwuDQo=
+On Tue, Jun 18, 2019 at 07:56:42PM +0200, Romain Perier wrote:
+> Hi !
+> 
+> Here a first review, you can get the complete list here:
+> 
+> https://salsa.debian.org/rperier-guest/linux-tree/raw/next/STATUS
+
+Cool! You identified three issues:
+
+net/netfilter/nfnetlink_cthelper.c:
+	NF_CT_HELPER_NAME_LEN is used instead of NF_CT_EXP_POLICY_NAME_LEN
+
+net/netfilter/ipset/ip_set_list_set.c:
+	IPSET_ATTR_NAME and IPSET_ATTR_NAMEREF both have a len of
+	IPSET_MAXNAMELEN for a string of size IPSET_MAXNAMELEN
+
+net/openvswitch/conntrack.c:
+	maxlen of NF_CT_HELPER_NAME_LEN with a string of size
+	NF_CT_HELPER_NAME_LEN. maxlen of CTNL_TIMEOUT_NAME_MAX with a
+	string of size CTNL_TIMEOUT_NAME_MAX
+
+I haven't looked closely at this myself yet, but I think the next step
+would be to write patches for each of these. And while doing that, have
+an eye toward thinking about how each case could be made more robust in
+the future to avoid these kinds of flaws returning.
+
+Nice!
+
+-- 
+Kees Cook
