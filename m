@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16223-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16224-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 33F8A524E1
-	for <lists+kernel-hardening@lfdr.de>; Tue, 25 Jun 2019 09:34:51 +0200 (CEST)
-Received: (qmail 3673 invoked by uid 550); 25 Jun 2019 07:34:42 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 0F26C5530C
+	for <lists+kernel-hardening@lfdr.de>; Tue, 25 Jun 2019 17:15:52 +0200 (CEST)
+Received: (qmail 3804 invoked by uid 550); 25 Jun 2019 15:15:44 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,78 +13,37 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 3653 invoked from network); 25 Jun 2019 07:34:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=merlin.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	 bh=EfE9b6iC+ztQ2vj5wKDIVg9bT9RfKnT+aDZ7Xh8JmQE=; b=PSt1cdfG8jH5IrxOFwBR1B7iF
-	JopUIkQmRjHxy5FprH9Y9CT7pNwP2YVqEqKo8zs1R7JVlb0XlkpvWvDzyT/iV0M726xXDDr5LAztO
-	+clzTA2iC4AVb5yD2D0yaHL8M1nGCoVcywSlRINOe6I6HWIOVZORlh/9C5BAk+4Pe6zgbun+JUf/e
-	slVVCpJLcSsz0tYF3bVjdB9286lk2vtmB7eBZ0K+d/xiufG0TuVMCQs6wQOQY+JfJGHnxgNb+T7bF
-	KTIygfAloBmKQn/5WzScPCwqIV95gzFkI96M7ypN2EJxsIVWZG4UVAZ6OUoZ0KszrzoN8t3rFlXUh
-	34boJnm5Q==;
-Date: Tue, 25 Jun 2019 09:34:07 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: Jann Horn <jannh@google.com>
-Cc: Joel Fernandes <joel@joelfernandes.org>,
-	kernel list <linux-kernel@vger.kernel.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Will Deacon <will.deacon@arm.com>,
-	"Paul E . McKenney" <paulmck@linux.vnet.ibm.com>,
-	Elena Reshetova <elena.reshetova@intel.com>,
-	Kees Cook <keescook@chromium.org>,
-	kernel-team <kernel-team@android.com>,
-	Kernel Hardening <kernel-hardening@lists.openwall.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Michal Hocko <mhocko@suse.com>
-Subject: Re: [PATCH RFC v2] Convert struct pid count to refcount_t
-Message-ID: <20190625073407.GP3436@hirez.programming.kicks-ass.net>
-References: <20190624184534.209896-1-joel@joelfernandes.org>
- <20190624185214.GA211230@google.com>
- <CAG48ez3maGsRbN3qr8YVb6ZCw0FDq-7GqqiTiA4yEa1mebkubw@mail.gmail.com>
+Received: (qmail 3785 invoked from network); 25 Jun 2019 15:15:44 -0000
+From: Florian Weimer <fweimer@redhat.com>
+To: linux-api@vger.kernel.org, kernel-hardening@lists.openwall.com, linux-x86_64@vger.kernel.org, linux-arch@vger.kernel.org
+Cc: Andy Lutomirski <luto@kernel.org>, Kees Cook <keescook@chromium.org>, Carlos O'Donell <carlos@redhat.com>
+Subject: Detecting the availability of VSYSCALL
+Date: Tue, 25 Jun 2019 17:15:27 +0200
+Message-ID: <87v9wty9v4.fsf@oldenburg2.str.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAG48ez3maGsRbN3qr8YVb6ZCw0FDq-7GqqiTiA4yEa1mebkubw@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Tue, 25 Jun 2019 15:15:32 +0000 (UTC)
 
-On Mon, Jun 24, 2019 at 09:10:15PM +0200, Jann Horn wrote:
-> That part of the documentation only talks about cases where you have a
-> control dependency on the return value of the refcount operation. But
-> refcount_inc() does not return a value, so this isn't relevant for
-> refcount_inc().
-> 
-> Also, AFAIU, the control dependency mentioned in the documentation has
-> to exist *in the caller* - it's just pointing out that if you write
-> code like the following, you have a control dependency between the
-> refcount operation and the write:
-> 
->     if (refcount_inc_not_zero(&obj->refcount)) {
->       WRITE_ONCE(obj->x, y);
->     }
-> 
-> For more information on the details of this stuff, try reading the
-> section "CONTROL DEPENDENCIES" of Documentation/memory-barriers.txt.
+We're trying to create portable binaries which use VSYSCALL on older
+kernels (to avoid performance regressions), but gracefully degrade to
+full system calls on kernels which do not have VSYSCALL support compiled
+in (or disabled at boot).
 
-IIRC the argument went as follows:
+For technical reasons, we cannot use vDSO fallback.  Trying vDSO first
+and only then use VSYSCALL is the way this has been tackled in the past,
+which is why this userspace ABI breakage goes generally unnoticed.  But
+we don't have a dynamic linker in our scenario.
 
- - if you use refcount_inc(), you've already got a stable object and
-   have ACQUIRED it otherwise, typically through locking.
+Is there any reliable way to detect that VSYSCALL is unavailable,
+without resorting to parsing /proc/self/maps or opening file
+descriptors?
 
- - if you use refcount_inc_not_zero(), you have a semi stable object
-   (RCU), but you still need to ensure any changes to the object happen
-   after acquiring a reference, and this is where the control dependency
-   comes in as Jann already explained.
+Should we try mapping something at the magic address (without MAP_FIXED)
+and see if we get back a different address?  Something in the auxiliary
+vector would work for us, too, but nothing seems to exists there
+unfortunately.
 
-Specifically, it would be bad to allow STOREs to happen before we know
-the refcount isn't 0, as that would be a UaF.
-
-Also see the comment in lib/refcount.c.
-
+Thanks,
+Florian
