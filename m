@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16230-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16231-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 7AE8D555BE
-	for <lists+kernel-hardening@lfdr.de>; Tue, 25 Jun 2019 19:18:53 +0200 (CEST)
-Received: (qmail 3979 invoked by uid 550); 25 Jun 2019 17:18:47 -0000
+	by mail.lfdr.de (Postfix) with SMTP id D8412555C9
+	for <lists+kernel-hardening@lfdr.de>; Tue, 25 Jun 2019 19:21:40 +0200 (CEST)
+Received: (qmail 12252 invoked by uid 550); 25 Jun 2019 17:21:35 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,64 +13,79 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 3944 invoked from network); 25 Jun 2019 17:18:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=e9aHcXOS3djuX2+rj9brnQ5rO1FWrHd9VPMB1qYiIng=;
-        b=LCjiUnngqp9q2yeBlDEksPSSztZCGq2aLoWu9hvrH3pTebpaLEwL8mnPJz/SagDOxM
-         GKmCZAMm3yqYj74wKHqv1IfMtZZQDvfVJcup+566HQZ7HKqtfcqWEdCZfuS7kLgW/sCm
-         RBV2dLgy9vDV7JPJL+16Lx9nRk3BxK5QqKPtI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=e9aHcXOS3djuX2+rj9brnQ5rO1FWrHd9VPMB1qYiIng=;
-        b=lQttQiovDwD/3gilg3H0wVx1DQ8Yr8nu4R/lvWIZzb3A6xnxxW3E3e5sngHw6QMx+f
-         99Wrxgq1askgIdBVtaQ5lj/PrAyMuzZ0GSDvwWnUeC75tBszPjT0M70SGzi6hwWeME8z
-         dXmEgLkSM7t63YJkA8EvctNHpO37NrILaU5K6XrcErnnlK6oU92VsTKcCVHGgzXo/d6e
-         WkqUTvfmQEQcUuyPqiNHoYPB1HQnjCb0PqtEppIsdBxNEXc7SI/xXB7tV6FF3ezUTEgy
-         VfFkzQ2K6IC0p10CQtALmVm9547Cb/y26qDlxAFC4DoZBEIuqkyw2vcHW/xC89xcdToJ
-         TR8g==
-X-Gm-Message-State: APjAAAV71KnvEzesPHsjcRBIplpN4912fhVdiDBhprsJzOtKJ6B858NO
-	MItWNFxUpM5JkWpytZdR2jZvJ7rGuUI=
-X-Google-Smtp-Source: APXvYqxN+J6ICyTDQZ72V1otPRpYfIOiFqhdDdczVvBTWfZ2ZcbzNDjZ/LJLO05WS83ee2NbVt8o8g==
-X-Received: by 2002:a63:6b46:: with SMTP id g67mr32330542pgc.45.1561483114212;
-        Tue, 25 Jun 2019 10:18:34 -0700 (PDT)
-Date: Tue, 25 Jun 2019 10:18:32 -0700
-From: Kees Cook <keescook@chromium.org>
-To: Yann Droneaud <ydroneaud@opteya.com>
+Received: (qmail 12195 invoked from network); 25 Jun 2019 17:21:35 -0000
+Message-ID: <52e1fb49f1f0acf292fb17c0153b7511baaac63e.camel@opteya.com>
+From: Yann Droneaud <ydroneaud@opteya.com>
+To: Solar Designer <solar@openwall.com>
 Cc: kernel-hardening@lists.openwall.com
+Date: Tue, 25 Jun 2019 19:21:23 +0200
+In-Reply-To: <20190625170043.GA22560@openwall.com>
+References: <dab4681adb58c769b8b8f580e3d2057b0f4f2607.camel@opteya.com>
+	 <20190625170043.GA22560@openwall.com>
+Organization: OPTEYA
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.32.3 (3.32.3-1.fc30) 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a01:e35:39f2:1220:9dd7:c176:119b:4c9d
+X-SA-Exim-Mail-From: ydroneaud@opteya.com
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on ou.quest-ce.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00,
+	URIBL_BLOCKED autolearn=ham version=3.3.2
 Subject: Re: Archive kernel-hardening@lists.openwall.com  on lore.kernel.org
  too
-Message-ID: <201906251017.8012A503@keescook>
-References: <dab4681adb58c769b8b8f580e3d2057b0f4f2607.camel@opteya.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <dab4681adb58c769b8b8f580e3d2057b0f4f2607.camel@opteya.com>
+X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:24:06 +0000)
+X-SA-Exim-Scanned: Yes (on ou.quest-ce.net)
 
-On Tue, Jun 25, 2019 at 01:21:03AM +0200, Yann Droneaud wrote:
-> I think it might make sense to have kernel-hardening@lists.openwall.com
->  archived on https://lore.kernel.org/lists.html to benefit from cross
-> reference between various kernel related mailing list.
-> 
-> The process to add the list is described at 
-> https://korg.wiki.kernel.org/userdoc/lore
-> 
-> Is having the list archived at https://lore.kernel.org/ something
-> acceptable ?
-> 
-> Is there someone already working on it ?
-> 
-> If not, can I do it ?
+Hi,
 
-As Solar has said, yes please. :)
+Le mardi 25 juin 2019 à 19:00 +0200, Solar Designer a écrit :
+> On Tue, Jun 25, 2019 at 01:21:03AM +0200, Yann Droneaud wrote:
+> > I think it might make sense to have kernel-hardening@lists.openwall.com
+> >  archived on https://lore.kernel.org/lists.html to benefit from cross
+> > reference between various kernel related mailing list.
+> > 
+> > The process to add the list is described at 
+> > https://korg.wiki.kernel.org/userdoc/lore
+> > 
+> > Is having the list archived at https://lore.kernel.org/ something
+> > acceptable ?
+> 
+> Yes.
+> 
+> > Is there someone already working on it ?
+> 
+> Probably not.
+> 
+> > If not, can I do it ?
+> 
+> Yes, please.
+> 
+> > Unfortunately I'm a late subscriber, so my archive is incomplete, which
+> > is a no-go according to the documentation:
+> > 
+> > > As one of prerequisites they require that we provide full existing 
+> > > archives of all list messages (or, at least, as complete as
+> > > possible).
+> > 
+> > Could it be possible for the list administrator to help by providing an
+> > archived (if possible, processed with 
+> > https://git.kernel.org/pub/scm/linux/kernel/git/mricon/korg-helpers.git/plain/list-archive-maker.py
+> > as described by 
+> > https://korg.wiki.kernel.org/userdoc/lore#sanitizing_the_archive).
+> > Solar Designer ?
+> 
+> I'd like to provide you with an mbox of the archive, and you take care
+> of the rest.  Works for you?
+> 
 
-Feel free to mention myself and Solar in the helpdesk@ email. There is
-already a patchwork instance tracking kernel-hardening, so this
-shouldn't be a surprise to the kernel.org admins. :)
+Would be great.
+
+Thanks.
 
 -- 
-Kees Cook
+Yann Droneaud
+OPTEYA
+
+
