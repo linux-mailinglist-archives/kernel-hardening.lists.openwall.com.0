@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16251-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16253-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 510875685A
-	for <lists+kernel-hardening@lfdr.de>; Wed, 26 Jun 2019 14:12:53 +0200 (CEST)
-Received: (qmail 21867 invoked by uid 550); 26 Jun 2019 12:12:46 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 0B72C56955
+	for <lists+kernel-hardening@lfdr.de>; Wed, 26 Jun 2019 14:36:34 +0200 (CEST)
+Received: (qmail 15636 invoked by uid 550); 26 Jun 2019 12:36:27 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,98 +13,115 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 21835 invoked from network); 26 Jun 2019 12:12:45 -0000
-From: Florian Weimer <fweimer@redhat.com>
-To: Andy Lutomirski <luto@kernel.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>,  Linux API <linux-api@vger.kernel.org>,  Kernel Hardening <kernel-hardening@lists.openwall.com>,  linux-x86_64@vger.kernel.org,  linux-arch <linux-arch@vger.kernel.org>,  Kees Cook <keescook@chromium.org>,  "Carlos O'Donell" <carlos@redhat.com>,  X86 ML <x86@kernel.org>
-Subject: Re: Detecting the availability of VSYSCALL
-References: <87v9wty9v4.fsf@oldenburg2.str.redhat.com>
-	<alpine.DEB.2.21.1906251824500.32342@nanos.tec.linutronix.de>
-	<87lfxpy614.fsf@oldenburg2.str.redhat.com>
-	<CALCETrVh1f5wJNMbMoVqY=bq-7G=uQ84BUkepf5RksA3vUopNQ@mail.gmail.com>
-	<87a7e5v1d9.fsf@oldenburg2.str.redhat.com>
-	<CALCETrUDt4v3=FqD+vseGTKTuG=qY+1LwRPrOrU8C7vCVbo=uA@mail.gmail.com>
-Date: Wed, 26 Jun 2019 14:12:22 +0200
-In-Reply-To: <CALCETrUDt4v3=FqD+vseGTKTuG=qY+1LwRPrOrU8C7vCVbo=uA@mail.gmail.com>
-	(Andy Lutomirski's message of "Tue, 25 Jun 2019 14:49:27 -0700")
-Message-ID: <87o92kmtp5.fsf@oldenburg2.str.redhat.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Wed, 26 Jun 2019 12:12:33 +0000 (UTC)
+Delivered-To: moderator for kernel-hardening@lists.openwall.com
+Received: (qmail 30090 invoked from network); 26 Jun 2019 12:20:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=2Fq0HjbifmsdupktcfAuEl6sSbOWTKpMU8wUfFApIcI=;
+        b=h8oRe74wvAhFNxCVSSLhgtaf8DdDRcvv2LUELZFKlhxIfMWHkB06yNG7SNT3CIncbO
+         xrYAcYPkEKjnBbVe2WkkxpRSyACn/8q3L802S7S92zdmpj8B19KqEVJcOM2de/TNEknR
+         +94Tt3chS1BA9EQxdCUwN45Wrz3UQ2wxYNt9NaVvGQq71AgKto3OiuqHn7RxyjdL02P3
+         kTB2Ww3CiDQVdnviX+kBmfbmKcALIJ+dol51U9jzsfedTnn6SYA/TwGSVoVw9zlhWnSb
+         4EeKQMkev9uTpqQzluNSwGkO5ukTgZfcxz/SaVb7HtKHx/CIH57gzcebuKUlYjgHmyus
+         M3AQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=2Fq0HjbifmsdupktcfAuEl6sSbOWTKpMU8wUfFApIcI=;
+        b=hQoIzLbxjXnY9lCavF1+gWqiAidIKH0gwEecQNhM++jT5yo7jsXEHHjAQuLOEgHEwl
+         TjVvlheo1dQbzqW50Pxkj5O/fOMn3/ONP3keAiR32mTNxzG0r44suduK1lCrm8c91hCR
+         xmZrnZ5vpVpZ0c7/ZWClzzO1olOaxjr+H6WXBU8bkp7YHsCpuMH8TzZYv1DgOwqajRzQ
+         mS5+6LRN02lwegyfya/P5iwYIWCo0Sk+ClTMj9b0WZmNuVhSw1F4gfshCAuj3UUHu+O5
+         9tPyVDTVmOUNBCfF1VmCtbYwefUYrKImv0LHOn87+YMMeUvFNgju4cQbtOQt/kDO+Z1m
+         uwlA==
+X-Gm-Message-State: APjAAAVDvjVClROBPIQIroWPFRQ7U6K4Jlk0nx0rehEOle5s0R5xHJTk
+	sC6dsvK6+qjPX9y41EbfsQznEUSsqlI=
+X-Google-Smtp-Source: APXvYqwCAtzX9p5b1vV/t1GUdeUyS8l0gHd33EslOH8hxFCkdYOBd6HFsLdwDix1xDg/zZ5Qa9VT7wjTypQ=
+X-Received: by 2002:a0c:d249:: with SMTP id o9mr3328284qvh.196.1561551587948;
+ Wed, 26 Jun 2019 05:19:47 -0700 (PDT)
+Date: Wed, 26 Jun 2019 14:19:41 +0200
+Message-Id: <20190626121943.131390-1-glider@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.22.0.410.gd8fdbe21b5-goog
+Subject: [PATCH v8 0/3] add init_on_alloc/init_on_free boot options
+From: Alexander Potapenko <glider@google.com>
+To: Andrew Morton <akpm@linux-foundation.org>, Christoph Lameter <cl@linux.com>, 
+	Kees Cook <keescook@chromium.org>
+Cc: Alexander Potapenko <glider@google.com>, Masahiro Yamada <yamada.masahiro@socionext.com>, 
+	Michal Hocko <mhocko@kernel.org>, James Morris <jmorris@namei.org>, 
+	"Serge E. Hallyn" <serge@hallyn.com>, Nick Desaulniers <ndesaulniers@google.com>, 
+	Kostya Serebryany <kcc@google.com>, Dmitry Vyukov <dvyukov@google.com>, Sandeep Patil <sspatil@android.com>, 
+	Laura Abbott <labbott@redhat.com>, Randy Dunlap <rdunlap@infradead.org>, Jann Horn <jannh@google.com>, 
+	Mark Rutland <mark.rutland@arm.com>, Marco Elver <elver@google.com>, Qian Cai <cai@lca.pw>, 
+	linux-mm@kvack.org, linux-security-module@vger.kernel.org, 
+	kernel-hardening@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
 
-* Andy Lutomirski:
+Provide init_on_alloc and init_on_free boot options.
 
-> On Tue, Jun 25, 2019 at 1:47 PM Florian Weimer <fweimer@redhat.com> wrote:
->>
->> * Andy Lutomirski:
->>
->> >> We want binaries that run fast on VSYSCALL kernels, but can fall back=
- to
->> >> full system calls on kernels that do not have them (instead of
->> >> crashing).
->> >
->> > Define "VSYSCALL kernels."  On any remotely recent kernel (*all* new
->> > kernels and all kernels for the last several years that haven't
->> > specifically requested vsyscall=3Dnative), using vsyscalls is much, mu=
-ch
->> > slower than just doing syscalls.  I know a way you can tell whether
->> > vsyscalls are fast, but it's unreliable, and I'm disinclined to
->> > suggest it.  There are also at least two pending patch series that
->> > will interfere.
->>
->> The fast path is for the benefit of the 2.6.32-based kernel in Red Hat
->> Enterprise Linux 6.  It doesn't have the vsyscall emulation code yet, I
->> think.
->>
->> My hope is to produce (statically linked) binaries that run as fast on
->> that kernel as they run today, but can gracefully fall back to something
->> else on kernels without vsyscall support.
->>
->> >> We could parse the vDSO and prefer the functions found there, but this
->> >> is for the statically linked case.  We currently do not have a (minim=
-al)
->> >> dynamic loader there in that version of the code base, so that doesn't
->> >> really work for us.
->> >
->> > Is anything preventing you from adding a vDSO parser?  I wrote one
->> > just for this type of use:
->> >
->> > $ wc -l tools/testing/selftests/vDSO/parse_vdso.c
->> > 269 tools/testing/selftests/vDSO/parse_vdso.c
->> >
->> > (289 lines includes quite a bit of comment.)
->>
->> I'm worried that if I use a custom parser and the binaries start
->> crashing again because something changed in the kernel (within the scope
->> permitted by the ELF specification), the kernel won't be fixed.
->>
->> That is, we'd be in exactly the same situation as today.
->
-> With my maintainer hat on, the kernel won't do that.  Obviously a
-> review of my parser would be appreciated, but I consider it to be
-> fully supported, just like glibc and musl's parsers are fully
-> supported.  Sadly, I *also* consider the version Go forked for a while
-> (now fixed) to be supported.  Sigh.
+These are aimed at preventing possible information leaks and making the
+control-flow bugs that depend on uninitialized values more deterministic.
 
-We've been burnt once, otherwise we wouldn't be having this
-conversation.  It's not just what the kernel does by default; if it's
-configurable, it will be disabled by some, and if it's label as
-=E2=80=9Csecurity hardening=E2=80=9D, the userspace ABI promise is suddenly=
- forgotten
-and it's all userspace's fault for not supporting the new way.
+Enabling either of the options guarantees that the memory returned by the
+page allocator and SL[AU]B is initialized with zeroes.
+SLOB allocator isn't supported at the moment, as its emulation of kmem
+caches complicates handling of SLAB_TYPESAFE_BY_RCU caches correctly.
 
-It looks like parsing the vDSO is the only way forward, and we have to
-move in that direction if we move at all.
+Enabling init_on_free also guarantees that pages and heap objects are
+initialized right after they're freed, so it won't be possible to access
+stale data by using a dangling pointer.
 
-It's tempting to read the machine code on the vsyscall page and analyze
-that, but vsyscall=3Dnone behavior changed at one point, and you no longer
-any mapping there at all.  So that doesn't work, either.
+As suggested by Michal Hocko, right now we don't let the heap users to
+disable initialization for certain allocations. There's not enough
+evidence that doing so can speed up real-life cases, and introducing
+ways to opt-out may result in things going out of control.
 
-I do hope the next userspace ABI break will have an option to undo it on
-a per-container basis.  Or at least a flag to detect it.
+To: Andrew Morton <akpm@linux-foundation.org>
+To: Christoph Lameter <cl@linux.com>
+To: Kees Cook <keescook@chromium.org>
+Cc: Masahiro Yamada <yamada.masahiro@socionext.com>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: James Morris <jmorris@namei.org>
+Cc: "Serge E. Hallyn" <serge@hallyn.com>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Kostya Serebryany <kcc@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Sandeep Patil <sspatil@android.com>
+Cc: Laura Abbott <labbott@redhat.com>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Marco Elver <elver@google.com>
+Cc: Qian Cai <cai@lca.pw>
+Cc: linux-mm@kvack.org
+Cc: linux-security-module@vger.kernel.org
+Cc: kernel-hardening@lists.openwall.com
 
-Thanks,
-Florian
+Alexander Potapenko (2):
+  mm: security: introduce init_on_alloc=1 and init_on_free=1 boot
+    options
+  mm: init: report memory auto-initialization features at boot time
+
+ .../admin-guide/kernel-parameters.txt         |  9 +++
+ drivers/infiniband/core/uverbs_ioctl.c        |  2 +-
+ include/linux/mm.h                            | 22 ++++++
+ init/main.c                                   | 24 +++++++
+ mm/dmapool.c                                  |  4 +-
+ mm/page_alloc.c                               | 71 +++++++++++++++++--
+ mm/slab.c                                     | 16 ++++-
+ mm/slab.h                                     | 19 +++++
+ mm/slub.c                                     | 43 +++++++++--
+ net/core/sock.c                               |  2 +-
+ security/Kconfig.hardening                    | 29 +++++++++
+ 12 files changed, 204 insertions(+), 19 deletions(-)
+---
+ v3: dropped __GFP_NO_AUTOINIT patches
+ v5: dropped support for SLOB allocator, handle SLAB_TYPESAFE_BY_RCU
+ v6: changed wording in boot-time message
+ v7: dropped the test_meminit.c patch (picked by Andrew Morton already),
+     minor wording changes
+ v8: fixes for interoperability with other heap debugging features
+-- 
+2.22.0.410.gd8fdbe21b5-goog
+
