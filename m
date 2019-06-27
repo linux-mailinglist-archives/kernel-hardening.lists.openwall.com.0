@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16300-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16301-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id E47D0587DE
-	for <lists+kernel-hardening@lfdr.de>; Thu, 27 Jun 2019 19:01:49 +0200 (CEST)
-Received: (qmail 17462 invoked by uid 550); 27 Jun 2019 17:01:42 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 6A2F658846
+	for <lists+kernel-hardening@lfdr.de>; Thu, 27 Jun 2019 19:26:31 +0200 (CEST)
+Received: (qmail 22307 invoked by uid 550); 27 Jun 2019 17:26:25 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,55 +13,90 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 17427 invoked from network); 27 Jun 2019 17:01:41 -0000
+Received: (qmail 22286 invoked from network); 27 Jun 2019 17:26:24 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=71duD+dj1AWEy6PZjgfTNHUCZN+FWrnSZ3ct8DL9Faw=;
-        b=dDwRroTKf1WTr8VEolUKbJHn/8fx7gyq5+0vyHVxnd2l/z08UfbJhphbBccRETXW5m
-         MXWs0fJitq0gzMgyFqo1O9hrcmrzRPcdSrQo0HAHAuHDcIzfE7b9Y73/4ifT2JI3jT3w
-         U1BWPXbXYhthczog3g+410wQZozTDeA0CU7uA=
+        bh=yC2k06ZrEbrPsihnFyfnuoaYxoQZIAB/UpnmdloBBeM=;
+        b=M4aPeAy351r9m7DiPtmkWbyW8Ee0+gq/RD1Lg9wqwC8OOoQUCONycYei3PscpDyOhk
+         OkKPaUedgsFtCO1shdwjpN4h163e76jNh/Co8Wn7gl19QplRZcMrhqfV5KsibtyZlnn4
+         hPQtpynZ7mgK5bBWvSUIRosOTKb186+XC2IUI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=71duD+dj1AWEy6PZjgfTNHUCZN+FWrnSZ3ct8DL9Faw=;
-        b=jj9PB/pjqyuRXEfUHPwa7tEvhX5NZRtjOmsJIyZ3EqnhT8YMckNh5dE12zA9kdiaEc
-         6QExExrhKU4XXBkzrCuADySrjjp6LbUXbcN1R6Ohmpqbud5W9uh2l/qcCwSESOCycyVf
-         TFs6HhzGINnCA8UMsU5tgJPL2aOI4076VvkvS0P5ixb7pNeiZEcry7GIOn0khcVgXwmv
-         Qim6JuCGKkvkTesS6TY5/1d5ARNyr+yrhjV2DVcd1Y+Z9r+OPdnQ5M3aDqSBjKI/iQai
-         25QxX/m637AsUIeT6tweom+RDUJ7F+vsMn9yy3B+/Ou9A0gGBcWOQMhKo6jc1Rvab+bC
-         oE0A==
-X-Gm-Message-State: APjAAAXiNjxRtz6q6xE9dnWrfv9xRjJIcfpcMKsVLndx4u8bQg5peuso
-	P05JIMXVIoJmPcmMmVc7zTErnbTSc4c=
-X-Google-Smtp-Source: APXvYqxaBukoSGTFpmbFjfj5I4Y7bedp6+c8gmhfmLzxxDwX1Gl//mLqWYji0qPjAm2InZUkq/pPNg==
-X-Received: by 2002:a17:902:2a27:: with SMTP id i36mr5721146plb.161.1561654889482;
-        Thu, 27 Jun 2019 10:01:29 -0700 (PDT)
-Date: Thu, 27 Jun 2019 10:01:27 -0700
+        bh=yC2k06ZrEbrPsihnFyfnuoaYxoQZIAB/UpnmdloBBeM=;
+        b=sLJQjQQlY/33LQHcwtuBHPMrFA8u82+rt4eMaEzUjwBm6piJmVIy2TDZYsmFcJH4Zx
+         4Vssg/cludH4zNlHg9TMG0zYqv27Wti7dEifrER4+GeMs4eeRMY0p+BWWRjrvFEGRr/3
+         IrMylgvHBhLYslHWLS6LRQY/xkLMkUXgaYZFud+FJV8SlKV2zyx1J5z32QuCYZKrZ8N6
+         LjFQHZtYoiDR1F97Jmn8wqc+27vTHZJyi5yx+d5UmWHRRm8V0sHmtWGAq29fnCgRPvL/
+         FqIO/BZwZsenDuZCd2TLGaRJ+20p29Kl8fDgpMMPdWiI0HkYYxDkJWBd2aPcbiWyyDv0
+         c/Bg==
+X-Gm-Message-State: APjAAAV8shuVCUyd+E1zjxOyKN16Gt1VdKLp7vhk29ViYvSAqHWspVkN
+	6L8Xhsj8goy2tRX5RgQ7Yz1HRQ==
+X-Google-Smtp-Source: APXvYqwf1jdzj0nrLT8fzBbcq9r+JxRpv7xWxbAyaYhGiAa9jeVaHMzeWiFPuJE8tePBzv+dt30lhA==
+X-Received: by 2002:a17:90a:26ef:: with SMTP id m102mr7318879pje.50.1561656372771;
+        Thu, 27 Jun 2019 10:26:12 -0700 (PDT)
+Date: Thu, 27 Jun 2019 10:26:11 -0700
 From: Kees Cook <keescook@chromium.org>
-To: Yann Droneaud <ydroneaud@opteya.com>
-Cc: kernel-hardening@lists.openwall.com
-Subject: Re: Archive kernel-hardening@lists.openwall.com  on lore.kernel.org
- too
-Message-ID: <201906271001.FD341B865A@keescook>
-References: <dab4681adb58c769b8b8f580e3d2057b0f4f2607.camel@opteya.com>
- <20190625170043.GA22560@openwall.com>
- <52e1fb49f1f0acf292fb17c0153b7511baaac63e.camel@opteya.com>
- <26aba7bb3d5964a68c325c3753d35d4059956000.camel@opteya.com>
+To: Andy Lutomirski <luto@kernel.org>
+Cc: x86@kernel.org, LKML <linux-kernel@vger.kernel.org>,
+	Florian Weimer <fweimer@redhat.com>, Jann Horn <jannh@google.com>,
+	stable@vger.kernel.org, Borislav Petkov <bp@alien8.de>,
+	Kernel Hardening <kernel-hardening@lists.openwall.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: Re: [PATCH v2 1/8] x86/vsyscall: Remove the vsyscall=native
+ documentation
+Message-ID: <201906271026.6AB1D9493@keescook>
+References: <cover.1561610354.git.luto@kernel.org>
+ <d77c7105eb4c57c1a95a95b6a5b8ba194a18e764.1561610354.git.luto@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <26aba7bb3d5964a68c325c3753d35d4059956000.camel@opteya.com>
+In-Reply-To: <d77c7105eb4c57c1a95a95b6a5b8ba194a18e764.1561610354.git.luto@kernel.org>
 
-On Thu, Jun 27, 2019 at 06:55:07PM +0200, Yann Droneaud wrote:
-> Thanks to kernel.org's Konstantin Ryabitsev, with the archives provided
-> by Solar Designer, kernel-hardening@lists.openwall.com is now
-> registered at https://lore.kernel.org/lists.html.
+On Wed, Jun 26, 2019 at 09:45:02PM -0700, Andy Lutomirski wrote:
+> The vsyscall=native feature is gone -- remove the docs.
 > 
-> Check out https://lore.kernel.org/kernel-hardening/ for the archive.
+> Fixes: 076ca272a14c ("x86/vsyscall/64: Drop "native" vsyscalls")
+> Cc: stable@vger.kernel.org
+> Cc: Kees Cook <keescook@chromium.org>
+> Cc: Borislav Petkov <bp@alien8.de>
+> Cc: Kernel Hardening <kernel-hardening@lists.openwall.com>
+> Cc: Peter Zijlstra <peterz@infradead.org>
+> Cc: Thomas Gleixner <tglx@linutronix.de>
+> Signed-off-by: Andy Lutomirski <luto@kernel.org>
 
-Yay! Nice work. :)
+Acked-by: Kees Cook <keescook@chromium.org>
+
+-Kees
+
+> ---
+>  Documentation/admin-guide/kernel-parameters.txt | 6 ------
+>  1 file changed, 6 deletions(-)
+> 
+> diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+> index 138f6664b2e2..0082d1e56999 100644
+> --- a/Documentation/admin-guide/kernel-parameters.txt
+> +++ b/Documentation/admin-guide/kernel-parameters.txt
+> @@ -5102,12 +5102,6 @@
+>  			emulate     [default] Vsyscalls turn into traps and are
+>  			            emulated reasonably safely.
+>  
+> -			native      Vsyscalls are native syscall instructions.
+> -			            This is a little bit faster than trapping
+> -			            and makes a few dynamic recompilers work
+> -			            better than they would in emulation mode.
+> -			            It also makes exploits much easier to write.
+> -
+>  			none        Vsyscalls don't work at all.  This makes
+>  			            them quite hard to use for exploits but
+>  			            might break your system.
+> -- 
+> 2.21.0
+> 
 
 -- 
 Kees Cook
