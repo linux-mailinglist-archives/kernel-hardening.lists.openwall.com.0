@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16272-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16273-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id BB73257508
-	for <lists+kernel-hardening@lfdr.de>; Thu, 27 Jun 2019 01:51:26 +0200 (CEST)
-Received: (qmail 8083 invoked by uid 550); 26 Jun 2019 23:51:21 -0000
+	by mail.lfdr.de (Postfix) with SMTP id C85C357AC8
+	for <lists+kernel-hardening@lfdr.de>; Thu, 27 Jun 2019 06:45:36 +0200 (CEST)
+Received: (qmail 11472 invoked by uid 550); 27 Jun 2019 04:45:25 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,54 +13,66 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 8027 invoked from network); 26 Jun 2019 23:51:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=aAwS0GTncPUrRoyShu3maS9uw3Abq5TnViZvJ5o9Xlg=;
-        b=fEadUKmwnebNmaVPpVltj8Bu3Xn+XffpgKPUz4X/5bwLlEmQx7wQbjSfCqG9Rm1nWC
-         2FEzzjWI/Eg6gGm7YQPUfDM73eLXJiD7eRgsxC9xDckui3cbiV/kwgWrHySz+AS/Noul
-         zeBeGK6DPbytg6NGP8feZPiGLo3kL1M49+sT4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=aAwS0GTncPUrRoyShu3maS9uw3Abq5TnViZvJ5o9Xlg=;
-        b=o7hm0aTgXhIZt/wwhUWuwMts8nEnI0ceEaLZBLNkYpm3weS11Ak3NY7dc/GVn5QVgK
-         P7dwzrkPlaLVOKf4I9kC4mTLzCSa3NuUITEzHx6Zm5DUUTUvmnVK79vUEC1hZw7Pvz46
-         XgE0BYEgyArvPfobuKbVKp8SzAFTvicHySgY5T9DapjTsDC/x2P7q7hl+HREiX6h08oG
-         01HBzQbld/KXsVWZCPxoj9EcStYSF3NQfa8wOx4PiMPZh3AqhmvHi/UHa0BnYc0/yYTh
-         2mVqic4ZRbmZHPIqAepQw2+VEfQ+5wazUBet5ks3hNsdjahemMLFHbEetY3lkRJsyb3B
-         Mgtg==
-X-Gm-Message-State: APjAAAXa+ouvnvmm1a9j4ZMJwznXd4R7xj2GGDxw8tbqsRcsrdr/as4H
-	DI4l95DXpddhzSi6Yg4mNnUflw==
-X-Google-Smtp-Source: APXvYqxhWsYg62JXkW4dZeiJNDMh46jecCsr79TG7tTCz6Cw+O6PJHTf0KZOUqsmpzsF3TzhlnPJSQ==
-X-Received: by 2002:a63:2cd1:: with SMTP id s200mr590801pgs.439.1561593068325;
-        Wed, 26 Jun 2019 16:51:08 -0700 (PDT)
-Date: Wed, 26 Jun 2019 16:51:06 -0700
-From: Kees Cook <keescook@chromium.org>
-To: Romain Perier <romain.perier@gmail.com>
-Cc: Kernel Hardening <kernel-hardening@lists.openwall.com>
-Subject: Re: Audit and fix all misuse of NLA_STRING: STATUS
-Message-ID: <201906261649.F2AFDCDBE@keescook>
-References: <CABgxDoLSzkVJ7Vh8mLiZySz6uS+VEu+GUxRqX8EWHKQDyz2fSg@mail.gmail.com>
- <201906200913.D2698BD0@keescook>
- <CABgxDoKQ4cnSS3p0sz8BgP65-R15U2Sr1AHVpU77ZGJu-Gvvvg@mail.gmail.com>
- <CABgxDoKTC1=5P=rnLmGzAgFs704+occs4Gw+6WyU99r4HwFBHA@mail.gmail.com>
+Received: (qmail 11429 invoked from network); 27 Jun 2019 04:45:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1561610712;
+	bh=K5SUY54SELZy1+lViKPOPr+FMJUSCP3gUFGFg03T6N8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=VcAQbH78K3Q74ErLQKjNUikUSjDpjyRSUPz1TDnnl5xy5zK1TDA53Pageqwq/mjf2
+	 kxa3bPlibB3B5DpHEs3RDfxs+aBW8hjS7XigMTp4u7tA70CpVo7JlDBKFKkF+k83Qa
+	 9bORDvXcvy5/k/6Bba+OFLfWx5/CVLA2NCDIX2W0=
+From: Andy Lutomirski <luto@kernel.org>
+To: x86@kernel.org
+Cc: LKML <linux-kernel@vger.kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Florian Weimer <fweimer@redhat.com>,
+	Jann Horn <jannh@google.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	stable@vger.kernel.org,
+	Borislav Petkov <bp@alien8.de>,
+	Kernel Hardening <kernel-hardening@lists.openwall.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH v2 1/8] x86/vsyscall: Remove the vsyscall=native documentation
+Date: Wed, 26 Jun 2019 21:45:02 -0700
+Message-Id: <d77c7105eb4c57c1a95a95b6a5b8ba194a18e764.1561610354.git.luto@kernel.org>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <cover.1561610354.git.luto@kernel.org>
+References: <cover.1561610354.git.luto@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CABgxDoKTC1=5P=rnLmGzAgFs704+occs4Gw+6WyU99r4HwFBHA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jun 25, 2019 at 06:42:48PM +0200, Romain Perier wrote:
-> I have double checked.
-> 
-> See, https://salsa.debian.org/rperier-guest/linux-tree/raw/next/STATUS
-> 
-> Nothing worrying, it seems.
+The vsyscall=native feature is gone -- remove the docs.
 
-Excellent; thanks! Do you want to remove this from the TODO list?
+Fixes: 076ca272a14c ("x86/vsyscall/64: Drop "native" vsyscalls")
+Cc: stable@vger.kernel.org
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Kernel Hardening <kernel-hardening@lists.openwall.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Andy Lutomirski <luto@kernel.org>
+---
+ Documentation/admin-guide/kernel-parameters.txt | 6 ------
+ 1 file changed, 6 deletions(-)
 
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index 138f6664b2e2..0082d1e56999 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -5102,12 +5102,6 @@
+ 			emulate     [default] Vsyscalls turn into traps and are
+ 			            emulated reasonably safely.
+ 
+-			native      Vsyscalls are native syscall instructions.
+-			            This is a little bit faster than trapping
+-			            and makes a few dynamic recompilers work
+-			            better than they would in emulation mode.
+-			            It also makes exploits much easier to write.
+-
+ 			none        Vsyscalls don't work at all.  This makes
+ 			            them quite hard to use for exploits but
+ 			            might break your system.
 -- 
-Kees Cook
+2.21.0
+
