@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16327-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16328-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 04E835AC9B
-	for <lists+kernel-hardening@lfdr.de>; Sat, 29 Jun 2019 18:45:51 +0200 (CEST)
-Received: (qmail 1260 invoked by uid 550); 29 Jun 2019 16:45:45 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 922DA5B70B
+	for <lists+kernel-hardening@lfdr.de>; Mon,  1 Jul 2019 10:43:04 +0200 (CEST)
+Received: (qmail 23720 invoked by uid 550); 1 Jul 2019 08:42:56 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,67 +13,139 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 1219 invoked from network); 29 Jun 2019 16:45:44 -0000
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Spam-Summary: 2,0,0,,d41d8cd98f00b204,joe@perches.com,:::::::::::::::::::::::::::::::::::::::,RULES_HIT:41:355:379:599:800:960:968:973:982:988:989:1260:1277:1311:1313:1314:1345:1359:1431:1437:1515:1516:1518:1534:1541:1593:1594:1711:1730:1747:1777:1792:2393:2553:2559:2562:2828:3138:3139:3140:3141:3142:3353:3622:3865:3866:3867:3868:3870:3871:3872:3874:4037:4321:5007:6742:10004:10400:10848:10967:11232:11658:11914:12043:12297:12663:12740:12760:12895:13069:13138:13231:13311:13357:13439:14096:14097:14181:14659:14721:21080:21433:21627:30034:30054:30070:30090:30091,0,RBL:23.242.196.136:@perches.com:.lbl8.mailshell.net-62.14.0.180 64.201.201.201,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:fn,MSBL:0,DNSBL:neutral,Custom_rules:0:0:0,LFtime:24,LUA_SUMMARY:none
-X-HE-Tag: wood26_67b7f2b025644
-X-Filterd-Recvd-Size: 3038
-Message-ID: <c3b83ba7f9b003dd4fb9cad885461ce93165dc04.camel@perches.com>
-Subject: Re: [PATCH V2] include: linux: Regularise the use of FIELD_SIZEOF
- macro
-From: Joe Perches <joe@perches.com>
-To: Alexey Dobriyan <adobriyan@gmail.com>, Andreas Dilger <adilger@dilger.ca>
-Cc: Andrew Morton <akpm@linux-foundation.org>, Shyam Saini
- <shyam.saini@amarulasolutions.com>, kernel-hardening@lists.openwall.com, 
- linux-kernel@vger.kernel.org, keescook@chromium.org, 
- linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org, 
- intel-gvt-dev@lists.freedesktop.org, intel-gfx@lists.freedesktop.org, 
- dri-devel@lists.freedesktop.org, netdev@vger.kernel.org, linux-ext4
- <linux-ext4@vger.kernel.org>, devel@lists.orangefs.org, linux-mm@kvack.org,
-  linux-sctp@vger.kernel.org, bpf@vger.kernel.org, kvm@vger.kernel.org, 
- mayhs11saini@gmail.com
-Date: Sat, 29 Jun 2019 09:45:10 -0700
-In-Reply-To: <20190629142510.GA10629@avx2>
-References: <20190611193836.2772-1-shyam.saini@amarulasolutions.com>
-	 <20190611134831.a60c11f4b691d14d04a87e29@linux-foundation.org>
-	 <6DCAE4F8-3BEC-45F2-A733-F4D15850B7F3@dilger.ca>
-	 <20190629142510.GA10629@avx2>
-Content-Type: text/plain; charset="ISO-8859-1"
-User-Agent: Evolution 3.30.5-0ubuntu0.18.10.1 
+Received: (qmail 23682 invoked from network); 1 Jul 2019 08:42:55 -0000
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.63,438,1557212400"; 
+   d="scan'208";a="190179067"
+From: "Gote, Nitin R" <nitin.r.gote@intel.com>
+To: Kees Cook <keescook@chromium.org>
+CC: "jannh@google.com" <jannh@google.com>,
+	"kernel-hardening@lists.openwall.com" <kernel-hardening@lists.openwall.com>
+Subject: RE: [PATCH] checkpatch: Added warnings in favor of strscpy().
+Thread-Topic: [PATCH] checkpatch: Added warnings in favor of strscpy().
+Thread-Index: AQHVLahxh0Ae9DcKwUaM2mlMiQSq1aawyP6AgASX1uA=
+Date: Mon, 1 Jul 2019 08:42:39 +0000
+Message-ID: <12356C813DFF6F479B608F81178A561586C2AC@BGSMSX101.gar.corp.intel.com>
+References: <1561722948-28289-1-git-send-email-nitin.r.gote@intel.com>
+ <201906280739.9CD1E4B@keescook>
+In-Reply-To: <201906280739.9CD1E4B@keescook>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+dlp-product: dlpe-windows
+dlp-version: 11.0.600.7
+dlp-reaction: no-action
+x-ctpclassification: CTP_NT
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiZmI5YmIxYTQtY2E5YS00Zjk5LWEyMTUtZGQ0ZTgzZmQ5YTQzIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiV0NxZDc3VDJEelJsYkhYMnN1aWlQbUxwMFJ6YWNiK2NLRDZXTThEY0J6eTBPSGdLS1RyeG1OazgwMEVjRzBUTCJ9
+x-originating-ip: [10.223.10.10]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
 
-On Sat, 2019-06-29 at 17:25 +0300, Alexey Dobriyan wrote:
-> On Tue, Jun 11, 2019 at 03:00:10PM -0600, Andreas Dilger wrote:
-> > On Jun 11, 2019, at 2:48 PM, Andrew Morton <akpm@linux-foundation.org> wrote:
-> > > On Wed, 12 Jun 2019 01:08:36 +0530 Shyam Saini <shyam.saini@amarulasolutions.com> wrote:
-> > I did a check, and FIELD_SIZEOF() is used about 350x, while sizeof_field()
-> > is about 30x, and SIZEOF_FIELD() is only about 5x.
-> > 
-> > That said, I'm much more in favour of "sizeof_field()" or "sizeof_member()"
-> > than FIELD_SIZEOF().  Not only does that better match "offsetof()", with
-> > which it is closely related, but is also closer to the original "sizeof()".
-> > 
-> > Since this is a rather trivial change, it can be split into a number of
-> > patches to get approval/landing via subsystem maintainers, and there is no
-> > huge urgency to remove the original macros until the users are gone.  It
-> > would make sense to remove SIZEOF_FIELD() and sizeof_field() quickly so
-> > they don't gain more users, and the remaining FIELD_SIZEOF() users can be
-> > whittled away as the patches come through the maintainer trees.
-> 
-> The signature should be
-> 
-> 	sizeof_member(T, m)
-> 
-> it is proper English,
-> it is lowercase, so is easier to type,
-> it uses standard term (member, not field),
-> it blends in with standard "sizeof" operator,
+Hi Kees,
 
-yes please.
+As per my understanding, I have updated strncpy() section in Documentation/=
+process/deprecated.rst for strscpy_pad() case. Other two cases of strncpy()=
+ are already explained.=20
 
-Also, a simple script conversion applied
-immediately after an rc1 might be easiest
-rather than individual patches.
+Also updated checkpatch for __nonstring case.
 
+Could you please give your inputs on below diff changes ? If this looks goo=
+d, I will send the patch.
 
+Diff changes :
+
+diff --git a/Documentation/process/deprecated.rst b/Documentation/process/d=
+eprecated.rst
+index 49e0f64..6ab05ac 100644
+--- a/Documentation/process/deprecated.rst
++++ b/Documentation/process/deprecated.rst
+@@ -102,6 +102,9 @@ still be used, but destinations should be marked with t=
+he `__nonstring
+ <https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html>`_
+ attribute to avoid future compiler warnings.
+
++If a caller is using NUL-terminated strings, and destination needing
++trailing NUL, then the safe replace is :c:func:`strscpy_pad()`.
++
+ strlcpy()
+ ---------
+ :c:func:`strlcpy` reads the entire source buffer first, possibly exceeding
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index 342c7c7..d3c0587 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -595,6 +595,10 @@ our %deprecated_apis =3D (
+        "rcu_barrier_sched"                     =3D> "rcu_barrier",
+        "get_state_synchronize_sched"           =3D> "get_state_synchronize=
+_rcu",
+        "cond_synchronize_sched"                =3D> "cond_synchronize_rcu"=
+,
++       "strcpy"                                =3D> "strscpy",
++       "strlcpy"                               =3D> "strscpy",
++       "strncpy"                               =3D> "strscpy, strscpy_pad =
+Or for non-NUL-terminated strings,
++        strncpy() can still be used, but destinations should be marked wit=
+h the __nonstring",
+ );
+
+Thanks and Regards,
+Nitin Gote
+
+-----Original Message-----
+From: Kees Cook [mailto:keescook@chromium.org]=20
+Sent: Friday, June 28, 2019 8:16 PM
+To: Gote, Nitin R <nitin.r.gote@intel.com>
+Cc: jannh@google.com; kernel-hardening@lists.openwall.com
+Subject: Re: [PATCH] checkpatch: Added warnings in favor of strscpy().
+
+On Fri, Jun 28, 2019 at 05:25:48PM +0530, Nitin Gote wrote:
+> Added warnings in checkpatch.pl script to :
+>=20
+> 1. Deprecate strcpy() in favor of strscpy().
+> 2. Deprecate strlcpy() in favor of strscpy().
+> 3. Deprecate strncpy() in favor of strscpy() or strscpy_pad().
+>=20
+> Signed-off-by: Nitin Gote <nitin.r.gote@intel.com>
+
+Excellent, yes. Can you also add a bit to the strncpy() section in Document=
+ation/process/deprecated.rst so that all three cases of strncpy() are expla=
+ined:
+
+- strncpy() into NUL-terminated target should use strscpy()
+- strncpy() into NUL-terminated target needing trailing NUL: strscpy_pad()
+- strncpy() into non-NUL-terminated target should have target marked
+  with __nonstring.
+
+(and probably mention the __nonstring case in checkpatch too)
+
+-Kees
+
+> ---
+>  scripts/checkpatch.pl | 3 +++
+>  1 file changed, 3 insertions(+)
+>=20
+> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl index=20
+> 342c7c7..bb0fa11 100755
+> --- a/scripts/checkpatch.pl
+> +++ b/scripts/checkpatch.pl
+> @@ -595,6 +595,9 @@ our %deprecated_apis =3D (
+>  	"rcu_barrier_sched"			=3D> "rcu_barrier",
+>  	"get_state_synchronize_sched"		=3D> "get_state_synchronize_rcu",
+>  	"cond_synchronize_sched"		=3D> "cond_synchronize_rcu",
+> +	"strcpy"				=3D> "strscpy",
+> +	"strlcpy"				=3D> "strscpy",
+> +	"strncpy"				=3D> "strscpy or strscpy_pad",
+>  );
+>=20
+>  #Create a search pattern for all these strings to speed up a loop=20
+> below
+> --
+> 2.7.4
+>=20
+
+--
+Kees Cook
