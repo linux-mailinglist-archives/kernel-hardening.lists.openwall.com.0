@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16335-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16337-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id DE5565D7B7
-	for <lists+kernel-hardening@lfdr.de>; Tue,  2 Jul 2019 23:04:28 +0200 (CEST)
-Received: (qmail 21547 invoked by uid 550); 2 Jul 2019 21:04:21 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 549B55D7BA
+	for <lists+kernel-hardening@lfdr.de>; Tue,  2 Jul 2019 23:04:47 +0200 (CEST)
+Received: (qmail 22036 invoked by uid 550); 2 Jul 2019 21:04:25 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,102 +13,62 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 21512 invoked from network); 2 Jul 2019 21:04:20 -0000
+Received: (qmail 21908 invoked from network); 2 Jul 2019 21:04:23 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=a6DSR9zMVNSIPOHutOGYYowzxyygnNjjAgHH6t/fH3Q=;
-        b=ZMFtd4fnwBhjqDgEcmMPYqwTfM3scvxup6E9ES0eTl1QBLbkm4L+EYQQqrUrDt7I0f
-         1W7i7K4qFAKEM9FkLZbBvOwEPA2KShqct0FnQuEtwjRtbN+49uyAwET1ta2fkPFntUdL
-         d1HKAJ/XrkEjycdCCsfgQI1lqoOc8poLOC7Ys=
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=SUVDDvVHWZQdqqeYC3Ylmti8VS+Hw8xp8Rwtgp+EZ08=;
+        b=SJrNkPBd+yGmaL7MwJlDAL3hoOg5/PNlXpqH4fiOUCEjDU7XvuOMciXmB8cPoT+n2/
+         HU33Fh6VqqDMT1goa9ATaIP7k1LBzcGA1ct8CbccucMTiIHK2XyZgpK/X09Vu8ILkbWH
+         9dJ2f4Owt/Sb6TPBTgMQ0eM3q07WV42g0a0+o=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=a6DSR9zMVNSIPOHutOGYYowzxyygnNjjAgHH6t/fH3Q=;
-        b=GCRr6m1xt1rLkrUdJn9DqOr9oe4wbOJKSvheiRqp0qqMVrb1GVvjxiPkBLhDv0wIjd
-         JNDEKObVrJGbk1bg8iClgmWBu8gP/OOfM5/xsIv4iG9SP9FUVJQsFLJxeLa8kci5N96x
-         obsdrqcewer/9IZxows8GF5Q95zW2Ed4Cr+m7c4lDRWrA904sa6I0aoRi0ejOlTlBI2b
-         zn/RaeClm4yhL3wWL0pYnCkWNt53maiI0mxHXmNKv0QHyhF/2TxCmVd0fLxY49w6rkGA
-         I/AWtv8swjneVSsda8b2g1JZyOPelUwm0h3DIU0J91uDBertd3Ep3g+VNJcHpSxkufzI
-         C3Pg==
-X-Gm-Message-State: APjAAAVtaZT96AzBPXXiN3eMvsLoZpFjEYYjZ8dD9tT++STiWP0NFnjf
-	zBoerJ0cAXSbBSwb6ORBpNxKgw==
-X-Google-Smtp-Source: APXvYqxbnDf0epA4zxEVMf+KQtiS47h5ZVi4HVl0lxeY8pfHVzHmCshNhotvWTcEjEQC+XEnSbkkRg==
-X-Received: by 2002:a17:90a:b908:: with SMTP id p8mr7901348pjr.94.1562101447970;
-        Tue, 02 Jul 2019 14:04:07 -0700 (PDT)
-Date: Tue, 2 Jul 2019 09:33:02 -0700
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=SUVDDvVHWZQdqqeYC3Ylmti8VS+Hw8xp8Rwtgp+EZ08=;
+        b=HirNF25+cVAzPfHg6Ik2tcX9B61tFXNsDY7nxwaVzAM7ftBHL2L8jph+2NXr6evng1
+         netr3GJjgLRUqWqUbmAb5ffpNb6IWg6cDCxInYD3gA4WYDlk8V0uQNiMmLNLkM97lZ3A
+         xQQDxBcJUO4VWMYwI7aUwvrgvfB1319KBofPv1JjFVE0x93nzfzrnblM62JyWeJTRzmL
+         e8mI8FVM2vomBoQ9plPinVfVUpYR7bJIzHTGtzIrSOtXKRjfZAA+VqHQUKHovHtmt6LQ
+         sYwggPRxn3qO0d7SS2QxQz505nZyL4JHCQGguT/XwL7GpMtcqaMvzPrQxg2D4AV1suwE
+         J+kg==
+X-Gm-Message-State: APjAAAXMPJChbU08UwT8uR9F8TyCH8hdEs/c7vRt1KlqrFynFUWZvwDA
+	UHOLoG0qGkjDGv4gPq3UTEYvWQ==
+X-Google-Smtp-Source: APXvYqwcJJEeXoRvcEHyUpuRg4L8X6jsMqgQTja/9PFIrJ95fLg+i/GQWS7UMCTozQh4UkRafF7X8Q==
+X-Received: by 2002:a17:90a:384d:: with SMTP id l13mr8060330pjf.86.1562101451990;
+        Tue, 02 Jul 2019 14:04:11 -0700 (PDT)
+Date: Tue, 2 Jul 2019 10:25:04 -0700
 From: Kees Cook <keescook@chromium.org>
-To: Joe Perches <joe@perches.com>
-Cc: Alexey Dobriyan <adobriyan@gmail.com>,
-	Andreas Dilger <adilger@dilger.ca>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Shyam Saini <shyam.saini@amarulasolutions.com>,
-	kernel-hardening@lists.openwall.com, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
-	intel-gvt-dev@lists.freedesktop.org,
-	intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-	netdev@vger.kernel.org, linux-ext4 <linux-ext4@vger.kernel.org>,
-	devel@lists.orangefs.org, linux-mm@kvack.org,
-	linux-sctp@vger.kernel.org, bpf@vger.kernel.org,
-	kvm@vger.kernel.org, mayhs11saini@gmail.com
-Subject: Re: [PATCH V2] include: linux: Regularise the use of FIELD_SIZEOF
- macro
-Message-ID: <201907020931.2170BAB@keescook>
-References: <20190611193836.2772-1-shyam.saini@amarulasolutions.com>
- <20190611134831.a60c11f4b691d14d04a87e29@linux-foundation.org>
- <6DCAE4F8-3BEC-45F2-A733-F4D15850B7F3@dilger.ca>
- <20190629142510.GA10629@avx2>
- <c3b83ba7f9b003dd4fb9cad885461ce93165dc04.camel@perches.com>
+To: Stephen Kitt <steve@sk2.org>
+Cc: Nitin Gote <nitin.r.gote@intel.com>, jannh@google.com,
+	kernel-hardening@lists.openwall.com
+Subject: Re: [PATCH] checkpatch: Added warnings in favor of strscpy().
+Message-ID: <201907021024.D1C8E7B2D@keescook>
+References: <1561722948-28289-1-git-send-email-nitin.r.gote@intel.com>
+ <20190629181537.7d524f7d@sk2.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <c3b83ba7f9b003dd4fb9cad885461ce93165dc04.camel@perches.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190629181537.7d524f7d@sk2.org>
 
-On Sat, Jun 29, 2019 at 09:45:10AM -0700, Joe Perches wrote:
-> On Sat, 2019-06-29 at 17:25 +0300, Alexey Dobriyan wrote:
-> > On Tue, Jun 11, 2019 at 03:00:10PM -0600, Andreas Dilger wrote:
-> > > On Jun 11, 2019, at 2:48 PM, Andrew Morton <akpm@linux-foundation.org> wrote:
-> > > > On Wed, 12 Jun 2019 01:08:36 +0530 Shyam Saini <shyam.saini@amarulasolutions.com> wrote:
-> > > I did a check, and FIELD_SIZEOF() is used about 350x, while sizeof_field()
-> > > is about 30x, and SIZEOF_FIELD() is only about 5x.
-> > > 
-> > > That said, I'm much more in favour of "sizeof_field()" or "sizeof_member()"
-> > > than FIELD_SIZEOF().  Not only does that better match "offsetof()", with
-> > > which it is closely related, but is also closer to the original "sizeof()".
-> > > 
-> > > Since this is a rather trivial change, it can be split into a number of
-> > > patches to get approval/landing via subsystem maintainers, and there is no
-> > > huge urgency to remove the original macros until the users are gone.  It
-> > > would make sense to remove SIZEOF_FIELD() and sizeof_field() quickly so
-> > > they don't gain more users, and the remaining FIELD_SIZEOF() users can be
-> > > whittled away as the patches come through the maintainer trees.
-> > 
-> > The signature should be
-> > 
-> > 	sizeof_member(T, m)
-> > 
-> > it is proper English,
-> > it is lowercase, so is easier to type,
-> > it uses standard term (member, not field),
-> > it blends in with standard "sizeof" operator,
+On Sat, Jun 29, 2019 at 06:15:37PM +0200, Stephen Kitt wrote:
+> On Fri, 28 Jun 2019 17:25:48 +0530, Nitin Gote <nitin.r.gote@intel.com> wrote:
+> > 1. Deprecate strcpy() in favor of strscpy().
 > 
-> yes please.
+> This isn’t a comment “against” this patch, but something I’ve been wondering
+> recently and which raises a question about how to handle strcpy’s deprecation
+> in particular. There is still one scenario where strcpy is useful: when GCC
+> replaces it with its builtin, inline version...
 > 
-> Also, a simple script conversion applied
-> immediately after an rc1 might be easiest
-> rather than individual patches.
+> Would it be worth introducing a macro for strcpy-from-constant-string, which
+> would check that GCC’s builtin is being used (when building with GCC), and
+> fall back to strscpy otherwise?
 
-This seems reasonable to me. I think the patch steps would be:
-
-1) implement sizeof_member(T, m) as a stand-alone macro
-2) do a scripted replacement of all identical macros.
-3) remove all the identical macros.
-
-Step 2 can be a patch that includes the script used to do the
-replacement. That way Linus can choose to just run the script instead of
-taking the patch.
+How would you suggest it operate? A separate API, or something like the
+existing overloaded strcpy() macros in string.h?
 
 -- 
 Kees Cook
