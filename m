@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16346-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16347-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 61A635FD8D
-	for <lists+kernel-hardening@lfdr.de>; Thu,  4 Jul 2019 21:54:10 +0200 (CEST)
-Received: (qmail 23737 invoked by uid 550); 4 Jul 2019 19:54:03 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 93CF25FDDC
+	for <lists+kernel-hardening@lfdr.de>; Thu,  4 Jul 2019 22:46:46 +0200 (CEST)
+Received: (qmail 22340 invoked by uid 550); 4 Jul 2019 20:46:41 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,51 +13,84 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 23713 invoked from network); 4 Jul 2019 19:54:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1562270030;
-	bh=D8dJJX8KT2Xl8Nh7bMvZgekUUmiAou9NFBVZsil11Lc=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=YrQuDPw+rga1xtwxOX16kcC0a03XtrEZuxO6OMtfMYRlXCWQXEwoRhtzXiTaMi7UH
-	 aY85ep5KDVRdkbbC3GGx6CKhK/VzlWNWBObEqB0mE5xBp8a7JvEcKmCN57ocm/RBNl
-	 1jkz+TotL/QtoBgpN+wyIXo03MdfNEnor9UGm1Tk=
-Date: Thu, 4 Jul 2019 12:53:49 -0700
-From: Andrew Morton <akpm@linux-foundation.org>
-To: Alexander Potapenko <glider@google.com>
-Cc: Christoph Lameter <cl@linux.com>, Kees Cook <keescook@chromium.org>,
- Michal Hocko <mhocko@suse.com>, James Morris
- <jamorris@linux.microsoft.com>, Masahiro Yamada
- <yamada.masahiro@socionext.com>, Michal Hocko <mhocko@kernel.org>, James
- Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>, Nick
- Desaulniers <ndesaulniers@google.com>, Kostya Serebryany <kcc@google.com>,
- Dmitry Vyukov <dvyukov@google.com>, Sandeep Patil <sspatil@android.com>,
- Laura Abbott <labbott@redhat.com>, Randy Dunlap <rdunlap@infradead.org>,
- Jann Horn <jannh@google.com>, Mark Rutland <mark.rutland@arm.com>, Marco
- Elver <elver@google.com>, Qian Cai <cai@lca.pw>, Linux Memory Management
- List <linux-mm@kvack.org>, linux-security-module
- <linux-security-module@vger.kernel.org>, Kernel Hardening
- <kernel-hardening@lists.openwall.com>
-Subject: Re: [PATCH v10 1/2] mm: security: introduce init_on_alloc=1 and
- init_on_free=1 boot options
-Message-Id: <20190704125349.0dd001629a9c4b8e4cb9f227@linux-foundation.org>
-In-Reply-To: <CAG_fn=XYRpeBgLpbwhaF=JfNHa-styydOKq8_SA3vsdMcXNgzw@mail.gmail.com>
-References: <20190628093131.199499-1-glider@google.com>
-	<20190628093131.199499-2-glider@google.com>
-	<20190702155915.ab5e7053e5c0d49e84c6ed67@linux-foundation.org>
-	<CAG_fn=XYRpeBgLpbwhaF=JfNHa-styydOKq8_SA3vsdMcXNgzw@mail.gmail.com>
-X-Mailer: Sylpheed 3.5.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Received: (qmail 22305 invoked from network); 4 Jul 2019 20:46:40 -0000
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Spam-Summary: 2,0,0,,d41d8cd98f00b204,joe@perches.com,:::::::::::::::,RULES_HIT:41:355:379:599:800:960:973:982:988:989:1260:1277:1311:1313:1314:1345:1359:1437:1515:1516:1518:1534:1541:1593:1594:1711:1730:1747:1777:1792:2393:2559:2562:2828:2895:3138:3139:3140:3141:3142:3353:3622:3653:3865:3866:3867:3868:3870:3874:4250:4321:5007:6119:6691:7903:8603:10004:10400:10848:11026:11232:11473:11658:11914:12043:12049:12297:12438:12740:12760:12895:13069:13161:13229:13311:13357:13439:14181:14659:14721:21080:21451:21627:30054:30064:30070:30083:30091,0,RBL:23.242.196.136:@perches.com:.lbl8.mailshell.net-62.8.0.180 64.201.201.201,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:fn,MSBL:0,DNSBL:neutral,Custom_rules:0:0:0,LFtime:24,LUA_SUMMARY:none
+X-HE-Tag: space91_1b23faa223b5f
+X-Filterd-Recvd-Size: 2807
+Message-ID: <f6a4c2b601bb59179cb2e3b8f4d836a1c11379a3.camel@perches.com>
+Subject: Re: [PATCH] checkpatch: Added warnings in favor of strscpy().
+From: Joe Perches <joe@perches.com>
+To: Nitin Gote <nitin.r.gote@intel.com>, akpm@linux-foundation.org
+Cc: corbet@lwn.net, apw@canonical.com, keescook@chromium.org, 
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	kernel-hardening@lists.openwall.com
+Date: Thu, 04 Jul 2019 13:46:25 -0700
+In-Reply-To: <1562219683-15474-1-git-send-email-nitin.r.gote@intel.com>
+References: <1562219683-15474-1-git-send-email-nitin.r.gote@intel.com>
+Content-Type: text/plain; charset="ISO-8859-1"
+User-Agent: Evolution 3.30.5-0ubuntu0.18.10.1 
+MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 
-On Wed, 3 Jul 2019 13:40:26 +0200 Alexander Potapenko <glider@google.com> wrote:
+On Thu, 2019-07-04 at 11:24 +0530, Nitin Gote wrote:
+> Added warnings in checkpatch.pl script to :
+> 
+> 1. Deprecate strcpy() in favor of strscpy().
+> 2. Deprecate strlcpy() in favor of strscpy().
+> 3. Deprecate strncpy() in favor of strscpy() or strscpy_pad().
+> 
+> Updated strncpy() section in Documentation/process/deprecated.rst
+> to cover strscpy_pad() case.
+> 
+> Signed-off-by: Nitin Gote <nitin.r.gote@intel.com>
 
-> > There are unchangelogged alterations between v9 and v10.  The
-> > replacement of IS_ENABLED(CONFIG_PAGE_POISONING)) with
-> > page_poisoning_enabled().
-> In the case I send another version of the patch, do I need to
-> retroactively add them to the changelog?
+OK, for whatever reason, this when into a spam folder.
 
-I don't think the world could stand another version ;)
+> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+[]
+> @@ -595,6 +595,11 @@ our %deprecated_apis = (
+>  	"rcu_barrier_sched"			=> "rcu_barrier",
+>  	"get_state_synchronize_sched"		=> "get_state_synchronize_rcu",
+>  	"cond_synchronize_sched"		=> "cond_synchronize_rcu",
+> +	"strcpy"				=> "strscpy",
+> +	"strlcpy"				=> "strscpy",
+> +	"strncpy"				=> "strscpy, strscpy_pad or for
+> +	non-NUL-terminated strings, strncpy() can still be used, but
+> +	destinations should be marked with the __nonstring",
+>  );
 
-Please simply explain this change for the reviewers?
+$ git grep -w strcpy | wc -l
+2239
+$ git grep -w strlcpy | wc -l
+1760
+$ git grep -w strncpy | wc -l
+839
+
+These functions are _really_ commonly used in the kernel.
+
+This should probably be a different %deprecated_string_api
+and these should probably not be emitted at WARN level
+when using command line option -f/--file but at CHECK level
+so that novice script users just don't send bad patches.
+
+Also, perhaps there could be some macro for the relatively
+commonly used
+
+	strscpy(foo, bar, sizeof(foo))
+and
+	strlcpy(foo, bar, sizeof(foo))
+
+so argument 1 doesn't have to be repeated in the sizeof()
+
+Something like:
+
+#define stracpy(to, from)					\
+({								\
+	size_t size = ARRAY_SIZE(to);				\
+	BUILD_BUG_ON(!__same_type(typeof(*to), char));		\
+								\
+	strscpy(to, from, size);				\
+})
+
+
