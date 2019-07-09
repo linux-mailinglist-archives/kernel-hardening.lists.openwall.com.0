@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16399-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16400-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id A41BF635B5
-	for <lists+kernel-hardening@lfdr.de>; Tue,  9 Jul 2019 14:25:57 +0200 (CEST)
-Received: (qmail 1254 invoked by uid 550); 9 Jul 2019 12:25:51 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 83059638E3
+	for <lists+kernel-hardening@lfdr.de>; Tue,  9 Jul 2019 17:49:32 +0200 (CEST)
+Received: (qmail 10201 invoked by uid 550); 9 Jul 2019 15:49:26 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,25 +13,25 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 1222 invoked from network); 9 Jul 2019 12:25:50 -0000
+Received: (qmail 10157 invoked from network); 9 Jul 2019 15:49:25 -0000
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.63,470,1557212400"; 
-   d="scan'208";a="249133728"
+   d="scan'208";a="176532235"
 From: NitinGote <nitin.r.gote@intel.com>
-To: joe@perches.com,
-	akpm@linux-foundation.org
-Cc: corbet@lwn.net,
+To: corbet@lwn.net
+Cc: joe@perches.com,
+	akpm@linux-foundation.org,
 	apw@canonical.com,
 	keescook@chromium.org,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	kernel-hardening@lists.openwall.com,
 	Nitin Gote <nitin.r.gote@intel.com>
-Subject: [PATCH v3] Added warnings in checkpatch.pl script to :
-Date: Tue,  9 Jul 2019 17:54:17 +0530
-Message-Id: <20190709122417.25778-1-nitin.r.gote@intel.com>
+Subject: [PATCH v4] Added warnings in checkpatch.pl script to :
+Date: Tue,  9 Jul 2019 21:18:06 +0530
+Message-Id: <20190709154806.26363-1-nitin.r.gote@intel.com>
 X-Mailer: git-send-email 2.17.1
 
 From: Nitin Gote <nitin.r.gote@intel.com>
@@ -55,12 +55,15 @@ Signed-off-by: Nitin Gote <nitin.r.gote@intel.com>
  - Avoided use of $check in implementation.
  - Incorporated trivial comments.
 
+ v3->v4
+ - Incorporated comment by removing "c:func:"
+
  Documentation/process/deprecated.rst |  6 +++---
  scripts/checkpatch.pl                | 24 ++++++++++++++++++++++++
  2 files changed, 27 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/process/deprecated.rst b/Documentation/process/deprecated.rst
-index 49e0f64a3427..f564de3caf76 100644
+index 49e0f64a3427..0fb37ebe3ad9 100644
 --- a/Documentation/process/deprecated.rst
 +++ b/Documentation/process/deprecated.rst
 @@ -93,9 +93,9 @@ will be NUL terminated. This can lead to various linear read overflows
@@ -71,8 +74,8 @@ index 49e0f64a3427..f564de3caf76 100644
 -(Users of :c:func:`strscpy` still needing NUL-padding will need an
 -explicit :c:func:`memset` added.)
 +only NUL-terminated strings. In this case, the safe replacement is
-+:c:func:`strscpy`. If, however, the destination buffer still needs
-+NUL-padding, the safe replacement is :c:func:`strscpy_pad`.
++`strscpy()`. If, however, the destination buffer still needs NUL-padding,
++the safe replacement is `strscpy_pad()`.
 
  If a caller is using non-NUL-terminated strings, :c:func:`strncpy()` can
  still be used, but destinations should be marked with the `__nonstring
