@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16422-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16423-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id B549466D5F
-	for <lists+kernel-hardening@lfdr.de>; Fri, 12 Jul 2019 14:30:10 +0200 (CEST)
-Received: (qmail 1304 invoked by uid 550); 12 Jul 2019 12:30:05 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 3610E66DB5
+	for <lists+kernel-hardening@lfdr.de>; Fri, 12 Jul 2019 14:32:59 +0200 (CEST)
+Received: (qmail 5558 invoked by uid 550); 12 Jul 2019 12:32:54 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,14 +13,14 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 1279 invoked from network); 12 Jul 2019 12:30:05 -0000
+Received: (qmail 5539 invoked from network); 12 Jul 2019 12:32:53 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1562934593;
-	bh=xxRtUTDCKhzXdeTgs0S5YKCWNASaZOqK2PANmHf8px8=;
+	s=default; t=1562934761;
+	bh=m4atKtWxwNsdWMmPKBnGNNVfQ4ouO8QtM5/ynhUxPw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GSODTSO+wG8kk636QnZzDojug75nlV/NTVjRMMyRJbFNp6Vty4AVuAS/6dpIIpj9T
-	 D0g1fhwYLrxBHw+2BKF0frlNgDOr5oc69THZGwLn1udyZsLeHIhgwb0d3H/E3FncHN
-	 QW6KooajjVYmPTbkwE2UZYliqNM86pJOogpB++LM=
+	b=fvwEbnpZOXvEAOAsvJ/Wju/4jtWe/q/M+lwTnYIzEuTqPkwhbFAONwccFfeZRbiSJ
+	 ND6gNYBdfUHaNYiHLLzZ6MsnPcWLTocQrse7DClDaKrwUQuf8UUIoySp9VPv48T/jK
+	 Z6Pzt+sijUsbQz04Bq6fORhqpudWof0Vp35VtkaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: linux-kernel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,12 +33,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Borislav Petkov <bp@alien8.de>,
 	Kernel Hardening <kernel-hardening@lists.openwall.com>,
 	Peter Zijlstra <peterz@infradead.org>
-Subject: [PATCH 5.1 105/138] Documentation/admin: Remove the vsyscall=native documentation
-Date: Fri, 12 Jul 2019 14:19:29 +0200
-Message-Id: <20190712121632.793176749@linuxfoundation.org>
+Subject: [PATCH 5.2 22/61] Documentation/admin: Remove the vsyscall=native documentation
+Date: Fri, 12 Jul 2019 14:19:35 +0200
+Message-Id: <20190712121621.837838383@linuxfoundation.org>
 X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20190712121628.731888964@linuxfoundation.org>
-References: <20190712121628.731888964@linuxfoundation.org>
+In-Reply-To: <20190712121620.632595223@linuxfoundation.org>
+References: <20190712121620.632595223@linuxfoundation.org>
 User-Agent: quilt/0.66
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -69,7 +69,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -5074,12 +5074,6 @@
+@@ -5102,12 +5102,6 @@
  			emulate     [default] Vsyscalls turn into traps and are
  			            emulated reasonably safely.
  
