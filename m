@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16423-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16424-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 3610E66DB5
-	for <lists+kernel-hardening@lfdr.de>; Fri, 12 Jul 2019 14:32:59 +0200 (CEST)
-Received: (qmail 5558 invoked by uid 550); 12 Jul 2019 12:32:54 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 3A414670AE
+	for <lists+kernel-hardening@lfdr.de>; Fri, 12 Jul 2019 15:56:51 +0200 (CEST)
+Received: (qmail 15423 invoked by uid 550); 12 Jul 2019 13:56:44 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,74 +13,73 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 5539 invoked from network); 12 Jul 2019 12:32:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1562934761;
-	bh=m4atKtWxwNsdWMmPKBnGNNVfQ4ouO8QtM5/ynhUxPw0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fvwEbnpZOXvEAOAsvJ/Wju/4jtWe/q/M+lwTnYIzEuTqPkwhbFAONwccFfeZRbiSJ
-	 ND6gNYBdfUHaNYiHLLzZ6MsnPcWLTocQrse7DClDaKrwUQuf8UUIoySp9VPv48T/jK
-	 Z6Pzt+sijUsbQz04Bq6fORhqpudWof0Vp35VtkaQ=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: linux-kernel@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org,
-	Andy Lutomirski <luto@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Kees Cook <keescook@chromium.org>,
-	Florian Weimer <fweimer@redhat.com>,
-	Jann Horn <jannh@google.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Kernel Hardening <kernel-hardening@lists.openwall.com>,
-	Peter Zijlstra <peterz@infradead.org>
-Subject: [PATCH 5.2 22/61] Documentation/admin: Remove the vsyscall=native documentation
-Date: Fri, 12 Jul 2019 14:19:35 +0200
-Message-Id: <20190712121621.837838383@linuxfoundation.org>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20190712121620.632595223@linuxfoundation.org>
-References: <20190712121620.632595223@linuxfoundation.org>
-User-Agent: quilt/0.66
+Received: (qmail 15401 invoked from network); 12 Jul 2019 13:56:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=joelfernandes.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=WDiv0t+R3uRl5W7qmXtAoSiEHEHdxKx4ml5mjXWh+Pg=;
+        b=QYqkLEGFA1/hJ7msrSJEUejaFTfoP3QzQQ0XbAHmT9Csl4VlQGRIXmlO2ywQXQvND+
+         Hrz0eSA/du87KWMiWhvfsSxGBDZW8Y6Afvn5Q1TceLQvp9r9CvlEbDnZIeTmNrviry7U
+         wYHovwF3+TslYJyFDr+Shjrc4RZtnIq4XuqVI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=WDiv0t+R3uRl5W7qmXtAoSiEHEHdxKx4ml5mjXWh+Pg=;
+        b=MuVNhh+4tcvIKu1e/0punT9PhQ+kXR2tWanh8HXQ7qEy+m1Q1xpofcwi28L42LaKil
+         P970T2JvFuPIuFNYhnP8F86e+RxRA5X9G2eBa8/MMhsknXysnlZd4Hqm9i67Vwrb/uB3
+         TlBVGO9jA0038EKxn3xA8KK6SimEz9qqfgwqTmi5xhtteqO8BKq3sqZf1GOCg/3ixv1E
+         6mCTy36rnbe8NmkJu3cuSQJIxs9BN9c3MXq7wMqrAA6cQzMMHb6me7B7/01e5SQ78EAh
+         ZD44P1vgOksYm80ep/lQ7ixbGNsz7sX2+Wjk14pdsp9HxaD+AXMEnZjRDc7U9san+WAy
+         EaFw==
+X-Gm-Message-State: APjAAAU2ePdqjhS1TZ3Fw5K6buKHI/pKyS/oPK78zKHLleaqlaW9mtxv
+	oVKQ/ngT8Qf2Ghine6AFGok=
+X-Google-Smtp-Source: APXvYqzJEhVDBzSiRVeb97C/BOIrGCC92lhrBy1TO8FxsLTYA0YSdLtl7eAeD1UPch8SID4lyw/Qag==
+X-Received: by 2002:a63:b1d:: with SMTP id 29mr11024618pgl.103.1562939792240;
+        Fri, 12 Jul 2019 06:56:32 -0700 (PDT)
+Date: Fri, 12 Jul 2019 09:56:29 -0400
+From: Joel Fernandes <joel@joelfernandes.org>
+To: Oleg Nesterov <oleg@redhat.com>
+Cc: linux-kernel@vger.kernel.org, Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>,
+	Bjorn Helgaas <bhelgaas@google.com>, Borislav Petkov <bp@alien8.de>,
+	c0d1n61at3@gmail.com, "David S. Miller" <davem@davemloft.net>,
+	edumazet@google.com,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Hideaki YOSHIFUJI <yoshfuji@linux-ipv6.org>,
+	"H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@redhat.com>,
+	Josh Triplett <josh@joshtriplett.org>, keescook@chromium.org,
+	kernel-hardening@lists.openwall.com,
+	Lai Jiangshan <jiangshanlai@gmail.com>, Len Brown <lenb@kernel.org>,
+	linux-acpi@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, neilb@suse.com,
+	netdev@vger.kernel.org, "Paul E. McKenney" <paulmck@linux.ibm.com>,
+	Pavel Machek <pavel@ucw.cz>, peterz@infradead.org,
+	"Rafael J. Wysocki" <rjw@rjwysocki.net>,
+	Rasmus Villemoes <rasmus.villemoes@prevas.dk>, rcu@vger.kernel.org,
+	Steven Rostedt <rostedt@goodmis.org>, Tejun Heo <tj@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>, will@kernel.org,
+	"maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT)" <x86@kernel.org>
+Subject: Re: [PATCH v1 1/6] rcu: Add support for consolidated-RCU reader
+ checking
+Message-ID: <20190712135629.GH92297@google.com>
+References: <20190711234401.220336-1-joel@joelfernandes.org>
+ <20190711234401.220336-2-joel@joelfernandes.org>
+ <20190712121200.GC21989@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190712121200.GC21989@redhat.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-From: Andy Lutomirski <luto@kernel.org>
+On Fri, Jul 12, 2019 at 02:12:00PM +0200, Oleg Nesterov wrote:
+> On 07/11, Joel Fernandes (Google) wrote:
+> >
+> > +int rcu_read_lock_any_held(void)
+> 
+> rcu_sync_is_idle() wants it. You have my ack in advance ;)
 
-commit d974ffcfb7447db5f29a4b662a3eaf99a4e1109e upstream.
+Cool, thanks ;)
 
-The vsyscall=native feature is gone -- remove the docs.
-
-Fixes: 076ca272a14c ("x86/vsyscall/64: Drop "native" vsyscalls")
-Signed-off-by: Andy Lutomirski <luto@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Kees Cook <keescook@chromium.org>
-Cc: Florian Weimer <fweimer@redhat.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: stable@vger.kernel.org
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Kernel Hardening <kernel-hardening@lists.openwall.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/d77c7105eb4c57c1a95a95b6a5b8ba194a18e764.1561610354.git.luto@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
----
- Documentation/admin-guide/kernel-parameters.txt |    6 ------
- 1 file changed, 6 deletions(-)
-
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -5102,12 +5102,6 @@
- 			emulate     [default] Vsyscalls turn into traps and are
- 			            emulated reasonably safely.
- 
--			native      Vsyscalls are native syscall instructions.
--			            This is a little bit faster than trapping
--			            and makes a few dynamic recompilers work
--			            better than they would in emulation mode.
--			            It also makes exploits much easier to write.
--
- 			none        Vsyscalls don't work at all.  This makes
- 			            them quite hard to use for exploits but
- 			            might break your system.
-
-
+- Joel
