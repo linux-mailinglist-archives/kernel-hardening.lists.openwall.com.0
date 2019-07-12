@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16418-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16419-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 2FB1A66B4C
-	for <lists+kernel-hardening@lfdr.de>; Fri, 12 Jul 2019 13:02:37 +0200 (CEST)
-Received: (qmail 30527 invoked by uid 550); 12 Jul 2019 11:02:30 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 29AFC66B61
+	for <lists+kernel-hardening@lfdr.de>; Fri, 12 Jul 2019 13:12:01 +0200 (CEST)
+Received: (qmail 8153 invoked by uid 550); 12 Jul 2019 11:11:55 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,20 +13,20 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 30507 invoked from network); 12 Jul 2019 11:02:29 -0000
+Received: (qmail 8135 invoked from network); 12 Jul 2019 11:11:55 -0000
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
 	:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
 	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
 	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
 	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	 bh=PD94wZRNXHIjHblu3nIrY4xxlHZYXkLegGZyayPXJPA=; b=LdoVKmUIYMMAH0RwU1/sb66Wt
-	PDIews2/h6sozwC0zDIT4qd9SogFPE8J/64yxNOntCL5i28uDH3ABs3F9LZSk85qfeMr/Kt5nyaA0
-	Cquj6eo1chq4GUCT+inbwuTEOZh4AnYQaFsOhi8FkO0DtOhKIzr0rtXPOKgkX6CORU7N63f/cN0uw
-	RjxLEuZUDL5JKAbluFeI8rfg2CtCfW/UhC0HK1DmeRDhd5H/GtQxVwWuSOT7jSZQcaa0WwNsGbKui
-	Rv7WZunOPBMTk/6IuVd+sc9fV0N25106/kjObkCTCppnjgcs0hF8Cp2YAaEfufGieuJllqDsFPGMV
-	wcgMqYSaA==;
-Date: Fri, 12 Jul 2019 13:01:42 +0200
+	 bh=It5jdfKhVmYVEt2Nrxa1ZDUn89wu3dnyJAHiP9qsY30=; b=XoGg2KePmkIpdC3B0kUZ7Tb2m
+	LEO73lBhtob0kk2Q+fMch7o8KyW9XW5SW2zZJWtMeVgjr9uXT5sKGe9pYAEStu/imSHtwcWIH+jwR
+	2rDlu/g7t9u/RxPTY7615E6o1hot1C/f4wmZwyUUwMGknaszEbF/uzPXj4AymDscDt6IVHRH6qMoc
+	AYZl06xEbp6NonVv3HkCwoDaur1zxjcYG1U2ESixlaTWZ4TelqBbDltIxaqydkDJZJmMs7UdVKWCr
+	XMqNArDoslHHDK1HxePnjZAzl98OtiiqECmG2gP+kMQuX5/oUHkDlZqfWTqmlYrxNWNArkVkw1WCt
+	rEwBDifEw==;
+Date: Fri, 12 Jul 2019 13:11:25 +0200
 From: Peter Zijlstra <peterz@infradead.org>
 To: "Joel Fernandes (Google)" <joel@joelfernandes.org>
 Cc: linux-kernel@vger.kernel.org, Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>,
@@ -52,7 +52,7 @@ Cc: linux-kernel@vger.kernel.org, Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>,
 	"maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT)" <x86@kernel.org>
 Subject: Re: [PATCH v1 1/6] rcu: Add support for consolidated-RCU reader
  checking
-Message-ID: <20190712110142.GS3402@hirez.programming.kicks-ass.net>
+Message-ID: <20190712111125.GT3402@hirez.programming.kicks-ass.net>
 References: <20190711234401.220336-1-joel@joelfernandes.org>
  <20190711234401.220336-2-joel@joelfernandes.org>
 MIME-Version: 1.0
@@ -62,37 +62,55 @@ In-Reply-To: <20190711234401.220336-2-joel@joelfernandes.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 
 On Thu, Jul 11, 2019 at 07:43:56PM -0400, Joel Fernandes (Google) wrote:
-> This patch adds support for checking RCU reader sections in list
-> traversal macros. Optionally, if the list macro is called under SRCU or
-> other lock/mutex protection, then appropriate lockdep expressions can be
-> passed to make the checks pass.
-> 
-> Existing list_for_each_entry_rcu() invocations don't need to pass the
-> optional fourth argument (cond) unless they are under some non-RCU
-> protection and needs to make lockdep check pass.
-> 
-> Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-> ---
->  include/linux/rculist.h  | 29 ++++++++++++++++++++++++-----
->  include/linux/rcupdate.h |  7 +++++++
->  kernel/rcu/Kconfig.debug | 11 +++++++++++
->  kernel/rcu/update.c      | 26 ++++++++++++++++++++++++++
->  4 files changed, 68 insertions(+), 5 deletions(-)
-> 
-> diff --git a/include/linux/rculist.h b/include/linux/rculist.h
-> index e91ec9ddcd30..78c15ec6b2c9 100644
-> --- a/include/linux/rculist.h
-> +++ b/include/linux/rculist.h
-> @@ -40,6 +40,23 @@ static inline void INIT_LIST_HEAD_RCU(struct list_head *list)
->   */
->  #define list_next_rcu(list)	(*((struct list_head __rcu **)(&(list)->next)))
->  
-> +/*
-> + * Check during list traversal that we are within an RCU reader
-> + */
+> +int rcu_read_lock_any_held(void)
+> +{
+> +	int lockdep_opinion = 0;
 > +
-> +#define SIXTH_ARG(a1, a2, a3, a4, a5, a6, ...) a6
-> +#define COUNT_VARGS(...) SIXTH_ARG(dummy, ## __VA_ARGS__, 4, 3, 2, 1, 0)
+> +	if (!debug_lockdep_rcu_enabled())
+> +		return 1;
+> +	if (!rcu_is_watching())
+> +		return 0;
+> +	if (!rcu_lockdep_current_cpu_online())
+> +		return 0;
+> +
+> +	/* Preemptible RCU flavor */
+> +	if (lock_is_held(&rcu_lock_map))
 
-You don't seem to actually use it in this patch; also linux/kernel.h has
-COUNT_ARGS().
+you forgot debug_locks here.
+
+> +		return 1;
+> +
+> +	/* BH flavor */
+> +	if (in_softirq() || irqs_disabled())
+
+I'm not sure I'd put irqs_disabled() under BH, also this entire
+condition is superfluous, see below.
+
+> +		return 1;
+> +
+> +	/* Sched flavor */
+> +	if (debug_locks)
+> +		lockdep_opinion = lock_is_held(&rcu_sched_lock_map);
+> +	return lockdep_opinion || !preemptible();
+
+that !preemptible() turns into:
+
+  !(preempt_count()==0 && !irqs_disabled())
+
+which is:
+
+  preempt_count() != 0 || irqs_disabled()
+
+and already includes irqs_disabled() and in_softirq().
+
+> +}
+
+So maybe something lke:
+
+	if (debug_locks && (lock_is_held(&rcu_lock_map) ||
+			    lock_is_held(&rcu_sched_lock_map)))
+		return true;
+
+	return !preemptible();
+
+
