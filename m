@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16463-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16464-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 34F0369290
-	for <lists+kernel-hardening@lfdr.de>; Mon, 15 Jul 2019 16:37:58 +0200 (CEST)
-Received: (qmail 28234 invoked by uid 550); 15 Jul 2019 14:37:39 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 51C8C6929D
+	for <lists+kernel-hardening@lfdr.de>; Mon, 15 Jul 2019 16:38:07 +0200 (CEST)
+Received: (qmail 28646 invoked by uid 550); 15 Jul 2019 14:37:42 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,35 +13,34 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 28120 invoked from network); 15 Jul 2019 14:37:38 -0000
+Received: (qmail 28583 invoked from network); 15 Jul 2019 14:37:42 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=joelfernandes.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Z+lAujGo7GrSG40jkK2/203/pKxvTLE13nrgeKcOwgI=;
-        b=AUubZl4ETLIsW/m5dgXLBulJXDHc0BCosX1eCwyxi+94m0Nn+UMJmqa85ypsCsZq1j
-         xz0LM9usgNKyVFOetyi7Bh0t5cemvEnRKdil/TVdpWNJXsluRFLQGvr0RhdUuQJTVlAU
-         AAiUQF4zYjdlsdkxFoX9G9U8IN3eAZ1c3LtuQ=
+        bh=/gvD5L3W4khYlR/j02/LMhetLZkkRNPQ8EPkwaYb/Yo=;
+        b=WUpb9JKsXzIHcxew1wAVQiWwZ+kaf0Ww3b9i/phqeK6eGSyIkMrGlEABg1JgP/N6a7
+         XI3TNv1vdpFEoUyT+MAAdsh6eiTQV1SZjNnbyXSh4bYq6H3Gz7K8UhzDuVF/rfbp1RTm
+         xNeitgRKD2kv4LjyEJgK6S9GJGZvS2JWmOhuM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Z+lAujGo7GrSG40jkK2/203/pKxvTLE13nrgeKcOwgI=;
-        b=Lh9WaEHsNGV4gH4VSujy7UsSczy1XqVSSE0/Uy3W3g34k2vyYnAmW7u9Vp1XU9MFUd
-         Xcil0PaZdpnwpMHjGP/ZSOBbt8b6Zpyixf213GO0/Db2ERNHhV4lqi+0hLpfHarDX4ev
-         d+pIXzIyKZVAo5fDeopT2rIEwd1KKgATiwfbht0ko8TF0hlbD/LDooYvlkjPemKWAVbM
-         HfzCmfSQ5dH0VZYIuZLekTgo3B9a1mqBWr8tiMN0MKrNNX3gnDjTn/HHmjP73OaCgQGd
-         2j74dyT731sBUtfK20jK9wz5qp2CuI8rpkoXarNQd+njVTIchWbzBhk0/lFrzL17Sn+k
-         zn1Q==
-X-Gm-Message-State: APjAAAWPEIEcBHLR0iE2BS6SqofQQfZaV43Xn70wW6t0Q8soDc5vAecf
-	kd5k/ne1U3nNqJm+KwIkEZU=
-X-Google-Smtp-Source: APXvYqyfIIGoLXgS2oKcW7Wk3sDCdph3kdkFQYwRHA7oKCzkGjxEv3JlpE2AZDMyjbjqgNcrkFD7WQ==
-X-Received: by 2002:a17:902:8649:: with SMTP id y9mr28192780plt.289.1563201446297;
-        Mon, 15 Jul 2019 07:37:26 -0700 (PDT)
+        bh=/gvD5L3W4khYlR/j02/LMhetLZkkRNPQ8EPkwaYb/Yo=;
+        b=YlB36+CshADzVGSfETyffKrvNgns6RNvgfg0LZKQqiclQX4Z9sRKy+zKa6+GVmnhyP
+         d4m+iXc6YaGTvAq9bxkzVTorKAEgyqeb2lJLTLdxCCPk3SI3NgKNnDRr6Nq5E12Q7W6M
+         vLDZLo7scxxQXjviIPKZP8225LcAtecDnOkEpuAuNJtnjFTV+0i1ovlogO156c4nQtqc
+         qZuYvEgU6tD6VmmcPcioDeO5lrU0mC5hiA16JXFbVPw3wLWE/TuW48z05kMu3dVvCxsj
+         3WBLzFsujEiEjGupsxSnD/Ua7/4bFO1HrAd2qAzQFs7WT1QY+UiSLgzP/GbyRTZndcKC
+         GFxg==
+X-Gm-Message-State: APjAAAXi4YOnDvWTkoXz5c98GjvVwc24CAhX9OkcU3JEucSGZq/s8Eto
+	Ba69Yz3KvBjlA5cvEacBxwU=
+X-Google-Smtp-Source: APXvYqySJr0Y1QIzNUIj9NJwd+Rw22u3LGJjXHmBidac39lx3Xu00PxoUZgolCbZ3bk0iovIh+UXIw==
+X-Received: by 2002:a17:902:1003:: with SMTP id b3mr29244590pla.172.1563201450419;
+        Mon, 15 Jul 2019 07:37:30 -0700 (PDT)
 From: "Joel Fernandes (Google)" <joel@joelfernandes.org>
 To: linux-kernel@vger.kernel.org
 Cc: "Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	Oleg Nesterov <oleg@redhat.com>,
 	Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Borislav Petkov <bp@alien8.de>,
@@ -66,6 +65,7 @@ Cc: "Joel Fernandes (Google)" <joel@joelfernandes.org>,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
 	neilb@suse.com,
 	netdev@vger.kernel.org,
+	Oleg Nesterov <oleg@redhat.com>,
 	"Paul E. McKenney" <paulmck@linux.ibm.com>,
 	Pavel Machek <pavel@ucw.cz>,
 	peterz@infradead.org,
@@ -77,42 +77,37 @@ Cc: "Joel Fernandes (Google)" <joel@joelfernandes.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	will@kernel.org,
 	x86@kernel.org (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
-Subject: [PATCH 3/9] rcu/sync: Remove custom check for reader-section (v2)
-Date: Mon, 15 Jul 2019 10:36:59 -0400
-Message-Id: <20190715143705.117908-4-joel@joelfernandes.org>
+Subject: [PATCH 4/9] ipv4: add lockdep condition to fix for_each_entry (v1)
+Date: Mon, 15 Jul 2019 10:37:00 -0400
+Message-Id: <20190715143705.117908-5-joel@joelfernandes.org>
 X-Mailer: git-send-email 2.22.0.510.g264f2c817a-goog
 In-Reply-To: <20190715143705.117908-1-joel@joelfernandes.org>
 References: <20190715143705.117908-1-joel@joelfernandes.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The rcu/sync code was doing its own check whether we are in a reader
-section. With RCU consolidating flavors and the generic helper added in
-this series, this is no longer need. We can just use the generic helper
-and it results in a nice cleanup.
+Using the previous support added, use it for adding lockdep conditions
+to list usage here.
 
-Cc: Oleg Nesterov <oleg@redhat.com>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
 Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
 ---
- include/linux/rcu_sync.h | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/ipv4/fib_frontend.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/rcu_sync.h b/include/linux/rcu_sync.h
-index 9b83865d24f9..0027d4c8087c 100644
---- a/include/linux/rcu_sync.h
-+++ b/include/linux/rcu_sync.h
-@@ -31,9 +31,7 @@ struct rcu_sync {
-  */
- static inline bool rcu_sync_is_idle(struct rcu_sync *rsp)
- {
--	RCU_LOCKDEP_WARN(!rcu_read_lock_held() &&
--			 !rcu_read_lock_bh_held() &&
--			 !rcu_read_lock_sched_held(),
-+	RCU_LOCKDEP_WARN(!rcu_read_lock_any_held(),
- 			 "suspicious rcu_sync_is_idle() usage");
- 	return !READ_ONCE(rsp->gp_state); /* GP_IDLE */
- }
+diff --git a/net/ipv4/fib_frontend.c b/net/ipv4/fib_frontend.c
+index 317339cd7f03..26b0fb24e2c2 100644
+--- a/net/ipv4/fib_frontend.c
++++ b/net/ipv4/fib_frontend.c
+@@ -124,7 +124,8 @@ struct fib_table *fib_get_table(struct net *net, u32 id)
+ 	h = id & (FIB_TABLE_HASHSZ - 1);
+ 
+ 	head = &net->ipv4.fib_table_hash[h];
+-	hlist_for_each_entry_rcu(tb, head, tb_hlist) {
++	hlist_for_each_entry_rcu(tb, head, tb_hlist,
++				 lockdep_rtnl_is_held()) {
+ 		if (tb->tb_id == id)
+ 			return tb;
+ 	}
 -- 
 2.22.0.510.g264f2c817a-goog
 
