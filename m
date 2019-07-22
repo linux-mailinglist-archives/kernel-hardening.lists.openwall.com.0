@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16531-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16532-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 8BBA670856
-	for <lists+kernel-hardening@lfdr.de>; Mon, 22 Jul 2019 20:21:49 +0200 (CEST)
-Received: (qmail 5541 invoked by uid 550); 22 Jul 2019 18:21:44 -0000
+	by mail.lfdr.de (Postfix) with SMTP id ACC1670883
+	for <lists+kernel-hardening@lfdr.de>; Mon, 22 Jul 2019 20:27:34 +0200 (CEST)
+Received: (qmail 13530 invoked by uid 550); 22 Jul 2019 18:27:28 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,41 +13,30 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 5480 invoked from network); 22 Jul 2019 18:21:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=HTjPBTADUPMB5RaGA9y0UyTqoJ3Kfn/iq/tEhGgaR3M=;
-        b=Dj43T+n6Vxg6cN3csQHecassw0CJtE++5r2L9ZQaygl4xXVA6mYVT88ZTYnI46lB+W
-         UNIKPs2wU27c+wvDPegaFAoelU0c0duzUcGIdc9b/fPDUKuu5QlRlibQ/0HLFnvruEZ9
-         RY9iOqCmvHk4MAaJgioF+tjnWh1lxA7mBoapM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=HTjPBTADUPMB5RaGA9y0UyTqoJ3Kfn/iq/tEhGgaR3M=;
-        b=loWAeq8crzw8UyHcSbcuSsCAoWDtKwraNh3SZs9wJazf5fqfgAov4/hmKgmnM8INQv
-         uKKmt7WVLnY4XOMnKwYFtk6GChp+vEawBUjAoe0GD8uY2K59G0RnPmOYyAZgcpTjJmY/
-         uJwOqsLJNbgHobI7jI8IHUAFfeH6jttw8Q9396k1xSDQwrDbl2s7QMkjUC2c+PgfdYXc
-         tYEgNUjfIyhDBecH9+uGpds70uL4Oe8yDu2IcX9VilT4qKT/ZvHZi9vSV7GNtKPnIl2d
-         Tl0yrugv/DBly/rEMFdBQfqjTgDYXQhb1QTtSPjN6b9jOIHJiiINZtObNK0gmYqAfhjn
-         MBQg==
-X-Gm-Message-State: APjAAAWf65lEcR+5sitGvGfmU7soJSHr3iQ/Gk4METiv3DkR3YiCjwFk
-	RxE7yUmAHbvgXyM/vU5e90J6ZQ==
-X-Google-Smtp-Source: APXvYqxd3ea3RMFRO/3G58OJVS+XLsxkndJ9CGsP8Y9p3sWvtvNRL3X4fkjIxQDOHpdZdeRpM3Xcbg==
-X-Received: by 2002:a17:90b:8d8:: with SMTP id ds24mr2771111pjb.135.1563819691252;
-        Mon, 22 Jul 2019 11:21:31 -0700 (PDT)
-Date: Mon, 22 Jul 2019 11:21:29 -0700
-From: Kees Cook <keescook@chromium.org>
+Received: (qmail 13497 invoked from network); 22 Jul 2019 18:27:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
+	:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	 bh=tGQ3tU84YUPv9anAGKOasBEXJrM8FRAxn66lIhfR02Q=; b=DrTCv0T34g/AEpsLdSUB+OweT
+	BU7fu+Dm0wrSTGO41re0jxJH+t+vM9hye9RL1wAr88bj0oPWG70t2JBWoOI48HrxEMlVPACbeN1uu
+	/ch/Hmv1HcofsIRa5N2G5LiDoyS7rybkBUntp6Vndt3qIKhBnQTqQWRwkkXEP16OLtG6iVXbr4Ee6
+	/dIFiZlM864pj2EDvEf/bCQtAHA6Sm4ltZVMH4ZT8suuvxhHl7Eyy0p7VoDwYOioVWqQhYZyUlQyn
+	eVCYgn6N9nZvdHT5OXq2lpHXkTaQNKAVrPqr3EDFcnwZjOk+8HtfltejH6pNYK8GHwVU9i9a/fxB2
+	5eGUReVYA==;
+Date: Mon, 22 Jul 2019 11:27:04 -0700
+From: Matthew Wilcox <willy@infradead.org>
 To: Joe Perches <joe@perches.com>
-Cc: Nitin Gote <nitin.r.gote@intel.com>, akpm@linux-foundation.org,
-	corbet@lwn.net, apw@canonical.com, linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org, kernel-hardening@lists.openwall.com,
+Cc: Kees Cook <keescook@chromium.org>, Nitin Gote <nitin.r.gote@intel.com>,
+	akpm@linux-foundation.org, corbet@lwn.net, apw@canonical.com,
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	kernel-hardening@lists.openwall.com,
 	Rasmus Villemoes <rasmus.villemoes@prevas.dk>
 Subject: Re: [RFC PATCH] string.h: Add stracpy/stracpy_pad (was: Re: [PATCH]
  checkpatch: Added warnings in favor of strscpy().)
-Message-ID: <201907221119.9ECF3466@keescook>
+Message-ID: <20190722182703.GE363@bombadil.infradead.org>
 References: <1562219683-15474-1-git-send-email-nitin.r.gote@intel.com>
  <f6a4c2b601bb59179cb2e3b8f4d836a1c11379a3.camel@perches.com>
  <d1524130f91d7cfd61bc736623409693d2895f57.camel@perches.com>
@@ -58,6 +47,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <2c959c56c23d0052e5c35ecfa2f6051b17fb2798.camel@perches.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 
 On Mon, Jul 22, 2019 at 10:58:15AM -0700, Joe Perches wrote:
 > On Mon, 2019-07-22 at 10:43 -0700, Joe Perches wrote:
@@ -98,58 +88,12 @@ On Mon, Jul 22, 2019 at 10:58:15AM -0700, Joe Perches wrote:
 > > > > +								\
 > > > > +	strscpy(to, from, size);				\
 > > > > +})
-> > > > +
-> > > > +#define stracpy_pad(to, from)					\
-> > > > +({								\
-> > > > +	size_t size = ARRAY_SIZE(to);				\
-> > > > +	BUILD_BUG_ON(!__same_type(typeof(*to), char));		\
-> > > > +								\
-> > > > +	strscpy_pad(to, from, size);				\
-> > > > +})
-> > > > +
-> > > >  #ifndef __HAVE_ARCH_STRCAT
-> > > >  extern char * strcat(char *, const char *);
-> > > >  #endif
-> > > 
-> > > This seems like a reasonable addition, yes. I think Coccinelle might
-> > > actually be able to find all the existing strscpy(dst, src, sizeof(dst))
-> > > cases to jump-start this conversion.
-> > 
-> > I did that.  It works.  It's a lot of conversions.
-> > 
-> > $ cat str.cpy.cocci
-> > @@
-> > expression e1;
-> > expression e2;
-> > @@
-> > 
-> > - strscpy(e1, e2, sizeof(e1))
-> > + stracpy(e1, e2)
-> > 
-> > @@
-> > expression e1;
-> > expression e2;
-> > @@
-> > 
-> > - strlcpy(e1, e2, sizeof(e1))
-> > + stracpy(e1, e2)
-> > 
-> > > Devil's advocate: this adds yet more string handling functions... will
-> > > this cause even more confusion?
-> > 
-> > Documentation is good.
-> > Actual in-kernel use and examples better.
-> 
-> btw: I just ran this again and it produces:
-> 
-> $ spatch --in-place -sp-file str.cpy.cocci .
-> $ git checkout tools/
-> $ git diff --shortstat
->  958 files changed, 2179 insertions(+), 2655 deletions(-)
 
-Cool. Well, assuming no one hates this, let's do it. :) Can you send a
-more complete patch with docs, etc? Maybe Linus will take it for late
-in the next merge window, perhaps?
+Where does the 'a' in 'stracpy' come from?  Googling around finds other
+people using a function called stracpy, but it takes different arguments.
+http://stracpy.blogspot.com/ takes a size argument, as does
+https://docs.polserver.com/doxygen/html/d5/dce/stracpy_8cpp_source.html
 
--- 
-Kees Cook
+The one in the 'Links' webbrowser (can't find a link to its source) seems
+like a strdup clone.
+
