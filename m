@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16553-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16554-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id B0C6F71849
-	for <lists+kernel-hardening@lfdr.de>; Tue, 23 Jul 2019 14:30:56 +0200 (CEST)
-Received: (qmail 3076 invoked by uid 550); 23 Jul 2019 12:30:39 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 26DF6719C2
+	for <lists+kernel-hardening@lfdr.de>; Tue, 23 Jul 2019 15:52:02 +0200 (CEST)
+Received: (qmail 13323 invoked by uid 550); 23 Jul 2019 13:51:54 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,64 +13,39 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 19634 invoked from network); 23 Jul 2019 06:51:13 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jMAMtmUAhJdSC4vipMY5itqWELsNJG6mJ9qzPbPKC4c=;
-        b=ihb0XbaNzs9AlVpMOo2LpImJqR7AyD2EwQ+BeXXDMs9XsReXoQCbUd6szM7HqjNmpO
-         lp0uiH2mAA9YaD+NxmwWO+p6vKYN6uXespDnGEszP8uOyQdCX8KHKTgAlkE6yAggf2gy
-         +hPkN01mxYODNgfWQExwbeplzNiNfs3C0m678j8KL8uq4ANtBI0O73OJzpS5S5abyAxy
-         Gns8F/lCr4TT/79Mmyq9PJGlpaBha4CLDUt0DMyd/vGdnJH0dAByagBWA5YsKHttWL6A
-         5odY8GLprLS6Y7mcpjJCsAjYMvTq1e6v62jhmbIX2RD4b2FesNglME3RK+HJc/bDybOS
-         ZO7w==
-X-Gm-Message-State: APjAAAVI79OZd9MaGmJJ8WYNklUpE3fpTpeMPyXgGTJ14NOB0Zon9ckV
-	rL9SfCqthM5SdSFCNCPpGcuFAg==
-X-Google-Smtp-Source: APXvYqy/k1FmuZtmzbGj70tGf6pEe8WcHy9IAXeVEBHOs6jjeBXUvh5MQmOdUmijA3oVu2MGxa60jg==
-X-Received: by 2002:a7b:c5c3:: with SMTP id n3mr59499751wmk.101.1563864662076;
-        Mon, 22 Jul 2019 23:51:02 -0700 (PDT)
-From: Ondrej Mosnacek <omosnace@redhat.com>
-To: selinux@vger.kernel.org,
-	Paul Moore <paul@paul-moore.com>
-Cc: NitinGote <nitin.r.gote@intel.com>,
-	kernel-hardening@lists.openwall.com,
+Received: (qmail 12262 invoked from network); 23 Jul 2019 13:51:53 -0000
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Spam-Summary: 2,0,0,,d41d8cd98f00b204,joe@perches.com,:::::::::::::::::::::,RULES_HIT:41:355:379:541:988:989:1260:1345:1437:1534:1538:1561:1711:1714:1730:1747:1777:1792:1801:2393:2559:2562:3138:3139:3140:3141:3142:3867:3868:4605:5007:6119:6261:10004:10848:11658:11914:12043:12291:12296:12297:12679:12683:12895:13069:13311:13357:14110:14181:14384:14394:14581:14721:21080:21451:21627:30054:30079,0,RBL:23.242.196.136:@perches.com:.lbl8.mailshell.net-62.8.0.180 64.201.201.201,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:fn,MSBL:0,DNSBL:neutral,Custom_rules:0:0:0,LFtime:26,LUA_SUMMARY:none
+X-HE-Tag: tiger29_82ea9ecb2fe20
+X-Filterd-Recvd-Size: 1297
+From: Joe Perches <joe@perches.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+	linux-kernel@vger.kernel.org
+Cc: Jonathan Corbet <corbet@lwn.net>,
+	Stephen Kitt <steve@sk2.org>,
 	Kees Cook <keescook@chromium.org>,
-	William Roberts <bill.c.roberts@gmail.com>
-Subject: [PATCH v2] selinux: check sidtab limit before adding a new entry
-Date: Tue, 23 Jul 2019 08:50:59 +0200
-Message-Id: <20190723065059.30101-1-omosnace@redhat.com>
-X-Mailer: git-send-email 2.21.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+	Nitin Gote <nitin.r.gote@intel.com>,
+	jannh@google.com,
+	kernel-hardening@lists.openwall.com,
+	Rasmus Villemoes <rasmus.villemoes@prevas.dk>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-doc@vger.kernel.org
+Subject: [PATCH V2 0/2] string: Add stracpy and stracpy_pad
+Date: Tue, 23 Jul 2019 06:51:35 -0700
+Message-Id: <cover.1563889130.git.joe@perches.com>
+X-Mailer: git-send-email 2.15.0
 
-We need to error out when trying to add an entry above SIDTAB_MAX in
-sidtab_reverse_lookup() to avoid overflow on the odd chance that this
-happens.
+Add more string copy mechanisms to help avoid defects
 
-Fixes: ee1a84fdfeed ("selinux: overhaul sidtab to fix bug and improve performance")
-Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
----
- security/selinux/ss/sidtab.c | 5 +++++
- 1 file changed, 5 insertions(+)
+Joe Perches (2):
+  string: Add stracpy and stracpy_pad mechanisms
+  kernel-doc: core-api: Include string.h into core-api
 
-diff --git a/security/selinux/ss/sidtab.c b/security/selinux/ss/sidtab.c
-index e63a90ff2728..1f0a6eaa2d6a 100644
---- a/security/selinux/ss/sidtab.c
-+++ b/security/selinux/ss/sidtab.c
-@@ -286,6 +286,11 @@ static int sidtab_reverse_lookup(struct sidtab *s, struct context *context,
- 		++count;
- 	}
- 
-+	/* bail out if we already reached max entries */
-+	rc = -EOVERFLOW;
-+	if (count >= SIDTAB_MAX)
-+		goto out_unlock;
-+
- 	/* insert context into new entry */
- 	rc = -ENOMEM;
- 	dst = sidtab_do_lookup(s, count, 1);
+ Documentation/core-api/kernel-api.rst |  3 +++
+ include/linux/string.h                | 50 +++++++++++++++++++++++++++++++++--
+ lib/string.c                          | 10 ++++---
+ 3 files changed, 57 insertions(+), 6 deletions(-)
+
 -- 
-2.21.0
+2.15.0
 
