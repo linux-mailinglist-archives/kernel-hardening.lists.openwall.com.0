@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16558-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16559-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id D72CE71AE0
-	for <lists+kernel-hardening@lfdr.de>; Tue, 23 Jul 2019 16:54:32 +0200 (CEST)
-Received: (qmail 29851 invoked by uid 550); 23 Jul 2019 14:54:26 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 290AF71BFB
+	for <lists+kernel-hardening@lfdr.de>; Tue, 23 Jul 2019 17:40:12 +0200 (CEST)
+Received: (qmail 24070 invoked by uid 550); 23 Jul 2019 15:40:05 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,85 +13,72 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 29827 invoked from network); 23 Jul 2019 14:54:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=h4KWYzLiz8Q76GJXEl0Zz0b7uhOVauu+r5qbYmNBT7A=;
-        b=qXzwwQuBz/BmI26lbVCqNhkrQrcAoVMmFk29raVO7XCfT+iYt7qIl5aMn+cE0enLiD
-         3+xaEvX2sNlGH8nkUL47bNlG38bxXHpFIXUqMIM/39Zba78y5N1D9sev9Ti45+6yKvFo
-         fnptNuTBEsfw1q7trWYvR9MRl1i1CmZJ81dZIrb9qrELPtiW892ktHWMpqYVyezzutph
-         EzfwjamCsf8fVFG4I08D2wdsCJDH1gV8GIksnHln9mgLPk0eckvQ9VliameBuufWzcy4
-         PlTOxHKX/9Vzj1mpMqG7PlDpXbg/JnOaAe+W5cw6SU3DpVodIr8KnfpprqFivQ+asM2D
-         WWrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=h4KWYzLiz8Q76GJXEl0Zz0b7uhOVauu+r5qbYmNBT7A=;
-        b=FpJUL499vt+uFmdXB6yjSZ1gUmgcvtEaSOt17HlhcJBTSsWQ2EPSvMmhrmv1B65sge
-         Dd94MO5JZny2Mp00nLPD1Ep7c7N/5r/sROAqQBkp3u4yYgNPOChltdia6UIiRuTRghU0
-         +S3MabTTEZG1JiUUlutaZDkXnWk0nnx7irPmZoNROy1ckUD3+Qu8lvRQurtA9jkyALGU
-         sUpxexsmM/kLBXd5+LrXGJFjqiWIbgdUC3h2loKTclCTw4cM8yq+5gUQQiJsdHRx4FpP
-         GVSFw4ep+QYOe+x9KmsaWRjPShGRQkZtwXjKciaF7Y2fYNwgRQLrtKa42SfCLQXawDjy
-         QdJA==
-X-Gm-Message-State: APjAAAUFcu1vVYTpBeQtUPgvBwFAMwtkvofn/vRBcQRx7e4kkQvsd/wP
-	DYrLXpQ0lu9BmW5L62nQ6fcl42vGPOjlmKsuSL/dEw==
-X-Google-Smtp-Source: APXvYqz6MT1sE9TYkC+Gt3TnmGvb96tCIp+1WidsrIqgtwnzoYqgfblBqQU7t6GJZutpN2xUNv4oxyMInzb5C00uRSI=
-X-Received: by 2002:a9d:812:: with SMTP id 18mr48441341oty.180.1563893653534;
- Tue, 23 Jul 2019 07:54:13 -0700 (PDT)
+Received: (qmail 24034 invoked from network); 23 Jul 2019 15:40:05 -0000
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Spam-Summary: 2,0,0,,d41d8cd98f00b204,joe@perches.com,:::::::::::::::::::,RULES_HIT:41:355:379:599:973:988:989:1260:1277:1311:1313:1314:1345:1359:1437:1515:1516:1518:1534:1541:1593:1594:1711:1730:1747:1777:1792:2198:2199:2393:2559:2562:2689:2828:2915:3138:3139:3140:3141:3142:3353:3622:3865:3866:3867:3868:3870:3871:3872:3873:3874:4321:5007:6119:7903:8603:10004:10400:10848:11232:11658:11914:12297:12663:12740:12760:12895:13069:13311:13357:13439:14659:14721:21080:21324:21627:21740:30012:30054:30056:30069:30079:30091,0,RBL:23.242.196.136:@perches.com:.lbl8.mailshell.net-62.8.0.180 64.201.201.201,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:fn,MSBL:0,DNSBL:neutral,Custom_rules:0:0:0,LFtime:24,LUA_SUMMARY:none
+X-HE-Tag: fowl35_38e5e5eee520d
+X-Filterd-Recvd-Size: 2880
+Message-ID: <c9ef2b56eaf36c8e5449b751ab6e5971b6b34311.camel@perches.com>
+Subject: Re: [PATCH V2 1/2] string: Add stracpy and stracpy_pad mechanisms
+From: Joe Perches <joe@perches.com>
+To: Rasmus Villemoes <linux@rasmusvillemoes.dk>, Linus Torvalds
+	 <torvalds@linux-foundation.org>, linux-kernel@vger.kernel.org
+Cc: Jonathan Corbet <corbet@lwn.net>, Stephen Kitt <steve@sk2.org>, Kees
+ Cook <keescook@chromium.org>, Nitin Gote <nitin.r.gote@intel.com>,
+ jannh@google.com,  kernel-hardening@lists.openwall.com, Andrew Morton
+ <akpm@linux-foundation.org>
+Date: Tue, 23 Jul 2019 08:39:49 -0700
+In-Reply-To: <ce1320d8-60df-7c54-2348-6aabac63c24d@rasmusvillemoes.dk>
+References: <cover.1563889130.git.joe@perches.com>
+	 <ed4611a4a96057bf8076856560bfbf9b5e95d390.1563889130.git.joe@perches.com>
+	 <ce1320d8-60df-7c54-2348-6aabac63c24d@rasmusvillemoes.dk>
+Content-Type: text/plain; charset="ISO-8859-1"
+User-Agent: Evolution 3.30.5-0ubuntu0.18.10.1 
 MIME-Version: 1.0
-References: <20190722113151.1584-1-nitin.r.gote@intel.com> <CAFqZXNs5vdQwoy2k=_XLiGRdyZCL=n8as6aL01Dw-U62amFREA@mail.gmail.com>
-In-Reply-To: <CAFqZXNs5vdQwoy2k=_XLiGRdyZCL=n8as6aL01Dw-U62amFREA@mail.gmail.com>
-From: Jann Horn <jannh@google.com>
-Date: Tue, 23 Jul 2019 16:53:47 +0200
-Message-ID: <CAG48ez3zRoB7awMdb-koKYJyfP9WifTLevxLxLHioLhH=itZ-A@mail.gmail.com>
-Subject: Re: [PATCH] selinux: convert struct sidtab count to refcount_t
-To: Ondrej Mosnacek <omosnace@redhat.com>
-Cc: NitinGote <nitin.r.gote@intel.com>, Kees Cook <keescook@chromium.org>, 
-	Kernel Hardening <kernel-hardening@lists.openwall.com>, Paul Moore <paul@paul-moore.com>, 
-	Stephen Smalley <sds@tycho.nsa.gov>, Eric Paris <eparis@parisplace.org>, 
-	SElinux list <selinux@vger.kernel.org>, 
-	Linux kernel mailing list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jul 22, 2019 at 3:44 PM Ondrej Mosnacek <omosnace@redhat.com> wrote:
-> On Mon, Jul 22, 2019 at 1:35 PM NitinGote <nitin.r.gote@intel.com> wrote:
-> > refcount_t type and corresponding API should be
-> > used instead of atomic_t when the variable is used as
-> > a reference counter. This allows to avoid accidental
-> > refcounter overflows that might lead to use-after-free
-> > situations.
-> >
-> > Signed-off-by: NitinGote <nitin.r.gote@intel.com>
->
-> Nack.
->
-> The 'count' variable is not used as a reference counter here. It
-> tracks the number of entries in sidtab, which is a very specific
-> lookup table that can only grow (the count never decreases). I only
-> made it atomic because the variable is read outside of the sidtab's
-> spin lock and thus the reads and writes to it need to be guaranteed to
-> be atomic. The counter is only updated under the spin lock, so
-> insertions do not race with each other.
+On Tue, 2019-07-23 at 16:37 +0200, Rasmus Villemoes wrote:
+> On 23/07/2019 15.51, Joe Perches wrote:
+> > Several uses of strlcpy and strscpy have had defects because the
+> > last argument of each function is misused or typoed.
+> > 
+> > Add macro mechanisms to avoid this defect.
+> > 
+> > stracpy (copy a string to a string array) must have a string
+> > array as the first argument (dest) and uses sizeof(dest) as the
+> > count of bytes to copy.
+> > 
+> > These mechanisms verify that the dest argument is an array of
+> > char or other compatible types like u8 or s8 or equivalent.
+> Sorry, but "compatible types" has a very specific meaning in C, so
+> please don't use that word.
 
-Probably shouldn't even be atomic_t... quoting Documentation/atomic_t.txt:
+I think you are being overly pedantic here but
+what wording do you actually suggest?
 
-| SEMANTICS
-| ---------
-|
-| Non-RMW ops:
-|
-| The non-RMW ops are (typically) regular LOADs and STOREs and are canonically
-| implemented using READ_ONCE(), WRITE_ONCE(), smp_load_acquire() and
-| smp_store_release() respectively. Therefore, if you find yourself only using
-| the Non-RMW operations of atomic_t, you do not in fact need atomic_t at all
-| and are doing it wrong.
+>  And yes, the kernel disables -Wpointer-sign,
+> so passing an u8* or s8* when strscpy() expects a char* is silently
+> accepted, but does such code exist?
 
-So I think what you actually want here is a plain "int count", and then:
- - for unlocked reads, either READ_ONCE()+smp_rmb() or smp_load_acquire()
- - for writes, either smp_wmb()+WRITE_ONCE() or smp_store_release()
+u8 definitely, s8 I'm not sure.
 
-smp_load_acquire() and smp_store_release() are probably the nicest
-here, since they are semantically clearer than smp_rmb()/smp_wmb().
+I don't find via grep a use of s8 foo[] = "bar";
+or "signed char foo[] = "bar";
+
+I don't think it bad to allow it.
+
+> > V2: Use __same_type testing char[], signed char[], and unsigned char[]
+> >     Rename to, from, and size, dest, src and count
+> 
+> count is just as bad as size in terms of "the expression src might
+> contain that identifier". But there's actually no reason to even declare
+> a local variable, just use ARRAY_SIZE() directly as the third argument
+> to strscpy().
+
+I don't care about that myself.
+It's a macro local identifier and shadowing in a macro
+is common.  I'm not a big fan of useless underscores.
+
+I think either works.
+
+
