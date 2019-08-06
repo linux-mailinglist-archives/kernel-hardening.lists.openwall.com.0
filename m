@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16726-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16727-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id B5CE783586
-	for <lists+kernel-hardening@lfdr.de>; Tue,  6 Aug 2019 17:44:05 +0200 (CEST)
-Received: (qmail 19818 invoked by uid 550); 6 Aug 2019 15:44:00 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 69690835B6
+	for <lists+kernel-hardening@lfdr.de>; Tue,  6 Aug 2019 17:51:32 +0200 (CEST)
+Received: (qmail 28187 invoked by uid 550); 6 Aug 2019 15:51:26 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,20 +13,24 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 19793 invoked from network); 6 Aug 2019 15:43:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-	t=1565106228;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-	bh=TDFDazt6//hwNfwRMzmVKFiu4ldxLz+yMwXDE8Lj5Eo=;
-	b=dt2cjv9ck6Riog7ad+ewdarAX2dM8UrmZhk8qdfxpW8EfZWGjwleuVrU4g1cmXqrcn8Kh+
-	TWcpA8A1qy+/qbzkXNRCP6wNTc/+TBGiGV3muxnmmGbdGi77lel3IPkl79O3Iqqfn0x3XN
-	2iqBRrkAzDyyrAqpiKzGnDMqxESTm0c=
-Date: Tue, 6 Aug 2019 17:43:47 +0200
-From: Borislav Petkov <bp@alien8.de>
-To: Thomas Garnier <thgarnie@chromium.org>
-Cc: kernel-hardening@lists.openwall.com, kristen@linux.intel.com,
+Received: (qmail 28156 invoked from network); 6 Aug 2019 15:51:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
+	:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	 bh=SncjWrmoRC5b495lasgofj0Rqb2mQTyyh5dUq+5um6c=; b=omsCdPaWcnXHcWz6QUOPsZ1pH
+	m4nhZmOCV5hlYYIM86PIwoYv97n1noOSx61nqdD5Rvo9OhGQQJ+ZPRQzx7OSmkV0g38j23wJVV0Wu
+	OA6nibDOjqa3aQAvytDJ1hR4rA9LfBGjXdSQASh7g9TEaQ8ZQXZk5SLvA35tGtSk8QSRL8vagnuRA
+	grsvsDLfqhl+NiT+Dqly9Tn8qDyLmrA6YcWPBssLEypNK8woJHz1tPHv/fxvUgbTsilr6PrnL7CMY
+	86FQfGDuo3nB2UVQvSwY6mHsHIHy7t5NB7g5s7yo2yQLb4vLc/RxZQGZgFdwDXYBYoVrN3i/SKjrc
+	dsPnU77wA==;
+Date: Tue, 6 Aug 2019 17:50:34 +0200
+From: Peter Zijlstra <peterz@infradead.org>
+To: Borislav Petkov <bp@alien8.de>
+Cc: Thomas Garnier <thgarnie@chromium.org>,
+	kernel-hardening@lists.openwall.com, kristen@linux.intel.com,
 	keescook@chromium.org, Herbert Xu <herbert@gondor.apana.org.au>,
 	"David S. Miller" <davem@davemloft.net>,
 	Thomas Gleixner <tglx@linutronix.de>,
@@ -37,7 +41,6 @@ Cc: kernel-hardening@lists.openwall.com, kristen@linux.intel.com,
 	"VMware, Inc." <pv-drivers@vmware.com>,
 	"Rafael J. Wysocki" <rjw@rjwysocki.net>,
 	Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
-	Peter Zijlstra <peterz@infradead.org>,
 	Nadav Amit <namit@vmware.com>, Jann Horn <jannh@google.com>,
 	Feng Tang <feng.tang@intel.com>,
 	Maran Wilson <maran.wilson@oracle.com>,
@@ -47,32 +50,30 @@ Cc: kernel-hardening@lists.openwall.com, kristen@linux.intel.com,
 	linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
 	virtualization@lists.linux-foundation.org, linux-pm@vger.kernel.org
 Subject: Re: [PATCH v9 00/11] x86: PIE support to extend KASLR randomization
-Message-ID: <20190806154347.GD25897@zn.tnic>
+Message-ID: <20190806155034.GP2349@hirez.programming.kicks-ass.net>
 References: <20190730191303.206365-1-thgarnie@chromium.org>
+ <20190806154347.GD25897@zn.tnic>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190730191303.206365-1-thgarnie@chromium.org>
+In-Reply-To: <20190806154347.GD25897@zn.tnic>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Tue, Jul 30, 2019 at 12:12:44PM -0700, Thomas Garnier wrote:
-> These patches make some of the changes necessary to build the kernel as
-> Position Independent Executable (PIE) on x86_64. Another patchset will
-> add the PIE option and larger architecture changes.
+On Tue, Aug 06, 2019 at 05:43:47PM +0200, Borislav Petkov wrote:
+> On Tue, Jul 30, 2019 at 12:12:44PM -0700, Thomas Garnier wrote:
+> > These patches make some of the changes necessary to build the kernel as
+> > Position Independent Executable (PIE) on x86_64. Another patchset will
+> > add the PIE option and larger architecture changes.
+> 
+> Yeah, about this: do we have a longer writeup about the actual benefits
+> of all this and why we should take this all? After all, after looking
+> at the first couple of asm patches, it is posing restrictions to how
+> we deal with virtual addresses in asm (only RIP-relative addressing in
+> 64-bit mode, MOVs with 64-bit immediates, etc, for example) and I'm
+> willing to bet money that some future unrelated change will break PIE
+> sooner or later.
 
-Yeah, about this: do we have a longer writeup about the actual benefits
-of all this and why we should take this all? After all, after looking
-at the first couple of asm patches, it is posing restrictions to how
-we deal with virtual addresses in asm (only RIP-relative addressing in
-64-bit mode, MOVs with 64-bit immediates, etc, for example) and I'm
-willing to bet money that some future unrelated change will break PIE
-sooner or later. And I'd like to have a better justification why we
-should enforce those new "rules" unconditionally.
+Possibly objtool can help here; it should be possible to teach it about
+these rules, and then it will yell when violated. That should avoid
+regressions.
 
-Thx.
-
--- 
-Regards/Gruss,
-    Boris.
-
-Good mailing practices for 400: avoid top-posting and trim the reply.
