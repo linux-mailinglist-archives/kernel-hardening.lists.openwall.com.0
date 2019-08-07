@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16747-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16748-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 91C9A84C50
-	for <lists+kernel-hardening@lfdr.de>; Wed,  7 Aug 2019 15:04:21 +0200 (CEST)
-Received: (qmail 30405 invoked by uid 550); 7 Aug 2019 13:04:14 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 8CF9D84C51
+	for <lists+kernel-hardening@lfdr.de>; Wed,  7 Aug 2019 15:04:31 +0200 (CEST)
+Received: (qmail 32220 invoked by uid 550); 7 Aug 2019 13:04:23 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,36 +13,106 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 30339 invoked from network); 7 Aug 2019 13:04:12 -0000
+Received: (qmail 32179 invoked from network); 7 Aug 2019 13:04:22 -0000
 From: Michael Ellerman <mpe@ellerman.id.au>
 To: Jason Yan <yanaijie@huawei.com>, linuxppc-dev@lists.ozlabs.org, diana.craciun@nxp.com, christophe.leroy@c-s.fr, benh@kernel.crashing.org, paulus@samba.org, npiggin@gmail.com, keescook@chromium.org, kernel-hardening@lists.openwall.com
 Cc: linux-kernel@vger.kernel.org, wangkefeng.wang@huawei.com, yebin10@huawei.com, thunder.leizhen@huawei.com, jingxiangfeng@huawei.com, fanchengyang@huawei.com, zhaohongjiang@huawei.com, Jason Yan <yanaijie@huawei.com>
-Subject: Re: [PATCH v5 09/10] powerpc/fsl_booke/kaslr: support nokaslr cmdline parameter
-In-Reply-To: <20190807065706.11411-10-yanaijie@huawei.com>
-References: <20190807065706.11411-1-yanaijie@huawei.com> <20190807065706.11411-10-yanaijie@huawei.com>
-Date: Wed, 07 Aug 2019 23:03:56 +1000
-Message-ID: <87y305t9dv.fsf@concordia.ellerman.id.au>
+Subject: Re: [PATCH v5 06/10] powerpc/fsl_booke/32: implement KASLR infrastructure
+In-Reply-To: <20190807065706.11411-7-yanaijie@huawei.com>
+References: <20190807065706.11411-1-yanaijie@huawei.com> <20190807065706.11411-7-yanaijie@huawei.com>
+Date: Wed, 07 Aug 2019 23:04:05 +1000
+Message-ID: <87wofpt9dm.fsf@concordia.ellerman.id.au>
 MIME-Version: 1.0
 Content-Type: text/plain
 
 Jason Yan <yanaijie@huawei.com> writes:
-> diff --git a/arch/powerpc/kernel/kaslr_booke.c b/arch/powerpc/kernel/kaslr_booke.c
-> index c6b326424b54..436f9a03f385 100644
-> --- a/arch/powerpc/kernel/kaslr_booke.c
-> +++ b/arch/powerpc/kernel/kaslr_booke.c
-> @@ -361,6 +361,18 @@ static unsigned long __init kaslr_choose_location(void *dt_ptr, phys_addr_t size
->  	return kaslr_offset;
->  }
->  
-> +static inline __init bool kaslr_disabled(void)
-> +{
-> +	char *str;
-> +
-> +	str = strstr(boot_command_line, "nokaslr");
-> +	if (str == boot_command_line ||
-> +	    (str > boot_command_line && *(str - 1) == ' '))
-> +		return true;
+> This patch add support to boot kernel from places other than KERNELBASE.
+> Since CONFIG_RELOCATABLE has already supported, what we need to do is
+> map or copy kernel to a proper place and relocate. Freescale Book-E
+> parts expect lowmem to be mapped by fixed TLB entries(TLB1). The TLB1
+> entries are not suitable to map the kernel directly in a randomized
+> region, so we chose to copy the kernel to a proper place and restart to
+> relocate.
 
-This extra logic doesn't work for "nokaslrfoo". Is it worth it?
+So to be 100% clear you are randomising the location of the kernel in
+virtual and physical space, by the same amount, and retaining the 1:1
+linear mapping.
+
+> diff --git a/arch/powerpc/Kconfig b/arch/powerpc/Kconfig
+> index 77f6ebf97113..755378887912 100644
+> --- a/arch/powerpc/Kconfig
+> +++ b/arch/powerpc/Kconfig
+> @@ -548,6 +548,17 @@ config RELOCATABLE
+>  	  setting can still be useful to bootwrappers that need to know the
+>  	  load address of the kernel (eg. u-boot/mkimage).
+>  
+> +config RANDOMIZE_BASE
+> +	bool "Randomize the address of the kernel image"
+> +	depends on (FSL_BOOKE && FLATMEM && PPC32)
+> +	select RELOCATABLE
+
+I think this should depend on RELOCATABLE, rather than selecting it.
+
+> diff --git a/arch/powerpc/kernel/kaslr_booke.c b/arch/powerpc/kernel/kaslr_booke.c
+> new file mode 100644
+> index 000000000000..30f84c0321b2
+> --- /dev/null
+> +++ b/arch/powerpc/kernel/kaslr_booke.c
+> @@ -0,0 +1,84 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (C) 2019 Jason Yan <yanaijie@huawei.com>
+> + *
+> + * This program is free software; you can redistribute it and/or modify
+> + * it under the terms of the GNU General Public License version 2 as
+> + * published by the Free Software Foundation.
+
+You don't need that paragraph now that you have the SPDX tag.
+
+Rather than using a '//' comment followed by a single line block comment
+you can format it as:
+
+// SPDX-License-Identifier: GPL-2.0-only
+//
+// Copyright (C) 2019 Jason Yan <yanaijie@huawei.com>
+
+
+> +#include <linux/signal.h>
+> +#include <linux/sched.h>
+> +#include <linux/kernel.h>
+> +#include <linux/errno.h>
+> +#include <linux/string.h>
+> +#include <linux/types.h>
+> +#include <linux/ptrace.h>
+> +#include <linux/mman.h>
+> +#include <linux/mm.h>
+> +#include <linux/swap.h>
+> +#include <linux/stddef.h>
+> +#include <linux/vmalloc.h>
+> +#include <linux/init.h>
+> +#include <linux/delay.h>
+> +#include <linux/highmem.h>
+> +#include <linux/memblock.h>
+> +#include <asm/pgalloc.h>
+> +#include <asm/prom.h>
+> +#include <asm/io.h>
+> +#include <asm/mmu_context.h>
+> +#include <asm/pgtable.h>
+> +#include <asm/mmu.h>
+> +#include <linux/uaccess.h>
+> +#include <asm/smp.h>
+> +#include <asm/machdep.h>
+> +#include <asm/setup.h>
+> +#include <asm/paca.h>
+> +#include <mm/mmu_decl.h>
+
+Do you really need all those headers?
+
+> +extern int is_second_reloc;
+
+That should be in a header.
+
+Any reason why it isn't a bool?
 
 cheers
+
