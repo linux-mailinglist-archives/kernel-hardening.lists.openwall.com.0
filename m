@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16760-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16762-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 6BA7686C09
-	for <lists+kernel-hardening@lfdr.de>; Thu,  8 Aug 2019 23:03:14 +0200 (CEST)
-Received: (qmail 17638 invoked by uid 550); 8 Aug 2019 21:03:08 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 41583876A9
+	for <lists+kernel-hardening@lfdr.de>; Fri,  9 Aug 2019 11:52:38 +0200 (CEST)
+Received: (qmail 12123 invoked by uid 550); 9 Aug 2019 09:52:12 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,132 +13,136 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 17580 invoked from network); 8 Aug 2019 21:03:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=u7I3DJPXIYVWIdKzNbWAianRUQ1VpcH16ru2Cgl5KxU=;
-        b=dtjvpRdov2jUJ9OXN1nFxfqdLgQ67Df6yhlpZ0lGq/TnL/p8xJYaFcDFX6FylRLDE5
-         gg+AfTbHjf15SnbuElB+C+PzV9FL/umUsEpANBn58np+2vEsmGS3no+/bezZUzmBVbf5
-         i6Z6bkukCu3llsBisvjaqLjdWmyxmZDztlGNE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=u7I3DJPXIYVWIdKzNbWAianRUQ1VpcH16ru2Cgl5KxU=;
-        b=udp3GZ7O7+w8E+M528ArYfUOs9aPwx+Eb5DeMctA5ncZsZT0F6mzodbjuBW65rdOz+
-         tjf38mrWHcPbrJhQnIRgJEqwU3EoU9o0tyNLONLGQgLPUy8lER3oadBhYkJkGw0ei0JG
-         cKn/FnPpmvlgYY1fbBleXkQnOzUpXxtLXWwnWnqOj7PiwMgZkYz5j9ACpDT6QFniePef
-         Aa2B8KtWeUH77pjyhikjPwz1LWNBlsp9v3DE/s4O+R/OnipAVDWW2yBv9kzpcGiEb8RE
-         ASTfEjWyXyYXfqMUl/yKN5IZgcm5wQLD/UqsXTwKeSvBfhk8g2GYD/YTTNBkjTNoMdwH
-         rXPw==
-X-Gm-Message-State: APjAAAVoXUyimZQmbNOY8RLqVW8vWbWuQOKMRU1zC45/9qYu59fgrnFG
-	kYTC6paKUeeJY0omOHIVHslFtg==
-X-Google-Smtp-Source: APXvYqzcDOL+qDu7pSUFRs+hpNilfPfvgL1m8mIXWTPshgMpOLdcoA/6R27WC6TEeS3hXEoIxqgcUg==
-X-Received: by 2002:a63:cb4f:: with SMTP id m15mr14358429pgi.100.1565298174689;
-        Thu, 08 Aug 2019 14:02:54 -0700 (PDT)
-Date: Thu, 8 Aug 2019 14:02:52 -0700
-From: Kees Cook <keescook@chromium.org>
-To: Romain Perier <romain.perier@gmail.com>
-Cc: Kernel Hardening <kernel-hardening@lists.openwall.com>,
-	Shyam Saini <mayhs11saini@gmail.com>
-Subject: Re: refactor tasklets to avoid unsigned long argument
-Message-ID: <201908081344.B616EB365F@keescook>
-References: <CABgxDoJzu-Pfq78AYJmf61KqJ2A3YXNJ7jMSS6p3kCzhFox0=w@mail.gmail.com>
- <201907020849.FB210CA@keescook>
- <CABgxDoJ6ra4DoPzEk8w25e0iTSHtNuYanHT-s+30JSzjfWestQ@mail.gmail.com>
- <201907031513.8E342FF@keescook>
- <CABgxDoLz76_nTqpdqMMH6+i1ia3k2bgiHkTV4Gc9X7vCe=CKRA@mail.gmail.com>
- <201907221017.F61AFC08E@keescook>
- <CABgxDo+FSk0Tkvu=uFd5tjd+6TnnkwxwrP1a0QLBSkhhJ4CqUw@mail.gmail.com>
- <CABgxDo+ys-84ifkAMQp2Snv2PV4yTEYwi+3Jj9aGARn0hbhuWQ@mail.gmail.com>
+Received: (qmail 12001 invoked from network); 9 Aug 2019 09:52:11 -0000
+From: Jason Yan <yanaijie@huawei.com>
+To: <mpe@ellerman.id.au>, <linuxppc-dev@lists.ozlabs.org>,
+	<diana.craciun@nxp.com>, <christophe.leroy@c-s.fr>,
+	<benh@kernel.crashing.org>, <paulus@samba.org>, <npiggin@gmail.com>,
+	<keescook@chromium.org>, <kernel-hardening@lists.openwall.com>
+CC: <linux-kernel@vger.kernel.org>, <wangkefeng.wang@huawei.com>,
+	<yebin10@huawei.com>, <thunder.leizhen@huawei.com>,
+	<jingxiangfeng@huawei.com>, <fanchengyang@huawei.com>,
+	<zhaohongjiang@huawei.com>, Jason Yan <yanaijie@huawei.com>
+Subject: [PATCH v6 00/12] implement KASLR for powerpc/fsl_booke/32
+Date: Fri, 9 Aug 2019 18:07:48 +0800
+Message-ID: <20190809100800.5426-1-yanaijie@huawei.com>
+X-Mailer: git-send-email 2.17.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgxDo+ys-84ifkAMQp2Snv2PV4yTEYwi+3Jj9aGARn0hbhuWQ@mail.gmail.com>
+Content-Type: text/plain
+X-Originating-IP: [10.175.124.28]
+X-CFilter-Loop: Reflected
 
-On Thu, Aug 08, 2019 at 05:47:29PM +0200, Romain Perier wrote:
-> Le mar. 23 juil. 2019 à 10:15, Romain Perier <romain.perier@gmail.com> a écrit :
-> >
-> > Le lun. 22 juil. 2019 à 19:19, Kees Cook <keescook@chromium.org> a écrit :
-> > >
-> > > On Sun, Jul 21, 2019 at 07:55:33PM +0200, Romain Perier wrote:
-> > > > Ok, thanks for these explanations.
-> > >
-> > > (Reminder: please use inline-context email replies instead of
-> > > top-posting, this makes threads much easier to read.)
-> >
-> > Arf, good point. My bad :)
-> >
-> > >
-> > >
-> > > Looks good! I wonder if you're able to use Coccinelle to generate the
-> > > conversion patch? There appear to be just under 400 callers of
-> > > tasklet_init(), which is a lot to type by hand. :)
-> >
-> > Mmmhhh, I did not thought *at all* to coccinelle for this, good idea.
-> > I am gonna to read some docs about the tool
-> >
-> > >
-> > > Also, have you found any other tasklet users that are NOT using
-> > > tasklet_init()? The timer_struct conversion had about three ways
-> > > to do initialization. :(
-> >
-> > This is what I was looking before you give me details about the task.
-> > It seems, there
-> > is only one way to init a tasklet. I have just re-checked, it seems ok.
-> 
-> Work is in progress (that's an hobby not full time). I am testing the
-> build with "allyesconfig".
+This series implements KASLR for powerpc/fsl_booke/32, as a security
+feature that deters exploit attempts relying on knowledge of the location
+of kernel internals.
 
-That's good -- I tend to use allmodconfig (since it sort of tests a
-larger set of functions -- the module init code is more complex than the
-static init code, IIRC), but I think for this series, you're fine either
-way.
+Since CONFIG_RELOCATABLE has already supported, what we need to do is
+map or copy kernel to a proper place and relocate. Freescale Book-E
+parts expect lowmem to be mapped by fixed TLB entries(TLB1). The TLB1
+entries are not suitable to map the kernel directly in a randomized
+region, so we chose to copy the kernel to a proper place and restart to
+relocate.
 
-> Do you think it is acceptable to change
-> drivers/mmc/host/renesas_sdhi_internal_dmac.c  to add a pointer to the
-> "struct device" or to the "host", so
-> renesas_sdhi_internal_dmac_complete_tasklet_fn() could access "host"
-> from the tasklet parameter
-> because currently, it is not possible.
-> from the tasklet you can access "dma_priv", from "dma_priv" you can
-> access "priv", then from "priv", you're blocked :)
-> 
-> 
-> This is what I have done for now  :
-> https://salsa.debian.org/rperier-guest/linux-tree/commit/a0e5735129b4118a1df55b02fead6fa9b7996520
->    (separately)
-> 
-> Then the handler would be something like:
-> https://salsa.debian.org/rperier-guest/linux-tree/commit/5fe1eaeb45060a7df10d166cc96e0bdcf0024368
->   (scroll down to renesas_sdhi_internal_dmac_complete_tasklet_fn() ).
+Entropy is derived from the banner and timer base, which will change every
+build and boot. This not so much safe so additionally the bootloader may
+pass entropy via the /chosen/kaslr-seed node in device tree.
 
-I did things like this in a few cases for timer_struct, yes. The only
-question I have is if "struct device" is what you want or "struct
-platform_device" is what you want?
+We will use the first 512M of the low memory to randomize the kernel
+image. The memory will be split in 64M zones. We will use the lower 8
+bit of the entropy to decide the index of the 64M zone. Then we chose a
+16K aligned offset inside the 64M zone to put the kernel in.
 
-+	priv->dev = &pdev->dev;
+    KERNELBASE
 
-You're already dereferencing "pdev" to get "dev", and then:
+        |-->   64M   <--|
+        |               |
+        +---------------+    +----------------+---------------+
+        |               |....|    |kernel|    |               |
+        +---------------+    +----------------+---------------+
+        |                         |
+        |----->   offset    <-----|
 
-+	struct platform_device *pdev = container_of(priv->dev, typeof(*pdev), dev);
+                              kernstart_virt_addr
 
-What you really want is the pdev anyway in the handler. Maybe just store
-that instead?
+We also check if we will overlap with some areas like the dtb area, the
+initrd area or the crashkernel area. If we cannot find a proper area,
+kaslr will be disabled and boot from the original kernel.
 
-Also, I think you can avoid the "dma_priv" variable with a from_tasklet()
-that uses dma_priv.dma_complete. Something like:
+Changes since v5:
+ - Rename M_IF_NEEDED to MAS2_M_IF_NEEDED
+ - Define some global variable as __ro_after_init
+ - Replace kimage_vaddr with kernstart_virt_addr
+ - Depend on RELOCATABLE, not select it
+ - Modify the comment block below the SPDX tag
+ - Remove some useless headers in kaslr_booke.c and move is_second_reloc
+   declarationto mmu_decl.h
+ - Remove DBG() and use pr_debug() and rewrite comment above get_boot_seed().
+ - Add a patch to document the KASLR implementation.
+ - Split a patch from patch #10 which exports kaslr offset in VMCOREINFO ELF notes.
+ - Remove extra logic around finding nokaslr string in cmdline.
+ - Make regions static global and __initdata
 
-struct renesas_sdhi *priv = from_tasklet(priv, t, dma_priv.dma_complete);
+Changes since v4:
+ - Add Reviewed-by tag from Christophe
+ - Remove an unnecessary cast
+ - Remove unnecessary parenthesis
+ - Fix checkpatch warning
 
-The only other gotcha to check is if it's ever possible for the pointer
-you're storing to change through some other means, which would cause you
-to be doing a use-after-free in this handler? (I assume not, since dma
-completion is tied to the device...)
+Changes since v3:
+ - Add Reviewed-by and Tested-by tag from Diana
+ - Change the comment in fsl_booke_entry_mapping.S to be consistent
+   with the new code.
+
+Changes since v2:
+ - Remove unnecessary #ifdef
+ - Use SZ_64M instead of0x4000000
+ - Call early_init_dt_scan_chosen() to init boot_command_line
+ - Rename kaslr_second_init() to kaslr_late_init()
+
+Changes since v1:
+ - Remove some useless 'extern' keyword.
+ - Replace EXPORT_SYMBOL with EXPORT_SYMBOL_GPL
+ - Improve some assembly code
+ - Use memzero_explicit instead of memset
+ - Use boot_command_line and remove early_command_line
+ - Do not print kaslr offset if kaslr is disabled
+
+Jason Yan (12):
+  powerpc: unify definition of M_IF_NEEDED
+  powerpc: move memstart_addr and kernstart_addr to init-common.c
+  powerpc: introduce kernstart_virt_addr to store the kernel base
+  powerpc/fsl_booke/32: introduce create_tlb_entry() helper
+  powerpc/fsl_booke/32: introduce reloc_kernel_entry() helper
+  powerpc/fsl_booke/32: implement KASLR infrastructure
+  powerpc/fsl_booke/32: randomize the kernel image offset
+  powerpc/fsl_booke/kaslr: clear the original kernel if randomized
+  powerpc/fsl_booke/kaslr: support nokaslr cmdline parameter
+  powerpc/fsl_booke/kaslr: dump out kernel offset information on panic
+  powerpc/fsl_booke/kaslr: export offset in VMCOREINFO ELF notes
+  powerpc/fsl_booke/32: Document KASLR implementation
+
+ Documentation/powerpc/kaslr-booke32.rst       |  42 ++
+ arch/powerpc/Kconfig                          |  11 +
+ arch/powerpc/include/asm/nohash/mmu-book3e.h  |  10 +
+ arch/powerpc/include/asm/page.h               |   7 +
+ arch/powerpc/kernel/Makefile                  |   1 +
+ arch/powerpc/kernel/early_32.c                |   2 +-
+ arch/powerpc/kernel/exceptions-64e.S          |  12 +-
+ arch/powerpc/kernel/fsl_booke_entry_mapping.S |  27 +-
+ arch/powerpc/kernel/head_fsl_booke.S          |  55 ++-
+ arch/powerpc/kernel/kaslr_booke.c             | 393 ++++++++++++++++++
+ arch/powerpc/kernel/machine_kexec.c           |   1 +
+ arch/powerpc/kernel/misc_64.S                 |   7 +-
+ arch/powerpc/kernel/setup-common.c            |  20 +
+ arch/powerpc/mm/init-common.c                 |   7 +
+ arch/powerpc/mm/init_32.c                     |   5 -
+ arch/powerpc/mm/init_64.c                     |   5 -
+ arch/powerpc/mm/mmu_decl.h                    |  11 +
+ arch/powerpc/mm/nohash/fsl_booke.c            |   8 +-
+ 18 files changed, 572 insertions(+), 52 deletions(-)
+ create mode 100644 Documentation/powerpc/kaslr-booke32.rst
+ create mode 100644 arch/powerpc/kernel/kaslr_booke.c
 
 -- 
-Kees Cook
+2.17.2
+
