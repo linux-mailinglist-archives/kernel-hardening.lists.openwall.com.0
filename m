@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16818-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16823-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 03C75A1987
-	for <lists+kernel-hardening@lfdr.de>; Thu, 29 Aug 2019 14:05:12 +0200 (CEST)
-Received: (qmail 25785 invoked by uid 550); 29 Aug 2019 12:05:01 -0000
+	by mail.lfdr.de (Postfix) with SMTP id B9C7EA1991
+	for <lists+kernel-hardening@lfdr.de>; Thu, 29 Aug 2019 14:06:07 +0200 (CEST)
+Received: (qmail 31851 invoked by uid 550); 29 Aug 2019 12:05:43 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -14,71 +14,66 @@ List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
 Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 10053 invoked from network); 28 Aug 2019 22:01:05 -0000
-Message-ID: <457508f39b96caab15ed4bf7ff0d586ffdc850f8.camel@buserror.net>
-From: Scott Wood <oss@buserror.net>
-To: Jason Yan <yanaijie@huawei.com>
-Cc: wangkefeng.wang@huawei.com, keescook@chromium.org, 
-	kernel-hardening@lists.openwall.com, thunder.leizhen@huawei.com, 
-	linux-kernel@vger.kernel.org, npiggin@gmail.com, jingxiangfeng@huawei.com, 
-	diana.craciun@nxp.com, paulus@samba.org, zhaohongjiang@huawei.com, 
-	fanchengyang@huawei.com, linuxppc-dev@lists.ozlabs.org, yebin10@huawei.com
-Date: Wed, 28 Aug 2019 11:44:48 -0500
-In-Reply-To: <de603506-5c4e-4ca3-bd77-e3a69af9faef@huawei.com>
-References: <20190809100800.5426-1-yanaijie@huawei.com>
-	 <20190809100800.5426-7-yanaijie@huawei.com>
-	 <20190828045454.GB17757@home.buserror.net>
-	 <de603506-5c4e-4ca3-bd77-e3a69af9faef@huawei.com>
-Organization: Red Hat
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2601:449:8400:7293:12bf:48ff:fe84:c9a0
-X-SA-Exim-Rcpt-To: yanaijie@huawei.com, wangkefeng.wang@huawei.com, keescook@chromium.org, kernel-hardening@lists.openwall.com, thunder.leizhen@huawei.com, linux-kernel@vger.kernel.org, npiggin@gmail.com, jingxiangfeng@huawei.com, diana.craciun@nxp.com, paulus@samba.org, zhaohongjiang@huawei.com, fanchengyang@huawei.com, linuxppc-dev@lists.ozlabs.org, yebin10@huawei.com
-X-SA-Exim-Mail-From: oss@buserror.net
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on baldur.localdomain
-X-Spam-Level: 
-X-Spam-Status: No, score=-17.5 required=5.0 tests=ALL_TRUSTED,BAYES_00,
-	GREYLIST_ISWHITE autolearn=ham autolearn_force=no version=3.4.2
-X-Spam-Report: 
-	* -1.0 ALL_TRUSTED Passed through trusted hosts only via SMTP
-	*  -15 BAYES_00 BODY: Bayes spam probability is 0 to 1%
-	*      [score: 0.0000]
-	* -1.5 GREYLIST_ISWHITE The incoming server has been whitelisted for
-	*      this recipient and sender
-Subject: Re: [PATCH v6 06/12] powerpc/fsl_booke/32: implement KASLR
- infrastructure
-X-SA-Exim-Version: 4.2.1 (built Tue, 02 Aug 2016 21:08:31 +0000)
-X-SA-Exim-Scanned: Yes (on baldur.buserror.net)
+Received: (qmail 11547 invoked from network); 29 Aug 2019 06:40:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=axtens.net; s=google;
+        h=from:to:cc:subject:in-reply-to:references:date:message-id
+         :mime-version;
+        bh=ORK7X7Ak0hv9l57pH4NKaklPes9OoYBlRdCvb9W3dTo=;
+        b=q1HORZW0OWUjI/oO7K00q9t+5S+cjgOt8RQe/7PnPWJMWD9OhqHBvLnu4qgDe/tVT/
+         gTg+qo2wqsSu9VsdHm7FxWpN0UtNKq45SLZlnHpeGQuaC8HD1/H2wu36mcgAqbKSvIu0
+         vkouxC4mK+bdT56ChNbGZAgyewi1tZ9h+qpfE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:in-reply-to:references:date
+         :message-id:mime-version;
+        bh=ORK7X7Ak0hv9l57pH4NKaklPes9OoYBlRdCvb9W3dTo=;
+        b=LXIG4Rl9tO8oQSqc8RKjesHIPBQh+gtcXXD9pDdfMIw5UiYLsgofCTTGuTcc7Eft4O
+         nXT/6J71LLx0RciaY7xorztliDKU6A06Md3g4CpJyRoRh0FlSBwUuGBn1p/AeOwEmR3s
+         KXUrtY8houBpmBr4cOxn4MWNX5sGENNuPeEdXhA2Uty2lD1pnpD2AD5THRnDxH5pjiwP
+         bPV4fcLZA3psqwjhNt77zvElbrpveHJER/toKCC7dW7S7yAWjP+FFtpWUSkDuE1Jb4KM
+         e4PhZqo674HcmZBtp1uxaJXryDDciCvfa07f6kqfgxUCM8BN0vzKcvWsjJNXALzBOBGV
+         R0YQ==
+X-Gm-Message-State: APjAAAViOOzeo1UjCOwJLtaD5e6+0Y1ZA6fcai8K3lEQLZC8SLkz5Me3
+	Ud8du8c/n5xfIugVGQHAfEKJjQ==
+X-Google-Smtp-Source: APXvYqxDJtWozUOTxlziw7Ld/8on+Ta0l+4nJ5okDn71QH5EXiS01UtjM/Lq+WdusL28oQRhpF6Dwg==
+X-Received: by 2002:a17:902:a50a:: with SMTP id s10mr8198619plq.108.1567060808510;
+        Wed, 28 Aug 2019 23:40:08 -0700 (PDT)
+From: Daniel Axtens <dja@axtens.net>
+To: "Christopher M. Riedl" <cmr@informatik.wtf>, linuxppc-dev@ozlabs.org, kernel-hardening@lists.openwall.com
+Cc: ajd@linux.ibm.com
+Subject: Re: [PATCH v5 1/2] powerpc/xmon: Allow listing and clearing breakpoints in read-only mode
+In-Reply-To: <20190828034613.14750-2-cmr@informatik.wtf>
+References: <20190828034613.14750-1-cmr@informatik.wtf> <20190828034613.14750-2-cmr@informatik.wtf>
+Date: Thu, 29 Aug 2019 16:40:03 +1000
+Message-ID: <87ef14v5j0.fsf@dja-thinkpad.axtens.net>
+MIME-Version: 1.0
+Content-Type: text/plain
 
-On Wed, 2019-08-28 at 19:03 +0800, Jason Yan wrote:
-> 
-> On 2019/8/28 12:54, Scott Wood wrote:
-> > On Fri, Aug 09, 2019 at 06:07:54PM +0800, Jason Yan wrote:
-> > > +/*
-> > > + * To see if we need to relocate the kernel to a random offset
-> > > + * void *dt_ptr - address of the device tree
-> > > + * phys_addr_t size - size of the first memory block
-> > > + */
-> > > +notrace void __init kaslr_early_init(void *dt_ptr, phys_addr_t size)
-> > > +{
-> > > +	unsigned long tlb_virt;
-> > > +	phys_addr_t tlb_phys;
-> > > +	unsigned long offset;
-> > > +	unsigned long kernel_sz;
-> > > +
-> > > +	kernel_sz = (unsigned long)_end - KERNELBASE;
-> > 
-> > Why KERNELBASE and not kernstart_addr?
-> > 
-> 
-> Did you mean kernstart_virt_addr? It should be kernstart_virt_addr.
+Hi Chris,
 
-Yes, kernstart_virt_addr.  KERNELBASE will be incorrect if the kernel was
-loaded at a nonzero physical address without CONFIG_PHYSICAL_START being
-adjusted to match.
+> Read-only mode should not prevent listing and clearing any active
+> breakpoints.
 
--Scott
+I tested this and it works for me:
 
+Tested-by: Daniel Axtens <dja@axtens.net>
 
+> +		if (xmon_is_ro || !scanhex(&a)) {
+
+It took me a while to figure out what this line does: as I understand
+it, the 'b' command can also be used to install a breakpoint (as well as
+bi/bd). If we are in ro mode or if the input after 'b' doesn't scan as a
+hex string, print the list of breakpoints instead. Anyway, I'm now
+happy with it, so:
+
+Reviewed-by: Daniel Axtens <dja@axtens.net>
+
+Regards,
+Daniel
+
+>  			/* print all breakpoints */
+>  			printf("   type            address\n");
+>  			if (dabr.enabled) {
+> -- 
+> 2.23.0
