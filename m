@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16861-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16862-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 90B1CAC01F
-	for <lists+kernel-hardening@lfdr.de>; Fri,  6 Sep 2019 21:04:37 +0200 (CEST)
-Received: (qmail 3209 invoked by uid 550); 6 Sep 2019 19:04:32 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 696D9AC033
+	for <lists+kernel-hardening@lfdr.de>; Fri,  6 Sep 2019 21:07:42 +0200 (CEST)
+Received: (qmail 7296 invoked by uid 550); 6 Sep 2019 19:07:35 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,60 +13,50 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 3186 invoked from network); 6 Sep 2019 19:04:31 -0000
-Date: Fri, 6 Sep 2019 12:03:26 -0700 (PDT)
-From: James Morris <jmorris@namei.org>
-To: Jeff Layton <jlayton@kernel.org>
-cc: =?ISO-8859-15?Q?Micka=EBl_Sala=FCn?= <mickael.salaun@ssi.gouv.fr>,
-        Florian Weimer <fweimer@redhat.com>,
-        =?ISO-8859-15?Q?Micka=EBl_Sala=FCn?= <mic@digikod.net>,
-        linux-kernel@vger.kernel.org, Aleksa Sarai <cyphar@cyphar.com>,
-        Alexei Starovoitov <ast@kernel.org>, Al Viro <viro@zeniv.linux.org.uk>,
-        Andy Lutomirski <luto@kernel.org>,
-        Christian Heimes <christian@python.org>,
-        Daniel Borkmann <daniel@iogearbox.net>,
-        Eric Chiang <ericchiang@google.com>, Jan Kara <jack@suse.cz>,
-        Jann Horn <jannh@google.com>, Jonathan Corbet <corbet@lwn.net>,
-        Kees Cook <keescook@chromium.org>, Matthew Garrett <mjg59@google.com>,
-        Matthew Wilcox <willy@infradead.org>,
-        Michael Kerrisk <mtk.manpages@gmail.com>,
-        Mimi Zohar <zohar@linux.ibm.com>,
-        =?ISO-8859-15?Q?Philippe_Tr=E9buchet?= <philippe.trebuchet@ssi.gouv.fr>,
-        Scott Shell <scottsh@microsoft.com>,
-        Sean Christopherson <sean.j.christopherson@intel.com>,
-        Shuah Khan <shuah@kernel.org>, Song Liu <songliubraving@fb.com>,
-        Steve Dower <steve.dower@python.org>, Steve Grubb <sgrubb@redhat.com>,
-        Thibaut Sautereau <thibaut.sautereau@ssi.gouv.fr>,
-        Vincent Strubel <vincent.strubel@ssi.gouv.fr>,
-        Yves-Alexis Perez <yves-alexis.perez@ssi.gouv.fr>,
-        kernel-hardening@lists.openwall.com, linux-api@vger.kernel.org,
-        linux-security-module@vger.kernel.org, linux-fsdevel@vger.kernel.org
-Subject: Re: [PATCH v2 1/5] fs: Add support for an O_MAYEXEC flag on
- sys_open()
-In-Reply-To: <5a59b309f9d0603d8481a483e16b5d12ecb77540.camel@kernel.org>
-Message-ID: <alpine.LRH.2.21.1909061202070.18660@namei.org>
-References: <20190906152455.22757-1-mic@digikod.net>  <20190906152455.22757-2-mic@digikod.net>  <87ef0te7v3.fsf@oldenburg2.str.redhat.com>  <75442f3b-a3d8-12db-579a-2c5983426b4d@ssi.gouv.fr>  <f53ec45fd253e96d1c8d0ea6f9cca7f68afa51e3.camel@kernel.org> 
- <1fbf54f6-7597-3633-a76c-11c4b2481add@ssi.gouv.fr> <5a59b309f9d0603d8481a483e16b5d12ecb77540.camel@kernel.org>
-User-Agent: Alpine 2.21 (LRH 202 2017-01-01)
+Received: (qmail 7274 invoked from network); 6 Sep 2019 19:07:34 -0000
+From: Steve Grubb <sgrubb@redhat.com>
+To: Florian Weimer <fweimer@redhat.com>
+Cc: =?ISO-8859-1?Q?Micka=EBl_Sala=FCn?= <mic@digikod.net>, linux-kernel@vger.kernel.org, Aleksa Sarai <cyphar@cyphar.com>, Alexei Starovoitov <ast@kernel.org>, Al Viro <viro@zeniv.linux.org.uk>, Andy Lutomirski <luto@kernel.org>, Christian Heimes <christian@python.org>, Daniel Borkmann <daniel@iogearbox.net>, Eric Chiang <ericchiang@google.com>, James Morris <jmorris@namei.org>, Jan Kara <jack@suse.cz>, Jann Horn <jannh@google.com>, Jonathan Corbet <corbet@lwn.net>, Kees Cook <keescook@chromium.org>, Matthew Garrett <mjg59@google.com>, Matthew Wilcox <willy@infradead.org>, Michael Kerrisk <mtk.manpages@gmail.com>, =?ISO-8859-1?Q?Micka=EBl_Sala=FCn?= <mickael.salaun@ssi.gouv.fr>, Mimi Zohar <zohar@linux.ibm.com>, Philippe =?ISO-8859-1?Q?Tr=E9buchet?= <philippe.trebuchet@ssi.gouv.fr>, Scott Shell <scottsh@microsoft.com>, Sean Christopherson <sean.j.christopherson@intel.com>, Shuah Khan <shuah@kernel.org>, Song Liu <songliubraving@fb.com>, Steve Dower <steve.dower@python.org>, Thibaut S
+ autereau <thibaut.sautereau@ssi.gouv.fr>, Vincent Strubel <vincent.strubel@ssi.gouv.fr>, Yves-Alexis Perez <yves-alexis.perez@ssi.gouv.fr>, kernel-hardening@lists.openwall.com, linux-api@vger.kernel.org, linux-security-module@vger.kernel.org, linux-fsdevel@vger.kernel.org
+Subject: Re: [PATCH v2 0/5] Add support for O_MAYEXEC
+Date: Fri, 06 Sep 2019 15:07:19 -0400
+Message-ID: <1802966.yheqmZt8Si@x2>
+Organization: Red Hat
+In-Reply-To: <87mufhckxv.fsf@oldenburg2.str.redhat.com>
+References: <20190906152455.22757-1-mic@digikod.net> <2989749.1YmIBkDdQn@x2> <87mufhckxv.fsf@oldenburg2.str.redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.44]); Fri, 06 Sep 2019 19:07:23 +0000 (UTC)
 
-On Fri, 6 Sep 2019, Jeff Layton wrote:
-
-> The fact that open and openat didn't vet unknown flags is really a bug.
+On Friday, September 6, 2019 2:57:00 PM EDT Florian Weimer wrote:
+> * Steve Grubb:
+> > Now with LD_AUDIT
+> > $ LD_AUDIT=/home/sgrubb/test/openflags/strip-flags.so.0 strace ./test
+> > 2>&1 | grep passwd openat(3, "passwd", O_RDONLY)           = 4
+> > 
+> > No O_CLOEXEC flag.
 > 
-> Too late to fix it now, of course, and as Aleksa points out, we've
-> worked around that in the past. Now though, we have a new openat2
-> syscall on the horizon. There's little need to continue these sorts of
-> hacks.
+> I think you need to explain in detail why you consider this a problem.
+
+Because you can strip the O_MAYEXEC flag from being passed into the kernel. 
+Once you do that, you defeat the security mechanism because it never gets 
+invoked. The issue is that the only thing that knows _why_ something is being 
+opened is user space. With this mechanism, you can attempt to pass this 
+reason to the kernel so that it may see if policy permits this. But you can 
+just remove the flag.
+
+-Steve
+
+> With LD_PRELOAD and LD_AUDIT, you can already do anything, including
+> scanning other loaded objects for a system call instruction and jumping
+> to that (in case a security module in the kernel performs a PC check to
+> confer additional privileges).
 > 
-> New open flags really have no place in the old syscalls, IMO.
-
-Agree here. It's unfortunate but a reality and Linus will reject any such 
-changes which break existing userspace.
+> Thanks,
+> Florian
 
 
--- 
-James Morris
-<jmorris@namei.org>
+
 
