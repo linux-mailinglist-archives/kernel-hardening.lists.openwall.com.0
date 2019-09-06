@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16855-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16856-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 33F01ABF95
-	for <lists+kernel-hardening@lfdr.de>; Fri,  6 Sep 2019 20:45:33 +0200 (CEST)
-Received: (qmail 3636 invoked by uid 550); 6 Sep 2019 18:45:18 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 09C70ABF96
+	for <lists+kernel-hardening@lfdr.de>; Fri,  6 Sep 2019 20:45:42 +0200 (CEST)
+Received: (qmail 6070 invoked by uid 550); 6 Sep 2019 18:45:34 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -14,11 +14,10 @@ List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
 Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 7911 invoked from network); 6 Sep 2019 17:14:10 -0000
-X-Virus-Scanned: amavisd-new at heinlein-support.de
-Date: Sat, 7 Sep 2019 03:13:35 +1000
-From: Aleksa Sarai <cyphar@cyphar.com>
-To: Jeff Layton <jlayton@kernel.org>
+Received: (qmail 16332 invoked from network); 6 Sep 2019 17:21:36 -0000
+Date: Fri, 6 Sep 2019 19:20:51 +0200
+From: Christian Brauner <christian.brauner@ubuntu.com>
+To: Aleksa Sarai <cyphar@cyphar.com>
 Cc: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mickael.salaun@ssi.gouv.fr>,
 	Florian Weimer <fweimer@redhat.com>,
 	=?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>,
@@ -49,76 +48,46 @@ Cc: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mickael.salaun@ssi.gouv.fr>,
 	linux-fsdevel@vger.kernel.org
 Subject: Re: [PATCH v2 1/5] fs: Add support for an O_MAYEXEC flag on
  sys_open()
-Message-ID: <20190906171335.d7mc3no5tdrcn6r5@yavin.dot.cyphar.com>
+Message-ID: <20190906172050.v44f43psd6qc6awi@wittgenstein>
 References: <20190906152455.22757-1-mic@digikod.net>
  <20190906152455.22757-2-mic@digikod.net>
  <87ef0te7v3.fsf@oldenburg2.str.redhat.com>
  <75442f3b-a3d8-12db-579a-2c5983426b4d@ssi.gouv.fr>
- <f53ec45fd253e96d1c8d0ea6f9cca7f68afa51e3.camel@kernel.org>
+ <20190906170739.kk3opr2phidb7ilb@yavin.dot.cyphar.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="ksyy7c2s2dmez4ls"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <f53ec45fd253e96d1c8d0ea6f9cca7f68afa51e3.camel@kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190906170739.kk3opr2phidb7ilb@yavin.dot.cyphar.com>
+User-Agent: NeoMutt/20180716
 
-
---ksyy7c2s2dmez4ls
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2019-09-06, Jeff Layton <jlayton@kernel.org> wrote:
-> On Fri, 2019-09-06 at 18:06 +0200, Micka=EBl Sala=FCn wrote:
+On Sat, Sep 07, 2019 at 03:07:39AM +1000, Aleksa Sarai wrote:
+> On 2019-09-06, Mickaël Salaün <mickael.salaun@ssi.gouv.fr> wrote:
+> > 
 > > On 06/09/2019 17:56, Florian Weimer wrote:
-> > > Let's assume I want to add support for this to the glibc dynamic load=
-er,
+> > > Let's assume I want to add support for this to the glibc dynamic loader,
 > > > while still being able to run on older kernels.
-> > >=20
-> > > Is it safe to try the open call first, with O_MAYEXEC, and if that fa=
-ils
+> > >
+> > > Is it safe to try the open call first, with O_MAYEXEC, and if that fails
 > > > with EINVAL, try again without O_MAYEXEC?
-> >=20
+> > 
 > > The kernel ignore unknown open(2) flags, so yes, it is safe even for
 > > older kernel to use O_MAYEXEC.
-> >=20
->=20
-> Well...maybe. What about existing programs that are sending down bogus
-> open flags? Once you turn this on, they may break...or provide a way to
-> circumvent the protections this gives.
+> 
+> Depends on your definition of "safe" -- a security feature that you will
+> silently not enable on older kernels doesn't sound super safe to me.
+> Unfortunately this is a limitation of open(2) that we cannot change --
+> which is why the openat2(2) proposal I've been posting gives -EINVAL for
+> unknown O_* flags.
+> 
+> There is a way to probe for support (though unpleasant), by creating a
+> test O_MAYEXEC fd and then checking if the flag is present in
+> /proc/self/fdinfo/$n.
 
-It should be noted that this has been a valid concern for every new O_*
-flag introduced (and yet we still introduced new flags, despite the
-concern) -- though to be fair, O_TMPFILE actually does have a
-work-around with the O_DIRECTORY mask setup.
+Which Florian said they can't do for various reasons.
 
-The openat2() set adds O_EMPTYPATH -- though in fairness it's also
-backwards compatible because empty path strings have always given ENOENT
-(or EINVAL?) while O_EMPTYPATH is a no-op non-empty strings.
+It is a major painpoint if there's no easy way for userspace to probe
+for support. Especially if it's security related which usually means
+that you want to know whether this feature works or not.
 
-> Maybe this should be a new flag that is only usable in the new openat2()
-> syscall that's still under discussion? That syscall will enforce that
-> all flags are recognized. You presumably wouldn't need the sysctl if you
-> went that route too.
-
-I'm also interested in whether we could add an UPGRADE_NOEXEC flag to
-how->upgrade_mask for the openat2(2) patchset (I reserved a flag bit for
-it, since I'd heard about this work through the grape-vine).
-
---=20
-Aleksa Sarai
-Senior Software Engineer (Containers)
-SUSE Linux GmbH
-<https://www.cyphar.com/>
-
---ksyy7c2s2dmez4ls
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQSxZm6dtfE8gxLLfYqdlLljIbnQEgUCXXKTvAAKCRCdlLljIbnQ
-Ep42AQDi8f6e24vrdyEbKC1Hri+QQFzpcnoeEUiuXcTSgZHNWgD/eHmpIaIcPrjX
-g5Pz4p5iuc67RR3OCv44VfaA+oZMjAo=
-=7221
------END PGP SIGNATURE-----
-
---ksyy7c2s2dmez4ls--
+Christian
