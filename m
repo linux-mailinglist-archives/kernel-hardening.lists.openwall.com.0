@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16838-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16841-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 6ADAAA3EA6
-	for <lists+kernel-hardening@lfdr.de>; Fri, 30 Aug 2019 21:48:10 +0200 (CEST)
-Received: (qmail 23768 invoked by uid 550); 30 Aug 2019 19:48:03 -0000
+	by mail.lfdr.de (Postfix) with SMTP id DF21BABC58
+	for <lists+kernel-hardening@lfdr.de>; Fri,  6 Sep 2019 17:26:45 +0200 (CEST)
+Received: (qmail 20473 invoked by uid 550); 6 Sep 2019 15:26:20 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,80 +13,127 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 23732 invoked from network); 30 Aug 2019 19:48:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=lfElKMam/T9V6bsHLEtrVU85ksJ2VDYhroR6xFrZWzc=;
-        b=S2+GEn1dwls7W9EjbKis0gEXBDsdZQPxoEf3WKnPui0h4AaQOe1DySp16Ru1yOEUR7
-         Mm6Q+D3hLV7Y3ti33qQgOpq2rSHyLPakdr2RDl46NbsvRtJ4YLZUZ0V3ZWDGJCD9sZrB
-         SQf4HSxDlqVFWh152qgTsEBU0mXYPt3NoxqBA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=lfElKMam/T9V6bsHLEtrVU85ksJ2VDYhroR6xFrZWzc=;
-        b=M3I1RVKDhqmhGAwQyaIgPmeJ5+QhNFZbBkehOtz0/l/B8GnlNV/ZFafQvh1+yuUUtj
-         3vW0P92NGlRiLMlZLcEftlvan12xUi07XzmqeTOIIJ8qlBsT5W2ZZE/mEM91SqAFNw/s
-         IW1nDWR78L/05/KosWU+spyPw/uC5QYk7O0RMStas8/8JVda11SygvQWTu8DsL7irOof
-         T0sNmXfkovBO1wYcKkW/TK7wZOEIeoCS+Cj6GcQok6BemzlrI/T6//WMYoym6OVCPcsb
-         ookXhTidO34eRg2fkEYBinmYDKTflb6eIbcUu/Cp5YgEkmZKJUTaT0m0fjDOlNRi3mEi
-         DxyQ==
-X-Gm-Message-State: APjAAAW8ptLCowsvYmQbDR5WtatV5lInKZnBM06JZUoU7I4wlwxOIKDS
-	AB2sMKyQE6YIEZijJ7YNuH/EFw==
-X-Google-Smtp-Source: APXvYqzQ7f5w2apaQfPAmRolacGQV7qES2OFHKPlOr231SsxxsJG+Tu1jnpgIbKXgFIB/alf1uAmAQ==
-X-Received: by 2002:a17:90a:d990:: with SMTP id d16mr219208pjv.55.1567194470301;
-        Fri, 30 Aug 2019 12:47:50 -0700 (PDT)
-Date: Fri, 30 Aug 2019 12:47:48 -0700
-From: Kees Cook <keescook@chromium.org>
-To: Dave Chinner <david@fromorbit.com>
-Cc: Jason Yan <yanaijie@huawei.com>, kernel-hardening@lists.openwall.com,
-	linux-fsdevel@vger.kernel.org
-Subject: Re: CONFIG_HARDENED_USERCOPY
-Message-ID: <201908301242.EAC8111@keescook>
-References: <6e02a518-fea9-19fe-dca7-0323a576750d@huawei.com>
- <201908290914.F0F929EA@keescook>
- <20190830042958.GC7777@dread.disaster.area>
+Received: (qmail 20222 invoked from network); 6 Sep 2019 15:26:17 -0000
+From: =?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+To: linux-kernel@vger.kernel.org
+Cc: =?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+        Aleksa Sarai <cyphar@cyphar.com>, Alexei Starovoitov <ast@kernel.org>,
+        Al Viro <viro@zeniv.linux.org.uk>, Andy Lutomirski <luto@kernel.org>,
+        Christian Heimes <christian@python.org>,
+        Daniel Borkmann <daniel@iogearbox.net>,
+        Eric Chiang <ericchiang@google.com>,
+        Florian Weimer <fweimer@redhat.com>, James Morris <jmorris@namei.org>,
+        Jan Kara <jack@suse.cz>, Jann Horn <jannh@google.com>,
+        Jonathan Corbet <corbet@lwn.net>, Kees Cook <keescook@chromium.org>,
+        Matthew Garrett <mjg59@google.com>,
+        Matthew Wilcox <willy@infradead.org>,
+        Michael Kerrisk <mtk.manpages@gmail.com>,
+        =?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mickael.salaun@ssi.gouv.fr>,
+        Mimi Zohar <zohar@linux.ibm.com>,
+        =?UTF-8?q?Philippe=20Tr=C3=A9buchet?= <philippe.trebuchet@ssi.gouv.fr>,
+        Scott Shell <scottsh@microsoft.com>,
+        Sean Christopherson <sean.j.christopherson@intel.com>,
+        Shuah Khan <shuah@kernel.org>, Song Liu <songliubraving@fb.com>,
+        Steve Dower <steve.dower@python.org>, Steve Grubb <sgrubb@redhat.com>,
+        Thibaut Sautereau <thibaut.sautereau@ssi.gouv.fr>,
+        Vincent Strubel <vincent.strubel@ssi.gouv.fr>,
+        Yves-Alexis Perez <yves-alexis.perez@ssi.gouv.fr>,
+        kernel-hardening@lists.openwall.com, linux-api@vger.kernel.org,
+        linux-security-module@vger.kernel.org, linux-fsdevel@vger.kernel.org
+Subject: [PATCH v2 0/5] Add support for O_MAYEXEC
+Date: Fri,  6 Sep 2019 17:24:50 +0200
+Message-Id: <20190906152455.22757-1-mic@digikod.net>
+X-Mailer: git-send-email 2.23.0.rc1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190830042958.GC7777@dread.disaster.area>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Antivirus: Dr.Web (R) for Unix mail servers drweb plugin ver.6.0.2.8
+X-Antivirus-Code: 0x100000
 
-On Fri, Aug 30, 2019 at 02:29:58PM +1000, Dave Chinner wrote:
-> On Thu, Aug 29, 2019 at 09:15:36AM -0700, Kees Cook wrote:
-> > On Thu, Aug 29, 2019 at 08:42:30PM +0800, Jason Yan wrote:
-> > > We found an issue of kernel bug related to HARDENED_USERCOPY.
-> > > When copying an IO buffer to userspace, HARDENED_USERCOPY thought it is
-> > > illegal to copy this buffer. Actually this is because this IO buffer was
-> > > merged from two bio vectors, and the two bio vectors buffer was allocated
-> > > with kmalloc() in the filesystem layer.
-> > 
-> > Ew. I thought the FS layer was always using page_alloc?
-> 
-> No, they don't. It's perfectly legal to use heap memory for bio
-> buffers - we've been doing it since, at least, XFS got merged all
-> those years ago.
+Hi,
 
-Okay, so I have some observations/thoughts about this:
+The goal of this patch series is to control script interpretation.  A
+new O_MAYEXEC flag used by sys_open() is added to enable userspace
+script interpreter to delegate to the kernel (and thus the system
+security policy) the permission to interpret/execute scripts or other
+files containing what can be seen as commands.
 
-- This "cross allocation merging" is going to continue being a problem
-  in the future when we have hardware-backed allocation tagging (like
-  ARM's MTE). It'll be exactly the same kind of detection: a tagged
-  pointer crossed into a separately allocated region and access through
-  it will be rejected.
+This second series mainly differ from the previous one [1] by moving the
+basic security policy from Yama to the filesystem subsystem.  This
+policy can be enforced by the system administrator through a sysctl
+configuration consistent with the mount points.
 
-- I don't think using _copy_to_user() unconditionally is correct here
-  unless we can be absolutely sure that the size calculation really
-  was correct. (i.e. is the merge close enough to the copy that the
-  non-merge paths don't lose the validation?)
+Furthermore, the security policy can also be delegated to an LSM, either
+a MAC system or an integrity system.  For instance, the new kernel
+MAY_OPENEXEC flag closes a major IMA measurement/appraisal interpreter
+integrity gap by bringing the ability to check the use of scripts [2].
+Other uses are expected, such as for openat2(2) [3], SGX integration
+[4], and bpffs [5].
 
-- If this has gone until now to get noticed (hardened usercopy was
-  introduced in v4.8), is this optimization (and, frankly, layering
-  violation) actually useful?
+Userspace need to adapt to take advantage of this new feature.  For
+example, the PEP 578 [6] (Runtime Audit Hooks) enables Python 3.8 to be
+extended with policy enforcement points related to code interpretation,
+which can be used to align with the PowerShell audit features.
+Additional Python security improvements (e.g. a limited interpreter
+withou -c, stdin piping of code) are on their way.
 
-- We could just turn off allocation merging in the face of having
-  hardened usercopy or allocation tagging enabled...
+The initial idea come from CLIP OS and the original implementation has
+been used for more than 10 years:
+https://github.com/clipos-archive/clipos4_doc
+
+An introduction to O_MAYEXEC was given at the Linux Security Summit
+Europe 2018 - Linux Kernel Security Contributions by ANSSI:
+https://www.youtube.com/watch?v=chNjCRtPKQY&t=17m15s
+The "write xor execute" principle was explained at Kernel Recipes 2018 -
+CLIP OS: a defense-in-depth OS:
+https://www.youtube.com/watch?v=PjRE0uBtkHU&t=11m14s
+
+This patch series can be applied on top of v5.3-rc7.  This can be tested
+with CONFIG_SYSCTL.  I would really appreciate constructive comments on
+this patch series.
+
+
+# Changes since v1
+
+* move code from Yama to the FS subsystem
+* set __FMODE_EXEC when using O_MAYEXEC to make this information
+  available through the new fanotify/FAN_OPEN_EXEC event
+* only match regular files (not directories nor other types), which
+  follows the same semantic as commit 73601ea5b7b1 ("fs/open.c: allow
+  opening only regular files during execve()")
+* improve tests
+
+[1] https://lore.kernel.org/lkml/20181212081712.32347-1-mic@digikod.net/
+[2] https://lore.kernel.org/lkml/1544647356.4028.105.camel@linux.ibm.com/
+[3] https://lore.kernel.org/lkml/20190904201933.10736-6-cyphar@cyphar.com/
+[4] https://lore.kernel.org/lkml/CALCETrVovr8XNZSroey7pHF46O=kj_c5D9K8h=z2T_cNrpvMig@mail.gmail.com/
+[5] https://lore.kernel.org/lkml/CALCETrVeZ0eufFXwfhtaG_j+AdvbzEWE0M3wjXMWVEO7pj+xkw@mail.gmail.com/
+[6] https://www.python.org/dev/peps/pep-0578/
+
+Regards,
+
+Mickaël Salaün (5):
+  fs: Add support for an O_MAYEXEC flag on sys_open()
+  fs: Add a MAY_EXECMOUNT flag to infer the noexec mount propertie
+  fs: Enable to enforce noexec mounts or file exec through O_MAYEXEC
+  selftest/exec: Add tests for O_MAYEXEC enforcing
+  doc: Add documentation for the fs.open_mayexec_enforce sysctl
+
+ Documentation/admin-guide/sysctl/fs.rst     |  43 +++
+ fs/fcntl.c                                  |   2 +-
+ fs/namei.c                                  |  70 +++++
+ fs/open.c                                   |   6 +
+ include/linux/fcntl.h                       |   2 +-
+ include/linux/fs.h                          |   7 +
+ include/uapi/asm-generic/fcntl.h            |   3 +
+ kernel/sysctl.c                             |   7 +
+ tools/testing/selftests/exec/.gitignore     |   1 +
+ tools/testing/selftests/exec/Makefile       |   4 +-
+ tools/testing/selftests/exec/omayexec.c     | 317 ++++++++++++++++++++
+ tools/testing/selftests/kselftest_harness.h |   3 +
+ 12 files changed, 462 insertions(+), 3 deletions(-)
+ create mode 100644 tools/testing/selftests/exec/omayexec.c
 
 -- 
-Kees Cook
+2.23.0
+
