@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-16892-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-16895-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id BA011B4C83
-	for <lists+kernel-hardening@lfdr.de>; Tue, 17 Sep 2019 13:06:54 +0200 (CEST)
-Received: (qmail 8178 invoked by uid 550); 17 Sep 2019 11:06:47 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 856A7B8DA7
+	for <lists+kernel-hardening@lfdr.de>; Fri, 20 Sep 2019 11:26:18 +0200 (CEST)
+Received: (qmail 31959 invoked by uid 550); 20 Sep 2019 09:25:41 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,129 +13,146 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 13889 invoked from network); 17 Sep 2019 07:20:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=axtens.net; s=google;
-        h=from:to:cc:subject:in-reply-to:references:date:message-id
-         :mime-version;
-        bh=1b+U1Nzm9O0QA4glqcmO/uZ3v1M7siGCSMhNnLK7FJs=;
-        b=Je08zzCnm0q36re4AEp6Lm98FBHaGD/6HQc6Lz3CHLTLdlE7ZRQNwFu706iBexv5Se
-         SpoUWWulP3fy8ggO2a+Xi+laO5ygySjsu3oIqFibNbnR7fyOwFX/iXa5BvbfSwODOsA3
-         2etUXUaTCkZIIih5GG80xwxdF5vbesZDj7sKs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:in-reply-to:references:date
-         :message-id:mime-version;
-        bh=1b+U1Nzm9O0QA4glqcmO/uZ3v1M7siGCSMhNnLK7FJs=;
-        b=XcxA2MPxQT7xhp4FUj8XoxKwmCFWTC1+y/8VQZXMWWB0y3oyTt2YzLHIcFk9c/Fk64
-         pDjTileJX36GmxLymVWFhAgq3w7kX1FsSvfb27kd2MbPTui47c46pET82XQASMWBBNMU
-         jB1VPFC68yU3bbYt+6RDEejZaAwZtGgYvAoe5hXD3MfrUA/eBL9aJbk70Ys0Q2NJD3Ke
-         jOvalf2By2E4VQ/nBgy8nK0AqCbMQk4jF1rv7CKvwScbH7x/PWSTDERaas1Bg4PnpMGe
-         Y5UqS/G49smHxbAKPh7kr/O7ft6nX5ks58BWdNWklAwFfTTbpV3m2XsZi4ezBxWxCpLL
-         Q8wQ==
-X-Gm-Message-State: APjAAAULZOcoR7GCTdbkD0X5q9RkcYl2wbiE+YggSkwG1uCAPJOTqAQR
-	R2/alosxgDLRZ2GeWJoQul/4vg==
-X-Google-Smtp-Source: APXvYqy4kjiS5gpcI18fBUp34VEwJV58XddHH7tBOwgSkIm6SPQlr/wW6um4nq2Q5IUwAWuNNG+3ug==
-X-Received: by 2002:a63:67c6:: with SMTP id b189mr1994224pgc.163.1568704808022;
-        Tue, 17 Sep 2019 00:20:08 -0700 (PDT)
-From: Daniel Axtens <dja@axtens.net>
-To: "Christopher M. Riedl" <cmr@informatik.wtf>, linuxppc-dev@ozlabs.org, kernel-hardening@lists.openwall.com, Matthew Garrett <mjg59@google.com>
-Cc: ajd@linux.ibm.com
-Subject: Re: [PATCH v7 0/2] Restrict xmon when kernel is locked down
-In-Reply-To: <20190907061124.1947-1-cmr@informatik.wtf>
-References: <20190907061124.1947-1-cmr@informatik.wtf>
-Date: Tue, 17 Sep 2019 17:20:03 +1000
-Message-ID: <87y2yngzj0.fsf@dja-thinkpad.axtens.net>
+Received: (qmail 31827 invoked from network); 20 Sep 2019 09:25:37 -0000
+From: Jason Yan <yanaijie@huawei.com>
+To: <mpe@ellerman.id.au>, <linuxppc-dev@lists.ozlabs.org>,
+	<diana.craciun@nxp.com>, <christophe.leroy@c-s.fr>,
+	<benh@kernel.crashing.org>, <paulus@samba.org>, <npiggin@gmail.com>,
+	<keescook@chromium.org>, <kernel-hardening@lists.openwall.com>
+CC: <linux-kernel@vger.kernel.org>, <wangkefeng.wang@huawei.com>,
+	<yebin10@huawei.com>, <thunder.leizhen@huawei.com>,
+	<jingxiangfeng@huawei.com>, <zhaohongjiang@huawei.com>, <oss@buserror.net>,
+	Jason Yan <yanaijie@huawei.com>
+Subject: [PATCH v7 00/12] implement KASLR for powerpc/fsl_booke/32
+Date: Fri, 20 Sep 2019 17:45:34 +0800
+Message-ID: <20190920094546.44948-1-yanaijie@huawei.com>
+X-Mailer: git-send-email 2.17.2
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Originating-IP: [10.175.124.28]
+X-CFilter-Loop: Reflected
 
-Hi,
+This series implements KASLR for powerpc/fsl_booke/32, as a security
+feature that deters exploit attempts relying on knowledge of the location
+of kernel internals.
 
-So Matthew Garrett and I talked about this at Linux Plumbers. Matthew,
-if I understood correctly, your concern was that this doesn't sit well
-with the existing threat model for lockdown. As I understand it, the
-idea is that if you're able to get access to the physical console,
-you're already able to get around most restictions by just dropping into
-the BIOS/UEFI configuration, disabling secure boot and booting something
-of your choice. xmon, being a Linux feature that only operates on the
-physical console, therefore falls outside the threat model for lockdown.
+Since CONFIG_RELOCATABLE has already supported, what we need to do is
+map or copy kernel to a proper place and relocate. Freescale Book-E
+parts expect lowmem to be mapped by fixed TLB entries(TLB1). The TLB1
+entries are not suitable to map the kernel directly in a randomized
+region, so we chose to copy the kernel to a proper place and restart to
+relocate.
 
-I've had a few chats with powerpc people about this, and I think our
-consensus is that the boundaries of our threat model are slightly
-different. Power machines are almost all server-class*, and therefore the
-console is almost always accessed over IPMI or the BMC. As such, we
-don't consider console access to be the same as physical access but
-instead consider it a form of, or akin to, remote access.
+Entropy is derived from the banner and timer base, which will change every
+build and boot. This not so much safe so additionally the bootloader may
+pass entropy via the /chosen/kaslr-seed node in device tree.
 
-This makes more sense on bare-metal powerpc than it does on x86: we
-don't have a boot-time configuration system that's accessible on the
-console, so you can't get around secure boot or any other lockdown
-restrictions that way.
+We will use the first 512M of the low memory to randomize the kernel
+image. The memory will be split in 64M zones. We will use the lower 8
+bit of the entropy to decide the index of the 64M zone. Then we chose a
+16K aligned offset inside the 64M zone to put the kernel in.
 
-It's also consistent across our future plans: our planned assertion of
-physical presence for authorising unsigned keys for secureboot involves
-pressing a physical button on the case at a particular point in the boot
-sequence, rather than typing in something at the console.
+    KERNELBASE
 
-So I think that given that this doesn't disrupt anything else in
-lockdown or affect any other platforms, it's worth taking.
+        |-->   64M   <--|
+        |               |
+        +---------------+    +----------------+---------------+
+        |               |....|    |kernel|    |               |
+        +---------------+    +----------------+---------------+
+        |                         |
+        |----->   offset    <-----|
 
-Kind regards,
-Daniel
+                              kernstart_virt_addr
 
-* yes, there are 32-bit and even some 64-bit embedded systems still. But
-  I don't think that should preclude xmon going in to lockdown: the
-  existence of powerpc boxes where the physical console may be trusted
-  doesn't mean that this is true of all the powerpc systems.
+We also check if we will overlap with some areas like the dtb area, the
+initrd area or the crashkernel area. If we cannot find a proper area,
+kaslr will be disabled and boot from the original kernel.
 
+Changes since v6:
+ - Rename create_tlb_entry() to create_kaslr_tlb_entry()
+ - Remove MAS2_VAL since there is no more users.
+ - Move kaslr_booke.c to arch/powerpc/mm/nohash.
+ - Call flush_icache_range() after copying the kernel.
+ - Warning if no kaslr-seed provided by the bootloader
+ - Use the right physical address when checking if the new position will overlap with other regions.
+ - Do not clear bss for the second pass because some global variables will not be initialized again 
+ - Use tabs instead of spaces between the mnemonic and the arguments(in fsl_booke_entry_mapping.S).
 
-> Xmon should be either fully or partially disabled depending on the
-> kernel lockdown state.
->
-> Put xmon into read-only mode for lockdown=integrity and completely
-> disable xmon when lockdown=confidentiality. Since this can occur
-> dynamically, there may be pre-existing, active breakpoints in xmon when
-> transitioning into read-only mode. These breakpoints will still trigger,
-> so allow them to be listed and cleared using xmon.
->
-> Changes since v6:
->  - Add lockdown check in sysrq-trigger to prevent entry into xmon_core
->  - Add lockdown check during init xmon setup for the case when booting
->    with compile-time or cmdline lockdown=confidentialiaty
->
-> Changes since v5:
->  - Do not spam print messages when attempting to enter xmon when
->    lockdown=confidentiality
->
-> Changes since v4:
->  - Move lockdown state checks into xmon_core
->  - Allow clearing of breakpoints in xmon read-only mode
->  - Test simple scenarios (combinations of xmon and lockdown cmdline
->    options, setting breakpoints and changing lockdown state, etc) in
->    QEMU and on an actual POWER8 VM
->  - Rebase onto security/next-lockdown
->    b602614a81078bf29c82b2671bb96a63488f68d6
->
-> Changes since v3:
->  - Allow active breakpoints to be shown/listed in read-only mode
->
-> Changes since v2:
->  - Rebased onto v36 of https://patchwork.kernel.org/cover/11049461/
->    (based on: f632a8170a6b667ee4e3f552087588f0fe13c4bb)
->  - Do not clear existing breakpoints when transitioning from
->    lockdown=none to lockdown=integrity
->  - Remove line continuation and dangling quote (confuses checkpatch.pl)
->    from the xmon command help/usage string
->
-> Christopher M. Riedl (2):
->   powerpc/xmon: Allow listing and clearing breakpoints in read-only mode
->   powerpc/xmon: Restrict when kernel is locked down
->
->  arch/powerpc/xmon/xmon.c     | 119 +++++++++++++++++++++++++++--------
->  include/linux/security.h     |   2 +
->  security/lockdown/lockdown.c |   2 +
->  3 files changed, 97 insertions(+), 26 deletions(-)
->
-> -- 
-> 2.23.0
+Changes since v5:
+ - Rename M_IF_NEEDED to MAS2_M_IF_NEEDED
+ - Define some global variable as __ro_after_init
+ - Replace kimage_vaddr with kernstart_virt_addr
+ - Depend on RELOCATABLE, not select it
+ - Modify the comment block below the SPDX tag
+ - Remove some useless headers in kaslr_booke.c and move is_second_reloc
+   declarationto mmu_decl.h
+ - Remove DBG() and use pr_debug() and rewrite comment above get_boot_seed().
+ - Add a patch to document the KASLR implementation.
+ - Split a patch from patch #10 which exports kaslr offset in VMCOREINFO ELF notes.
+ - Remove extra logic around finding nokaslr string in cmdline.
+ - Make regions static global and __initdata
+
+Changes since v4:
+ - Add Reviewed-by tag from Christophe
+ - Remove an unnecessary cast
+ - Remove unnecessary parenthesis
+ - Fix checkpatch warning
+
+Changes since v3:
+ - Add Reviewed-by and Tested-by tag from Diana
+ - Change the comment in fsl_booke_entry_mapping.S to be consistent
+   with the new code.
+
+Changes since v2:
+ - Remove unnecessary #ifdef
+ - Use SZ_64M instead of0x4000000
+ - Call early_init_dt_scan_chosen() to init boot_command_line
+ - Rename kaslr_second_init() to kaslr_late_init()
+
+Changes since v1:
+ - Remove some useless 'extern' keyword.
+ - Replace EXPORT_SYMBOL with EXPORT_SYMBOL_GPL
+ - Improve some assembly code
+ - Use memzero_explicit instead of memset
+ - Use boot_command_line and remove early_command_line
+ - Do not print kaslr offset if kaslr is disabled
+
+Jason Yan (12):
+  powerpc: unify definition of M_IF_NEEDED
+  powerpc: move memstart_addr and kernstart_addr to init-common.c
+  powerpc: introduce kernstart_virt_addr to store the kernel base
+  powerpc/fsl_booke/32: introduce create_kaslr_tlb_entry() helper
+  powerpc/fsl_booke/32: introduce reloc_kernel_entry() helper
+  powerpc/fsl_booke/32: implement KASLR infrastructure
+  powerpc/fsl_booke/32: randomize the kernel image offset
+  powerpc/fsl_booke/kaslr: clear the original kernel if randomized
+  powerpc/fsl_booke/kaslr: support nokaslr cmdline parameter
+  powerpc/fsl_booke/kaslr: dump out kernel offset information on panic
+  powerpc/fsl_booke/kaslr: export offset in VMCOREINFO ELF notes
+  powerpc/fsl_booke/32: Document KASLR implementation
+
+ Documentation/powerpc/kaslr-booke32.rst       |  42 ++
+ arch/powerpc/Kconfig                          |  11 +
+ arch/powerpc/include/asm/nohash/mmu-book3e.h  |  11 +-
+ arch/powerpc/include/asm/page.h               |   7 +
+ arch/powerpc/kernel/early_32.c                |   5 +-
+ arch/powerpc/kernel/exceptions-64e.S          |  12 +-
+ arch/powerpc/kernel/fsl_booke_entry_mapping.S |  25 +-
+ arch/powerpc/kernel/head_fsl_booke.S          |  61 ++-
+ arch/powerpc/kernel/machine_kexec.c           |   1 +
+ arch/powerpc/kernel/misc_64.S                 |   7 +-
+ arch/powerpc/kernel/setup-common.c            |  20 +
+ arch/powerpc/mm/init-common.c                 |   7 +
+ arch/powerpc/mm/init_32.c                     |   5 -
+ arch/powerpc/mm/init_64.c                     |   5 -
+ arch/powerpc/mm/mmu_decl.h                    |  11 +
+ arch/powerpc/mm/nohash/Makefile               |   1 +
+ arch/powerpc/mm/nohash/fsl_booke.c            |   8 +-
+ arch/powerpc/mm/nohash/kaslr_booke.c          | 401 ++++++++++++++++++
+ 18 files changed, 587 insertions(+), 53 deletions(-)
+ create mode 100644 Documentation/powerpc/kaslr-booke32.rst
+ create mode 100644 arch/powerpc/mm/nohash/kaslr_booke.c
+
+-- 
+2.17.2
+
