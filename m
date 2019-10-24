@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17103-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17105-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 8B928E415C
-	for <lists+kernel-hardening@lfdr.de>; Fri, 25 Oct 2019 04:11:29 +0200 (CEST)
-Received: (qmail 28317 invoked by uid 550); 25 Oct 2019 02:11:23 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 8FA1DE4714
+	for <lists+kernel-hardening@lfdr.de>; Fri, 25 Oct 2019 11:27:09 +0200 (CEST)
+Received: (qmail 30148 invoked by uid 550); 25 Oct 2019 09:27:04 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,184 +13,188 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 28285 invoked from network); 25 Oct 2019 02:11:22 -0000
+Delivered-To: moderator for kernel-hardening@lists.openwall.com
+Received: (qmail 18224 invoked from network); 24 Oct 2019 22:51:49 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=eMod+peVky1R2jV5YHW7OhCYYwyF8T+37oaZ+MrQTUY=;
-        b=P3/3hM+3ftg3RiRAhxugOmc0kE4/F9JM+pZcDCsuW4Savw4ZtbsMvu/NE+zZ+1ecnt
-         Ra6/F8v791JJd4U9S0+y2Zbjp1gL7Mka63tqqk2QL/VhVWRP/IzhMGiZFYXqCzl1bvmq
-         I9QDKQ52KOmpv9J39bm2f3iTwe0Q3kJ9x5CilluPdSuO4yc8AD3XqCKX3Fx3j5nWCvNb
-         hWatr0yQNUQyN9kNdSDvgkH9pIj7wNcazzhKRdeioM/S+AW9ltW/HHR7xM0PEHYJLWqu
-         lcI3dd6bejngboNEJcmJ7+f25EsxrKGvzKNyc2W3N5AL0QHNZYyMANVbGSqpqaJSFej3
-         4UbQ==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=oWllzh5vaeGWMmnhX95Qs3eA6Ovd/Uui8NGiRBr6Pe0=;
+        b=pogRYPkg/nve1M3OiYY4Wag+d2PGWQPzsdNXcqTuKY+rlnlmqz5dwAwrmMzYU1Szy1
+         cm3n9fGnSJHilO5kqRF1Hs+N3EvXjbaFF2Cv3P+ZXK2S2z4DYn0/FcnJWOUW/H+Voyvy
+         HDH8+0v+N6O/QC3DxHUDMt+9LIDK3IZ8+bxwsdl47cLyCTOi/ERhIGmwc3aKkvyHKFjV
+         2F524csUpsJCv7iZZ3N88FVs6h2ebq5zpzvbkSMUPzlNsczLyDlVkytRU8OSMDg0vyx/
+         /i4vK/102Dp6GDDm4BCbIIW1M1ufCgWsVxgKP+feminwGyUvIq1wApA9zsM54kuRfZcS
+         YnMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=eMod+peVky1R2jV5YHW7OhCYYwyF8T+37oaZ+MrQTUY=;
-        b=pssogL4igQyQ7neh6bVwvQMGWUW4ocyqA+bO04neATi1zcE3wyTsTSgkyd2ImP5PF6
-         jESclSDRhlqjuRmxrBkdVoXL2p481BQC4RDugDyWCat8Tc985dPLG5b98nYIhaTi0R49
-         F+HIeVh9jOyWHSzggnf1baRhd3RCAcAud1P8MuabJ4CBGI2urHPW65Em1au1AiQSinSk
-         OMhtMmYDywVXKkDcJj0YkhHIqvAq/lW7fOGmLpMidPuwd+iUTmZdL7KyIcYwk6FVRp/P
-         dO3Gz9TJzK8OEuC/6TWAv9SEm4MhLnLAoGbSfP+U48bwqGgp18oHFU+ZsuQWaSssa0Bz
-         s7rQ==
-X-Gm-Message-State: APjAAAXH9pdL1TvCx+jK4Csy4N8LFfZi0JPttlmIxt+OffvNZnyytCWA
-	cTMjGos9OaBBxXJtpxpksow9bFMEjm98Dz5T4zE=
-X-Google-Smtp-Source: APXvYqxb04lwgHaNP4PtyPYo0TwM/Hc3BIVBzDsxWVeRBWCACACdiASFHowAT+O+mjHvrKNHVkEHomeEI6EJAjUEHrs=
-X-Received: by 2002:aca:f543:: with SMTP id t64mr807023oih.89.1571969470743;
- Thu, 24 Oct 2019 19:11:10 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAHhAz+htpQewAZcpGWD567KLksorc+arA3Mu=hkUX+y6567jGA@mail.gmail.com>
- <201909301645.5FA44A4@keescook> <CAHhAz+jyZmLBsFBxLG_XmZRBrprrxa49T+07NhcrsH4Yi6jp6A@mail.gmail.com>
- <201910031417.2AEEE7B@keescook> <CAHhAz+iUOum7EV1g9W=vFHZ0kq9US7L4CJFX4=QbSExrgBX7yg@mail.gmail.com>
- <201910100950.5179A62E2@keescook> <CAHhAz+j9oaAY9_sn16J2c=U+iidZKu3mp0pRpPZAvu4dJPetkg@mail.gmail.com>
- <201910101106.9ACB5DB@keescook> <CAHhAz+hw251beDeaWRFV7oShngSQ_KAACXAzb45EZRBdZ3kbSg@mail.gmail.com>
-In-Reply-To: <CAHhAz+hw251beDeaWRFV7oShngSQ_KAACXAzb45EZRBdZ3kbSg@mail.gmail.com>
-From: Muni Sekhar <munisekharrms@gmail.com>
-Date: Fri, 25 Oct 2019 07:40:58 +0530
-Message-ID: <CAHhAz+g6RBPKfUMne6Me_ha3FwUWj6a_pA=dYshyjAtOuu+SfA@mail.gmail.com>
-Subject: Re: How to get the crash dump if system hangs?
-To: Kees Cook <keescook@chromium.org>
-Cc: kernel-hardening@lists.openwall.com
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=oWllzh5vaeGWMmnhX95Qs3eA6Ovd/Uui8NGiRBr6Pe0=;
+        b=uRXE0BuAjs92f28zySZFQWdL5QQ/lWpRtlQ30ErVMnIBlpdclOgsbwleB4Q4ktpqac
+         Qotu3TEXjWoG0JvIzTWzUVU9EyfD6HszQFycvYtgaSkZGwJuIOhGjIF3EwGsFJx6RKvJ
+         UhN6vhsYx6+WLJCrw3bcF/MymU1i7BO5ulb1J7MNG/CH1askslTJyQ3R7OybhJ/46qgd
+         evU1Vj0WXY+i/7y0NEZepE71f9TKODbz4K+1boGQ7KdNJkhSqtyIk1SVbQE33WcupDc5
+         Ul7r66UFV9f/1svr+sa4FklrNulgKSjR611HeNFALyPKlBiAYA1gFjVzcZgaNpQP2j8u
+         JOQg==
+X-Gm-Message-State: APjAAAUxO2b6ev424lycOd+MPYN+r9atmH74r15JoyVsWYnQ6DCpHm0R
+	WngiZnCT/onHBkRU6DFJv1y+MapMp4rcEpw1MYk=
+X-Google-Smtp-Source: APXvYqy2KwvYNP2JqDo6REYpoD752JF/rXPe0p7AxMxmFNVZPrCd+i7RIFwlPKqpkKy5vtu6yuCaVfarLiMcqAZvOds=
+X-Received: by 2002:a63:6f02:: with SMTP id k2mr494747pgc.163.1571957496395;
+ Thu, 24 Oct 2019 15:51:36 -0700 (PDT)
+Date: Thu, 24 Oct 2019 15:51:15 -0700
+In-Reply-To: <20191018161033.261971-1-samitolvanen@google.com>
+Message-Id: <20191024225132.13410-1-samitolvanen@google.com>
+Mime-Version: 1.0
+References: <20191018161033.261971-1-samitolvanen@google.com>
+X-Mailer: git-send-email 2.24.0.rc0.303.g954a862665-goog
+Subject: [PATCH v2 00/17] add support for Clang's Shadow Call Stack
+From: samitolvanen@google.com
+To: Will Deacon <will@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, Masami Hiramatsu <mhiramat@kernel.org>, 
+	Ard Biesheuvel <ard.biesheuvel@linaro.org>
+Cc: Dave Martin <Dave.Martin@arm.com>, Kees Cook <keescook@chromium.org>, 
+	Laura Abbott <labbott@redhat.com>, Mark Rutland <mark.rutland@arm.com>, 
+	Nick Desaulniers <ndesaulniers@google.com>, Jann Horn <jannh@google.com>, 
+	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>, 
+	Masahiro Yamada <yamada.masahiro@socionext.com>, clang-built-linux@googlegroups.com, 
+	kernel-hardening@lists.openwall.com, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, Sami Tolvanen <samitolvanen@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 11, 2019 at 7:33 PM Muni Sekhar <munisekharrms@gmail.com> wrote=
-:
->
-> On Fri, Oct 11, 2019 at 12:01 AM Kees Cook <keescook@chromium.org> wrote:
-> >
-> > On Thu, Oct 10, 2019 at 10:45:21PM +0530, Muni Sekhar wrote:
-> > > I'm using Ubuntu distro, ran "reboot" command but after reboot
-> > > console-ramoops-0 is not present in /sys/fs/pstore
-> >
-> > Hmpf. Well, then, I guess your boot firmware is pretty aggressive about
-> > wiping RAM across boots. :(
+This patch series adds support for Clang's Shadow Call Stack
+(SCS) mitigation, which uses a separately allocated shadow stack
+to protect against return address overwrites. More information
+can be found here:
 
-After UEFI boot mode set Now I see that ramoops is working fine.
+  https://clang.llvm.org/docs/ShadowCallStack.html
 
-To validate this, I simulated the crash using the following command.
+SCS provides better protection against traditional buffer
+overflows than CONFIG_STACKPROTECTOR_*, but it should be noted
+that SCS security guarantees in the kernel differ from the ones
+documented for user space. The kernel must store addresses of
+shadow stacks used by other tasks and interrupt handlers in
+memory, which means an attacker capable reading and writing
+arbitrary memory may be able to locate them and hijack control
+flow by modifying shadow stacks that are not currently in use.
 
-# echo c > /proc/sysrq-trigger
+SCS is currently supported only on arm64, where the compiler
+requires the x18 register to be reserved for holding the current
+task's shadow stack pointer. Because of this, the series includes
+patches from Ard to remove x18 usage from assembly code.
 
+With -fsanitize=shadow-call-stack, the compiler injects
+instructions to all non-leaf C functions to store the return
+address to the shadow stack, and unconditionally load it again
+before returning. As a result, SCS is currently incompatible
+with features that rely on modifying function return addresses
+to alter control flow, such as function graph tracing and
+kretprobes, although it may be possible to later change these
+feature to modify the shadow stack instead. A copy of the return
+address is still kept in the kernel stack for compatibility with
+stack unwinding, for example.
 
-Then my system got rebooted automatically. After reboot , initially no
-files present in pstore.
+SCS has a minimal performance overhead, but allocating
+shadow stacks increases kernel memory usage. The feature is
+therefore mostly useful on hardware that lacks support for PAC
+instructions.
 
-$ ls -ltr /sys/fs/pstore/
-
-total 0
-
-
-$ sudo modprobe ramoops mem_size=3D1048576 ecc=3D1 mem_address=3D0x3ff00000
-console_size=3D16384 ftrace_size=3D16384 pmsg_size=3D16384 record_size=3D32=
-768
-mem_type=3D1 dump_oops=3D1
-
-
-After loading the ramoops module, I see it generates dmesg and console logs=
-.
-
-$ ls -ltr /sys/fs/pstore/
-
-total 0
-
--r--r--r-- 1 root root 54522 Oct 24 13:27 dmesg-ramoops-0
-
--r--r--r-- 1 root root 54604 Oct 24 13:27 dmesg-ramoops-1
-
--r--r--r-- 1 root root  3641 Oct 24 13:30 console-ramoops-0
-
-
-I repeated it for many times and verified that it works consistently.
-
-I=E2=80=99ve a actual test case where my system gets frozen  so have no
-software control. I executed this test case and as expected my system
-has frozen and recovered it by powering it on(cold boot?) and then
-loaded the ramoops but this time no files present in /sys/fs/pstore.
-
-Any idea, why it works for =E2=80=98simulating the crash=E2=80=99 and not i=
-n actual
-hang scenario? The only difference is , In actual hang case it needs a
-manual hard reboot.
-
-If you restart a PC in cold(hard) boot, is it possible to see the RAM
-memory(previous boot) still? I really I don=E2=80=99t know how it works.
-
-So, is there a  way to automatically reboot the Linux system when it
-freezes? I set =E2=80=9Ckernel.softlockup_panic =3D 1, kernel.unknown_nmi_p=
-anic
-=3D 1, kernel.softlockup_all_cpu_backtrace =3D 1, kernel.panic =3D 1,
-kernel.panic_on_io_nmi =3D 1, kernel.panic_on_oops =3D 1,
-kernel.panic_on_stackoverflow =3D 1, kernel.panic_on_unrecovered_nmi =3D
-1=E2=80=9D, but it does not helped to reboot when it freezes.
+Changes in v2:
+ - Changed Ard's KVM patch to use x29 instead of x18 for the
+   guest context, which makes restore_callee_saved_regs cleaner
+ - Updated help text (and commit messages) to point out
+   differences in security properties compared to user space SCS
+ - Cleaned up config options: removed the ROP protection choice,
+   replaced the CC_IS_CLANG dependency with an arch-specific
+   cc-option test, and moved disabling of incompatible config
+   options to an arch-specific Kconfig
+ - Added CC_FLAGS_SCS, which are filtered out where needed
+   instead of using DISABLE_SCS
+ - Added a __has_feature guard around __noscs for older clang
+   versions
+ - Changed the shadow stack overflow check for vmapped SCS to
+   use SCS_SIZE to avoid surprises when changing configs
+ - Renamed SCS_GFP to GFP_SCS
+ - Dropped the patch to reserve x18 unconditionally, it's now
+   only reserved with SCS
+ - Added a clarification why restoring x18 in the EFI RT
+   wrapper is safe
+ - Added a missing change to arch/arm64/include/asm/suspend.h,
+   and a comment to arch/arm64/mm/proc.S to remind that struct
+   cpu_suspend_ctx must be kept in sync with the code
+ - Moved x18 loading/storing during a context switch to
+   cpu_switch_to(), renamed scs_thread_switch() to
+   scs_overflow_check(), and removed the now unused scs_load()
+ - Added compile-time initialization for init_shadow_call_stack
+   and removed scs_set_init_magic()
 
 
-> >
-> > There was a patch set to store to disk, but I haven't seen a recent
-> > version of it, if you want to go that route[1].
-> >
-> > -Kees
-> >
-> > [1] https://lore.kernel.org/lkml/1551922630-27548-1-git-send-email-liao=
-weixiong@allwinnertech.com/
-> Thanks I will check it out.
->
-> While loading ramoops I see "persistent_ram: uncorrectable error in
-> header", is this harmful?
->
-> [  270.864969] ramoops: using module parameters
-> [  270.866651] persistent_ram: uncorrectable error in header
-> [  270.867252] persistent_ram: uncorrectable error in header
-> [  270.867728] persistent_ram: uncorrectable error in header
-> [  270.868067] persistent_ram: uncorrectable error in header
-> [  270.868492] persistent_ram: uncorrectable error in header
-> [  270.868839] persistent_ram: uncorrectable error in header
-> [  270.869209] persistent_ram: uncorrectable error in header
-> [  270.869681] persistent_ram: uncorrectable error in header
-> [  270.870026] persistent_ram: uncorrectable error in header
-> [  270.870430] persistent_ram: uncorrectable error in header
-> [  270.870774] persistent_ram: uncorrectable error in header
-> [  270.871110] persistent_ram: uncorrectable error in header
-> [  270.871687] persistent_ram: uncorrectable error in header
-> [  270.872055] persistent_ram: uncorrectable error in header
-> [  270.872567] persistent_ram: uncorrectable error in header
-> [  270.872910] persistent_ram: uncorrectable error in header
-> [  270.873243] persistent_ram: uncorrectable error in header
-> [  270.873592] persistent_ram: uncorrectable error in header
-> [  270.873932] persistent_ram: uncorrectable error in header
-> [  270.874267] persistent_ram: uncorrectable error in header
-> [  270.874614] persistent_ram: uncorrectable error in header
-> [  270.874958] persistent_ram: uncorrectable error in header
-> [  270.875300] persistent_ram: uncorrectable error in header
-> [  270.875686] persistent_ram: uncorrectable error in header
-> [  270.876028] persistent_ram: uncorrectable error in header
-> [  270.876462] persistent_ram: uncorrectable error in header
-> [  270.876808] persistent_ram: uncorrectable error in header
-> [  270.877144] persistent_ram: uncorrectable error in header
-> [  270.877519] persistent_ram: uncorrectable error in header
-> [  270.877860] persistent_ram: uncorrectable error in header
-> [  270.878199] persistent_ram: uncorrectable error in header
-> [  270.878565] persistent_ram: uncorrectable error in header
-> [  270.878916] persistent_ram: uncorrectable error in header
-> [  270.881129] console [pstore-1] enabled
-> [  270.884817] pstore: Registered ramoops as persistent store backend
-> [  270.885232] ramoops: attached 0x100000@0x3ff00000, ecc: 16/0
->
-> >
-> > --
-> > Kees Cook
->
->
->
-> --
-> Thanks,
-> Sekhar
+Ard Biesheuvel (2):
+  arm64/lib: copy_page: avoid x18 register in assembler code
+  arm64: kernel: avoid x18 as an arbitrary temp register
 
+Sami Tolvanen (15):
+  arm64: mm: don't use x18 in idmap_kpti_install_ng_mappings
+  arm64: kvm: stop treating register x18 as caller save
+  add support for Clang's Shadow Call Stack (SCS)
+  scs: add accounting
+  scs: add support for stack usage debugging
+  kprobes: fix compilation without CONFIG_KRETPROBES
+  arm64: disable function graph tracing with SCS
+  arm64: disable kretprobes with SCS
+  arm64: reserve x18 from general allocation with SCS
+  arm64: preserve x18 when CPU is suspended
+  arm64: efi: restore x18 if it was corrupted
+  arm64: vdso: disable Shadow Call Stack
+  arm64: kprobes: fix kprobes without CONFIG_KRETPROBES
+  arm64: disable SCS for hypervisor code
+  arm64: implement Shadow Call Stack
 
+ Makefile                             |   6 +
+ arch/Kconfig                         |  33 +++++
+ arch/arm64/Kconfig                   |   9 +-
+ arch/arm64/Makefile                  |   4 +
+ arch/arm64/include/asm/scs.h         |  45 ++++++
+ arch/arm64/include/asm/stacktrace.h  |   4 +
+ arch/arm64/include/asm/suspend.h     |   2 +-
+ arch/arm64/include/asm/thread_info.h |   3 +
+ arch/arm64/kernel/Makefile           |   1 +
+ arch/arm64/kernel/asm-offsets.c      |   3 +
+ arch/arm64/kernel/cpu-reset.S        |   4 +-
+ arch/arm64/kernel/efi-rt-wrapper.S   |   7 +-
+ arch/arm64/kernel/entry.S            |  28 ++++
+ arch/arm64/kernel/head.S             |   9 ++
+ arch/arm64/kernel/irq.c              |   2 +
+ arch/arm64/kernel/probes/kprobes.c   |   2 +
+ arch/arm64/kernel/process.c          |   2 +
+ arch/arm64/kernel/scs.c              |  39 +++++
+ arch/arm64/kernel/smp.c              |   4 +
+ arch/arm64/kernel/vdso/Makefile      |   2 +-
+ arch/arm64/kvm/hyp/Makefile          |   3 +
+ arch/arm64/kvm/hyp/entry.S           |  41 +++--
+ arch/arm64/lib/copy_page.S           |  38 ++---
+ arch/arm64/mm/proc.S                 |  72 +++++----
+ drivers/base/node.c                  |   6 +
+ fs/proc/meminfo.c                    |   4 +
+ include/linux/compiler-clang.h       |   6 +
+ include/linux/compiler_types.h       |   4 +
+ include/linux/mmzone.h               |   3 +
+ include/linux/scs.h                  |  78 ++++++++++
+ init/init_task.c                     |   8 +
+ kernel/Makefile                      |   1 +
+ kernel/fork.c                        |   9 ++
+ kernel/kprobes.c                     |  38 ++---
+ kernel/sched/core.c                  |   2 +
+ kernel/sched/sched.h                 |   1 +
+ kernel/scs.c                         | 214 +++++++++++++++++++++++++++
+ mm/page_alloc.c                      |   6 +
+ mm/vmstat.c                          |   3 +
+ 39 files changed, 649 insertions(+), 97 deletions(-)
+ create mode 100644 arch/arm64/include/asm/scs.h
+ create mode 100644 arch/arm64/kernel/scs.c
+ create mode 100644 include/linux/scs.h
+ create mode 100644 kernel/scs.c
 
---=20
-Thanks,
-Sekhar
+-- 
+2.24.0.rc0.303.g954a862665-goog
+
