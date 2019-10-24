@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17116-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17117-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id D87EEE4726
-	for <lists+kernel-hardening@lfdr.de>; Fri, 25 Oct 2019 11:28:57 +0200 (CEST)
-Received: (qmail 5877 invoked by uid 550); 25 Oct 2019 09:27:56 -0000
+	by mail.lfdr.de (Postfix) with SMTP id CDA0EE4727
+	for <lists+kernel-hardening@lfdr.de>; Fri, 25 Oct 2019 11:29:09 +0200 (CEST)
+Received: (qmail 7617 invoked by uid 550); 25 Oct 2019 09:28:07 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -14,41 +14,41 @@ List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
 Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 19695 invoked from network); 24 Oct 2019 22:52:31 -0000
+Received: (qmail 19738 invoked from network); 24 Oct 2019 22:52:35 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=P4MEC/JNWY+R+03CT6BMcXkN4eq/H40mvA6s8gty/0o=;
-        b=LgK71Giry5j2UUrcqZm8M1t7G3cAfX70fiBl3GzVzX02VQgK8Xy/2JaMhQllH7/ZPL
-         nbGIhdXyHvO6fXRGrMomvZJWhyGPRIV+y5d/BACVs3jLEuafWJis56Ilg2TYMyAOMkM5
-         SfUjIveEskgTQm3JvXHTwS4MAd3espod1yTXwztKlrb0HBnCQxMl0mltDYsrGzXFlpAt
-         6tZqhZ8nWrGVt0cWZi2CF1EWQFTr31Hkxzp7LT+IslJa1Cl5Oy3SBFezMzAOQVF4maYG
-         e9EgGYHPCM5PcJ0/rpT9DVxNu/NMQhoXs2qqn/CdhLriWJXwzW/tS3v6g8YNS9Gn2Pkb
-         dSag==
+        bh=3L2fKWe0mnTKbOXtDJWS5MdWfgbISjm7SM0mf8jhMMs=;
+        b=H2b3RZCLiylwud/YwS8XTUX1Nfxf49CmiNoouPiLQWiwkmkw6s5J3L6a6uOMooc4I/
+         if+ccaYBMM2Jc9mBIKeBZr0auWMA7zC6OkjcSJ1FJGr5CKQ2AKFeLXHSWQCh1T+Wk3pm
+         nyov8olG1fm/RHMhdTkccA9BSvy00AbYUCyfFQMmdOh2Xuacq9FgBu+HT9CuJQpEIC8Y
+         PNTFQVciC8sYwLstWG7sJf0mJ+TuwRuGM9jfM6cjlT4zPYuVFCG5+jqVPAX/8eswE8zf
+         bt35nEX73zZkPoG04qT4nAnZvMZgNDYWfIB2eks3sB+AlQloPZxuEBCzajWqBzSccSw9
+         NBmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=P4MEC/JNWY+R+03CT6BMcXkN4eq/H40mvA6s8gty/0o=;
-        b=YcAxkWW9jsuThXNUVz7ni1EV1BLVaiRzT9qSIR30xoOfPkJ25+Pi2tySL6Pd8fud7n
-         nrTDN1vKHQsoZHecOOZ1A0GBgRgekM1ar3WeCVHX+vkfg/7UcQKUiHsPw+fwoBNfp6oW
-         8SCQWJYFGWpW8gkjVkqGsC+Ru+85yuarjs0tfvi291bfbFEl/XoWQ478OD+uEpQvXRnz
-         W5OVQ051TWnc9ei4BDgGsS+JAfot0xY9xTeqQn+oC4riFfzRR7o3HfqhuRvTkqZj82oy
-         DdbAcu7u3Iw2R2jpS9EbhKKzVb89xd/WLYeuO6JbGgFNiJarSAmammT+b6bCqWfkkYqj
-         Z67w==
-X-Gm-Message-State: APjAAAXZkh6CjKdLtOgLvOhhoCT5Plaz5AqXcVCHIlvW9ocoCFp5JJIo
-	fQeUkMu7wbV51taAEHLQLBtIwSY2sPtC2pwLm9E=
-X-Google-Smtp-Source: APXvYqxj5BIdKecvMwrjzhKVp3MzlCFpXSuWCACeGyF0YdtpM7lXtWd326/xzWB6Xxpi8A45K4ijH/MY+l7rtLgFqfA=
-X-Received: by 2002:a25:2a46:: with SMTP id q67mr381984ybq.123.1571957539222;
- Thu, 24 Oct 2019 15:52:19 -0700 (PDT)
-Date: Thu, 24 Oct 2019 15:51:26 -0700
+        bh=3L2fKWe0mnTKbOXtDJWS5MdWfgbISjm7SM0mf8jhMMs=;
+        b=YrVT1esykooH1+83xViLbuzgIeCHozUpfbXyjHZx5WP5zzyUDXmHvwzBARZzEhs6k/
+         0PfQui00MJKGxVLu7ksYKCOTBRys/RbUE/FIviGZLukiIQrmy5SZjUkRbQnTRf2+T/0X
+         zpX93RRfukLhcsMeBA75U0zhD5PmGGsNLwRww7ceEu6v+ngCIrGmFMDIe9RXW+F+Vn8w
+         L3WrRtnsbqi8xKzIseOOpD/kI/M4hwXkCe//HsZE0SGcF8l0/0SDtURGQ3+RtEG8TxgX
+         JZ2KuzGcM+l+FiJ4biUP+72nnZlNmvwei1R7F68OTeygXddA0cNp2rhDJQUfhSWYsBDh
+         Fucw==
+X-Gm-Message-State: APjAAAVKl3E8kEzmhdsQRn+D03XVzu7OaSYIcHRNXK9H9tnjAdiYiTgG
+	UHs3nvb2pc2gG8t7z8t9Ma8bUJJ56Pk15MehxBc=
+X-Google-Smtp-Source: APXvYqy9g1XQvCTpQ3Jxss3Ar1eHiV+3ywS0nmj9a/zcS8ytsRAvfPgmUVmxVtOnVPORgMnA0aWwHbORKOrobXSREds=
+X-Received: by 2002:a63:af13:: with SMTP id w19mr469567pge.189.1571957543335;
+ Thu, 24 Oct 2019 15:52:23 -0700 (PDT)
+Date: Thu, 24 Oct 2019 15:51:27 -0700
 In-Reply-To: <20191024225132.13410-1-samitolvanen@google.com>
-Message-Id: <20191024225132.13410-12-samitolvanen@google.com>
+Message-Id: <20191024225132.13410-13-samitolvanen@google.com>
 Mime-Version: 1.0
 References: <20191018161033.261971-1-samitolvanen@google.com> <20191024225132.13410-1-samitolvanen@google.com>
 X-Mailer: git-send-email 2.24.0.rc0.303.g954a862665-goog
-Subject: [PATCH v2 11/17] arm64: reserve x18 from general allocation with SCS
+Subject: [PATCH v2 12/17] arm64: preserve x18 when CPU is suspended
 From: samitolvanen@google.com
 To: Will Deacon <will@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
 	Steven Rostedt <rostedt@goodmis.org>, Masami Hiramatsu <mhiramat@kernel.org>, 
@@ -62,31 +62,61 @@ Cc: Dave Martin <Dave.Martin@arm.com>, Kees Cook <keescook@chromium.org>,
 	linux-kernel@vger.kernel.org, Sami Tolvanen <samitolvanen@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-Reserve the x18 register from general allocation when SCS is enabled,
-because the compiler uses the register to store the current task's
-shadow stack pointer. Note that all external kernel modules must also be
-compiled with -ffixed-x18 if the kernel has SCS enabled.
+Don't lose the current task's shadow stack when the CPU is suspended.
 
 Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
 ---
- arch/arm64/Makefile | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/include/asm/suspend.h | 2 +-
+ arch/arm64/mm/proc.S             | 9 +++++++++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/Makefile b/arch/arm64/Makefile
-index 2c0238ce0551..ef76101201b2 100644
---- a/arch/arm64/Makefile
-+++ b/arch/arm64/Makefile
-@@ -72,6 +72,10 @@ stack_protector_prepare: prepare0
- 					include/generated/asm-offsets.h))
- endif
+diff --git a/arch/arm64/include/asm/suspend.h b/arch/arm64/include/asm/suspend.h
+index 8939c87c4dce..0cde2f473971 100644
+--- a/arch/arm64/include/asm/suspend.h
++++ b/arch/arm64/include/asm/suspend.h
+@@ -2,7 +2,7 @@
+ #ifndef __ASM_SUSPEND_H
+ #define __ASM_SUSPEND_H
  
-+ifeq ($(CONFIG_SHADOW_CALL_STACK), y)
-+KBUILD_CFLAGS	+= -ffixed-x18
-+endif
-+
- ifeq ($(CONFIG_CPU_BIG_ENDIAN), y)
- KBUILD_CPPFLAGS	+= -mbig-endian
- CHECKFLAGS	+= -D__AARCH64EB__
+-#define NR_CTX_REGS 12
++#define NR_CTX_REGS 13
+ #define NR_CALLEE_SAVED_REGS 12
+ 
+ /*
+diff --git a/arch/arm64/mm/proc.S b/arch/arm64/mm/proc.S
+index fdabf40a83c8..0e7c353c9dfd 100644
+--- a/arch/arm64/mm/proc.S
++++ b/arch/arm64/mm/proc.S
+@@ -49,6 +49,8 @@
+  * cpu_do_suspend - save CPU registers context
+  *
+  * x0: virtual address of context pointer
++ *
++ * This must be kept in sync with struct cpu_suspend_ctx in <asm/suspend.h>.
+  */
+ ENTRY(cpu_do_suspend)
+ 	mrs	x2, tpidr_el0
+@@ -73,6 +75,9 @@ alternative_endif
+ 	stp	x8, x9, [x0, #48]
+ 	stp	x10, x11, [x0, #64]
+ 	stp	x12, x13, [x0, #80]
++#ifdef CONFIG_SHADOW_CALL_STACK
++	str	x18, [x0, #96]
++#endif
+ 	ret
+ ENDPROC(cpu_do_suspend)
+ 
+@@ -89,6 +94,10 @@ ENTRY(cpu_do_resume)
+ 	ldp	x9, x10, [x0, #48]
+ 	ldp	x11, x12, [x0, #64]
+ 	ldp	x13, x14, [x0, #80]
++#ifdef CONFIG_SHADOW_CALL_STACK
++	ldr	x18, [x0, #96]
++	str	xzr, [x0, #96]
++#endif
+ 	msr	tpidr_el0, x2
+ 	msr	tpidrro_el0, x3
+ 	msr	contextidr_el1, x4
 -- 
 2.24.0.rc0.303.g954a862665-goog
 
