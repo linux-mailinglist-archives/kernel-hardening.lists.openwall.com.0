@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17239-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17240-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id E7287ECB14
-	for <lists+kernel-hardening@lfdr.de>; Fri,  1 Nov 2019 23:13:23 +0100 (CET)
-Received: (qmail 32344 invoked by uid 550); 1 Nov 2019 22:12:29 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 957A7ECB26
+	for <lists+kernel-hardening@lfdr.de>; Fri,  1 Nov 2019 23:13:33 +0100 (CET)
+Received: (qmail 32617 invoked by uid 550); 1 Nov 2019 22:12:31 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,41 +13,41 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 32262 invoked from network); 1 Nov 2019 22:12:28 -0000
+Received: (qmail 32521 invoked from network); 1 Nov 2019 22:12:31 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=lxookr95uMT9sOw8S1HRxQFBJ0wSUMPDNTYBScBbdzA=;
-        b=VqPASQjKWMJdAAeJVcDeaVBQprxOwcKwHm7RWTEH9a4e15mPmrxMbW1NmgWy95nCCG
-         gTOzFuhp1ly0goL38Kzph/3B6Z/grLfH43Q8d/pdkZ/OzdVRcdb/FYfbWEa2y3Z36z+b
-         aTHaRyLhmFGkSCynkV7G0QI+cwcWnjK1qpx31PYhN1zT7bAET6McDo/Y5fThXHdO9Ek7
-         zYHqR539+PQJrPPLRkOE7jflC+yHuXbTJUVLQrKHrysQdsbsiJzOBJ0HDbVrb0s28p6t
-         kflfPrlWaRQdM1RMKSTS9mn+78aoixWKDx0joRXcRCUOTMxiomPR6k+4etm9NwgxSA31
-         215g==
+        bh=YuceP/m4Sv7I7vrWsOPJ1pSb3CxvhwOwQ1OQoGSTS4o=;
+        b=oC92Xyk4xx4OFjCywUW0xRGLKJPopJyks6H3DIWfvMcqM41QRHY8A6HpLSO2oO1inw
+         7nVZsYb0ejRziH+5dLCL9D9wKeQQKeMEb1VUrkYc1cMPvyFcm3It+tNXG+Hwcj7gshxb
+         6nHSjR+gi4hodQFSJLJDhZIR1+Kzve8eUQ6q7dVUcbIISZ2N2+mSkGwMJQvydH28gjMd
+         oRMh4SmcetuL5E9614gPeg7eJPENTgrxaRMgcD0aWe9YQNHjd9wnZeZVxQ0kRl59z7of
+         8623sjz/SPs/pQv7SS4ugqqYKNBb1daNI8KHgf/+dBsRhEhkLc4Q35KQzw9rmfiSpNPD
+         e0Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=lxookr95uMT9sOw8S1HRxQFBJ0wSUMPDNTYBScBbdzA=;
-        b=qcaOLsp+95x9EoQWY+9K3fVzErDLKK9v9AI9j8JZW6bRb2WB7RIFvpDrFs5xxc5/RG
-         CvW1n1DRmFLeeDQLYBEU+4JqibLDtPFxDiFsAJlPOYjPtk5LSg+D2P+dCgehakmI6yQT
-         v3AN6N2ahGNulj/LWNe0/95J/703eLRRa+We+j4MPZIKYrGgvhRe1Yv5bH0kB8Qk3zys
-         nZa4o1Tz7c7Hn36mSXfkKKWJqvri4Y1T6jwbcsyxi7ZsmrZERubF2IJdsjlragkDzVsv
-         KRFzEjSWXIdq4CqZjJh5dmdTIm3BStTJf4hPo6/ygp2KfKJG2epE/9OXlz8S7p5t1OiA
-         vvPA==
-X-Gm-Message-State: APjAAAWy1EDC68E6emFJzN7/scrS9UaA7IQ+vDv/NWAgfSPJYA1LiR05
-	uFhxCX+CxoiP5lkb1IpiRnE0KThJVxFPxhxiMFU=
-X-Google-Smtp-Source: APXvYqy5WQVZIH4BmgA2vfXXE0nLc6aKF5v7DRRaYQ9YrQPB5qUQFSJiOmM2MmnfKMB9bJuYwXz6LVby2vjMPQ9mbfI=
-X-Received: by 2002:a63:d306:: with SMTP id b6mr15679209pgg.338.1572646336234;
- Fri, 01 Nov 2019 15:12:16 -0700 (PDT)
-Date: Fri,  1 Nov 2019 15:11:41 -0700
+        bh=YuceP/m4Sv7I7vrWsOPJ1pSb3CxvhwOwQ1OQoGSTS4o=;
+        b=IVmXyRZ7kK5J/IXjnGGt36v8WJ2OHxC/noRlCmXbG8wWmxtxhIUm5naFsa7i65UaLn
+         AgEEzj4ZSht8z0LNUzsYsnmNnnEMeHbfMaYyN3ThIz1Qy0KSvNxciM0gyLJHZIlYyHhT
+         vKqK9bOpxLCdbMW76Uxif06G1L7yS3b8paN3BJDYil/v14RJdtXY02zcrAgtq17/gtjk
+         sozqufEPEeicVT5hAtw0mHvHoOHTTdQExdvs7xOb4bOdAHpt4lvqkXBs65Qd/kizzcAy
+         LaYpuxSJc0FN6ZSYP94uEL3kzs+nEL/aEE/uaoLX0FiFK2LXfcqInwQZVn2fF2YjnwKE
+         909w==
+X-Gm-Message-State: APjAAAVE8zdwyoYea9kXk0+1Nrrlcs4/COpREm+T+PDabbEkhdhXpwmI
+	y5jAsHB5SBdyGEMAC26BlDd8y7dOCZPQUkEehx0=
+X-Google-Smtp-Source: APXvYqyESI1nj79EQYAfPNp7QT9azRRC93peb8wyxMPp245spxyPTFrWPJ4dhblj2gZ8cJDr8g3hFVKQrrU1shqGWxs=
+X-Received: by 2002:a63:2b8e:: with SMTP id r136mr2674046pgr.103.1572646338730;
+ Fri, 01 Nov 2019 15:12:18 -0700 (PDT)
+Date: Fri,  1 Nov 2019 15:11:42 -0700
 In-Reply-To: <20191101221150.116536-1-samitolvanen@google.com>
-Message-Id: <20191101221150.116536-9-samitolvanen@google.com>
+Message-Id: <20191101221150.116536-10-samitolvanen@google.com>
 Mime-Version: 1.0
 References: <20191018161033.261971-1-samitolvanen@google.com> <20191101221150.116536-1-samitolvanen@google.com>
 X-Mailer: git-send-email 2.24.0.rc1.363.gb1bccd3e3d-goog
-Subject: [PATCH v4 08/17] kprobes: fix compilation without CONFIG_KRETPROBES
+Subject: [PATCH v4 09/17] arm64: kprobes: fix kprobes without CONFIG_KRETPROBES
 From: Sami Tolvanen <samitolvanen@google.com>
 To: Will Deacon <will@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
 	Steven Rostedt <rostedt@goodmis.org>, Masami Hiramatsu <mhiramat@kernel.org>, 
@@ -61,72 +61,35 @@ Cc: Dave Martin <Dave.Martin@arm.com>, Kees Cook <keescook@chromium.org>,
 	linux-kernel@vger.kernel.org, Sami Tolvanen <samitolvanen@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-kprobe_on_func_entry and arch_kprobe_on_func_entry need to be available
-even if CONFIG_KRETPROBES is not selected.
+This allows CONFIG_KRETPROBES to be disabled without disabling
+kprobes entirely.
 
 Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
-Acked-by: Masami Hiramatsu <mhiramat@kernel.org>
 Reviewed-by: Kees Cook <keescook@chromium.org>
 ---
- kernel/kprobes.c | 38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ arch/arm64/kernel/probes/kprobes.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/kprobes.c b/kernel/kprobes.c
-index 53534aa258a6..b5e20a4669b8 100644
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -1829,6 +1829,25 @@ unsigned long __weak arch_deref_entry_point(void *entry)
- 	return (unsigned long)entry;
+diff --git a/arch/arm64/kernel/probes/kprobes.c b/arch/arm64/kernel/probes/kprobes.c
+index c4452827419b..98230ae979ca 100644
+--- a/arch/arm64/kernel/probes/kprobes.c
++++ b/arch/arm64/kernel/probes/kprobes.c
+@@ -551,6 +551,7 @@ void __kprobes __used *trampoline_probe_handler(struct pt_regs *regs)
+ 	return (void *)orig_ret_address;
  }
  
-+bool __weak arch_kprobe_on_func_entry(unsigned long offset)
-+{
-+	return !offset;
-+}
-+
-+bool kprobe_on_func_entry(kprobe_opcode_t *addr, const char *sym, unsigned long offset)
-+{
-+	kprobe_opcode_t *kp_addr = _kprobe_addr(addr, sym, offset);
-+
-+	if (IS_ERR(kp_addr))
-+		return false;
-+
-+	if (!kallsyms_lookup_size_offset((unsigned long)kp_addr, NULL, &offset) ||
-+						!arch_kprobe_on_func_entry(offset))
-+		return false;
-+
-+	return true;
-+}
-+
- #ifdef CONFIG_KRETPROBES
- /*
-  * This kprobe pre_handler is registered with every kretprobe. When probe
-@@ -1885,25 +1904,6 @@ static int pre_handler_kretprobe(struct kprobe *p, struct pt_regs *regs)
- }
- NOKPROBE_SYMBOL(pre_handler_kretprobe);
- 
--bool __weak arch_kprobe_on_func_entry(unsigned long offset)
--{
--	return !offset;
--}
--
--bool kprobe_on_func_entry(kprobe_opcode_t *addr, const char *sym, unsigned long offset)
--{
--	kprobe_opcode_t *kp_addr = _kprobe_addr(addr, sym, offset);
--
--	if (IS_ERR(kp_addr))
--		return false;
--
--	if (!kallsyms_lookup_size_offset((unsigned long)kp_addr, NULL, &offset) ||
--						!arch_kprobe_on_func_entry(offset))
--		return false;
--
--	return true;
--}
--
- int register_kretprobe(struct kretprobe *rp)
++#ifdef CONFIG_KRETPROBES
+ void __kprobes arch_prepare_kretprobe(struct kretprobe_instance *ri,
+ 				      struct pt_regs *regs)
  {
- 	int ret = 0;
+@@ -564,6 +565,7 @@ int __kprobes arch_trampoline_kprobe(struct kprobe *p)
+ {
+ 	return 0;
+ }
++#endif
+ 
+ int __init arch_init_kprobes(void)
+ {
 -- 
 2.24.0.rc1.363.gb1bccd3e3d-goog
 
