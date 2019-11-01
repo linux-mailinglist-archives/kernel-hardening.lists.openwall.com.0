@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17221-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17222-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 52CB3EBCA7
-	for <lists+kernel-hardening@lfdr.de>; Fri,  1 Nov 2019 05:00:17 +0100 (CET)
-Received: (qmail 3497 invoked by uid 550); 1 Nov 2019 04:00:12 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 49DD5EBCAC
+	for <lists+kernel-hardening@lfdr.de>; Fri,  1 Nov 2019 05:00:50 +0100 (CET)
+Received: (qmail 5267 invoked by uid 550); 1 Nov 2019 04:00:45 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,32 +13,32 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 3474 invoked from network); 1 Nov 2019 04:00:11 -0000
+Received: (qmail 5247 invoked from network); 1 Nov 2019 04:00:44 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=A7vrO+MQB63nPz6FPwTRdUgznbxQobdODcdehGRotvI=;
-        b=SoIAx/f+o5ObJpWgtzqlvIdoi9BrVBtR0sORn7UXLhxKD40+Hq5g8o71ljOsCw58Xu
-         nV5Xy/0YwVtNd7g4N0HQfZNFqvK0+sr9AAyTxnNs4Qwhx3+vEE4Ynyv8Aid4jjjCxSzD
-         BwrcVTfNY0xZuV8VaybEOQY3+plZAuUInWL9I=
+        bh=DqG2K0fvYUAA4E302d2Wr4MEutud0mjKuHdZBEE6NhQ=;
+        b=gAic49MAeOc0RHQwT7q95mZfaWy/E6IhEpBpV5hJ3STSid/jPRu+sGJtzjSfKCXuEf
+         cHqE/dxdIBbercFZyX9sSIjRyybd8IPXMMKNRCD5XgWMmq1WJvMLtGj8wgTBt16jV32H
+         m8Pv3sMDvWULeXDkmLgUa3AZ6LDQXwbzmCxlc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=A7vrO+MQB63nPz6FPwTRdUgznbxQobdODcdehGRotvI=;
-        b=Pk5hU0QuWkFgYcxl7YN3gpAhELc6m0jCpH/F0m+82jGe/9liV5LRlL/v4RhaFhjXxW
-         JSxHRJRQYiBxF3zzBzjFIBY276xuGKR0bauDCMOGR8g5Y6ABtjgBdSXWpSDVlf9AAhLZ
-         DUmc+2ESUqv/8rmzfwtmXbSvuOdG0TgeLAm5PwClvDDY0r6EFTaNbejcYq65BTJO7cl6
-         nwK6yEjXI3zRc65uoOiPazQP1ttat/QfjVy32DCvJpgMnCX+BUfaTrNlyLJyjTiGbY6a
-         /oLq3zuKhg96r89gz1HrLaCbVkyNjJ1MDn0CCaPvmd/kgCFJ700c8X/2JUTKPk+L2+WA
-         rXSA==
-X-Gm-Message-State: APjAAAXs63u7xIn8v4aijOlxLA4fTbUzxwlUPvu+lcxDRwiQD/8c3eM1
-	iZsGXYzAw9ksUYJ9nyy7ovP8Mw==
-X-Google-Smtp-Source: APXvYqxYKGSK6I8b7hoUIAqJTB3Ku0XRihpPu4nBcAxKCNBJscoqFmYbPUJv9aMkupfl7+/RJ59IiA==
-X-Received: by 2002:a63:611:: with SMTP id 17mr10933319pgg.191.1572580800014;
-        Thu, 31 Oct 2019 21:00:00 -0700 (PDT)
-Date: Thu, 31 Oct 2019 20:59:58 -0700
+        bh=DqG2K0fvYUAA4E302d2Wr4MEutud0mjKuHdZBEE6NhQ=;
+        b=s5qaVo7EmJ6RhC23Bx1SGL0yAD+zSVBBkNluJ0PiddwCdVB01ZAbbAw2RhAHbPgIG8
+         QAExSvBQKq/1RDhnaLGEQTYQDpjfRFoN6tO8l079u06MuFvfVPgSerURPX346L2I7Q2L
+         gvOIVpsI3fGBt4A0nkunhkc2QHRZPG/haaGhyCwEsn6CoX2gRhbRtFFP2ZjchWOMcjrv
+         nWUP0W9FlCu63eoDiSAPa2R8ZmDgh2KMo9AfoUVsPEfPDiia+FC2qeUUnshUK0QNCAYn
+         UdRZkWXcgOYCvRKAQGMAzbIwn+RknwuPXRUcA9ZxT9DakUVEMF/v+BKd2vyc1CbaS7YY
+         OMPg==
+X-Gm-Message-State: APjAAAVoTjk/X6IUUsLbrxn3HCRJSDB2W6hxF0zU0DH673xtHSe8FV2o
+	hRUxOTB56jok1EXIGgISVfe+Pw==
+X-Google-Smtp-Source: APXvYqwjxz9PkVBJaSe/Y1M2wUY5vJE9zTstT50unKznJW5kGeoF7F85nWGFPaym5lZ0YmXY+dykwQ==
+X-Received: by 2002:aa7:90da:: with SMTP id k26mr1506175pfk.162.1572580833083;
+        Thu, 31 Oct 2019 21:00:33 -0700 (PDT)
+Date: Thu, 31 Oct 2019 21:00:31 -0700
 From: Kees Cook <keescook@chromium.org>
 To: samitolvanen@google.com
 Cc: Will Deacon <will@kernel.org>,
@@ -56,22 +56,21 @@ Cc: Will Deacon <will@kernel.org>,
 	clang-built-linux@googlegroups.com,
 	kernel-hardening@lists.openwall.com,
 	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 12/17] arm64: reserve x18 from general allocation with
- SCS
-Message-ID: <201910312059.C43A11D@keescook>
+Subject: Re: [PATCH v3 14/17] arm64: efi: restore x18 if it was corrupted
+Message-ID: <201910312100.E35C214206@keescook>
 References: <20191018161033.261971-1-samitolvanen@google.com>
  <20191031164637.48901-1-samitolvanen@google.com>
- <20191031164637.48901-13-samitolvanen@google.com>
+ <20191031164637.48901-15-samitolvanen@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191031164637.48901-13-samitolvanen@google.com>
+In-Reply-To: <20191031164637.48901-15-samitolvanen@google.com>
 
-On Thu, Oct 31, 2019 at 09:46:32AM -0700, samitolvanen@google.com wrote:
-> Reserve the x18 register from general allocation when SCS is enabled,
-> because the compiler uses the register to store the current task's
-> shadow stack pointer. Note that all external kernel modules must also be
-> compiled with -ffixed-x18 if the kernel has SCS enabled.
+On Thu, Oct 31, 2019 at 09:46:34AM -0700, samitolvanen@google.com wrote:
+> If we detect a corrupted x18 and SCS is enabled, restore the register
+> before jumping back to instrumented code. This is safe, because the
+> wrapper is called with preemption disabled and a separate shadow stack
+> is used for interrupt handling.
 > 
 > Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
 
@@ -80,24 +79,25 @@ Reviewed-by: Kees Cook <keescook@chromium.org>
 -Kees
 
 > ---
->  arch/arm64/Makefile | 4 ++++
->  1 file changed, 4 insertions(+)
+>  arch/arm64/kernel/efi-rt-wrapper.S | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/Makefile b/arch/arm64/Makefile
-> index 2c0238ce0551..ef76101201b2 100644
-> --- a/arch/arm64/Makefile
-> +++ b/arch/arm64/Makefile
-> @@ -72,6 +72,10 @@ stack_protector_prepare: prepare0
->  					include/generated/asm-offsets.h))
->  endif
->  
-> +ifeq ($(CONFIG_SHADOW_CALL_STACK), y)
-> +KBUILD_CFLAGS	+= -ffixed-x18
-> +endif
-> +
->  ifeq ($(CONFIG_CPU_BIG_ENDIAN), y)
->  KBUILD_CPPFLAGS	+= -mbig-endian
->  CHECKFLAGS	+= -D__AARCH64EB__
+> diff --git a/arch/arm64/kernel/efi-rt-wrapper.S b/arch/arm64/kernel/efi-rt-wrapper.S
+> index 3fc71106cb2b..945744f16086 100644
+> --- a/arch/arm64/kernel/efi-rt-wrapper.S
+> +++ b/arch/arm64/kernel/efi-rt-wrapper.S
+> @@ -34,5 +34,10 @@ ENTRY(__efi_rt_asm_wrapper)
+>  	ldp	x29, x30, [sp], #32
+>  	b.ne	0f
+>  	ret
+> -0:	b	efi_handle_corrupted_x18	// tail call
+> +0:
+> +#ifdef CONFIG_SHADOW_CALL_STACK
+> +	/* Restore x18 before returning to instrumented code. */
+> +	mov	x18, x2
+> +#endif
+> +	b	efi_handle_corrupted_x18	// tail call
+>  ENDPROC(__efi_rt_asm_wrapper)
 > -- 
 > 2.24.0.rc0.303.g954a862665-goog
 > 
