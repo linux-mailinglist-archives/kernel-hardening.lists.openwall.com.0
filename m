@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17240-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17241-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 957A7ECB26
-	for <lists+kernel-hardening@lfdr.de>; Fri,  1 Nov 2019 23:13:33 +0100 (CET)
-Received: (qmail 32617 invoked by uid 550); 1 Nov 2019 22:12:31 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 47135ECB27
+	for <lists+kernel-hardening@lfdr.de>; Fri,  1 Nov 2019 23:13:43 +0100 (CET)
+Received: (qmail 1102 invoked by uid 550); 1 Nov 2019 22:12:34 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,41 +13,41 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 32521 invoked from network); 1 Nov 2019 22:12:31 -0000
+Received: (qmail 32725 invoked from network); 1 Nov 2019 22:12:33 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=YuceP/m4Sv7I7vrWsOPJ1pSb3CxvhwOwQ1OQoGSTS4o=;
-        b=oC92Xyk4xx4OFjCywUW0xRGLKJPopJyks6H3DIWfvMcqM41QRHY8A6HpLSO2oO1inw
-         7nVZsYb0ejRziH+5dLCL9D9wKeQQKeMEb1VUrkYc1cMPvyFcm3It+tNXG+Hwcj7gshxb
-         6nHSjR+gi4hodQFSJLJDhZIR1+Kzve8eUQ6q7dVUcbIISZ2N2+mSkGwMJQvydH28gjMd
-         oRMh4SmcetuL5E9614gPeg7eJPENTgrxaRMgcD0aWe9YQNHjd9wnZeZVxQ0kRl59z7of
-         8623sjz/SPs/pQv7SS4ugqqYKNBb1daNI8KHgf/+dBsRhEhkLc4Q35KQzw9rmfiSpNPD
-         e0Yw==
+        bh=TmDnfQN5KSEC3g/578TQjZ7QNjxfyUPcu+BQjF9Yuvo=;
+        b=WX+ZlyX9au7TTis+HDd7Dbd6apXsSxGT4BjPuLcLwhq8XdU1hWXuu+jMmXXpmqn/ly
+         JnciDuOZ2YKOinrTMYHNYjglGY6CBM9JRa6UwI5ny+82cASaJNLEYq03XkrGGMRD/45C
+         080BYykDqPbpaWcEFlq6ukx4uUgLPbDYn8rQoXBjaKsPYUg8U6UVKNYt0gsSY+aCZh6t
+         sDQ/hg4YUpFcnNlIJocP1LkLyLwN/E6CPVe3fwUCeFBsqzz656n40juIl8qkmBDC5VxV
+         leO2fOlOj+kIu6XcB0vIjnzmxkmxh31gkv9F3DRvB4cNzr9altIj/aQ4Xeb30TvjIhYS
+         CEeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=YuceP/m4Sv7I7vrWsOPJ1pSb3CxvhwOwQ1OQoGSTS4o=;
-        b=IVmXyRZ7kK5J/IXjnGGt36v8WJ2OHxC/noRlCmXbG8wWmxtxhIUm5naFsa7i65UaLn
-         AgEEzj4ZSht8z0LNUzsYsnmNnnEMeHbfMaYyN3ThIz1Qy0KSvNxciM0gyLJHZIlYyHhT
-         vKqK9bOpxLCdbMW76Uxif06G1L7yS3b8paN3BJDYil/v14RJdtXY02zcrAgtq17/gtjk
-         sozqufEPEeicVT5hAtw0mHvHoOHTTdQExdvs7xOb4bOdAHpt4lvqkXBs65Qd/kizzcAy
-         LaYpuxSJc0FN6ZSYP94uEL3kzs+nEL/aEE/uaoLX0FiFK2LXfcqInwQZVn2fF2YjnwKE
-         909w==
-X-Gm-Message-State: APjAAAVE8zdwyoYea9kXk0+1Nrrlcs4/COpREm+T+PDabbEkhdhXpwmI
-	y5jAsHB5SBdyGEMAC26BlDd8y7dOCZPQUkEehx0=
-X-Google-Smtp-Source: APXvYqyESI1nj79EQYAfPNp7QT9azRRC93peb8wyxMPp245spxyPTFrWPJ4dhblj2gZ8cJDr8g3hFVKQrrU1shqGWxs=
-X-Received: by 2002:a63:2b8e:: with SMTP id r136mr2674046pgr.103.1572646338730;
- Fri, 01 Nov 2019 15:12:18 -0700 (PDT)
-Date: Fri,  1 Nov 2019 15:11:42 -0700
+        bh=TmDnfQN5KSEC3g/578TQjZ7QNjxfyUPcu+BQjF9Yuvo=;
+        b=hAOuPvgzqLmhoB06w2gZkRlfQUadfci/VAn29VbmMOLofVF5+4QdbrTJaVvP0BuTJ6
+         GennkD1kUB7qgqdWKwni/CV45Gs54XGKN1MVWTI3ay2uQ3CWl014bli5fsVO3Z1QZDWE
+         +84W//HYTE7EmrG61UOIG8TZQlhllDvNsB3azXyVvG2HTYyhb1XlVE+r4w/ee7vytmDW
+         m+gh1OX7z01QiOgr8NiN5jsvC0b97I+WKTRkyr5XdWMquXEQtezJLQIhqdsVMIARxL3+
+         tELF5U+auWH8BnWNeQ9ztvnpFONuYoKvzhfv4WfJyBsKvilw++gUsFxi+43Eo+/QgI0Y
+         r52A==
+X-Gm-Message-State: APjAAAUzd55ZOht7Jy8X13F0dvib4ndtupSzy6ZXIPGItIM8OZIFxLQX
+	el6vpBR5xz5RcD3xXxcgrLJuAzCy3DYrZx55GTA=
+X-Google-Smtp-Source: APXvYqzVngOFcUfwiWQ8eDwuiV8sr1oY1W9Y7iX+20vU9uQZSIlJayld9jxLG7yCiTZmX5C4MT0to41bsvZhb6iCe1E=
+X-Received: by 2002:a63:364d:: with SMTP id d74mr15884929pga.408.1572646341266;
+ Fri, 01 Nov 2019 15:12:21 -0700 (PDT)
+Date: Fri,  1 Nov 2019 15:11:43 -0700
 In-Reply-To: <20191101221150.116536-1-samitolvanen@google.com>
-Message-Id: <20191101221150.116536-10-samitolvanen@google.com>
+Message-Id: <20191101221150.116536-11-samitolvanen@google.com>
 Mime-Version: 1.0
 References: <20191018161033.261971-1-samitolvanen@google.com> <20191101221150.116536-1-samitolvanen@google.com>
 X-Mailer: git-send-email 2.24.0.rc1.363.gb1bccd3e3d-goog
-Subject: [PATCH v4 09/17] arm64: kprobes: fix kprobes without CONFIG_KRETPROBES
+Subject: [PATCH v4 10/17] arm64: disable kretprobes with SCS
 From: Sami Tolvanen <samitolvanen@google.com>
 To: Will Deacon <will@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
 	Steven Rostedt <rostedt@goodmis.org>, Masami Hiramatsu <mhiramat@kernel.org>, 
@@ -61,35 +61,29 @@ Cc: Dave Martin <Dave.Martin@arm.com>, Kees Cook <keescook@chromium.org>,
 	linux-kernel@vger.kernel.org, Sami Tolvanen <samitolvanen@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-This allows CONFIG_KRETPROBES to be disabled without disabling
-kprobes entirely.
+With CONFIG_KRETPROBES, function return addresses are modified to
+redirect control flow to kretprobe_trampoline. This is incompatible
+with SCS.
 
 Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
 Reviewed-by: Kees Cook <keescook@chromium.org>
 ---
- arch/arm64/kernel/probes/kprobes.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kernel/probes/kprobes.c b/arch/arm64/kernel/probes/kprobes.c
-index c4452827419b..98230ae979ca 100644
---- a/arch/arm64/kernel/probes/kprobes.c
-+++ b/arch/arm64/kernel/probes/kprobes.c
-@@ -551,6 +551,7 @@ void __kprobes __used *trampoline_probe_handler(struct pt_regs *regs)
- 	return (void *)orig_ret_address;
- }
- 
-+#ifdef CONFIG_KRETPROBES
- void __kprobes arch_prepare_kretprobe(struct kretprobe_instance *ri,
- 				      struct pt_regs *regs)
- {
-@@ -564,6 +565,7 @@ int __kprobes arch_trampoline_kprobe(struct kprobe *p)
- {
- 	return 0;
- }
-+#endif
- 
- int __init arch_init_kprobes(void)
- {
+diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+index 3f047afb982c..e7b57a8a5531 100644
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -165,7 +165,7 @@ config ARM64
+ 	select HAVE_STACKPROTECTOR
+ 	select HAVE_SYSCALL_TRACEPOINTS
+ 	select HAVE_KPROBES
+-	select HAVE_KRETPROBES
++	select HAVE_KRETPROBES if !SHADOW_CALL_STACK
+ 	select HAVE_GENERIC_VDSO
+ 	select IOMMU_DMA if IOMMU_SUPPORT
+ 	select IRQ_DOMAIN
 -- 
 2.24.0.rc1.363.gb1bccd3e3d-goog
 
