@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17258-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17259-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 800DDEE0C6
-	for <lists+kernel-hardening@lfdr.de>; Mon,  4 Nov 2019 14:13:32 +0100 (CET)
-Received: (qmail 31771 invoked by uid 550); 4 Nov 2019 13:13:27 -0000
+	by mail.lfdr.de (Postfix) with SMTP id B4C3DEE0E9
+	for <lists+kernel-hardening@lfdr.de>; Mon,  4 Nov 2019 14:21:12 +0100 (CET)
+Received: (qmail 3134 invoked by uid 550); 4 Nov 2019 13:21:07 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,15 +13,15 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 31751 invoked from network); 4 Nov 2019 13:13:26 -0000
+Received: (qmail 3114 invoked from network); 4 Nov 2019 13:21:07 -0000
 To: Sami Tolvanen <samitolvanen@google.com>
-Subject: Re: [PATCH v4 06/17] scs: add accounting
+Subject: Re: [PATCH v4 13/17] arm64: preserve x18 when CPU is suspended
 X-PHP-Originating-Script: 0:main.inc
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date: Mon, 04 Nov 2019 14:22:19 +0109
+Date: Mon, 04 Nov 2019 14:29:59 +0109
 From: Marc Zyngier <maz@kernel.org>
 Cc: Will Deacon <will@kernel.org>, Catalin Marinas
  <catalin.marinas@arm.com>, Steven Rostedt <rostedt@goodmis.org>, Masami
@@ -33,11 +33,11 @@ Cc: Will Deacon <will@kernel.org>, Catalin Marinas
  <yamada.masahiro@socionext.com>, <clang-built-linux@googlegroups.com>,
  <kernel-hardening@lists.openwall.com>,
  <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>
-In-Reply-To: <20191101221150.116536-7-samitolvanen@google.com>
+In-Reply-To: <20191101221150.116536-14-samitolvanen@google.com>
 References: <20191018161033.261971-1-samitolvanen@google.com>
  <20191101221150.116536-1-samitolvanen@google.com>
- <20191101221150.116536-7-samitolvanen@google.com>
-Message-ID: <791fc70f7bcaf13a89abaee9aae52dfe@www.loen.fr>
+ <20191101221150.116536-14-samitolvanen@google.com>
+Message-ID: <02c56a5273f94e9d832182f1b3cb5097@www.loen.fr>
 X-Sender: maz@kernel.org
 User-Agent: Roundcube Webmail/0.7.2
 X-SA-Exim-Connect-IP: <locally generated>
@@ -46,75 +46,71 @@ X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on cheepnis.misterjones.org); SAEximRunCond expanded to false
 
 On 2019-11-01 23:21, Sami Tolvanen wrote:
-> This change adds accounting for the memory allocated for shadow 
-> stacks.
+> Don't lose the current task's shadow stack when the CPU is suspended.
 >
 > Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+> Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 > Reviewed-by: Kees Cook <keescook@chromium.org>
 > ---
->  drivers/base/node.c    |  6 ++++++
->  fs/proc/meminfo.c      |  4 ++++
->  include/linux/mmzone.h |  3 +++
->  kernel/scs.c           | 19 +++++++++++++++++++
->  mm/page_alloc.c        |  6 ++++++
->  mm/vmstat.c            |  3 +++
->  6 files changed, 41 insertions(+)
+>  arch/arm64/include/asm/suspend.h |  2 +-
+>  arch/arm64/mm/proc.S             | 10 ++++++++++
+>  2 files changed, 11 insertions(+), 1 deletion(-)
 >
-> diff --git a/drivers/base/node.c b/drivers/base/node.c
-> index 296546ffed6c..111e58ec231e 100644
-> --- a/drivers/base/node.c
-> +++ b/drivers/base/node.c
-> @@ -415,6 +415,9 @@ static ssize_t node_read_meminfo(struct device 
-> *dev,
->  		       "Node %d AnonPages:      %8lu kB\n"
->  		       "Node %d Shmem:          %8lu kB\n"
->  		       "Node %d KernelStack:    %8lu kB\n"
-> +#ifdef CONFIG_SHADOW_CALL_STACK
-> +		       "Node %d ShadowCallStack:%8lu kB\n"
-> +#endif
->  		       "Node %d PageTables:     %8lu kB\n"
->  		       "Node %d NFS_Unstable:   %8lu kB\n"
->  		       "Node %d Bounce:         %8lu kB\n"
-> @@ -438,6 +441,9 @@ static ssize_t node_read_meminfo(struct device 
-> *dev,
->  		       nid, K(node_page_state(pgdat, NR_ANON_MAPPED)),
->  		       nid, K(i.sharedram),
->  		       nid, sum_zone_node_page_state(nid, NR_KERNEL_STACK_KB),
-> +#ifdef CONFIG_SHADOW_CALL_STACK
-> +		       nid, sum_zone_node_page_state(nid, NR_KERNEL_SCS_BYTES) / 
-> 1024,
-> +#endif
->  		       nid, K(sum_zone_node_page_state(nid, NR_PAGETABLE)),
->  		       nid, K(node_page_state(pgdat, NR_UNSTABLE_NFS)),
->  		       nid, K(sum_zone_node_page_state(nid, NR_BOUNCE)),
-> diff --git a/fs/proc/meminfo.c b/fs/proc/meminfo.c
-> index 8c1f1bb1a5ce..49768005a79e 100644
-> --- a/fs/proc/meminfo.c
-> +++ b/fs/proc/meminfo.c
-> @@ -103,6 +103,10 @@ static int meminfo_proc_show(struct seq_file *m,
-> void *v)
->  	show_val_kb(m, "SUnreclaim:     ", sunreclaim);
->  	seq_printf(m, "KernelStack:    %8lu kB\n",
->  		   global_zone_page_state(NR_KERNEL_STACK_KB));
-> +#ifdef CONFIG_SHADOW_CALL_STACK
-> +	seq_printf(m, "ShadowCallStack:%8lu kB\n",
-> +		   global_zone_page_state(NR_KERNEL_SCS_BYTES) / 1024);
-> +#endif
->  	show_val_kb(m, "PageTables:     ",
->  		    global_zone_page_state(NR_PAGETABLE));
+> diff --git a/arch/arm64/include/asm/suspend.h
+> b/arch/arm64/include/asm/suspend.h
+> index 8939c87c4dce..0cde2f473971 100644
+> --- a/arch/arm64/include/asm/suspend.h
+> +++ b/arch/arm64/include/asm/suspend.h
+> @@ -2,7 +2,7 @@
+>  #ifndef __ASM_SUSPEND_H
+>  #define __ASM_SUSPEND_H
 >
-> diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
-> index bda20282746b..fcb8c1708f9e 100644
-> --- a/include/linux/mmzone.h
-> +++ b/include/linux/mmzone.h
-> @@ -200,6 +200,9 @@ enum zone_stat_item {
->  	NR_MLOCK,		/* mlock()ed pages found and moved off LRU */
->  	NR_PAGETABLE,		/* used for pagetables */
->  	NR_KERNEL_STACK_KB,	/* measured in KiB */
-> +#if IS_ENABLED(CONFIG_SHADOW_CALL_STACK)
+> -#define NR_CTX_REGS 12
+> +#define NR_CTX_REGS 13
+>  #define NR_CALLEE_SAVED_REGS 12
+>
+>  /*
+> diff --git a/arch/arm64/mm/proc.S b/arch/arm64/mm/proc.S
+> index fdabf40a83c8..5616dc52a033 100644
+> --- a/arch/arm64/mm/proc.S
+> +++ b/arch/arm64/mm/proc.S
+> @@ -49,6 +49,8 @@
+>   * cpu_do_suspend - save CPU registers context
+>   *
+>   * x0: virtual address of context pointer
+> + *
+> + * This must be kept in sync with struct cpu_suspend_ctx in 
+> <asm/suspend.h>.
+>   */
+>  ENTRY(cpu_do_suspend)
+>  	mrs	x2, tpidr_el0
+> @@ -73,6 +75,9 @@ alternative_endif
+>  	stp	x8, x9, [x0, #48]
+>  	stp	x10, x11, [x0, #64]
+>  	stp	x12, x13, [x0, #80]
+> +#ifdef CONFIG_SHADOW_CALL_STACK
+> +	str	x18, [x0, #96]
+> +#endif
 
-Is there any reason why you're not consistently using only one of
-"#if IS_ENABLED(...)" or "#ifdef ...", but instead a mix of both?
+Do we need the #ifdefery here? We didn't add that to the KVM path,
+and I'd feel better having a single behaviour, specially when
+NR_CTX_REGS is unconditionally sized to hold 13 regs.
+
+>  	ret
+>  ENDPROC(cpu_do_suspend)
+>
+> @@ -89,6 +94,11 @@ ENTRY(cpu_do_resume)
+>  	ldp	x9, x10, [x0, #48]
+>  	ldp	x11, x12, [x0, #64]
+>  	ldp	x13, x14, [x0, #80]
+> +#ifdef CONFIG_SHADOW_CALL_STACK
+> +	ldr	x18, [x0, #96]
+> +	/* Clear the SCS pointer from the state buffer */
+> +	str	xzr, [x0, #96]
+> +#endif
+>  	msr	tpidr_el0, x2
+>  	msr	tpidrro_el0, x3
+>  	msr	contextidr_el1, x4
 
 Thanks,
 
