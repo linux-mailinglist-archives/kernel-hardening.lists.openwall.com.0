@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17298-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17299-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 23CC2F0997
-	for <lists+kernel-hardening@lfdr.de>; Tue,  5 Nov 2019 23:32:52 +0100 (CET)
-Received: (qmail 7508 invoked by uid 550); 5 Nov 2019 22:32:46 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 613C5F0998
+	for <lists+kernel-hardening@lfdr.de>; Tue,  5 Nov 2019 23:32:59 +0100 (CET)
+Received: (qmail 7543 invoked by uid 550); 5 Nov 2019 22:32:46 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,7 +13,7 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 7470 invoked from network); 5 Nov 2019 22:32:45 -0000
+Received: (qmail 7471 invoked from network); 5 Nov 2019 22:32:45 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1572993153; bh=CEqNC2OZLKhyTZ7Hb0wmLJu9sTXB7Mqxnyl1A+S6+TQ=; h=Subject:To:Cc:References:From:Date:In-Reply-To:From:Subject; b=EthnUynlV3IADcJoG7UBd/VTNjzZ7I/WBRXx6R0tOfBu/digqcE9CI8gdRu4aZr81P6OpLwRgnsT25ySQipCfZU0BCUBdunGTXIHoP+PiOZEXdNdmK/jzMYw31lw1aWnh+f0jvUliA4etie2rv1S8EhZBKrzcIFeSDaSgHhTRkQiofew4SCwhWp4p/S+ewHGXd5jG48seSE9Q8ekCTB1PysumwFLXyZ7ON6SQtrPWuquqyU1XdnBQRthU8iDf07Nc+Jf9Cx5lPriaeGI15bo9cmQp+2Yv5ziEAgxf3TDPWz7oqNpGzhXXoxXgig9U+3swL3t2ALLrz9/qUbBzRJ4DQ==
 X-YMail-OSG: rfffkqUVM1mtWPHBkSEHkDFHFeeok1ZQg00bzBb3.jZv4O1lGgzzwpgqdePX6OZ
  2wiCCfIXfku9bdJSJPbuC.uynz.UKpEKMLq9A90N7FxSs0vvCrkYuLeI70vP.HS1qbFbLZxLoajv
