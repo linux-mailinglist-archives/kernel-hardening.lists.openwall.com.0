@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17285-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17284-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id D0040F0488
-	for <lists+kernel-hardening@lfdr.de>; Tue,  5 Nov 2019 18:56:17 +0100 (CET)
-Received: (qmail 15478 invoked by uid 550); 5 Nov 2019 17:56:03 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 6FF5FF0485
+	for <lists+kernel-hardening@lfdr.de>; Tue,  5 Nov 2019 18:56:10 +0100 (CET)
+Received: (qmail 15440 invoked by uid 550); 5 Nov 2019 17:56:03 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,7 +13,7 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 15403 invoked from network); 5 Nov 2019 17:56:02 -0000
+Received: (qmail 15402 invoked from network); 5 Nov 2019 17:56:02 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1572976550; bh=m0eV6RivZxxrTplc4CbRCm5zHYpJb9DOad4uWb+vhCw=; h=Subject:To:Cc:References:From:Date:In-Reply-To:From:Subject; b=Awr0eoJXkEd6QFwtUmXAJLwk8faDsqvpCf6E1mB+saZtVMb/7XBVJryNEFgh3BjN6Lw4lt24cQr3WYYYhoSouuIf6JbLkaYMV83ZGYxWxulXuSml83FJpS6dXqgPTOP7wTwMGYH0qIfVC2ZpEk3JybJO2COa8ICbqDJIM5J+T4pys5GKUdNW+U965CENDk9V4kelhJT3u1pu+NjaWXhf1EIOWonrQh07C4POQ+M6SwnyXdWUrOtOeoqWrFIxMR5wiraj7Nz6QPp36qTbpySbZWCi1/zoYKklB4rHWW+XPdaT8P+9hVdMJUDBk3I+kLyco73svOwveayrt1quw3pWvw==
 X-YMail-OSG: boHysvYVM1kRFUHZ9YTgzEiGUrRD6LpeCX19W6dQvnFb0N.qjuLyuhD2lbsN8jF
  fPdLfD7ggr39lSRLiDxP_yFwaBWBpJLYqg9erNHrYN_m0FJUyWHuuVzEkgRHI2uqY4Fgc4h_BRQ8
