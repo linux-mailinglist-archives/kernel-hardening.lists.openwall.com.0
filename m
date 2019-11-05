@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17289-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17287-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 9EBBDF065D
-	for <lists+kernel-hardening@lfdr.de>; Tue,  5 Nov 2019 20:55:14 +0100 (CET)
-Received: (qmail 18211 invoked by uid 550); 5 Nov 2019 19:55:08 -0000
+	by mail.lfdr.de (Postfix) with SMTP id D0F3BF0606
+	for <lists+kernel-hardening@lfdr.de>; Tue,  5 Nov 2019 20:31:53 +0100 (CET)
+Received: (qmail 1812 invoked by uid 550); 5 Nov 2019 19:31:48 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,76 +13,127 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 18191 invoked from network); 5 Nov 2019 19:55:08 -0000
-Date: Tue, 5 Nov 2019 09:17:23 +0000
-From: Mark Rutland <mark.rutland@arm.com>
-To: Sami Tolvanen <samitolvanen@google.com>
-Cc: Will Deacon <will@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Ard Biesheuvel <ard.biesheuvel@linaro.org>,
-	Dave Martin <Dave.Martin@arm.com>,
-	Kees Cook <keescook@chromium.org>,
-	Laura Abbott <labbott@redhat.com>, Marc Zyngier <maz@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Jann Horn <jannh@google.com>,
-	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
-	Masahiro Yamada <yamada.masahiro@socionext.com>,
-	clang-built-linux <clang-built-linux@googlegroups.com>,
-	Kernel Hardening <kernel-hardening@lists.openwall.com>,
-	linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-	LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v4 07/17] scs: add support for stack usage debugging
-Message-ID: <20191105091723.GC4743@lakrids.cambridge.arm.com>
-References: <20191018161033.261971-1-samitolvanen@google.com>
- <20191101221150.116536-1-samitolvanen@google.com>
- <20191101221150.116536-8-samitolvanen@google.com>
- <20191104124017.GD45140@lakrids.cambridge.arm.com>
- <CABCJKueoJs7hS7VrVoz6CY_oAjTGcV-W61v9GAdwg+zk0W5ErA@mail.gmail.com>
+Received: (qmail 1773 invoked from network); 5 Nov 2019 19:31:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=1SeagsDbeuKXlh/lZkZD0AtJ+ZGsb8zVUjbHRp2z3fk=;
+        b=bG3YzgHY/KABC6APZVuTRck1R3V3hiIEonbR4Y6UPz+3BbG8+IUrTEUBpY9wx4cLKU
+         WvBehL3A5X9T9a4/MuQkX6lGV1mUzk/M1UAZwNbbvjcCQ+BAEHcUN6NxOb/AwuB1eYuz
+         JPwltdrZJbOOFMZWqocUM75vGTaHdfq2YeKxFcLsY4+IV1t4WxTicEXPXg6gA0lJCgMN
+         Zg0UeDb9sdgfp0s4VwhDafzWQE6UI3QTlWWZUYuLxLv77dGWb2ON8usVq7+K6cnMAi6j
+         f+7cChq65Br+qn9tL8e9tjke7GwNCdD/2L5f6mlggr82Vb0pkvSgaoprE3BxmhoXkHxq
+         IZQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=1SeagsDbeuKXlh/lZkZD0AtJ+ZGsb8zVUjbHRp2z3fk=;
+        b=jEKE7gua4Yfl133oo8KVBFPjEXnhPuXeJwaxoJDc4Qn9wvZDJiGjU4dzbS6IHVtvJy
+         VHo4pAMYx3Tqjq8fkz8dwaKuKhOI7xI21hWyHfR7eod5YrSLI68VzQM0Uy46NPYDq7ng
+         WzqO1RRuZeZ0zs2/x6oc51yo1MaH0ParT9BVtTzQVk/5V3dzaOgxYKWc9WZ+BziRJFYS
+         sTbaAvGVNilFeP9aJLOdBWOBN3Ck/czHysQhWpYxIbxFZw2h8W/843oRa2h12Os8FODb
+         wuOOVm/fTkcvZ6yGY5DXLIOLVxrV0Fys1Heb/ZgN31PMnG8faVZ0o3aT2tEJ3ajhwwS1
+         r21Q==
+X-Gm-Message-State: APjAAAV7WvrBIeLrL4mfTJk7ZrUexScTYkbBKSrrmJTvmz8t5yS/dqqx
+	im+CUPrlu0oR9e8OpnkJw5Y=
+X-Google-Smtp-Source: APXvYqy/IJZanoWg94nn+q8E66Sh0NTLVCbwR9j2nk1uXc92V5rp3fg98PT8TE2KB5Ylf7r6SRzC+w==
+X-Received: by 2002:a17:90a:6283:: with SMTP id d3mr895052pjj.27.1572982295051;
+        Tue, 05 Nov 2019 11:31:35 -0800 (PST)
+Date: Tue, 5 Nov 2019 11:31:32 -0800
+From: Alexei Starovoitov <alexei.starovoitov@gmail.com>
+To: Casey Schaufler <casey@schaufler-ca.com>
+Cc: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>,
+	linux-kernel@vger.kernel.org, Alexei Starovoitov <ast@kernel.org>,
+	Andy Lutomirski <luto@amacapital.net>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	David Drysdale <drysdale@google.com>,
+	Florent Revest <revest@chromium.org>,
+	James Morris <jmorris@namei.org>, Jann Horn <jann@thejh.net>,
+	John Johansen <john.johansen@canonical.com>,
+	Jonathan Corbet <corbet@lwn.net>, Kees Cook <keescook@chromium.org>,
+	KP Singh <kpsingh@chromium.org>,
+	Michael Kerrisk <mtk.manpages@gmail.com>,
+	=?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mickael.salaun@ssi.gouv.fr>,
+	Paul Moore <paul@paul-moore.com>, Sargun Dhillon <sargun@sargun.me>,
+	"Serge E . Hallyn" <serge@hallyn.com>,
+	Shuah Khan <shuah@kernel.org>, Stephen Smalley <sds@tycho.nsa.gov>,
+	Tejun Heo <tj@kernel.org>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Tycho Andersen <tycho@tycho.ws>, Will Drewry <wad@chromium.org>,
+	bpf@vger.kernel.org, kernel-hardening@lists.openwall.com,
+	linux-api@vger.kernel.org, linux-security-module@vger.kernel.org,
+	netdev@vger.kernel.org
+Subject: Re: [PATCH bpf-next v13 4/7] landlock: Add ptrace LSM hooks
+Message-ID: <20191105193130.qam2eafnmgvrvjwk@ast-mbp.dhcp.thefacebook.com>
+References: <20191104172146.30797-1-mic@digikod.net>
+ <20191104172146.30797-5-mic@digikod.net>
+ <20191105171824.dfve44gjiftpnvy7@ast-mbp.dhcp.thefacebook.com>
+ <c5c6b433-7e6a-c8f8-f063-e704c3df4cc6@schaufler-ca.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <CABCJKueoJs7hS7VrVoz6CY_oAjTGcV-W61v9GAdwg+zk0W5ErA@mail.gmail.com>
-User-Agent: Mutt/1.11.1+11 (2f07cb52) (2018-12-01)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <c5c6b433-7e6a-c8f8-f063-e704c3df4cc6@schaufler-ca.com>
+User-Agent: NeoMutt/20180223
 
-On Mon, Nov 04, 2019 at 01:35:28PM -0800, Sami Tolvanen wrote:
-> On Mon, Nov 4, 2019 at 4:40 AM Mark Rutland <mark.rutland@arm.com> wrote:
-> > > +#ifdef CONFIG_DEBUG_STACK_USAGE
-> > > +static inline unsigned long scs_used(struct task_struct *tsk)
-> > > +{
-> > > +     unsigned long *p = __scs_base(tsk);
-> > > +     unsigned long *end = scs_magic(tsk);
-> > > +     uintptr_t s = (uintptr_t)p;
+On Tue, Nov 05, 2019 at 09:55:42AM -0800, Casey Schaufler wrote:
+> On 11/5/2019 9:18 AM, Alexei Starovoitov wrote:
+> > On Mon, Nov 04, 2019 at 06:21:43PM +0100, Mickaël Salaün wrote:
+> >> Add a first Landlock hook that can be used to enforce a security policy
+> >> or to audit some process activities.  For a sandboxing use-case, it is
+> >> needed to inform the kernel if a task can legitimately debug another.
+> >> ptrace(2) can also be used by an attacker to impersonate another task
+> >> and remain undetected while performing malicious activities.
+> >>
+> >> Using ptrace(2) and related features on a target process can lead to a
+> >> privilege escalation.  A sandboxed task must then be able to tell the
+> >> kernel if another task is more privileged, via ptrace_may_access().
+> >>
+> >> Signed-off-by: Mickaël Salaün <mic@digikod.net>
+> > ...
+> >> +static int check_ptrace(struct landlock_domain *domain,
+> >> +		struct task_struct *tracer, struct task_struct *tracee)
+> >> +{
+> >> +	struct landlock_hook_ctx_ptrace ctx_ptrace = {
+> >> +		.prog_ctx = {
+> >> +			.tracer = (uintptr_t)tracer,
+> >> +			.tracee = (uintptr_t)tracee,
+> >> +		},
+> >> +	};
+> > So you're passing two kernel pointers obfuscated as u64 into bpf program
+> > yet claiming that the end goal is to make landlock unprivileged?!
+> > The most basic security hole in the tool that is aiming to provide security.
 > >
-> > As previously, please use unsigned long for consistency.
+> > I think the only way bpf-based LSM can land is both landlock and KRSI
+> > developers work together on a design that solves all use cases. BPF is capable
+> > to be a superset of all existing LSMs
 > 
-> Ack.
-> 
-> > > +     while (p < end && *p)
-> > > +             p++;
-> >
-> > I think this is the only place where we legtimately access the shadow
-> > call stack directly.
-> 
-> There's also scs_corrupted, which checks that the end magic is intact.
+> I can't agree with this. Nope. There are many security models
+> for which BPF introduces excessive complexity. You don't need
+> or want the generality of a general purpose programming language
+> to implement Smack or TOMOYO. Or a simple Bell & LaPadula for
+> that matter. SELinux? I can't imagine anyone trying to do that
+> in eBPF, although I'm willing to be surprised. Being able to
+> enforce a policy isn't the only criteria for an LSM. 
 
-Ah, true. I missed that.
+what are the other criteria?
 
-> > When using SCS and KASAN, are the
-> > compiler-generated accesses to the SCS instrumented?
-> >
-> > If not, it might make sense to make this:
-> >
-> >         while (p < end && READ_ONCE_NOCKECK(*p))
-> >
-> > ... and poison the allocation from KASAN's PoV, so that we can find
-> > unintentional accesses more easily.
-> 
-> Sure, that makes sense. I can poison the allocation for the
-> non-vmalloc case, I'll just need to refactor scs_set_magic to happen
-> before the poisoning.
+> It's got
+> to perform well and integrate with the rest of the system. 
 
-Sounds good!
+what do you mean by that?
 
-Mark.
+> I see many issues with a BPF <-> vfs interface.
+
+There is no such interface today. What do you have in mind?
+
+> the mechanisms needed for the concerns of the day. Ideally,
+> we should be able to drop mechanisms when we decide that they
+> no longer add value.
+
+Exactly. bpf-based lsm must not add to kernel abi.
+
