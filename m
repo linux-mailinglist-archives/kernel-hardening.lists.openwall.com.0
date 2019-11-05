@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17291-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17292-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 9C999F0671
-	for <lists+kernel-hardening@lfdr.de>; Tue,  5 Nov 2019 20:55:41 +0100 (CET)
-Received: (qmail 21760 invoked by uid 550); 5 Nov 2019 19:55:34 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 4821FF0674
+	for <lists+kernel-hardening@lfdr.de>; Tue,  5 Nov 2019 20:55:51 +0100 (CET)
+Received: (qmail 21797 invoked by uid 550); 5 Nov 2019 19:55:35 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,7 +13,7 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 21725 invoked from network); 5 Nov 2019 19:55:33 -0000
+Received: (qmail 21726 invoked from network); 5 Nov 2019 19:55:33 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1572983721; bh=d9L0VmPL6ALHaSammxHQMCwSd1ZmOK0RbRK+tf+z8FQ=; h=Subject:To:Cc:References:From:Date:In-Reply-To:From:Subject; b=H03KZzN/+bLe1zPdsfK8AFewMwl2a9WZwfFhivgszz+MukYWXM9Bnqfe8lyFBCNo02WrVli+VWcHNSrti5vTbY/jotdwj8opEQnb6Y8uAYI75b5tNbrMbXCLQaTJBPHkyzrb6VlV5Pt/6Onb+cvDOMJX5ikUCXBxuj74d3gmKpjRluqxIK20Rmx/7VtlZMqpyc7lb/yrzvMoyaIPqnOwSPREuQlYc55/Cghlk0MNooC15J7+cb+N6S3SxENScdv0BuY9LcMzmKKtLLqU0idpUfu9wTvhpo0zxJnIUKh+vcQM4LCORu5UM/+dBl2FBMn+lSBkiz4c9KAoDYdh1HbEuA==
 X-YMail-OSG: EYiygnkVM1kbNPk0Yu.7vFvBJtEOXVpRrhcACoGas71uPCjpfxHhkAf_IHGekE0
  j7BhR0ymB9kpUJhJd0Ul4SMy7veFiHEAWTe9KWMchCjsJlgc3HJkt8fTVy3KQqFEIcaLKCCp.91e
