@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17338-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17336-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 350B1F8294
-	for <lists+kernel-hardening@lfdr.de>; Mon, 11 Nov 2019 22:47:41 +0100 (CET)
-Received: (qmail 1051 invoked by uid 550); 11 Nov 2019 21:46:23 -0000
+	by mail.lfdr.de (Postfix) with SMTP id F05E5F828F
+	for <lists+kernel-hardening@lfdr.de>; Mon, 11 Nov 2019 22:47:09 +0100 (CET)
+Received: (qmail 32686 invoked by uid 550); 11 Nov 2019 21:46:21 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,30 +13,30 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 32576 invoked from network); 11 Nov 2019 21:46:19 -0000
+Received: (qmail 32499 invoked from network); 11 Nov 2019 21:46:18 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=I/3dBlJyaxPRtFTis6wLSqQyStGQBcFjrF54ZE6N9ys=;
-        b=kmWX6IjqUtRMt+wusjNIA2uL5H2sIAh/5FOt2aG6VjnnT6ztx6kDdaxbUvAX9TMRTy
-         1J2LwAPQvXXt5zFk+ySCykBJoPhqC3OdlxvvrnCivG1qdIU0A5cslh1z9MZg5CbNkrFZ
-         wgcO2qTsPS7Y+yU23hmLm27pp/92lo/gleDLU=
+        bh=Q2lZ7Dm1L5aRXMm9XxNsm9WxcGVGFqTOrxf2vwq2v/c=;
+        b=X6cJO6j+LuNeFzoMBlJXSpwENsy0YOCb5jmcJTGxZvPS1RV2nWRXEkpU9UtVC0gzU3
+         +Skr+AL2+vJk7GunbZi7TcgodFA6q2V5iT3hVRsf4ee2IKQkEKCEGk0zUGnZWZV6us3x
+         dsdp/HxQ5DvQXnLDmGpXnTwQRiGC4YdyBTjDE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=I/3dBlJyaxPRtFTis6wLSqQyStGQBcFjrF54ZE6N9ys=;
-        b=jyxtZrFhP8EWsPGX3AolVsAIwUObCknNP06nM+5jH49itNrLD4BtdU/At/Ph+ZrsdK
-         wU7TtcqK/pJzIvsutXC6vPZt26m/lpnkPCdgKGad8gV7w/pKIv7IouIuLZz+9tHGaBVB
-         MgFkYB2pvS35Kobp7/VXwRiondrrJZ7LesRsPCnUIOJN8kQQEq0gfGHo2XEbYVC/UG69
-         isAS4usH8Bg7/MMlJ8v7ovuuRr7UMmg5C23z0GPwa5rB7ueyVRiMcGuXJxP47gM5VEVL
-         1aCoKtk42BWVGT7obFDAtT9t1SN5kjKk0+ANQofF702G/v+nFLh2GBwekmXXSimI1mcC
-         7AKA==
-X-Gm-Message-State: APjAAAV/yft4s7YaQ9g89R93Iw8hRAKa2z6HwRkCte+hY/asxKejoV7u
-	BuFish/jR6FCLRVN56PfU8x2+w==
-X-Google-Smtp-Source: APXvYqztW9oWMklUPzVKJI3FAB8FKSIHkHfHiMvOVTc5Wn5vlQagD7druaWt2L6MWIHtHkHpx1wx3g==
-X-Received: by 2002:a17:902:8e86:: with SMTP id bg6mr28110421plb.240.1573508767350;
-        Mon, 11 Nov 2019 13:46:07 -0800 (PST)
+        bh=Q2lZ7Dm1L5aRXMm9XxNsm9WxcGVGFqTOrxf2vwq2v/c=;
+        b=uOwbxKf2QaK+h7uV2F/WU6s113k1Tf1mNc3Cr3wHsDcMT7S+aynhAdSvwS1ILUQHBv
+         yEXZpzzaCtQ6pX6XgdtzwTPBu4EkklckIYZMkJgEG3e82KbhMJLr0d3oeBxYIjDaj31N
+         lqrWNgGhr20Mex/9izR1uVVCQXL6On/zSf33l3JMdJRE3JZKlV79dLa0izzUkpkZ03Cz
+         GQgXHDKLrbMI3HTns6MfhjlnHEOT2f0G8Kdo8YE4I/3mQZpYwjQcaYWnp2KROH300225
+         GySe0l8gp/RnqlVypd035dKZ6dwHHnkZQ8wdIt7t1ccccfh6kLDbA4umumohlCopuSU8
+         Pr6A==
+X-Gm-Message-State: APjAAAX4o/69VHaVU7NQGCM/WfcgCr4ZZzPK6dC582ID5N0TuvndzocO
+	RIq/FtucYLHMKdP1cyPPnFNgzg==
+X-Google-Smtp-Source: APXvYqyte6oJuiojDpH+7VVh1GlXynL4x0mJaAVAGIUiJyoki2Cy/SuhjS+ya0YYXVwQoQZshdRvoA==
+X-Received: by 2002:a17:902:b948:: with SMTP id h8mr27221875pls.139.1573508766383;
+        Mon, 11 Nov 2019 13:46:06 -0800 (PST)
 From: Kees Cook <keescook@chromium.org>
 To: Herbert Xu <herbert@gondor.apana.org.au>
 Cc: Kees Cook <keescook@chromium.org>,
@@ -50,117 +50,51 @@ Cc: Kees Cook <keescook@chromium.org>,
 	linux-crypto@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	kernel-hardening@lists.openwall.com
-Subject: [PATCH v4 6/8] crypto: x86/aesni: Use new glue function macros
-Date: Mon, 11 Nov 2019 13:45:50 -0800
-Message-Id: <20191111214552.36717-7-keescook@chromium.org>
+Subject: [PATCH v4 7/8] crypto: x86/glue_helper: Remove function prototype cast helpers
+Date: Mon, 11 Nov 2019 13:45:51 -0800
+Message-Id: <20191111214552.36717-8-keescook@chromium.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20191111214552.36717-1-keescook@chromium.org>
 References: <20191111214552.36717-1-keescook@chromium.org>
 
-Convert to function declaration macros from function prototype casts to
-avoid triggering Control-Flow Integrity checks during indirect function
-calls.
+Now that all users of the function prototype casting helpers have been
+removed, delete the unused macros.
 
 Signed-off-by: Kees Cook <keescook@chromium.org>
 ---
- arch/x86/crypto/aesni-intel_glue.c | 31 ++++++++++--------------------
- 1 file changed, 10 insertions(+), 21 deletions(-)
+ arch/x86/include/asm/crypto/glue_helper.h | 5 -----
+ include/crypto/xts.h                      | 2 --
+ 2 files changed, 7 deletions(-)
 
-diff --git a/arch/x86/crypto/aesni-intel_glue.c b/arch/x86/crypto/aesni-intel_glue.c
-index 3e707e81afdb..e1072ea0a4fa 100644
---- a/arch/x86/crypto/aesni-intel_glue.c
-+++ b/arch/x86/crypto/aesni-intel_glue.c
-@@ -33,9 +33,7 @@
- #include <crypto/internal/skcipher.h>
- #include <linux/workqueue.h>
- #include <linux/spinlock.h>
--#ifdef CONFIG_X86_64
- #include <asm/crypto/glue_helper.h>
--#endif
+diff --git a/arch/x86/include/asm/crypto/glue_helper.h b/arch/x86/include/asm/crypto/glue_helper.h
+index 2fa4968ab8e2..a9935bbb3eb9 100644
+--- a/arch/x86/include/asm/crypto/glue_helper.h
++++ b/arch/x86/include/asm/crypto/glue_helper.h
+@@ -18,11 +18,6 @@ typedef void (*common_glue_ctr_func_t)(void *ctx, u128 *dst, const u128 *src,
+ typedef void (*common_glue_xts_func_t)(void *ctx, u128 *dst, const u128 *src,
+ 				       le128 *iv);
  
- 
- #define AESNI_ALIGN	16
-@@ -83,10 +81,8 @@ struct gcm_context_data {
- 
- asmlinkage int aesni_set_key(struct crypto_aes_ctx *ctx, const u8 *in_key,
- 			     unsigned int key_len);
--asmlinkage void aesni_enc(struct crypto_aes_ctx *ctx, u8 *out,
--			  const u8 *in);
--asmlinkage void aesni_dec(struct crypto_aes_ctx *ctx, u8 *out,
--			  const u8 *in);
-+CRYPTO_FUNC(aesni_enc);
-+CRYPTO_FUNC(aesni_dec);
- asmlinkage void aesni_ecb_enc(struct crypto_aes_ctx *ctx, u8 *out,
- 			      const u8 *in, unsigned int len);
- asmlinkage void aesni_ecb_dec(struct crypto_aes_ctx *ctx, u8 *out,
-@@ -550,19 +546,14 @@ static int xts_aesni_setkey(struct crypto_skcipher *tfm, const u8 *key,
- }
- 
- 
--static void aesni_xts_tweak(void *ctx, u8 *out, const u8 *in)
--{
--	aesni_enc(ctx, out, in);
--}
+-#define GLUE_FUNC_CAST(fn) ((common_glue_func_t)(fn))
+-#define GLUE_CBC_FUNC_CAST(fn) ((common_glue_cbc_func_t)(fn))
+-#define GLUE_CTR_FUNC_CAST(fn) ((common_glue_ctr_func_t)(fn))
+-#define GLUE_XTS_FUNC_CAST(fn) ((common_glue_xts_func_t)(fn))
 -
- static void aesni_xts_enc(void *ctx, u128 *dst, const u128 *src, le128 *iv)
+ #define CRYPTO_FUNC(func)						\
+ asmlinkage void func(void *ctx, u8 *dst, const u8 *src)
+ 
+diff --git a/include/crypto/xts.h b/include/crypto/xts.h
+index 75fd96ff976b..15ae7fdc0478 100644
+--- a/include/crypto/xts.h
++++ b/include/crypto/xts.h
+@@ -8,8 +8,6 @@
+ 
+ #define XTS_BLOCK_SIZE 16
+ 
+-#define XTS_TWEAK_CAST(x) ((void (*)(void *, u8*, const u8*))(x))
+-
+ static inline int xts_check_key(struct crypto_tfm *tfm,
+ 				const u8 *key, unsigned int keylen)
  {
--	glue_xts_crypt_128bit_one(ctx, dst, src, iv, GLUE_FUNC_CAST(aesni_enc));
-+	glue_xts_crypt_128bit_one(ctx, dst, src, iv, aesni_enc);
- }
- 
- static void aesni_xts_dec(void *ctx, u128 *dst, const u128 *src, le128 *iv)
- {
--	glue_xts_crypt_128bit_one(ctx, dst, src, iv, GLUE_FUNC_CAST(aesni_dec));
-+	glue_xts_crypt_128bit_one(ctx, dst, src, iv, aesni_dec);
- }
- 
- static void aesni_xts_enc8(void *ctx, u128 *dst, const u128 *src, le128 *iv)
-@@ -581,10 +572,10 @@ static const struct common_glue_ctx aesni_enc_xts = {
- 
- 	.funcs = { {
- 		.num_blocks = 8,
--		.fn_u = { .xts = GLUE_XTS_FUNC_CAST(aesni_xts_enc8) }
-+		.fn_u = { .xts = aesni_xts_enc8 }
- 	}, {
- 		.num_blocks = 1,
--		.fn_u = { .xts = GLUE_XTS_FUNC_CAST(aesni_xts_enc) }
-+		.fn_u = { .xts = aesni_xts_enc }
- 	} }
- };
- 
-@@ -594,10 +585,10 @@ static const struct common_glue_ctx aesni_dec_xts = {
- 
- 	.funcs = { {
- 		.num_blocks = 8,
--		.fn_u = { .xts = GLUE_XTS_FUNC_CAST(aesni_xts_dec8) }
-+		.fn_u = { .xts = aesni_xts_dec8 }
- 	}, {
- 		.num_blocks = 1,
--		.fn_u = { .xts = GLUE_XTS_FUNC_CAST(aesni_xts_dec) }
-+		.fn_u = { .xts = aesni_xts_dec }
- 	} }
- };
- 
-@@ -606,8 +597,7 @@ static int xts_encrypt(struct skcipher_request *req)
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct aesni_xts_ctx *ctx = crypto_skcipher_ctx(tfm);
- 
--	return glue_xts_req_128bit(&aesni_enc_xts, req,
--				   XTS_TWEAK_CAST(aesni_xts_tweak),
-+	return glue_xts_req_128bit(&aesni_enc_xts, req, aesni_enc,
- 				   aes_ctx(ctx->raw_tweak_ctx),
- 				   aes_ctx(ctx->raw_crypt_ctx),
- 				   false);
-@@ -618,8 +608,7 @@ static int xts_decrypt(struct skcipher_request *req)
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct aesni_xts_ctx *ctx = crypto_skcipher_ctx(tfm);
- 
--	return glue_xts_req_128bit(&aesni_dec_xts, req,
--				   XTS_TWEAK_CAST(aesni_xts_tweak),
-+	return glue_xts_req_128bit(&aesni_dec_xts, req, aesni_enc,
- 				   aes_ctx(ctx->raw_tweak_ctx),
- 				   aes_ctx(ctx->raw_crypt_ctx),
- 				   true);
 -- 
 2.17.1
 
