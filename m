@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17336-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17337-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id F05E5F828F
-	for <lists+kernel-hardening@lfdr.de>; Mon, 11 Nov 2019 22:47:09 +0100 (CET)
-Received: (qmail 32686 invoked by uid 550); 11 Nov 2019 21:46:21 -0000
+	by mail.lfdr.de (Postfix) with SMTP id B4962F8293
+	for <lists+kernel-hardening@lfdr.de>; Mon, 11 Nov 2019 22:47:30 +0100 (CET)
+Received: (qmail 32758 invoked by uid 550); 11 Nov 2019 21:46:22 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,30 +13,30 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 32499 invoked from network); 11 Nov 2019 21:46:18 -0000
+Received: (qmail 32595 invoked from network); 11 Nov 2019 21:46:19 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Q2lZ7Dm1L5aRXMm9XxNsm9WxcGVGFqTOrxf2vwq2v/c=;
-        b=X6cJO6j+LuNeFzoMBlJXSpwENsy0YOCb5jmcJTGxZvPS1RV2nWRXEkpU9UtVC0gzU3
-         +Skr+AL2+vJk7GunbZi7TcgodFA6q2V5iT3hVRsf4ee2IKQkEKCEGk0zUGnZWZV6us3x
-         dsdp/HxQ5DvQXnLDmGpXnTwQRiGC4YdyBTjDE=
+        bh=2WYPO+Cs160lWLgrFwHAXtycZesNOJ8Ah35tHvgpbQI=;
+        b=nQAAN4TMzTMOwTTpLhRLBu60PTHJUR7cQ/Y17oJwAbsKJ7d2W5XN8Fqx6V0ZnbNnwX
+         ruKgSpRuRRxG8RBcC+AkTTxQZdZXiqr4Y/AQAWydLWw0qW0huXDKxIn8pwCRFliGuP9P
+         GlrWZwkbma/KLtl4UwKMmnuRSf/WZps4nWD64=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Q2lZ7Dm1L5aRXMm9XxNsm9WxcGVGFqTOrxf2vwq2v/c=;
-        b=uOwbxKf2QaK+h7uV2F/WU6s113k1Tf1mNc3Cr3wHsDcMT7S+aynhAdSvwS1ILUQHBv
-         yEXZpzzaCtQ6pX6XgdtzwTPBu4EkklckIYZMkJgEG3e82KbhMJLr0d3oeBxYIjDaj31N
-         lqrWNgGhr20Mex/9izR1uVVCQXL6On/zSf33l3JMdJRE3JZKlV79dLa0izzUkpkZ03Cz
-         GQgXHDKLrbMI3HTns6MfhjlnHEOT2f0G8Kdo8YE4I/3mQZpYwjQcaYWnp2KROH300225
-         GySe0l8gp/RnqlVypd035dKZ6dwHHnkZQ8wdIt7t1ccccfh6kLDbA4umumohlCopuSU8
-         Pr6A==
-X-Gm-Message-State: APjAAAX4o/69VHaVU7NQGCM/WfcgCr4ZZzPK6dC582ID5N0TuvndzocO
-	RIq/FtucYLHMKdP1cyPPnFNgzg==
-X-Google-Smtp-Source: APXvYqyte6oJuiojDpH+7VVh1GlXynL4x0mJaAVAGIUiJyoki2Cy/SuhjS+ya0YYXVwQoQZshdRvoA==
-X-Received: by 2002:a17:902:b948:: with SMTP id h8mr27221875pls.139.1573508766383;
-        Mon, 11 Nov 2019 13:46:06 -0800 (PST)
+        bh=2WYPO+Cs160lWLgrFwHAXtycZesNOJ8Ah35tHvgpbQI=;
+        b=tJVMgzhnGe85m1ScL4aLvUMZyf2ROTXuI7pWyoD8TTDfcjp339xXpuW31FGT5cCkIF
+         oZiBgie1ctxKRIBrvjtPFyW9XUqoIsscWzU2l3mSQnXNgxUl4XJOq7GfXEfKl5qFwZxY
+         dlz9tCEwPeZU5un9GD9/XKMUF5gg7s3czAHrLpuG+yZfKTvHreDrUw1R+FcKw4pBzZ8Q
+         ABdrtRj9SHhHXRun8cyadbrUMlVYK91GNvLAV25NJKEKfyo0iaOpemY7UQcwTOozJNrp
+         HJrFJT3BLjemSzOpSH+m6Glgotpdh7K8hcF8pRVpJclxDWhXMKAPQBh4y9Fu8VqjPzZ4
+         YLZA==
+X-Gm-Message-State: APjAAAUqWUO2VBdTe7pzpByOI5BOEqltNNEhGMasE4mAJcSPCXPmFobY
+	t6EXSqldv1dLtzf4lTYQy0Q2Ow==
+X-Google-Smtp-Source: APXvYqyyDwMPQYhs6q2UU3YEN3oqn4oWt9YMxPCJD6W8qjLSZJNsg+/JAgiqqjlfzDgYrzdwWlM30w==
+X-Received: by 2002:a17:90a:35d0:: with SMTP id r74mr1614656pjb.47.1573508767878;
+        Mon, 11 Nov 2019 13:46:07 -0800 (PST)
 From: Kees Cook <keescook@chromium.org>
 To: Herbert Xu <herbert@gondor.apana.org.au>
 Cc: Kees Cook <keescook@chromium.org>,
@@ -50,51 +50,355 @@ Cc: Kees Cook <keescook@chromium.org>,
 	linux-crypto@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	kernel-hardening@lists.openwall.com
-Subject: [PATCH v4 7/8] crypto: x86/glue_helper: Remove function prototype cast helpers
-Date: Mon, 11 Nov 2019 13:45:51 -0800
-Message-Id: <20191111214552.36717-8-keescook@chromium.org>
+Subject: [PATCH v4 8/8] crypto, x86/sha: Eliminate casts on asm implementations
+Date: Mon, 11 Nov 2019 13:45:52 -0800
+Message-Id: <20191111214552.36717-9-keescook@chromium.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20191111214552.36717-1-keescook@chromium.org>
 References: <20191111214552.36717-1-keescook@chromium.org>
 
-Now that all users of the function prototype casting helpers have been
-removed, delete the unused macros.
+In order to avoid CFI function prototype mismatches, this removes the
+casts on assembly implementations of sha1/256/512 accelerators. The
+safety checks from BUILD_BUG_ON() remain.
 
 Signed-off-by: Kees Cook <keescook@chromium.org>
 ---
- arch/x86/include/asm/crypto/glue_helper.h | 5 -----
- include/crypto/xts.h                      | 2 --
- 2 files changed, 7 deletions(-)
+ arch/x86/crypto/sha1_ssse3_glue.c   | 61 ++++++++++++-----------------
+ arch/x86/crypto/sha256_ssse3_glue.c | 31 +++++++--------
+ arch/x86/crypto/sha512_ssse3_glue.c | 28 ++++++-------
+ 3 files changed, 50 insertions(+), 70 deletions(-)
 
-diff --git a/arch/x86/include/asm/crypto/glue_helper.h b/arch/x86/include/asm/crypto/glue_helper.h
-index 2fa4968ab8e2..a9935bbb3eb9 100644
---- a/arch/x86/include/asm/crypto/glue_helper.h
-+++ b/arch/x86/include/asm/crypto/glue_helper.h
-@@ -18,11 +18,6 @@ typedef void (*common_glue_ctr_func_t)(void *ctx, u128 *dst, const u128 *src,
- typedef void (*common_glue_xts_func_t)(void *ctx, u128 *dst, const u128 *src,
- 				       le128 *iv);
+diff --git a/arch/x86/crypto/sha1_ssse3_glue.c b/arch/x86/crypto/sha1_ssse3_glue.c
+index 639d4c2fd6a8..a151d899f37a 100644
+--- a/arch/x86/crypto/sha1_ssse3_glue.c
++++ b/arch/x86/crypto/sha1_ssse3_glue.c
+@@ -27,11 +27,8 @@
+ #include <crypto/sha1_base.h>
+ #include <asm/simd.h>
  
--#define GLUE_FUNC_CAST(fn) ((common_glue_func_t)(fn))
--#define GLUE_CBC_FUNC_CAST(fn) ((common_glue_cbc_func_t)(fn))
--#define GLUE_CTR_FUNC_CAST(fn) ((common_glue_ctr_func_t)(fn))
--#define GLUE_XTS_FUNC_CAST(fn) ((common_glue_xts_func_t)(fn))
+-typedef void (sha1_transform_fn)(u32 *digest, const char *data,
+-				unsigned int rounds);
 -
- #define CRYPTO_FUNC(func)						\
- asmlinkage void func(void *ctx, u8 *dst, const u8 *src)
- 
-diff --git a/include/crypto/xts.h b/include/crypto/xts.h
-index 75fd96ff976b..15ae7fdc0478 100644
---- a/include/crypto/xts.h
-+++ b/include/crypto/xts.h
-@@ -8,8 +8,6 @@
- 
- #define XTS_BLOCK_SIZE 16
- 
--#define XTS_TWEAK_CAST(x) ((void (*)(void *, u8*, const u8*))(x))
--
- static inline int xts_check_key(struct crypto_tfm *tfm,
- 				const u8 *key, unsigned int keylen)
+ static int sha1_update(struct shash_desc *desc, const u8 *data,
+-			     unsigned int len, sha1_transform_fn *sha1_xform)
++			     unsigned int len, sha1_block_fn *sha1_xform)
  {
+ 	struct sha1_state *sctx = shash_desc_ctx(desc);
+ 
+@@ -39,48 +36,44 @@ static int sha1_update(struct shash_desc *desc, const u8 *data,
+ 	    (sctx->count % SHA1_BLOCK_SIZE) + len < SHA1_BLOCK_SIZE)
+ 		return crypto_sha1_update(desc, data, len);
+ 
+-	/* make sure casting to sha1_block_fn() is safe */
++	/* make sure sha1_block_fn() use in generic routines is safe */
+ 	BUILD_BUG_ON(offsetof(struct sha1_state, state) != 0);
+ 
+ 	kernel_fpu_begin();
+-	sha1_base_do_update(desc, data, len,
+-			    (sha1_block_fn *)sha1_xform);
++	sha1_base_do_update(desc, data, len, sha1_xform);
+ 	kernel_fpu_end();
+ 
+ 	return 0;
+ }
+ 
+ static int sha1_finup(struct shash_desc *desc, const u8 *data,
+-		      unsigned int len, u8 *out, sha1_transform_fn *sha1_xform)
++		      unsigned int len, u8 *out, sha1_block_fn *sha1_xform)
+ {
+ 	if (!crypto_simd_usable())
+ 		return crypto_sha1_finup(desc, data, len, out);
+ 
+ 	kernel_fpu_begin();
+ 	if (len)
+-		sha1_base_do_update(desc, data, len,
+-				    (sha1_block_fn *)sha1_xform);
+-	sha1_base_do_finalize(desc, (sha1_block_fn *)sha1_xform);
++		sha1_base_do_update(desc, data, len, sha1_xform);
++	sha1_base_do_finalize(desc, sha1_xform);
+ 	kernel_fpu_end();
+ 
+ 	return sha1_base_finish(desc, out);
+ }
+ 
+-asmlinkage void sha1_transform_ssse3(u32 *digest, const char *data,
+-				     unsigned int rounds);
++asmlinkage void sha1_transform_ssse3(struct sha1_state *digest,
++				     u8 const *data, int rounds);
+ 
+ static int sha1_ssse3_update(struct shash_desc *desc, const u8 *data,
+ 			     unsigned int len)
+ {
+-	return sha1_update(desc, data, len,
+-			(sha1_transform_fn *) sha1_transform_ssse3);
++	return sha1_update(desc, data, len, sha1_transform_ssse3);
+ }
+ 
+ static int sha1_ssse3_finup(struct shash_desc *desc, const u8 *data,
+ 			      unsigned int len, u8 *out)
+ {
+-	return sha1_finup(desc, data, len, out,
+-			(sha1_transform_fn *) sha1_transform_ssse3);
++	return sha1_finup(desc, data, len, out, sha1_transform_ssse3);
+ }
+ 
+ /* Add padding and return the message digest. */
+@@ -119,21 +112,19 @@ static void unregister_sha1_ssse3(void)
+ }
+ 
+ #ifdef CONFIG_AS_AVX
+-asmlinkage void sha1_transform_avx(u32 *digest, const char *data,
+-				   unsigned int rounds);
++asmlinkage void sha1_transform_avx(struct sha1_state *digest,
++				   u8 const *data, int rounds);
+ 
+ static int sha1_avx_update(struct shash_desc *desc, const u8 *data,
+ 			     unsigned int len)
+ {
+-	return sha1_update(desc, data, len,
+-			(sha1_transform_fn *) sha1_transform_avx);
++	return sha1_update(desc, data, len, sha1_transform_avx);
+ }
+ 
+ static int sha1_avx_finup(struct shash_desc *desc, const u8 *data,
+ 			      unsigned int len, u8 *out)
+ {
+-	return sha1_finup(desc, data, len, out,
+-			(sha1_transform_fn *) sha1_transform_avx);
++	return sha1_finup(desc, data, len, out, sha1_transform_avx);
+ }
+ 
+ static int sha1_avx_final(struct shash_desc *desc, u8 *out)
+@@ -190,8 +181,8 @@ static inline void unregister_sha1_avx(void) { }
+ #if defined(CONFIG_AS_AVX2) && (CONFIG_AS_AVX)
+ #define SHA1_AVX2_BLOCK_OPTSIZE	4	/* optimal 4*64 bytes of SHA1 blocks */
+ 
+-asmlinkage void sha1_transform_avx2(u32 *digest, const char *data,
+-				    unsigned int rounds);
++asmlinkage void sha1_transform_avx2(struct sha1_state *digest,
++				    u8 const *data, int rounds);
+ 
+ static bool avx2_usable(void)
+ {
+@@ -203,8 +194,8 @@ static bool avx2_usable(void)
+ 	return false;
+ }
+ 
+-static void sha1_apply_transform_avx2(u32 *digest, const char *data,
+-				unsigned int rounds)
++static void sha1_apply_transform_avx2(struct sha1_state *digest,
++				      u8 const *data, int rounds)
+ {
+ 	/* Select the optimal transform based on data block size */
+ 	if (rounds >= SHA1_AVX2_BLOCK_OPTSIZE)
+@@ -216,15 +207,13 @@ static void sha1_apply_transform_avx2(u32 *digest, const char *data,
+ static int sha1_avx2_update(struct shash_desc *desc, const u8 *data,
+ 			     unsigned int len)
+ {
+-	return sha1_update(desc, data, len,
+-		(sha1_transform_fn *) sha1_apply_transform_avx2);
++	return sha1_update(desc, data, len, sha1_apply_transform_avx2);
+ }
+ 
+ static int sha1_avx2_finup(struct shash_desc *desc, const u8 *data,
+ 			      unsigned int len, u8 *out)
+ {
+-	return sha1_finup(desc, data, len, out,
+-		(sha1_transform_fn *) sha1_apply_transform_avx2);
++	return sha1_finup(desc, data, len, out, sha1_apply_transform_avx2);
+ }
+ 
+ static int sha1_avx2_final(struct shash_desc *desc, u8 *out)
+@@ -267,21 +256,19 @@ static inline void unregister_sha1_avx2(void) { }
+ #endif
+ 
+ #ifdef CONFIG_AS_SHA1_NI
+-asmlinkage void sha1_ni_transform(u32 *digest, const char *data,
+-				   unsigned int rounds);
++asmlinkage void sha1_ni_transform(struct sha1_state *digest, u8 const *data,
++				  int rounds);
+ 
+ static int sha1_ni_update(struct shash_desc *desc, const u8 *data,
+ 			     unsigned int len)
+ {
+-	return sha1_update(desc, data, len,
+-		(sha1_transform_fn *) sha1_ni_transform);
++	return sha1_update(desc, data, len, sha1_ni_transform);
+ }
+ 
+ static int sha1_ni_finup(struct shash_desc *desc, const u8 *data,
+ 			      unsigned int len, u8 *out)
+ {
+-	return sha1_finup(desc, data, len, out,
+-		(sha1_transform_fn *) sha1_ni_transform);
++	return sha1_finup(desc, data, len, out, sha1_ni_transform);
+ }
+ 
+ static int sha1_ni_final(struct shash_desc *desc, u8 *out)
+diff --git a/arch/x86/crypto/sha256_ssse3_glue.c b/arch/x86/crypto/sha256_ssse3_glue.c
+index f9aff31fe59e..960f56100a6c 100644
+--- a/arch/x86/crypto/sha256_ssse3_glue.c
++++ b/arch/x86/crypto/sha256_ssse3_glue.c
+@@ -41,12 +41,11 @@
+ #include <linux/string.h>
+ #include <asm/simd.h>
+ 
+-asmlinkage void sha256_transform_ssse3(u32 *digest, const char *data,
+-				       u64 rounds);
+-typedef void (sha256_transform_fn)(u32 *digest, const char *data, u64 rounds);
++asmlinkage void sha256_transform_ssse3(struct sha256_state *digest,
++				       u8 const *data, int rounds);
+ 
+ static int _sha256_update(struct shash_desc *desc, const u8 *data,
+-			  unsigned int len, sha256_transform_fn *sha256_xform)
++			  unsigned int len, sha256_block_fn *sha256_xform)
+ {
+ 	struct sha256_state *sctx = shash_desc_ctx(desc);
+ 
+@@ -54,28 +53,26 @@ static int _sha256_update(struct shash_desc *desc, const u8 *data,
+ 	    (sctx->count % SHA256_BLOCK_SIZE) + len < SHA256_BLOCK_SIZE)
+ 		return crypto_sha256_update(desc, data, len);
+ 
+-	/* make sure casting to sha256_block_fn() is safe */
++	/* make sure sha256_block_fn() use in generic routines is safe */
+ 	BUILD_BUG_ON(offsetof(struct sha256_state, state) != 0);
+ 
+ 	kernel_fpu_begin();
+-	sha256_base_do_update(desc, data, len,
+-			      (sha256_block_fn *)sha256_xform);
++	sha256_base_do_update(desc, data, len, sha256_xform);
+ 	kernel_fpu_end();
+ 
+ 	return 0;
+ }
+ 
+ static int sha256_finup(struct shash_desc *desc, const u8 *data,
+-	      unsigned int len, u8 *out, sha256_transform_fn *sha256_xform)
++	      unsigned int len, u8 *out, sha256_block_fn *sha256_xform)
+ {
+ 	if (!crypto_simd_usable())
+ 		return crypto_sha256_finup(desc, data, len, out);
+ 
+ 	kernel_fpu_begin();
+ 	if (len)
+-		sha256_base_do_update(desc, data, len,
+-				      (sha256_block_fn *)sha256_xform);
+-	sha256_base_do_finalize(desc, (sha256_block_fn *)sha256_xform);
++		sha256_base_do_update(desc, data, len, sha256_xform);
++	sha256_base_do_finalize(desc, sha256_xform);
+ 	kernel_fpu_end();
+ 
+ 	return sha256_base_finish(desc, out);
+@@ -145,8 +142,8 @@ static void unregister_sha256_ssse3(void)
+ }
+ 
+ #ifdef CONFIG_AS_AVX
+-asmlinkage void sha256_transform_avx(u32 *digest, const char *data,
+-				     u64 rounds);
++asmlinkage void sha256_transform_avx(struct sha256_state *digest,
++				     u8 const *data, int blocks);
+ 
+ static int sha256_avx_update(struct shash_desc *desc, const u8 *data,
+ 			 unsigned int len)
+@@ -227,8 +224,8 @@ static inline void unregister_sha256_avx(void) { }
+ #endif
+ 
+ #if defined(CONFIG_AS_AVX2) && defined(CONFIG_AS_AVX)
+-asmlinkage void sha256_transform_rorx(u32 *digest, const char *data,
+-				      u64 rounds);
++asmlinkage void sha256_transform_rorx(struct sha256_state *digest,
++				      u8 const *data, int rounds);
+ 
+ static int sha256_avx2_update(struct shash_desc *desc, const u8 *data,
+ 			 unsigned int len)
+@@ -307,8 +304,8 @@ static inline void unregister_sha256_avx2(void) { }
+ #endif
+ 
+ #ifdef CONFIG_AS_SHA256_NI
+-asmlinkage void sha256_ni_transform(u32 *digest, const char *data,
+-				   u64 rounds); /*unsigned int rounds);*/
++asmlinkage void sha256_ni_transform(struct sha256_state *digest,
++				    u8 const *data, int rounds);
+ 
+ static int sha256_ni_update(struct shash_desc *desc, const u8 *data,
+ 			 unsigned int len)
+diff --git a/arch/x86/crypto/sha512_ssse3_glue.c b/arch/x86/crypto/sha512_ssse3_glue.c
+index 458356a3f124..09349d93f562 100644
+--- a/arch/x86/crypto/sha512_ssse3_glue.c
++++ b/arch/x86/crypto/sha512_ssse3_glue.c
+@@ -39,13 +39,11 @@
+ #include <crypto/sha512_base.h>
+ #include <asm/simd.h>
+ 
+-asmlinkage void sha512_transform_ssse3(u64 *digest, const char *data,
+-				       u64 rounds);
+-
+-typedef void (sha512_transform_fn)(u64 *digest, const char *data, u64 rounds);
++asmlinkage void sha512_transform_ssse3(struct sha512_state *digest,
++				       u8 const *data, int rounds);
+ 
+ static int sha512_update(struct shash_desc *desc, const u8 *data,
+-		       unsigned int len, sha512_transform_fn *sha512_xform)
++		       unsigned int len, sha512_block_fn *sha512_xform)
+ {
+ 	struct sha512_state *sctx = shash_desc_ctx(desc);
+ 
+@@ -53,28 +51,26 @@ static int sha512_update(struct shash_desc *desc, const u8 *data,
+ 	    (sctx->count[0] % SHA512_BLOCK_SIZE) + len < SHA512_BLOCK_SIZE)
+ 		return crypto_sha512_update(desc, data, len);
+ 
+-	/* make sure casting to sha512_block_fn() is safe */
++	/* make sure sha512_block_fn() use in generic routines is safe */
+ 	BUILD_BUG_ON(offsetof(struct sha512_state, state) != 0);
+ 
+ 	kernel_fpu_begin();
+-	sha512_base_do_update(desc, data, len,
+-			      (sha512_block_fn *)sha512_xform);
++	sha512_base_do_update(desc, data, len, sha512_xform);
+ 	kernel_fpu_end();
+ 
+ 	return 0;
+ }
+ 
+ static int sha512_finup(struct shash_desc *desc, const u8 *data,
+-	      unsigned int len, u8 *out, sha512_transform_fn *sha512_xform)
++	      unsigned int len, u8 *out, sha512_block_fn *sha512_xform)
+ {
+ 	if (!crypto_simd_usable())
+ 		return crypto_sha512_finup(desc, data, len, out);
+ 
+ 	kernel_fpu_begin();
+ 	if (len)
+-		sha512_base_do_update(desc, data, len,
+-				      (sha512_block_fn *)sha512_xform);
+-	sha512_base_do_finalize(desc, (sha512_block_fn *)sha512_xform);
++		sha512_base_do_update(desc, data, len, sha512_xform);
++	sha512_base_do_finalize(desc, sha512_xform);
+ 	kernel_fpu_end();
+ 
+ 	return sha512_base_finish(desc, out);
+@@ -144,8 +140,8 @@ static void unregister_sha512_ssse3(void)
+ }
+ 
+ #ifdef CONFIG_AS_AVX
+-asmlinkage void sha512_transform_avx(u64 *digest, const char *data,
+-				     u64 rounds);
++asmlinkage void sha512_transform_avx(struct sha512_state *digest,
++				     u8 const *data, int rounds);
+ static bool avx_usable(void)
+ {
+ 	if (!cpu_has_xfeatures(XFEATURE_MASK_SSE | XFEATURE_MASK_YMM, NULL)) {
+@@ -225,8 +221,8 @@ static inline void unregister_sha512_avx(void) { }
+ #endif
+ 
+ #if defined(CONFIG_AS_AVX2) && defined(CONFIG_AS_AVX)
+-asmlinkage void sha512_transform_rorx(u64 *digest, const char *data,
+-				      u64 rounds);
++asmlinkage void sha512_transform_rorx(struct sha512_state *digest,
++				      u8 const *data, int rounds);
+ 
+ static int sha512_avx2_update(struct shash_desc *desc, const u8 *data,
+ 		       unsigned int len)
 -- 
 2.17.1
 
