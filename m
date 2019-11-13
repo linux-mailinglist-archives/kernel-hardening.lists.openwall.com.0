@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17348-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17353-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 419C1FB762
-	for <lists+kernel-hardening@lfdr.de>; Wed, 13 Nov 2019 19:25:54 +0100 (CET)
-Received: (qmail 32347 invoked by uid 550); 13 Nov 2019 18:25:36 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 429AAFB776
+	for <lists+kernel-hardening@lfdr.de>; Wed, 13 Nov 2019 19:26:46 +0100 (CET)
+Received: (qmail 1119 invoked by uid 550); 13 Nov 2019 18:25:41 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,31 +13,31 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 32113 invoked from network); 13 Nov 2019 18:25:34 -0000
+Received: (qmail 32754 invoked from network); 13 Nov 2019 18:25:40 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bD5Btyvs30QB0Boa/ykxeHPaSOGxuB/Mtgf0h73FpmI=;
-        b=An9ELpQUImuq4cUSxedtONqFAnPMBWTt88/iGMgJchfKNW5/YXZ2l+OD4nnu7Yl6WT
-         KnmhWR0aXIEb5/p5WqGSelRUu3L7tAm7u/cOXwQWFIpScDGiV0fVww9Wgt+pZoTwm3LD
-         grWximviZcjlCybW5nx/wSGeq5+yrmHHJcW2E=
+        bh=rF12U17ByIOUQlBO485khkST+bkad067Bgj3e47H3vA=;
+        b=B0Nw9A2dWJpHxnMPBj0OXkSohw6eWiwcJKGvnKHrJrtIk0rvPw+E7/6OZfIcBo0MoE
+         EG/wQc/J+UmQdYjfEmSKSde2EkwAGvkXitXGwd6JwXG88zNi3/lEutSAtonzdWCmsuEP
+         KMNwIhqUaj7y14XDAUn1Zn3DCY7sINJ44Z1lQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bD5Btyvs30QB0Boa/ykxeHPaSOGxuB/Mtgf0h73FpmI=;
-        b=jROCm/ikO6oMdvaeo5FlQA1JSmBHcnODCJJbWDvA2WtFh8uFSRd1F1d4wyIURT6Ijh
-         SwnxfbSUUgC4MzQIlcbUBp0aFHNdkEzeBqHr32/NkiwimKJKB+SplL0p5WzkWWFt0euU
-         d4lEs6AOdJAkw4aRYuL++9RySKnONPXKnnEOshbkUf2m8Jtkt4iInC71HbUcS3I9pWha
-         lzqww9U/xa5k/GYf+DqoICD5xO1Av3JMR8gpSYtAHMg0LfELrnB2y/1Ysw0PHEvaa2xA
-         2jmebXyBcwOqg9EtdIhsctdaLkZULXNbebjJgF432IEJQV1YHp8K/pTW/68MjDzAhFlx
-         QYHg==
-X-Gm-Message-State: APjAAAXSB6TrZ+uOGndL/Mi/2HefIbijhjfPidA3pipSy88oHQ4Ge7f4
-	m9OgQiZpxbCzQN7pplAwARIl+A==
-X-Google-Smtp-Source: APXvYqwIa8ddeyBFu2oInSxFU8ucT4wBypwb64v0JS0ai5tN59xTNVcumfC3ahvkcP6qdt6cU/u5qg==
-X-Received: by 2002:a63:1e4e:: with SMTP id p14mr5237309pgm.127.1573669522726;
-        Wed, 13 Nov 2019 10:25:22 -0800 (PST)
+        bh=rF12U17ByIOUQlBO485khkST+bkad067Bgj3e47H3vA=;
+        b=Ak4uavsGNtFodi/JCkuG/wrdPK/QCH2bi9MbS5LpjYlxL5vmog+QMES1vFvr+kDddy
+         QrmRh8Ug7V9RgfD9S3Qn2e0GTe+A1+ZZAXUZqceEtGhqSLhNjqyXuMmRSUpXEpCSuhQe
+         8yP4TZyoETUnDchAjfWGUwN+FnVJ54u88vJmZg1593Uu2gxexEM7E6LxYamUqoXVQReb
+         JnGKQwB1Qc8D0Y8F4HkORLcgmQ8jdDhjEzeHLsLTFy1MgZBFeO12KZ/ywqk7U+6Ewlan
+         uajjOMTuuseqLzI5l/RTnW1u6Dj56wwUfhtiypU1d1n6DV71JosfC7Szn5COt1LpN7Ad
+         bttw==
+X-Gm-Message-State: APjAAAVyf97jIPcabi5k445y5Ry1aGzjfmuYEZUjP9cHyPTXIZ5BTg+W
+	t2+0YXpb/n+sJNrEsBUZPhRmYA==
+X-Google-Smtp-Source: APXvYqzwuMLsVm5YwHmbN1BZvt4twWfgaMYDp8kH6QoYuok+0f4pRCA11sqZ5mo522AsEv1vA2vENw==
+X-Received: by 2002:a17:90a:f496:: with SMTP id bx22mr6677618pjb.126.1573669527838;
+        Wed, 13 Nov 2019 10:25:27 -0800 (PST)
 From: Kees Cook <keescook@chromium.org>
 To: Herbert Xu <herbert@gondor.apana.org.au>
 Cc: Kees Cook <keescook@chromium.org>,
@@ -51,9 +51,9 @@ Cc: Kees Cook <keescook@chromium.org>,
 	linux-crypto@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	kernel-hardening@lists.openwall.com
-Subject: [PATCH v5 4/8] crypto: x86/twofish: Remove glue function macro usage
-Date: Wed, 13 Nov 2019 10:25:12 -0800
-Message-Id: <20191113182516.13545-5-keescook@chromium.org>
+Subject: [PATCH v5 5/8] crypto: x86/cast6: Remove glue function macro usage
+Date: Wed, 13 Nov 2019 10:25:13 -0800
+Message-Id: <20191113182516.13545-6-keescook@chromium.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20191113182516.13545-1-keescook@chromium.org>
 References: <20191113182516.13545-1-keescook@chromium.org>
@@ -69,353 +69,224 @@ pointer math, u8 pointers are internally cast back to u128 pointers.
 Co-developed-by: João Moreira <joao.moreira@intel.com>
 Signed-off-by: Kees Cook <keescook@chromium.org>
 ---
- arch/x86/crypto/twofish_avx_glue.c    | 76 ++++++++++++---------------
- arch/x86/crypto/twofish_glue_3way.c   | 38 +++++++-------
- arch/x86/include/asm/crypto/twofish.h | 20 +++----
- 3 files changed, 62 insertions(+), 72 deletions(-)
+ arch/x86/crypto/cast6_avx_glue.c | 70 +++++++++++++++-----------------
+ crypto/cast6_generic.c           |  6 ++-
+ include/crypto/cast6.h           |  4 +-
+ 3 files changed, 39 insertions(+), 41 deletions(-)
 
-diff --git a/arch/x86/crypto/twofish_avx_glue.c b/arch/x86/crypto/twofish_avx_glue.c
-index d561c821788b..f5d1f6e175f2 100644
---- a/arch/x86/crypto/twofish_avx_glue.c
-+++ b/arch/x86/crypto/twofish_avx_glue.c
-@@ -22,20 +22,16 @@
- #define TWOFISH_PARALLEL_BLOCKS 8
+diff --git a/arch/x86/crypto/cast6_avx_glue.c b/arch/x86/crypto/cast6_avx_glue.c
+index a8a38fffb4a9..299cef14a762 100644
+--- a/arch/x86/crypto/cast6_avx_glue.c
++++ b/arch/x86/crypto/cast6_avx_glue.c
+@@ -20,20 +20,17 @@
  
- /* 8-way parallel cipher functions */
--asmlinkage void twofish_ecb_enc_8way(struct twofish_ctx *ctx, u8 *dst,
--				     const u8 *src);
--asmlinkage void twofish_ecb_dec_8way(struct twofish_ctx *ctx, u8 *dst,
--				     const u8 *src);
-+asmlinkage void twofish_ecb_enc_8way(void *ctx, u8 *dst, const u8 *src);
-+asmlinkage void twofish_ecb_dec_8way(void *ctx, u8 *dst, const u8 *src);
+ #define CAST6_PARALLEL_BLOCKS 8
  
--asmlinkage void twofish_cbc_dec_8way(struct twofish_ctx *ctx, u8 *dst,
--				     const u8 *src);
--asmlinkage void twofish_ctr_8way(struct twofish_ctx *ctx, u8 *dst,
--				 const u8 *src, le128 *iv);
-+asmlinkage void twofish_cbc_dec_8way(void *ctx, u8 *dst, const u8 *src);
-+asmlinkage void twofish_ctr_8way(void *ctx, u8 *dst, const u8 *src, le128 *iv);
+-asmlinkage void cast6_ecb_enc_8way(struct cast6_ctx *ctx, u8 *dst,
+-				   const u8 *src);
+-asmlinkage void cast6_ecb_dec_8way(struct cast6_ctx *ctx, u8 *dst,
+-				   const u8 *src);
+-
+-asmlinkage void cast6_cbc_dec_8way(struct cast6_ctx *ctx, u8 *dst,
+-				   const u8 *src);
+-asmlinkage void cast6_ctr_8way(struct cast6_ctx *ctx, u8 *dst, const u8 *src,
++asmlinkage void cast6_ecb_enc_8way(void *ctx, u8 *dst, const u8 *src);
++asmlinkage void cast6_ecb_dec_8way(void *ctx, u8 *dst, const u8 *src);
++
++asmlinkage void cast6_cbc_dec_8way(void *ctx, u8 *dst, const u8 *src);
++asmlinkage void cast6_ctr_8way(void *ctx, u8 *dst, const u8 *src,
+ 			       le128 *iv);
  
--asmlinkage void twofish_xts_enc_8way(struct twofish_ctx *ctx, u8 *dst,
--				     const u8 *src, le128 *iv);
--asmlinkage void twofish_xts_dec_8way(struct twofish_ctx *ctx, u8 *dst,
--				     const u8 *src, le128 *iv);
-+asmlinkage void twofish_xts_enc_8way(void *ctx, u8 *dst, const u8 *src,
-+				     le128 *iv);
-+asmlinkage void twofish_xts_dec_8way(void *ctx, u8 *dst, const u8 *src,
-+				     le128 *iv);
+-asmlinkage void cast6_xts_enc_8way(struct cast6_ctx *ctx, u8 *dst,
+-				   const u8 *src, le128 *iv);
+-asmlinkage void cast6_xts_dec_8way(struct cast6_ctx *ctx, u8 *dst,
+-				   const u8 *src, le128 *iv);
++asmlinkage void cast6_xts_enc_8way(void *ctx, u8 *dst, const u8 *src,
++				   le128 *iv);
++asmlinkage void cast6_xts_dec_8way(void *ctx, u8 *dst, const u8 *src,
++				   le128 *iv);
  
- static int twofish_setkey_skcipher(struct crypto_skcipher *tfm,
- 				   const u8 *key, unsigned int keylen)
-@@ -43,22 +39,21 @@ static int twofish_setkey_skcipher(struct crypto_skcipher *tfm,
- 	return twofish_setkey(&tfm->base, key, keylen);
+ static int cast6_setkey_skcipher(struct crypto_skcipher *tfm,
+ 				 const u8 *key, unsigned int keylen)
+@@ -41,21 +38,23 @@ static int cast6_setkey_skcipher(struct crypto_skcipher *tfm,
+ 	return cast6_setkey(&tfm->base, key, keylen);
  }
  
--static inline void twofish_enc_blk_3way(struct twofish_ctx *ctx, u8 *dst,
--					const u8 *src)
-+static inline void twofish_enc_blk_3way(void *ctx, u8 *dst, const u8 *src)
- {
- 	__twofish_enc_blk_3way(ctx, dst, src, false);
- }
- 
--static void twofish_xts_enc(void *ctx, u128 *dst, const u128 *src, le128 *iv)
-+static void twofish_xts_enc(void *ctx, u8 *dst, const u8 *src, le128 *iv)
+-static void cast6_xts_enc(void *ctx, u128 *dst, const u128 *src, le128 *iv)
++static void cast6_xts_enc(void *ctx, u8 *dst, const u8 *src, le128 *iv)
  {
 -	glue_xts_crypt_128bit_one(ctx, dst, src, iv,
--				  GLUE_FUNC_CAST(twofish_enc_blk));
-+	glue_xts_crypt_128bit_one(ctx, (u128 *)dst, (const u128 *)src,
-+				  iv, twofish_enc_blk);
+-				  GLUE_FUNC_CAST(__cast6_encrypt));
++	glue_xts_crypt_128bit_one(ctx, (u128 *)dst, (const u128 *)src, iv,
++				  __cast6_encrypt);
  }
  
--static void twofish_xts_dec(void *ctx, u128 *dst, const u128 *src, le128 *iv)
-+static void twofish_xts_dec(void *ctx, u8 *dst, const u8 *src, le128 *iv)
+-static void cast6_xts_dec(void *ctx, u128 *dst, const u128 *src, le128 *iv)
++static void cast6_xts_dec(void *ctx, u8 *dst, const u8 *src, le128 *iv)
  {
 -	glue_xts_crypt_128bit_one(ctx, dst, src, iv,
--				  GLUE_FUNC_CAST(twofish_dec_blk));
-+	glue_xts_crypt_128bit_one(ctx, (u128 *)dst, (const u128 *)src,
-+				  iv, twofish_dec_blk);
+-				  GLUE_FUNC_CAST(__cast6_decrypt));
++	glue_xts_crypt_128bit_one(ctx, (u128 *)dst, (const u128 *)src, iv,
++				  __cast6_decrypt);
  }
  
- struct twofish_xts_ctx {
-@@ -93,13 +88,13 @@ static const struct common_glue_ctx twofish_enc = {
- 
- 	.funcs = { {
- 		.num_blocks = TWOFISH_PARALLEL_BLOCKS,
--		.fn_u = { .ecb = GLUE_FUNC_CAST(twofish_ecb_enc_8way) }
-+		.fn_u = { .ecb = twofish_ecb_enc_8way }
- 	}, {
- 		.num_blocks = 3,
--		.fn_u = { .ecb = GLUE_FUNC_CAST(twofish_enc_blk_3way) }
-+		.fn_u = { .ecb = twofish_enc_blk_3way }
- 	}, {
- 		.num_blocks = 1,
--		.fn_u = { .ecb = GLUE_FUNC_CAST(twofish_enc_blk) }
-+		.fn_u = { .ecb = twofish_enc_blk }
- 	} }
- };
- 
-@@ -109,13 +104,13 @@ static const struct common_glue_ctx twofish_ctr = {
- 
- 	.funcs = { {
- 		.num_blocks = TWOFISH_PARALLEL_BLOCKS,
--		.fn_u = { .ctr = GLUE_CTR_FUNC_CAST(twofish_ctr_8way) }
-+		.fn_u = { .ctr = twofish_ctr_8way }
- 	}, {
- 		.num_blocks = 3,
--		.fn_u = { .ctr = GLUE_CTR_FUNC_CAST(twofish_enc_blk_ctr_3way) }
-+		.fn_u = { .ctr = twofish_enc_blk_ctr_3way }
- 	}, {
- 		.num_blocks = 1,
--		.fn_u = { .ctr = GLUE_CTR_FUNC_CAST(twofish_enc_blk_ctr) }
-+		.fn_u = { .ctr = twofish_enc_blk_ctr }
- 	} }
- };
- 
-@@ -125,10 +120,10 @@ static const struct common_glue_ctx twofish_enc_xts = {
- 
- 	.funcs = { {
- 		.num_blocks = TWOFISH_PARALLEL_BLOCKS,
--		.fn_u = { .xts = GLUE_XTS_FUNC_CAST(twofish_xts_enc_8way) }
-+		.fn_u = { .xts = twofish_xts_enc_8way }
- 	}, {
- 		.num_blocks = 1,
--		.fn_u = { .xts = GLUE_XTS_FUNC_CAST(twofish_xts_enc) }
-+		.fn_u = { .xts = twofish_xts_enc }
- 	} }
- };
- 
-@@ -138,13 +133,13 @@ static const struct common_glue_ctx twofish_dec = {
- 
- 	.funcs = { {
- 		.num_blocks = TWOFISH_PARALLEL_BLOCKS,
--		.fn_u = { .ecb = GLUE_FUNC_CAST(twofish_ecb_dec_8way) }
-+		.fn_u = { .ecb = twofish_ecb_dec_8way }
- 	}, {
- 		.num_blocks = 3,
--		.fn_u = { .ecb = GLUE_FUNC_CAST(twofish_dec_blk_3way) }
-+		.fn_u = { .ecb = twofish_dec_blk_3way }
- 	}, {
- 		.num_blocks = 1,
--		.fn_u = { .ecb = GLUE_FUNC_CAST(twofish_dec_blk) }
-+		.fn_u = { .ecb = twofish_dec_blk }
- 	} }
- };
- 
-@@ -154,13 +149,13 @@ static const struct common_glue_ctx twofish_dec_cbc = {
- 
- 	.funcs = { {
- 		.num_blocks = TWOFISH_PARALLEL_BLOCKS,
--		.fn_u = { .cbc = GLUE_CBC_FUNC_CAST(twofish_cbc_dec_8way) }
-+		.fn_u = { .cbc = twofish_cbc_dec_8way }
- 	}, {
- 		.num_blocks = 3,
--		.fn_u = { .cbc = GLUE_CBC_FUNC_CAST(twofish_dec_blk_cbc_3way) }
-+		.fn_u = { .cbc = twofish_dec_blk_cbc_3way }
- 	}, {
- 		.num_blocks = 1,
--		.fn_u = { .cbc = GLUE_CBC_FUNC_CAST(twofish_dec_blk) }
-+		.fn_u = { .cbc = twofish_dec_blk }
- 	} }
- };
- 
-@@ -170,10 +165,10 @@ static const struct common_glue_ctx twofish_dec_xts = {
- 
- 	.funcs = { {
- 		.num_blocks = TWOFISH_PARALLEL_BLOCKS,
--		.fn_u = { .xts = GLUE_XTS_FUNC_CAST(twofish_xts_dec_8way) }
-+		.fn_u = { .xts = twofish_xts_dec_8way }
- 	}, {
- 		.num_blocks = 1,
--		.fn_u = { .xts = GLUE_XTS_FUNC_CAST(twofish_xts_dec) }
-+		.fn_u = { .xts = twofish_xts_dec }
- 	} }
- };
- 
-@@ -189,8 +184,7 @@ static int ecb_decrypt(struct skcipher_request *req)
- 
- static int cbc_encrypt(struct skcipher_request *req)
- {
--	return glue_cbc_encrypt_req_128bit(GLUE_FUNC_CAST(twofish_enc_blk),
--					   req);
-+	return glue_cbc_encrypt_req_128bit(twofish_enc_blk, req);
- }
- 
- static int cbc_decrypt(struct skcipher_request *req)
-@@ -208,8 +202,7 @@ static int xts_encrypt(struct skcipher_request *req)
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct twofish_xts_ctx *ctx = crypto_skcipher_ctx(tfm);
- 
--	return glue_xts_req_128bit(&twofish_enc_xts, req,
--				   XTS_TWEAK_CAST(twofish_enc_blk),
-+	return glue_xts_req_128bit(&twofish_enc_xts, req, twofish_enc_blk,
- 				   &ctx->tweak_ctx, &ctx->crypt_ctx, false);
- }
- 
-@@ -218,8 +211,7 @@ static int xts_decrypt(struct skcipher_request *req)
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct twofish_xts_ctx *ctx = crypto_skcipher_ctx(tfm);
- 
--	return glue_xts_req_128bit(&twofish_dec_xts, req,
--				   XTS_TWEAK_CAST(twofish_enc_blk),
-+	return glue_xts_req_128bit(&twofish_dec_xts, req, twofish_enc_blk,
- 				   &ctx->tweak_ctx, &ctx->crypt_ctx, true);
- }
- 
-diff --git a/arch/x86/crypto/twofish_glue_3way.c b/arch/x86/crypto/twofish_glue_3way.c
-index 1dc9e29f221e..180d9b263a94 100644
---- a/arch/x86/crypto/twofish_glue_3way.c
-+++ b/arch/x86/crypto/twofish_glue_3way.c
-@@ -25,21 +25,21 @@ static int twofish_setkey_skcipher(struct crypto_skcipher *tfm,
- 	return twofish_setkey(&tfm->base, key, keylen);
- }
- 
--static inline void twofish_enc_blk_3way(struct twofish_ctx *ctx, u8 *dst,
--					const u8 *src)
-+static inline void twofish_enc_blk_3way(void *ctx, u8 *dst, const u8 *src)
- {
- 	__twofish_enc_blk_3way(ctx, dst, src, false);
- }
- 
--static inline void twofish_enc_blk_xor_3way(struct twofish_ctx *ctx, u8 *dst,
--					    const u8 *src)
-+static inline void twofish_enc_blk_xor_3way(void *ctx, u8 *dst, const u8 *src)
- {
- 	__twofish_enc_blk_3way(ctx, dst, src, true);
- }
- 
--void twofish_dec_blk_cbc_3way(void *ctx, u128 *dst, const u128 *src)
-+void twofish_dec_blk_cbc_3way(void *ctx, u8 *d, const u8 *s)
- {
- 	u128 ivs[2];
-+	u128 *dst = (u128 *)d;
-+	const u128 *src = (const u128 *)s;
- 
- 	ivs[0] = src[0];
- 	ivs[1] = src[1];
-@@ -51,9 +51,11 @@ void twofish_dec_blk_cbc_3way(void *ctx, u128 *dst, const u128 *src)
- }
- EXPORT_SYMBOL_GPL(twofish_dec_blk_cbc_3way);
- 
--void twofish_enc_blk_ctr(void *ctx, u128 *dst, const u128 *src, le128 *iv)
-+void twofish_enc_blk_ctr(void *ctx, u8 *d, const u8 *s, le128 *iv)
+-static void cast6_crypt_ctr(void *ctx, u128 *dst, const u128 *src, le128 *iv)
++static void cast6_crypt_ctr(void *ctx, u8 *d, const u8 *s, le128 *iv)
  {
  	be128 ctrblk;
 +	u128 *dst = (u128 *)d;
 +	const u128 *src = (const u128 *)s;
  
- 	if (dst != src)
- 		*dst = *src;
-@@ -66,10 +68,11 @@ void twofish_enc_blk_ctr(void *ctx, u128 *dst, const u128 *src, le128 *iv)
- }
- EXPORT_SYMBOL_GPL(twofish_enc_blk_ctr);
- 
--void twofish_enc_blk_ctr_3way(void *ctx, u128 *dst, const u128 *src,
--			      le128 *iv)
-+void twofish_enc_blk_ctr_3way(void *ctx, u8 *d, const u8 *s, le128 *iv)
- {
- 	be128 ctrblks[3];
-+	u128 *dst = (u128 *)d;
-+	const u128 *src = (const u128 *)s;
- 
- 	if (dst != src) {
- 		dst[0] = src[0];
-@@ -94,10 +97,10 @@ static const struct common_glue_ctx twofish_enc = {
+ 	le128_to_be128(&ctrblk, iv);
+ 	le128_inc(iv);
+@@ -70,10 +69,10 @@ static const struct common_glue_ctx cast6_enc = {
  
  	.funcs = { {
- 		.num_blocks = 3,
--		.fn_u = { .ecb = GLUE_FUNC_CAST(twofish_enc_blk_3way) }
-+		.fn_u = { .ecb = twofish_enc_blk_3way }
+ 		.num_blocks = CAST6_PARALLEL_BLOCKS,
+-		.fn_u = { .ecb = GLUE_FUNC_CAST(cast6_ecb_enc_8way) }
++		.fn_u = { .ecb = cast6_ecb_enc_8way }
  	}, {
  		.num_blocks = 1,
--		.fn_u = { .ecb = GLUE_FUNC_CAST(twofish_enc_blk) }
-+		.fn_u = { .ecb = twofish_enc_blk }
+-		.fn_u = { .ecb = GLUE_FUNC_CAST(__cast6_encrypt) }
++		.fn_u = { .ecb = __cast6_encrypt }
  	} }
  };
  
-@@ -107,10 +110,10 @@ static const struct common_glue_ctx twofish_ctr = {
+@@ -83,10 +82,10 @@ static const struct common_glue_ctx cast6_ctr = {
  
  	.funcs = { {
- 		.num_blocks = 3,
--		.fn_u = { .ecb = GLUE_FUNC_CAST(twofish_enc_blk_ctr_3way) }
-+		.fn_u = { .ctr = twofish_enc_blk_ctr_3way }
+ 		.num_blocks = CAST6_PARALLEL_BLOCKS,
+-		.fn_u = { .ctr = GLUE_CTR_FUNC_CAST(cast6_ctr_8way) }
++		.fn_u = { .ctr = cast6_ctr_8way }
  	}, {
  		.num_blocks = 1,
--		.fn_u = { .ecb = GLUE_FUNC_CAST(twofish_enc_blk_ctr) }
-+		.fn_u = { .ctr = twofish_enc_blk_ctr }
+-		.fn_u = { .ctr = GLUE_CTR_FUNC_CAST(cast6_crypt_ctr) }
++		.fn_u = { .ctr = cast6_crypt_ctr }
  	} }
  };
  
-@@ -120,10 +123,10 @@ static const struct common_glue_ctx twofish_dec = {
+@@ -96,10 +95,10 @@ static const struct common_glue_ctx cast6_enc_xts = {
  
  	.funcs = { {
- 		.num_blocks = 3,
--		.fn_u = { .ecb = GLUE_FUNC_CAST(twofish_dec_blk_3way) }
-+		.fn_u = { .ecb = twofish_dec_blk_3way }
+ 		.num_blocks = CAST6_PARALLEL_BLOCKS,
+-		.fn_u = { .xts = GLUE_XTS_FUNC_CAST(cast6_xts_enc_8way) }
++		.fn_u = { .xts = cast6_xts_enc_8way }
  	}, {
  		.num_blocks = 1,
--		.fn_u = { .ecb = GLUE_FUNC_CAST(twofish_dec_blk) }
-+		.fn_u = { .ecb = twofish_dec_blk }
+-		.fn_u = { .xts = GLUE_XTS_FUNC_CAST(cast6_xts_enc) }
++		.fn_u = { .xts = cast6_xts_enc }
  	} }
  };
  
-@@ -133,10 +136,10 @@ static const struct common_glue_ctx twofish_dec_cbc = {
+@@ -109,10 +108,10 @@ static const struct common_glue_ctx cast6_dec = {
  
  	.funcs = { {
- 		.num_blocks = 3,
--		.fn_u = { .cbc = GLUE_CBC_FUNC_CAST(twofish_dec_blk_cbc_3way) }
-+		.fn_u = { .cbc = twofish_dec_blk_cbc_3way }
+ 		.num_blocks = CAST6_PARALLEL_BLOCKS,
+-		.fn_u = { .ecb = GLUE_FUNC_CAST(cast6_ecb_dec_8way) }
++		.fn_u = { .ecb = cast6_ecb_dec_8way }
  	}, {
  		.num_blocks = 1,
--		.fn_u = { .cbc = GLUE_CBC_FUNC_CAST(twofish_dec_blk) }
-+		.fn_u = { .cbc = twofish_dec_blk }
+-		.fn_u = { .ecb = GLUE_FUNC_CAST(__cast6_decrypt) }
++		.fn_u = { .ecb = __cast6_decrypt }
  	} }
  };
  
-@@ -152,8 +155,7 @@ static int ecb_decrypt(struct skcipher_request *req)
+@@ -122,10 +121,10 @@ static const struct common_glue_ctx cast6_dec_cbc = {
+ 
+ 	.funcs = { {
+ 		.num_blocks = CAST6_PARALLEL_BLOCKS,
+-		.fn_u = { .cbc = GLUE_CBC_FUNC_CAST(cast6_cbc_dec_8way) }
++		.fn_u = { .cbc = cast6_cbc_dec_8way }
+ 	}, {
+ 		.num_blocks = 1,
+-		.fn_u = { .cbc = GLUE_CBC_FUNC_CAST(__cast6_decrypt) }
++		.fn_u = { .cbc = __cast6_decrypt }
+ 	} }
+ };
+ 
+@@ -135,10 +134,10 @@ static const struct common_glue_ctx cast6_dec_xts = {
+ 
+ 	.funcs = { {
+ 		.num_blocks = CAST6_PARALLEL_BLOCKS,
+-		.fn_u = { .xts = GLUE_XTS_FUNC_CAST(cast6_xts_dec_8way) }
++		.fn_u = { .xts = cast6_xts_dec_8way }
+ 	}, {
+ 		.num_blocks = 1,
+-		.fn_u = { .xts = GLUE_XTS_FUNC_CAST(cast6_xts_dec) }
++		.fn_u = { .xts = cast6_xts_dec }
+ 	} }
+ };
+ 
+@@ -154,8 +153,7 @@ static int ecb_decrypt(struct skcipher_request *req)
  
  static int cbc_encrypt(struct skcipher_request *req)
  {
--	return glue_cbc_encrypt_req_128bit(GLUE_FUNC_CAST(twofish_enc_blk),
+-	return glue_cbc_encrypt_req_128bit(GLUE_FUNC_CAST(__cast6_encrypt),
 -					   req);
-+	return glue_cbc_encrypt_req_128bit(twofish_enc_blk, req);
++	return glue_cbc_encrypt_req_128bit(__cast6_encrypt, req);
  }
  
  static int cbc_decrypt(struct skcipher_request *req)
-diff --git a/arch/x86/include/asm/crypto/twofish.h b/arch/x86/include/asm/crypto/twofish.h
-index f618bf272b90..148e0bb267e0 100644
---- a/arch/x86/include/asm/crypto/twofish.h
-+++ b/arch/x86/include/asm/crypto/twofish.h
-@@ -7,22 +7,18 @@
- #include <crypto/b128ops.h>
+@@ -199,8 +197,7 @@ static int xts_encrypt(struct skcipher_request *req)
+ 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
+ 	struct cast6_xts_ctx *ctx = crypto_skcipher_ctx(tfm);
  
- /* regular block cipher functions from twofish_x86_64 module */
--asmlinkage void twofish_enc_blk(struct twofish_ctx *ctx, u8 *dst,
--				const u8 *src);
--asmlinkage void twofish_dec_blk(struct twofish_ctx *ctx, u8 *dst,
--				const u8 *src);
-+asmlinkage void twofish_enc_blk(void *ctx, u8 *dst, const u8 *src);
-+asmlinkage void twofish_dec_blk(void *ctx, u8 *dst, const u8 *src);
+-	return glue_xts_req_128bit(&cast6_enc_xts, req,
+-				   XTS_TWEAK_CAST(__cast6_encrypt),
++	return glue_xts_req_128bit(&cast6_enc_xts, req, __cast6_encrypt,
+ 				   &ctx->tweak_ctx, &ctx->crypt_ctx, false);
+ }
  
- /* 3-way parallel cipher functions */
--asmlinkage void __twofish_enc_blk_3way(struct twofish_ctx *ctx, u8 *dst,
--				       const u8 *src, bool xor);
--asmlinkage void twofish_dec_blk_3way(struct twofish_ctx *ctx, u8 *dst,
--				     const u8 *src);
-+asmlinkage void __twofish_enc_blk_3way(void *ctx, u8 *dst, const u8 *src,
-+				       bool xor);
-+asmlinkage void twofish_dec_blk_3way(void *ctx, u8 *dst, const u8 *src);
+@@ -209,8 +206,7 @@ static int xts_decrypt(struct skcipher_request *req)
+ 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
+ 	struct cast6_xts_ctx *ctx = crypto_skcipher_ctx(tfm);
  
- /* helpers from twofish_x86_64-3way module */
--extern void twofish_dec_blk_cbc_3way(void *ctx, u128 *dst, const u128 *src);
--extern void twofish_enc_blk_ctr(void *ctx, u128 *dst, const u128 *src,
--				le128 *iv);
--extern void twofish_enc_blk_ctr_3way(void *ctx, u128 *dst, const u128 *src,
-+extern void twofish_dec_blk_cbc_3way(void *ctx, u8 *dst, const u8 *src);
-+extern void twofish_enc_blk_ctr(void *ctx, u8 *dst, const u8 *src, le128 *iv);
-+extern void twofish_enc_blk_ctr_3way(void *ctx, u8 *dst, const u8 *src,
- 				     le128 *iv);
+-	return glue_xts_req_128bit(&cast6_dec_xts, req,
+-				   XTS_TWEAK_CAST(__cast6_encrypt),
++	return glue_xts_req_128bit(&cast6_dec_xts, req, __cast6_encrypt,
+ 				   &ctx->tweak_ctx, &ctx->crypt_ctx, true);
+ }
  
- #endif /* ASM_X86_TWOFISH_H */
+diff --git a/crypto/cast6_generic.c b/crypto/cast6_generic.c
+index a8248f8e2777..c51121bedf68 100644
+--- a/crypto/cast6_generic.c
++++ b/crypto/cast6_generic.c
+@@ -173,8 +173,9 @@ static inline void QBAR(u32 *block, u8 *Kr, u32 *Km)
+ 	block[2] ^= F1(block[3], Kr[0], Km[0]);
+ }
+ 
+-void __cast6_encrypt(struct cast6_ctx *c, u8 *outbuf, const u8 *inbuf)
++void __cast6_encrypt(void *ctx, u8 *outbuf, const u8 *inbuf)
+ {
++	struct cast6_ctx *c = ctx;
+ 	const __be32 *src = (const __be32 *)inbuf;
+ 	__be32 *dst = (__be32 *)outbuf;
+ 	u32 block[4];
+@@ -211,8 +212,9 @@ static void cast6_encrypt(struct crypto_tfm *tfm, u8 *outbuf, const u8 *inbuf)
+ 	__cast6_encrypt(crypto_tfm_ctx(tfm), outbuf, inbuf);
+ }
+ 
+-void __cast6_decrypt(struct cast6_ctx *c, u8 *outbuf, const u8 *inbuf)
++void __cast6_decrypt(void *ctx, u8 *outbuf, const u8 *inbuf)
+ {
++	struct cast6_ctx *c = ctx;
+ 	const __be32 *src = (const __be32 *)inbuf;
+ 	__be32 *dst = (__be32 *)outbuf;
+ 	u32 block[4];
+diff --git a/include/crypto/cast6.h b/include/crypto/cast6.h
+index c71f6ef47f0f..b6c3a0324959 100644
+--- a/include/crypto/cast6.h
++++ b/include/crypto/cast6.h
+@@ -19,7 +19,7 @@ int __cast6_setkey(struct cast6_ctx *ctx, const u8 *key,
+ 		   unsigned int keylen, u32 *flags);
+ int cast6_setkey(struct crypto_tfm *tfm, const u8 *key, unsigned int keylen);
+ 
+-void __cast6_encrypt(struct cast6_ctx *ctx, u8 *dst, const u8 *src);
+-void __cast6_decrypt(struct cast6_ctx *ctx, u8 *dst, const u8 *src);
++void __cast6_encrypt(void *ctx, u8 *dst, const u8 *src);
++void __cast6_decrypt(void *ctx, u8 *dst, const u8 *src);
+ 
+ #endif
 -- 
 2.17.1
 
