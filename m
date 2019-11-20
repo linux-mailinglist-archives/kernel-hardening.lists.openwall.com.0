@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17403-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17406-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id D22831030F7
-	for <lists+kernel-hardening@lfdr.de>; Wed, 20 Nov 2019 02:07:02 +0100 (CET)
-Received: (qmail 25620 invoked by uid 550); 20 Nov 2019 01:06:55 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 37C271030FA
+	for <lists+kernel-hardening@lfdr.de>; Wed, 20 Nov 2019 02:07:25 +0100 (CET)
+Received: (qmail 26020 invoked by uid 550); 20 Nov 2019 01:06:58 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,29 +13,30 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 24561 invoked from network); 20 Nov 2019 01:06:54 -0000
+Received: (qmail 25793 invoked from network); 20 Nov 2019 01:06:56 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=CUFUdRWnKnM6bQsVtJfdZZf6wE8f8HKbQO0cl/4N/Js=;
-        b=QPNZ3TFYMN2cyDfBdvY07DD5Qf553QuOH2y52Uwcvrqipiupi+07SzCncWmB4ompaa
-         Sp+KugNpDIe0O6L+0QzSoa4zgNsRPXdvojFu1L2G6OGfQek8k6mLkB+UwWM1uFrTy2gS
-         NyC4I93Ch4Jff4rMgtPSiWxg1V0Gf/SF4lmjQ=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=cO8TBOltsH4skyCZjRFi1jjLHEcJb6wGQF3Nty2AFlw=;
+        b=GjW65mTRpHcwke1tPpXJc+tEroqq+/c02L1weluBXv2HYDmUvuJroQHtjQB47mZ+Dq
+         XrKKO4SSKAvPWN92dzPW6/GSh6v84X+1ecqKm5cP0W3j1AZS9WEFrXlA9digFiGFRewB
+         KhiECAt/oiWz0Q2+iz92oxoX7RzTYeQrdzJTo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=CUFUdRWnKnM6bQsVtJfdZZf6wE8f8HKbQO0cl/4N/Js=;
-        b=W9NefbWQUy8gYBDVx91fUAVux8e23Eqolm01HDtH5lz2tMo+cgOFrKAszYpXQKJAoi
-         dakuF50WhFo+yikFKS5DY2+yCtquWTLuJJTOUC+a/YGmu8NvjVSdfztKq7w8sGDIeh99
-         2ox6RQ54mYqFOGkTsmkvH4420jh63guomnlSDDxEeWXocaSucthDZDXlXyq/SvWU2AUn
-         cy7DMr2a6vkh7WncQkUhjxHlyk9b72IjXoYSUkogTN7pGv87nCsZrkeGgtechz8RB0LJ
-         UZo6A4H4EN2p6QZi6Z2zOUBUcS67pEoQ60tpcnQlQ4OEHwn5KkuEaX0xw5ONvyGCNsJY
-         bl1g==
-X-Gm-Message-State: APjAAAV7C+cO7VySzQEEv3mj9NyrDx3nl+C8YoptOs7DuWWQI1jbOlHa
-	VavvU177fA9m4smHsX08o4z9KQ==
-X-Google-Smtp-Source: APXvYqwryrV10zt9FpcokSWJA8ITt8y25QMJpvbarPp35S9IPnXIHn2OsUwTFiZFRGn4wDxNWoDbIA==
-X-Received: by 2002:a62:ae17:: with SMTP id q23mr705132pff.2.1574212002529;
-        Tue, 19 Nov 2019 17:06:42 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=cO8TBOltsH4skyCZjRFi1jjLHEcJb6wGQF3Nty2AFlw=;
+        b=Klu8EFKd70LrRc0VHyGe6tqhpFFuTFoEzchVq3FApjpNl7agzBvR1+NGvqczKv34kV
+         BtbpSTmW9ToFbyNIzP28X1JE6bglIsI9Wg10tmf2MPJrZN/MJM2d+mptovatZ8f8G97c
+         DDFCgxOuRXrTmLnEpy520465fpo8OWv/26DXzcoPn8jNnH8Qk8sLpp2enYJTVDjLenNS
+         dnRpcWYAHnp6iZb3AJ+sYKHegenoTouWW+Fnn/FgeTfWrh8YOedH1Y1Uw9Uyi008aTpX
+         8lupWVf/2f88xPCVtAhoN9YpXjfbCcLZHg9DviTaLk8yYB5PrNMn3E+lX29b7eEBXwHp
+         dHYQ==
+X-Gm-Message-State: APjAAAUJzGl3isCVXiZfOc1YBcXDU8AbbfHC9IOHhX0DQ0RAY7nHXf9i
+	LPxdjUoriOYXUe8Qw9T7ZKFMGA==
+X-Google-Smtp-Source: APXvYqyASvZYvBQ/e7CI9HnVv6bkAWB/563LT5YKo0qEsvHWgg7DJbmwdBC/nFhsf8xhjPvdZtXPKw==
+X-Received: by 2002:aa7:9f89:: with SMTP id z9mr651850pfr.123.1574212004404;
+        Tue, 19 Nov 2019 17:06:44 -0800 (PST)
 From: Kees Cook <keescook@chromium.org>
 To: Andrey Ryabinin <aryabinin@virtuozzo.com>
 Cc: Kees Cook <keescook@chromium.org>,
@@ -51,30 +52,112 @@ Cc: Kees Cook <keescook@chromium.org>,
 	kasan-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
 	kernel-hardening@lists.openwall.com
-Subject: [PATCH 0/3] ubsan: Split out bounds checker
-Date: Tue, 19 Nov 2019 17:06:33 -0800
-Message-Id: <20191120010636.27368-1-keescook@chromium.org>
+Subject: [PATCH 1/3] ubsan: Add trap instrumentation option
+Date: Tue, 19 Nov 2019 17:06:34 -0800
+Message-Id: <20191120010636.27368-2-keescook@chromium.org>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20191120010636.27368-1-keescook@chromium.org>
+References: <20191120010636.27368-1-keescook@chromium.org>
 
-This splits out the bounds checker so it can be individually used. This
-is expected to be enabled in Android and hopefully for syzbot. Includes
-LKDTM tests for behavioral corner-cases.
+The Undefined Behavior Sanitizer can operate in two modes: warning
+reporting mode via lib/ubsan.c handler calls, or trap mode, which uses
+__builtin_trap() as the handler. Using lib/ubsan.c means the kernel
+image is about 5% larger (due to all the debugging text and reporting
+structures to capture details about the warning conditions). Using the
+trap mode, the image size changes are much smaller, though at the loss
+of the "warning only" mode.
 
--Kees
+In order to give greater flexibility to system builders that want
+minimal changes to image size and are prepared to deal with kernel
+threads being killed, this introduces CONFIG_UBSAN_TRAP. The resulting
+image sizes comparison:
 
-Kees Cook (3):
-  ubsan: Add trap instrumentation option
-  ubsan: Split "bounds" checker from other options
-  lkdtm/bugs: Add arithmetic overflow and array bounds checks
+   text    data     bss       dec       hex     filename
+19533663   6183037  18554956  44271656  2a38828 vmlinux.stock
+19991849   7618513  18874448  46484810  2c54d4a vmlinux.ubsan
+19712181   6284181  18366540  44362902  2a4ec96 vmlinux.ubsan-trap
 
- drivers/misc/lkdtm/bugs.c  | 75 ++++++++++++++++++++++++++++++++++++++
- drivers/misc/lkdtm/core.c  |  3 ++
- drivers/misc/lkdtm/lkdtm.h |  3 ++
- lib/Kconfig.ubsan          | 34 ++++++++++++++++-
- lib/Makefile               |  2 +
- scripts/Makefile.ubsan     | 16 ++++++--
- 6 files changed, 128 insertions(+), 5 deletions(-)
+CONFIG_UBSAN=y:      image +4.8% (text +2.3%, data +18.9%)
+CONFIG_UBSAN_TRAP=y: image +0.2% (text +0.9%, data +1.6%)
 
+Suggested-by: Elena Petrova <lenaptr@google.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+---
+ lib/Kconfig.ubsan      | 15 +++++++++++++--
+ lib/Makefile           |  2 ++
+ scripts/Makefile.ubsan |  9 +++++++--
+ 3 files changed, 22 insertions(+), 4 deletions(-)
+
+diff --git a/lib/Kconfig.ubsan b/lib/Kconfig.ubsan
+index 0e04fcb3ab3d..d69e8b21ebae 100644
+--- a/lib/Kconfig.ubsan
++++ b/lib/Kconfig.ubsan
+@@ -5,12 +5,23 @@ config ARCH_HAS_UBSAN_SANITIZE_ALL
+ config UBSAN
+ 	bool "Undefined behaviour sanity checker"
+ 	help
+-	  This option enables undefined behaviour sanity checker
++	  This option enables undefined behaviour sanity checker.
+ 	  Compile-time instrumentation is used to detect various undefined
+-	  behaviours in runtime. Various types of checks may be enabled
++	  behaviours at runtime. Various types of checks may be enabled
+ 	  via boot parameter ubsan_handle
+ 	  (see: Documentation/dev-tools/ubsan.rst).
+ 
++config UBSAN_TRAP
++	bool "On Sanitizer warnings, stop the offending kernel thread"
++	depends on UBSAN
++	depends on $(cc-option, -fsanitize-undefined-trap-on-error)
++	help
++	  Building kernels with Sanitizer features enabled tends to grow
++	  the kernel size by over 5%, due to adding all the debugging
++	  text on failure paths. To avoid this, Sanitizer instrumentation
++	  can just issue a trap. This reduces the kernel size overhead but
++	  turns all warnings into full thread-killing exceptions.
++
+ config UBSAN_SANITIZE_ALL
+ 	bool "Enable instrumentation for the entire kernel"
+ 	depends on UBSAN
+diff --git a/lib/Makefile b/lib/Makefile
+index c5892807e06f..bc498bf0f52d 100644
+--- a/lib/Makefile
++++ b/lib/Makefile
+@@ -272,7 +272,9 @@ quiet_cmd_build_OID_registry = GEN     $@
+ clean-files	+= oid_registry_data.c
+ 
+ obj-$(CONFIG_UCS2_STRING) += ucs2_string.o
++ifneq ($(CONFIG_UBSAN_TRAP),y)
+ obj-$(CONFIG_UBSAN) += ubsan.o
++endif
+ 
+ UBSAN_SANITIZE_ubsan.o := n
+ KASAN_SANITIZE_ubsan.o := n
+diff --git a/scripts/Makefile.ubsan b/scripts/Makefile.ubsan
+index 019771b845c5..668a91510bfe 100644
+--- a/scripts/Makefile.ubsan
++++ b/scripts/Makefile.ubsan
+@@ -1,5 +1,10 @@
+ # SPDX-License-Identifier: GPL-2.0
+ ifdef CONFIG_UBSAN
++
++ifdef CONFIG_UBSAN_ALIGNMENT
++      CFLAGS_UBSAN += $(call cc-option, -fsanitize=alignment)
++endif
++
+       CFLAGS_UBSAN += $(call cc-option, -fsanitize=shift)
+       CFLAGS_UBSAN += $(call cc-option, -fsanitize=integer-divide-by-zero)
+       CFLAGS_UBSAN += $(call cc-option, -fsanitize=unreachable)
+@@ -9,8 +14,8 @@ ifdef CONFIG_UBSAN
+       CFLAGS_UBSAN += $(call cc-option, -fsanitize=bool)
+       CFLAGS_UBSAN += $(call cc-option, -fsanitize=enum)
+ 
+-ifdef CONFIG_UBSAN_ALIGNMENT
+-      CFLAGS_UBSAN += $(call cc-option, -fsanitize=alignment)
++ifdef CONFIG_UBSAN_TRAP
++      CFLAGS_UBSAN += $(call cc-option, -fsanitize-undefined-trap-on-error)
+ endif
+ 
+       # -fsanitize=* options makes GCC less smart than usual and
 -- 
 2.17.1
 
