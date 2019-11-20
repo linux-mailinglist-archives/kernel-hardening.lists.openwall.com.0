@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17405-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17407-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 5349C1030F9
-	for <lists+kernel-hardening@lfdr.de>; Wed, 20 Nov 2019 02:07:17 +0100 (CET)
-Received: (qmail 25902 invoked by uid 550); 20 Nov 2019 01:06:57 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 9DD8C10371E
+	for <lists+kernel-hardening@lfdr.de>; Wed, 20 Nov 2019 10:58:34 +0100 (CET)
+Received: (qmail 25999 invoked by uid 550); 20 Nov 2019 09:58:27 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,183 +13,178 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 25778 invoked from network); 20 Nov 2019 01:06:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0T61AzxnAvwa4rB+CZumfDDidufAJnp+U8GPCQMxTB4=;
-        b=a82EApFVTEe9phvCSrJOP3TlCmeHwEbc7lBntv/Y4A3SIjXWLzIYaza53B34WSAvIO
-         M/p/3ECy6DvVgT1DcT27ZKc9hqk61OMYWbeg8Ie4sWtPigLH57V9lJaYWI9PwzZgGuQN
-         +goyCf8HKTHNdfpJZrJyL8SxxITM+b1kefwFs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=0T61AzxnAvwa4rB+CZumfDDidufAJnp+U8GPCQMxTB4=;
-        b=Nf/iZF9dOTWItmVOBMofCzGW9TQY6EG/BJrFuCWkCQ6qJUvN2PNdIo7C+5KdBPD/Qh
-         thlASSlaCux0IN+izLW7OVtrTd9aSw9yqfRoHedug/UDPO65OM6Zwzta+1kXVsdjZwEV
-         yhEmMfvvW3DwuqB0HxhIBB59LUKSIsmqmyy/I1uAWyjwtl0UyXXTUfsjtIfp6B1Bpgjd
-         LpS2pL64H6t/MWGPQYNxbo4mR4iCZ6aR1d28lWhXbtYOj85CkRprk1Gy7eJu24t0EUxI
-         1px9l609K75l9LCX44OvByAVv8xngIoP/C/tZnXNrQaqutdTQypFQS21GeTBUteb3IHN
-         3oDw==
-X-Gm-Message-State: APjAAAVeNjeDqsE+QHRVA+A9S9Ls6Hmhyi64RFiXAiXNoghCTNzpQ1XT
-	CmvOOoZgLzuym+08Bj8UELTHFA==
-X-Google-Smtp-Source: APXvYqwMjjdQ2rf3CZ9jjyiv4G3ZP7tQU+Lm0RTG8f4dInndtCYLfPklkPViLPE1GjBEoqneZ6KF6w==
-X-Received: by 2002:a17:902:561:: with SMTP id 88mr155318plf.127.1574212003854;
-        Tue, 19 Nov 2019 17:06:43 -0800 (PST)
-From: Kees Cook <keescook@chromium.org>
-To: Andrey Ryabinin <aryabinin@virtuozzo.com>
-Cc: Kees Cook <keescook@chromium.org>,
-	Elena Petrova <lenaptr@google.com>,
-	Alexander Potapenko <glider@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	"Gustavo A. R. Silva" <gustavo@embeddedor.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Ard Biesheuvel <ard.biesheuvel@linaro.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	kasan-dev@googlegroups.com,
-	linux-kernel@vger.kernel.org,
-	kernel-hardening@lists.openwall.com
-Subject: [PATCH 3/3] lkdtm/bugs: Add arithmetic overflow and array bounds checks
-Date: Tue, 19 Nov 2019 17:06:36 -0800
-Message-Id: <20191120010636.27368-4-keescook@chromium.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20191120010636.27368-1-keescook@chromium.org>
-References: <20191120010636.27368-1-keescook@chromium.org>
+Received: (qmail 25979 invoked from network); 20 Nov 2019 09:58:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1574243891;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+	bh=K6XtfsmuOWVyvNSkl/OwZZStrOVOUJCeIR1iP8qeEBg=;
+	b=jFjecU/KcYAyQAmdJjS4m4iM2zQx67FlcwDS2d9V7uxQNfBxxTtg14h+CqHyk89+aAYhfR
+	hm/eJUuwUhSLH8h61Q4XLBaac/6Ouo6kE48Li12NtkFOP54MAmYTifuDuQzghMyAjK2wtp
+	ui+APoH39yhjpKgheiq03scykvJi9Yo=
+Date: Wed, 20 Nov 2019 10:58:04 +0100
+From: Borislav Petkov <bp@alien8.de>
+To: Tianlin Li <tli@digitalocean.com>
+Cc: kernel-hardening@lists.openwall.com, keescook@chromium.org,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, Greentime Hu <green.hu@gmail.com>,
+	Vincent Chen <deanbo422@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"H . Peter Anvin" <hpa@zytor.com>, x86@kernel.org,
+	Jessica Yu <jeyu@kernel.org>, Josh Poimboeuf <jpoimboe@redhat.com>,
+	Jiri Kosina <jikos@kernel.org>, Miroslav Benes <mbenes@suse.cz>,
+	Petr Mladek <pmladek@suse.com>,
+	Joe Lawrence <joe.lawrence@redhat.com>
+Subject: Re: [RFC PATCH] kernel/module: have the callers of set_memory_*()
+ check the return value
+Message-ID: <20191120095804.GB2634@zn.tnic>
+References: <20191119155149.20396-1-tli@digitalocean.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20191119155149.20396-1-tli@digitalocean.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-Adds LKDTM tests for arithmetic overflow (both signed and unsigned),
-as well as array bounds checking.
+On Tue, Nov 19, 2019 at 09:51:49AM -0600, Tianlin Li wrote:
+> Right now several architectures allow their set_memory_*() family of 
+> functions to fail, but callers may not be checking the return values. We 
+> need to fix the callers and add the __must_check attribute.
 
-Signed-off-by: Kees Cook <keescook@chromium.org>
----
- drivers/misc/lkdtm/bugs.c  | 75 ++++++++++++++++++++++++++++++++++++++
- drivers/misc/lkdtm/core.c  |  3 ++
- drivers/misc/lkdtm/lkdtm.h |  3 ++
- 3 files changed, 81 insertions(+)
+Please formulate commit messages in passive tone. "we" is ambiguous.
 
-diff --git a/drivers/misc/lkdtm/bugs.c b/drivers/misc/lkdtm/bugs.c
-index 7284a22b1a09..8b4ef30f53c6 100644
---- a/drivers/misc/lkdtm/bugs.c
-+++ b/drivers/misc/lkdtm/bugs.c
-@@ -11,6 +11,7 @@
- #include <linux/sched/signal.h>
- #include <linux/sched/task_stack.h>
- #include <linux/uaccess.h>
-+#include <linux/slab.h>
- 
- struct lkdtm_list {
- 	struct list_head node;
-@@ -171,6 +172,80 @@ void lkdtm_HUNG_TASK(void)
- 	schedule();
- }
- 
-+volatile unsigned int huge = INT_MAX - 2;
-+volatile unsigned int ignored;
-+
-+void lkdtm_OVERFLOW_SIGNED(void)
-+{
-+	int value;
-+
-+	value = huge;
-+	pr_info("Normal signed addition ...\n");
-+	value += 1;
-+	ignored = value;
-+
-+	pr_info("Overflowing signed addition ...\n");
-+	value += 4;
-+	ignored = value;
-+}
-+
-+
-+void lkdtm_OVERFLOW_UNSIGNED(void)
-+{
-+	unsigned int value;
-+
-+	value = huge;
-+	pr_info("Normal unsigned addition ...\n");
-+	value += 1;
-+	ignored = value;
-+
-+	pr_info("Overflowing unsigned addition ...\n");
-+	value += 4;
-+	ignored = value;
-+}
-+
-+/* Intentially using old-style flex array definition of 1 byte. */
-+struct array_bounds_flex_array {
-+	int one;
-+	int two;
-+	char data[1];
-+};
-+
-+struct array_bounds {
-+	int one;
-+	int two;
-+	char data[8];
-+	int three;
-+};
-+
-+void lkdtm_ARRAY_BOUNDS(void)
-+{
-+	struct array_bounds_flex_array *not_checked;
-+	struct array_bounds *checked;
-+	int i;
-+
-+	not_checked = kmalloc(sizeof(*not_checked) * 2, GFP_KERNEL);
-+	checked = kmalloc(sizeof(*checked) * 2, GFP_KERNEL);
-+
-+	pr_info("Array access within bounds ...\n");
-+	/* For both, touch all bytes in the actual member size. */
-+	for (i = 0; i < sizeof(checked->data); i++)
-+		checked->data[i] = 'A';
-+	/*
-+	 * For the uninstrumented flex array member, also touch 1 byte
-+	 * beyond to verify it is correctly uninstrumented.
-+	 */
-+	for (i = 0; i < sizeof(not_checked->data) + 1; i++)
-+		not_checked->data[i] = 'A';
-+
-+	pr_info("Array access beyond bounds ...\n");
-+	for (i = 0; i < sizeof(checked->data) + 1; i++)
-+		checked->data[i] = 'B';
-+
-+	kfree(not_checked);
-+	kfree(checked);
-+}
-+
- void lkdtm_CORRUPT_LIST_ADD(void)
- {
- 	/*
-diff --git a/drivers/misc/lkdtm/core.c b/drivers/misc/lkdtm/core.c
-index cbc4c9045a99..25879f7b0768 100644
---- a/drivers/misc/lkdtm/core.c
-+++ b/drivers/misc/lkdtm/core.c
-@@ -129,6 +129,9 @@ static const struct crashtype crashtypes[] = {
- 	CRASHTYPE(HARDLOCKUP),
- 	CRASHTYPE(SPINLOCKUP),
- 	CRASHTYPE(HUNG_TASK),
-+	CRASHTYPE(OVERFLOW_SIGNED),
-+	CRASHTYPE(OVERFLOW_UNSIGNED),
-+	CRASHTYPE(ARRAY_BOUNDS),
- 	CRASHTYPE(EXEC_DATA),
- 	CRASHTYPE(EXEC_STACK),
- 	CRASHTYPE(EXEC_KMALLOC),
-diff --git a/drivers/misc/lkdtm/lkdtm.h b/drivers/misc/lkdtm/lkdtm.h
-index ab446e0bde97..2cd0c5031eea 100644
---- a/drivers/misc/lkdtm/lkdtm.h
-+++ b/drivers/misc/lkdtm/lkdtm.h
-@@ -22,6 +22,9 @@ void lkdtm_SOFTLOCKUP(void);
- void lkdtm_HARDLOCKUP(void);
- void lkdtm_SPINLOCKUP(void);
- void lkdtm_HUNG_TASK(void);
-+void lkdtm_OVERFLOW_SIGNED(void);
-+void lkdtm_OVERFLOW_UNSIGNED(void);
-+void lkdtm_ARRAY_BOUNDS(void);
- void lkdtm_CORRUPT_LIST_ADD(void);
- void lkdtm_CORRUPT_LIST_DEL(void);
- void lkdtm_CORRUPT_USER_DS(void);
+From Documentation/process/submitting-patches.rst:
+
+ "Describe your changes in imperative mood, e.g. "make xyzzy do frotz"
+  instead of "[This patch] makes xyzzy do frotz" or "[I] changed xyzzy
+  to do frotz", as if you are giving orders to the codebase to change
+  its behaviour."
+
+Also, you could add a high-level summary of the failure case from:
+
+https://lore.kernel.org/netdev/20180628213459.28631-4-daniel@iogearbox.net/
+
+as a more real-life, convincing justification for this.
+
+> They also may not provide any level of atomicity, in the sense that
+> the memory protections may be left incomplete on failure.
+> This issue likely has a few 
+> steps on effects architectures[1]:
+> 1)Have all callers of set_memory_*() helpers check the return value.
+> 2)Add __much_check to all set_memory_*() helpers so that new uses do not 
+
+__must_check
+
+> ignore the return value.
+> 3)Add atomicity to the calls so that the memory protections aren't left in 
+> a partial state.
+> 
+> Ideally, the failure of set_memory_*() should be passed up the call stack, 
+> and callers should examine the failure and deal with it. But currently, 
+> some callers just have void return type.
+> 
+> We need to fix the callers to handle the return all the way to the top of 
+> stack, and it will require a large series of patches to finish all the three 
+> steps mentioned above. I start with kernel/module, and will move onto other 
+> subsystems. I am not entirely sure about the failure modes for each caller. 
+> So I would like to get some comments before I move forward. This single 
+> patch is just for fixing the return value of set_memory_*() function in 
+> kernel/module, and also the related callers. Any feedback would be greatly 
+> appreciated.
+> 
+> [1]:https://github.com/KSPP/linux/issues/7
+> 
+> Signed-off-by: Tianlin Li <tli@digitalocean.com>
+> ---
+>  arch/arm/kernel/ftrace.c   |   8 +-
+>  arch/arm64/kernel/ftrace.c |   6 +-
+>  arch/nds32/kernel/ftrace.c |   6 +-
+>  arch/x86/kernel/ftrace.c   |  13 ++-
+>  include/linux/module.h     |  16 ++--
+>  kernel/livepatch/core.c    |  15 +++-
+>  kernel/module.c            | 170 +++++++++++++++++++++++++++----------
+>  kernel/trace/ftrace.c      |  15 +++-
+>  8 files changed, 175 insertions(+), 74 deletions(-)
+
+Yeah, general idea makes sense but you'd need to redo your patch ontop
+of linux-next because there are some changes in flight in ftrace-land at
+least and your patch won't apply anymore after next week, when the merge
+window opens.
+
+Also, you should use checkpatch before sending a patch as sometimes it makes
+sense what it complains about:
+
+WARNING: Missing a blank line after declarations
+#79: FILE: arch/arm/kernel/ftrace.c:68:
++       int ret;
++       ret = set_all_modules_text_ro();
+
+WARNING: Missing a blank line after declarations
+#150: FILE: arch/x86/kernel/ftrace.c:61:
++       int ret;
++       ret = set_all_modules_text_ro();
+
+WARNING: trailing semicolon indicates no statements, indent implies otherwise
+#203: FILE: kernel/livepatch/core.c:731:
++               if (module_enable_ro(patch->mod, true));
++                       pr_err("module_enable_ro failed.\n");
+
+ERROR: trailing statements should be on next line
+#203: FILE: kernel/livepatch/core.c:731:
++               if (module_enable_ro(patch->mod, true));
+
+WARNING: Missing a blank line after declarations
+#451: FILE: kernel/module.c:2091:
++       int ret;
++       ret = frob_text(&mod->core_layout, set_memory_x);
+
+WARNING: Missing a blank line after declarations
+#511: FILE: kernel/trace/ftrace.c:5819:
++               int ret = ftrace_arch_code_modify_prepare();
++               if (ret) {
+
+WARNING: Missing a blank line after declarations
+#527: FILE: kernel/trace/ftrace.c:5864:
++               int ret = ftrace_arch_code_modify_post_process();
++               FTRACE_WARN_ON(ret);
+
+> diff --git a/kernel/livepatch/core.c b/kernel/livepatch/core.c
+> index c4ce08f43bd6..39bfc0685854 100644
+> --- a/kernel/livepatch/core.c
+> +++ b/kernel/livepatch/core.c
+> @@ -721,16 +721,25 @@ static int klp_init_object_loaded(struct klp_patch *patch,
+>  
+>  	mutex_lock(&text_mutex);
+>  
+> -	module_disable_ro(patch->mod);
+> +	ret = module_disable_ro(patch->mod);
+> +	if (ret) {
+> +		mutex_unlock(&text_mutex);
+> +		return ret;
+> +	}
+>  	ret = klp_write_object_relocations(patch->mod, obj);
+>  	if (ret) {
+> -		module_enable_ro(patch->mod, true);
+> +		if (module_enable_ro(patch->mod, true));
+		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+and if you look at its output above closely, it might even help you
+catch the bug you've added.
+
+ [ Don't worry, happens to the best of us. :-) ]
+
+Also, what would help review is if you split your patch:
+
+patch 1: Change functions to return a retval
+patch 2-n: Change call sites to handle retval properly
+
+Thx.
+
 -- 
-2.17.1
+Regards/Gruss,
+    Boris.
 
+https://people.kernel.org/tglx/notes-about-netiquette
