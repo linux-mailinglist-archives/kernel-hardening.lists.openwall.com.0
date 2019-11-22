@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17425-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17423-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id F0C13105E01
-	for <lists+kernel-hardening@lfdr.de>; Fri, 22 Nov 2019 02:04:35 +0100 (CET)
-Received: (qmail 19943 invoked by uid 550); 22 Nov 2019 01:03:57 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 67BB5105DFA
+	for <lists+kernel-hardening@lfdr.de>; Fri, 22 Nov 2019 02:04:18 +0100 (CET)
+Received: (qmail 19675 invoked by uid 550); 22 Nov 2019 01:03:54 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,31 +13,31 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 19806 invoked from network); 22 Nov 2019 01:03:56 -0000
+Received: (qmail 19512 invoked from network); 22 Nov 2019 01:03:53 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=yLXiD3mid8KH+vzWk5eeV9cjY9C1Tzvqr7ZpCV412RY=;
-        b=hLEhYIK9flS41tAVD9Y1bn4Jt1UMYp7abrfy7AKnCXRyYLediN4w0OgzUjMgs0WAYW
-         rzprgJVKdgJxLcSWW6iAsj72BUpuEc3wX6C78lTdcb6JdJgZL51SVGpEs6Ai7XrsXt+y
-         5MF2Lwf3FHcIrCf8H9/NtYF9ZkNBOYzfwh3jk=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ogInRXGt+sPw2HEZ3/J86GV8yEDJ13ZF9JZ3hZT/kGM=;
+        b=c62IQrA7WMubIKMG7YRJfYNOmH5PP3OT90j5iiPtbjViBXxNeoyI+rV6BqUpCESkc3
+         0Z6S2kc1Ccjd6okULsJZlYzzpEAwEx8F/2cRVCPCVqWdvIarQggraQ6MQJ93WsAdkTYK
+         QnmRcZuTUPTjhbIA8tmlOW7wJi47t97BFMcK8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=yLXiD3mid8KH+vzWk5eeV9cjY9C1Tzvqr7ZpCV412RY=;
-        b=MSZWjtGnKR4lI6AgYPduHzkUhDkXxkcgfLdQH/Yq7M+RHtr9rMDnjZ/QJ77HfE8Uaw
-         p2NWiH6vW7ZcXMP5/OPv5Ny9GFd2pulyQzexv7P1Da3SlhXc6x0mEyn7DAWduNgcJrzn
-         H+E1CK+qG2hccu78hgl5tutZ4z7uqQh10hUvOaEDkVPf8IDocV8c1s6ER00PXlJEWyQp
-         eHtB3Txpu/wM5VhPGfCZ+q2pSChMrTHhykutVaVMcvIXmFtacUvUbTm0B23gcGCLkagL
-         HPJEHDP2Ytt+dARv7D7/7r3dET2u6yyIXVKuPD95rKF4FJAp6M1n/KJSQiSZTdEMYCoB
-         CnCg==
-X-Gm-Message-State: APjAAAVGokNohGJ7WfmCFHo3HwaESKFUMAD6/ri6CGi/HwNSnQcW/Er9
-	ZPynaFXr6sf1u0K4/Dr4y0Lamg==
-X-Google-Smtp-Source: APXvYqz/gdanKWHRL5lO19w7tDA97M8iQ7EDdo45/bL9HF9nQFFMvAJl5aGHe6J3GPDcKfidzkpnhw==
-X-Received: by 2002:a63:4705:: with SMTP id u5mr12607717pga.7.1574384623397;
-        Thu, 21 Nov 2019 17:03:43 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ogInRXGt+sPw2HEZ3/J86GV8yEDJ13ZF9JZ3hZT/kGM=;
+        b=Hq1qq4+xh2bi5FxAbTdLpM40OTDPF7sw1zr3Vl4uC2KPD4jFaA8gO9kCYUMhSVs1Pn
+         j8SlHAYg4MT4sUZHxOQU7zkyiTn/+0N+eJmXbQU+BNnK8nZKfm4Tq0LIfT9jNRXm+LTL
+         cLEh4vNqCkBFdEcBiG3MMF6eyHH9s2TQmCR42BVXPIzbG+h1ai2WVjiRIo9AlQ4Xy75k
+         7vEhvuiFCTABMS1G28gNYOxVWS7++orJTEZoLyBW5vLR5xoId6Sqs4mwJ2+ume7d2cdz
+         Dc6iCejfmdq3jVqGDtfY0zzpGHltyyzjpIiczgxWCvfyG/WG52xXUtUmXSJRo6pcybQ2
+         L70A==
+X-Gm-Message-State: APjAAAXw5GNokydgHl6kfuBnCUfgYcy1L2oRrj+5Stp8khMg9OfwqBYM
+	OylX6tfKobVE/nfQb1lh0i/FaDzQp24=
+X-Google-Smtp-Source: APXvYqwkm/Hnnfz9l9HjiwV4ZZkTNJsjp7ESPfZDQZlb++3cENihjkIQMXfvttuJWXLyWpE9Hd+A3A==
+X-Received: by 2002:a63:5f04:: with SMTP id t4mr12527616pgb.73.1574384621641;
+        Thu, 21 Nov 2019 17:03:41 -0800 (PST)
 From: Kees Cook <keescook@chromium.org>
 To: Herbert Xu <herbert@gondor.apana.org.au>
 Cc: Kees Cook <keescook@chromium.org>,
@@ -50,83 +50,135 @@ Cc: Kees Cook <keescook@chromium.org>,
 	linux-crypto@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	kernel-hardening@lists.openwall.com
-Subject: [PATCH v6 0/8] crypto: x86: Fix indirect function call casts
-Date: Thu, 21 Nov 2019 17:03:26 -0800
-Message-Id: <20191122010334.12081-1-keescook@chromium.org>
+Subject: [PATCH v6 1/8] crypto: x86/glue_helper: Regularize function prototypes
+Date: Thu, 21 Nov 2019 17:03:27 -0800
+Message-Id: <20191122010334.12081-2-keescook@chromium.org>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20191122010334.12081-1-keescook@chromium.org>
+References: <20191122010334.12081-1-keescook@chromium.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-v6:
-- minimize need for various internal casts (ebiggers)
-- clarify comments (ebiggers)
-- switch all context pointers to const (ebiggers)
-v5: https://lore.kernel.org/lkml/20191113182516.13545-1-keescook@chromium.org
-v4: https://lore.kernel.org/lkml/20191111214552.36717-1-keescook@chromium.org
-v3: https://lore.kernel.org/lkml/20190507161321.34611-1-keescook@chromium.org
+The crypto glue performed function prototype casting to make indirect
+calls to assembly routines. Instead of performing casts at the call
+sites (which trips Control Flow Integrity prototype checking), switch
+each prototype to a common standard set of arguments which allows the
+incremental removal of the existing macros. In order to keep pointer
+math unchanged, internal casting between u128 pointers and u8 pointers
+is added.
 
-Hi,
+Co-developed-by: João Moreira <joao.moreira@intel.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+---
+ arch/x86/crypto/glue_helper.c             | 23 ++++++++++++++---------
+ arch/x86/include/asm/crypto/glue_helper.h | 13 +++++++------
+ 2 files changed, 21 insertions(+), 15 deletions(-)
 
-Now that Clang's CFI has been fixed to do the right thing with extern
-asm functions, this patch series is much simplified. Repeating patch
-1's commit log here:
-
-    The crypto glue performed function prototype casting to make indirect
-    calls to assembly routines. Instead of performing casts at the call
-    sites (which trips Control Flow Integrity prototype checking), switch
-    each prototype to a common standard set of arguments which allows the
-    incremental removal of the existing macros. In order to keep pointer
-    math unchanged, internal casting between u128 pointers and u8 pointers
-    is added.
-
-With this series (and the Clang LTO+CFI series) I am able to boot x86
-with all crytpo selftests enabled without tripping any CFI checks.
-
-Thanks!
-
--Kees
-
-Kees Cook (8):
-  crypto: x86/glue_helper: Regularize function prototypes
-  crypto: x86/serpent: Remove glue function macros usage
-  crypto: x86/camellia: Remove glue function macro usage
-  crypto: x86/twofish: Remove glue function macro usage
-  crypto: x86/cast6: Remove glue function macro usage
-  crypto: x86/aesni: Remove glue function macro usage
-  crypto: x86/glue_helper: Remove function prototype cast helpers
-  crypto, x86/sha: Eliminate casts on asm implementations
-
- arch/x86/crypto/aesni-intel_asm.S          |  8 +--
- arch/x86/crypto/aesni-intel_glue.c         | 45 ++++++-------
- arch/x86/crypto/camellia_aesni_avx2_glue.c | 74 ++++++++++-----------
- arch/x86/crypto/camellia_aesni_avx_glue.c  | 72 +++++++++------------
- arch/x86/crypto/camellia_glue.c            | 45 +++++++------
- arch/x86/crypto/cast6_avx_glue.c           | 68 +++++++++-----------
- arch/x86/crypto/glue_helper.c              | 23 ++++---
- arch/x86/crypto/serpent_avx2_glue.c        | 65 +++++++++----------
- arch/x86/crypto/serpent_avx_glue.c         | 63 +++++++++---------
- arch/x86/crypto/serpent_sse2_glue.c        | 30 +++++----
- arch/x86/crypto/sha1_ssse3_asm.S           | 10 ++-
- arch/x86/crypto/sha1_ssse3_glue.c          | 64 ++++++++----------
- arch/x86/crypto/sha256-ssse3-asm.S         |  4 +-
- arch/x86/crypto/sha256_ssse3_glue.c        | 34 +++++-----
- arch/x86/crypto/sha512-ssse3-asm.S         |  4 +-
- arch/x86/crypto/sha512_ssse3_glue.c        | 31 +++++----
- arch/x86/crypto/twofish_avx_glue.c         | 75 ++++++++++------------
- arch/x86/crypto/twofish_glue_3way.c        | 37 ++++++-----
- arch/x86/include/asm/crypto/camellia.h     | 63 +++++++++---------
- arch/x86/include/asm/crypto/glue_helper.h  | 18 ++----
- arch/x86/include/asm/crypto/serpent-avx.h  | 20 +++---
- arch/x86/include/asm/crypto/serpent-sse2.h | 28 ++++----
- arch/x86/include/asm/crypto/twofish.h      | 19 +++---
- crypto/cast6_generic.c                     | 18 +++---
- crypto/serpent_generic.c                   |  6 +-
- include/crypto/cast6.h                     |  4 +-
- include/crypto/serpent.h                   |  4 +-
- include/crypto/xts.h                       |  2 -
- 28 files changed, 446 insertions(+), 488 deletions(-)
-
+diff --git a/arch/x86/crypto/glue_helper.c b/arch/x86/crypto/glue_helper.c
+index d15b99397480..d3d91a0abf88 100644
+--- a/arch/x86/crypto/glue_helper.c
++++ b/arch/x86/crypto/glue_helper.c
+@@ -134,7 +134,8 @@ int glue_cbc_decrypt_req_128bit(const struct common_glue_ctx *gctx,
+ 				src -= num_blocks - 1;
+ 				dst -= num_blocks - 1;
+ 
+-				gctx->funcs[i].fn_u.cbc(ctx, dst, src);
++				gctx->funcs[i].fn_u.cbc(ctx, (u8 *)dst,
++							(const u8 *)src);
+ 
+ 				nbytes -= func_bytes;
+ 				if (nbytes < bsize)
+@@ -188,7 +189,9 @@ int glue_ctr_req_128bit(const struct common_glue_ctx *gctx,
+ 
+ 			/* Process multi-block batch */
+ 			do {
+-				gctx->funcs[i].fn_u.ctr(ctx, dst, src, &ctrblk);
++				gctx->funcs[i].fn_u.ctr(ctx, (u8 *)dst,
++							(const u8 *)src,
++							&ctrblk);
+ 				src += num_blocks;
+ 				dst += num_blocks;
+ 				nbytes -= func_bytes;
+@@ -210,7 +213,8 @@ int glue_ctr_req_128bit(const struct common_glue_ctx *gctx,
+ 
+ 		be128_to_le128(&ctrblk, (be128 *)walk.iv);
+ 		memcpy(&tmp, walk.src.virt.addr, nbytes);
+-		gctx->funcs[gctx->num_funcs - 1].fn_u.ctr(ctx, &tmp, &tmp,
++		gctx->funcs[gctx->num_funcs - 1].fn_u.ctr(ctx, (u8 *)&tmp,
++							  (const u8 *)&tmp,
+ 							  &ctrblk);
+ 		memcpy(walk.dst.virt.addr, &tmp, nbytes);
+ 		le128_to_be128((be128 *)walk.iv, &ctrblk);
+@@ -240,7 +244,8 @@ static unsigned int __glue_xts_req_128bit(const struct common_glue_ctx *gctx,
+ 
+ 		if (nbytes >= func_bytes) {
+ 			do {
+-				gctx->funcs[i].fn_u.xts(ctx, dst, src,
++				gctx->funcs[i].fn_u.xts(ctx, (u8 *)dst,
++							(const u8 *)src,
+ 							walk->iv);
+ 
+ 				src += num_blocks;
+@@ -354,8 +359,8 @@ int glue_xts_req_128bit(const struct common_glue_ctx *gctx,
+ }
+ EXPORT_SYMBOL_GPL(glue_xts_req_128bit);
+ 
+-void glue_xts_crypt_128bit_one(void *ctx, u128 *dst, const u128 *src, le128 *iv,
+-			       common_glue_func_t fn)
++void glue_xts_crypt_128bit_one(const void *ctx, u8 *dst, const u8 *src,
++			       le128 *iv, common_glue_func_t fn)
+ {
+ 	le128 ivblk = *iv;
+ 
+@@ -363,13 +368,13 @@ void glue_xts_crypt_128bit_one(void *ctx, u128 *dst, const u128 *src, le128 *iv,
+ 	gf128mul_x_ble(iv, &ivblk);
+ 
+ 	/* CC <- T xor C */
+-	u128_xor(dst, src, (u128 *)&ivblk);
++	u128_xor((u128 *)dst, (const u128 *)src, (u128 *)&ivblk);
+ 
+ 	/* PP <- D(Key2,CC) */
+-	fn(ctx, (u8 *)dst, (u8 *)dst);
++	fn(ctx, dst, dst);
+ 
+ 	/* P <- T xor PP */
+-	u128_xor(dst, dst, (u128 *)&ivblk);
++	u128_xor((u128 *)dst, (u128 *)dst, (u128 *)&ivblk);
+ }
+ EXPORT_SYMBOL_GPL(glue_xts_crypt_128bit_one);
+ 
+diff --git a/arch/x86/include/asm/crypto/glue_helper.h b/arch/x86/include/asm/crypto/glue_helper.h
+index 8d4a8e1226ee..ba48d5af4f16 100644
+--- a/arch/x86/include/asm/crypto/glue_helper.h
++++ b/arch/x86/include/asm/crypto/glue_helper.h
+@@ -11,11 +11,11 @@
+ #include <asm/fpu/api.h>
+ #include <crypto/b128ops.h>
+ 
+-typedef void (*common_glue_func_t)(void *ctx, u8 *dst, const u8 *src);
+-typedef void (*common_glue_cbc_func_t)(void *ctx, u128 *dst, const u128 *src);
+-typedef void (*common_glue_ctr_func_t)(void *ctx, u128 *dst, const u128 *src,
++typedef void (*common_glue_func_t)(const void *ctx, u8 *dst, const u8 *src);
++typedef void (*common_glue_cbc_func_t)(const void *ctx, u8 *dst, const u8 *src);
++typedef void (*common_glue_ctr_func_t)(const void *ctx, u8 *dst, const u8 *src,
+ 				       le128 *iv);
+-typedef void (*common_glue_xts_func_t)(void *ctx, u128 *dst, const u128 *src,
++typedef void (*common_glue_xts_func_t)(const void *ctx, u8 *dst, const u8 *src,
+ 				       le128 *iv);
+ 
+ #define GLUE_FUNC_CAST(fn) ((common_glue_func_t)(fn))
+@@ -116,7 +116,8 @@ extern int glue_xts_req_128bit(const struct common_glue_ctx *gctx,
+ 			       common_glue_func_t tweak_fn, void *tweak_ctx,
+ 			       void *crypt_ctx, bool decrypt);
+ 
+-extern void glue_xts_crypt_128bit_one(void *ctx, u128 *dst, const u128 *src,
+-				      le128 *iv, common_glue_func_t fn);
++extern void glue_xts_crypt_128bit_one(const void *ctx, u8 *dst,
++				      const u8 *src, le128 *iv,
++				      common_glue_func_t fn);
+ 
+ #endif /* _CRYPTO_GLUE_HELPER_H */
 -- 
 2.17.1
 
