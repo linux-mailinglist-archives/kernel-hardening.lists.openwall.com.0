@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17420-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17425-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id EBE79105D14
-	for <lists+kernel-hardening@lfdr.de>; Fri, 22 Nov 2019 00:14:38 +0100 (CET)
-Received: (qmail 21862 invoked by uid 550); 21 Nov 2019 23:14:34 -0000
+	by mail.lfdr.de (Postfix) with SMTP id F0C13105E01
+	for <lists+kernel-hardening@lfdr.de>; Fri, 22 Nov 2019 02:04:35 +0100 (CET)
+Received: (qmail 19943 invoked by uid 550); 22 Nov 2019 01:03:57 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,121 +13,120 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 21825 invoked from network); 21 Nov 2019 23:14:33 -0000
+Received: (qmail 19806 invoked from network); 22 Nov 2019 01:03:56 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=2veRivAEh/Lpdr/ITAgILE86AAw5jcwe/4mpzH2NlJY=;
-        b=ePy4Igu7gMSF9I7sxcFxsVtHYtvJJ2SEnYiHowKoYYz0JdW1fbVLxfCsr5NiQNFD96
-         S75Onl+RseVnFfQwCk0TEvq7bo+71LX5nid4yXpkidBnjdfT7azrp8iUcU0eXKuqqqAj
-         Z8aCyx+1mc7qCC6QTIDXBUcAMy2pYNzJnxWQo=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=yLXiD3mid8KH+vzWk5eeV9cjY9C1Tzvqr7ZpCV412RY=;
+        b=hLEhYIK9flS41tAVD9Y1bn4Jt1UMYp7abrfy7AKnCXRyYLediN4w0OgzUjMgs0WAYW
+         rzprgJVKdgJxLcSWW6iAsj72BUpuEc3wX6C78lTdcb6JdJgZL51SVGpEs6Ai7XrsXt+y
+         5MF2Lwf3FHcIrCf8H9/NtYF9ZkNBOYzfwh3jk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=2veRivAEh/Lpdr/ITAgILE86AAw5jcwe/4mpzH2NlJY=;
-        b=fQvd/QR57P0D+g2AJl98f1YNwl6BZi7xhYaN9hQmz7cF6jtGQQv9glfXvY1LBZ8K4Y
-         mwcGJ4AT7GQJ2fp639SECQQ/P4wKNk0n26Etn7pFHREiuJsf/YPh8tgyd15kwBNTo5rY
-         vbfKTi0Bdlh5cvDRxeBWFjXzKLjHVQCku6Zyz99vQg4/OmjS3RD6XdsLRX04YJo7LsWI
-         MCLAhBC4ddUCWkBykPtw717ZEfCCPaM7jIyhlkNgtfF79Xy+Kcmca1LWBV3qFY8Xqv/9
-         D74WKRyWikzZqpUTDGCv1o2oNCjLVOhW1QfHi6xjYprUJNDgKVd0JyOLf6mtr8r0ji4g
-         th/Q==
-X-Gm-Message-State: APjAAAXGZcSwXiHivb9SVieLkAB16k1nd+YYlIK5D3o0+zUnvbvNBL+T
-	BTsSKY/R9GHhEozLrz/iZS6XdA==
-X-Google-Smtp-Source: APXvYqx10aUfkseuuvvIiZfCFrVLk2ANnIMrVihwB9ZsfC8ppUGV0nab1w1NRyDgV1ToQf1VrNj46Q==
-X-Received: by 2002:a17:90a:c082:: with SMTP id o2mr14857916pjs.94.1574378061504;
-        Thu, 21 Nov 2019 15:14:21 -0800 (PST)
-Date: Thu, 21 Nov 2019 15:14:19 -0800
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=yLXiD3mid8KH+vzWk5eeV9cjY9C1Tzvqr7ZpCV412RY=;
+        b=MSZWjtGnKR4lI6AgYPduHzkUhDkXxkcgfLdQH/Yq7M+RHtr9rMDnjZ/QJ77HfE8Uaw
+         p2NWiH6vW7ZcXMP5/OPv5Ny9GFd2pulyQzexv7P1Da3SlhXc6x0mEyn7DAWduNgcJrzn
+         H+E1CK+qG2hccu78hgl5tutZ4z7uqQh10hUvOaEDkVPf8IDocV8c1s6ER00PXlJEWyQp
+         eHtB3Txpu/wM5VhPGfCZ+q2pSChMrTHhykutVaVMcvIXmFtacUvUbTm0B23gcGCLkagL
+         HPJEHDP2Ytt+dARv7D7/7r3dET2u6yyIXVKuPD95rKF4FJAp6M1n/KJSQiSZTdEMYCoB
+         CnCg==
+X-Gm-Message-State: APjAAAVGokNohGJ7WfmCFHo3HwaESKFUMAD6/ri6CGi/HwNSnQcW/Er9
+	ZPynaFXr6sf1u0K4/Dr4y0Lamg==
+X-Google-Smtp-Source: APXvYqz/gdanKWHRL5lO19w7tDA97M8iQ7EDdo45/bL9HF9nQFFMvAJl5aGHe6J3GPDcKfidzkpnhw==
+X-Received: by 2002:a63:4705:: with SMTP id u5mr12607717pga.7.1574384623397;
+        Thu, 21 Nov 2019 17:03:43 -0800 (PST)
 From: Kees Cook <keescook@chromium.org>
-To: Herbert Xu <herbert@gondor.apana.org.au>,
-	=?iso-8859-1?Q?Jo=E3o?= Moreira <joao.moreira@intel.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+To: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: Kees Cook <keescook@chromium.org>,
+	=?UTF-8?q?Jo=C3=A3o=20Moreira?= <joao.moreira@intel.com>,
+	Eric Biggers <ebiggers@kernel.org>,
 	Ard Biesheuvel <ard.biesheuvel@linaro.org>,
-	Stephan Mueller <smueller@chronox.de>, x86@kernel.org,
-	linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Stephan Mueller <smueller@chronox.de>,
+	x86@kernel.org,
+	linux-crypto@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	kernel-hardening@lists.openwall.com
-Subject: Re: [PATCH v5 8/8] crypto, x86/sha: Eliminate casts on asm
- implementations
-Message-ID: <201911211512.6A86399@keescook>
-References: <20191113182516.13545-1-keescook@chromium.org>
- <20191113182516.13545-9-keescook@chromium.org>
- <20191113195529.GD221701@gmail.com>
+Subject: [PATCH v6 0/8] crypto: x86: Fix indirect function call casts
+Date: Thu, 21 Nov 2019 17:03:26 -0800
+Message-Id: <20191122010334.12081-1-keescook@chromium.org>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191113195529.GD221701@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Nov 13, 2019 at 11:55:30AM -0800, Eric Biggers wrote:
-> On Wed, Nov 13, 2019 at 10:25:16AM -0800, Kees Cook wrote:
-> > In order to avoid CFI function prototype mismatches, this removes the
-> > casts on assembly implementations of sha1/256/512 accelerators. The
-> > safety checks from BUILD_BUG_ON() remain.
-> > 
-> > Signed-off-by: Kees Cook <keescook@chromium.org>
-> > ---
-> >  arch/x86/crypto/sha1_ssse3_glue.c   | 61 ++++++++++++-----------------
-> >  arch/x86/crypto/sha256_ssse3_glue.c | 31 +++++++--------
-> >  arch/x86/crypto/sha512_ssse3_glue.c | 28 ++++++-------
-> >  3 files changed, 50 insertions(+), 70 deletions(-)
-> > 
-> > diff --git a/arch/x86/crypto/sha1_ssse3_glue.c b/arch/x86/crypto/sha1_ssse3_glue.c
-> > index 639d4c2fd6a8..a151d899f37a 100644
-> > --- a/arch/x86/crypto/sha1_ssse3_glue.c
-> > +++ b/arch/x86/crypto/sha1_ssse3_glue.c
-> > @@ -27,11 +27,8 @@
-> >  #include <crypto/sha1_base.h>
-> >  #include <asm/simd.h>
-> >  
-> > -typedef void (sha1_transform_fn)(u32 *digest, const char *data,
-> > -				unsigned int rounds);
-> > -
-> >  static int sha1_update(struct shash_desc *desc, const u8 *data,
-> > -			     unsigned int len, sha1_transform_fn *sha1_xform)
-> > +			     unsigned int len, sha1_block_fn *sha1_xform)
-> >  {
-> >  	struct sha1_state *sctx = shash_desc_ctx(desc);
-> >  
-> > @@ -39,48 +36,44 @@ static int sha1_update(struct shash_desc *desc, const u8 *data,
-> >  	    (sctx->count % SHA1_BLOCK_SIZE) + len < SHA1_BLOCK_SIZE)
-> >  		return crypto_sha1_update(desc, data, len);
-> >  
-> > -	/* make sure casting to sha1_block_fn() is safe */
-> > +	/* make sure sha1_block_fn() use in generic routines is safe */
-> >  	BUILD_BUG_ON(offsetof(struct sha1_state, state) != 0);
-> 
-> This update to the comment makes no sense, since sha1_block_fn() is obviously
-> safe in the helpers, and this says nothing about the assembly functions.
-> Instead this should say something like:
-> 
-> 	/*
-> 	 * Make sure that struct sha1_state begins directly with the 160-bit
-> 	 * SHA1 internal state, as this is what the assembly functions expect.
-> 	 */
-> 
-> Likewise for SHA-256 and SHA-512, except for those it would be a 256-bit and
-> 512-bit internal state respectively.
+v6:
+- minimize need for various internal casts (ebiggers)
+- clarify comments (ebiggers)
+- switch all context pointers to const (ebiggers)
+v5: https://lore.kernel.org/lkml/20191113182516.13545-1-keescook@chromium.org
+v4: https://lore.kernel.org/lkml/20191111214552.36717-1-keescook@chromium.org
+v3: https://lore.kernel.org/lkml/20190507161321.34611-1-keescook@chromium.org
 
-Thanks! Agreed, that is much clearer.
+Hi,
 
-> > -asmlinkage void sha1_transform_ssse3(u32 *digest, const char *data,
-> > -				     unsigned int rounds);
-> > +asmlinkage void sha1_transform_ssse3(struct sha1_state *digest,
-> > +				     u8 const *data, int rounds);
-> 
-> 'u8 const' is unconventional.  Please use 'const u8' instead.
+Now that Clang's CFI has been fixed to do the right thing with extern
+asm functions, this patch series is much simplified. Repeating patch
+1's commit log here:
 
-Yeah, I noticed that but decided to disrupt less. Fixed now.
+    The crypto glue performed function prototype casting to make indirect
+    calls to assembly routines. Instead of performing casts at the call
+    sites (which trips Control Flow Integrity prototype checking), switch
+    each prototype to a common standard set of arguments which allows the
+    incremental removal of the existing macros. In order to keep pointer
+    math unchanged, internal casting between u128 pointers and u8 pointers
+    is added.
 
-> Also, this function prototype is also given in a comment in the corresponding
-> assembly file.  Can you please update that too, and also leave a comment in the
-> assembly file like "struct sha1_state is assumed to begin with u32 state[5]."?
-> 
-> Likewise for all the other SHA-1, and SHA-256, and SHA-512 assembly functions,
-> except it would be u32 state[8] for SHA-256 and u64 state[8] for SHA-512.
+With this series (and the Clang LTO+CFI series) I am able to boot x86
+with all crytpo selftests enabled without tripping any CFI checks.
 
-I love how each uses an entirely different comment style. :) Updated!
+Thanks!
+
+-Kees
+
+Kees Cook (8):
+  crypto: x86/glue_helper: Regularize function prototypes
+  crypto: x86/serpent: Remove glue function macros usage
+  crypto: x86/camellia: Remove glue function macro usage
+  crypto: x86/twofish: Remove glue function macro usage
+  crypto: x86/cast6: Remove glue function macro usage
+  crypto: x86/aesni: Remove glue function macro usage
+  crypto: x86/glue_helper: Remove function prototype cast helpers
+  crypto, x86/sha: Eliminate casts on asm implementations
+
+ arch/x86/crypto/aesni-intel_asm.S          |  8 +--
+ arch/x86/crypto/aesni-intel_glue.c         | 45 ++++++-------
+ arch/x86/crypto/camellia_aesni_avx2_glue.c | 74 ++++++++++-----------
+ arch/x86/crypto/camellia_aesni_avx_glue.c  | 72 +++++++++------------
+ arch/x86/crypto/camellia_glue.c            | 45 +++++++------
+ arch/x86/crypto/cast6_avx_glue.c           | 68 +++++++++-----------
+ arch/x86/crypto/glue_helper.c              | 23 ++++---
+ arch/x86/crypto/serpent_avx2_glue.c        | 65 +++++++++----------
+ arch/x86/crypto/serpent_avx_glue.c         | 63 +++++++++---------
+ arch/x86/crypto/serpent_sse2_glue.c        | 30 +++++----
+ arch/x86/crypto/sha1_ssse3_asm.S           | 10 ++-
+ arch/x86/crypto/sha1_ssse3_glue.c          | 64 ++++++++----------
+ arch/x86/crypto/sha256-ssse3-asm.S         |  4 +-
+ arch/x86/crypto/sha256_ssse3_glue.c        | 34 +++++-----
+ arch/x86/crypto/sha512-ssse3-asm.S         |  4 +-
+ arch/x86/crypto/sha512_ssse3_glue.c        | 31 +++++----
+ arch/x86/crypto/twofish_avx_glue.c         | 75 ++++++++++------------
+ arch/x86/crypto/twofish_glue_3way.c        | 37 ++++++-----
+ arch/x86/include/asm/crypto/camellia.h     | 63 +++++++++---------
+ arch/x86/include/asm/crypto/glue_helper.h  | 18 ++----
+ arch/x86/include/asm/crypto/serpent-avx.h  | 20 +++---
+ arch/x86/include/asm/crypto/serpent-sse2.h | 28 ++++----
+ arch/x86/include/asm/crypto/twofish.h      | 19 +++---
+ crypto/cast6_generic.c                     | 18 +++---
+ crypto/serpent_generic.c                   |  6 +-
+ include/crypto/cast6.h                     |  4 +-
+ include/crypto/serpent.h                   |  4 +-
+ include/crypto/xts.h                       |  2 -
+ 28 files changed, 446 insertions(+), 488 deletions(-)
 
 -- 
-Kees Cook
+2.17.1
+
