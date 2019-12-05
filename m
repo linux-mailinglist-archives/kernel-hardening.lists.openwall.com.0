@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17460-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17461-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 49BAB113885
-	for <lists+kernel-hardening@lfdr.de>; Thu,  5 Dec 2019 01:11:17 +0100 (CET)
-Received: (qmail 28051 invoked by uid 550); 5 Dec 2019 00:10:30 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 52760113886
+	for <lists+kernel-hardening@lfdr.de>; Thu,  5 Dec 2019 01:11:28 +0100 (CET)
+Received: (qmail 28305 invoked by uid 550); 5 Dec 2019 00:10:32 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,31 +13,31 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 27997 invoked from network); 5 Dec 2019 00:10:29 -0000
+Received: (qmail 28224 invoked from network); 5 Dec 2019 00:10:31 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ALzclmclfe7/Are+E2zwtoN5E20g3s/7atxslYp5zww=;
-        b=StNnDlpBGGpkxh4LmqeR9wQsbcrNJKHaZeCmAjkMHb8h4GTl1ZQHqs4uCC/JvHxElq
-         /txNvdxS5adtJxiAROs0VVndZR8Kr1R4yXT4EJxkMc7Wt7DhsZDWJ5E+4a1VFw/xMwZy
-         P/zLTliHZPcyMRn4gvSewOaYYINB+zv5mAwd8=
+        bh=7yE3ZHkR69UGcsqSedpJxhASD5SeB0FinXe1byG56UQ=;
+        b=f/EVziDY7KK0UVtP07zeQE8P/OZC24lNIxT+R0yrkPhKCRQlrqlzCOrH5fi8fvczJ5
+         bhXqfRmivbfuDr2Tu6VTuKi28nf92jc1ge/UxVZlXwVOvxwsjHB0e4vv9oMBJYuLmvcB
+         d+qDYPPdtKxm9l1gNlaJYeQGZJZ06L4X45ZUM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ALzclmclfe7/Are+E2zwtoN5E20g3s/7atxslYp5zww=;
-        b=UUkN69k/LkiXp8OdDrkrUK4fAHOtYAJMz9ZlzCXRCZdwnaMynCmEJAON2veGFMhcD/
-         Di8tpNb9HnmDlIZ22q4z4CA71/3DYqEcQwb3Vi/KShUWD+UMS+kAb1p8CsBXB4oYJnyv
-         xoWbmAZYXlc+47XysmarN3KGCeHkYivIfTP+4f3CcMZF+C5IWmSLGBeE8TCxmtkz4b0C
-         Cib80Qicw0zf28ErIRUwT/8sTSYnNiUHfiL/Hk91LDHk4jwwJ9+O5h5VpCb1uB0PeyG2
-         USVOJG+fdX5cMJXCbvFlKlUesjT0qVDcQDUISmGBxnsuZilBx7rcqDFK2NuWULXrzt9m
-         bWnw==
-X-Gm-Message-State: APjAAAUzXE6/uISZWVQkUMYpyUccr1FfyiQQpAubjJ/3WdQolRPHk/od
-	ubnh8FF3RbkhZpEkfiBUYM3CTp1wSRo=
-X-Google-Smtp-Source: APXvYqxSdZ7Wkqu57YaZ3sPkRlqDS6GltWmE59e0kHGg9y8FxcGordcqDvfMgNftRbTyxHsQtapMFw==
-X-Received: by 2002:a17:902:b089:: with SMTP id p9mr6262250plr.154.1575504617608;
-        Wed, 04 Dec 2019 16:10:17 -0800 (PST)
+        bh=7yE3ZHkR69UGcsqSedpJxhASD5SeB0FinXe1byG56UQ=;
+        b=PksUano7lnQ00nm5G1XXqXUOdUDeGoug2ucteLIYFX/zz4F/SiR1SbkmuN/BJp/uY2
+         JpFZ0wmBoM9USJpJKyBFj1Up4tmIcTQ7jeVwhfReRYif3UjKb2VXeixvFASaZCKODtL2
+         CFmox5ste+US6ujaxb3vi27r0+lluGm8PZGH4JFeSXXioRCaMNY1KOVejTl21sB/YMFF
+         iPdGYtLLTnDYpStY1AGJaTj2ilbmuoLNBX/tJgKmJbgW1hyJTChqDB9vuS9SlWGdnCJd
+         qIjEPQyv1CtnkTt0V6NhieqFujadKbVfZIAGE8ZYRhKr0+qYCA+HxGea5ti/G7qVnb0T
+         NmAw==
+X-Gm-Message-State: APjAAAWQxt2FppJ/aQWTuAnzrY8oYUJkkue9uus71+yOdgzVO9hTdnvc
+	izoRaJvLSEFcxJvFZSQatQqieWFEChU=
+X-Google-Smtp-Source: APXvYqwCkYksA3H9gQM8Dd/UpM0c4sw+LmMk/E0hmNMYq/n4Q5BnskCCI0QZYAt9KoQF8+EThAaDog==
+X-Received: by 2002:a63:3f4f:: with SMTP id m76mr6186602pga.353.1575504619867;
+        Wed, 04 Dec 2019 16:10:19 -0800 (PST)
 From: Thomas Garnier <thgarnie@chromium.org>
 To: kernel-hardening@lists.openwall.com
 Cc: kristen@linux.intel.com,
@@ -48,41 +48,50 @@ Cc: kristen@linux.intel.com,
 	Borislav Petkov <bp@alien8.de>,
 	"H. Peter Anvin" <hpa@zytor.com>,
 	x86@kernel.org,
+	Andy Lutomirski <luto@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Len Brown <len.brown@intel.com>,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v10 05/11] x86: pm-trace - Adapt assembly for PIE support
-Date: Wed,  4 Dec 2019 16:09:42 -0800
-Message-Id: <20191205000957.112719-6-thgarnie@chromium.org>
+Subject: [PATCH v10 06/11] x86/CPU: Adapt assembly for PIE support
+Date: Wed,  4 Dec 2019 16:09:43 -0800
+Message-Id: <20191205000957.112719-7-thgarnie@chromium.org>
 X-Mailer: git-send-email 2.24.0.393.g34dc348eaf-goog
 In-Reply-To: <20191205000957.112719-1-thgarnie@chromium.org>
 References: <20191205000957.112719-1-thgarnie@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Change assembly to use the new _ASM_MOVABS macro instead of _ASM_MOV for
-the assembly to be PIE compatible.
+Change the assembly code to use only relative references of symbols for the
+kernel to be PIE compatible.
 
 Position Independent Executable (PIE) support will allow to extend the
 KASLR randomization range below 0xffffffff80000000.
 
 Signed-off-by: Thomas Garnier <thgarnie@chromium.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
 ---
- arch/x86/include/asm/pm-trace.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/include/asm/processor.h | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/include/asm/pm-trace.h b/arch/x86/include/asm/pm-trace.h
-index bfa32aa428e5..972070806ce9 100644
---- a/arch/x86/include/asm/pm-trace.h
-+++ b/arch/x86/include/asm/pm-trace.h
-@@ -8,7 +8,7 @@
- do {								\
- 	if (pm_trace_enabled) {					\
- 		const void *tracedata;				\
--		asm volatile(_ASM_MOV " $1f,%0\n"		\
-+		asm volatile(_ASM_MOVABS " $1f,%0\n"		\
- 			     ".section .tracedata,\"a\"\n"	\
- 			     "1:\t.word %c1\n\t"		\
- 			     _ASM_PTR " %c2\n"			\
+diff --git a/arch/x86/include/asm/processor.h b/arch/x86/include/asm/processor.h
+index 0340aad3f2fc..77fa291a60bb 100644
+--- a/arch/x86/include/asm/processor.h
++++ b/arch/x86/include/asm/processor.h
+@@ -742,11 +742,13 @@ static inline void sync_core(void)
+ 		"pushfq\n\t"
+ 		"mov %%cs, %0\n\t"
+ 		"pushq %q0\n\t"
+-		"pushq $1f\n\t"
++		"leaq 1f(%%rip), %q0\n\t"
++		"pushq %q0\n\t"
+ 		"iretq\n\t"
+ 		UNWIND_HINT_RESTORE
+ 		"1:"
+-		: "=&r" (tmp), ASM_CALL_CONSTRAINT : : "cc", "memory");
++		: "=&r" (tmp), ASM_CALL_CONSTRAINT
++		: : "cc", "memory");
+ #endif
+ }
+ 
 -- 
 2.24.0.393.g34dc348eaf-goog
 
