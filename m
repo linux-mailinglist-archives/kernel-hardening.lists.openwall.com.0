@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17457-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17458-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id E78A811387E
-	for <lists+kernel-hardening@lfdr.de>; Thu,  5 Dec 2019 01:10:49 +0100 (CET)
-Received: (qmail 27807 invoked by uid 550); 5 Dec 2019 00:10:25 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 5999B113883
+	for <lists+kernel-hardening@lfdr.de>; Thu,  5 Dec 2019 01:10:58 +0100 (CET)
+Received: (qmail 27935 invoked by uid 550); 5 Dec 2019 00:10:27 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,31 +13,31 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 27697 invoked from network); 5 Dec 2019 00:10:24 -0000
+Received: (qmail 27821 invoked from network); 5 Dec 2019 00:10:26 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=D3o0S53BeNnZfZd99UaFa744uBy1bdSUJelyk4yNxHs=;
-        b=GC95mQV5lCJoxcnVgn7296LK/LZBl3LEgiS0w9Qsv+v/6fbsEouw6kOnJdXsFNqaIi
-         ffnEamkViwozMeBKfXxdLm0oEVeqCoZhAOCOuTTXnq8ARzgED4nTN2Lg02dSegV3KT2s
-         0M9m5OFAtgEpGoe6zM5fLdwUOKXdYd2RGeaW0=
+        bh=AI0Sbf2qfvdip7zDaIMGaj7cN/UAI4vRqAvCejejut0=;
+        b=FDTctH2CeJShcdMHsHl2Oi7MHODy229XFf1dMS36U2X/QdXpsbAtsCUC75G8Tt4iZ/
+         wFsIWH/tIi6YoU802WLaDkHZFr84ABsj1X/04mTK+cDldigsFFAdsf9RjxmBi1w9DMRf
+         Y3eRIoUILPqZg0xNze2z+SLJZaY99XtfVjbec=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=D3o0S53BeNnZfZd99UaFa744uBy1bdSUJelyk4yNxHs=;
-        b=i+H40ceTCOkQEH9qL7HCcu1aUdTbrXZL1zNQPp1TtuxGozvECZuKeVVMXUGJkuLRnE
-         P8ZlWU5nylyu8EwRaw8J29fZp8qzTdbqWzRxyi6hGd83OxdDReiUnBkFyT4pwxJbplqZ
-         d5EEIhTKk0tg2F8YgIuCT9yPsPN1gYs95sQGtunIv+RYtnNarP8OXn5B9pHnrk8LgMNb
-         NHGy+4EjZ8n0Xphjbcl9E7FQYZrjKZbPrrDHqfyc9RXZTM6x2WKYxmgiYVRbsosgXxSP
-         tjBckxX/hxjYTnyz772MoozLoRi6Kchk0mc/3AFaV1OCCovYrIGzKBbrpdwwG5YHK1ri
-         +ujQ==
-X-Gm-Message-State: APjAAAW//V9VeKns8LELPJmI0tRrq1RA25thld4ByGBH6oEftkL6SU8X
-	NAGUhN/PzmJ0KAO0xVLAVlYLfNxAWCE=
-X-Google-Smtp-Source: APXvYqxZa14mrTVNWUdtWyPFCBpCEtH1XqTiMCdfNPGTL0gp3E35ktiDS7ypx6yJ/1yVmjm1S0Bzdw==
-X-Received: by 2002:a62:6381:: with SMTP id x123mr6145520pfb.75.1575504612382;
-        Wed, 04 Dec 2019 16:10:12 -0800 (PST)
+        bh=AI0Sbf2qfvdip7zDaIMGaj7cN/UAI4vRqAvCejejut0=;
+        b=L7BBay87hWNu7BpVDN7k4AzLyacZaAcM1AA6dPTVPUzN4UVvQimUjUeGJ3BxHQGdfh
+         EyEkjjUw5oYnQbuYlFQ0rovKbp935DxuZjMzq9qkHOBqR1M7ubwRdcv3eMmUPrX19qEU
+         mEeIZ0L8yLk0Q95DALvprV/yXgPJUQBGg1TxGL+makrktrScF/li+GqAMBjkNz8SXsum
+         f7myLFMWNbHCMoAqV7GFPS2MDuK7LEU1xrANdPmmfna2c9hvfgdy55lPWp5H/KNuHvX0
+         j1orNlZU6WavbafOt8aA21cxCI55pau6ARim/xJTywsjEfV1Yn7DFcQP+4Wyj29+QNFH
+         2DGQ==
+X-Gm-Message-State: APjAAAWtm1pTkN6exSOh15/qerN9ERagVQlzuNwTOfrHU/dX0fTfty9/
+	GPlwPT+BItaGufB4/YZdfKbg2q3QaCw=
+X-Google-Smtp-Source: APXvYqyoUG5RvODwUDikHFr0GME5meRLVDUYTKsj6+bCgJ3vbygvGSX80K/1+YC5RDXowxCFuo8yEw==
+X-Received: by 2002:a17:90a:a612:: with SMTP id c18mr6163516pjq.49.1575504614402;
+        Wed, 04 Dec 2019 16:10:14 -0800 (PST)
 From: Thomas Garnier <thgarnie@chromium.org>
 To: kernel-hardening@lists.openwall.com
 Cc: kristen@linux.intel.com,
@@ -48,40 +48,45 @@ Cc: kristen@linux.intel.com,
 	Borislav Petkov <bp@alien8.de>,
 	"H. Peter Anvin" <hpa@zytor.com>,
 	x86@kernel.org,
-	Peter Zijlstra <peterz@infradead.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Allison Randal <allison@lohutok.net>,
+	Alexios Zavras <alexios.zavras@intel.com>,
+	Jiri Slaby <jslaby@suse.cz>,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v10 02/11] x86: Add macro to get symbol address for PIE support
-Date: Wed,  4 Dec 2019 16:09:39 -0800
-Message-Id: <20191205000957.112719-3-thgarnie@chromium.org>
+Subject: [PATCH v10 03/11] x86: relocate_kernel - Adapt assembly for PIE support
+Date: Wed,  4 Dec 2019 16:09:40 -0800
+Message-Id: <20191205000957.112719-4-thgarnie@chromium.org>
 X-Mailer: git-send-email 2.24.0.393.g34dc348eaf-goog
 In-Reply-To: <20191205000957.112719-1-thgarnie@chromium.org>
 References: <20191205000957.112719-1-thgarnie@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a new _ASM_MOVABS macro to fetch a symbol address. Replace
-"_ASM_MOV $<symbol>, %dst" code construct that are not compatible with
-PIE.
+Change the assembly code to use only absolute references of symbols for the
+kernel to be PIE compatible.
+
+Position Independent Executable (PIE) support will allow to extend the
+KASLR randomization range below 0xffffffff80000000.
 
 Signed-off-by: Thomas Garnier <thgarnie@chromium.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
 ---
- arch/x86/include/asm/asm.h | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kernel/relocate_kernel_64.S | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/asm.h b/arch/x86/include/asm/asm.h
-index cd339b88d5d4..644bdbf149ee 100644
---- a/arch/x86/include/asm/asm.h
-+++ b/arch/x86/include/asm/asm.h
-@@ -32,6 +32,7 @@
- #define _ASM_ALIGN	__ASM_SEL(.balign 4, .balign 8)
- 
- #define _ASM_MOV	__ASM_SIZE(mov)
-+#define _ASM_MOVABS	__ASM_SEL(movl, movabsq)
- #define _ASM_INC	__ASM_SIZE(inc)
- #define _ASM_DEC	__ASM_SIZE(dec)
- #define _ASM_ADD	__ASM_SIZE(add)
+diff --git a/arch/x86/kernel/relocate_kernel_64.S b/arch/x86/kernel/relocate_kernel_64.S
+index ef3ba99068d3..c294339df5ef 100644
+--- a/arch/x86/kernel/relocate_kernel_64.S
++++ b/arch/x86/kernel/relocate_kernel_64.S
+@@ -206,7 +206,7 @@ SYM_CODE_START_LOCAL_NOALIGN(identity_mapped)
+ 	movq	%rax, %cr3
+ 	lea	PAGE_SIZE(%r8), %rsp
+ 	call	swap_pages
+-	movq	$virtual_mapped, %rax
++	movabsq	$virtual_mapped, %rax
+ 	pushq	%rax
+ 	ret
+ SYM_CODE_END(identity_mapped)
 -- 
 2.24.0.393.g34dc348eaf-goog
 
