@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17480-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17481-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 5421C115927
-	for <lists+kernel-hardening@lfdr.de>; Fri,  6 Dec 2019 23:15:27 +0100 (CET)
-Received: (qmail 20392 invoked by uid 550); 6 Dec 2019 22:14:29 -0000
+	by mail.lfdr.de (Postfix) with SMTP id EBFE211592D
+	for <lists+kernel-hardening@lfdr.de>; Fri,  6 Dec 2019 23:15:38 +0100 (CET)
+Received: (qmail 21681 invoked by uid 550); 6 Dec 2019 22:14:31 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,41 +13,41 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 20315 invoked from network); 6 Dec 2019 22:14:28 -0000
+Received: (qmail 21585 invoked from network); 6 Dec 2019 22:14:30 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=l4zxu+Ve1HL3tnwJkQPbvyP6wBLrUpssPL9/jgnN43M=;
-        b=Ndn1mcggyHBtKAX2XvpEyO1cvzn5t5Rt5EL74f5oQNI8xON9HZdOIOpGfCHheh4ROb
-         ZMN247KbIgaMPUDc6e3RJ7DYNG8PST7u+oWWP+k1N+jSEe2J/d2Hj+oq/JPjyElDDN0s
-         1bajoDV+ePEiqhlZBkx0JT+WTHRbNVJ9xUb/RgEkuqCSSWGQ87CELue3gJUsVkVLLj1/
-         jMc9JOE96jedSwbK6Jh+owxavogPTbBQc3Lm1+HVnkCfDUu1/SEqZVkaAo5gGN3APpx7
-         /ziJCrqylxkp6ltt8RGxlVAjAuQ46tyN3U7+ZPVlmKLcHn2gKg0ggIkQts840wwlTABV
-         1Rpw==
+        bh=4aDgrw7n3sKpB8rlb4e1FXGpnlGkWbIPMM9nhNp+jXs=;
+        b=au1NZhTF4wAsexOlDW3QvGUTHHibdiuoOGtKnmjfRLZ0pPJFJKE+opISQXIrUR97ye
+         Jne0qPeQQiFimsKZER4HaK21Z32PFAMdXThycc6amcnFXyiRGqcBd7hzGtaSxtjLovKA
+         MtCxYRCUfBUiozbQAY8WWFFWshKqoTOktvqXvtAigS6VHdCV5+fVo6wqlgPIj5sUrPy7
+         nyM+Yj6Rc076XJ7CjGnjpbrP4L2nSj+srGB86VsKIU0Wi383uYJUprK31BiItYr5v/o2
+         Pxb9DYcCbj3fcvL19VOlmfxX8nuMHZ73nI0/DFRRg8SJ94YuyFgsEVGXyEeevmK3xEjY
+         Wuvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=l4zxu+Ve1HL3tnwJkQPbvyP6wBLrUpssPL9/jgnN43M=;
-        b=G/DbhBt7LFpkChDtWISIzkauENtJp1xvfq1Qyxse1MunPYN19BBP6AvOpSN+JqN++Y
-         eApF79Jsiq+4M72wJCfmgZV3SD8b1KtB/zgmeIADn3HVmZAKoxOu0ZQ/12qjueQXepWy
-         EDLKt+xCuGMpc20n/EaQoAUSdidVOIERZgUftEyMzwQfUQaCUp5l7V/qesJPGOv0MQQg
-         Tb0mPCMWs+zym4U24fVSNw6MyUKTq+0zD9OwVXI+bvBcR99Xn8/Ozmf/xcKkSqcyxQlc
-         Soi5ZiMR1LA24JC11W9gpVGr0z9jIi2fUS+WsaZEitbilwYuu16YoWbGbUJn2A0f3+9J
-         Jjhw==
-X-Gm-Message-State: APjAAAVarTiqV3BSJOTVZNz74E6n7iW/YyNXJiyKeZ0n8Sgq8/NEU1w4
-	vLnMmOxl/5k0BtEJnHBV1FfHzNTYeWWdv4Y+CxM=
-X-Google-Smtp-Source: APXvYqxNGRCIoJl/pi6uCzgUEQ/oTKWPk8JXk9O2ag4WW88WJwvi2rvTurqocnD02MdVkQxGa8htdlPNVJwyO2G3YuU=
-X-Received: by 2002:a65:4345:: with SMTP id k5mr6095564pgq.252.1575670456528;
- Fri, 06 Dec 2019 14:14:16 -0800 (PST)
-Date: Fri,  6 Dec 2019 14:13:44 -0800
+        bh=4aDgrw7n3sKpB8rlb4e1FXGpnlGkWbIPMM9nhNp+jXs=;
+        b=bqL90pF1NuJX8ixgj3a6hWOUGLeH576hr/JYieMcsC9Sy5uojeJ8jDOpspjHuiiCvw
+         qwYHMwyQhCW2HZSWNxhXYMZl2c3rlp/85ffk5YvWrZNVSD3neYMga5k6FC0A0VfMQisV
+         ZS9UJA53uk6wTiB764IDG5kOZIDhSt7LJ5HOQA/5TjMxvjgaYdDhS/YQ31A1mY+9FdI/
+         oQ8qPed43QH/zJjUIWb8MlbQqRAm+OKPbTLbhFKIaZQykbv1TK7K1Go+FvFgzi2fgP6x
+         kjlHjaiEwArZsAk51PSxXb4NjUNSbbVBbYzR7C5ySXJ9i3Cr6ewD+/eCU1dZmJ4ngGrz
+         ++lA==
+X-Gm-Message-State: APjAAAWkfs0Xdu59PlePbkzZHlcOcGxZBmSeklCf8C2xTB6RcVpV3E2/
+	Vh3+in/5mFsAkftFXRZRcueedQlz9S2AS8kcZ5w=
+X-Google-Smtp-Source: APXvYqwRlAi+m5KSot17CZFEPydPDuL4iAvmhFlppFfNB1e6R6A3XWaehHnjib1r5pVc/bUaEbkOTOtXqUzvI+1YHGE=
+X-Received: by 2002:a65:518b:: with SMTP id h11mr5968857pgq.133.1575670459027;
+ Fri, 06 Dec 2019 14:14:19 -0800 (PST)
+Date: Fri,  6 Dec 2019 14:13:45 -0800
 In-Reply-To: <20191206221351.38241-1-samitolvanen@google.com>
-Message-Id: <20191206221351.38241-9-samitolvanen@google.com>
+Message-Id: <20191206221351.38241-10-samitolvanen@google.com>
 Mime-Version: 1.0
 References: <20191018161033.261971-1-samitolvanen@google.com> <20191206221351.38241-1-samitolvanen@google.com>
 X-Mailer: git-send-email 2.24.0.393.g34dc348eaf-goog
-Subject: [PATCH v6 08/15] arm64: disable function graph tracing with SCS
+Subject: [PATCH v6 09/15] arm64: reserve x18 from general allocation with SCS
 From: Sami Tolvanen <samitolvanen@google.com>
 To: Will Deacon <will@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
 	Steven Rostedt <rostedt@goodmis.org>, Masami Hiramatsu <mhiramat@kernel.org>, 
@@ -61,34 +61,33 @@ Cc: Dave Martin <Dave.Martin@arm.com>, Kees Cook <keescook@chromium.org>,
 	linux-kernel@vger.kernel.org, Sami Tolvanen <samitolvanen@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-The graph tracer hooks returns by modifying frame records on the
-(regular) stack, but with SCS the return address is taken from the
-shadow stack, and the value in the frame record has no effect. As we
-don't currently have a mechanism to determine the corresponding slot
-on the shadow stack (and to pass this through the ftrace
-infrastructure), for now let's disable the graph tracer when SCS is
-enabled.
+Reserve the x18 register from general allocation when SCS is enabled,
+because the compiler uses the register to store the current task's
+shadow stack pointer. Note that all external kernel modules must also be
+compiled with -ffixed-x18 if the kernel has SCS enabled.
 
 Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 Reviewed-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Mark Rutland <mark.rutland@arm.com>
 ---
- arch/arm64/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/Makefile | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index b1b4476ddb83..49e5f94ff4af 100644
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -149,7 +149,7 @@ config ARM64
- 	select HAVE_FTRACE_MCOUNT_RECORD
- 	select HAVE_FUNCTION_TRACER
- 	select HAVE_FUNCTION_ERROR_INJECTION
--	select HAVE_FUNCTION_GRAPH_TRACER
-+	select HAVE_FUNCTION_GRAPH_TRACER if !SHADOW_CALL_STACK
- 	select HAVE_GCC_PLUGINS
- 	select HAVE_HW_BREAKPOINT if PERF_EVENTS
- 	select HAVE_IRQ_TIME_ACCOUNTING
+diff --git a/arch/arm64/Makefile b/arch/arm64/Makefile
+index 1fbe24d4fdb6..e69736fc1106 100644
+--- a/arch/arm64/Makefile
++++ b/arch/arm64/Makefile
+@@ -72,6 +72,10 @@ stack_protector_prepare: prepare0
+ 					include/generated/asm-offsets.h))
+ endif
+ 
++ifeq ($(CONFIG_SHADOW_CALL_STACK), y)
++KBUILD_CFLAGS	+= -ffixed-x18
++endif
++
+ ifeq ($(CONFIG_CPU_BIG_ENDIAN), y)
+ KBUILD_CPPFLAGS	+= -mbig-endian
+ CHECKFLAGS	+= -D__AARCH64EB__
 -- 
 2.24.0.393.g34dc348eaf-goog
 
