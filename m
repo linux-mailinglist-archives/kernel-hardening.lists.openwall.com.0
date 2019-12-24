@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17513-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17514-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id CAF54129950
-	for <lists+kernel-hardening@lfdr.de>; Mon, 23 Dec 2019 18:24:19 +0100 (CET)
-Received: (qmail 7398 invoked by uid 550); 23 Dec 2019 17:24:11 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 3ECD4129DF1
+	for <lists+kernel-hardening@lfdr.de>; Tue, 24 Dec 2019 06:56:14 +0100 (CET)
+Received: (qmail 19760 invoked by uid 550); 24 Dec 2019 05:56:07 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,57 +13,88 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 7378 invoked from network); 23 Dec 2019 17:24:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-	t=1577121839;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-	bh=qCVgGYhpI8fuKjCs8j7FE3FBqgR2XtSUh+fcWzWH/VE=;
-	b=pvVxg2hevIXfE5w6AjNWNNr06Hnx3RYJHHVwrf8s0r2xJThHa80f8RP/uGdow/GBBatTO/
-	EYQHW+V+LUNPOVQo4AsEyrZWC+tOHadjiSubJv/2LfgB6CoNxXenfr04LOHkgIuvLEbcEd
-	YwwrPHo/fWJcekxP0Wf0T/oOtgxiBsQ=
-Date: Mon, 23 Dec 2019 18:23:50 +0100
-From: Borislav Petkov <bp@alien8.de>
-To: Thomas Garnier <thgarnie@chromium.org>
-Cc: kernel-hardening@lists.openwall.com, kristen@linux.intel.com,
-	keescook@chromium.org, Juergen Gross <jgross@suse.com>,
-	Thomas Hellstrom <thellstrom@vmware.com>,
-	"VMware, Inc." <pv-drivers@vmware.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>, "H. Peter Anvin" <hpa@zytor.com>,
-	x86@kernel.org, virtualization@lists.linux-foundation.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v10 10/11] x86/paravirt: Adapt assembly for PIE support
-Message-ID: <20191223172350.GH16710@zn.tnic>
-References: <20191205000957.112719-1-thgarnie@chromium.org>
- <20191205000957.112719-11-thgarnie@chromium.org>
+Received: (qmail 19721 invoked from network); 24 Dec 2019 05:56:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=russell.cc; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding; s=fm3; bh=quBZcC5Nj15k+G+ee0d2Sguypc
+	PXvk8rxSpa/ZtL4BE=; b=XjahVPXMeph/schhBdXTzGRdm3VhVmGKt6OrPT6Dzb
+	hfeEnvGzaDB1GOzWUuGUWy8b09znxYHokZq9JXupd1DvgK8y5ptklT5uPHY0Z/mC
+	0FDBaQt51Jn3lSejDB6YyF3pkvictdJKWa9UMyhiOZF7o4DkkSnRgPyzGEfMO0eb
+	DUsTFTFkFmiYwEoEPcRuNlKZ5yfzHi9F3ls/nKJ/pKfo1YvqARfxdF6ngdZEh+p7
+	FW8FWEzpdGVWal+MdaKUpXdpiJ0fyJUcuu00FDfeLP1kWeavRAsmGoVsifbCbO8s
+	h3psPt2ChciymIksKw9TSFA6UmHtOMxTjL8X10UJS3SA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:date:from
+	:message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=quBZcC5Nj15k+G+ee
+	0d2SguypcPXvk8rxSpa/ZtL4BE=; b=fjTuryOiDFR+IKhOm4xNdGKh93s3o4fSQ
+	elZNNIljI8oSJmFCoXgDfU1LgLMsdLD37AehyFvY+wa+HTOP1xqlNNnTWGzBpGPd
+	PNaUA8D3r15QRxPx8yuPGeN1WRRG4ox1UEjdFPQtnfgIuSBOdmnOmW3fLfl+q3cu
+	HVGIBbRM9oVmUTIQZLKrJhE4gA0DtvJTcxlBzqWhzJxuiTrwx6XDcRkLKlC4Qcs3
+	bakWHf0Bl0uRgC/ezpU3W2o04nr6tu+ltIKgnO4180Hzk4cyZDysX/DGwufFYbd8
+	CnsCw7Ar1taYIwAjJz3tOnfcvEu5tv3YAvUwEmZp8URb/HWixETJg==
+X-ME-Sender: <xms:aagBXltYeLkDxWnfsR48r3c7NlCIPqfEa4tF9FxsiLZeY6EmgOLGMg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrvddvuddgieduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdludehmdenogevohgrshhtrg
+    hlqdfhgeduvddqtddvucdludehtddmnecujfgurhephffvufffkffoggfgsedtkeertder
+    tddtnecuhfhrohhmpeftuhhsshgvlhhlucevuhhrrhgvhicuoehruhhstghurhesrhhush
+    hsvghllhdrtggtqeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhoiihlrggsshdr
+    ohhrghenucfkphepuddvvddrleelrdekvddruddtnecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpehruhhstghurhesrhhushhsvghllhdrtggtnecuvehluhhsthgvrhfuihiivgeptd
+X-ME-Proxy: <xmx:aagBXitWqBZvi3RRE2AL7wjwcQJ1Z04R_VJ6B5Ni0zyzybAR5cKoLQ>
+    <xmx:aagBXjw_Zl6HoaMtTbGDd5QWZuE7dBysBU0PahNN-C8evukBXAs4gA>
+    <xmx:aagBXgjep3Dbi8xh1qkhYgClaPMK4awHtEyYR3mbYU-iKt3zL7ZF0g>
+    <xmx:aqgBXqkuKaF3LIf7SS9A8p10obwq4DOaaZKpmxRhs8CIRTGdYpFBIQ>
+From: Russell Currey <ruscur@russell.cc>
+To: linuxppc-dev@lists.ozlabs.org
+Cc: Russell Currey <ruscur@russell.cc>,
+	christophe.leroy@c-s.fr,
+	joel@jms.id.au,
+	mpe@ellerman.id.au,
+	ajd@linux.ibm.com,
+	dja@axtens.net,
+	npiggin@gmail.com,
+	kernel-hardening@lists.openwall.com
+Subject: [PATCH v6 0/5] Implement STRICT_MODULE_RWX for powerpc
+Date: Tue, 24 Dec 2019 16:55:40 +1100
+Message-Id: <20191224055545.178462-1-ruscur@russell.cc>
+X-Mailer: git-send-email 2.24.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20191205000957.112719-11-thgarnie@chromium.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 
-On Wed, Dec 04, 2019 at 04:09:47PM -0800, Thomas Garnier wrote:
-> If PIE is enabled, switch the paravirt assembly constraints to be
-> compatible. The %c/i constrains generate smaller code so is kept by
-> default.
-> 
-> Position Independent Executable (PIE) support will allow to extend the
-> KASLR randomization range below 0xffffffff80000000.
-> 
-> Signed-off-by: Thomas Garnier <thgarnie@chromium.org>
-> Acked-by: Juergen Gross <jgross@suse.com>
-> ---
->  arch/x86/include/asm/paravirt_types.h | 32 +++++++++++++++++++++++----
->  1 file changed, 28 insertions(+), 4 deletions(-)
+v5 cover letter: https://lore.kernel.org/kernel-hardening/20191030073111.140493-1-ruscur@russell.cc/
+v4 cover letter: https://lists.ozlabs.org/pipermail/linuxppc-dev/2019-October/198268.html
+v3 cover letter: https://lists.ozlabs.org/pipermail/linuxppc-dev/2019-October/198023.html
 
-More missed feedback:
+Changes since v5:
+	[1/5]: Addressed review comments from Christophe Leroy (thanks!)
+	[2/5]: Use patch_instruction() instead of memcpy() thanks to mpe
 
-https://lkml.kernel.org/r/CAJcbSZG-JhBC9b1JMv1zq2r5uRQipYLtkNjM67sd7=eqy_iOaA@mail.gmail.com
+Thanks for the feedback, hopefully this is the final iteration.  I have a patch
+to remove the STRICT_KERNEL_RWX incompatibility with RELOCATABLE for book3s64
+coming soon, so with that we should have a great basis for powerpc RWX going
+forward.
+
+Russell Currey (5):
+  powerpc/mm: Implement set_memory() routines
+  powerpc/kprobes: Mark newly allocated probes as RO
+  powerpc/mm/ptdump: debugfs handler for W+X checks at runtime
+  powerpc: Set ARCH_HAS_STRICT_MODULE_RWX
+  powerpc/configs: Enable STRICT_MODULE_RWX in skiroot_defconfig
+
+ arch/powerpc/Kconfig                   |  2 +
+ arch/powerpc/Kconfig.debug             |  6 +-
+ arch/powerpc/configs/skiroot_defconfig |  1 +
+ arch/powerpc/include/asm/set_memory.h  | 32 ++++++++++
+ arch/powerpc/kernel/kprobes.c          |  6 +-
+ arch/powerpc/mm/Makefile               |  1 +
+ arch/powerpc/mm/pageattr.c             | 83 ++++++++++++++++++++++++++
+ arch/powerpc/mm/ptdump/ptdump.c        | 21 ++++++-
+ 8 files changed, 147 insertions(+), 5 deletions(-)
+ create mode 100644 arch/powerpc/include/asm/set_memory.h
+ create mode 100644 arch/powerpc/mm/pageattr.c
 
 -- 
-Regards/Gruss,
-    Boris.
+2.24.1
 
-https://people.kernel.org/tglx/notes-about-netiquette
