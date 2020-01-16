@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17569-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17570-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 4046C13E9C9
-	for <lists+kernel-hardening@lfdr.de>; Thu, 16 Jan 2020 18:40:14 +0100 (CET)
-Received: (qmail 5288 invoked by uid 550); 16 Jan 2020 17:40:09 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 2FDA613EA1E
+	for <lists+kernel-hardening@lfdr.de>; Thu, 16 Jan 2020 18:42:49 +0100 (CET)
+Received: (qmail 7534 invoked by uid 550); 16 Jan 2020 17:42:44 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,15 +13,15 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 5268 invoked from network); 16 Jan 2020 17:40:08 -0000
+Received: (qmail 7508 invoked from network); 16 Jan 2020 17:42:43 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1579196397;
-	bh=euJA6zdxXJ1OpER7tf/R3kpDg450PVX85nEcb4d8ZzQ=;
+	s=default; t=1579196551;
+	bh=mgprMcwg5geRqmgaKiU1wuHYHMykWSduBoXMRAfD5oU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PjGV/BPsPkpco5bu27nYxZQvO9xiW4VIFDMeF0zaF5C0Ti5cMJbhN/BTuggIf3g7w
-	 EEeKCYCLG7UMT6aIKCgfFWTnFzTEO8Y+4Khh0O0kVq3zDlFsMTEKLuH1/6fKcakRWh
-	 7bY4ukqYCxg396Yb9t9aBgkzy6GJ2+SaCj5w+8KE=
-Date: Thu, 16 Jan 2020 17:39:51 +0000
+	b=Mgw6egZbi23SsHpczLIWPA2oAwGPyk1eHd0VM6m9t7cbSHqf6wpmF1ExXLBq+pIoS
+	 ao91bTU+o5nHjuJ5t+13jNG0TuB8o3S23+d9VEpLJq1SU98zND0ETuVrwom6LsbauM
+	 AfXlJFTytG/yjer33m8X2wJA8Wvp2M4SU906Ij2A=
+Date: Thu, 16 Jan 2020 17:42:25 +0000
 From: Will Deacon <will@kernel.org>
 To: Sami Tolvanen <samitolvanen@google.com>
 Cc: Catalin Marinas <catalin.marinas@arm.com>,
@@ -39,49 +39,84 @@ Cc: Catalin Marinas <catalin.marinas@arm.com>,
 	clang-built-linux@googlegroups.com,
 	kernel-hardening@lists.openwall.com,
 	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 08/15] arm64: disable function graph tracing with SCS
-Message-ID: <20200116173950.GB21396@willie-the-truck>
+Subject: Re: [PATCH v6 10/15] arm64: preserve x18 when CPU is suspended
+Message-ID: <20200116174225.GC21396@willie-the-truck>
 References: <20191018161033.261971-1-samitolvanen@google.com>
  <20191206221351.38241-1-samitolvanen@google.com>
- <20191206221351.38241-9-samitolvanen@google.com>
+ <20191206221351.38241-11-samitolvanen@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191206221351.38241-9-samitolvanen@google.com>
+In-Reply-To: <20191206221351.38241-11-samitolvanen@google.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Fri, Dec 06, 2019 at 02:13:44PM -0800, Sami Tolvanen wrote:
-> The graph tracer hooks returns by modifying frame records on the
-> (regular) stack, but with SCS the return address is taken from the
-> shadow stack, and the value in the frame record has no effect. As we
-> don't currently have a mechanism to determine the corresponding slot
-> on the shadow stack (and to pass this through the ftrace
-> infrastructure), for now let's disable the graph tracer when SCS is
-> enabled.
+On Fri, Dec 06, 2019 at 02:13:46PM -0800, Sami Tolvanen wrote:
+> Don't lose the current task's shadow stack when the CPU is suspended.
 > 
 > Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+> Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 > Reviewed-by: Kees Cook <keescook@chromium.org>
 > Reviewed-by: Mark Rutland <mark.rutland@arm.com>
 > ---
->  arch/arm64/Kconfig | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  arch/arm64/include/asm/suspend.h |  2 +-
+>  arch/arm64/mm/proc.S             | 14 ++++++++++++++
+>  2 files changed, 15 insertions(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-> index b1b4476ddb83..49e5f94ff4af 100644
-> --- a/arch/arm64/Kconfig
-> +++ b/arch/arm64/Kconfig
-> @@ -149,7 +149,7 @@ config ARM64
->  	select HAVE_FTRACE_MCOUNT_RECORD
->  	select HAVE_FUNCTION_TRACER
->  	select HAVE_FUNCTION_ERROR_INJECTION
-> -	select HAVE_FUNCTION_GRAPH_TRACER
-> +	select HAVE_FUNCTION_GRAPH_TRACER if !SHADOW_CALL_STACK
->  	select HAVE_GCC_PLUGINS
->  	select HAVE_HW_BREAKPOINT if PERF_EVENTS
->  	select HAVE_IRQ_TIME_ACCOUNTING
+> diff --git a/arch/arm64/include/asm/suspend.h b/arch/arm64/include/asm/suspend.h
+> index 8939c87c4dce..0cde2f473971 100644
+> --- a/arch/arm64/include/asm/suspend.h
+> +++ b/arch/arm64/include/asm/suspend.h
+> @@ -2,7 +2,7 @@
+>  #ifndef __ASM_SUSPEND_H
+>  #define __ASM_SUSPEND_H
+>  
+> -#define NR_CTX_REGS 12
+> +#define NR_CTX_REGS 13
+>  #define NR_CALLEE_SAVED_REGS 12
+>  
+>  /*
+> diff --git a/arch/arm64/mm/proc.S b/arch/arm64/mm/proc.S
+> index fdabf40a83c8..5c8219c55948 100644
+> --- a/arch/arm64/mm/proc.S
+> +++ b/arch/arm64/mm/proc.S
+> @@ -49,6 +49,8 @@
+>   * cpu_do_suspend - save CPU registers context
+>   *
+>   * x0: virtual address of context pointer
+> + *
+> + * This must be kept in sync with struct cpu_suspend_ctx in <asm/suspend.h>.
+>   */
+>  ENTRY(cpu_do_suspend)
+>  	mrs	x2, tpidr_el0
+> @@ -73,6 +75,11 @@ alternative_endif
+>  	stp	x8, x9, [x0, #48]
+>  	stp	x10, x11, [x0, #64]
+>  	stp	x12, x13, [x0, #80]
+> +	/*
+> +	 * Save x18 as it may be used as a platform register, e.g. by shadow
+> +	 * call stack.
+> +	 */
+> +	str	x18, [x0, #96]
+>  	ret
+>  ENDPROC(cpu_do_suspend)
+>  
+> @@ -89,6 +96,13 @@ ENTRY(cpu_do_resume)
+>  	ldp	x9, x10, [x0, #48]
+>  	ldp	x11, x12, [x0, #64]
+>  	ldp	x13, x14, [x0, #80]
+> +	/*
+> +	 * Restore x18, as it may be used as a platform register, and clear
+> +	 * the buffer to minimize the risk of exposure when used for shadow
+> +	 * call stack.
+> +	 */
+> +	ldr	x18, [x0, #96]
+> +	str	xzr, [x0, #96]
 
-I think this is the wrong way around, as we support the graph tracer
-today and so I think SHADOW_CALL_STACK should depend on !GRAPH_TRACER
-and possibly even EXPERT until this is resolved.
+Mumble, mumble, spectre-v4.
+
+But I think it's fairly hopeless trying to fix that everywhere it crops up,
+so:
+
+Acked-by: Will Deacon <will@kernel.org>
 
 Will
