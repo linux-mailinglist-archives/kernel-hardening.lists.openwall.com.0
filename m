@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17562-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17565-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 1D40E13D180
-	for <lists+kernel-hardening@lfdr.de>; Thu, 16 Jan 2020 02:25:09 +0100 (CET)
-Received: (qmail 3846 invoked by uid 550); 16 Jan 2020 01:24:36 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 726FA13D183
+	for <lists+kernel-hardening@lfdr.de>; Thu, 16 Jan 2020 02:25:37 +0100 (CET)
+Received: (qmail 4002 invoked by uid 550); 16 Jan 2020 01:24:40 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,31 +13,31 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 3701 invoked from network); 16 Jan 2020 01:24:35 -0000
+Received: (qmail 3851 invoked from network); 16 Jan 2020 01:24:37 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=46Z0N6nNFPIgM2OuwNgkHRjYe659IsqNoWw8FG0hdrY=;
-        b=SJwnin5nMwZBKrhpnWtYLNNA2XESjaBA5OMZZUiC+dLBovxajhmbEreGNQuSCGlJwg
-         rzwLtTnueeZeF9mo1NZWc/UG++85l/gf4xMNaTD7Mi65olwyiNctPjj7SEzVTf8lz6JY
-         y2wkfmtBIGevOe/HcrOjcNSuIe8PF7VSzsSEI=
+        bh=8H0Ju2Tzkc7Hi4GTApYP4I+j3crkZ0C4oDWnN2FFbsw=;
+        b=YBfsq7Ezv9QYWZccbUoWAnosaxltJReREbQgD47d8e4wJ+Ejg4Gn/vs3HhD5eYzXQr
+         oJSYxgIJL4FY50iMU0/0GHsjGfjdVuL9/LFpgrcASS5CbKRGtx4pLqrpDWIs3X6BUzT1
+         x8tB+7PXLZLkr6MHrizsmnC10IzFOgJdvcjV8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=46Z0N6nNFPIgM2OuwNgkHRjYe659IsqNoWw8FG0hdrY=;
-        b=nHrZMMR1RB7yPxlQlk04vrwNufnAI9KvK6SZLDOiG+YeslnQVv12kX7V8ARIto5qSo
-         ROLEjrdbETrQhfxGEOcKuyHWYAV54wimNutBK4qYUprBRYQm+Mr+Y2ny8tFBITaqy8m6
-         FdUbJVwCKo4FDDfBB/i0CuqzVdVbtdHwOui+mD+JG7LLp7OJWr6iggZBweD8+F3tFY1P
-         BxLvP245qY2H82T5FCjrlkmKt7RjHfpN32miMOS0NkcFGHnuf9UCe2vuNx2KjJ/6tKyN
-         wMc4ynzFdj/t+60A4g6kZ0Vs/AX9Q+ikVa1u1wSDFQ7p7e4V5UMl/tao9HQM0ZEcmbYz
-         KYig==
-X-Gm-Message-State: APjAAAV9RZ8vKTmGFhiO8jUNvOLEk/0Z9VoZQySn2mjVP4jMHiIV3LBa
-	4Lfl5blyNdmMbZxZy8UexvJF9A==
-X-Google-Smtp-Source: APXvYqxsGknX6bnO/GaSkj5DHw5Et7M+pO9sTANSMwjDnHU91axQ6Z/1Fsl4MvtQ189Vh73/ukEWVg==
-X-Received: by 2002:aa7:9816:: with SMTP id e22mr35105862pfl.229.1579137863425;
-        Wed, 15 Jan 2020 17:24:23 -0800 (PST)
+        bh=8H0Ju2Tzkc7Hi4GTApYP4I+j3crkZ0C4oDWnN2FFbsw=;
+        b=d+V/TNk0v7j20oQQ8uzcCK89Ed2F1TK5CXIkqyR3k5Ek36JC+GRi0lUqUuxbVsoynK
+         zT5VTaaxIDLK4u/y7k5AjOjA8N+gOlWAIYoZHmVPzU0W9D2d3IXgiitQLuUijeFxv/4h
+         BlBOhN+Brr8bDpbFCau+wBh7Ji6EsZHyoEIfcDt47dsZpxsn8hQy4d5MILt06nDivxia
+         Sql0AIGnO8gjicxFzNAaqR12AAE1U76L69iEOSFRfx+S2B5gz1cd72AONCiEKAL6bKM6
+         mTC579VNqXAI9eItzAUZUorKVlTLeO+4kDKdx3SxmFJyev7NCuaqe+QiECk5aKKr+esY
+         W17g==
+X-Gm-Message-State: APjAAAVuPhBHvBIRGyKQU7FRRhtY6zicNifZ5Q+f3uKW27BXUo3Wp/xf
+	NJ1onYNZ2QdPOPzxKCEFiSEoiA==
+X-Google-Smtp-Source: APXvYqyCry89U8JhHB2JmnnGGqfqp6e2/sFNsw+rUzw40rZSQ9y3ohq76mRbxz8eJb3EdmcaMK/hOw==
+X-Received: by 2002:aa7:98d0:: with SMTP id e16mr33457061pfm.77.1579137865146;
+        Wed, 15 Jan 2020 17:24:25 -0800 (PST)
 From: Kees Cook <keescook@chromium.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: Kees Cook <keescook@chromium.org>,
@@ -53,34 +53,32 @@ Cc: Kees Cook <keescook@chromium.org>,
 	linux-kernel@vger.kernel.org,
 	kernel-hardening@lists.openwall.com,
 	syzkaller@googlegroups.com
-Subject: [PATCH v3 4/6] ubsan: Check panic_on_warn
-Date: Wed, 15 Jan 2020 17:23:19 -0800
-Message-Id: <20200116012321.26254-5-keescook@chromium.org>
+Subject: [PATCH v3 5/6] kasan: Unset panic_on_warn before calling panic()
+Date: Wed, 15 Jan 2020 17:23:20 -0800
+Message-Id: <20200116012321.26254-6-keescook@chromium.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200116012321.26254-1-keescook@chromium.org>
 References: <20200116012321.26254-1-keescook@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Syzkaller expects kernel warnings to panic when the panic_on_warn
-sysctl is set. More work is needed here to have UBSan reuse the WARN
-infrastructure, but for now, just check the flag manually.
+As done in the full WARN() handler, panic_on_warn needs to be cleared
+before calling panic() to avoid recursive panics.
 
-Link: https://lore.kernel.org/lkml/CACT4Y+bsLJ-wFx_TaXqax3JByUOWB3uk787LsyMVcfW6JzzGvg@mail.gmail.com
 Signed-off-by: Kees Cook <keescook@chromium.org>
 ---
- lib/ubsan.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ mm/kasan/report.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/lib/ubsan.c b/lib/ubsan.c
-index 7b9b58aee72c..429663eef6a7 100644
---- a/lib/ubsan.c
-+++ b/lib/ubsan.c
-@@ -156,6 +156,17 @@ static void ubsan_epilogue(void)
- 		"========================================\n");
- 
- 	current->in_ubsan--;
-+
+diff --git a/mm/kasan/report.c b/mm/kasan/report.c
+index 621782100eaa..844554e78893 100644
+--- a/mm/kasan/report.c
++++ b/mm/kasan/report.c
+@@ -92,8 +92,16 @@ static void end_report(unsigned long *flags)
+ 	pr_err("==================================================================\n");
+ 	add_taint(TAINT_BAD_PAGE, LOCKDEP_NOW_UNRELIABLE);
+ 	spin_unlock_irqrestore(&report_lock, *flags);
+-	if (panic_on_warn)
 +	if (panic_on_warn) {
 +		/*
 +		 * This thread may hit another WARN() in the panic path.
@@ -89,11 +87,11 @@ index 7b9b58aee72c..429663eef6a7 100644
 +		 * panic_mutex in panic().
 +		 */
 +		panic_on_warn = 0;
-+		panic("panic_on_warn set ...\n");
+ 		panic("panic_on_warn set ...\n");
 +	}
+ 	kasan_enable_current();
  }
  
- static void handle_overflow(struct overflow_data *data, void *lhs,
 -- 
 2.20.1
 
