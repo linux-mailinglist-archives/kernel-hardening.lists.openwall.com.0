@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17579-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17580-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 233B113FA6D
-	for <lists+kernel-hardening@lfdr.de>; Thu, 16 Jan 2020 21:17:24 +0100 (CET)
-Received: (qmail 1294 invoked by uid 550); 16 Jan 2020 20:17:18 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 3F6D513FAB6
+	for <lists+kernel-hardening@lfdr.de>; Thu, 16 Jan 2020 21:36:30 +0100 (CET)
+Received: (qmail 9226 invoked by uid 550); 16 Jan 2020 20:36:25 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,43 +13,43 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 1267 invoked from network); 16 Jan 2020 20:17:17 -0000
+Received: (qmail 8182 invoked from network); 16 Jan 2020 20:36:25 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=ZF5qzwwkyvyxMKFoOMSyyzNqONb3HROfIsi+ysNvVik=;
-        b=nqN/bGHtSGgX+TrvYBkC13nJUB3X8ukJ0klosFF2D10Zy6+y3oamxcHwM8fKEGApUq
-         ljpWCk+uAgUgTHRZ1qBolWRCI5hpR6cf37CtPTltdh0YgZvzs++wth7qnHJIp986uOBB
-         UtxOCPtMeYhDZIrkw9F7bWSMB7HrODj92xdDp0H7B5dpg/28a7guMnn4MYFhqm3AeNyl
-         0j3ofX8AEU86BvazTA4YNmuV8io7MMtpGWaEkogvIihSJVFwcARSZu5G6e+K3zeFZ3kx
-         72oIJUgsqtD/qxVLtjNU3NsUe+MHB49BJcuPel9WG6KsUZ0IewO/3FguqYguZl6qKihc
-         072g==
+        bh=RV6fXTo3b3qoT7vSlLu9LZXPKWnKYVEBYLBa7aJ3coE=;
+        b=dryW2bgxQT3TcmKHyF7k3/UkFi2E2Qunh6WctF3kjeRnNJDiSxf7obYQetkLkkmU/f
+         rsRO4G1R9NHiQfiB7IbS/g3e201MDYpYRfm3I3lKZQuJ6YOovOwoFVhI0kbjkNwOxZtP
+         m0dEx+VXLI9Cl6w4dCABDOZNZ3pChr94FxH3Dz3EX4sWv6ulIjkhtRpxwc+9VzwfxebA
+         cjQgmaLfTXvQy+lU5KMD7jPpMrGjZ09Pd0UPfHvYS5HSHD7Naska9ofDRIcdvtGMBkNE
+         kQkpg/ELqolO16Xjr3izfosdUsgTcuHhXOL5clFLaqYqXnnDVzR4Q0VRcIwAYcdwoE7u
+         IvEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=ZF5qzwwkyvyxMKFoOMSyyzNqONb3HROfIsi+ysNvVik=;
-        b=duTuWDIHEYI8NQW/moOQADP0DKihKDwanQtIQPXAdOqRHdNWrq1TYsZW0SvBW9Hzaq
-         VXZWAOFmIvdT5N20iJtxNhC471Z6lELHxMKeCGcAvUp7AQ18PWD3G+yaO70sz0DcY+n6
-         P0ASxltHk9LYeB8ZBHZleImGxsjRZEEh/+VQQC+bOwpKYBUtWsZffxJQ44IYBf1uddrI
-         ClFRlAgzbYHQBL8khI5vkPVMjy8OBl7JukaB8kOSJ9auHQ962zfwYsRDJnPNAf2EkC0W
-         tsFYJBaPC/sy9NZgGYZ9/xNbXhOaE2ln39cEyJDbFnQ82wpZpbOwcfLXcikMFDKJfV3n
-         5Taw==
-X-Gm-Message-State: APjAAAXMw0DaszffGDocYHCMWWqcrGfUfxEjpfumy1E9WIUfNUj5/8UG
-	U9DR63ZS3dISX30QJYa6cYKcsI07y6NzXBRdRhSN1Q==
-X-Google-Smtp-Source: APXvYqzGSnsl6edzBoVDYTYn7dSudVhqxeHJpq3vbT3Nbo0uCX4G50Cg8szwmqQoGFBA6ZgNEWLEG8Jm96Lj3l2tVXg=
-X-Received: by 2002:a67:f057:: with SMTP id q23mr3030208vsm.5.1579205825357;
- Thu, 16 Jan 2020 12:17:05 -0800 (PST)
+        bh=RV6fXTo3b3qoT7vSlLu9LZXPKWnKYVEBYLBa7aJ3coE=;
+        b=ara3ZmYkcohyzLYqcWu7AXnjslWkc2fC5Z4gs50ce9JdZi3q5rgVzMsbPkWdPcf2j4
+         mFGWi9VV7oNRPgdsG/zLv5QgjMbSgNXpDC2Hq0YQ/GmN28WvYKbAHjark4n5HxDqArXZ
+         8PV1EHD6pUy78ljIbjMEX/F/RYA9na1MiN1RKE13UAp9rL/TGbtv6iU5quRantH//Jln
+         GEGoqbKDco0fXefLZd/5BWOhSsz930vn9nHpNelOIigErf7nMl0jDVS+RiVS4nHsNRLY
+         pl5iJISD1sPG66Z5Tcj5rd0BzL+PEb6w8ImyQzLbWyRagaByIgSto8Ooxujhs63KFK8I
+         vPvQ==
+X-Gm-Message-State: APjAAAVNW7x5PMIOHMjcUbF5RvRCLbp7JCCdIXP5ntG+il00c/x+otE+
+	fXjDhLqKXHRVeuRIyF/ArC2025BWTxdQOtzOt7jH6Q==
+X-Google-Smtp-Source: APXvYqy3hookrrU/Buxl44KY5o3vqIMbrfDIWbbyEY39r9m+d/9XpIDAayToTJcBMK5GJtdqCaMmmDL594aQGbaPCAk=
+X-Received: by 2002:a1f:2910:: with SMTP id p16mr18939592vkp.71.1579206972944;
+ Thu, 16 Jan 2020 12:36:12 -0800 (PST)
 MIME-Version: 1.0
 References: <20191018161033.261971-1-samitolvanen@google.com>
- <20191206221351.38241-1-samitolvanen@google.com> <20191206221351.38241-14-samitolvanen@google.com>
- <20200116174742.GF21396@willie-the-truck>
-In-Reply-To: <20200116174742.GF21396@willie-the-truck>
+ <20191206221351.38241-1-samitolvanen@google.com> <20191206221351.38241-12-samitolvanen@google.com>
+ <20200116174450.GD21396@willie-the-truck>
+In-Reply-To: <20200116174450.GD21396@willie-the-truck>
 From: Sami Tolvanen <samitolvanen@google.com>
-Date: Thu, 16 Jan 2020 12:16:53 -0800
-Message-ID: <CABCJKucQY_Qr6bZXW5TdPnDcBUd7uk8_Md5FNfO+ObNmsH3MZg@mail.gmail.com>
-Subject: Re: [PATCH v6 13/15] arm64: disable SCS for hypervisor code
+Date: Thu, 16 Jan 2020 12:36:01 -0800
+Message-ID: <CABCJKudsTFd22NzB9JdzrAo2UFzsfNVtB_zvdRiAEBXAC9t3=g@mail.gmail.com>
+Subject: Re: [PATCH v6 11/15] arm64: efi: restore x18 if it was corrupted
 To: Will Deacon <will@kernel.org>
 Cc: Catalin Marinas <catalin.marinas@arm.com>, Steven Rostedt <rostedt@goodmis.org>, 
 	Masami Hiramatsu <mhiramat@kernel.org>, Ard Biesheuvel <ard.biesheuvel@linaro.org>, 
@@ -63,34 +63,24 @@ Cc: Catalin Marinas <catalin.marinas@arm.com>, Steven Rostedt <rostedt@goodmis.o
 	linux-arm-kernel <linux-arm-kernel@lists.infradead.org>, LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Jan 16, 2020 at 9:47 AM Will Deacon <will@kernel.org> wrote:
+On Thu, Jan 16, 2020 at 9:45 AM Will Deacon <will@kernel.org> wrote:
 >
-> On Fri, Dec 06, 2019 at 02:13:49PM -0800, Sami Tolvanen wrote:
-> > Filter out CC_FLAGS_SCS for code that runs at a different exception
-> > level.
-> >
-> > Suggested-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
-> > Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
-> > Reviewed-by: Kees Cook <keescook@chromium.org>
-> > Reviewed-by: Mark Rutland <mark.rutland@arm.com>
-> > ---
-> >  arch/arm64/kvm/hyp/Makefile | 3 +++
-> >  1 file changed, 3 insertions(+)
-> >
-> > diff --git a/arch/arm64/kvm/hyp/Makefile b/arch/arm64/kvm/hyp/Makefile
-> > index ea710f674cb6..17ea3da325e9 100644
-> > --- a/arch/arm64/kvm/hyp/Makefile
-> > +++ b/arch/arm64/kvm/hyp/Makefile
-> > @@ -28,3 +28,6 @@ GCOV_PROFILE        := n
-> >  KASAN_SANITIZE       := n
-> >  UBSAN_SANITIZE       := n
-> >  KCOV_INSTRUMENT      := n
-> > +
-> > +# remove the SCS flags from all objects in this directory
-> > +KBUILD_CFLAGS := $(filter-out $(CC_FLAGS_SCS), $(KBUILD_CFLAGS))
+> On Fri, Dec 06, 2019 at 02:13:47PM -0800, Sami Tolvanen wrote:
+> > -0:   b       efi_handle_corrupted_x18        // tail call
+> > +0:
+> > +#ifdef CONFIG_SHADOW_CALL_STACK
+> > +     /*
+> > +      * Restore x18 before returning to instrumented code. This is
+> > +      * safe because the wrapper is called with preemption disabled and
+> > +      * a separate shadow stack is used for interrupts.
+> > +      */
+> > +     mov     x18, x2
+> > +#endif
 >
-> Same comment as for the vDSO; can we remove the -ffixed-x18 as well?
+> Why not restore it regardless of CONFIG_SHADOW_CALL_STACK?
 
-Sure, I don't see why not. I'll change this in the next version.
+The ifdefs are here only because restoring the register without SCS
+isn't actually necessary, but I'm fine with dropping them (and editing
+the comment) in the next version if you prefer.
 
 Sami
