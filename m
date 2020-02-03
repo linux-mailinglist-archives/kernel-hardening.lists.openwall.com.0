@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17657-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17658-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 2CCE8150EB5
-	for <lists+kernel-hardening@lfdr.de>; Mon,  3 Feb 2020 18:37:25 +0100 (CET)
-Received: (qmail 18408 invoked by uid 550); 3 Feb 2020 17:37:19 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 2774F150EC2
+	for <lists+kernel-hardening@lfdr.de>; Mon,  3 Feb 2020 18:38:50 +0100 (CET)
+Received: (qmail 20418 invoked by uid 550); 3 Feb 2020 17:38:45 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,23 +13,23 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 18388 invoked from network); 3 Feb 2020 17:37:19 -0000
+Received: (qmail 20395 invoked from network); 3 Feb 2020 17:38:44 -0000
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
 	:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
 	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=M5ilNMr/HaOIF+l97HNJx/b4/Xm/SDuNMftzBAjQyhk=; b=aRscgIH2h0u4Rl1ejEyVb5K5cr
-	UmN9OrjOYROKrgyw8lErle++lCLxJN1Yce9M6aMoTb6vqHWK/H8LiT0lF6w1L6tfCpihErVm1YMDe
-	uFSh3RCwwzsuzL8Tb7xrpDaQY9GpyQjGCW2eZDhtzfIWOJePB3MedA6YJDv2AYc73eNsoZzC7YaKn
-	bjou3GrF54S6T26jlG4BaVI9n22CIcPERlaVrqepPb4ER/SpFuRLtPJ+y0m6Zm8MgBvwEIjEPKV4o
-	ACIsAcGyhfYY7eknHBb4LWnFgLRJf2IrWdsxeTQDhkxsBuHmJurPafJYqIbZsBK5iA7jsrR6PmbtJ
-	sV96kmcg==;
-Date: Mon, 3 Feb 2020 09:36:22 -0800
+	bh=+svzYeMjDifvnay5XBCjENPcDei37krIAEbCjdfWWhU=; b=Uh9wVVKd7GmAMVO4QoLCs33RIH
+	tlUkrd456X1MQBI2ZcjKd8tWTxYKw/bt1d55Ecyox2OJeX/KE3bKnXvCj0vdsvzOSRJOd/UDIAj2w
+	l69ejkcK5CyzMwzk0S4RHBdXLS04dd6+vaW8jfpHz5B4mBd/ZuzHl/qmllj4Q34oHizwWkUodym02
+	ZUMRhjFtl2ELh+OM+6mA5n82D1di9RosZqr2hOYtHgD5aGIXdOFNC+Vi54iDCsFS1U75qnFbhSdWd
+	6KQP4QlIfHfPrkzxQ8aWaj0dUQkgDa2J9kucmHTDPGk2LSzjnDt+zoORFqfTTcsUgOBgWXXrrmdLU
+	rT5JVVNg==;
+Date: Mon, 3 Feb 2020 09:38:11 -0800
 From: Christoph Hellwig <hch@infradead.org>
-To: Christian Borntraeger <borntraeger@de.ibm.com>
-Cc: Christoph Hellwig <hch@infradead.org>,
-	Christopher Lameter <cl@linux.com>,
-	Kees Cook <keescook@chromium.org>, Jiri Slaby <jslaby@suse.cz>,
+To: Kees Cook <keescook@chromium.org>
+Cc: Christian Borntraeger <borntraeger@de.ibm.com>,
+	Christoph Hellwig <hch@infradead.org>,
+	Christopher Lameter <cl@linux.com>, Jiri Slaby <jslaby@suse.cz>,
 	Julian Wiedmann <jwi@linux.ibm.com>,
 	Ursula Braun <ubraun@linux.ibm.com>,
 	Alexander Viro <viro@zeniv.linux.org.uk>,
@@ -56,9 +56,8 @@ Cc: Christoph Hellwig <hch@infradead.org>,
 	Vlastimil Babka <vbabka@suse.cz>, Michal Kubecek <mkubecek@suse.cz>
 Subject: Re: [kernel-hardening] [PATCH 09/38] usercopy: Mark kmalloc caches
  as usercopy caches
-Message-ID: <20200203173622.GA30011@infradead.org>
-References: <201911121313.1097D6EE@keescook>
- <201911141327.4DE6510@keescook>
+Message-ID: <20200203173811.GB30011@infradead.org>
+References: <201911141327.4DE6510@keescook>
  <bfca96db-bbd0-d958-7732-76e36c667c68@suse.cz>
  <202001271519.AA6ADEACF0@keescook>
  <5861936c-1fe1-4c44-d012-26efa0c8b6e7@de.ibm.com>
@@ -67,26 +66,19 @@ References: <201911121313.1097D6EE@keescook>
  <6844ea47-8e0e-4fb7-d86f-68046995a749@de.ibm.com>
  <20200129170939.GA4277@infradead.org>
  <771c5511-c5ab-3dd1-d938-5dbc40396daa@de.ibm.com>
+ <202001300945.7D465B5F5@keescook>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <771c5511-c5ab-3dd1-d938-5dbc40396daa@de.ibm.com>
+In-Reply-To: <202001300945.7D465B5F5@keescook>
 X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
 
-On Wed, Jan 29, 2020 at 06:19:56PM +0100, Christian Borntraeger wrote:
-> There is not necessarily a device for that. It is a hypervisor interface (an
-> instruction that is interpreted by z/VM). We do have the netiucv driver that
-> creates a virtual nic, but there is also AF_IUCV which works without a device.
-> 
-> But back to the original question: If we mark kmalloc caches as usercopy caches,
-> we should do the same for DMA kmalloc caches. As outlined by Christoph, this has
-> nothing to do with device DMA.
+On Thu, Jan 30, 2020 at 11:23:38AM -0800, Kees Cook wrote:
+> Hm, looks like it's allocated from the low 16MB. Seems like poor naming!
+> :) There seems to be a LOT of stuff using GFP_DMA, and it seems unlikely
+> those are all expecting low addresses?
 
-Oh well, s/390 with its weird mix of cpu and I/O again.  Everywhere else
-where we have addressing limits we do treat that as a DMA address.
-
-We've also had a bit of a lose plan to force ZONE_DMA as a public
-interface out, as it is generally the wrong thing to do for drivers.
-A ZONE_32 and/or ZONE_31 makes some sense as the backing for the
-dma allocator, but it mostly shouldn't be exposed, especially not to
-the slab allocator.
+Most of that is either completely or partially bogus.  Besides the
+weird S/390 stuff pretty much everything should be using the dma
+allocators.  A couple really messed up drivers even pass GFP_DMA*
+to the dma allocator, but my patches to fix that up seem to be stuck.
