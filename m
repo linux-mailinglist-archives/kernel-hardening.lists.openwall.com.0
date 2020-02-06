@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17687-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17689-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id E35B5153D17
-	for <lists+kernel-hardening@lfdr.de>; Thu,  6 Feb 2020 04:00:07 +0100 (CET)
-Received: (qmail 32493 invoked by uid 550); 6 Feb 2020 02:59:49 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 2ABC9153D19
+	for <lists+kernel-hardening@lfdr.de>; Thu,  6 Feb 2020 04:00:25 +0100 (CET)
+Received: (qmail 32600 invoked by uid 550); 6 Feb 2020 02:59:50 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,7 +13,7 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 32419 invoked from network); 6 Feb 2020 02:59:48 -0000
+Received: (qmail 32421 invoked from network); 6 Feb 2020 02:59:48 -0000
 From: Jason Yan <yanaijie@huawei.com>
 To: <mpe@ellerman.id.au>, <linuxppc-dev@lists.ozlabs.org>,
 	<diana.craciun@nxp.com>, <christophe.leroy@c-s.fr>,
@@ -22,69 +22,128 @@ To: <mpe@ellerman.id.au>, <linuxppc-dev@lists.ozlabs.org>,
 	<oss@buserror.net>
 CC: <linux-kernel@vger.kernel.org>, <zhaohongjiang@huawei.com>, Jason Yan
 	<yanaijie@huawei.com>
-Subject: [PATCH v3 0/6] implement KASLR for powerpc/fsl_booke/64
-Date: Thu, 6 Feb 2020 10:58:19 +0800
-Message-ID: <20200206025825.22934-1-yanaijie@huawei.com>
+Subject: [PATCH v3 1/6] powerpc/fsl_booke/kaslr: refactor kaslr_legal_offset() and kaslr_early_init()
+Date: Thu, 6 Feb 2020 10:58:20 +0800
+Message-ID: <20200206025825.22934-2-yanaijie@huawei.com>
 X-Mailer: git-send-email 2.17.2
+In-Reply-To: <20200206025825.22934-1-yanaijie@huawei.com>
+References: <20200206025825.22934-1-yanaijie@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [10.175.124.28]
 X-CFilter-Loop: Reflected
 
-This is a try to implement KASLR for Freescale BookE64 which is based on
-my earlier implementation for Freescale BookE32:
-https://patchwork.ozlabs.org/project/linuxppc-dev/list/?series=131718
+Some code refactor in kaslr_legal_offset() and kaslr_early_init(). No
+functional change. This is a preparation for KASLR fsl_booke64.
 
-The implementation for Freescale BookE64 is similar as BookE32. One
-difference is that Freescale BookE64 set up a TLB mapping of 1G during
-booting. Another difference is that ppc64 needs the kernel to be
-64K-aligned. So we can randomize the kernel in this 1G mapping and make
-it 64K-aligned. This can save some code to creat another TLB map at
-early boot. The disadvantage is that we only have about 1G/64K = 16384
-slots to put the kernel in.
+Signed-off-by: Jason Yan <yanaijie@huawei.com>
+Cc: Scott Wood <oss@buserror.net>
+Cc: Diana Craciun <diana.craciun@nxp.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Christophe Leroy <christophe.leroy@c-s.fr>
+Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Cc: Paul Mackerras <paulus@samba.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Kees Cook <keescook@chromium.org>
+---
+ arch/powerpc/mm/nohash/kaslr_booke.c | 40 ++++++++++++++--------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
-    KERNELBASE
-
-          64K                     |--> kernel <--|
-           |                      |              |
-        +--+--+--+    +--+--+--+--+--+--+--+--+--+    +--+--+
-        |  |  |  |....|  |  |  |  |  |  |  |  |  |....|  |  |
-        +--+--+--+    +--+--+--+--+--+--+--+--+--+    +--+--+
-        |                         |                        1G
-        |----->   offset    <-----|
-
-                              kernstart_virt_addr
-
-I'm not sure if the slot numbers is enough or the design has any
-defects. If you have some better ideas, I would be happy to hear that.
-
-Thank you all.
-
-v2->v3:
-  Fix build error when KASLR is disabled.
-v1->v2:
-  Add __kaslr_offset for the secondary cpu boot up.
-
-Jason Yan (6):
-  powerpc/fsl_booke/kaslr: refactor kaslr_legal_offset() and
-    kaslr_early_init()
-  powerpc/fsl_booke/64: introduce reloc_kernel_entry() helper
-  powerpc/fsl_booke/64: implement KASLR for fsl_booke64
-  powerpc/fsl_booke/64: do not clear the BSS for the second pass
-  powerpc/fsl_booke/64: clear the original kernel if randomized
-  powerpc/fsl_booke/kaslr: rename kaslr-booke32.rst to kaslr-booke.rst
-    and add 64bit part
-
- .../{kaslr-booke32.rst => kaslr-booke.rst}    | 35 +++++++--
- arch/powerpc/Kconfig                          |  2 +-
- arch/powerpc/kernel/exceptions-64e.S          | 23 ++++++
- arch/powerpc/kernel/head_64.S                 | 14 ++++
- arch/powerpc/kernel/setup_64.c                |  4 +-
- arch/powerpc/mm/mmu_decl.h                    | 19 ++---
- arch/powerpc/mm/nohash/kaslr_booke.c          | 71 +++++++++++++------
- 7 files changed, 132 insertions(+), 36 deletions(-)
- rename Documentation/powerpc/{kaslr-booke32.rst => kaslr-booke.rst} (59%)
-
+diff --git a/arch/powerpc/mm/nohash/kaslr_booke.c b/arch/powerpc/mm/nohash/kaslr_booke.c
+index 4a75f2d9bf0e..07b036e98353 100644
+--- a/arch/powerpc/mm/nohash/kaslr_booke.c
++++ b/arch/powerpc/mm/nohash/kaslr_booke.c
+@@ -25,6 +25,7 @@ struct regions {
+ 	unsigned long pa_start;
+ 	unsigned long pa_end;
+ 	unsigned long kernel_size;
++	unsigned long linear_sz;
+ 	unsigned long dtb_start;
+ 	unsigned long dtb_end;
+ 	unsigned long initrd_start;
+@@ -260,11 +261,23 @@ static __init void get_cell_sizes(const void *fdt, int node, int *addr_cells,
+ 		*size_cells = fdt32_to_cpu(*prop);
+ }
+ 
+-static unsigned long __init kaslr_legal_offset(void *dt_ptr, unsigned long index,
+-					       unsigned long offset)
++static unsigned long __init kaslr_legal_offset(void *dt_ptr, unsigned long random)
+ {
+ 	unsigned long koffset = 0;
+ 	unsigned long start;
++	unsigned long index;
++	unsigned long offset;
++
++	/*
++	 * Decide which 64M we want to start
++	 * Only use the low 8 bits of the random seed
++	 */
++	index = random & 0xFF;
++	index %= regions.linear_sz / SZ_64M;
++
++	/* Decide offset inside 64M */
++	offset = random % (SZ_64M - regions.kernel_size);
++	offset = round_down(offset, SZ_16K);
+ 
+ 	while ((long)index >= 0) {
+ 		offset = memstart_addr + index * SZ_64M + offset;
+@@ -289,10 +302,9 @@ static inline __init bool kaslr_disabled(void)
+ static unsigned long __init kaslr_choose_location(void *dt_ptr, phys_addr_t size,
+ 						  unsigned long kernel_sz)
+ {
+-	unsigned long offset, random;
++	unsigned long random;
+ 	unsigned long ram, linear_sz;
+ 	u64 seed;
+-	unsigned long index;
+ 
+ 	kaslr_get_cmdline(dt_ptr);
+ 	if (kaslr_disabled())
+@@ -333,22 +345,12 @@ static unsigned long __init kaslr_choose_location(void *dt_ptr, phys_addr_t size
+ 	regions.dtb_start = __pa(dt_ptr);
+ 	regions.dtb_end = __pa(dt_ptr) + fdt_totalsize(dt_ptr);
+ 	regions.kernel_size = kernel_sz;
++	regions.linear_sz = linear_sz;
+ 
+ 	get_initrd_range(dt_ptr);
+ 	get_crash_kernel(dt_ptr, ram);
+ 
+-	/*
+-	 * Decide which 64M we want to start
+-	 * Only use the low 8 bits of the random seed
+-	 */
+-	index = random & 0xFF;
+-	index %= linear_sz / SZ_64M;
+-
+-	/* Decide offset inside 64M */
+-	offset = random % (SZ_64M - kernel_sz);
+-	offset = round_down(offset, SZ_16K);
+-
+-	return kaslr_legal_offset(dt_ptr, index, offset);
++	return kaslr_legal_offset(dt_ptr, random);
+ }
+ 
+ /*
+@@ -358,8 +360,6 @@ static unsigned long __init kaslr_choose_location(void *dt_ptr, phys_addr_t size
+  */
+ notrace void __init kaslr_early_init(void *dt_ptr, phys_addr_t size)
+ {
+-	unsigned long tlb_virt;
+-	phys_addr_t tlb_phys;
+ 	unsigned long offset;
+ 	unsigned long kernel_sz;
+ 
+@@ -375,8 +375,8 @@ notrace void __init kaslr_early_init(void *dt_ptr, phys_addr_t size)
+ 	is_second_reloc = 1;
+ 
+ 	if (offset >= SZ_64M) {
+-		tlb_virt = round_down(kernstart_virt_addr, SZ_64M);
+-		tlb_phys = round_down(kernstart_addr, SZ_64M);
++		unsigned long tlb_virt = round_down(kernstart_virt_addr, SZ_64M);
++		phys_addr_t tlb_phys = round_down(kernstart_addr, SZ_64M);
+ 
+ 		/* Create kernel map to relocate in */
+ 		create_kaslr_tlb_entry(1, tlb_virt, tlb_phys);
 -- 
 2.17.2
 
