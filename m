@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17696-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17698-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id F0D2015436F
-	for <lists+kernel-hardening@lfdr.de>; Thu,  6 Feb 2020 12:48:21 +0100 (CET)
-Received: (qmail 3509 invoked by uid 550); 6 Feb 2020 11:48:16 -0000
+	by mail.lfdr.de (Postfix) with SMTP id AE00515438A
+	for <lists+kernel-hardening@lfdr.de>; Thu,  6 Feb 2020 12:53:13 +0100 (CET)
+Received: (qmail 8032 invoked by uid 550); 6 Feb 2020 11:53:09 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,79 +13,87 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 3486 invoked from network); 6 Feb 2020 11:48:16 -0000
+Received: (qmail 8012 invoked from network); 6 Feb 2020 11:53:08 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=tf7UfAXF0+7+R/0CR/EhvROtYInc8epHQipEfshPVGs=;
-        b=PX6L81YYJdfK1dzYbHAtJvW+q7p3T/0pcVLlue5FeG4q7vAYgtvwTOkmic7TMKGuuO
-         +Kv/qr++XIOZZEokHxFHqatEdlf/ZNap1h7uIHw40ejP2uWu7PRmNoRic/wvHYFAd3Zk
-         wKRp8P+VQP4V4FtxKgDx6FYxSI0lZ5z57RMqU=
+         :content-disposition:in-reply-to;
+        bh=QoBuf+g4Xxni6UvGzXiTkNzIActsAJcHEvJL0GRcYx8=;
+        b=R5Xlq0RIQQTLqUa8qKTou4rSksjpBBz9TjP86XXO7E4Tuwiieo96zVVhZlH+93zGUD
+         bzlD31tE81BY9v+0GAYnBV5v+V5sXbyvABDV4DA88MsG+3PLxSee4lU73cccmps87FQN
+         cCxYxdTQRfEpxBAhyyx8hTq7URx4/raEeFZkM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=tf7UfAXF0+7+R/0CR/EhvROtYInc8epHQipEfshPVGs=;
-        b=bty4XQiNFXoV5OB1q4N4/te0Tjpf5hyxyoQKp/eGkylQPGahfD7w9dE1PRxYsYaOKj
-         zi0EdPB+qYuboKS0VX63xEiQS9tOD/GL4OkcAaErSC9w7v0pRR8bqFajjG6und8sinnV
-         to113xCiPz5TCgxHtLvB2Yl/mtiX1rMB8h5V3ZtR8aZjxVTZO85hyeQBSz4jwIC1FmE0
-         7m9ikKQj8t+eET2Ov3j+NojfYyFGHb+8/6e3y7Oq1f57zREtWss8KEIKAaCeWUz2d772
-         +K2VSU/q1ez+haQ3qjjvuE2FEvakBcu/xfOZTdXEVm15UiLTG8vWChnHx6ijfL7QF2KT
-         VErw==
-X-Gm-Message-State: APjAAAVbBK7cLSjn69d5zb769XTP6ZN8LSozsUtZo5ujk9K+Xk+poODY
-	p0Lhhz1GipJDtykw++Zf9l8ztw==
-X-Google-Smtp-Source: APXvYqwjnYccMXUVd+n93iR5zMBTFfXt5QHWYG9PKa/8tWlaPADduZNq1u0fLkVynUJQ4it71oULeg==
-X-Received: by 2002:a9d:5885:: with SMTP id x5mr29462319otg.132.1580989683562;
-        Thu, 06 Feb 2020 03:48:03 -0800 (PST)
-Date: Thu, 6 Feb 2020 03:48:01 -0800
+         :mime-version:content-disposition:in-reply-to;
+        bh=QoBuf+g4Xxni6UvGzXiTkNzIActsAJcHEvJL0GRcYx8=;
+        b=YYdV09uFPVFgnS3LDrzaFf+LT+vVlM1GyKjEwP9LLG3nQW1ue31B5a1lBXcegd0qxW
+         vBzvXQpNYZZf6bjzSbewavaldBlUKrPbf9XxfCIjFVqZ/IiIT6DIccRgZiExGhPi4RKZ
+         +3Oi8vIhTKVIB3C6H3p1oTx+fri9mEG6kGNMINM08MkBbv/a+uX4OnubkL4oAlRkMVJZ
+         mtTpf3iPEdkG75W+lYfgjjKvWizMF/EXXkG2cKySCOKBrWOjxyNWFYgJg7xEJTj7QDx0
+         2cnAGeq3RmkZEFbMcEpR/MGTAvUl6up0vWPKqHpjYN+CJL+LaeOzX0dLyI1KUuOZgi1o
+         qvlA==
+X-Gm-Message-State: APjAAAWNLaeZUBZ2RmhE48KAFfgiGoaA6YESmXKZ63Aa92zoPzFhgZ1w
+	y5q/WK0qRJshViUVMmK6M+N9tA==
+X-Google-Smtp-Source: APXvYqyvEG2esL/xfTcmuUFiEIXQPPyBLna4U/YdvgcHle0HS3e+pc6RLhK/cy8xnBBDz95dp3rg6Q==
+X-Received: by 2002:a05:6808:b29:: with SMTP id t9mr6587780oij.69.1580989976311;
+        Thu, 06 Feb 2020 03:52:56 -0800 (PST)
+Date: Thu, 6 Feb 2020 03:52:54 -0800
 From: Kees Cook <keescook@chromium.org>
-To: Andy Lutomirski <luto@amacapital.net>
+To: Peter Zijlstra <peterz@infradead.org>
 Cc: Kristen Carlson Accardi <kristen@linux.intel.com>, tglx@linutronix.de,
 	mingo@redhat.com, bp@alien8.de, hpa@zytor.com,
 	arjan@linux.intel.com, rick.p.edgecombe@intel.com, x86@kernel.org,
 	linux-kernel@vger.kernel.org, kernel-hardening@lists.openwall.com
-Subject: Re: [RFC PATCH 03/11] x86/boot: Allow a "silent" kaslr random byte
- fetch
-Message-ID: <202002060345.FAF7517CA4@keescook>
-References: <20200205223950.1212394-4-kristen@linux.intel.com>
- <B173D69E-DC6C-4658-B5CB-391D3C6A6597@amacapital.net>
+Subject: Re: [RFC PATCH 05/11] x86: Makefile: Add build and config option for
+ CONFIG_FG_KASLR
+Message-ID: <202002060348.7543F4D5@keescook>
+References: <20200205223950.1212394-1-kristen@linux.intel.com>
+ <20200205223950.1212394-6-kristen@linux.intel.com>
+ <20200206103055.GV14879@hirez.programming.kicks-ass.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <B173D69E-DC6C-4658-B5CB-391D3C6A6597@amacapital.net>
+In-Reply-To: <20200206103055.GV14879@hirez.programming.kicks-ass.net>
 
-On Wed, Feb 05, 2020 at 05:08:55PM -0800, Andy Lutomirski wrote:
-> 
-> 
-> > On Feb 5, 2020, at 2:39 PM, Kristen Carlson Accardi <kristen@linux.intel.com> wrote:
+On Thu, Feb 06, 2020 at 11:30:55AM +0100, Peter Zijlstra wrote:
+> On Wed, Feb 05, 2020 at 02:39:44PM -0800, Kristen Carlson Accardi wrote:
+> > Allow user to select CONFIG_FG_KASLR if dependencies are met. Change
+> > the make file to build with -ffunction-sections if CONFIG_FG_KASLR
 > > 
-> > ﻿From: Kees Cook <keescook@chromium.org>
+> > Signed-off-by: Kristen Carlson Accardi <kristen@linux.intel.com>
+> > ---
+> >  Makefile         |  4 ++++
+> >  arch/x86/Kconfig | 13 +++++++++++++
+> >  2 files changed, 17 insertions(+)
 > > 
-> > Under earlyprintk, each RNG call produces a debug report line. When
-> > shuffling hundreds of functions, this is not useful information (each
-> > line is identical and tells us nothing new). Instead, allow for a NULL
-> > "purpose" to suppress the debug reporting.
+> > diff --git a/Makefile b/Makefile
+> > index c50ef91f6136..41438a921666 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -846,6 +846,10 @@ ifdef CONFIG_LIVEPATCH
+> >  KBUILD_CFLAGS += $(call cc-option, -flive-patching=inline-clone)
+> >  endif
+> >  
+> > +ifdef CONFIG_FG_KASLR
+> > +KBUILD_CFLAGS += -ffunction-sections
+> > +endif
+> [...]
+> In particular:
 > 
-> Have you counted how many RDRAND calls this causes?  RDRAND is
-> exceedingly slow on all CPUs I’ve looked at. The whole “RDRAND
-> has great bandwidth” marketing BS actually means that it has decent
-> bandwidth if all CPUs hammer it at the same time. The latency is abysmal.
-> I have asked Intel to improve this, but the latency of that request will
-> be quadrillions of cycles :)
+>   "They prevent optimizations by the compiler and assembler using
+>   relative locations inside a translation unit since the locations are
+>   unknown until link time."
 
-In an earlier version of this series, it was called once per function
-section (so, about 50,000 times). The (lack of) speed was quite
-measurable.
+I think this mainly a feature of this flag, since it's those relocations
+that are used to do the post-shuffle fixups. But yes, I would imagine
+this has some negative impact on code generation.
 
-> I would suggest adding a little ChaCha20 DRBG or similar to the KASLR
-> environment instead. What crypto primitives are available there?
+> I suppose in practise this only means tail-calls are affected and will
+> no longer use JMP.d8. Or are more things affected?
 
-Agreed. The simple PRNG in the next patch was most just a POC initially,
-but Kristen kept it due to its debugging properties (specifying an
-external seed). Pulling in ChaCha20 seems like a good approach.
+It's worth looking at. I'm also curious to see how this will interact
+with Link Time Optimization.
 
 -- 
 Kees Cook
