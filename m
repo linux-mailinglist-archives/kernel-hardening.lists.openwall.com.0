@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17691-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17693-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id D3850153D1E
-	for <lists+kernel-hardening@lfdr.de>; Thu,  6 Feb 2020 04:00:45 +0100 (CET)
-Received: (qmail 1272 invoked by uid 550); 6 Feb 2020 02:59:54 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 707711541E7
+	for <lists+kernel-hardening@lfdr.de>; Thu,  6 Feb 2020 11:31:26 +0100 (CET)
+Received: (qmail 31969 invoked by uid 550); 6 Feb 2020 10:31:19 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,103 +13,97 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 1136 invoked from network); 6 Feb 2020 02:59:53 -0000
-From: Jason Yan <yanaijie@huawei.com>
-To: <mpe@ellerman.id.au>, <linuxppc-dev@lists.ozlabs.org>,
-	<diana.craciun@nxp.com>, <christophe.leroy@c-s.fr>,
-	<benh@kernel.crashing.org>, <paulus@samba.org>, <npiggin@gmail.com>,
-	<keescook@chromium.org>, <kernel-hardening@lists.openwall.com>,
-	<oss@buserror.net>
-CC: <linux-kernel@vger.kernel.org>, <zhaohongjiang@huawei.com>, Jason Yan
-	<yanaijie@huawei.com>
-Subject: [PATCH v3 6/6] powerpc/fsl_booke/kaslr: rename kaslr-booke32.rst to kaslr-booke.rst and add 64bit part
-Date: Thu, 6 Feb 2020 10:58:25 +0800
-Message-ID: <20200206025825.22934-7-yanaijie@huawei.com>
-X-Mailer: git-send-email 2.17.2
-In-Reply-To: <20200206025825.22934-1-yanaijie@huawei.com>
-References: <20200206025825.22934-1-yanaijie@huawei.com>
+Received: (qmail 31946 invoked from network); 6 Feb 2020 10:31:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=merlin.20170209; h=In-Reply-To:Content-Transfer-Encoding:
+	Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:
+	Sender:Reply-To:Content-ID:Content-Description;
+	bh=doRr41+uHYQPX4/to1I/1srPnHzm/CaLlIXj8w9Vubs=; b=O9XIG10RJTp9t1KXQg2NFLAhGf
+	+gipjAzct3zUGo4Hyf9EXunyT5NgIUBfSiRIcZJt8HPofZwC8xQet/QxB0qiVlRipsJYmF1Nvm96k
+	cQZQmF1xIcEPKZcvzf3CkUzkhwNWRV1SpwSsdISIhizHw7pz61xKYs7HxGgghNYyVtkQlt3f+9JHG
+	Fb4dZblXX3+XwHvlmeJoP0sm0Wl0Plbx9z2G5OZtxM9AMBT1WU/sZkZRALvH9fpuNj8TrigZBSNH9
+	Z+M8+QiUbaQzhsyC0BtstPUOnyUpGp7GvoV7zWtNYZ4i11n9mcGWZHr300AVj0uwgpw+hRo2dvhJx
+	FJXyLhTw==;
+Date: Thu, 6 Feb 2020 11:30:55 +0100
+From: Peter Zijlstra <peterz@infradead.org>
+To: Kristen Carlson Accardi <kristen@linux.intel.com>
+Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, hpa@zytor.com,
+	arjan@linux.intel.com, keescook@chromium.org,
+	rick.p.edgecombe@intel.com, x86@kernel.org,
+	linux-kernel@vger.kernel.org, kernel-hardening@lists.openwall.com
+Subject: Re: [RFC PATCH 05/11] x86: Makefile: Add build and config option for
+ CONFIG_FG_KASLR
+Message-ID: <20200206103055.GV14879@hirez.programming.kicks-ass.net>
+References: <20200205223950.1212394-1-kristen@linux.intel.com>
+ <20200205223950.1212394-6-kristen@linux.intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.175.124.28]
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200205223950.1212394-6-kristen@linux.intel.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-Now we support both 32 and 64 bit KASLR for fsl booke. Add document for
-64 bit part and rename kaslr-booke32.rst to kaslr-booke.rst.
+On Wed, Feb 05, 2020 at 02:39:44PM -0800, Kristen Carlson Accardi wrote:
+> Allow user to select CONFIG_FG_KASLR if dependencies are met. Change
+> the make file to build with -ffunction-sections if CONFIG_FG_KASLR
+> 
+> Signed-off-by: Kristen Carlson Accardi <kristen@linux.intel.com>
+> ---
+>  Makefile         |  4 ++++
+>  arch/x86/Kconfig | 13 +++++++++++++
+>  2 files changed, 17 insertions(+)
+> 
+> diff --git a/Makefile b/Makefile
+> index c50ef91f6136..41438a921666 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -846,6 +846,10 @@ ifdef CONFIG_LIVEPATCH
+>  KBUILD_CFLAGS += $(call cc-option, -flive-patching=inline-clone)
+>  endif
+>  
+> +ifdef CONFIG_FG_KASLR
+> +KBUILD_CFLAGS += -ffunction-sections
+> +endif
 
-Signed-off-by: Jason Yan <yanaijie@huawei.com>
-Cc: Scott Wood <oss@buserror.net>
-Cc: Diana Craciun <diana.craciun@nxp.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Christophe Leroy <christophe.leroy@c-s.fr>
-Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Cc: Paul Mackerras <paulus@samba.org>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Kees Cook <keescook@chromium.org>
----
- .../{kaslr-booke32.rst => kaslr-booke.rst}    | 35 ++++++++++++++++---
- 1 file changed, 31 insertions(+), 4 deletions(-)
- rename Documentation/powerpc/{kaslr-booke32.rst => kaslr-booke.rst} (59%)
+The GCC manual has:
 
-diff --git a/Documentation/powerpc/kaslr-booke32.rst b/Documentation/powerpc/kaslr-booke.rst
-similarity index 59%
-rename from Documentation/powerpc/kaslr-booke32.rst
-rename to Documentation/powerpc/kaslr-booke.rst
-index 8b259fdfdf03..42121fed8249 100644
---- a/Documentation/powerpc/kaslr-booke32.rst
-+++ b/Documentation/powerpc/kaslr-booke.rst
-@@ -1,15 +1,18 @@
- .. SPDX-License-Identifier: GPL-2.0
- 
--===========================
--KASLR for Freescale BookE32
--===========================
-+=========================
-+KASLR for Freescale BookE
-+=========================
- 
- The word KASLR stands for Kernel Address Space Layout Randomization.
- 
- This document tries to explain the implementation of the KASLR for
--Freescale BookE32. KASLR is a security feature that deters exploit
-+Freescale BookE. KASLR is a security feature that deters exploit
- attempts relying on knowledge of the location of kernel internals.
- 
-+KASLR for Freescale BookE32
-+-------------------------
-+
- Since CONFIG_RELOCATABLE has already supported, what we need to do is
- map or copy kernel to a proper place and relocate. Freescale Book-E
- parts expect lowmem to be mapped by fixed TLB entries(TLB1). The TLB1
-@@ -38,5 +41,29 @@ bit of the entropy to decide the index of the 64M zone. Then we chose a
- 
-                               kernstart_virt_addr
- 
-+
-+KASLR for Freescale BookE64
-+---------------------------
-+
-+The implementation for Freescale BookE64 is similar as BookE32. One
-+difference is that Freescale BookE64 set up a TLB mapping of 1G during
-+booting. Another difference is that ppc64 needs the kernel to be
-+64K-aligned. So we can randomize the kernel in this 1G mapping and make
-+it 64K-aligned. This can save some code to creat another TLB map at early
-+boot. The disadvantage is that we only have about 1G/64K = 16384 slots to
-+put the kernel in::
-+
-+    KERNELBASE
-+
-+          64K                     |--> kernel <--|
-+           |                      |              |
-+        +--+--+--+    +--+--+--+--+--+--+--+--+--+    +--+--+
-+        |  |  |  |....|  |  |  |  |  |  |  |  |  |....|  |  |
-+        +--+--+--+    +--+--+--+--+--+--+--+--+--+    +--+--+
-+        |                         |                        1G
-+        |----->   offset    <-----|
-+
-+                              kernstart_virt_addr
-+
- To enable KASLR, set CONFIG_RANDOMIZE_BASE = y. If KASLR is enable and you
- want to disable it at runtime, add "nokaslr" to the kernel cmdline.
--- 
-2.17.2
+  -ffunction-sections
+  -fdata-sections
 
+      Place each function or data item into its own section in the output
+      file if the target supports arbitrary sections. The name of the
+      function or the name of the data item determines the section’s name
+      in the output file.
+
+      Use these options on systems where the linker can perform
+      optimizations to improve locality of reference in the instruction
+      space. Most systems using the ELF object format have linkers with
+      such optimizations. On AIX, the linker rearranges sections (CSECTs)
+      based on the call graph. The performance impact varies.
+
+      Together with a linker garbage collection (linker --gc-sections
+      option) these options may lead to smaller statically-linked
+      executables (after stripping).
+
+      On ELF/DWARF systems these options do not degenerate the quality of
+      the debug information. There could be issues with other object
+      files/debug info formats.
+
+      Only use these options when there are significant benefits from
+      doing so. When you specify these options, the assembler and linker
+      create larger object and executable files and are also slower. These
+      options affect code generation. They prevent optimizations by the
+      compiler and assembler using relative locations inside a translation
+      unit since the locations are unknown until link time. An example of
+      such an optimization is relaxing calls to short call instructions.
+
+In particular:
+
+  "They prevent optimizations by the compiler and assembler using
+  relative locations inside a translation unit since the locations are
+  unknown until link time."
+
+I suppose in practise this only means tail-calls are affected and will
+no longer use JMP.d8. Or are more things affected?
+
+(Also, should not the next patch come before this one?)
