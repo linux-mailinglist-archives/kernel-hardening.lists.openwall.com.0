@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17686-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17688-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 1A137153D15
-	for <lists+kernel-hardening@lfdr.de>; Thu,  6 Feb 2020 03:59:59 +0100 (CET)
-Received: (qmail 32455 invoked by uid 550); 6 Feb 2020 02:59:48 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 2041E153D18
+	for <lists+kernel-hardening@lfdr.de>; Thu,  6 Feb 2020 04:00:16 +0100 (CET)
+Received: (qmail 32534 invoked by uid 550); 6 Feb 2020 02:59:49 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,7 +13,7 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 32420 invoked from network); 6 Feb 2020 02:59:48 -0000
+Received: (qmail 32418 invoked from network); 6 Feb 2020 02:59:48 -0000
 From: Jason Yan <yanaijie@huawei.com>
 To: <mpe@ellerman.id.au>, <linuxppc-dev@lists.ozlabs.org>,
 	<diana.craciun@nxp.com>, <christophe.leroy@c-s.fr>,
@@ -22,9 +22,9 @@ To: <mpe@ellerman.id.au>, <linuxppc-dev@lists.ozlabs.org>,
 	<oss@buserror.net>
 CC: <linux-kernel@vger.kernel.org>, <zhaohongjiang@huawei.com>, Jason Yan
 	<yanaijie@huawei.com>
-Subject: [PATCH v3 2/6] powerpc/fsl_booke/64: introduce reloc_kernel_entry() helper
-Date: Thu, 6 Feb 2020 10:58:21 +0800
-Message-ID: <20200206025825.22934-3-yanaijie@huawei.com>
+Subject: [PATCH v3 4/6] powerpc/fsl_booke/64: do not clear the BSS for the second pass
+Date: Thu, 6 Feb 2020 10:58:23 +0800
+Message-ID: <20200206025825.22934-5-yanaijie@huawei.com>
 X-Mailer: git-send-email 2.17.2
 In-Reply-To: <20200206025825.22934-1-yanaijie@huawei.com>
 References: <20200206025825.22934-1-yanaijie@huawei.com>
@@ -33,9 +33,9 @@ Content-Type: text/plain
 X-Originating-IP: [10.175.124.28]
 X-CFilter-Loop: Reflected
 
-Like the 32bit code, we introduce reloc_kernel_entry() helper to prepare
-for the KASLR 64bit version. And move the C declaration of this function
-out of CONFIG_PPC32 and use long instead of int for the parameter 'addr'.
+The BSS section has already cleared out in the first pass. No need to
+clear it again. This can save some time when booting with KASLR
+enabled.
 
 Signed-off-by: Jason Yan <yanaijie@huawei.com>
 Cc: Scott Wood <oss@buserror.net>
@@ -47,47 +47,27 @@ Cc: Paul Mackerras <paulus@samba.org>
 Cc: Nicholas Piggin <npiggin@gmail.com>
 Cc: Kees Cook <keescook@chromium.org>
 ---
- arch/powerpc/kernel/exceptions-64e.S | 13 +++++++++++++
- arch/powerpc/mm/mmu_decl.h           |  3 ++-
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ arch/powerpc/kernel/head_64.S | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/arch/powerpc/kernel/exceptions-64e.S b/arch/powerpc/kernel/exceptions-64e.S
-index e4076e3c072d..1b9b174bee86 100644
---- a/arch/powerpc/kernel/exceptions-64e.S
-+++ b/arch/powerpc/kernel/exceptions-64e.S
-@@ -1679,3 +1679,16 @@ _GLOBAL(setup_ehv_ivors)
- _GLOBAL(setup_lrat_ivor)
- 	SET_IVOR(42, 0x340) /* LRAT Error */
- 	blr
-+
-+/*
-+ * Return to the start of the relocated kernel and run again
-+ * r3 - virtual address of fdt
-+ * r4 - entry of the kernel
-+ */
-+_GLOBAL(reloc_kernel_entry)
-+	mfmsr	r7
-+	rlwinm	r7, r7, 0, ~(MSR_IS | MSR_DS)
-+
-+	mtspr	SPRN_SRR0,r4
-+	mtspr	SPRN_SRR1,r7
-+	rfi
-diff --git a/arch/powerpc/mm/mmu_decl.h b/arch/powerpc/mm/mmu_decl.h
-index 8e99649c24fc..3e1c85c7d10b 100644
---- a/arch/powerpc/mm/mmu_decl.h
-+++ b/arch/powerpc/mm/mmu_decl.h
-@@ -140,9 +140,10 @@ extern void adjust_total_lowmem(void);
- extern int switch_to_as1(void);
- extern void restore_to_as0(int esel, int offset, void *dt_ptr, int bootcpu);
- void create_kaslr_tlb_entry(int entry, unsigned long virt, phys_addr_t phys);
--void reloc_kernel_entry(void *fdt, int addr);
- extern int is_second_reloc;
- #endif
-+
-+void reloc_kernel_entry(void *fdt, long addr);
- extern void loadcam_entry(unsigned int index);
- extern void loadcam_multi(int first_idx, int num, int tmp_idx);
+diff --git a/arch/powerpc/kernel/head_64.S b/arch/powerpc/kernel/head_64.S
+index 744624140fb8..8c644e7c3eaf 100644
+--- a/arch/powerpc/kernel/head_64.S
++++ b/arch/powerpc/kernel/head_64.S
+@@ -914,6 +914,13 @@ start_here_multiplatform:
+ 	bl      relative_toc
+ 	tovirt(r2,r2)
  
++	/* Do not clear the BSS for the second pass if randomized */
++	LOAD_REG_ADDR(r3, kernstart_virt_addr)
++	lwz     r3,0(r3)
++	LOAD_REG_IMMEDIATE(r4, KERNELBASE)
++	cmpw	r3,r4
++	bne	4f
++
+ 	/* Clear out the BSS. It may have been done in prom_init,
+ 	 * already but that's irrelevant since prom_init will soon
+ 	 * be detached from the kernel completely. Besides, we need
 -- 
 2.17.2
 
