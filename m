@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17764-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17763-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 3CB5E1583B0
-	for <lists+kernel-hardening@lfdr.de>; Mon, 10 Feb 2020 20:31:44 +0100 (CET)
-Received: (qmail 12088 invoked by uid 550); 10 Feb 2020 19:31:14 -0000
+	by mail.lfdr.de (Postfix) with SMTP id BC4981583A4
+	for <lists+kernel-hardening@lfdr.de>; Mon, 10 Feb 2020 20:31:37 +0100 (CET)
+Received: (qmail 12030 invoked by uid 550); 10 Feb 2020 19:31:13 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,31 +13,31 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 11983 invoked from network); 10 Feb 2020 19:31:13 -0000
+Received: (qmail 11812 invoked from network); 10 Feb 2020 19:31:12 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Hedv3uQpLYtG/8d40iSwsTwWwbRFJKr8vrN4ZiDg04Q=;
-        b=mqEHj3cJctfFXlmy16cRdbd3ZRwBg+PBoqBPYVmqQH/qHbN5NUcjIYDQxGJmRKQ7wa
-         Gh/oTcwv3s+WJTQGeN5oXvRGmYE52sD2Oy62uw9zNjtHK9oLi+CKMUz2V13jB1bNCceN
-         HKebkK1prPWHrTSh29Rcs3l4gWJQcq2tOzhxQ=
+        bh=Xgo1yExYE1FoOrHi/q0yB3FWShMft6x5k4WGrQxm170=;
+        b=L4WYG666B6q1Et3bcdlnVISVkOrsiaz/021i2HOtSDO+5jbbvUU8qOhFuAJpImd9Of
+         tHvcCRS71nZ2E2PCYI1v1I7/5Fx8qC14IBkh3bZudUkhVCFVSTRXv68LgS4rolJ8b7NO
+         oy2IjZYniOec+89rewQ3DeqzhHAbfLUi9rvdA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Hedv3uQpLYtG/8d40iSwsTwWwbRFJKr8vrN4ZiDg04Q=;
-        b=NuBv9/hkGLTThOtpp2KdeY1Moh/4UrQL++mhW1QepEIKN7q00aVW+0NkCUWLRIRzEw
-         a++Kp2MCFUtjmQjm3ZN8yzu7ehnz8V0qTgWB194nB5R/5Fg23pOSiLXRNcJSZWhstOI9
-         KUAZonIzNxQqMnK2PAJv6gk5ufp561WIHjP14a89eD88eOC9Gbd+LCLny5Nk5/wRLarw
-         12dG2vprX5U8vs++FrG+dyBfS7wax6EIDX29WpiV76AKvQsLvbOMH6PjIgnM9kiH3iW6
-         +ikDZlP5F/v5B6WR7a4wotWsvxiq8cBAqqwMsWo02BykMUhQ9ZDWNAhsapq2cxNAtUJD
-         Oe5w==
-X-Gm-Message-State: APjAAAVmUh9O3kJ+HFHjsfUhnnZ4bV422LD/SNGfYuwK09+3Xl0goj4A
-	7L4GZNcxwR2P/0DcuS2N7hPrgQ==
-X-Google-Smtp-Source: APXvYqxzrrMjKkyUG9U1mzxeIF/mXf4CdliJjd23xPg8Q25YEpKS/E/iAhQV5XTWVKedZ6gqCTRpxg==
-X-Received: by 2002:aca:be57:: with SMTP id o84mr419172oif.138.1581363061318;
-        Mon, 10 Feb 2020 11:31:01 -0800 (PST)
+        bh=Xgo1yExYE1FoOrHi/q0yB3FWShMft6x5k4WGrQxm170=;
+        b=GCqfVrqBMglOJBotBqwvRtfObmJXJ5mhMPFEGyDJlUHYCi2JJ7kcTX1WF45ll9fpXx
+         elLfRGtYFcJJQhQXxGDo9yPOwohGDiUceXVtEjtHH7imEcx2faFm6iyFy2P9Prb1QArF
+         ov8DDHhOWCCwfy1TTxu+8NRtAtAjov6ZjMowLiFszatzwHqPGEMuker0il7N6YlgKgLm
+         VGCHiOCofBecTCIb7bZMYB3y8AB2yFSgHGMiqKFrQQevLaLvf53aoiDlgKCWPDmDwxb5
+         ooQBakZgMBhP3ZhHcCr00afQkkIMGhTDYExI797IO9MsLk5JgjeIdYvr3yPnHtqSI0/n
+         u4Ag==
+X-Gm-Message-State: APjAAAWS6BNNT3xdamTi3c+8Z671bQMWds5yrYf2YPUbY8I2eThPFbQD
+	77mBDchJQ4nhdza70vAuiofgwA==
+X-Google-Smtp-Source: APXvYqxrCRbeRObAKsREPcdxJmg1NESdR+jwjL0VLXI5HeLb3NvoJQshGJ4OJNNqOglQAXv1YayQEA==
+X-Received: by 2002:a9d:6e8f:: with SMTP id a15mr2204441otr.178.1581363060517;
+        Mon, 10 Feb 2020 11:31:00 -0800 (PST)
 From: Kees Cook <keescook@chromium.org>
 To: Ingo Molnar <mingo@kernel.org>
 Cc: Kees Cook <keescook@chromium.org>,
@@ -52,9 +52,9 @@ Cc: Kees Cook <keescook@chromium.org>,
 	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org,
 	linux-kselftest@vger.kernel.org
-Subject: [PATCH v3 3/7] x86/elf: Disable automatic READ_IMPLIES_EXEC for 64-bit address spaces
-Date: Mon, 10 Feb 2020 11:30:45 -0800
-Message-Id: <20200210193049.64362-4-keescook@chromium.org>
+Subject: [PATCH v3 4/7] arm32/64, elf: Add tables to document READ_IMPLIES_EXEC
+Date: Mon, 10 Feb 2020 11:30:46 -0800
+Message-Id: <20200210193049.64362-5-keescook@chromium.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200210193049.64362-1-keescook@chromium.org>
 References: <20200210193049.64362-1-keescook@chromium.org>
@@ -62,43 +62,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-With modern x86 64-bit environments, there should never be a need for
-automatic READ_IMPLIES_EXEC, as the architecture is intended to always
-be execute-bit aware (as in, the default memory protection should be NX
-unless a region explicitly requests to be executable).
+Add tables to document the current behavior of READ_IMPLIES_EXEC in
+preparation for changing the behavior for both arm64 and arm.
 
-There were very old x86_64 systems that lacked the NX bit, but for those,
-the NX bit is, obviously, unenforceable, so these changes should have
-no impact on them.
-
-Suggested-by: Hector Marco-Gisbert <hecmargi@upv.es>
 Signed-off-by: Kees Cook <keescook@chromium.org>
 ---
- arch/x86/include/asm/elf.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/kernel/elf.c        | 24 +++++++++++++++++++++---
+ arch/arm64/include/asm/elf.h | 20 ++++++++++++++++++++
+ 2 files changed, 41 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/include/asm/elf.h b/arch/x86/include/asm/elf.h
-index a7035065377c..c9b7be0bcad3 100644
---- a/arch/x86/include/asm/elf.h
-+++ b/arch/x86/include/asm/elf.h
-@@ -287,7 +287,7 @@ extern u32 elf_hwcap2;
-  *              CPU: | lacks NX*  | has NX, ia32     | has NX, x86_64 |
-  * ELF:              |            |                  |                |
-  * -------------------------------|------------------|----------------|
-- * missing GNU_STACK | exec-all   | exec-all         | exec-all       |
-+ * missing GNU_STACK | exec-all   | exec-all         | exec-none      |
-  * GNU_STACK == RWX  | exec-stack | exec-stack       | exec-stack     |
-  * GNU_STACK == RW   | exec-none  | exec-none        | exec-none      |
-  *
-@@ -303,7 +303,7 @@ extern u32 elf_hwcap2;
-  *
+diff --git a/arch/arm/kernel/elf.c b/arch/arm/kernel/elf.c
+index 182422981386..2f69cf978fe3 100644
+--- a/arch/arm/kernel/elf.c
++++ b/arch/arm/kernel/elf.c
+@@ -78,9 +78,27 @@ void elf_set_personality(const struct elf32_hdr *x)
+ EXPORT_SYMBOL(elf_set_personality);
+ 
+ /*
+- * Set READ_IMPLIES_EXEC if:
+- *  - the binary requires an executable stack
+- *  - we're running on a CPU which doesn't support NX.
++ * An executable for which elf_read_implies_exec() returns TRUE will
++ * have the READ_IMPLIES_EXEC personality flag set automatically.
++ *
++ * The decision process for determining the results are:
++ *
++ *              CPU: | lacks NX*  | has NX     |
++ * ELF:              |            |            |
++ * -------------------------------|------------|
++ * missing GNU_STACK | exec-all   | exec-all   |
++ * GNU_STACK == RWX  | exec-all   | exec-all   |
++ * GNU_STACK == RW   | exec-all   | exec-none  |
++ *
++ *  exec-all  : all PROT_READ user mappings are executable, except when
++ *              backed by files on a noexec-filesystem.
++ *  exec-none : only PROT_EXEC user mappings are executable.
++ *
++ *  *this column has no architectural effect: NX markings are ignored by
++ *   hardware, but may have behavioral effects when "wants X" collides with
++ *   "cannot be X" constraints in memory permission flags, as in
++ *   https://lkml.kernel.org/r/20190418055759.GA3155@mellanox.com
++ *
   */
- #define elf_read_implies_exec(ex, executable_stack)	\
--	(executable_stack == EXSTACK_DEFAULT)
-+	(mmap_is_ia32() && executable_stack == EXSTACK_DEFAULT)
+ int arm_elf_read_implies_exec(int executable_stack)
+ {
+diff --git a/arch/arm64/include/asm/elf.h b/arch/arm64/include/asm/elf.h
+index b618017205a3..7fc779e3f1ec 100644
+--- a/arch/arm64/include/asm/elf.h
++++ b/arch/arm64/include/asm/elf.h
+@@ -96,6 +96,26 @@
+  */
+ #define elf_check_arch(x)		((x)->e_machine == EM_AARCH64)
  
- struct task_struct;
++/*
++ * An executable for which elf_read_implies_exec() returns TRUE will
++ * have the READ_IMPLIES_EXEC personality flag set automatically.
++ *
++ * The decision process for determining the results are:
++ *
++ *             CPU*: | arm32      | arm64      |
++ * ELF:              |            |            |
++ * -------------------------------|------------|
++ * missing GNU_STACK | exec-all   | exec-all   |
++ * GNU_STACK == RWX  | exec-all   | exec-all   |
++ * GNU_STACK == RW   | exec-none  | exec-none  |
++ *
++ *  exec-all  : all PROT_READ user mappings are executable, except when
++ *              backed by files on a noexec-filesystem.
++ *  exec-none : only PROT_EXEC user mappings are executable.
++ *
++ *  *all arm64 CPUs support NX, so there is no "lacks NX" column.
++ *
++ */
+ #define elf_read_implies_exec(ex,stk)	(stk != EXSTACK_DISABLE_X)
  
+ #define CORE_DUMP_USE_REGSET
 -- 
 2.20.1
 
