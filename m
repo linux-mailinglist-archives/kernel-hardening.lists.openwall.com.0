@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17745-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17746-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 711CA157E5F
-	for <lists+kernel-hardening@lfdr.de>; Mon, 10 Feb 2020 16:08:19 +0100 (CET)
-Received: (qmail 3827 invoked by uid 550); 10 Feb 2020 15:06:38 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 9B65D157F45
+	for <lists+kernel-hardening@lfdr.de>; Mon, 10 Feb 2020 16:55:18 +0100 (CET)
+Received: (qmail 5698 invoked by uid 550); 10 Feb 2020 15:55:13 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,93 +13,48 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 3716 invoked from network); 10 Feb 2020 15:06:36 -0000
-From: Alexey Gladkov <gladkov.alexey@gmail.com>
-To: LKML <linux-kernel@vger.kernel.org>,
-	Kernel Hardening <kernel-hardening@lists.openwall.com>,
-	Linux API <linux-api@vger.kernel.org>,
-	Linux FS Devel <linux-fsdevel@vger.kernel.org>,
-	Linux Security Module <linux-security-module@vger.kernel.org>
-Cc: Akinobu Mita <akinobu.mita@gmail.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Alexey Gladkov <gladkov.alexey@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Andy Lutomirski <luto@kernel.org>,
-	Daniel Micay <danielmicay@gmail.com>,
-	Djalal Harouni <tixxdz@gmail.com>,
-	"Dmitry V . Levin" <ldv@altlinux.org>,
-	"Eric W . Biederman" <ebiederm@xmission.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	"J . Bruce Fields" <bfields@fieldses.org>,
-	Jeff Layton <jlayton@poochiereds.net>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Kees Cook <keescook@chromium.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Solar Designer <solar@openwall.com>
-Subject: [PATCH v8 11/11] proc: Move hidepid values to uapi as they are user interface to mount
-Date: Mon, 10 Feb 2020 16:05:19 +0100
-Message-Id: <20200210150519.538333-12-gladkov.alexey@gmail.com>
-X-Mailer: git-send-email 2.24.1
-In-Reply-To: <20200210150519.538333-1-gladkov.alexey@gmail.com>
-References: <20200210150519.538333-1-gladkov.alexey@gmail.com>
+Received: (qmail 5678 invoked from network); 10 Feb 2020 15:55:12 -0000
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.70,425,1574150400"; 
+   d="scan'208";a="380142760"
+Subject: Re: [RFC PATCH 06/11] x86: make sure _etext includes function
+ sections
+To: Peter Zijlstra <peterz@infradead.org>, Kees Cook <keescook@chromium.org>
+Cc: Andy Lutomirski <luto@amacapital.net>,
+ Kristen Carlson Accardi <kristen@linux.intel.com>, tglx@linutronix.de,
+ mingo@redhat.com, bp@alien8.de, hpa@zytor.com, rick.p.edgecombe@intel.com,
+ x86@kernel.org, linux-kernel@vger.kernel.org,
+ kernel-hardening@lists.openwall.com
+References: <75f0bd0365857ba4442ee69016b63764a8d2ad68.camel@linux.intel.com>
+ <B413445A-F1F0-4FB7-AA9F-C5FF4CEFF5F5@amacapital.net>
+ <20200207092423.GC14914@hirez.programming.kicks-ass.net>
+ <202002091742.7B1E6BF19@keescook>
+ <20200210105117.GE14879@hirez.programming.kicks-ass.net>
+From: Arjan van de Ven <arjan@linux.intel.com>
+Message-ID: <43b7ba31-6dca-488b-8a0e-72d9fdfd1a6b@linux.intel.com>
+Date: Mon, 10 Feb 2020 07:54:58 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200210105117.GE14879@hirez.programming.kicks-ass.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 
-Suggested-by: Alexey Dobriyan <adobriyan@gmail.com>
-Signed-off-by: Alexey Gladkov <gladkov.alexey@gmail.com>
----
- include/linux/proc_fs.h      |  9 +--------
- include/uapi/linux/proc_fs.h | 13 +++++++++++++
- 2 files changed, 14 insertions(+), 8 deletions(-)
- create mode 100644 include/uapi/linux/proc_fs.h
+> 
+> I'll leave it to others to figure out the exact details. But afaict it
+> should be possible to have fine-grained-randomization and preserve the
+> workaround in the end.
+> 
 
-diff --git a/include/linux/proc_fs.h b/include/linux/proc_fs.h
-index 3ad0a47c3556..f2b4a411d371 100644
---- a/include/linux/proc_fs.h
-+++ b/include/linux/proc_fs.h
-@@ -7,19 +7,12 @@
- 
- #include <linux/types.h>
- #include <linux/fs.h>
-+#include <uapi/linux/proc_fs.h>
- 
- struct proc_dir_entry;
- struct seq_file;
- struct seq_operations;
- 
--/* definitions for hide_pid field */
--enum {
--	HIDEPID_OFF	  = 0,
--	HIDEPID_NO_ACCESS = 1,
--	HIDEPID_INVISIBLE = 2,
--	HIDEPID_NOT_PTRACABLE = 4, /* Limit pids to only ptracable pids */
--};
--
- /* definitions for proc mount option pidonly */
- enum {
- 	PROC_PIDONLY_OFF = 0,
-diff --git a/include/uapi/linux/proc_fs.h b/include/uapi/linux/proc_fs.h
-new file mode 100644
-index 000000000000..1e3374efffe2
---- /dev/null
-+++ b/include/uapi/linux/proc_fs.h
-@@ -0,0 +1,13 @@
-+/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
-+#ifndef _UAPI_PROC_FS_H
-+#define _UAPI_PROC_FS_H
-+
-+/* definitions for hide_pid field */
-+enum {
-+	HIDEPID_OFF           = 0,
-+	HIDEPID_NO_ACCESS     = 1,
-+	HIDEPID_INVISIBLE     = 2,
-+	HIDEPID_NOT_PTRACABLE = 4,
-+};
-+
-+#endif
--- 
-2.24.1
+the most obvious "solution" is to compile with an alignment of 4 bytes (so tight packing)
+and then in the randomizer preserve the offset within 32 bytes, no matter what it is
+
+that would get you an average padding of 16 bytes which is a bit more than now but not too insane
+(queue Kees' argument that tiny bits of padding are actually good)
+
+
+
 
