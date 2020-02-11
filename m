@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17776-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17777-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 29924159106
-	for <lists+kernel-hardening@lfdr.de>; Tue, 11 Feb 2020 14:57:46 +0100 (CET)
-Received: (qmail 7301 invoked by uid 550); 11 Feb 2020 13:57:40 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 15A9B15910C
+	for <lists+kernel-hardening@lfdr.de>; Tue, 11 Feb 2020 14:57:53 +0100 (CET)
+Received: (qmail 7864 invoked by uid 550); 11 Feb 2020 13:57:45 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,8 +13,8 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 7281 invoked from network); 11 Feb 2020 13:57:39 -0000
-Subject: Re: [PATCH v7 00/11] add support for Clang's Shadow Call Stack
+Received: (qmail 7764 invoked from network); 11 Feb 2020 13:57:44 -0000
+Subject: Re: [PATCH v7 11/11] arm64: scs: add shadow stacks for SDEI
 To: Sami Tolvanen <samitolvanen@google.com>
 Cc: Will Deacon <will@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
  Steven Rostedt <rostedt@goodmis.org>, Masami Hiramatsu
@@ -29,13 +29,14 @@ Cc: Will Deacon <will@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
  linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
 References: <20191018161033.261971-1-samitolvanen@google.com>
  <20200128184934.77625-1-samitolvanen@google.com>
+ <20200128184934.77625-12-samitolvanen@google.com>
 From: James Morse <james.morse@arm.com>
-Message-ID: <63517cff-4bd6-bb6c-9a54-23de4f5fbb4a@arm.com>
-Date: Tue, 11 Feb 2020 13:57:24 +0000
+Message-ID: <dbb090ae-d1ec-cb1a-0710-e1d3cfe762b9@arm.com>
+Date: Tue, 11 Feb 2020 13:57:29 +0000
 User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:60.0) Gecko/20100101
  Thunderbird/60.9.0
 MIME-Version: 1.0
-In-Reply-To: <20200128184934.77625-1-samitolvanen@google.com>
+In-Reply-To: <20200128184934.77625-12-samitolvanen@google.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
@@ -43,35 +44,33 @@ Content-Transfer-Encoding: 7bit
 Hi Sami,
 
 On 28/01/2020 18:49, Sami Tolvanen wrote:
-> This patch series adds support for Clang's Shadow Call Stack
-> (SCS) mitigation, which uses a separately allocated shadow stack
-> to protect against return address overwrites. More information
-> can be found here:
-> 
->   https://clang.llvm.org/docs/ShadowCallStack.html
-> 
-> SCS provides better protection against traditional buffer
-> overflows than CONFIG_STACKPROTECTOR_*, but it should be noted
-> that SCS security guarantees in the kernel differ from the ones
-> documented for user space. The kernel must store addresses of
-> shadow stacks used by inactive tasks and interrupt handlers in
-> memory, which means an attacker capable reading and writing
-> arbitrary memory may be able to locate them and hijack control
-> flow by modifying shadow stacks that are not currently in use.
-> 
-> SCS is currently supported only on arm64, where the compiler
-> requires the x18 register to be reserved for holding the current
-> task's shadow stack pointer.
+> This change adds per-CPU shadow call stacks for the SDEI handler.
+> Similarly to how the kernel stacks are handled, we add separate shadow
+> stacks for normal and critical events.
 
-I found I had to add:
-| KBUILD_CFLAGS := $(filter-out -ffixed-x18 $(CC_FLAGS_SCS), $(KBUILD_CFLAGS))
+Reviewed-by: James Morse <james.morse@arm.com>
+Tested-by: James Morse <james.morse@arm.com>
 
-to drivers/firmware/efi/libstub/Makefile, to get this going.
-I don't think there is much point supporting SCS for the EFIstub, its already isolated
-from the rest of the kernel's C code by the __efistub symbol prefix machinery, and trying
-to use it would expose us to buggy firmware at a point we can't handle it!
 
-I can send a patch if its easier for you,
+> diff --git a/arch/arm64/kernel/scs.c b/arch/arm64/kernel/scs.c
+> index eaadf5430baa..dddb7c56518b 100644
+> --- a/arch/arm64/kernel/scs.c
+> +++ b/arch/arm64/kernel/scs.c
+
+> +static int scs_alloc_percpu(unsigned long * __percpu *ptr, int cpu)
+> +{
+> +	unsigned long *p;
+> +
+> +	p = __vmalloc_node_range(PAGE_SIZE, SCS_SIZE,
+> +				 VMALLOC_START, VMALLOC_END,
+> +				 GFP_SCS, PAGE_KERNEL,
+> +				 0, cpu_to_node(cpu),
+> +				 __builtin_return_address(0));
+
+(What makes this arch specific? arm64 has its own calls like this for the regular vmap
+stacks because it plays tricks with the alignment. Here the alignment requirement comes
+from the core SCS code... Would another architecture implement these
+scs_alloc_percpu()/scs_free_percpu() differently?)
 
 
 Thanks,
