@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17804-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17806-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 826E915B203
-	for <lists+kernel-hardening@lfdr.de>; Wed, 12 Feb 2020 21:41:47 +0100 (CET)
-Received: (qmail 1374 invoked by uid 550); 12 Feb 2020 20:41:43 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 7B61E15B266
+	for <lists+kernel-hardening@lfdr.de>; Wed, 12 Feb 2020 21:59:51 +0100 (CET)
+Received: (qmail 17559 invoked by uid 550); 12 Feb 2020 20:59:46 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,68 +13,94 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 1332 invoked from network); 12 Feb 2020 20:41:42 -0000
-Date: Wed, 12 Feb 2020 20:41:24 +0000
-From: Al Viro <viro@zeniv.linux.org.uk>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: "Eric W. Biederman" <ebiederm@xmission.com>,
-	LKML <linux-kernel@vger.kernel.org>,
-	Kernel Hardening <kernel-hardening@lists.openwall.com>,
-	Linux API <linux-api@vger.kernel.org>,
-	Linux FS Devel <linux-fsdevel@vger.kernel.org>,
-	Linux Security Module <linux-security-module@vger.kernel.org>,
-	Akinobu Mita <akinobu.mita@gmail.com>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Andy Lutomirski <luto@kernel.org>,
-	Daniel Micay <danielmicay@gmail.com>,
-	Djalal Harouni <tixxdz@gmail.com>,
-	"Dmitry V . Levin" <ldv@altlinux.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	"J . Bruce Fields" <bfields@fieldses.org>,
-	Jeff Layton <jlayton@poochiereds.net>,
-	Jonathan Corbet <corbet@lwn.net>, Kees Cook <keescook@chromium.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Solar Designer <solar@openwall.com>
-Subject: Re: [PATCH v8 07/11] proc: flush task dcache entries from all procfs
- instances
-Message-ID: <20200212204124.GR23230@ZenIV.linux.org.uk>
-References: <20200210150519.538333-8-gladkov.alexey@gmail.com>
- <87v9odlxbr.fsf@x220.int.ebiederm.org>
- <20200212144921.sykucj4mekcziicz@comp-core-i7-2640m-0182e6>
- <87tv3vkg1a.fsf@x220.int.ebiederm.org>
- <CAHk-=wg52stFtUxMOxs3afkwDWmWn1JXC7RJ7dPsTrJbnxpZVg@mail.gmail.com>
- <87v9obipk9.fsf@x220.int.ebiederm.org>
- <CAHk-=wgwmu4jpmOqW0+Lz0dcem1Fub=ThLHvmLobf_WqCq7bwg@mail.gmail.com>
- <20200212200335.GO23230@ZenIV.linux.org.uk>
- <CAHk-=wi+1CPShMFvJNPfnrJ8DD8uVKUOQ5TQzQUNGLUkeoahkg@mail.gmail.com>
- <20200212203833.GQ23230@ZenIV.linux.org.uk>
+Received: (qmail 17539 invoked from network); 12 Feb 2020 20:59:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=dNT84lBczGzzOgb9OnM5Fdxg6SAeViGOzJlzxW7UwtM=;
+        b=hqtkQWWMamX0OQO403fEmerDtGachsfSTpAQbGxOovOjrH4I6JJGU7ulCB6ab4JoT3
+         KAyC6liLk8dJENInpS9tXLd0C/e4cO0xsfrq3v5JmxMDWdQPH4RtbIyUaPUEmFFncsnu
+         NTRkAxc5qKDuK8ZfwFSsDYyfi27+i3eqlWyAZMw88Gui9+TfOwUOVnUpQC+aVOuJacyq
+         8T1BF/3aw0pTkYZ2HCojO8/QDLI6PFgcL/LPPiCxdXK9F4wYD6vIQ7uMQfgPEsyj2YE5
+         xyfVe+8nvsIELQ09/BO6sp4lG11/JqoDsbV7KjcyH1H3MR+bLO9ZJQVegNEKcfhvaktJ
+         6iJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dNT84lBczGzzOgb9OnM5Fdxg6SAeViGOzJlzxW7UwtM=;
+        b=QE1DTvvAmbiOuwtl1kkXUlDWhwWJ6QCX7vd6O7uwJxro8CAMDujF2CVrFlfiwmcEwZ
+         8+WQatQHyw6NR2gggP0b5BHoK3jHNRY1kFTxXIq3LGmDpsGR4gPmQFiHchthsIB6iM8g
+         ytnlx3sB8zyHmu1fHaci/Nhf/EJDscLxhOyeerQZqkMPlbjVBmXhbmcbauTDrFRd6boO
+         jiYDwGt9ixOHnR8qKMdaO/ZZeuKdScY9DHgO0wM634qZsR3i4BeZGq/fFz3hIohdn7Pd
+         A1fdH9xMGPe12bpHF0xL7Ky3uJ/wzfqQZFOlAKygQ80pulhvKpML2GZ8/JF6Lvq2FlvO
+         5F3g==
+X-Gm-Message-State: APjAAAWYt4F3MaAnLPwqS+KdnjUILpEb78zSZ8teekDhOOk5ZoAtVAvT
+	nII1vQvyMD+6eddPulqpbnC0EG+BkV9Sf6/EmjdLUQ==
+X-Google-Smtp-Source: APXvYqwlqtMeW4JdpzouZL0DVTK633mlJLfXjD51WE9+E3ZvoUcyD8yDdtL0O1xkdRc9tJh+2nQxwQKr0i+z+9CR1Hg=
+X-Received: by 2002:a67:2c15:: with SMTP id s21mr298736vss.104.1581541173587;
+ Wed, 12 Feb 2020 12:59:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200212203833.GQ23230@ZenIV.linux.org.uk>
-Sender: Al Viro <viro@ftp.linux.org.uk>
+References: <20191018161033.261971-1-samitolvanen@google.com>
+ <20200128184934.77625-1-samitolvanen@google.com> <20200128184934.77625-12-samitolvanen@google.com>
+ <dbb090ae-d1ec-cb1a-0710-e1d3cfe762b9@arm.com>
+In-Reply-To: <dbb090ae-d1ec-cb1a-0710-e1d3cfe762b9@arm.com>
+From: Sami Tolvanen <samitolvanen@google.com>
+Date: Wed, 12 Feb 2020 12:59:22 -0800
+Message-ID: <CABCJKudpeTDa4Ro1aCsCJ-=x97SG0qu5LGpj9ywj1aLOtboNkQ@mail.gmail.com>
+Subject: Re: [PATCH v7 11/11] arm64: scs: add shadow stacks for SDEI
+To: James Morse <james.morse@arm.com>
+Cc: Will Deacon <will@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, Masami Hiramatsu <mhiramat@kernel.org>, 
+	Ard Biesheuvel <ard.biesheuvel@linaro.org>, Mark Rutland <mark.rutland@arm.com>, 
+	Dave Martin <Dave.Martin@arm.com>, Kees Cook <keescook@chromium.org>, 
+	Laura Abbott <labbott@redhat.com>, Marc Zyngier <maz@kernel.org>, 
+	Nick Desaulniers <ndesaulniers@google.com>, Jann Horn <jannh@google.com>, 
+	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>, 
+	Masahiro Yamada <yamada.masahiro@socionext.com>, 
+	clang-built-linux <clang-built-linux@googlegroups.com>, 
+	Kernel Hardening <kernel-hardening@lists.openwall.com>, 
+	linux-arm-kernel <linux-arm-kernel@lists.infradead.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Feb 12, 2020 at 08:38:33PM +0000, Al Viro wrote:
-> On Wed, Feb 12, 2020 at 12:35:04PM -0800, Linus Torvalds wrote:
-> > On Wed, Feb 12, 2020 at 12:03 PM Al Viro <viro@zeniv.linux.org.uk> wrote:
-> > >
-> > > What's to prevent racing with fs shutdown while you are doing the second part?
-> > 
-> > I was thinking that only the proc_flush_task() code would do this.
-> > 
-> > And that holds a ref to the vfsmount through upid->ns.
-> > 
-> > So I wasn't suggesting doing this in general - just splitting up the
-> > implementation of d_invalidate() so that proc_flush_task_mnt() could
-> > delay the complex part to after having traversed the RCU-protected
-> > list.
-> > 
-> > But hey - I missed this part of the problem originally, so maybe I'm
-> > just missing something else this time. Wouldn't be the first time.
-> 
-> Wait, I thought the whole point of that had been to allow multiple
-> procfs instances for the same userns?  Confused...
+On Tue, Feb 11, 2020 at 5:57 AM James Morse <james.morse@arm.com> wrote:
+>
+> Hi Sami,
+>
+> On 28/01/2020 18:49, Sami Tolvanen wrote:
+> > This change adds per-CPU shadow call stacks for the SDEI handler.
+> > Similarly to how the kernel stacks are handled, we add separate shadow
+> > stacks for normal and critical events.
+>
+> Reviewed-by: James Morse <james.morse@arm.com>
+> Tested-by: James Morse <james.morse@arm.com>
 
-s/userns/pidns/, sorry
+Thank you for taking the time to test this, James!
+
+> > diff --git a/arch/arm64/kernel/scs.c b/arch/arm64/kernel/scs.c
+> > index eaadf5430baa..dddb7c56518b 100644
+> > --- a/arch/arm64/kernel/scs.c
+> > +++ b/arch/arm64/kernel/scs.c
+>
+> > +static int scs_alloc_percpu(unsigned long * __percpu *ptr, int cpu)
+> > +{
+> > +     unsigned long *p;
+> > +
+> > +     p = __vmalloc_node_range(PAGE_SIZE, SCS_SIZE,
+> > +                              VMALLOC_START, VMALLOC_END,
+> > +                              GFP_SCS, PAGE_KERNEL,
+> > +                              0, cpu_to_node(cpu),
+> > +                              __builtin_return_address(0));
+>
+> (What makes this arch specific? arm64 has its own calls like this for the regular vmap
+> stacks because it plays tricks with the alignment. Here the alignment requirement comes
+> from the core SCS code... Would another architecture implement these
+> scs_alloc_percpu()/scs_free_percpu() differently?)
+
+You are correct, these aren't necessarily specific to arm64. However,
+right now, we are not allocating per-CPU shadow stacks anywhere else,
+so this was a natural place for the helper functions. Would you prefer
+me to move these to kernel/scs.c instead?
+
+Sami
