@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17858-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17859-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id A654D165F2F
-	for <lists+kernel-hardening@lfdr.de>; Thu, 20 Feb 2020 14:50:54 +0100 (CET)
-Received: (qmail 9853 invoked by uid 550); 20 Feb 2020 13:50:50 -0000
+	by mail.lfdr.de (Postfix) with SMTP id A75121668DA
+	for <lists+kernel-hardening@lfdr.de>; Thu, 20 Feb 2020 21:48:47 +0100 (CET)
+Received: (qmail 27703 invoked by uid 550); 20 Feb 2020 20:48:41 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,59 +13,101 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 9816 invoked from network); 20 Feb 2020 13:50:49 -0000
-Authentication-Results: localhost; dkim=pass
-	reason="1024-bit key; insecure key"
-	header.d=c-s.fr header.i=@c-s.fr header.b=CNWrIpY9; dkim-adsp=pass;
-	dkim-atps=neutral
-X-Virus-Scanned: Debian amavisd-new at c-s.fr
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=c-s.fr; s=mail;
-	t=1582206636; bh=BBvK55B0LYyWjBw8+VjTb6XCT0ZX1sFMbmdMfCez4Qc=;
-	h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-	b=CNWrIpY9gD8poAlxwObDNLUNcxZT+TJtZIHaddLxG1IAZNLiUgfUDUuRP33FCBueN
-	 JaBmGKUyfzqOhMRkqEQXbq1nI1HXoGTvbNi1QW1tTtC73d/qd/1PmQuL+bSbyU2BWN
-	 j7JLZIO4kMUzwqpwwZcL+6oKCA3sT8Ka7ofn34M4=
-X-Virus-Scanned: amavisd-new at c-s.fr
-Subject: Re: [PATCH v3 6/6] powerpc/fsl_booke/kaslr: rename kaslr-booke32.rst
- to kaslr-booke.rst and add 64bit part
-To: Jason Yan <yanaijie@huawei.com>, mpe@ellerman.id.au,
- linuxppc-dev@lists.ozlabs.org, diana.craciun@nxp.com,
- benh@kernel.crashing.org, paulus@samba.org, npiggin@gmail.com,
- keescook@chromium.org, kernel-hardening@lists.openwall.com, oss@buserror.net
-Cc: linux-kernel@vger.kernel.org, zhaohongjiang@huawei.com
-References: <20200206025825.22934-1-yanaijie@huawei.com>
- <20200206025825.22934-7-yanaijie@huawei.com>
-From: Christophe Leroy <christophe.leroy@c-s.fr>
-Message-ID: <77c4a404-3ce5-5090-bbff-aaca71507146@c-s.fr>
-Date: Thu, 20 Feb 2020 14:50:36 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+Received: (qmail 27660 invoked from network); 20 Feb 2020 20:48:40 -0000
+From: ebiederm@xmission.com (Eric W. Biederman)
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Al Viro <viro@zeniv.linux.org.uk>,  LKML <linux-kernel@vger.kernel.org>,  Kernel Hardening <kernel-hardening@lists.openwall.com>,  Linux API <linux-api@vger.kernel.org>,  Linux FS Devel <linux-fsdevel@vger.kernel.org>,  Linux Security Module <linux-security-module@vger.kernel.org>,  Akinobu Mita <akinobu.mita@gmail.com>,  Alexey Dobriyan <adobriyan@gmail.com>,  Andrew Morton <akpm@linux-foundation.org>,  Andy Lutomirski <luto@kernel.org>,  Daniel Micay <danielmicay@gmail.com>,  Djalal Harouni <tixxdz@gmail.com>,  "Dmitry V . Levin" <ldv@altlinux.org>,  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,  Ingo Molnar <mingo@kernel.org>,  "J . Bruce Fields" <bfields@fieldses.org>,  Jeff Layton <jlayton@poochiereds.net>,  Jonathan Corbet <corbet@lwn.net>,  Kees Cook <keescook@chromium.org>,  Oleg Nesterov <oleg@redhat.com>,  Solar Designer <solar@openwall.com>
+References: <20200210150519.538333-8-gladkov.alexey@gmail.com>
+	<87v9odlxbr.fsf@x220.int.ebiederm.org>
+	<20200212144921.sykucj4mekcziicz@comp-core-i7-2640m-0182e6>
+	<87tv3vkg1a.fsf@x220.int.ebiederm.org>
+	<CAHk-=wg52stFtUxMOxs3afkwDWmWn1JXC7RJ7dPsTrJbnxpZVg@mail.gmail.com>
+	<87v9obipk9.fsf@x220.int.ebiederm.org>
+	<CAHk-=wgwmu4jpmOqW0+Lz0dcem1Fub=ThLHvmLobf_WqCq7bwg@mail.gmail.com>
+	<20200212200335.GO23230@ZenIV.linux.org.uk>
+	<CAHk-=wi+1CPShMFvJNPfnrJ8DD8uVKUOQ5TQzQUNGLUkeoahkg@mail.gmail.com>
+	<20200212203833.GQ23230@ZenIV.linux.org.uk>
+	<20200212204124.GR23230@ZenIV.linux.org.uk>
+	<CAHk-=wi5FOGV_3tALK3n6E2fK3Oa_yCYkYQtCSaXLSEm2DUCKg@mail.gmail.com>
+	<87lfp7h422.fsf@x220.int.ebiederm.org>
+	<CAHk-=wgmn9Qds0VznyphouSZW6e42GWDT5H1dpZg8pyGDGN+=w@mail.gmail.com>
+	<87pnejf6fz.fsf@x220.int.ebiederm.org>
+Date: Thu, 20 Feb 2020 14:46:25 -0600
+In-Reply-To: <87pnejf6fz.fsf@x220.int.ebiederm.org> (Eric W. Biederman's
+	message of "Wed, 12 Feb 2020 22:37:52 -0600")
+Message-ID: <871rqpaswu.fsf_-_@x220.int.ebiederm.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20200206025825.22934-7-yanaijie@huawei.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-XM-SPF: eid=1j4skD-00085Y-Cz;;;mid=<871rqpaswu.fsf_-_@x220.int.ebiederm.org>;;;hst=in02.mta.xmission.com;;;ip=68.227.160.95;;;frm=ebiederm@xmission.com;;;spf=neutral
+X-XM-AID: U2FsdGVkX1/Q6NKhmM+yXD+yJ+hS7KlJi2ul8+5zveY=
+X-SA-Exim-Connect-IP: 68.227.160.95
+X-SA-Exim-Mail-From: ebiederm@xmission.com
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on sa07.xmission.com
+X-Spam-Level: *
+X-Spam-Status: No, score=1.3 required=8.0 tests=ALL_TRUSTED,BAYES_50,
+	DCC_CHECK_NEGATIVE,T_TooManySym_01,XMNoVowels autolearn=disabled
+	version=3.4.2
+X-Spam-Report: 
+	* -1.0 ALL_TRUSTED Passed through trusted hosts only via SMTP
+	*  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+	*      [score: 0.4907]
+	*  1.5 XMNoVowels Alpha-numberic number with no vowels
+	* -0.0 DCC_CHECK_NEGATIVE Not listed in DCC
+	*      [sa07 1397; Body=1 Fuz1=1 Fuz2=1]
+	*  0.0 T_TooManySym_01 4+ unique symbols in subject
+X-Spam-DCC: XMission; sa07 1397; Body=1 Fuz1=1 Fuz2=1 
+X-Spam-Combo: *;Linus Torvalds <torvalds@linux-foundation.org>
+X-Spam-Relay-Country: 
+X-Spam-Timing: total 392 ms - load_scoreonly_sql: 0.03 (0.0%),
+	signal_user_changed: 2.8 (0.7%), b_tie_ro: 1.97 (0.5%), parse: 1.00
+	(0.3%), extract_message_metadata: 3.0 (0.8%), get_uri_detail_list:
+	0.95 (0.2%), tests_pri_-1000: 4.4 (1.1%), tests_pri_-950: 1.37 (0.4%),
+	tests_pri_-900: 1.07 (0.3%), tests_pri_-90: 28 (7.1%), check_bayes: 26
+	(6.7%), b_tokenize: 9 (2.2%), b_tok_get_all: 7 (1.9%), b_comp_prob:
+	2.5 (0.6%), b_tok_touch_all: 4.3 (1.1%), b_finish: 0.78 (0.2%),
+	tests_pri_0: 334 (85.4%), check_dkim_signature: 0.50 (0.1%),
+	check_dkim_adsp: 3.1 (0.8%), poll_dns_idle: 0.42 (0.1%), tests_pri_10:
+	1.97 (0.5%), tests_pri_500: 6 (1.5%), rewrite_mail: 0.00 (0.0%)
+Subject: [PATCH 0/7] proc: Dentry flushing without proc_mnt
+X-Spam-Flag: No
+X-SA-Exim-Version: 4.2.1 (built Thu, 05 May 2016 13:38:54 -0600)
+X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
 
 
+Just because it is less of a fundamental change and less testing I went
+and looked at updating proc_flush_task to use a list as Al suggested.
 
-Le 06/02/2020 à 03:58, Jason Yan a écrit :
-> Now we support both 32 and 64 bit KASLR for fsl booke. Add document for
-> 64 bit part and rename kaslr-booke32.rst to kaslr-booke.rst.
-> 
-> Signed-off-by: Jason Yan <yanaijie@huawei.com>
-> Cc: Scott Wood <oss@buserror.net>
-> Cc: Diana Craciun <diana.craciun@nxp.com>
-> Cc: Michael Ellerman <mpe@ellerman.id.au>
-> Cc: Christophe Leroy <christophe.leroy@c-s.fr>
-> Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-> Cc: Paul Mackerras <paulus@samba.org>
-> Cc: Nicholas Piggin <npiggin@gmail.com>
-> Cc: Kees Cook <keescook@chromium.org>
-> ---
->   .../{kaslr-booke32.rst => kaslr-booke.rst}    | 35 ++++++++++++++++---
->   1 file changed, 31 insertions(+), 4 deletions(-)
->   rename Documentation/powerpc/{kaslr-booke32.rst => kaslr-booke.rst} (59%)
+If we can stand an sget/deactivate_super pair for every dentry we want
+to invalidate I think I have something.
 
-Also update Documentation/powerpc/index.rst ?
+Comments from anyone will be appreciated I gave this some light testing
+and the code is based on something similar already present in proc so
+I think there is a high chance this code is correct but I could easily
+be wrong.
 
-Christophe
+Linus, does this approach look like something you can stand?
+
+Eric
+
+Eric W. Biederman (7):
+      proc: Rename in proc_inode rename sysctl_inodes sibling_inodes
+      proc: Generalize proc_sys_prune_dcache into proc_prune_siblings_dcache
+      proc: Mov rcu_read_(lock|unlock) in proc_prune_siblings_dcache
+      proc: Use d_invalidate in proc_prune_siblings_dcache
+      proc: Clear the pieces of proc_inode that proc_evict_inode cares about
+      proc: Use a list of inodes to flush from proc
+      proc: Ensure we see the exit of each process tid exactly once
+
+ fs/exec.c               |   5 +--
+ fs/proc/base.c          | 111 ++++++++++++++++--------------------------------
+ fs/proc/inode.c         |  60 +++++++++++++++++++++++---
+ fs/proc/internal.h      |   4 +-
+ fs/proc/proc_sysctl.c   |  45 +++-----------------
+ include/linux/pid.h     |   2 +
+ include/linux/proc_fs.h |   4 +-
+ kernel/exit.c           |   4 +-
+ kernel/pid.c            |  16 +++++++
+ 9 files changed, 124 insertions(+), 127 deletions(-)
+
+
