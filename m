@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17870-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17873-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id CF640166AA5
-	for <lists+kernel-hardening@lfdr.de>; Fri, 21 Feb 2020 00:00:48 +0100 (CET)
-Received: (qmail 18310 invoked by uid 550); 20 Feb 2020 23:00:44 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 0C089166ACA
+	for <lists+kernel-hardening@lfdr.de>; Fri, 21 Feb 2020 00:08:45 +0100 (CET)
+Received: (qmail 28104 invoked by uid 550); 20 Feb 2020 23:08:40 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,48 +13,51 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 18284 invoked from network); 20 Feb 2020 23:00:43 -0000
+Received: (qmail 28084 invoked from network); 20 Feb 2020 23:08:40 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linux-foundation.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=oW+dHyuXcdgcpFOp9rkCYNNzyvxL/1mmVUWMW1tVkn8=;
-        b=HsJYplXHj9WIosfuyYDxgCIpizr4Q2QTncG0r8kQoBcqx1jdtsR9fFVeYAPGlhnI5Y
-         7UWBHhKU9LT9oEd08VowjnmWRULPbdq+faWGzRjHU4lCzwffnnc4X3O8+YTbupxrOXam
-         he3lTa6POmGxUb6ylyx451mYPhWfQQq6/MfdM=
+        bh=8oe6NGrWHTfgph3/inQD25AzfwK01P8Rirv0Se4y4rY=;
+        b=eERYNg5pIV17feq4MuZzbw+6+6UOz8wPDMox8sHvl6LW5lyeCJiNPLjaaiAnC6tgNr
+         k4eFpoUVZrOY+nWuuaeOf69/y2kMFcR2Xyd4iQCdWpyjSB4kE6JLltV8O5wbI2adfQ2q
+         gkwegZ8+VoH9h8WqrHWMh85pZ16PVGc+EW3II=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=oW+dHyuXcdgcpFOp9rkCYNNzyvxL/1mmVUWMW1tVkn8=;
-        b=HHMbOwWXCuji1vXEHmKU1ahtqXxQCe4Gdzbx27o+eKxkoZyfXHvMFcKNCg+x1GLrDU
-         +8puzAEye3+K1JXkblePzS3ca7OhamX21TVtzi9YlH7BnhWsJHaLWnlRfWXuY+/npo71
-         edFrA7WPLIyTC/0KCfKHEbzlD2dLxzCiQQcJ6TdX8q6Y8HBbMpghtPlma0VQIi27XhHb
-         r5rUC403E+1G20S8i8fM0PrsLpKg33jx6TDRslW/XBlrCWI+mvgLK8hTWk7P2qehuh5L
-         R/2Z6aiCoMPUxnFFNP4Am4nS6DnNIDDAy6YcpmO7qdABOJg8FJBCDhmQmgAb7OmlyTe8
-         N1/w==
-X-Gm-Message-State: APjAAAWscRarrlznI9rkI8qBskqZ+lkjZIr1NqPvn7A5UUy3FKZF1V1U
-	vzqLSWfzBeZhReY5mYKm63PQ2G/eajg=
-X-Google-Smtp-Source: APXvYqyQETX93j79eDt2soxIL0e2J3Wh7jpRWSXJsqgT6wE5s+DEDtK88e2ZRZlecIn9M82oLfG8AA==
-X-Received: by 2002:a05:6512:467:: with SMTP id x7mr3134861lfd.177.1582239631972;
-        Thu, 20 Feb 2020 15:00:31 -0800 (PST)
-X-Received: by 2002:a2e:88c5:: with SMTP id a5mr20496205ljk.201.1582239629960;
- Thu, 20 Feb 2020 15:00:29 -0800 (PST)
+        bh=8oe6NGrWHTfgph3/inQD25AzfwK01P8Rirv0Se4y4rY=;
+        b=MULcFupczTUhpRj2B23/rDNzEH5UQF7H4j8vE41yJQow/u8+qJuDE/kODOOj4UoxlX
+         XWBFIS/dI9Ubx43gVLXW9ZjMPH6JzBreTSyQOOYhLJBgJydGLRVs82vVq1WFTaCUKcQ1
+         eAOG+/SQb+P5usLERp6S+5T2sWv+Tnlyxnlquwh000YW68u+3nPhbho/bqFtsW+REvxo
+         rry+4+a41JNG1Jqt/yslBitKKbP04kxB/DLDbvZTpSvd3c9IuE/qVoSl7qp7R/bLMvvx
+         Ogx0aXmAP6bU4W7Bj0t2ka58XZlOGFWhT5DNcMAWkuly4hUpdXMYJqrwDHNJWD1aZQ/w
+         xBJQ==
+X-Gm-Message-State: APjAAAUMPPhQRJqhtH9cP03x/9sw5au2jDOCMovgwV1VrGLKpAQLxYgW
+	vfkO8CNkBUr5YQNBWwAWiQ5hWjG9aqQ=
+X-Google-Smtp-Source: APXvYqzgpGPhh7mvyxr1rielk3zboBfB6IjUzGJTMstY/pMEHGl2vMjSASyfh3Mr/jOpCnWaAJX8aw==
+X-Received: by 2002:a17:906:2596:: with SMTP id m22mr31923395ejb.167.1582240108449;
+        Thu, 20 Feb 2020 15:08:28 -0800 (PST)
+X-Received: by 2002:a2e:97cc:: with SMTP id m12mr19768759ljj.241.1582239758414;
+ Thu, 20 Feb 2020 15:02:38 -0800 (PST)
 MIME-Version: 1.0
-References: <20200212200335.GO23230@ZenIV.linux.org.uk> <CAHk-=wi+1CPShMFvJNPfnrJ8DD8uVKUOQ5TQzQUNGLUkeoahkg@mail.gmail.com>
+References: <20200210150519.538333-8-gladkov.alexey@gmail.com>
+ <87v9odlxbr.fsf@x220.int.ebiederm.org> <20200212144921.sykucj4mekcziicz@comp-core-i7-2640m-0182e6>
+ <87tv3vkg1a.fsf@x220.int.ebiederm.org> <CAHk-=wg52stFtUxMOxs3afkwDWmWn1JXC7RJ7dPsTrJbnxpZVg@mail.gmail.com>
+ <87v9obipk9.fsf@x220.int.ebiederm.org> <CAHk-=wgwmu4jpmOqW0+Lz0dcem1Fub=ThLHvmLobf_WqCq7bwg@mail.gmail.com>
+ <20200212200335.GO23230@ZenIV.linux.org.uk> <CAHk-=wi+1CPShMFvJNPfnrJ8DD8uVKUOQ5TQzQUNGLUkeoahkg@mail.gmail.com>
  <20200212203833.GQ23230@ZenIV.linux.org.uk> <20200212204124.GR23230@ZenIV.linux.org.uk>
  <CAHk-=wi5FOGV_3tALK3n6E2fK3Oa_yCYkYQtCSaXLSEm2DUCKg@mail.gmail.com>
  <87lfp7h422.fsf@x220.int.ebiederm.org> <CAHk-=wgmn9Qds0VznyphouSZW6e42GWDT5H1dpZg8pyGDGN+=w@mail.gmail.com>
  <87pnejf6fz.fsf@x220.int.ebiederm.org> <871rqpaswu.fsf_-_@x220.int.ebiederm.org>
- <87blpt9e6m.fsf_-_@x220.int.ebiederm.org> <20200220225420.GR23230@ZenIV.linux.org.uk>
-In-Reply-To: <20200220225420.GR23230@ZenIV.linux.org.uk>
+In-Reply-To: <871rqpaswu.fsf_-_@x220.int.ebiederm.org>
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Thu, 20 Feb 2020 15:00:13 -0800
-X-Gmail-Original-Message-ID: <CAHk-=whPwMTTaGtphubBXeiKitKigutddx9Fcp4Sf1sw4tpyeA@mail.gmail.com>
-Message-ID: <CAHk-=whPwMTTaGtphubBXeiKitKigutddx9Fcp4Sf1sw4tpyeA@mail.gmail.com>
-Subject: Re: [PATCH 4/7] proc: Use d_invalidate in proc_prune_siblings_dcache
-To: Al Viro <viro@zeniv.linux.org.uk>
-Cc: "Eric W. Biederman" <ebiederm@xmission.com>, LKML <linux-kernel@vger.kernel.org>, 
+Date: Thu, 20 Feb 2020 15:02:22 -0800
+X-Gmail-Original-Message-ID: <CAHk-=whX7UmXgCKPPvjyQFqBiKw-Zsgj22_rH8epDPoWswAnLA@mail.gmail.com>
+Message-ID: <CAHk-=whX7UmXgCKPPvjyQFqBiKw-Zsgj22_rH8epDPoWswAnLA@mail.gmail.com>
+Subject: Re: [PATCH 0/7] proc: Dentry flushing without proc_mnt
+To: "Eric W. Biederman" <ebiederm@xmission.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>, LKML <linux-kernel@vger.kernel.org>, 
 	Kernel Hardening <kernel-hardening@lists.openwall.com>, Linux API <linux-api@vger.kernel.org>, 
 	Linux FS Devel <linux-fsdevel@vger.kernel.org>, 
 	Linux Security Module <linux-security-module@vger.kernel.org>, 
@@ -68,14 +71,17 @@ Cc: "Eric W. Biederman" <ebiederm@xmission.com>, LKML <linux-kernel@vger.kernel.
 	Solar Designer <solar@openwall.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Feb 20, 2020 at 2:54 PM Al Viro <viro@zeniv.linux.org.uk> wrote:
+On Thu, Feb 20, 2020 at 12:48 PM Eric W. Biederman
+<ebiederm@xmission.com> wrote:
 >
-> s/no inode.*/it's a directory inode./
+> Linus, does this approach look like something you can stand?
 
-That actually makes my worry go away too. We don't allow aliases for
-directory inodes, iirc.
+A couple of worries, although one of them seem to have already been
+resolved by Al.
 
-So then it doesn't depend on some /proc implementation issue any more,
-then it's fundamental that there's only one dentry.
+I think the real gatekeeper should be Al in general.  But other than
+the small comments I had, I think this might work just fine.
 
-            Linus
+Al?
+
+           Linus
