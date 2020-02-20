@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17861-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17862-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 13C1F1668F5
-	for <lists+kernel-hardening@lfdr.de>; Thu, 20 Feb 2020 21:50:47 +0100 (CET)
-Received: (qmail 30626 invoked by uid 550); 20 Feb 2020 20:50:42 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 208111668F8
+	for <lists+kernel-hardening@lfdr.de>; Thu, 20 Feb 2020 21:51:40 +0100 (CET)
+Received: (qmail 32640 invoked by uid 550); 20 Feb 2020 20:51:35 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,7 +13,7 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 30580 invoked from network); 20 Feb 2020 20:50:41 -0000
+Received: (qmail 32600 invoked from network); 20 Feb 2020 20:51:34 -0000
 From: ebiederm@xmission.com (Eric W. Biederman)
 To: Linus Torvalds <torvalds@linux-foundation.org>
 Cc: Al Viro <viro@zeniv.linux.org.uk>,  LKML <linux-kernel@vger.kernel.org>,  Kernel Hardening <kernel-hardening@lists.openwall.com>,  Linux API <linux-api@vger.kernel.org>,  Linux FS Devel <linux-fsdevel@vger.kernel.org>,  Linux Security Module <linux-security-module@vger.kernel.org>,  Akinobu Mita <akinobu.mita@gmail.com>,  Alexey Dobriyan <adobriyan@gmail.com>,  Andrew Morton <akpm@linux-foundation.org>,  Andy Lutomirski <luto@kernel.org>,  Daniel Micay <danielmicay@gmail.com>,  Djalal Harouni <tixxdz@gmail.com>,  "Dmitry V . Levin" <ldv@altlinux.org>,  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,  Ingo Molnar <mingo@kernel.org>,  "J . Bruce Fields" <bfields@fieldses.org>,  Jeff Layton <jlayton@poochiereds.net>,  Jonathan Corbet <corbet@lwn.net>,  Kees Cook <keescook@chromium.org>,  Oleg Nesterov <oleg@redhat.com>,  Solar Designer <solar@openwall.com>
@@ -33,168 +33,115 @@ References: <20200210150519.538333-8-gladkov.alexey@gmail.com>
 	<CAHk-=wgmn9Qds0VznyphouSZW6e42GWDT5H1dpZg8pyGDGN+=w@mail.gmail.com>
 	<87pnejf6fz.fsf@x220.int.ebiederm.org>
 	<871rqpaswu.fsf_-_@x220.int.ebiederm.org>
-Date: Thu, 20 Feb 2020 14:48:28 -0600
+Date: Thu, 20 Feb 2020 14:49:09 -0600
 In-Reply-To: <871rqpaswu.fsf_-_@x220.int.ebiederm.org> (Eric W. Biederman's
 	message of "Thu, 20 Feb 2020 14:46:25 -0600")
-Message-ID: <87mu9d9e8z.fsf_-_@x220.int.ebiederm.org>
+Message-ID: <87h7zl9e7u.fsf_-_@x220.int.ebiederm.org>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-XM-SPF: eid=1j4smC-0008QU-FZ;;;mid=<87mu9d9e8z.fsf_-_@x220.int.ebiederm.org>;;;hst=in02.mta.xmission.com;;;ip=68.227.160.95;;;frm=ebiederm@xmission.com;;;spf=neutral
-X-XM-AID: U2FsdGVkX19U9wTJM2ZK4ftSyO914HE9nIIpH9k5Pfg=
+X-XM-SPF: eid=1j4smw-0005SC-BW;;;mid=<87h7zl9e7u.fsf_-_@x220.int.ebiederm.org>;;;hst=in01.mta.xmission.com;;;ip=68.227.160.95;;;frm=ebiederm@xmission.com;;;spf=neutral
+X-XM-AID: U2FsdGVkX18yxsTIN6rEo+POZRFDqs4bpwfG8Bf38/Y=
 X-SA-Exim-Connect-IP: 68.227.160.95
 X-SA-Exim-Mail-From: ebiederm@xmission.com
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on sa05.xmission.com
-X-Spam-Level: **
-X-Spam-Status: No, score=2.5 required=8.0 tests=ALL_TRUSTED,BAYES_50,
-	DCC_CHECK_NEGATIVE,T_TooManySym_01,XMGappySubj_01,XMNoVowels,XMSubLong
-	autolearn=disabled version=3.4.2
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on sa01.xmission.com
+X-Spam-Level: ****
+X-Spam-Status: No, score=4.0 required=8.0 tests=ALL_TRUSTED,BAYES_50,
+	DCC_CHECK_NEGATIVE,NO_DNS_FOR_FROM,TR_Symld_Words,T_TooManySym_01,
+	T_TooManySym_02,T_TooManySym_03,T_TooManySym_04,XMGappySubj_01,
+	XMNoVowels,XMSubLong autolearn=disabled version=3.4.2
+X-Spam-Virus: No
 X-Spam-Report: 
 	* -1.0 ALL_TRUSTED Passed through trusted hosts only via SMTP
 	*  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-	*      [score: 0.4998]
+	*      [score: 0.5000]
 	*  0.7 XMSubLong Long Subject
 	*  0.5 XMGappySubj_01 Very gappy subject
+	*  1.5 TR_Symld_Words too many words that have symbols inside
 	*  1.5 XMNoVowels Alpha-numberic number with no vowels
 	* -0.0 DCC_CHECK_NEGATIVE Not listed in DCC
-	*      [sa05 1397; Body=1 Fuz1=1]
+	*      [sa01 1397; Body=1 Fuz1=1 Fuz2=1]
+	*  0.0 NO_DNS_FOR_FROM DNS: Envelope sender has no MX or A DNS records
+	*  0.0 T_TooManySym_02 5+ unique symbols in subject
 	*  0.0 T_TooManySym_01 4+ unique symbols in subject
-X-Spam-DCC: XMission; sa05 1397; Body=1 Fuz1=1 
-X-Spam-Combo: **;Linus Torvalds <torvalds@linux-foundation.org>
+	*  0.0 T_TooManySym_03 6+ unique symbols in subject
+	*  0.0 T_TooManySym_04 7+ unique symbols in subject
+X-Spam-DCC: XMission; sa01 1397; Body=1 Fuz1=1 Fuz2=1 
+X-Spam-Combo: ****;Linus Torvalds <torvalds@linux-foundation.org>
 X-Spam-Relay-Country: 
-X-Spam-Timing: total 394 ms - load_scoreonly_sql: 0.06 (0.0%),
-	signal_user_changed: 3.1 (0.8%), b_tie_ro: 2.2 (0.6%), parse: 1.45
-	(0.4%), extract_message_metadata: 13 (3.2%), get_uri_detail_list: 1.86
-	(0.5%), tests_pri_-1000: 16 (4.0%), tests_pri_-950: 1.30 (0.3%),
-	tests_pri_-900: 1.08 (0.3%), tests_pri_-90: 33 (8.3%), check_bayes: 31
-	(7.9%), b_tokenize: 11 (2.9%), b_tok_get_all: 8 (2.0%), b_comp_prob:
-	4.2 (1.1%), b_tok_touch_all: 5 (1.3%), b_finish: 0.66 (0.2%),
-	tests_pri_0: 313 (79.4%), check_dkim_signature: 0.95 (0.2%),
-	check_dkim_adsp: 2.5 (0.6%), poll_dns_idle: 0.47 (0.1%), tests_pri_10:
-	2.2 (0.5%), tests_pri_500: 7 (1.8%), rewrite_mail: 0.00 (0.0%)
-Subject: [PATCH 2/7] proc: Generalize proc_sys_prune_dcache into proc_prune_siblings_dcache
+X-Spam-Timing: total 7271 ms - load_scoreonly_sql: 0.03 (0.0%),
+	signal_user_changed: 2.9 (0.0%), b_tie_ro: 2.1 (0.0%), parse: 1.16
+	(0.0%), extract_message_metadata: 12 (0.2%), get_uri_detail_list: 1.32
+	(0.0%), tests_pri_-1000: 3.4 (0.0%), tests_pri_-950: 0.98 (0.0%),
+	tests_pri_-900: 0.84 (0.0%), tests_pri_-90: 21 (0.3%), check_bayes: 20
+	(0.3%), b_tokenize: 6 (0.1%), b_tok_get_all: 7 (0.1%), b_comp_prob:
+	1.55 (0.0%), b_tok_touch_all: 3.9 (0.1%), b_finish: 0.62 (0.0%),
+	tests_pri_0: 6184 (85.0%), check_dkim_signature: 0.38 (0.0%),
+	check_dkim_adsp: 6008 (82.6%), poll_dns_idle: 7038 (96.8%),
+	tests_pri_10: 1.66 (0.0%), tests_pri_500: 1041 (14.3%), rewrite_mail:
+	0.00 (0.0%)
+Subject: [PATCH 3/7] proc: Mov rcu_read_(lock|unlock) in proc_prune_siblings_dcache
 X-Spam-Flag: No
 X-SA-Exim-Version: 4.2.1 (built Thu, 05 May 2016 13:38:54 -0600)
-X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
+X-SA-Exim-Scanned: Yes (on in01.mta.xmission.com)
 
 
-This prepares the way for allowing the pid part of proc to use this
-dcache pruning code as well.
+Don't make it look like rcu_read_lock is held over the entire loop
+instead just take the rcu_read_lock over the part of the loop that
+matters.  This makes the intent of the code a little clearer.
 
-Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
+Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
 ---
- fs/proc/inode.c       | 38 ++++++++++++++++++++++++++++++++++++++
- fs/proc/internal.h    |  1 +
- fs/proc/proc_sysctl.c | 35 +----------------------------------
- 3 files changed, 40 insertions(+), 34 deletions(-)
+ fs/proc/inode.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/fs/proc/inode.c b/fs/proc/inode.c
-index bdae442d5262..74ce4a8d05eb 100644
+index 74ce4a8d05eb..38a7baa41aba 100644
 --- a/fs/proc/inode.c
 +++ b/fs/proc/inode.c
-@@ -103,6 +103,44 @@ void __init proc_init_kmemcache(void)
- 	BUILD_BUG_ON(sizeof(struct proc_dir_entry) >= SIZEOF_PDE);
- }
+@@ -110,11 +110,13 @@ void proc_prune_siblings_dcache(struct hlist_head *inodes, spinlock_t *lock)
+ 	struct hlist_node *node;
+ 	struct super_block *sb;
  
-+void proc_prune_siblings_dcache(struct hlist_head *inodes, spinlock_t *lock)
-+{
-+	struct inode *inode;
-+	struct proc_inode *ei;
-+	struct hlist_node *node;
-+	struct super_block *sb;
-+
-+	rcu_read_lock();
-+	for (;;) {
-+		node = hlist_first_rcu(inodes);
-+		if (!node)
-+			break;
-+		ei = hlist_entry(node, struct proc_inode, sibling_inodes);
-+		spin_lock(lock);
-+		hlist_del_init_rcu(&ei->sibling_inodes);
-+		spin_unlock(lock);
-+
-+		inode = &ei->vfs_inode;
-+		sb = inode->i_sb;
-+		if (!atomic_inc_not_zero(&sb->s_active))
-+			continue;
-+		inode = igrab(inode);
-+		rcu_read_unlock();
-+		if (unlikely(!inode)) {
-+			deactivate_super(sb);
-+			rcu_read_lock();
-+			continue;
-+		}
-+
-+		d_prune_aliases(inode);
-+		iput(inode);
-+		deactivate_super(sb);
-+
-+		rcu_read_lock();
-+	}
-+	rcu_read_unlock();
-+}
-+
- static int proc_show_options(struct seq_file *seq, struct dentry *root)
- {
- 	struct super_block *sb = root->d_sb;
-diff --git a/fs/proc/internal.h b/fs/proc/internal.h
-index 366cd3aa690b..ba9a991824a5 100644
---- a/fs/proc/internal.h
-+++ b/fs/proc/internal.h
-@@ -210,6 +210,7 @@ extern const struct inode_operations proc_pid_link_inode_operations;
- extern const struct super_operations proc_sops;
- 
- void proc_init_kmemcache(void);
-+void proc_prune_siblings_dcache(struct hlist_head *inodes, spinlock_t *lock);
- void set_proc_pid_nlink(void);
- extern struct inode *proc_get_inode(struct super_block *, struct proc_dir_entry *);
- extern void proc_entry_rundown(struct proc_dir_entry *);
-diff --git a/fs/proc/proc_sysctl.c b/fs/proc/proc_sysctl.c
-index 42fbb7f3c587..5da9d7f7ae34 100644
---- a/fs/proc/proc_sysctl.c
-+++ b/fs/proc/proc_sysctl.c
-@@ -269,40 +269,7 @@ static void unuse_table(struct ctl_table_header *p)
- 
- static void proc_sys_prune_dcache(struct ctl_table_header *head)
- {
--	struct inode *inode;
--	struct proc_inode *ei;
--	struct hlist_node *node;
--	struct super_block *sb;
--
 -	rcu_read_lock();
--	for (;;) {
--		node = hlist_first_rcu(&head->inodes);
+ 	for (;;) {
++		rcu_read_lock();
+ 		node = hlist_first_rcu(inodes);
 -		if (!node)
--			break;
--		ei = hlist_entry(node, struct proc_inode, sibling_inodes);
--		spin_lock(&sysctl_lock);
--		hlist_del_init_rcu(&ei->sibling_inodes);
--		spin_unlock(&sysctl_lock);
--
--		inode = &ei->vfs_inode;
--		sb = inode->i_sb;
++		if (!node) {
++			rcu_read_unlock();
+ 			break;
++		}
+ 		ei = hlist_entry(node, struct proc_inode, sibling_inodes);
+ 		spin_lock(lock);
+ 		hlist_del_init_rcu(&ei->sibling_inodes);
+@@ -122,23 +124,21 @@ void proc_prune_siblings_dcache(struct hlist_head *inodes, spinlock_t *lock)
+ 
+ 		inode = &ei->vfs_inode;
+ 		sb = inode->i_sb;
 -		if (!atomic_inc_not_zero(&sb->s_active))
--			continue;
--		inode = igrab(inode);
--		rcu_read_unlock();
--		if (unlikely(!inode)) {
--			deactivate_super(sb);
++		if (!atomic_inc_not_zero(&sb->s_active)) {
++			rcu_read_unlock();
+ 			continue;
++		}
+ 		inode = igrab(inode);
+ 		rcu_read_unlock();
+ 		if (unlikely(!inode)) {
+ 			deactivate_super(sb);
 -			rcu_read_lock();
--			continue;
--		}
--
--		d_prune_aliases(inode);
--		iput(inode);
--		deactivate_super(sb);
+ 			continue;
+ 		}
+ 
+ 		d_prune_aliases(inode);
+ 		iput(inode);
+ 		deactivate_super(sb);
 -
 -		rcu_read_lock();
--	}
+ 	}
 -	rcu_read_unlock();
-+	proc_prune_siblings_dcache(&head->inodes, &sysctl_lock);
  }
  
- /* called under sysctl_lock, will reacquire if has to wait */
+ static int proc_show_options(struct seq_file *seq, struct dentry *root)
 -- 
 2.20.1
 
