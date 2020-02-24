@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17879-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17885-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id C45EF168FE3
-	for <lists+kernel-hardening@lfdr.de>; Sat, 22 Feb 2020 16:48:53 +0100 (CET)
-Received: (qmail 27961 invoked by uid 550); 22 Feb 2020 15:48:47 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 3E76416AAAA
+	for <lists+kernel-hardening@lfdr.de>; Mon, 24 Feb 2020 17:03:55 +0100 (CET)
+Received: (qmail 25620 invoked by uid 550); 24 Feb 2020 16:02:49 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,147 +13,218 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 27921 invoked from network); 22 Feb 2020 15:48:46 -0000
-From: ebiederm@xmission.com (Eric W. Biederman)
-To: Oleg Nesterov <oleg@redhat.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,  Al Viro <viro@zeniv.linux.org.uk>,  LKML <linux-kernel@vger.kernel.org>,  Kernel Hardening <kernel-hardening@lists.openwall.com>,  Linux API <linux-api@vger.kernel.org>,  Linux FS Devel <linux-fsdevel@vger.kernel.org>,  Linux Security Module <linux-security-module@vger.kernel.org>,  Akinobu Mita <akinobu.mita@gmail.com>,  Alexey Dobriyan <adobriyan@gmail.com>,  Andrew Morton <akpm@linux-foundation.org>,  Andy Lutomirski <luto@kernel.org>,  Daniel Micay <danielmicay@gmail.com>,  Djalal Harouni <tixxdz@gmail.com>,  "Dmitry V . Levin" <ldv@altlinux.org>,  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,  Ingo Molnar <mingo@kernel.org>,  "J . Bruce Fields" <bfields@fieldses.org>,  Jeff Layton <jlayton@poochiereds.net>,  Jonathan Corbet <corbet@lwn.net>,  Kees Cook <keescook@chromium.org>,  Solar Designer <solar@openwall.com>
-References: <20200212200335.GO23230@ZenIV.linux.org.uk>
-	<CAHk-=wi+1CPShMFvJNPfnrJ8DD8uVKUOQ5TQzQUNGLUkeoahkg@mail.gmail.com>
-	<20200212203833.GQ23230@ZenIV.linux.org.uk>
-	<20200212204124.GR23230@ZenIV.linux.org.uk>
-	<CAHk-=wi5FOGV_3tALK3n6E2fK3Oa_yCYkYQtCSaXLSEm2DUCKg@mail.gmail.com>
-	<87lfp7h422.fsf@x220.int.ebiederm.org>
-	<CAHk-=wgmn9Qds0VznyphouSZW6e42GWDT5H1dpZg8pyGDGN+=w@mail.gmail.com>
-	<87pnejf6fz.fsf@x220.int.ebiederm.org>
-	<871rqpaswu.fsf_-_@x220.int.ebiederm.org>
-	<87r1yp7zhc.fsf_-_@x220.int.ebiederm.org>
-	<20200221165036.GB16646@redhat.com>
-Date: Sat, 22 Feb 2020 09:46:29 -0600
-In-Reply-To: <20200221165036.GB16646@redhat.com> (Oleg Nesterov's message of
-	"Fri, 21 Feb 2020 17:50:37 +0100")
-Message-ID: <87mu9a4obu.fsf@x220.int.ebiederm.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+Received: (qmail 24468 invoked from network); 24 Feb 2020 16:02:48 -0000
+From: =?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+To: linux-kernel@vger.kernel.org
+Cc: =?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+        Al Viro <viro@zeniv.linux.org.uk>,
+        Andy Lutomirski <luto@amacapital.net>, Arnd Bergmann <arnd@arndb.de>,
+        Casey Schaufler <casey@schaufler-ca.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        James Morris <jmorris@namei.org>, Jann Horn <jann@thejh.net>,
+        Jonathan Corbet <corbet@lwn.net>, Kees Cook <keescook@chromium.org>,
+        Michael Kerrisk <mtk.manpages@gmail.com>,
+        =?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mickael.salaun@ssi.gouv.fr>,
+        "Serge E . Hallyn" <serge@hallyn.com>, Shuah Khan <shuah@kernel.org>,
+        Vincent Dagonneau <vincent.dagonneau@ssi.gouv.fr>,
+        kernel-hardening@lists.openwall.com, linux-api@vger.kernel.org,
+        linux-arch@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org, linux-kselftest@vger.kernel.org,
+        linux-security-module@vger.kernel.org, x86@kernel.org
+Subject: [RFC PATCH v14 00/10] Landlock LSM
+Date: Mon, 24 Feb 2020 17:02:05 +0100
+Message-Id: <20200224160215.4136-1-mic@digikod.net>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-XM-SPF: eid=1j5X14-0004kb-Io;;;mid=<87mu9a4obu.fsf@x220.int.ebiederm.org>;;;hst=in01.mta.xmission.com;;;ip=68.227.160.95;;;frm=ebiederm@xmission.com;;;spf=neutral
-X-XM-AID: U2FsdGVkX1+wG8oCF9P5p4qTliSUMtLy9dXaaffHDtc=
-X-SA-Exim-Connect-IP: 68.227.160.95
-X-SA-Exim-Mail-From: ebiederm@xmission.com
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on sa06.xmission.com
-X-Spam-Level: **
-X-Spam-Status: No, score=2.0 required=8.0 tests=ALL_TRUSTED,BAYES_50,
-	DCC_CHECK_NEGATIVE,T_TM2_M_HEADER_IN_MSG,XMNoVowels,XMSubLong
-	autolearn=disabled version=3.4.2
-X-Spam-Report: 
-	* -1.0 ALL_TRUSTED Passed through trusted hosts only via SMTP
-	*  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-	*      [score: 0.5000]
-	*  1.5 XMNoVowels Alpha-numberic number with no vowels
-	*  0.7 XMSubLong Long Subject
-	*  0.0 T_TM2_M_HEADER_IN_MSG BODY: No description available.
-	* -0.0 DCC_CHECK_NEGATIVE Not listed in DCC
-	*      [sa06 1397; Body=1 Fuz1=1 Fuz2=1]
-X-Spam-DCC: XMission; sa06 1397; Body=1 Fuz1=1 Fuz2=1 
-X-Spam-Combo: **;Oleg Nesterov <oleg@redhat.com>
-X-Spam-Relay-Country: 
-X-Spam-Timing: total 717 ms - load_scoreonly_sql: 0.03 (0.0%),
-	signal_user_changed: 2.8 (0.4%), b_tie_ro: 1.94 (0.3%), parse: 0.93
-	(0.1%), extract_message_metadata: 12 (1.7%), get_uri_detail_list: 2.2
-	(0.3%), tests_pri_-1000: 6 (0.8%), tests_pri_-950: 1.23 (0.2%),
-	tests_pri_-900: 1.12 (0.2%), tests_pri_-90: 32 (4.4%), check_bayes: 30
-	(4.2%), b_tokenize: 11 (1.5%), b_tok_get_all: 10 (1.4%), b_comp_prob:
-	3.0 (0.4%), b_tok_touch_all: 3.9 (0.5%), b_finish: 0.68 (0.1%),
-	tests_pri_0: 648 (90.3%), check_dkim_signature: 0.57 (0.1%),
-	check_dkim_adsp: 12 (1.7%), poll_dns_idle: 0.37 (0.1%), tests_pri_10:
-	2.9 (0.4%), tests_pri_500: 8 (1.0%), rewrite_mail: 0.00 (0.0%)
-Subject: Re: [PATCH 7/7] proc: Ensure we see the exit of each process tid exactly once
-X-Spam-Flag: No
-X-SA-Exim-Version: 4.2.1 (built Thu, 05 May 2016 13:38:54 -0600)
-X-SA-Exim-Scanned: Yes (on in01.mta.xmission.com)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Antivirus: Dr.Web (R) for Unix mail servers drweb plugin ver.6.0.2.8
+X-Antivirus-Code: 0x100000
 
-Oleg Nesterov <oleg@redhat.com> writes:
+Hi,
 
-> On 02/20, Eric W. Biederman wrote:
->>
->> +void exchange_tids(struct task_struct *ntask, struct task_struct *otask)
->> +{
->> +	/* pid_links[PIDTYPE_PID].next is always NULL */
->> +	struct pid *npid = READ_ONCE(ntask->thread_pid);
->> +	struct pid *opid = READ_ONCE(otask->thread_pid);
->> +
->> +	rcu_assign_pointer(opid->tasks[PIDTYPE_PID].first, &ntask->pid_links[PIDTYPE_PID]);
->> +	rcu_assign_pointer(npid->tasks[PIDTYPE_PID].first, &otask->pid_links[PIDTYPE_PID]);
->> +	rcu_assign_pointer(ntask->thread_pid, opid);
->> +	rcu_assign_pointer(otask->thread_pid, npid);
->
-> this breaks has_group_leader_pid()...
->
-> proc_pid_readdir() can miss a process doing mt-exec but this looks fixable,
-> just we need to update ntask->thread_pid before updating ->first.
->
-> The more problematic case is __exit_signal() which does
-> 		
-> 		if (unlikely(has_group_leader_pid(tsk)))
-> 			posix_cpu_timers_exit_group(tsk);
+This new version of Landlock is a major revamp of the previous series
+[1], hence the RFC tag.  The three main changes are the replacement of
+eBPF with a dedicated safe management of access rules, the replacement
+of the use of seccomp(2) with a dedicated syscall, and the management of
+filesystem access-control (back from the v10).
 
-Along with the comment:
-		/*
-		 * This can only happen if the caller is de_thread().
-		 * FIXME: this is the temporary hack, we should teach
-		 * posix-cpu-timers to handle this case correctly.
-		 */
-So I suspect this is fixable and the above fix might be part of that.
+As discussed in [2], eBPF may be too powerful and dangerous to be put in
+the hand of unprivileged and potentially malicious processes, especially
+because of side-channel attacks against access-controls or other parts
+of the kernel.
 
-Hmm looking at your commit:
+Thanks to this new implementation (1540 SLOC), designed from the ground
+to be used by unprivileged processes, this series enables a process to
+sandbox itself without requiring CAP_SYS_ADMIN, but only the
+no_new_privs constraint (like seccomp).  Not relying on eBPF also
+enables to improve performances, especially for stacked security
+policies thanks to mergeable rulesets.
 
-commit e0a70217107e6f9844628120412cb27bb4cea194
-Author: Oleg Nesterov <oleg@redhat.com>
-Date:   Fri Nov 5 16:53:42 2010 +0100
+The compiled documentation is available here:
+https://landlock.io/linux-doc/landlock-v14/security/landlock/index.html
 
-    posix-cpu-timers: workaround to suppress the problems with mt exec
-    
-    posix-cpu-timers.c correctly assumes that the dying process does
-    posix_cpu_timers_exit_group() and removes all !CPUCLOCK_PERTHREAD
-    timers from signal->cpu_timers list.
-    
-    But, it also assumes that timer->it.cpu.task is always the group
-    leader, and thus the dead ->task means the dead thread group.
-    
-    This is obviously not true after de_thread() changes the leader.
-    After that almost every posix_cpu_timer_ method has problems.
-    
-    It is not simple to fix this bug correctly. First of all, I think
-    that timer->it.cpu should use struct pid instead of task_struct.
-    Also, the locking should be reworked completely. In particular,
-    tasklist_lock should not be used at all. This all needs a lot of
-    nontrivial and hard-to-test changes.
-    
-    Change __exit_signal() to do posix_cpu_timers_exit_group() when
-    the old leader dies during exec. This is not the fix, just the
-    temporary hack to hide the problem for 2.6.37 and stable. IOW,
-    this is obviously wrong but this is what we currently have anyway:
-    cpu timers do not work after mt exec.
-    
-    In theory this change adds another race. The exiting leader can
-    detach the timers which were attached to the new leader. However,
-    the window between de_thread() and release_task() is small, we
-    can pretend that sys_timer_create() was called before de_thread().
-    
-    Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-    Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+This series can be applied on top of v5.6-rc3.  This can be tested with
+CONFIG_SECURITY_LANDLOCK and CONFIG_SAMPLE_LANDLOCK.  This patch series
+can be found in a Git repository here:
+https://github.com/landlock-lsm/linux/commits/landlock-v14
+I would really appreciate constructive comments on the design and the code.
 
-It looks like the data structures need fixing.  Possibly to use struct
-pid.  Possibly to move the group data to signal struct.
 
-I think I played with some of that awhile ago.
+# Landlock LSM
 
-I am going to move this change to another patchset.  So I don't wind up
-playing shift the bug around.  I thought I would need this to get the
-other code working but it turns out we remain bug compatible without
-this.
+The goal of Landlock is to enable to restrict ambient rights (e.g.
+global filesystem access) for a set of processes.  Because Landlock is a
+stackable LSM [3], it makes possible to create safe security sandboxes
+as new security layers in addition to the existing system-wide
+access-controls. This kind of sandbox is expected to help mitigate the
+security impact of bugs or unexpected/malicious behaviors in user-space
+applications. Landlock empower any process, including unprivileged ones,
+to securely restrict themselves.
 
-Hopefully I can get something out in the next week or so that addresses
-the issues you have pointed out.
+Landlock is inspired by seccomp-bpf but instead of filtering syscalls
+and their raw arguments, a Landlock rule can restrict the use of kernel
+objects like file hierarchies, according to the kernel semantic.
+Landlock also takes inspiration from other OS sandbox mechanisms: XNU
+Sandbox, FreeBSD Capsicum or OpenBSD Pledge/Unveil.
 
-Eric
+
+# Current limitations
+
+## Path walk
+
+Landlock need to use dentries to identify a file hierarchy, which is
+needed for composable and unprivileged access-controls. This means that
+path resolution/walking (handled with inode_permission()) is not
+supported, yet. This could be filled with a future extension first of
+the LSM framework. The Landlock userspace ABI can handle such change
+with new option (e.g. to the struct landlock_ruleset).
+
+## UnionFS
+
+An UnionFS super-block use a set of upper and lower directories. An
+access request to a file in one of these hierarchy trigger a call to
+ovl_path_real() which generate another access request according to the
+matching hierarchy. Because such super-block is not aware of its current
+mount point, OverlayFS can't create a dedicated mnt_parent for each of
+the upper and lower directories mount clones. It is then not currently
+possible to track the source of such indirect access-request, and then
+not possible to identify a unified OverlayFS hierarchy.
+
+## Syscall
+
+Because it is only tested on x86_64, the syscall is only wired up for
+this architecture.  The whole x86 family (and probably all the others)
+will be supported in the next patch series.
+
+
+## Memory limits
+
+There is currently no limit on the memory usage.  Any idea to leverage
+an existing mechanism (e.g. rlimit)?
+
+
+# Changes since v13
+
+* Revamp of the LSM: remove the need for eBPF and seccomp(2).
+* Implement a full filesystem access-control.
+* Take care of the backward compatibility issues, especially for
+  this security features.
+
+Previous version:
+https://lore.kernel.org/lkml/20191104172146.30797-1-mic@digikod.net/
+
+[1] https://lore.kernel.org/lkml/20191104172146.30797-1-mic@digikod.net/
+[2] https://lore.kernel.org/lkml/a6b61f33-82dc-0c1c-7a6c-1926343ef63e@digikod.net/
+[3] https://lore.kernel.org/lkml/50db058a-7dde-441b-a7f9-f6837fe8b69f@schaufler-ca.com/
+
+Regards,
+
+Mickaël Salaün (10):
+  landlock: Add object and rule management
+  landlock: Add ruleset and domain management
+  landlock: Set up the security framework and manage credentials
+  landlock: Add ptrace restrictions
+  fs,landlock: Support filesystem access-control
+  landlock: Add syscall implementation
+  arch: Wire up landlock() syscall
+  selftests/landlock: Add initial tests
+  samples/landlock: Add a sandbox manager example
+  landlock: Add user and kernel documentation
+
+ Documentation/security/index.rst              |   1 +
+ Documentation/security/landlock/index.rst     |  18 +
+ Documentation/security/landlock/kernel.rst    |  44 ++
+ Documentation/security/landlock/user.rst      | 233 +++++++
+ MAINTAINERS                                   |  12 +
+ arch/x86/entry/syscalls/syscall_64.tbl        |   1 +
+ fs/super.c                                    |   2 +
+ include/linux/landlock.h                      |  22 +
+ include/linux/syscalls.h                      |   3 +
+ include/uapi/asm-generic/unistd.h             |   4 +-
+ include/uapi/linux/landlock.h                 | 315 +++++++++
+ samples/Kconfig                               |   7 +
+ samples/Makefile                              |   1 +
+ samples/landlock/.gitignore                   |   1 +
+ samples/landlock/Makefile                     |  15 +
+ samples/landlock/sandboxer.c                  | 226 +++++++
+ security/Kconfig                              |  11 +-
+ security/Makefile                             |   2 +
+ security/landlock/Kconfig                     |  16 +
+ security/landlock/Makefile                    |   4 +
+ security/landlock/cred.c                      |  47 ++
+ security/landlock/cred.h                      |  55 ++
+ security/landlock/fs.c                        | 591 +++++++++++++++++
+ security/landlock/fs.h                        |  42 ++
+ security/landlock/object.c                    | 341 ++++++++++
+ security/landlock/object.h                    | 134 ++++
+ security/landlock/ptrace.c                    | 118 ++++
+ security/landlock/ptrace.h                    |  14 +
+ security/landlock/ruleset.c                   | 463 +++++++++++++
+ security/landlock/ruleset.h                   | 106 +++
+ security/landlock/setup.c                     |  38 ++
+ security/landlock/setup.h                     |  20 +
+ security/landlock/syscall.c                   | 470 +++++++++++++
+ tools/testing/selftests/Makefile              |   1 +
+ tools/testing/selftests/landlock/.gitignore   |   3 +
+ tools/testing/selftests/landlock/Makefile     |  13 +
+ tools/testing/selftests/landlock/config       |   4 +
+ tools/testing/selftests/landlock/test.h       |  40 ++
+ tools/testing/selftests/landlock/test_base.c  |  80 +++
+ tools/testing/selftests/landlock/test_fs.c    | 624 ++++++++++++++++++
+ .../testing/selftests/landlock/test_ptrace.c  | 293 ++++++++
+ 41 files changed, 4429 insertions(+), 6 deletions(-)
+ create mode 100644 Documentation/security/landlock/index.rst
+ create mode 100644 Documentation/security/landlock/kernel.rst
+ create mode 100644 Documentation/security/landlock/user.rst
+ create mode 100644 include/linux/landlock.h
+ create mode 100644 include/uapi/linux/landlock.h
+ create mode 100644 samples/landlock/.gitignore
+ create mode 100644 samples/landlock/Makefile
+ create mode 100644 samples/landlock/sandboxer.c
+ create mode 100644 security/landlock/Kconfig
+ create mode 100644 security/landlock/Makefile
+ create mode 100644 security/landlock/cred.c
+ create mode 100644 security/landlock/cred.h
+ create mode 100644 security/landlock/fs.c
+ create mode 100644 security/landlock/fs.h
+ create mode 100644 security/landlock/object.c
+ create mode 100644 security/landlock/object.h
+ create mode 100644 security/landlock/ptrace.c
+ create mode 100644 security/landlock/ptrace.h
+ create mode 100644 security/landlock/ruleset.c
+ create mode 100644 security/landlock/ruleset.h
+ create mode 100644 security/landlock/setup.c
+ create mode 100644 security/landlock/setup.h
+ create mode 100644 security/landlock/syscall.c
+ create mode 100644 tools/testing/selftests/landlock/.gitignore
+ create mode 100644 tools/testing/selftests/landlock/Makefile
+ create mode 100644 tools/testing/selftests/landlock/config
+ create mode 100644 tools/testing/selftests/landlock/test.h
+ create mode 100644 tools/testing/selftests/landlock/test_base.c
+ create mode 100644 tools/testing/selftests/landlock/test_fs.c
+ create mode 100644 tools/testing/selftests/landlock/test_ptrace.c
+
+-- 
+2.25.0
 
