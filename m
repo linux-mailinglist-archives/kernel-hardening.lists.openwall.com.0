@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17931-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17932-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id BD47216F6CC
-	for <lists+kernel-hardening@lfdr.de>; Wed, 26 Feb 2020 06:08:37 +0100 (CET)
-Received: (qmail 16001 invoked by uid 550); 26 Feb 2020 05:08:33 -0000
+	by mail.lfdr.de (Postfix) with SMTP id BBCB316F6D4
+	for <lists+kernel-hardening@lfdr.de>; Wed, 26 Feb 2020 06:10:45 +0100 (CET)
+Received: (qmail 18130 invoked by uid 550); 26 Feb 2020 05:10:41 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,18 +13,18 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 15969 invoked from network); 26 Feb 2020 05:08:32 -0000
+Received: (qmail 18095 invoked from network); 26 Feb 2020 05:10:40 -0000
 Authentication-Results: localhost; dkim=pass
 	reason="1024-bit key; insecure key"
-	header.d=c-s.fr header.i=@c-s.fr header.b=KzpNUgHw; dkim-adsp=pass;
+	header.d=c-s.fr header.i=@c-s.fr header.b=FpYzmR5Q; dkim-adsp=pass;
 	dkim-atps=neutral
 X-Virus-Scanned: Debian amavisd-new at c-s.fr
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=c-s.fr; s=mail;
-	t=1582693700; bh=P9F+TW11il3dDG/JQwLQZ9bfwJOcps3i7xL5sjC2o4k=;
+	t=1582693828; bh=V9G92WeV7I0zyA8d4SzL2Zeetat6pnJ2RUGjU6q3uIg=;
 	h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-	b=KzpNUgHw2EtMqKovHHARDbs08RAkwUm4n5Wu+3xK7obpFJoYeDpkkR2JrZaMBRac3
-	 oDrO1U0t9a5ip9BQfSego2phz4FrMb9Aej7Oi8Bstz+rh+2re6Xrg1AHfwm0fomAkx
-	 p/P+J9gHqmSzukHZeTIOx2LnEQ/8Sd+bkMU6V4VU=
+	b=FpYzmR5QNKHUaBBVDRQjMn4m/pOdgoFNEP5tSJGRbUNRZBjex2jvHKjGm8eDBIFBf
+	 wnPRdyxZXUFGgKULHnBXKV7iqLyAsW//hePYYh3TciLnTMP9L2FVuHIIo+zvj2DvVw
+	 1OgN0jnJw11ZcZaByVat8IoCcG26DQ9EYye4GeBs=
 X-Virus-Scanned: amavisd-new at c-s.fr
 Subject: Re: [PATCH v3 3/6] powerpc/fsl_booke/64: implement KASLR for
  fsl_booke64
@@ -37,55 +37,79 @@ References: <20200206025825.22934-1-yanaijie@huawei.com>
  <20200206025825.22934-4-yanaijie@huawei.com>
  <41b9f1ca-c6fd-291a-2c96-2a0e8a754ec4@c-s.fr>
  <dbe0b316-40a2-7da4-c26b-e59efa555400@huawei.com>
+ <d3647cce-ece3-d302-f541-b02b1f2b5e9e@huawei.com>
 From: Christophe Leroy <christophe.leroy@c-s.fr>
-Message-ID: <046ebac6-9cab-cc3e-e535-9a50051dc25f@c-s.fr>
-Date: Wed, 26 Feb 2020 06:08:13 +0100
+Message-ID: <ceeced29-c6b9-60c9-41b0-3cf537bbf62c@c-s.fr>
+Date: Wed, 26 Feb 2020 06:10:22 +0100
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.5.0
 MIME-Version: 1.0
-In-Reply-To: <dbe0b316-40a2-7da4-c26b-e59efa555400@huawei.com>
+In-Reply-To: <d3647cce-ece3-d302-f541-b02b1f2b5e9e@huawei.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: fr
 Content-Transfer-Encoding: 8bit
 
 
 
-Le 26/02/2020 à 03:40, Jason Yan a écrit :
+Le 26/02/2020 à 04:33, Jason Yan a écrit :
 > 
 > 
-> 在 2020/2/20 21:48, Christophe Leroy 写道:
+> 在 2020/2/26 10:40, Jason Yan 写道:
 >>
 >>
->> Le 06/02/2020 à 03:58, Jason Yan a écrit :
->>>       /*
->>>        * Decide which 64M we want to start
->>>        * Only use the low 8 bits of the random seed
->>>        */
->>> -    index = random & 0xFF;
->>> +    unsigned long index = random & 0xFF;
->>
->> That's not good in terms of readability, index declaration should 
->> remain at the top of the function, should be possible if using 
->> IS_ENABLED() instead
+>> 在 2020/2/20 21:48, Christophe Leroy 写道:
+>>>
+>>>
+>>> Le 06/02/2020 à 03:58, Jason Yan a écrit :
+> Hi Christophe,
 > 
-> I'm wondering how to declare a variable inside a code block such as if 
-> (IS_ENABLED(CONFIG_PPC32)) at the top of the function and use the 
-> variable in another if (IS_ENABLED(CONFIG_PPC32)). Is there any good idea?
+> When using a standard C if/else, all code compiled for PPC32 and PPC64, 
+> but this will bring some build error because not all variables both 
+> defined for PPC32 and PPC64.
+> 
+> [yanaijie@138 linux]$ sh ppc64build.sh
+>    CALL    scripts/atomic/check-atomics.sh
+>    CALL    scripts/checksyscalls.sh
+>    CHK     include/generated/compile.h
+>    CC      arch/powerpc/mm/nohash/kaslr_booke.o
+> arch/powerpc/mm/nohash/kaslr_booke.c: In function 'kaslr_choose_location':
+> arch/powerpc/mm/nohash/kaslr_booke.c:341:30: error: 
+> 'CONFIG_LOWMEM_CAM_NUM' undeclared (first use in this function); did you 
+> mean 'CONFIG_FLATMEM_MANUAL'?
+>     ram = map_mem_in_cams(ram, CONFIG_LOWMEM_CAM_NUM, true);
+>                                ^~~~~~~~~~~~~~~~~~~~~
+>                                CONFIG_FLATMEM_MANUAL
 
-You declare it outside the block as usual:
+This one has to remain inside an #ifdef. That's the only one that has to 
+remain.
 
-	unsigned long some_var;
+> arch/powerpc/mm/nohash/kaslr_booke.c:341:30: note: each undeclared 
+> identifier is reported only once for each function it appears in
+> arch/powerpc/mm/nohash/kaslr_booke.c: In function 'kaslr_early_init':
+> arch/powerpc/mm/nohash/kaslr_booke.c:404:3: error: 'is_second_reloc' 
 
-	if (condition) {
-		some_var = something;
-	}
-	do_many_things();
-	do_other_things();
+In mmu_decl.h, put the declaration outside the #ifdef CONFIG_PPC32
 
-	if (condition)
-		return some_var;
-	else
-		return 0;
+> undeclared (first use in this function); did you mean '__cond_lock'?
+>     is_second_reloc = 1;
+>     ^~~~~~~~~~~~~~~
+>     __cond_lock
+> arch/powerpc/mm/nohash/kaslr_booke.c:411:4: error: implicit declaration 
+> of function 'create_kaslr_tlb_entry'; did you mean 'reloc_kernel_entry'? 
 
+Same, put the declaration outside of the #ifdef
+
+> [-Werror=implicit-function-declaration]
+>      create_kaslr_tlb_entry(1, tlb_virt, tlb_phys);
+>      ^~~~~~~~~~~~~~~~~~~~~~
+>      reloc_kernel_entry
+> cc1: all warnings being treated as errors
+> make[3]: *** [scripts/Makefile.build:268: 
+> arch/powerpc/mm/nohash/kaslr_booke.o] Error 1
+> make[2]: *** [scripts/Makefile.build:505: arch/powerpc/mm/nohash] Error 2
+> make[1]: *** [scripts/Makefile.build:505: arch/powerpc/mm] Error 2
+> make: *** [Makefile:1681: arch/powerpc] Error 2
+
+See the patch I sent you. It builds ok for me.
 
 Christophe
