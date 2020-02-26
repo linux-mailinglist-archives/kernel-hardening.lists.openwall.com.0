@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17943-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17944-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 1EAD316F7F6
-	for <lists+kernel-hardening@lfdr.de>; Wed, 26 Feb 2020 07:27:21 +0100 (CET)
-Received: (qmail 7182 invoked by uid 550); 26 Feb 2020 06:27:16 -0000
+	by mail.lfdr.de (Postfix) with SMTP id D92E616F808
+	for <lists+kernel-hardening@lfdr.de>; Wed, 26 Feb 2020 07:36:30 +0100 (CET)
+Received: (qmail 13517 invoked by uid 550); 26 Feb 2020 06:36:25 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,36 +13,92 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 6120 invoked from network); 26 Feb 2020 06:27:15 -0000
-Subject: Re: [RFC PATCH] Use IS_ENABLED() instead of #ifdefs
-To: Christophe Leroy <christophe.leroy@c-s.fr>, <mpe@ellerman.id.au>,
-	<linuxppc-dev@lists.ozlabs.org>, <diana.craciun@nxp.com>,
-	<benh@kernel.crashing.org>, <paulus@samba.org>, <npiggin@gmail.com>,
-	<keescook@chromium.org>, <kernel-hardening@lists.openwall.com>,
-	<oss@buserror.net>
-CC: <linux-kernel@vger.kernel.org>, <zhaohongjiang@huawei.com>
-References: <92d936b83e47f6a65866ca2d39a0d5bfefba6279.1582693094.git.christophe.leroy@c-s.fr>
-From: Jason Yan <yanaijie@huawei.com>
-Message-ID: <071e97e0-2772-76bf-2434-03769fc71c5a@huawei.com>
-Date: Wed, 26 Feb 2020 14:26:51 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.2
+Received: (qmail 13482 invoked from network); 26 Feb 2020 06:36:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=russell.cc; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding; s=fm1; bh=xzPxK0T3LkI6AKlfQxuJpPd2C1
+	+xMqQduZDssjupEwU=; b=QB3lHwMoFrMTwCghDNWOiSxy2EErGseqg/TawWgLL/
+	CmgWAj7Dq0dNddaHBCPXjD69LEOLV7nMa97QhYBdjBA8zGXO0ozC2izszq2jj42m
+	mBBrHd0OROYbjFKjAIlIzc6xiawriOTP0HBFugkgSFrlQuxFsIuLAirOVrGyBwgZ
+	vWO5L7+T2LRmJMIuE58XBv9bKBHSZ4wwFBRJU1TJaGpy6/4IG7c5GAjGO5DdxjJJ
+	XMCS7iTCTY2zvROxQSV/PtIiCcOlad5r13j3EVJ2xPuaolJ/XShJjBJHoQ+T+dCj
+	iUNw0kDVMC435P01rfRCuRyGGBGQPvwpUfMzZ+Gh9a7g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:date:from
+	:message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=xzPxK0T3LkI6AKlfQ
+	xuJpPd2C1+xMqQduZDssjupEwU=; b=O4/p3ZJvPHU2wN2WkpCFFxVgXlb5y7zN1
+	S4fob/M5jVJbSM63v82LuesIkd809mq/nhk1qddMxU5s1ue/PuMvZV+iT1uusdwb
+	eDj16F0M9uM+GRHnqa6CAF7BV0EM7ZCMadBbKUx3nBe+WQxOzPuEU21+V+OfBjYu
+	MMkXMxODChCsUXnxPlVqN5OZWQOcSm/UzMV1sTZA+3huyj3b6Uk0BygbS+dbemyv
+	T3czXUb7XtOv6mHRtgtKxs/ymizI49FCP/A8S9n2djbcmUdf2jrp47hL78xtpTBf
+	+uXAXJEQFJZ2EQ2+gQEL47ssz5b+tUB7werucUfi7bKO6j5o/E0Cw==
+X-ME-Sender: <xms:2hFWXjwZ8PsF3RYZBr82cl83KP4hW5hPWuv7R-MmO22VKlwplbOVqg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrleefgdelkecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecufghrlhcuvffnffculdduhedmnecujfgurhephffvuf
+    ffkffoggfgsedtkeertdertddtnecuhfhrohhmpeftuhhsshgvlhhlucevuhhrrhgvhicu
+    oehruhhstghurhesrhhushhsvghllhdrtggtqeenucffohhmrghinhepohiilhgrsghsrd
+    horhhgnecukfhppeduvddvrdelledrkedvrddutdenucevlhhushhtvghrufhiiigvpedt
+    necurfgrrhgrmhepmhgrihhlfhhrohhmpehruhhstghurhesrhhushhsvghllhdrtggt
+X-ME-Proxy: <xmx:2hFWXgzG1ZG8GHOfcB1lBAZSUHJbv4kHMPzvGwP2MH07QsOIyRwc4Q>
+    <xmx:2hFWXlqyHoV86kVxbDL8IPAjkuZo58yyNQyWbS7_Im2WUFthohiKaA>
+    <xmx:2hFWXrmL_VTKqcDgkIBHo6cCG47ZY5-jyr1BvtTpt8G_PAiMWjw8kw>
+    <xmx:2xFWXg762S7bax3C8pnNjvrEFv6QMzTxraRC9dRSNsZKLrVSOmF6qg>
+From: Russell Currey <ruscur@russell.cc>
+To: linuxppc-dev@lists.ozlabs.org
+Cc: jniethe5@gmail.com,
+	Russell Currey <ruscur@russell.cc>,
+	christophe.leroy@c-s.fr,
+	joel@jms.id.au,
+	mpe@ellerman.id.au,
+	ajd@linux.ibm.com,
+	dja@axtens.net,
+	npiggin@gmail.com,
+	kernel-hardening@lists.openwall.com
+Subject: [PATCH v5 0/8] set_memory() routines and STRICT_MODULE_RWX
+Date: Wed, 26 Feb 2020 17:35:43 +1100
+Message-Id: <20200226063551.65363-1-ruscur@russell.cc>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <92d936b83e47f6a65866ca2d39a0d5bfefba6279.1582693094.git.christophe.leroy@c-s.fr>
-Content-Type: text/plain; charset="gbk"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.173.221.195]
-X-CFilter-Loop: Reflected
 
+Repost from v4 because I somehow missed half of the final patch.
 
+Picking up from Christophe's last series, including the following changes:
 
-ÔÚ 2020/2/26 13:04, Christophe Leroy Ð´µÀ:
-> ---
-> This works for me. Only had to leave the #ifdef around the map_mem_in_cams()
-> Also had to set linear_sz and ram for the alternative case, otherwise I get
+- [6/8] Cast "data" to unsigned long instead of int to fix build
+- [8/8] New, to fix an issue reported by Jordan Niethe
 
+Christophe's last series is here:
+https://patchwork.ozlabs.org/project/linuxppc-dev/list/?series=156428
 
-Great. Thank you for the illustration.
+Christophe Leroy (4):
+  powerpc/mm: Implement set_memory() routines
+  powerpc/kprobes: Mark newly allocated probes as RO
+  powerpc/mm: implement set_memory_attr()
+  powerpc/32: use set_memory_attr()
 
-Jason
+Russell Currey (4):
+  powerpc/mm/ptdump: debugfs handler for W+X checks at runtime
+  powerpc: Set ARCH_HAS_STRICT_MODULE_RWX
+  powerpc/configs: Enable STRICT_MODULE_RWX in skiroot_defconfig
+  powerpc/mm: Disable set_memory() routines when strict RWX isn't
+    enabled
+
+ arch/powerpc/Kconfig                   |   2 +
+ arch/powerpc/Kconfig.debug             |   6 +-
+ arch/powerpc/configs/skiroot_defconfig |   1 +
+ arch/powerpc/include/asm/set_memory.h  |  34 +++++++
+ arch/powerpc/kernel/kprobes.c          |  17 +++-
+ arch/powerpc/mm/Makefile               |   2 +-
+ arch/powerpc/mm/pageattr.c             | 117 +++++++++++++++++++++++++
+ arch/powerpc/mm/pgtable_32.c           |  95 +++-----------------
+ arch/powerpc/mm/ptdump/ptdump.c        |  21 ++++-
+ 9 files changed, 202 insertions(+), 93 deletions(-)
+ create mode 100644 arch/powerpc/include/asm/set_memory.h
+ create mode 100644 arch/powerpc/mm/pageattr.c
+
+-- 
+2.25.1
 
