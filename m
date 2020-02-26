@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17955-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17957-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 8680B16F88B
-	for <lists+kernel-hardening@lfdr.de>; Wed, 26 Feb 2020 08:29:37 +0100 (CET)
-Received: (qmail 28079 invoked by uid 550); 26 Feb 2020 07:29:32 -0000
+	by mail.lfdr.de (Postfix) with SMTP id AA20B16F993
+	for <lists+kernel-hardening@lfdr.de>; Wed, 26 Feb 2020 09:27:23 +0100 (CET)
+Received: (qmail 26338 invoked by uid 550); 26 Feb 2020 08:27:19 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,41 +13,39 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 28047 invoked from network); 26 Feb 2020 07:29:31 -0000
-Authentication-Results: localhost; dkim=pass
-	reason="1024-bit key; insecure key"
-	header.d=c-s.fr header.i=@c-s.fr header.b=cs0L8wZs; dkim-adsp=pass;
-	dkim-atps=neutral
-X-Virus-Scanned: Debian amavisd-new at c-s.fr
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=c-s.fr; s=mail;
-	t=1582702159; bh=a8SYvzvnlOIBi57mqwe6Lh2gVEDqxoLQIno02IN+QIQ=;
-	h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-	b=cs0L8wZsiYQVCfe7j0+wjVQwXQAry4k+c6dHNTKJL+uvvVDyNX0TilLfnWlFglYz+
-	 lUh13DUEJ68FXEhx65kq3/rUOiK031uQY+4z1FsZ262j6yP8wLJoHoqMkv08Llka8g
-	 ZDndOONLrHGyTKh4LqV+DeiQ3BHdzBoOzkIxxxHw=
-X-Virus-Scanned: amavisd-new at c-s.fr
+Delivered-To: moderator for kernel-hardening@lists.openwall.com
+Received: (qmail 26588 invoked from network); 26 Feb 2020 06:38:50 -0000
 Subject: Re: [PATCH v5 8/8] powerpc/mm: Disable set_memory() routines when
  strict RWX isn't enabled
 To: Russell Currey <ruscur@russell.cc>, linuxppc-dev@lists.ozlabs.org
-Cc: jniethe5@gmail.com, joel@jms.id.au, mpe@ellerman.id.au,
- ajd@linux.ibm.com, dja@axtens.net, npiggin@gmail.com,
- kernel-hardening@lists.openwall.com
+Cc: jniethe5@gmail.com, christophe.leroy@c-s.fr, joel@jms.id.au,
+        mpe@ellerman.id.au, dja@axtens.net, npiggin@gmail.com,
+        kernel-hardening@lists.openwall.com
 References: <20200226063551.65363-1-ruscur@russell.cc>
  <20200226063551.65363-9-ruscur@russell.cc>
-From: Christophe Leroy <christophe.leroy@c-s.fr>
-Message-ID: <0c858bb2-9be8-ff77-d5ec-7f74700cdb85@c-s.fr>
-Date: Wed, 26 Feb 2020 08:29:11 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:68.0) Gecko/20100101
+From: Andrew Donnellan <ajd@linux.ibm.com>
+Date: Wed, 26 Feb 2020 17:38:29 +1100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.5.0
 MIME-Version: 1.0
 In-Reply-To: <20200226063551.65363-9-ruscur@russell.cc>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+x-cbid: 20022606-0008-0000-0000-000003567CAB
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 20022606-0009-0000-0000-00004A779A5A
+Message-Id: <c560b6bb-1a42-bf50-5122-7912771e1481@linux.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138,18.0.572
+ definitions=2020-02-26_01:2020-02-25,2020-02-26 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=922 phishscore=0
+ bulkscore=0 suspectscore=0 clxscore=1011 adultscore=0 lowpriorityscore=0
+ mlxscore=0 priorityscore=1501 malwarescore=0 impostorscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2001150001
+ definitions=main-2002260047
 
-
-
-Le 26/02/2020 à 07:35, Russell Currey a écrit :
+On 26/2/20 5:35 pm, Russell Currey wrote:
 > There are a couple of reasons that the set_memory() functions are
 > problematic when STRICT_KERNEL_RWX isn't enabled:
 > 
@@ -58,77 +56,13 @@ Le 26/02/2020 à 07:35, Russell Currey a écrit :
 > 
 > The latter can be replicated by building a kernel with the set_memory()
 > patches but with STRICT_KERNEL_RWX off and running ftracetest.
-
-I agree with Andrew, those changes should go into patch 1.
-
 > 
 > Reported-by: Jordan Niethe <jniethe5@gmail.com>
 > Signed-off-by: Russell Currey <ruscur@russell.cc>
-> ---
-> v5: Apply to both set_memory_attr() and change_memory_attr()
 
-See my comments of v4, additional comments below
+Can we squash this in earlier in the series for the sake of bisectability?
 
-> v4: New
-> 
->   arch/powerpc/mm/pageattr.c | 22 ++++++++++++++++------
->   1 file changed, 16 insertions(+), 6 deletions(-)
-> 
-> diff --git a/arch/powerpc/mm/pageattr.c b/arch/powerpc/mm/pageattr.c
-> index ee6b5e3b7604..49b8e2e0581d 100644
-> --- a/arch/powerpc/mm/pageattr.c
-> +++ b/arch/powerpc/mm/pageattr.c
-> @@ -64,13 +64,18 @@ static int change_page_attr(pte_t *ptep, unsigned long addr, void *data)
->   
->   int change_memory_attr(unsigned long addr, int numpages, long action)
->   {
-> -	unsigned long start = ALIGN_DOWN(addr, PAGE_SIZE);
-> -	unsigned long sz = numpages * PAGE_SIZE;
-> +	unsigned long start, size;
-> +
-> +	if (!IS_ENABLED(CONFIG_STRICT_KERNEL_RWX))
-> +		return 0;
->   
->   	if (!numpages)
->   		return 0;
->   
-> -	return apply_to_page_range(&init_mm, start, sz, change_page_attr, (void *)action);
-> +	start = ALIGN_DOWN(addr, PAGE_SIZE);
-> +	size = numpages * PAGE_SIZE;
-> +
-> +	return apply_to_page_range(&init_mm, start, size, change_page_attr, (void *)action);
+-- 
+Andrew Donnellan              OzLabs, ADL Canberra
+ajd@linux.ibm.com             IBM Australia Limited
 
-You don't need to move start and sz initialisation, neither you need to 
-change the name of sz to size.
-
-If you want to rename sz to size, do it in the initial patch, but take 
-care of the length of the lines. IIRC I used a short name to have the 
-line fit on a single line with no more than 90 chars.
-
-Christophe
-
->   }
->   
->   /*
-> @@ -96,12 +101,17 @@ static int set_page_attr(pte_t *ptep, unsigned long addr, void *data)
->   
->   int set_memory_attr(unsigned long addr, int numpages, pgprot_t prot)
->   {
-> -	unsigned long start = ALIGN_DOWN(addr, PAGE_SIZE);
-> -	unsigned long sz = numpages * PAGE_SIZE;
-> +	unsigned long start, size;
-> +
-> +	if (!IS_ENABLED(CONFIG_STRICT_KERNEL_RWX))
-> +		return 0;
->   
->   	if (!numpages)
->   		return 0;
->   
-> -	return apply_to_page_range(&init_mm, start, sz, set_page_attr,
-> +	start = ALIGN_DOWN(addr, PAGE_SIZE);
-> +	size = numpages * PAGE_SIZE;
-> +
-> +	return apply_to_page_range(&init_mm, start, size, set_page_attr,
->   				   (void *)pgprot_val(prot));
->   }
-> 
