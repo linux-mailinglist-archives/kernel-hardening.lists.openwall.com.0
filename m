@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17982-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17983-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 12016172813
-	for <lists+kernel-hardening@lfdr.de>; Thu, 27 Feb 2020 19:50:36 +0100 (CET)
-Received: (qmail 4006 invoked by uid 550); 27 Feb 2020 18:49:46 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 8E5E2172814
+	for <lists+kernel-hardening@lfdr.de>; Thu, 27 Feb 2020 19:50:46 +0100 (CET)
+Received: (qmail 5191 invoked by uid 550); 27 Feb 2020 18:49:46 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,30 +13,30 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 3920 invoked from network); 27 Feb 2020 18:49:44 -0000
+Received: (qmail 3914 invoked from network); 27 Feb 2020 18:49:43 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=sVbVapbdvm9D9bZT8RLizJdch6+5SIEY/KYRYQVG8Tk=;
-        b=X5i1lW7gtygxaUBwIXKTt8fYX5fEWxVzi2XPmciBRut8OEFBUEudCWo+YccEh6f6ny
-         /0Cptj90ru+QtzO+Jm5B066x0Pd+9dPxjKr3EyADF+7U55O/GYlCWSY7ZOhdLMBJq8sg
-         t4LNOFIll7WZncnYRr9YoMxDx9eWQGNfzgmqw=
+        bh=q9yyIQHmH5l6RRr9oXrsGBCw2p7gy7/zKkbegYq6Q+s=;
+        b=EoiJfokBzBijS7ogbomlrPLta94WyfYZGKZqTZT+8P/yr6WCpdvkb+EqRkbucn6oQQ
+         xvcCLwn+7X/N7NM0f+ybirtBEUEfoLNChYrfzj2rAhVbZIrYtRP0w8+asO4704I60H8H
+         7zTejJ11nKsT3D+JRyJbUBmzHdFgXSH9Q/s/M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=sVbVapbdvm9D9bZT8RLizJdch6+5SIEY/KYRYQVG8Tk=;
-        b=E7/LpRXXSMUzozXaO7J6tMmTbDoHLQdoCLMyzvQw06v+cEi0ZiQleNiQe6D3CKMSA+
-         hZ/tUGKKbBr+hxfiv8/wucvBxKMngpqpa+SyJUT3b9GMI+7t5MD5VXEMfyB+gQpAqGAY
-         LwMf1HBtIbRi52F+S2+ddzZiSJ1DCYC1wy+cK2tT2jzRhMmDCS/wYE6wRf5pkZTb5cyt
-         ++S115VdmXAc1N1yC+I2dBGAUolPV3DyU0L2dFPSYLHFBUQFaUYaFxAbqxEh330k0tg3
-         eG2rwmaHhhrJdYl/6JY6b7imAV5HCMJAj2x9sle84Ls5Rnk8bx4b3cR106LlNasRfYm4
-         y1WA==
-X-Gm-Message-State: APjAAAXTouC0xlqfU0cUF4b+BjnadnQXXldzxiaKAoBDanw29U0MO85M
-	k6bxUVlxZGq9txEOkXG6ViUyHQ==
-X-Google-Smtp-Source: APXvYqzw71xoeQerxYnDZjCdeGbLhe11Auq1JT6Ex87ZaButtE9AiRc/KemYe2G4Nel9rk6gdI8HaQ==
-X-Received: by 2002:a17:90b:8d1:: with SMTP id ds17mr352661pjb.33.1582829372673;
+        bh=q9yyIQHmH5l6RRr9oXrsGBCw2p7gy7/zKkbegYq6Q+s=;
+        b=TWBzfI8AjhX92k4KZTxrOpHKikeJ6aHZSnloFIBe/EXj+MJui6gGw2vuJWyAhXItRP
+         cXQ+Hp+LKxag3NnlzGH/4HzuIpsyLCKexlmsuiKtkZ5xO/uQef8SoGgSaBnwILrbLZiH
+         SNz6NiF6ePv9mvhyypTSCzXb9mAFZ6pczXqTlIDDpFwiXMYZb+eA81jShVAjQiseM8ue
+         UEJpN7pHOyZh7yYZ9ZFBXw/+L7jRP7JCDg4XN5okMwwBioQyRywz5gbwRXDiLtuySxcz
+         m/irXCeCxPumJc26eGh+igJB/LsXys/mwBev9NsWrqJGZEJPpZ75W+UKJnenH/uEMCmb
+         qGgQ==
+X-Gm-Message-State: APjAAAW0u5F94S/tXV5sjQtS4jKGbkJ2bfhgw9VxA/LKfv18labiD8hC
+	gv3hwYbeINTcsbZ9aQJ6hDRjRA==
+X-Google-Smtp-Source: APXvYqxPlU1oTw33jTXQZTnFErMj2ORveBvMb4iMkMpLbrPkXmZ4jTnKGS50+nfW+yapmFwhYkwaCQ==
+X-Received: by 2002:a63:fc51:: with SMTP id r17mr721308pgk.292.1582829372073;
         Thu, 27 Feb 2020 10:49:32 -0800 (PST)
 From: Kees Cook <keescook@chromium.org>
 To: Andrew Morton <akpm@linux-foundation.org>
@@ -55,45 +55,159 @@ Cc: Kees Cook <keescook@chromium.org>,
 	linux-kernel@vger.kernel.org,
 	kernel-hardening@lists.openwall.com,
 	syzkaller@googlegroups.com
-Subject: [PATCH v4 5/6] kasan: Unset panic_on_warn before calling panic()
-Date: Thu, 27 Feb 2020 10:49:20 -0800
-Message-Id: <20200227184921.30215-6-keescook@chromium.org>
+Subject: [PATCH v4 6/6] ubsan: Include bug type in report header
+Date: Thu, 27 Feb 2020 10:49:21 -0800
+Message-Id: <20200227184921.30215-7-keescook@chromium.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200227184921.30215-1-keescook@chromium.org>
 References: <20200227184921.30215-1-keescook@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-As done in the full WARN() handler, panic_on_warn needs to be cleared
-before calling panic() to avoid recursive panics.
+When syzbot tries to figure out how to deduplicate bug reports, it
+prefers seeing a hint about a specific bug type (we can do better than
+just "UBSAN"). This lifts the handler reason into the UBSAN report line
+that includes the file path that tripped a check. Unfortunately, UBSAN
+does not provide function names.
 
+Suggested-by: Dmitry Vyukov <dvyukov@google.com>
+Link: https://lore.kernel.org/lkml/CACT4Y+bsLJ-wFx_TaXqax3JByUOWB3uk787LsyMVcfW6JzzGvg@mail.gmail.com
 Signed-off-by: Kees Cook <keescook@chromium.org>
-Acked-by: Dmitry Vyukov <dvyukov@google.com>
 ---
- mm/kasan/report.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ lib/ubsan.c | 36 +++++++++++++++---------------------
+ 1 file changed, 15 insertions(+), 21 deletions(-)
 
-diff --git a/mm/kasan/report.c b/mm/kasan/report.c
-index 5ef9f24f566b..54bd98a1fc7b 100644
---- a/mm/kasan/report.c
-+++ b/mm/kasan/report.c
-@@ -92,8 +92,16 @@ static void end_report(unsigned long *flags)
- 	pr_err("==================================================================\n");
- 	add_taint(TAINT_BAD_PAGE, LOCKDEP_NOW_UNRELIABLE);
- 	spin_unlock_irqrestore(&report_lock, *flags);
--	if (panic_on_warn)
-+	if (panic_on_warn) {
-+		/*
-+		 * This thread may hit another WARN() in the panic path.
-+		 * Resetting this prevents additional WARN() from panicking the
-+		 * system on this thread.  Other threads are blocked by the
-+		 * panic_mutex in panic().
-+		 */
-+		panic_on_warn = 0;
- 		panic("panic_on_warn set ...\n");
-+	}
- 	kasan_enable_current();
+diff --git a/lib/ubsan.c b/lib/ubsan.c
+index 429663eef6a7..057d5375bfc6 100644
+--- a/lib/ubsan.c
++++ b/lib/ubsan.c
+@@ -45,13 +45,6 @@ static bool was_reported(struct source_location *location)
+ 	return test_and_set_bit(REPORTED_BIT, &location->reported);
  }
+ 
+-static void print_source_location(const char *prefix,
+-				struct source_location *loc)
+-{
+-	pr_err("%s %s:%d:%d\n", prefix, loc->file_name,
+-		loc->line & LINE_MASK, loc->column & COLUMN_MASK);
+-}
+-
+ static bool suppress_report(struct source_location *loc)
+ {
+ 	return current->in_ubsan || was_reported(loc);
+@@ -140,13 +133,14 @@ static void val_to_string(char *str, size_t size, struct type_descriptor *type,
+ 	}
+ }
+ 
+-static void ubsan_prologue(struct source_location *location)
++static void ubsan_prologue(struct source_location *loc, const char *reason)
+ {
+ 	current->in_ubsan++;
+ 
+ 	pr_err("========================================"
+ 		"========================================\n");
+-	print_source_location("UBSAN: Undefined behaviour in", location);
++	pr_err("UBSAN: %s in %s:%d:%d\n", reason, loc->file_name,
++		loc->line & LINE_MASK, loc->column & COLUMN_MASK);
+ }
+ 
+ static void ubsan_epilogue(void)
+@@ -180,12 +174,12 @@ static void handle_overflow(struct overflow_data *data, void *lhs,
+ 	if (suppress_report(&data->location))
+ 		return;
+ 
+-	ubsan_prologue(&data->location);
++	ubsan_prologue(&data->location, type_is_signed(type) ?
++			"signed integer overflow" :
++			"unsigned integer overflow");
+ 
+ 	val_to_string(lhs_val_str, sizeof(lhs_val_str), type, lhs);
+ 	val_to_string(rhs_val_str, sizeof(rhs_val_str), type, rhs);
+-	pr_err("%s integer overflow:\n",
+-		type_is_signed(type) ? "signed" : "unsigned");
+ 	pr_err("%s %c %s cannot be represented in type %s\n",
+ 		lhs_val_str,
+ 		op,
+@@ -225,7 +219,7 @@ void __ubsan_handle_negate_overflow(struct overflow_data *data,
+ 	if (suppress_report(&data->location))
+ 		return;
+ 
+-	ubsan_prologue(&data->location);
++	ubsan_prologue(&data->location, "negation overflow");
+ 
+ 	val_to_string(old_val_str, sizeof(old_val_str), data->type, old_val);
+ 
+@@ -245,7 +239,7 @@ void __ubsan_handle_divrem_overflow(struct overflow_data *data,
+ 	if (suppress_report(&data->location))
+ 		return;
+ 
+-	ubsan_prologue(&data->location);
++	ubsan_prologue(&data->location, "division overflow");
+ 
+ 	val_to_string(rhs_val_str, sizeof(rhs_val_str), data->type, rhs);
+ 
+@@ -264,7 +258,7 @@ static void handle_null_ptr_deref(struct type_mismatch_data_common *data)
+ 	if (suppress_report(data->location))
+ 		return;
+ 
+-	ubsan_prologue(data->location);
++	ubsan_prologue(data->location, "NULL pointer dereference");
+ 
+ 	pr_err("%s null pointer of type %s\n",
+ 		type_check_kinds[data->type_check_kind],
+@@ -279,7 +273,7 @@ static void handle_misaligned_access(struct type_mismatch_data_common *data,
+ 	if (suppress_report(data->location))
+ 		return;
+ 
+-	ubsan_prologue(data->location);
++	ubsan_prologue(data->location, "misaligned access");
+ 
+ 	pr_err("%s misaligned address %p for type %s\n",
+ 		type_check_kinds[data->type_check_kind],
+@@ -295,7 +289,7 @@ static void handle_object_size_mismatch(struct type_mismatch_data_common *data,
+ 	if (suppress_report(data->location))
+ 		return;
+ 
+-	ubsan_prologue(data->location);
++	ubsan_prologue(data->location, "object size mismatch");
+ 	pr_err("%s address %p with insufficient space\n",
+ 		type_check_kinds[data->type_check_kind],
+ 		(void *) ptr);
+@@ -354,7 +348,7 @@ void __ubsan_handle_out_of_bounds(struct out_of_bounds_data *data, void *index)
+ 	if (suppress_report(&data->location))
+ 		return;
+ 
+-	ubsan_prologue(&data->location);
++	ubsan_prologue(&data->location, "array index out of bounds");
+ 
+ 	val_to_string(index_str, sizeof(index_str), data->index_type, index);
+ 	pr_err("index %s is out of range for type %s\n", index_str,
+@@ -375,7 +369,7 @@ void __ubsan_handle_shift_out_of_bounds(struct shift_out_of_bounds_data *data,
+ 	if (suppress_report(&data->location))
+ 		goto out;
+ 
+-	ubsan_prologue(&data->location);
++	ubsan_prologue(&data->location, "shift out of bounds");
+ 
+ 	val_to_string(rhs_str, sizeof(rhs_str), rhs_type, rhs);
+ 	val_to_string(lhs_str, sizeof(lhs_str), lhs_type, lhs);
+@@ -407,7 +401,7 @@ EXPORT_SYMBOL(__ubsan_handle_shift_out_of_bounds);
+ 
+ void __ubsan_handle_builtin_unreachable(struct unreachable_data *data)
+ {
+-	ubsan_prologue(&data->location);
++	ubsan_prologue(&data->location, "unreachable");
+ 	pr_err("calling __builtin_unreachable()\n");
+ 	ubsan_epilogue();
+ 	panic("can't return from __builtin_unreachable()");
+@@ -422,7 +416,7 @@ void __ubsan_handle_load_invalid_value(struct invalid_value_data *data,
+ 	if (suppress_report(&data->location))
+ 		return;
+ 
+-	ubsan_prologue(&data->location);
++	ubsan_prologue(&data->location, "invalid load");
+ 
+ 	val_to_string(val_str, sizeof(val_str), data->type, val);
  
 -- 
 2.20.1
