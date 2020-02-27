@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17977-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17981-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 0F55217280B
-	for <lists+kernel-hardening@lfdr.de>; Thu, 27 Feb 2020 19:49:53 +0100 (CET)
-Received: (qmail 3734 invoked by uid 550); 27 Feb 2020 18:49:40 -0000
+	by mail.lfdr.de (Postfix) with SMTP id DADC0172812
+	for <lists+kernel-hardening@lfdr.de>; Thu, 27 Feb 2020 19:50:26 +0100 (CET)
+Received: (qmail 3945 invoked by uid 550); 27 Feb 2020 18:49:44 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,37 +13,37 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 3699 invoked from network); 27 Feb 2020 18:49:39 -0000
+Received: (qmail 3798 invoked from network); 27 Feb 2020 18:49:41 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TZN5E5934TvMDmRyA6YbiUZA3oVW+HYGx9jzlGs1fas=;
-        b=eXruJRfnQmahJDeyOvX95cjw0dXGhTf7PEpDDj6CQlvkVdL87yFHrwKSQm2LixP2lk
-         8au/afqF+SQ1+SMDz9z/6272yLFXtVIAvGceYi3lt7xxtZw8aDgZpl1SVaFyCKSxRA+E
-         GF5oUviUdxtOaY5AMoMhU870DTHlhwK5HwGJI=
+        bh=tZTI1WKOfKcUGuqkPLx5fh8/0duDs7Ezr+5qHoGz4tY=;
+        b=GklqgiNXeNchROgyC1BDr/uKshy3XOAwg/V7eA31LU8HpeMPQxp2F9ilEeKURDOSJP
+         uXxuJwLLDx996zP1QRfYEMDPuBOI2E1PnHExPDrJ43nwK5khJSPgWU6JT2rmr29+WU/u
+         ho8QR+KKHnR+iX/rYRf/Pracpbyaz3NUqtexg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TZN5E5934TvMDmRyA6YbiUZA3oVW+HYGx9jzlGs1fas=;
-        b=rDTp1JELHxb6q8RRQA1eRjhrZaL7YgM0IRA2UdAp4dQ9YkXavgtvZC/vZd+GqHkK6m
-         rtYIb3cn3cvE+j7B9+v925XpOlrK+57ExESIl3ODrhnaaihCWyD8THlOvfgki6RzRDcu
-         nSFErJ6cY+SEtwwLx3Pp3Sf7FyhDkHA0C3RFC9DB5JvySaDd5jNuhSPj33VRfl+Dc5K4
-         kIMgTPg9MmJNMiE1cvhvNREpa3yNHBSSk0sYG7/IZjtvPJ7N3M+f/1k4KoPdm4JYac02
-         4bHl5d62k7dR5Oy1fINqCc5IDVMH5TOhVX5u4FxOHo0/x7yPy3XsJxYt395mj3B2ACrC
-         xJBA==
-X-Gm-Message-State: APjAAAUZH1sZ/X8UwEEO6DGt5zjGbCzRgEbpeyW2EDf9bZS8M0iRyE3f
-	cuCbrmqRWbOC5jcSeFyPYNK8Tg==
-X-Google-Smtp-Source: APXvYqzi0405M2isd5TrmwfjhdAc874OWtUh021IAQSnb+b3v9koU7Y59YGdJnGnP+UkARRMPRwUbQ==
-X-Received: by 2002:a17:902:8a89:: with SMTP id p9mr160846plo.286.1582829367317;
-        Thu, 27 Feb 2020 10:49:27 -0800 (PST)
+        bh=tZTI1WKOfKcUGuqkPLx5fh8/0duDs7Ezr+5qHoGz4tY=;
+        b=UKTgGK4eZ5ntILtgoO0Mnj49rATqnVTltx5SnBCkmCqbPFfF+7IXatPkzBOMqPeL42
+         mK8mvInS+rCeMDC8zRXd1n7ARSYkhH/UBqPPbzEi7Nd7sQ8VeG8a2AvY0EPk0unDvR4Y
+         EJY8DV83Fl3imP62C/kg15TpqqSXS58caI2HDnXPufOlCDnX+yozOlUYNx64L0qY0L1/
+         njvj4Q3fNI8AwpFejq1l0QsmMzeuJ00PoXrM29D3rg/H2tC/VLNMxpI+/r1LAITzvLPT
+         OsSsJ94LM2Sm0kXBpUyAq/s1SUMidZlk/yH0MK7RrzuPymzk9/n9tzecC1ONOlJytzDT
+         bk/Q==
+X-Gm-Message-State: APjAAAXviq1m3u92Flh+jrmC/2O8nPhrGnQk2hzGKsWHNMYbrrzEaKxc
+	fEq2qZokcWR1qm8wfYmqeD7DDQ==
+X-Google-Smtp-Source: APXvYqx1M8rIsrCkimvQNj4LaDpY7NXABU85kVIFBPe0471ED+onlrECMMc1xhJz0b/EeVW39Wkhqw==
+X-Received: by 2002:a17:90a:cb11:: with SMTP id z17mr366666pjt.122.1582829370031;
+        Thu, 27 Feb 2020 10:49:30 -0800 (PST)
 From: Kees Cook <keescook@chromium.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: Kees Cook <keescook@chromium.org>,
-	Elena Petrova <lenaptr@google.com>,
-	Andrey Ryabinin <aryabinin@virtuozzo.com>,
 	Dmitry Vyukov <dvyukov@google.com>,
+	Andrey Ryabinin <aryabinin@virtuozzo.com>,
+	Elena Petrova <lenaptr@google.com>,
 	Andrey Konovalov <andreyknvl@google.com>,
 	Alexander Potapenko <glider@google.com>,
 	Dan Carpenter <dan.carpenter@oracle.com>,
@@ -55,152 +55,147 @@ Cc: Kees Cook <keescook@chromium.org>,
 	linux-kernel@vger.kernel.org,
 	kernel-hardening@lists.openwall.com,
 	syzkaller@googlegroups.com
-Subject: [PATCH v4 2/6] ubsan: Split "bounds" checker from other options
-Date: Thu, 27 Feb 2020 10:49:17 -0800
-Message-Id: <20200227184921.30215-3-keescook@chromium.org>
+Subject: [PATCH v4 3/6] lkdtm/bugs: Add arithmetic overflow and array bounds checks
+Date: Thu, 27 Feb 2020 10:49:18 -0800
+Message-Id: <20200227184921.30215-4-keescook@chromium.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200227184921.30215-1-keescook@chromium.org>
 References: <20200227184921.30215-1-keescook@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In order to do kernel builds with the bounds checker individually
-available, introduce CONFIG_UBSAN_BOUNDS, with the remaining options
-under CONFIG_UBSAN_MISC.
+Adds LKDTM tests for arithmetic overflow (both signed and unsigned),
+as well as array bounds checking.
 
-For example, using this, we can start to expand the coverage syzkaller is
-providing. Right now, all of UBSan is disabled for syzbot builds because
-taken as a whole, it is too noisy. This will let us focus on one feature
-at a time.
-
-For the bounds checker specifically, this provides a mechanism to
-eliminate an entire class of array overflows with close to zero
-performance overhead (I cannot measure a difference). In my (mostly)
-defconfig, enabling bounds checking adds ~4200 checks to the kernel.
-Performance changes are in the noise, likely due to the branch predictors
-optimizing for the non-fail path.
-
-Some notes on the bounds checker:
-
-- it does not instrument {mem,str}*()-family functions, it only
-  instruments direct indexed accesses (e.g. "foo[i]"). Dealing with
-  the {mem,str}*()-family functions is a work-in-progress around
-  CONFIG_FORTIFY_SOURCE[1].
-
-- it ignores flexible array members, including the very old single
-  byte (e.g. "int foo[1];") declarations. (Note that GCC's
-  implementation appears to ignore _all_ trailing arrays, but Clang only
-  ignores empty, 0, and 1 byte arrays[2].)
-
-[1] https://github.com/KSPP/linux/issues/6
-[2] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92589
-
-Suggested-by: Elena Petrova <lenaptr@google.com>
 Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Andrey Ryabinin <aryabinin@virtuozzo.com>
 Acked-by: Dmitry Vyukov <dvyukov@google.com>
 ---
- lib/Kconfig.ubsan      | 29 ++++++++++++++++++++++++-----
- scripts/Makefile.ubsan |  7 ++++++-
- 2 files changed, 30 insertions(+), 6 deletions(-)
+ drivers/misc/lkdtm/bugs.c  | 75 ++++++++++++++++++++++++++++++++++++++
+ drivers/misc/lkdtm/core.c  |  3 ++
+ drivers/misc/lkdtm/lkdtm.h |  3 ++
+ 3 files changed, 81 insertions(+)
 
-diff --git a/lib/Kconfig.ubsan b/lib/Kconfig.ubsan
-index 9deb655838b0..48469c95d78e 100644
---- a/lib/Kconfig.ubsan
-+++ b/lib/Kconfig.ubsan
-@@ -2,7 +2,7 @@
- config ARCH_HAS_UBSAN_SANITIZE_ALL
- 	bool
+diff --git a/drivers/misc/lkdtm/bugs.c b/drivers/misc/lkdtm/bugs.c
+index de87693cf557..e4c61ffea35c 100644
+--- a/drivers/misc/lkdtm/bugs.c
++++ b/drivers/misc/lkdtm/bugs.c
+@@ -11,6 +11,7 @@
+ #include <linux/sched/signal.h>
+ #include <linux/sched/task_stack.h>
+ #include <linux/uaccess.h>
++#include <linux/slab.h>
  
--config UBSAN
-+menuconfig UBSAN
- 	bool "Undefined behaviour sanity checker"
- 	help
- 	  This option enables the Undefined Behaviour sanity checker.
-@@ -10,9 +10,10 @@ config UBSAN
- 	  behaviours at runtime. For more details, see:
- 	  Documentation/dev-tools/ubsan.rst
+ #ifdef CONFIG_X86_32
+ #include <asm/desc.h>
+@@ -175,6 +176,80 @@ void lkdtm_HUNG_TASK(void)
+ 	schedule();
+ }
  
-+if UBSAN
++volatile unsigned int huge = INT_MAX - 2;
++volatile unsigned int ignored;
 +
- config UBSAN_TRAP
- 	bool "On Sanitizer warnings, abort the running kernel code"
--	depends on UBSAN
- 	depends on $(cc-option, -fsanitize-undefined-trap-on-error)
- 	help
- 	  Building kernels with Sanitizer features enabled tends to grow
-@@ -25,9 +26,26 @@ config UBSAN_TRAP
- 	  the system. For some system builders this is an acceptable
- 	  trade-off.
- 
-+config UBSAN_BOUNDS
-+	bool "Perform array index bounds checking"
-+	default UBSAN
-+	help
-+	  This option enables detection of directly indexed out of bounds
-+	  array accesses, where the array size is known at compile time.
-+	  Note that this does not protect array overflows via bad calls
-+	  to the {str,mem}*cpy() family of functions (that is addressed
-+	  by CONFIG_FORTIFY_SOURCE).
++void lkdtm_OVERFLOW_SIGNED(void)
++{
++	int value;
 +
-+config UBSAN_MISC
-+	bool "Enable all other Undefined Behavior sanity checks"
-+	default UBSAN
-+	help
-+	  This option enables all sanity checks that don't have their
-+	  own Kconfig options. Disable this if you only want to have
-+	  individually selected checks.
++	value = huge;
++	pr_info("Normal signed addition ...\n");
++	value += 1;
++	ignored = value;
 +
- config UBSAN_SANITIZE_ALL
- 	bool "Enable instrumentation for the entire kernel"
--	depends on UBSAN
- 	depends on ARCH_HAS_UBSAN_SANITIZE_ALL
- 
- 	# We build with -Wno-maybe-uninitilzed, but we still want to
-@@ -44,7 +62,6 @@ config UBSAN_SANITIZE_ALL
- 
- config UBSAN_NO_ALIGNMENT
- 	bool "Disable checking of pointers alignment"
--	depends on UBSAN
- 	default y if HAVE_EFFICIENT_UNALIGNED_ACCESS
- 	help
- 	  This option disables the check of unaligned memory accesses.
-@@ -57,7 +74,9 @@ config UBSAN_ALIGNMENT
- 
- config TEST_UBSAN
- 	tristate "Module for testing for undefined behavior detection"
--	depends on m && UBSAN
-+	depends on m
- 	help
- 	  This is a test module for UBSAN.
- 	  It triggers various undefined behavior, and detect it.
++	pr_info("Overflowing signed addition ...\n");
++	value += 4;
++	ignored = value;
++}
 +
-+endif	# if UBSAN
-diff --git a/scripts/Makefile.ubsan b/scripts/Makefile.ubsan
-index 668a91510bfe..5b15bc425ec9 100644
---- a/scripts/Makefile.ubsan
-+++ b/scripts/Makefile.ubsan
-@@ -5,14 +5,19 @@ ifdef CONFIG_UBSAN_ALIGNMENT
-       CFLAGS_UBSAN += $(call cc-option, -fsanitize=alignment)
- endif
- 
-+ifdef CONFIG_UBSAN_BOUNDS
-+      CFLAGS_UBSAN += $(call cc-option, -fsanitize=bounds)
-+endif
 +
-+ifdef CONFIG_UBSAN_MISC
-       CFLAGS_UBSAN += $(call cc-option, -fsanitize=shift)
-       CFLAGS_UBSAN += $(call cc-option, -fsanitize=integer-divide-by-zero)
-       CFLAGS_UBSAN += $(call cc-option, -fsanitize=unreachable)
-       CFLAGS_UBSAN += $(call cc-option, -fsanitize=signed-integer-overflow)
--      CFLAGS_UBSAN += $(call cc-option, -fsanitize=bounds)
-       CFLAGS_UBSAN += $(call cc-option, -fsanitize=object-size)
-       CFLAGS_UBSAN += $(call cc-option, -fsanitize=bool)
-       CFLAGS_UBSAN += $(call cc-option, -fsanitize=enum)
-+endif
- 
- ifdef CONFIG_UBSAN_TRAP
-       CFLAGS_UBSAN += $(call cc-option, -fsanitize-undefined-trap-on-error)
++void lkdtm_OVERFLOW_UNSIGNED(void)
++{
++	unsigned int value;
++
++	value = huge;
++	pr_info("Normal unsigned addition ...\n");
++	value += 1;
++	ignored = value;
++
++	pr_info("Overflowing unsigned addition ...\n");
++	value += 4;
++	ignored = value;
++}
++
++/* Intentially using old-style flex array definition of 1 byte. */
++struct array_bounds_flex_array {
++	int one;
++	int two;
++	char data[1];
++};
++
++struct array_bounds {
++	int one;
++	int two;
++	char data[8];
++	int three;
++};
++
++void lkdtm_ARRAY_BOUNDS(void)
++{
++	struct array_bounds_flex_array *not_checked;
++	struct array_bounds *checked;
++	volatile int i;
++
++	not_checked = kmalloc(sizeof(*not_checked) * 2, GFP_KERNEL);
++	checked = kmalloc(sizeof(*checked) * 2, GFP_KERNEL);
++
++	pr_info("Array access within bounds ...\n");
++	/* For both, touch all bytes in the actual member size. */
++	for (i = 0; i < sizeof(checked->data); i++)
++		checked->data[i] = 'A';
++	/*
++	 * For the uninstrumented flex array member, also touch 1 byte
++	 * beyond to verify it is correctly uninstrumented.
++	 */
++	for (i = 0; i < sizeof(not_checked->data) + 1; i++)
++		not_checked->data[i] = 'A';
++
++	pr_info("Array access beyond bounds ...\n");
++	for (i = 0; i < sizeof(checked->data) + 1; i++)
++		checked->data[i] = 'B';
++
++	kfree(not_checked);
++	kfree(checked);
++}
++
+ void lkdtm_CORRUPT_LIST_ADD(void)
+ {
+ 	/*
+diff --git a/drivers/misc/lkdtm/core.c b/drivers/misc/lkdtm/core.c
+index ee0d6e721441..2e04719b503c 100644
+--- a/drivers/misc/lkdtm/core.c
++++ b/drivers/misc/lkdtm/core.c
+@@ -129,6 +129,9 @@ static const struct crashtype crashtypes[] = {
+ 	CRASHTYPE(HARDLOCKUP),
+ 	CRASHTYPE(SPINLOCKUP),
+ 	CRASHTYPE(HUNG_TASK),
++	CRASHTYPE(OVERFLOW_SIGNED),
++	CRASHTYPE(OVERFLOW_UNSIGNED),
++	CRASHTYPE(ARRAY_BOUNDS),
+ 	CRASHTYPE(EXEC_DATA),
+ 	CRASHTYPE(EXEC_STACK),
+ 	CRASHTYPE(EXEC_KMALLOC),
+diff --git a/drivers/misc/lkdtm/lkdtm.h b/drivers/misc/lkdtm/lkdtm.h
+index c56d23e37643..8391081c6f13 100644
+--- a/drivers/misc/lkdtm/lkdtm.h
++++ b/drivers/misc/lkdtm/lkdtm.h
+@@ -22,6 +22,9 @@ void lkdtm_SOFTLOCKUP(void);
+ void lkdtm_HARDLOCKUP(void);
+ void lkdtm_SPINLOCKUP(void);
+ void lkdtm_HUNG_TASK(void);
++void lkdtm_OVERFLOW_SIGNED(void);
++void lkdtm_OVERFLOW_UNSIGNED(void);
++void lkdtm_ARRAY_BOUNDS(void);
+ void lkdtm_CORRUPT_LIST_ADD(void);
+ void lkdtm_CORRUPT_LIST_DEL(void);
+ void lkdtm_CORRUPT_USER_DS(void);
 -- 
 2.20.1
 
