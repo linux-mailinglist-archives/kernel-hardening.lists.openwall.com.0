@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-17981-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-17979-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id DADC0172812
-	for <lists+kernel-hardening@lfdr.de>; Thu, 27 Feb 2020 19:50:26 +0100 (CET)
-Received: (qmail 3945 invoked by uid 550); 27 Feb 2020 18:49:44 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 0F2D917280F
+	for <lists+kernel-hardening@lfdr.de>; Thu, 27 Feb 2020 19:50:09 +0100 (CET)
+Received: (qmail 3831 invoked by uid 550); 27 Feb 2020 18:49:42 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,35 +13,34 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 3798 invoked from network); 27 Feb 2020 18:49:41 -0000
+Received: (qmail 3732 invoked from network); 27 Feb 2020 18:49:40 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=tZTI1WKOfKcUGuqkPLx5fh8/0duDs7Ezr+5qHoGz4tY=;
-        b=GklqgiNXeNchROgyC1BDr/uKshy3XOAwg/V7eA31LU8HpeMPQxp2F9ilEeKURDOSJP
-         uXxuJwLLDx996zP1QRfYEMDPuBOI2E1PnHExPDrJ43nwK5khJSPgWU6JT2rmr29+WU/u
-         ho8QR+KKHnR+iX/rYRf/Pracpbyaz3NUqtexg=
+        bh=46Z0N6nNFPIgM2OuwNgkHRjYe659IsqNoWw8FG0hdrY=;
+        b=lTDnhmVnqQJEUJ5LnBGPuhXrnv05UkcjRDWNOX4WHR+p4aommd+S5U5/xJ9GYmjDyV
+         D/5GwhtD18WW//fs2/5w1ghXIQm+EKFifaYUneu04fLN8/9y1Mj2SuFmDWjgLzxaen0O
+         3tTOuDeaafS34wt+AZuoCBaUtcE3qzutj612k=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=tZTI1WKOfKcUGuqkPLx5fh8/0duDs7Ezr+5qHoGz4tY=;
-        b=UKTgGK4eZ5ntILtgoO0Mnj49rATqnVTltx5SnBCkmCqbPFfF+7IXatPkzBOMqPeL42
-         mK8mvInS+rCeMDC8zRXd1n7ARSYkhH/UBqPPbzEi7Nd7sQ8VeG8a2AvY0EPk0unDvR4Y
-         EJY8DV83Fl3imP62C/kg15TpqqSXS58caI2HDnXPufOlCDnX+yozOlUYNx64L0qY0L1/
-         njvj4Q3fNI8AwpFejq1l0QsmMzeuJ00PoXrM29D3rg/H2tC/VLNMxpI+/r1LAITzvLPT
-         OsSsJ94LM2Sm0kXBpUyAq/s1SUMidZlk/yH0MK7RrzuPymzk9/n9tzecC1ONOlJytzDT
-         bk/Q==
-X-Gm-Message-State: APjAAAXviq1m3u92Flh+jrmC/2O8nPhrGnQk2hzGKsWHNMYbrrzEaKxc
-	fEq2qZokcWR1qm8wfYmqeD7DDQ==
-X-Google-Smtp-Source: APXvYqx1M8rIsrCkimvQNj4LaDpY7NXABU85kVIFBPe0471ED+onlrECMMc1xhJz0b/EeVW39Wkhqw==
-X-Received: by 2002:a17:90a:cb11:: with SMTP id z17mr366666pjt.122.1582829370031;
-        Thu, 27 Feb 2020 10:49:30 -0800 (PST)
+        bh=46Z0N6nNFPIgM2OuwNgkHRjYe659IsqNoWw8FG0hdrY=;
+        b=Y5al6XlPUeRYJxZ0cTtBFh4xV2ychyqnJT8kkAXfnVLrmaLXOQxjE3gYC2uX7xT+IH
+         s59hkF/LWU+v8oF5u9Si7K+VFWq+DmRk6+z57/pRN5KqeGnQQ3aK0f6kwRC0HvU9sHdB
+         +nuPaT14MBRkhOM1vn6+oxL9rcJh4x/pJESz+yC+eU0rfspmLEVwEUgSRA/q5xArfJSJ
+         4uc2KIfY9fTlbf+tgdmVVqEcIhszLnnpPAvsueibdZtfQuXnXdT/jOV3KKfpT/bptd/j
+         CNEo7QjwJdfAntAh7u5YoRw9pJPiCPO/I1bTbMhz7ASidQvDzWNokUMZxT+K/ohGp6EY
+         ZL7A==
+X-Gm-Message-State: APjAAAX9f4Uqs5robz+xmtyHP4dDbaXo00SmLuzVz88WwXe8dvGrft5q
+	FsuogFazELfF2w0JDyCUG2gdvg==
+X-Google-Smtp-Source: APXvYqyp61REIsdWHH37oqm6TnnTLVpBM0r3x0E6/zmvpnUPvvoIlWHFgZSyISwmK1qp5zs0Rz23qw==
+X-Received: by 2002:a63:3103:: with SMTP id x3mr677715pgx.209.1582829368829;
+        Thu, 27 Feb 2020 10:49:28 -0800 (PST)
 From: Kees Cook <keescook@chromium.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: Kees Cook <keescook@chromium.org>,
-	Dmitry Vyukov <dvyukov@google.com>,
 	Andrey Ryabinin <aryabinin@virtuozzo.com>,
 	Elena Petrova <lenaptr@google.com>,
 	Andrey Konovalov <andreyknvl@google.com>,
@@ -55,147 +54,47 @@ Cc: Kees Cook <keescook@chromium.org>,
 	linux-kernel@vger.kernel.org,
 	kernel-hardening@lists.openwall.com,
 	syzkaller@googlegroups.com
-Subject: [PATCH v4 3/6] lkdtm/bugs: Add arithmetic overflow and array bounds checks
-Date: Thu, 27 Feb 2020 10:49:18 -0800
-Message-Id: <20200227184921.30215-4-keescook@chromium.org>
+Subject: [PATCH v4 4/6] ubsan: Check panic_on_warn
+Date: Thu, 27 Feb 2020 10:49:19 -0800
+Message-Id: <20200227184921.30215-5-keescook@chromium.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200227184921.30215-1-keescook@chromium.org>
 References: <20200227184921.30215-1-keescook@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Adds LKDTM tests for arithmetic overflow (both signed and unsigned),
-as well as array bounds checking.
+Syzkaller expects kernel warnings to panic when the panic_on_warn
+sysctl is set. More work is needed here to have UBSan reuse the WARN
+infrastructure, but for now, just check the flag manually.
 
+Link: https://lore.kernel.org/lkml/CACT4Y+bsLJ-wFx_TaXqax3JByUOWB3uk787LsyMVcfW6JzzGvg@mail.gmail.com
 Signed-off-by: Kees Cook <keescook@chromium.org>
-Acked-by: Dmitry Vyukov <dvyukov@google.com>
 ---
- drivers/misc/lkdtm/bugs.c  | 75 ++++++++++++++++++++++++++++++++++++++
- drivers/misc/lkdtm/core.c  |  3 ++
- drivers/misc/lkdtm/lkdtm.h |  3 ++
- 3 files changed, 81 insertions(+)
+ lib/ubsan.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/misc/lkdtm/bugs.c b/drivers/misc/lkdtm/bugs.c
-index de87693cf557..e4c61ffea35c 100644
---- a/drivers/misc/lkdtm/bugs.c
-+++ b/drivers/misc/lkdtm/bugs.c
-@@ -11,6 +11,7 @@
- #include <linux/sched/signal.h>
- #include <linux/sched/task_stack.h>
- #include <linux/uaccess.h>
-+#include <linux/slab.h>
+diff --git a/lib/ubsan.c b/lib/ubsan.c
+index 7b9b58aee72c..429663eef6a7 100644
+--- a/lib/ubsan.c
++++ b/lib/ubsan.c
+@@ -156,6 +156,17 @@ static void ubsan_epilogue(void)
+ 		"========================================\n");
  
- #ifdef CONFIG_X86_32
- #include <asm/desc.h>
-@@ -175,6 +176,80 @@ void lkdtm_HUNG_TASK(void)
- 	schedule();
+ 	current->in_ubsan--;
++
++	if (panic_on_warn) {
++		/*
++		 * This thread may hit another WARN() in the panic path.
++		 * Resetting this prevents additional WARN() from panicking the
++		 * system on this thread.  Other threads are blocked by the
++		 * panic_mutex in panic().
++		 */
++		panic_on_warn = 0;
++		panic("panic_on_warn set ...\n");
++	}
  }
  
-+volatile unsigned int huge = INT_MAX - 2;
-+volatile unsigned int ignored;
-+
-+void lkdtm_OVERFLOW_SIGNED(void)
-+{
-+	int value;
-+
-+	value = huge;
-+	pr_info("Normal signed addition ...\n");
-+	value += 1;
-+	ignored = value;
-+
-+	pr_info("Overflowing signed addition ...\n");
-+	value += 4;
-+	ignored = value;
-+}
-+
-+
-+void lkdtm_OVERFLOW_UNSIGNED(void)
-+{
-+	unsigned int value;
-+
-+	value = huge;
-+	pr_info("Normal unsigned addition ...\n");
-+	value += 1;
-+	ignored = value;
-+
-+	pr_info("Overflowing unsigned addition ...\n");
-+	value += 4;
-+	ignored = value;
-+}
-+
-+/* Intentially using old-style flex array definition of 1 byte. */
-+struct array_bounds_flex_array {
-+	int one;
-+	int two;
-+	char data[1];
-+};
-+
-+struct array_bounds {
-+	int one;
-+	int two;
-+	char data[8];
-+	int three;
-+};
-+
-+void lkdtm_ARRAY_BOUNDS(void)
-+{
-+	struct array_bounds_flex_array *not_checked;
-+	struct array_bounds *checked;
-+	volatile int i;
-+
-+	not_checked = kmalloc(sizeof(*not_checked) * 2, GFP_KERNEL);
-+	checked = kmalloc(sizeof(*checked) * 2, GFP_KERNEL);
-+
-+	pr_info("Array access within bounds ...\n");
-+	/* For both, touch all bytes in the actual member size. */
-+	for (i = 0; i < sizeof(checked->data); i++)
-+		checked->data[i] = 'A';
-+	/*
-+	 * For the uninstrumented flex array member, also touch 1 byte
-+	 * beyond to verify it is correctly uninstrumented.
-+	 */
-+	for (i = 0; i < sizeof(not_checked->data) + 1; i++)
-+		not_checked->data[i] = 'A';
-+
-+	pr_info("Array access beyond bounds ...\n");
-+	for (i = 0; i < sizeof(checked->data) + 1; i++)
-+		checked->data[i] = 'B';
-+
-+	kfree(not_checked);
-+	kfree(checked);
-+}
-+
- void lkdtm_CORRUPT_LIST_ADD(void)
- {
- 	/*
-diff --git a/drivers/misc/lkdtm/core.c b/drivers/misc/lkdtm/core.c
-index ee0d6e721441..2e04719b503c 100644
---- a/drivers/misc/lkdtm/core.c
-+++ b/drivers/misc/lkdtm/core.c
-@@ -129,6 +129,9 @@ static const struct crashtype crashtypes[] = {
- 	CRASHTYPE(HARDLOCKUP),
- 	CRASHTYPE(SPINLOCKUP),
- 	CRASHTYPE(HUNG_TASK),
-+	CRASHTYPE(OVERFLOW_SIGNED),
-+	CRASHTYPE(OVERFLOW_UNSIGNED),
-+	CRASHTYPE(ARRAY_BOUNDS),
- 	CRASHTYPE(EXEC_DATA),
- 	CRASHTYPE(EXEC_STACK),
- 	CRASHTYPE(EXEC_KMALLOC),
-diff --git a/drivers/misc/lkdtm/lkdtm.h b/drivers/misc/lkdtm/lkdtm.h
-index c56d23e37643..8391081c6f13 100644
---- a/drivers/misc/lkdtm/lkdtm.h
-+++ b/drivers/misc/lkdtm/lkdtm.h
-@@ -22,6 +22,9 @@ void lkdtm_SOFTLOCKUP(void);
- void lkdtm_HARDLOCKUP(void);
- void lkdtm_SPINLOCKUP(void);
- void lkdtm_HUNG_TASK(void);
-+void lkdtm_OVERFLOW_SIGNED(void);
-+void lkdtm_OVERFLOW_UNSIGNED(void);
-+void lkdtm_ARRAY_BOUNDS(void);
- void lkdtm_CORRUPT_LIST_ADD(void);
- void lkdtm_CORRUPT_LIST_DEL(void);
- void lkdtm_CORRUPT_USER_DS(void);
+ static void handle_overflow(struct overflow_data *data, void *lhs,
 -- 
 2.20.1
 
