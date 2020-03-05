@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18081-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18083-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 2BD0C17AD4A
-	for <lists+kernel-hardening@lfdr.de>; Thu,  5 Mar 2020 18:31:29 +0100 (CET)
-Received: (qmail 31991 invoked by uid 550); 5 Mar 2020 17:31:24 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 1A6CA17AD9F
+	for <lists+kernel-hardening@lfdr.de>; Thu,  5 Mar 2020 18:54:23 +0100 (CET)
+Received: (qmail 11766 invoked by uid 550); 5 Mar 2020 17:54:17 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -14,15 +14,18 @@ List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
 Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 15732 invoked from network); 5 Mar 2020 15:18:39 -0000
+Received: (qmail 22383 invoked from network); 5 Mar 2020 15:41:21 -0000
 Subject: Re: [PATCH] sh: Stop printing the virtual memory layout
-To: Arvind Sankar <nivedita@alum.mit.edu>, Kees Cook <keescook@chromium.org>
+To: Joe Perches <joe@perches.com>, Arvind Sankar <nivedita@alum.mit.edu>,
+ Kees Cook <keescook@chromium.org>
 Cc: "Tobin C . Harding" <me@tobin.cc>, Tycho Andersen <tycho@tycho.ws>,
  kernel-hardening@lists.openwall.com,
  Yoshinori Sato <ysato@users.sourceforge.jp>, Rich Felker <dalias@libc.org>,
  linux-sh@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <202003021038.8F0369D907@keescook>
  <20200305151010.835954-1-nivedita@alum.mit.edu>
+ <f672417e-1323-4ef2-58a1-1158c482d569@physik.fu-berlin.de>
+ <31d1567c4c195f3bc5c6b610386cf0f559f9094f.camel@perches.com>
 From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Autocrypt: addr=glaubitz@physik.fu-berlin.de; keydata=
  mQINBE3JE9wBEADMrYGNfz3oz6XLw9XcWvuIxIlPWoTyw9BxTicfGAv0d87wngs9U+d52t/R
@@ -68,31 +71,27 @@ Autocrypt: addr=glaubitz@physik.fu-berlin.de; keydata=
  jEF9ImTPcYZpw5vhdyPwBdXW2lSjV3EAqknWujRgcsm84nycuJnImwJptR481EWmtuH6ysj5
  YhRVGbQPfdsjVUQfZdRdkEv4CZ90pdscBi1nRqcqANtzC+WQFwekDzk2lGqNRDg56s+q0KtY
  scOkTAZQGVpD/8AaLH4v1w==
-Message-ID: <f672417e-1323-4ef2-58a1-1158c482d569@physik.fu-berlin.de>
-Date: Thu, 5 Mar 2020 16:18:23 +0100
+Message-ID: <3c628a5a-35c7-3d92-b94b-23704500f7c4@physik.fu-berlin.de>
+Date: Thu, 5 Mar 2020 16:41:05 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.5.0
 MIME-Version: 1.0
-In-Reply-To: <20200305151010.835954-1-nivedita@alum.mit.edu>
+In-Reply-To: <31d1567c4c195f3bc5c6b610386cf0f559f9094f.camel@perches.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: 160.45.32.140
 
-On 3/5/20 4:10 PM, Arvind Sankar wrote:
-> For security, don't display the kernel's virtual memory layout.
+On 3/5/20 4:38 PM, Joe Perches wrote:
+>> Aww, why wasn't this made configurable? I found these memory map printouts
+>> very useful for development.
 > 
-> Kees Cook points out:
-> "These have been entirely removed on other architectures, so let's
-> just do the same for ia32 and remove it unconditionally."
+> It could be changed from pr_info to pr_devel.
 > 
-> 071929dbdd86 ("arm64: Stop printing the virtual memory layout")
-> 1c31d4e96b8c ("ARM: 8820/1: mm: Stop printing the virtual memory layout")
-> 31833332f798 ("m68k/mm: Stop printing the virtual memory layout")
-> fd8d0ca25631 ("parisc: Hide virtual kernel memory layout")
-> adb1fe9ae2ee ("mm/page_alloc: Remove kernel address exposure in free_reserved_area()")
-Aww, why wasn't this made configurable? I found these memory map printouts
-very useful for development.
+> A #define DEBUG would have to be added to emit it.
+
+Well, from the discussion it seems the decision to cut it out has already been
+made, so I guess it's too late :(.
 
 Adrian
 
