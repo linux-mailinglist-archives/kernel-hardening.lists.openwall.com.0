@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18100-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18101-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id F063F17B810
-	for <lists+kernel-hardening@lfdr.de>; Fri,  6 Mar 2020 09:05:09 +0100 (CET)
-Received: (qmail 19589 invoked by uid 550); 6 Mar 2020 08:05:03 -0000
+	by mail.lfdr.de (Postfix) with SMTP id A859817BC04
+	for <lists+kernel-hardening@lfdr.de>; Fri,  6 Mar 2020 12:46:16 +0100 (CET)
+Received: (qmail 7522 invoked by uid 550); 6 Mar 2020 11:46:10 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,72 +13,56 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 19557 invoked from network); 6 Mar 2020 08:05:03 -0000
+Delivered-To: moderator for kernel-hardening@lists.openwall.com
+Received: (qmail 13874 invoked from network); 6 Mar 2020 07:54:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=UWIoMeEB2CUV9mwiKAX71h5fko7k2os2QipVNvf6bCo=;
+        b=PNrX6AM0uaL/bBdobe7dNADUo+F4/G1hUMaxudkNpBcH04picEhD9scb8esJBu6Q8a
+         A7NTB9tyLFjUqB0Vb41KIuF5FxaKvLvWhw+T3Vo62B3dpWk75cmacDwHBt3zF1aizmPG
+         N6NQ0FxUXTlZL+gPZkCLmVzv/rkU2ShqN9g8ELn3yjtOxdhMkq8ZuTaMeuEEjZNG+KZj
+         qPvK7hZhtn27i/JgwlrAdko9a3PCR3Eq7bYcoaTGUGV/FdXuzzbksDpnqZK+fe0HFbD5
+         3bwKi8/YJ227AsaLnnoEwW575gt7UXxRPjLV4V8wyTXWk+4KsQFkWq2K8S72dKjhXnVV
+         XQLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=amxHAEVuD5PKAqXH5UoPsqWC2PaLt0se617vrFyjmJ8=;
-        b=pj2hYTtGssuQgi3V7ry7qTbyUfejSHDdevuBo9YURGixCsMNUQCgvHHS7afihEzbRW
-         RftsawTbF5Y75eBh78pzjQ60LYS+6QktFp6WOsRna9pwOgHisrkJAAvwr66QJCvUYd3N
-         Sa+Bf2wCvNfMiGxodvv5bEMSW2B0Xy5/Wy2y/S83et7EHNg6bSf6z0b/O79HY8NRxcmW
-         HHTyjZUqvgdYFrgRODk1WNngp8M/WVdWGFd8j4IDzWku3DXoqNbnWnrOz3E1PUcur9c5
-         0+hvbIR3r2OkxcaQRVzhflFs5oMGLxn8RNSa+G150ifdD7aM2LmDhJpS1bXD4PK49HFm
-         SRzw==
-X-Gm-Message-State: ANhLgQ2tn/wlmrTQSWzbLNEZEbZ+1JD7QuKA60snXVWU88w1uPNbu/FU
-	jg01Ybe1lyWnK0IzMflx3e6Ey8syllB7aEse8JU=
-X-Google-Smtp-Source: ADFU+vtlDpFfaubyko7ZpC8uPYldjA9crYo8K9PGRZCVsCWdWiwtdf++OIGRPvYIF5xT5MGmJTUCJyiSR233bJUOsaU=
-X-Received: by 2002:a05:6830:12d1:: with SMTP id a17mr1547778otq.39.1583481891563;
- Fri, 06 Mar 2020 00:04:51 -0800 (PST)
+        bh=UWIoMeEB2CUV9mwiKAX71h5fko7k2os2QipVNvf6bCo=;
+        b=M7OVV6XZYie3RGb7bNrQmBzmJ7FUzPf5t4u6nJiomKD8gBG/eiw7VWavt+mpGLMlgN
+         Ta4VD78lZLa+Z2mS4fKJBuC7Jl9BRkbxjuR2a85HYUHksqtwFykM+gjAmq3QK+V61c7b
+         Bb4NU06eEQI69UTkHcSy4hsPcc5CtJ4/Ufp6/JDVLz5OxMa65Iv8kwCT69iRX7GO/V2Y
+         ujswWJxpaoRnaGOHES+AfrR6iBswbUFZ6jksXL4+wtVf3hH9W3snJT+f5kiksI9zr9qQ
+         tuiJgQ+Qv92KgaXh8zc7iiDxzHtqTMvicjf/VSXIq4aww/R5jQ7K524AlFA9Y+pZDK1g
+         2C+A==
+X-Gm-Message-State: ANhLgQ3hmxCtXH8D3Y6zZpxn2EQybEqsuX3lfYrprv1007ub5F+UI5Xx
+	V3s1hpgL8CbAbm514yNmgFRYNWTWYidwycfracI=
+X-Google-Smtp-Source: ADFU+vvQFehPqcFAEG48yvZ7aCbXwYyl9wcrvV8Hrk3L/zkur4PN0je35ufuF1mZ6Z0WKNa8hjuWx2TxU5yX8MAX2j0=
+X-Received: by 2002:a17:90a:d205:: with SMTP id o5mr2271425pju.46.1583481251417;
+ Thu, 05 Mar 2020 23:54:11 -0800 (PST)
 MIME-Version: 1.0
-References: <202003021038.8F0369D907@keescook> <20200305151010.835954-1-nivedita@alum.mit.edu>
- <f672417e-1323-4ef2-58a1-1158c482d569@physik.fu-berlin.de>
-In-Reply-To: <f672417e-1323-4ef2-58a1-1158c482d569@physik.fu-berlin.de>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Fri, 6 Mar 2020 09:04:40 +0100
-Message-ID: <CAMuHMdVG+ueSeMw1BEKSv15zun4eOB1ZzdGidH8quy2zMp7tdg@mail.gmail.com>
-Subject: Re: [PATCH] sh: Stop printing the virtual memory layout
-To: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Cc: Arvind Sankar <nivedita@alum.mit.edu>, Kees Cook <keescook@chromium.org>, 
-	"Tobin C . Harding" <me@tobin.cc>, Tycho Andersen <tycho@tycho.ws>, kernel-hardening@lists.openwall.com, 
-	Yoshinori Sato <ysato@users.sourceforge.jp>, Rich Felker <dalias@libc.org>, 
-	Linux-sh list <linux-sh@vger.kernel.org>, 
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <202003021038.8F0369D907@keescook> <20200305151144.836824-1-nivedita@alum.mit.edu>
+In-Reply-To: <20200305151144.836824-1-nivedita@alum.mit.edu>
+From: Max Filippov <jcmvbkbc@gmail.com>
+Date: Thu, 5 Mar 2020 23:54:00 -0800
+Message-ID: <CAMo8BfKDF+6uw_jxMa2BuNScJS=PMiwFhb9YhH4DWD+jo4+dyg@mail.gmail.com>
+Subject: Re: [PATCH] xtensa/mm: Stop printing the virtual memory layout
+To: Arvind Sankar <nivedita@alum.mit.edu>
+Cc: Kees Cook <keescook@chromium.org>, "Tobin C . Harding" <me@tobin.cc>, Tycho Andersen <tycho@tycho.ws>, 
+	kernel-hardening@lists.openwall.com, Chris Zankel <chris@zankel.net>, 
+	"open list:TENSILICA XTENSA PORT (xtensa)" <linux-xtensa@linux-xtensa.org>, LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 
-Hi Adrian,
+On Thu, Mar 5, 2020 at 7:11 AM Arvind Sankar <nivedita@alum.mit.edu> wrote:
+>
+> For security, don't display the kernel's virtual memory layout.
 
-On Thu, Mar 5, 2020 at 4:18 PM John Paul Adrian Glaubitz
-<glaubitz@physik.fu-berlin.de> wrote:
-> On 3/5/20 4:10 PM, Arvind Sankar wrote:
-> > For security, don't display the kernel's virtual memory layout.
-> >
-> > Kees Cook points out:
-> > "These have been entirely removed on other architectures, so let's
-> > just do the same for ia32 and remove it unconditionally."
-> >
-> > 071929dbdd86 ("arm64: Stop printing the virtual memory layout")
-> > 1c31d4e96b8c ("ARM: 8820/1: mm: Stop printing the virtual memory layout")
-> > 31833332f798 ("m68k/mm: Stop printing the virtual memory layout")
-> > fd8d0ca25631 ("parisc: Hide virtual kernel memory layout")
-> > adb1fe9ae2ee ("mm/page_alloc: Remove kernel address exposure in free_reserved_area()")
-> Aww, why wasn't this made configurable? I found these memory map printouts
-> very useful for development.
-
-In most of the above (but not in this patch), "%p" was used to print
-addresses, which started showing useless hashed addresses since commit
-ad67b74d2469d9b8 ("printk: hash addresses printed with %p").
-
-Instead of changing them all to print usable addresses instead, it was
-agreed upon to just remove them.
-
-Gr{oetje,eeting}s,
-
-                        Geert
+Given that primary users of xtensa linux kernels are developers
+removing this information, and even disabling it by default doesn't
+sound reasonable to me.
 
 -- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+Thanks.
+-- Max
