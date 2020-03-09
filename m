@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18109-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18111-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 7C02D17E46A
-	for <lists+kernel-hardening@lfdr.de>; Mon,  9 Mar 2020 17:15:32 +0100 (CET)
-Received: (qmail 1831 invoked by uid 550); 9 Mar 2020 16:15:25 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 793A717E534
+	for <lists+kernel-hardening@lfdr.de>; Mon,  9 Mar 2020 17:59:50 +0100 (CET)
+Received: (qmail 20149 invoked by uid 550); 9 Mar 2020 16:59:45 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,149 +13,81 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 1797 invoked from network); 9 Mar 2020 16:15:24 -0000
+Delivered-To: moderator for kernel-hardening@lists.openwall.com
+Received: (qmail 14335 invoked from network); 9 Mar 2020 16:49:45 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=YnKNr3hKRT5ikwt9roCSkDxlo76o8UWZ8pQ2c566Cf4=;
-        b=bFsZ5+xSdTR8H8crWlM6K47GKUWc1rJ515OZGp73trVfjgiNteU9a+Cahp2oKyNWjY
-         5fyUr2Je7MMc9pQbQScjAk+4L4d7mu0qzQ67QIx5ntGMze9FCj00EIuaXj45eRA9xwLC
-         Q39gzs6fLraauHczp7CUQ/uvpSu/Pv3g1+zyM=
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=bNoFPXhpvMiuUF7F+uekItlbOQGQEdKTXJsSJYz6wNk=;
+        b=kkDM6ZUxQYSDcpRCzqXBzl6yRdTxqvu7JFcn1rImw8v+HOQq5uEy+Sz/qwy5/3C+s3
+         KUB+FBs5z4n/A5MqPulS4DKCuhgmvKIaNUHArlCnB0h/4FTfLx81RD+3NgPaOsTFI1sc
+         Xht0fVFnt3MfGytquyliFmFlyCRFniOygfHi/nqq5EDEZIh0kzrbvrDR7LEVlhMc98eX
+         29sgNmh17iEBtwdaaw3GPVgxtwO9+CmG5NxPouEQhUPQ9nIeCFBa/YA5/1Cb1Wws7s7Y
+         +vU04Kr5himrgDw19nt8CDZj7ZuERB70/bdH97/T6iWuj6uLbmoM8YruSAMB5TCOsPlb
+         8E3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=YnKNr3hKRT5ikwt9roCSkDxlo76o8UWZ8pQ2c566Cf4=;
-        b=ba9lkHRSobgc+JE91emwIWH5UvR0rx5mozBnOU+VIw3W73jtmsMSfobfYlCoaEYgPt
-         kaBCahl+mDpSC9ddE1IpSBw63t6UchVfODpn8oZFyUpasbl/r+RcmbTcOqLDOn6d4XYY
-         mE4aDw9L9sMmszdUGCtFt3KEinYtBmlP7swgcpN36rRryQxB2tKr/aMUcBSpV/GCukok
-         WTdxPe7M3AO1Oh70cGpYhRjav+vvMvqp1orL6M9zrBG7+uF3L5YyFJEssVdMjRn0fk+X
-         hyh4//O/ru2DdhxQn2kwv2oY5zhaMFzztYoGK9BzfpwvyPu8soezMheVLcXYZ3W04wV0
-         ygQw==
-X-Gm-Message-State: ANhLgQ2UgkI7HcQLyVlBhRpRgVpGNFW2y4HkP3/589rMXIHja8F+jzQ6
-	LR9CfAHwtv9j2xzQpSwQwGkRVA==
-X-Google-Smtp-Source: ADFU+vvFjBxaKhEtFtDyy5FhCQR6zvOlDckAvu416t13ucxmTgfU3D8gVc8Q+eGzqzcwU5poa34MfQ==
-X-Received: by 2002:a17:90a:a588:: with SMTP id b8mr71771pjq.182.1583770512109;
-        Mon, 09 Mar 2020 09:15:12 -0700 (PDT)
-Date: Mon, 9 Mar 2020 09:15:10 -0700
-From: Kees Cook <keescook@chromium.org>
-To: Mark Rutland <mark.rutland@arm.com>
-Cc: Phong Tran <tranmanphong@gmail.com>, catalin.marinas@arm.com,
-	will@kernel.org, alexios.zavras@intel.com, tglx@linutronix.de,
-	akpm@linux-foundation.org, steven.price@arm.com,
-	steve.capper@arm.com, broonie@kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=bNoFPXhpvMiuUF7F+uekItlbOQGQEdKTXJsSJYz6wNk=;
+        b=D3V2Wne0i4j0UE5xbkgiiL9QmYQFLPGtzkjVc0JCzs8IvRDLidFoNSKWQoKe9Dd+/t
+         MS0J8Zu06xxzBd2vplV9uTpkW4f3MJtHlJhh4CFHIEhogdYr1qGGoHIM0Xf1DpREgPGj
+         RWYsrmUd+Ar/U8g5Sr/wl0FgtvYlsRC7Aep43M3wg8QEZSG14Et8x62v933zWUL8nCI2
+         phHCoz86twVunld1kQnMRrVCebN6vcyzXZvfFoEwopv2g7pitjTbzyKc2oZ/HyTDEVuL
+         WuZzUYJugND+LEIVo91Z8U6WnG67iSyh9tFY19VA+ZEfOFBZ5kXYW4QD1tHJKfQkum7h
+         4eIA==
+X-Gm-Message-State: ANhLgQ16ULGcD4U4lVJUD26IPvlTkReSaugwYGmHRdLluG9z5neciGK7
+	pXpECHk+0MWrYYqawmosJkY=
+X-Google-Smtp-Source: ADFU+vt/onT9cxmuspJ5T+KCU952uWkieCbEwJO4adVK6fLUN8zSNRf6ArvXDJD1xRu8YQakUYup1A==
+X-Received: by 2002:a17:90b:1882:: with SMTP id mn2mr105796pjb.139.1583772573044;
+        Mon, 09 Mar 2020 09:49:33 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Mon, 9 Mar 2020 09:49:31 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Ard Biesheuvel <ard.biesheuvel@linaro.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux@armlinux.org.uk, Kees Cook <keescook@chromium.org>,
+	Emese Revfy <re.emese@gmail.com>, Arnd Bergmann <arnd@arndb.de>,
+	Laura Abbott <labbott@redhat.com>,
 	kernel-hardening@lists.openwall.com
-Subject: Re: [PATCH] arm64: add check_wx_pages debugfs for CHECK_WX
-Message-ID: <202003090914.F6720CFF13@keescook>
-References: <20200307093926.27145-1-tranmanphong@gmail.com>
- <20200309121713.GA26309@lakrids.cambridge.arm.com>
+Subject: Re: [PATCH v3] ARM: smp: add support for per-task stack canaries
+Message-ID: <20200309164931.GA23889@roeck-us.net>
+References: <20181206083257.9596-1-ard.biesheuvel@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200309121713.GA26309@lakrids.cambridge.arm.com>
+In-Reply-To: <20181206083257.9596-1-ard.biesheuvel@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 
-On Mon, Mar 09, 2020 at 12:17:14PM +0000, Mark Rutland wrote:
-> On Sat, Mar 07, 2020 at 04:39:26PM +0700, Phong Tran wrote:
-> > follow the suggestion from
-> > https://github.com/KSPP/linux/issues/35
+On Thu, Dec 06, 2018 at 09:32:57AM +0100, Ard Biesheuvel wrote:
+> On ARM, we currently only change the value of the stack canary when
+> switching tasks if the kernel was built for UP. On SMP kernels, this
+> is impossible since the stack canary value is obtained via a global
+> symbol reference, which means
+> a) all running tasks on all CPUs must use the same value
+> b) we can only modify the value when no kernel stack frames are live
+>    on any CPU, which is effectively never.
 > 
-> That says:
+> So instead, use a GCC plugin to add a RTL pass that replaces each
+> reference to the address of the __stack_chk_guard symbol with an
+> expression that produces the address of the 'stack_canary' field
+> that is added to struct thread_info. This way, each task will use
+> its own randomized value.
 > 
-> | This should be implemented for all architectures
-> 
-> ... so surely this should be in generic code, rahter than being
-> arm64-specific?
+> Cc: Russell King <linux@armlinux.org.uk>
+> Cc: Kees Cook <keescook@chromium.org>
+> Cc: Emese Revfy <re.emese@gmail.com>
+> Cc: Arnd Bergmann <arnd@arndb.de>
+> Cc: Laura Abbott <labbott@redhat.com>
+> Cc: kernel-hardening@lists.openwall.com
+> Acked-by: Nicolas Pitre <nico@linaro.org>
+> Signed-off-by: Ard Biesheuvel <ard.biesheuvel@linaro.org>
 
-Not all architectures have implemented CONFIG_DEBUG_WX...
+Since this patch is in the tree, cc-option no longer works on
+the arm architecture if CONFIG_STACKPROTECTOR_PER_TASK is enabled.
 
--Kees
+Any idea how to fix that ? 
 
-> 
-> Thanks,
-> Mark.
-> 
-> > 
-> > Signed-off-by: Phong Tran <tranmanphong@gmail.com>
-> > ---
-> >  arch/arm64/Kconfig.debug        |  3 ++-
-> >  arch/arm64/include/asm/ptdump.h |  2 ++
-> >  arch/arm64/mm/dump.c            |  1 +
-> >  arch/arm64/mm/ptdump_debugfs.c  | 18 ++++++++++++++++++
-> >  4 files changed, 23 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/arch/arm64/Kconfig.debug b/arch/arm64/Kconfig.debug
-> > index 1c906d932d6b..be552fa351e2 100644
-> > --- a/arch/arm64/Kconfig.debug
-> > +++ b/arch/arm64/Kconfig.debug
-> > @@ -48,7 +48,8 @@ config DEBUG_WX
-> >  	  of other unfixed kernel bugs easier.
-> >  
-> >  	  There is no runtime or memory usage effect of this option
-> > -	  once the kernel has booted up - it's a one time check.
-> > +	  once the kernel has booted up - it's a one time check and
-> > +	  can be checked by echo "1" to "check_wx_pages" debugfs in runtime.
-> >  
-> >  	  If in doubt, say "Y".
-> >  
-> > diff --git a/arch/arm64/include/asm/ptdump.h b/arch/arm64/include/asm/ptdump.h
-> > index 38187f74e089..b80d6b4fc508 100644
-> > --- a/arch/arm64/include/asm/ptdump.h
-> > +++ b/arch/arm64/include/asm/ptdump.h
-> > @@ -24,9 +24,11 @@ struct ptdump_info {
-> >  void ptdump_walk(struct seq_file *s, struct ptdump_info *info);
-> >  #ifdef CONFIG_PTDUMP_DEBUGFS
-> >  void ptdump_debugfs_register(struct ptdump_info *info, const char *name);
-> > +int ptdump_check_wx_init(void);
-> >  #else
-> >  static inline void ptdump_debugfs_register(struct ptdump_info *info,
-> >  					   const char *name) { }
-> > +static inline int ptdump_check_wx_init(void) { return 0; }
-> >  #endif
-> >  void ptdump_check_wx(void);
-> >  #endif /* CONFIG_PTDUMP_CORE */
-> > diff --git a/arch/arm64/mm/dump.c b/arch/arm64/mm/dump.c
-> > index 860c00ec8bd3..60c99a047763 100644
-> > --- a/arch/arm64/mm/dump.c
-> > +++ b/arch/arm64/mm/dump.c
-> > @@ -378,6 +378,7 @@ static int ptdump_init(void)
-> >  #endif
-> >  	ptdump_initialize();
-> >  	ptdump_debugfs_register(&kernel_ptdump_info, "kernel_page_tables");
-> > +	ptdump_check_wx_init();
-> >  	return 0;
-> >  }
-> >  device_initcall(ptdump_init);
-> > diff --git a/arch/arm64/mm/ptdump_debugfs.c b/arch/arm64/mm/ptdump_debugfs.c
-> > index 1f2eae3e988b..73cddc12c3c2 100644
-> > --- a/arch/arm64/mm/ptdump_debugfs.c
-> > +++ b/arch/arm64/mm/ptdump_debugfs.c
-> > @@ -16,3 +16,21 @@ void ptdump_debugfs_register(struct ptdump_info *info, const char *name)
-> >  {
-> >  	debugfs_create_file(name, 0400, NULL, info, &ptdump_fops);
-> >  }
-> > +
-> > +static int check_wx_debugfs_set(void *data, u64 val)
-> > +{
-> > +	if (val != 1ULL)
-> > +		return -EINVAL;
-> > +
-> > +	ptdump_check_wx();
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +DEFINE_SIMPLE_ATTRIBUTE(check_wx_fops, NULL, check_wx_debugfs_set, "%llu\n");
-> > +
-> > +int ptdump_check_wx_init(void)
-> > +{
-> > +	return debugfs_create_file("check_wx_pages", 0200, NULL,
-> > +				   NULL, &check_wx_fops) ? 0 : -ENOMEM;
-> > +}
-> > -- 
-> > 2.20.1
-> > 
-
--- 
-Kees Cook
+Thanks,
+Guenter
