@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18110-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18112-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id F33ED17E508
-	for <lists+kernel-hardening@lfdr.de>; Mon,  9 Mar 2020 17:52:07 +0100 (CET)
-Received: (qmail 15947 invoked by uid 550); 9 Mar 2020 16:52:02 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 850F417ECCF
+	for <lists+kernel-hardening@lfdr.de>; Tue, 10 Mar 2020 00:45:40 +0100 (CET)
+Received: (qmail 1162 invoked by uid 550); 9 Mar 2020 23:45:34 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,140 +13,204 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 15915 invoked from network); 9 Mar 2020 16:52:01 -0000
-Date: Mon, 9 Mar 2020 16:51:39 +0000
-From: Mark Rutland <mark.rutland@arm.com>
-To: Kees Cook <keescook@chromium.org>
-Cc: Phong Tran <tranmanphong@gmail.com>, catalin.marinas@arm.com,
-	will@kernel.org, alexios.zavras@intel.com, tglx@linutronix.de,
-	akpm@linux-foundation.org, steven.price@arm.com,
-	steve.capper@arm.com, broonie@kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	kernel-hardening@lists.openwall.com
-Subject: Re: [PATCH] arm64: add check_wx_pages debugfs for CHECK_WX
-Message-ID: <20200309165125.GA44566@lakrids.cambridge.arm.com>
-References: <20200307093926.27145-1-tranmanphong@gmail.com>
- <20200309121713.GA26309@lakrids.cambridge.arm.com>
- <202003090914.F6720CFF13@keescook>
+Received: (qmail 1127 invoked from network); 9 Mar 2020 23:45:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=fmBdIxd2DBH3drat2RxXw5EvMETx4X35UelSAv/ALh8=;
+        b=TEQwnLgh8B3PsJKBlW2TWyJTnA9DDlkOy51XwT8ZvW45CdlsU0L88IRmKnKkRltzBm
+         kGOI6UBw/K7+paEi85+jlPPq3aiTme3vzGx0b9SuJDLCK0DjPl3v+LDgpJwsWFjalO1g
+         VMe5PrqnKGg8d5GsqbZHoRMhh7Niv0b3RLcDFnfMlagHZIzScsm1LLtypLf7E73dZsIz
+         Uu+rOdydlnVXzRtmsfDp6JQRHCADpg+3xOUK4fvE+ZcX7GO7hPaNAxIED0JiHv2Ndvjm
+         IgTFCLoYEf13ad9TCi4MxxRLj54zFArGjR3fZwoYAoFD1Y+5F1sl/nxCYT1zPUp2xbwH
+         keJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=fmBdIxd2DBH3drat2RxXw5EvMETx4X35UelSAv/ALh8=;
+        b=NyK+LxgvmCP3v1d+tXSYpZwbS15LmHkEdNdEE0oheCSqCsjzqwkhE+SCnAsuaQEVIh
+         L+bMWMnNq+hUqRHOlUfmQrCphBFDLB08daHbB/53eThlZKwJQO47GIlpYDjQjzTOQTn9
+         8vDtqQvwBBf4UlGqeLk72n10Snjk+Z9Q7ZRrn5m35eZ4Duy9MV9//wmpFyIA4Mbazqtm
+         8ei8NRcPTQx8SM0xykl4ZnW9TrUYxl9SGycrVw10ug3lAA5ePZ0i36wpuPGmefMSDKbj
+         yC2TwrZRcbkq9TC8Vo+sLgkiAgSuLQr/00aN9I9Y1ccCZy7UoL9n+U1bjNIisON2KMYo
+         9LZw==
+X-Gm-Message-State: ANhLgQ2DW8Fzw9CmAK9uSNH7xAZO8aZc57rZZ+jxPjXk+8PwvcYTbVKm
+	oOBwfsvzNzoQCbSKVDWJ6CwJ96ytaRfMTwOc+YAE5w==
+X-Google-Smtp-Source: ADFU+vu3ctqe66UiWnus61OOtoDCVSNb+kXOZJ2waD27t2a3YUthZNqfb4fWuw2uMljnqbH/s6/XwWZrmf2yGIRlebQ=
+X-Received: by 2002:a9d:7358:: with SMTP id l24mr14121308otk.228.1583797521077;
+ Mon, 09 Mar 2020 16:45:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <202003090914.F6720CFF13@keescook>
-User-Agent: Mutt/1.11.1+11 (2f07cb52) (2018-12-01)
+References: <20200224160215.4136-1-mic@digikod.net>
+In-Reply-To: <20200224160215.4136-1-mic@digikod.net>
+From: Jann Horn <jannh@google.com>
+Date: Tue, 10 Mar 2020 00:44:54 +0100
+Message-ID: <CAG48ez21bEn0wL1bbmTiiu8j9jP5iEWtHOwz4tURUJ+ki0ydYw@mail.gmail.com>
+Subject: Re: [RFC PATCH v14 00/10] Landlock LSM
+To: =?UTF-8?B?TWlja2HDq2wgU2FsYcO8bg==?= <mic@digikod.net>
+Cc: kernel list <linux-kernel@vger.kernel.org>, Al Viro <viro@zeniv.linux.org.uk>, 
+	Andy Lutomirski <luto@amacapital.net>, Arnd Bergmann <arnd@arndb.de>, 
+	Casey Schaufler <casey@schaufler-ca.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	James Morris <jmorris@namei.org>, Jann Horn <jann@thejh.net>, Jonathan Corbet <corbet@lwn.net>, 
+	Kees Cook <keescook@chromium.org>, Michael Kerrisk <mtk.manpages@gmail.com>, 
+	=?UTF-8?B?TWlja2HDq2wgU2FsYcO8bg==?= <mickael.salaun@ssi.gouv.fr>, 
+	"Serge E . Hallyn" <serge@hallyn.com>, Shuah Khan <shuah@kernel.org>, 
+	Vincent Dagonneau <vincent.dagonneau@ssi.gouv.fr>, 
+	Kernel Hardening <kernel-hardening@lists.openwall.com>, Linux API <linux-api@vger.kernel.org>, 
+	linux-arch <linux-arch@vger.kernel.org>, linux-doc@vger.kernel.org, 
+	linux-fsdevel <linux-fsdevel@vger.kernel.org>, 
+	"open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>, 
+	linux-security-module <linux-security-module@vger.kernel.org>, 
+	"the arch/x86 maintainers" <x86@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 09, 2020 at 09:15:10AM -0700, Kees Cook wrote:
-> On Mon, Mar 09, 2020 at 12:17:14PM +0000, Mark Rutland wrote:
-> > On Sat, Mar 07, 2020 at 04:39:26PM +0700, Phong Tran wrote:
-> > > follow the suggestion from
-> > > https://github.com/KSPP/linux/issues/35
-> > 
-> > That says:
-> > 
-> > | This should be implemented for all architectures
-> > 
-> > ... so surely this should be in generic code, rahter than being
-> > arm64-specific?
-> 
-> Not all architectures have implemented CONFIG_DEBUG_WX...
+On Mon, Feb 24, 2020 at 5:03 PM Micka=C3=ABl Sala=C3=BCn <mic@digikod.net> =
+wrote:
+> This new version of Landlock is a major revamp of the previous series
+> [1], hence the RFC tag.  The three main changes are the replacement of
+> eBPF with a dedicated safe management of access rules, the replacement
+> of the use of seccomp(2) with a dedicated syscall, and the management of
+> filesystem access-control (back from the v10).
+>
+> As discussed in [2], eBPF may be too powerful and dangerous to be put in
+> the hand of unprivileged and potentially malicious processes, especially
+> because of side-channel attacks against access-controls or other parts
+> of the kernel.
+>
+> Thanks to this new implementation (1540 SLOC), designed from the ground
+> to be used by unprivileged processes, this series enables a process to
+> sandbox itself without requiring CAP_SYS_ADMIN, but only the
+> no_new_privs constraint (like seccomp).  Not relying on eBPF also
+> enables to improve performances, especially for stacked security
+> policies thanks to mergeable rulesets.
+>
+> The compiled documentation is available here:
+> https://landlock.io/linux-doc/landlock-v14/security/landlock/index.html
+>
+> This series can be applied on top of v5.6-rc3.  This can be tested with
+> CONFIG_SECURITY_LANDLOCK and CONFIG_SAMPLE_LANDLOCK.  This patch series
+> can be found in a Git repository here:
+> https://github.com/landlock-lsm/linux/commits/landlock-v14
+> I would really appreciate constructive comments on the design and the cod=
+e.
 
-Sure; I assumed the generic code could be gated with:
+I've looked through the patchset, and I think that it would be
+possible to simplify it quite a bit. I have tried to do that (and
+compiled-tested it, but not actually tried running it); here's what I
+came up with:
 
-#ifdef CONFIG_DEBUG_WX
-	debug_checkwx()
-#endif
+https://github.com/thejh/linux/commits/landlock-mod
 
-... or something to that effect, so that the common code could handle
-all the sysfs bits and ensure that part was consistent.
+The three modified patches (patches 1, 2 and 5) are marked with
+"[MODIFIED]" in their title. Please take a look - what do you think?
+Feel free to integrate my changes into your patches if you think they
+make sense.
 
-Thanksm
-Mark.
-> 
-> -Kees
-> 
-> > 
-> > Thanks,
-> > Mark.
-> > 
-> > > 
-> > > Signed-off-by: Phong Tran <tranmanphong@gmail.com>
-> > > ---
-> > >  arch/arm64/Kconfig.debug        |  3 ++-
-> > >  arch/arm64/include/asm/ptdump.h |  2 ++
-> > >  arch/arm64/mm/dump.c            |  1 +
-> > >  arch/arm64/mm/ptdump_debugfs.c  | 18 ++++++++++++++++++
-> > >  4 files changed, 23 insertions(+), 1 deletion(-)
-> > > 
-> > > diff --git a/arch/arm64/Kconfig.debug b/arch/arm64/Kconfig.debug
-> > > index 1c906d932d6b..be552fa351e2 100644
-> > > --- a/arch/arm64/Kconfig.debug
-> > > +++ b/arch/arm64/Kconfig.debug
-> > > @@ -48,7 +48,8 @@ config DEBUG_WX
-> > >  	  of other unfixed kernel bugs easier.
-> > >  
-> > >  	  There is no runtime or memory usage effect of this option
-> > > -	  once the kernel has booted up - it's a one time check.
-> > > +	  once the kernel has booted up - it's a one time check and
-> > > +	  can be checked by echo "1" to "check_wx_pages" debugfs in runtime.
-> > >  
-> > >  	  If in doubt, say "Y".
-> > >  
-> > > diff --git a/arch/arm64/include/asm/ptdump.h b/arch/arm64/include/asm/ptdump.h
-> > > index 38187f74e089..b80d6b4fc508 100644
-> > > --- a/arch/arm64/include/asm/ptdump.h
-> > > +++ b/arch/arm64/include/asm/ptdump.h
-> > > @@ -24,9 +24,11 @@ struct ptdump_info {
-> > >  void ptdump_walk(struct seq_file *s, struct ptdump_info *info);
-> > >  #ifdef CONFIG_PTDUMP_DEBUGFS
-> > >  void ptdump_debugfs_register(struct ptdump_info *info, const char *name);
-> > > +int ptdump_check_wx_init(void);
-> > >  #else
-> > >  static inline void ptdump_debugfs_register(struct ptdump_info *info,
-> > >  					   const char *name) { }
-> > > +static inline int ptdump_check_wx_init(void) { return 0; }
-> > >  #endif
-> > >  void ptdump_check_wx(void);
-> > >  #endif /* CONFIG_PTDUMP_CORE */
-> > > diff --git a/arch/arm64/mm/dump.c b/arch/arm64/mm/dump.c
-> > > index 860c00ec8bd3..60c99a047763 100644
-> > > --- a/arch/arm64/mm/dump.c
-> > > +++ b/arch/arm64/mm/dump.c
-> > > @@ -378,6 +378,7 @@ static int ptdump_init(void)
-> > >  #endif
-> > >  	ptdump_initialize();
-> > >  	ptdump_debugfs_register(&kernel_ptdump_info, "kernel_page_tables");
-> > > +	ptdump_check_wx_init();
-> > >  	return 0;
-> > >  }
-> > >  device_initcall(ptdump_init);
-> > > diff --git a/arch/arm64/mm/ptdump_debugfs.c b/arch/arm64/mm/ptdump_debugfs.c
-> > > index 1f2eae3e988b..73cddc12c3c2 100644
-> > > --- a/arch/arm64/mm/ptdump_debugfs.c
-> > > +++ b/arch/arm64/mm/ptdump_debugfs.c
-> > > @@ -16,3 +16,21 @@ void ptdump_debugfs_register(struct ptdump_info *info, const char *name)
-> > >  {
-> > >  	debugfs_create_file(name, 0400, NULL, info, &ptdump_fops);
-> > >  }
-> > > +
-> > > +static int check_wx_debugfs_set(void *data, u64 val)
-> > > +{
-> > > +	if (val != 1ULL)
-> > > +		return -EINVAL;
-> > > +
-> > > +	ptdump_check_wx();
-> > > +
-> > > +	return 0;
-> > > +}
-> > > +
-> > > +DEFINE_SIMPLE_ATTRIBUTE(check_wx_fops, NULL, check_wx_debugfs_set, "%llu\n");
-> > > +
-> > > +int ptdump_check_wx_init(void)
-> > > +{
-> > > +	return debugfs_create_file("check_wx_pages", 0200, NULL,
-> > > +				   NULL, &check_wx_fops) ? 0 : -ENOMEM;
-> > > +}
-> > > -- 
-> > > 2.20.1
-> > > 
-> 
-> -- 
-> Kees Cook
+
+Apart from simplifying the code, I also found the following issues,
+which I have fixed in the modified patches:
+
+put_hierarchy() has to drop a reference on its parent. (However, this
+must not recurse, so we have to do it with a loop.)
+
+put_ruleset() is not in an RCU read-side critical section, so as soon
+as it calls kfree_rcu(), "freeme" might disappear; but "orig" is in
+"freeme", so when the loop tries to find the next element with
+rb_next(orig), that can be a UAF.
+rbtree_postorder_for_each_entry_safe() exists for dealing with such
+issues.
+
+AFAIK the calls to rb_erase() in clean_ruleset() is not safe if
+someone is concurrently accessing the rbtree as an RCU reader, because
+concurrent rotations can prevent a lookup from succeeding. The
+simplest fix is probably to just make any rbtree that has been
+installed on a process immutable, and give up on the cleaning -
+arguably the memory wastage that can cause is pretty limited. (By the
+way, as a future optimization, we might want to turn the rbtree into a
+hashtable when installing it?)
+
+The iput() in landlock_release_inode() looks unsafe - you need to
+guarantee that even if the deletion of a ruleset races with
+generic_shutdown_super(), every iput() for that superblock finishes
+before landlock_release_inodes() returns, even if the iput() is
+happening in the context of ruleset deletion. This is why
+fsnotify_unmount_inodes() has that wait_var_event() at the end.
+
+
+Aside from those things, there is also a major correctness issue where
+I'm not sure how to solve it properly:
+
+Let's say a process installs a filter on itself like this:
+
+struct landlock_attr_ruleset ruleset =3D { .handled_access_fs =3D
+ACCESS_FS_ROUGHLY_WRITE};
+int ruleset_fd =3D landlock(LANDLOCK_CMD_CREATE_RULESET,
+LANDLOCK_OPT_CREATE_RULESET, sizeof(ruleset), &ruleset);
+struct landlock_attr_path_beneath path_beneath =3D {
+  .ruleset_fd =3D ruleset_fd,
+  .allowed_access =3D ACCESS_FS_ROUGHLY_WRITE,
+  .parent_fd =3D open("/tmp/foobar", O_PATH),
+};
+landlock(LANDLOCK_CMD_ADD_RULE, LANDLOCK_OPT_ADD_RULE_PATH_BENEATH,
+sizeof(path_beneath), &path_beneath);
+prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
+struct landlock_attr_enforce attr_enforce =3D { .ruleset_fd =3D ruleset_fd =
+};
+landlock(LANDLOCK_CMD_ENFORCE_RULESET, LANDLOCK_OPT_ENFORCE_RULESET,
+sizeof(attr_enforce), &attr_enforce);
+
+At this point, the process is not supposed to be able to write to
+anything outside /tmp/foobar, right? But what happens if the process
+does the following next?
+
+struct landlock_attr_ruleset ruleset =3D { .handled_access_fs =3D
+ACCESS_FS_ROUGHLY_WRITE};
+int ruleset_fd =3D landlock(LANDLOCK_CMD_CREATE_RULESET,
+LANDLOCK_OPT_CREATE_RULESET, sizeof(ruleset), &ruleset);
+struct landlock_attr_path_beneath path_beneath =3D {
+  .ruleset_fd =3D ruleset_fd,
+  .allowed_access =3D ACCESS_FS_ROUGHLY_WRITE,
+  .parent_fd =3D open("/", O_PATH),
+};
+landlock(LANDLOCK_CMD_ADD_RULE, LANDLOCK_OPT_ADD_RULE_PATH_BENEATH,
+sizeof(path_beneath), &path_beneath);
+prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
+struct landlock_attr_enforce attr_enforce =3D { .ruleset_fd =3D ruleset_fd =
+};
+landlock(LANDLOCK_CMD_ENFORCE_RULESET, LANDLOCK_OPT_ENFORCE_RULESET,
+sizeof(attr_enforce), &attr_enforce);
+
+As far as I can tell from looking at the source, after this, you will
+have write access to the entire filesystem again. I think the idea is
+that LANDLOCK_CMD_ENFORCE_RULESET should only let you drop privileges,
+not increase them, right?
+
+I think the easy way to fix this would be to add a bitmask to each
+rule that says from which ruleset it originally comes, and then let
+check_access_path() collect these bitmasks from each rule with OR, and
+check at the end whether the resulting bitmask is full - if not, at
+least one of the rulesets did not permit the access, and it should be
+denied.
+
+But maybe it would make more sense to change how the API works
+instead, and get rid of the concept of "merging" two rulesets
+together? Instead, we could make the API work like this:
+
+ - LANDLOCK_CMD_CREATE_RULESET gives you a file descriptor whose
+->private_data contains a pointer to the old ruleset of the process,
+as well as a pointer to a new empty ruleset.
+ - LANDLOCK_CMD_ADD_RULE fails if the specified rule would not be
+permitted by the old ruleset, then adds the rule to the new ruleset
+ - LANDLOCK_CMD_ENFORCE_RULESET fails if the old ruleset pointer in
+->private_data doesn't match the current ruleset of the process, then
+replaces the old ruleset with the new ruleset.
+
+With this, the new ruleset is guaranteed to be a subset of the old
+ruleset because each of the new ruleset's rules is permitted by the
+old ruleset. (Unless the directory hierarchy rotates, but in that case
+the inaccuracy isn't much worse than what would've been possible
+through RCU path walk anyway AFAIK.)
+
+What do you think?
