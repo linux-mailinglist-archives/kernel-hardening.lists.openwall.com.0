@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18173-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18169-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 747261914D1
-	for <lists+kernel-hardening@lfdr.de>; Tue, 24 Mar 2020 16:40:49 +0100 (CET)
-Received: (qmail 29869 invoked by uid 550); 24 Mar 2020 15:37:36 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 800521914C9
+	for <lists+kernel-hardening@lfdr.de>; Tue, 24 Mar 2020 16:39:46 +0100 (CET)
+Received: (qmail 28075 invoked by uid 550); 24 Mar 2020 15:37:27 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,14 +13,14 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 29752 invoked from network); 24 Mar 2020 15:37:34 -0000
+Received: (qmail 27953 invoked from network); 24 Mar 2020 15:37:26 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1585064243;
-	bh=IuBp/xaFr7ZgC7YM6R2iieq975HLH8RBRdBRFZApg8c=;
+	s=default; t=1585064245;
+	bh=cYOrYm3TU8Oaswi/PS0pKnS4rYXUoN3KS4S87l1Oy2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qs5aP9nlEw42QteOwo5uHGgWaCB9jXQ+POKR/d5+1ybu9PSL4TbUOBhTqDTALLGm+
-	 zk2IaxLeINs+m4fwCpIxAI0jpcdDX9udzRb/aAr3L3Owlzm2ln11r8qHBGIkMB0RjB
-	 HOLvPVeAOIdvDyDcFqSQpVTf7Nxa4Gk2tMAUsXHI=
+	b=k1XBzan/+CO0dNlXvcPznHNdfatVBYZOF2k+EJWIN6NK17dCPQN8YBP/j2MLYpnw9
+	 36DjGr7A4vTTVusW6h+pJZOKRPw+Nri81DI5ucdV4f80MStPpEW1IHqvNk9TR/0+ng
+	 JsaIpAaRWrlZQz5WqbDP93q07FZrFb6SFT1a8zmw=
 From: Will Deacon <will@kernel.org>
 To: linux-kernel@vger.kernel.org
 Cc: Will Deacon <will@kernel.org>,
@@ -34,143 +34,166 @@ Cc: Will Deacon <will@kernel.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	kernel-team@android.com,
 	kernel-hardening@lists.openwall.com
-Subject: [RFC PATCH 13/21] list: Add integrity checking to hlist_nulls implementation
-Date: Tue, 24 Mar 2020 15:36:35 +0000
-Message-Id: <20200324153643.15527-14-will@kernel.org>
+Subject: [RFC PATCH 14/21] plist: Use CHECK_DATA_CORRUPTION instead of explicit {BUG,WARN}_ON()
+Date: Tue, 24 Mar 2020 15:36:36 +0000
+Message-Id: <20200324153643.15527-15-will@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200324153643.15527-1-will@kernel.org>
 References: <20200324153643.15527-1-will@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Extend the 'hlist_nulls' implementation so that it can optionally
-perform integrity checking in a similar fashion to the standard 'list'
-code when CONFIG_CHECK_INTEGRITY_LIST=y.
+CHECK_DATA_CORRUPTION() allows detected data corruption to result
+consistently in either a BUG() or a WARN() depending on
+CONFIG_BUG_ON_DATA_CORRUPTION.
 
-On architectures without a trap value for ILLEGAL_POINTER_VALUE (i.e.
-all 32-bit architectures), explicit pointer/poison checks can help to
-mitigate UAF vulnerabilities such as the one exploited by "pingpongroot"
-(CVE-2015-3636).
+Use CHECK_DATA_CORRUPTION() to report plist integrity checking failures,
+rather than explicit use of BUG_ON() and WARN_ON().
 
 Cc: Kees Cook <keescook@chromium.org>
 Cc: Paul E. McKenney <paulmck@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
 Signed-off-by: Will Deacon <will@kernel.org>
 ---
- include/linux/list_nulls.h | 23 +++++++++++++++++++
- lib/list_debug.c           | 47 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 70 insertions(+)
+ lib/plist.c | 63 ++++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 40 insertions(+), 23 deletions(-)
 
-diff --git a/include/linux/list_nulls.h b/include/linux/list_nulls.h
-index 48f33ae16381..379e097e92b0 100644
---- a/include/linux/list_nulls.h
-+++ b/include/linux/list_nulls.h
-@@ -35,6 +35,23 @@ struct hlist_nulls_node {
- 	({ typeof(ptr) ____ptr = (ptr); \
- 	   !is_a_nulls(____ptr) ? hlist_nulls_entry(____ptr, type, member) : NULL; \
- 	})
-+
-+#ifdef CONFIG_CHECK_INTEGRITY_LIST
-+extern bool __hlist_nulls_add_head_valid(struct hlist_nulls_node *new,
-+					 struct hlist_nulls_head *head);
-+extern bool __hlist_nulls_del_valid(struct hlist_nulls_node *node);
-+#else
-+static inline bool __hlist_nulls_add_head_valid(struct hlist_nulls_node *new,
-+						struct hlist_nulls_head *head)
-+{
-+	return true;
-+}
-+static inline bool __hlist_nulls_del_valid(struct hlist_nulls_node *node)
-+{
-+	return true;
-+}
-+#endif
-+
- /**
-  * ptr_is_a_nulls - Test if a ptr is a nulls
-  * @ptr: ptr to be tested
-@@ -79,6 +96,9 @@ static inline void hlist_nulls_add_head(struct hlist_nulls_node *n,
+diff --git a/lib/plist.c b/lib/plist.c
+index c06e98e78259..eb127eaab235 100644
+--- a/lib/plist.c
++++ b/lib/plist.c
+@@ -29,39 +29,46 @@
+ 
+ static struct plist_head test_head;
+ 
+-static void plist_check_prev_next(struct list_head *t, struct list_head *p,
+-				  struct list_head *n)
++static bool plist_prev_next_invalid(struct list_head *t, struct list_head *p,
++				    struct list_head *n)
  {
- 	struct hlist_nulls_node *first = h->first;
- 
-+	if (!__hlist_nulls_add_head_valid(n, h))
-+		return;
-+
- 	n->next = first;
- 	n->pprev = &h->first;
- 	h->first = n;
-@@ -91,6 +111,9 @@ static inline void __hlist_nulls_del(struct hlist_nulls_node *n)
- 	struct hlist_nulls_node *next = n->next;
- 	struct hlist_nulls_node **pprev = n->pprev;
- 
-+	if (!__hlist_nulls_del_valid(n))
-+		return;
-+
- 	WRITE_ONCE(*pprev, next);
- 	if (!is_a_nulls(next))
- 		WRITE_ONCE(next->pprev, pprev);
-diff --git a/lib/list_debug.c b/lib/list_debug.c
-index 03234ebd18c9..b3560de4accc 100644
---- a/lib/list_debug.c
-+++ b/lib/list_debug.c
-@@ -10,6 +10,7 @@
- #include <linux/bug.h>
- #include <linux/kernel.h>
- #include <linux/rculist.h>
-+#include <linux/rculist_nulls.h>
- 
- /*
-  * Check that the data structures for the list manipulations are reasonably
-@@ -139,3 +140,49 @@ bool __hlist_del_valid(struct hlist_node *node)
- 	return true;
+-	WARN(n->prev != p || p->next != n,
+-			"top: %p, n: %p, p: %p\n"
+-			"prev: %p, n: %p, p: %p\n"
+-			"next: %p, n: %p, p: %p\n",
++	return CHECK_DATA_CORRUPTION(n->prev != p || p->next != n,
++			"plist corruption:\n"
++			"\ttop: %p, n: %p, p: %p\n"
++			"\tprev: %p, n: %p, p: %p\n"
++			"\tnext: %p, n: %p, p: %p\n",
+ 			 t, t->next, t->prev,
+ 			p, p->next, p->prev,
+ 			n, n->next, n->prev);
  }
- EXPORT_SYMBOL(__hlist_del_valid);
+ 
+-static void plist_check_list(struct list_head *top)
++static bool plist_list_invalid(struct list_head *top)
+ {
+ 	struct list_head *prev = top, *next = top->next;
++	bool corruption;
+ 
+-	plist_check_prev_next(top, prev, next);
++	corruption = plist_prev_next_invalid(top, prev, next);
+ 	while (next != top) {
+ 		prev = next;
+ 		next = prev->next;
+-		plist_check_prev_next(top, prev, next);
++		corruption |= plist_prev_next_invalid(top, prev, next);
+ 	}
 +
-+bool __hlist_nulls_add_head_valid(struct hlist_nulls_node *new,
-+				  struct hlist_nulls_head *head)
-+{
-+	struct hlist_nulls_node *first = head->first;
++	return corruption;
+ }
+ 
+-static void plist_check_head(struct plist_head *head)
++static bool plist_head_valid(struct plist_head *head)
+ {
++	bool corruption = false;
 +
-+	if (CHECK_DATA_CORRUPTION(!is_a_nulls(first) &&
-+				  first->pprev != &head->first,
-+			"hlist_nulls_add_head corruption: first->pprev should be &head->first (%px), but was %px (first=%px)",
-+			&head->first, first->pprev, first) ||
-+	    CHECK_DATA_CORRUPTION(new == first,
-+			"hlist_nulls_add_head double add: new (%px) == first (%px)",
-+			new, first))
-+		return false;
-+
-+	return true;
-+}
-+EXPORT_SYMBOL(__hlist_nulls_add_head_valid);
-+
-+bool __hlist_nulls_del_valid(struct hlist_nulls_node *node)
-+{
-+	struct hlist_nulls_node *prev, *next = node->next;
-+
-+	if (CHECK_DATA_CORRUPTION(next == LIST_POISON1,
-+			"hlist_nulls_del corruption: %px->next is LIST_POISON1 (%px)\n",
-+			node, LIST_POISON1) ||
-+	    CHECK_DATA_CORRUPTION(node->pprev == LIST_POISON2,
-+			"hlist_nulls_del corruption: %px->pprev is LIST_POISON2 (%px)\n",
-+			node, LIST_POISON2))
-+		return false;
-+
-+	BUILD_BUG_ON(offsetof(struct hlist_nulls_node, next) !=
-+		     offsetof(struct hlist_nulls_head, first));
-+	prev = container_of(node->pprev, struct hlist_nulls_node, next);
-+	if (CHECK_DATA_CORRUPTION(prev->next != node,
-+			"hlist_nulls_del corruption: prev->next should be %px, but was %px\n",
-+			node, prev->next) ||
-+	    CHECK_DATA_CORRUPTION(!is_a_nulls(next) &&
-+				  next->pprev != &node->next,
-+			"hlist_nulls_del corruption: next->pprev should be %px, but was %px\n",
-+			&node->next, next->pprev))
-+		return false;
-+
-+	return true;
-+}
-+EXPORT_SYMBOL(__hlist_nulls_del_valid);
+ 	if (!plist_head_empty(head))
+-		plist_check_list(&plist_first(head)->prio_list);
+-	plist_check_list(&head->node_list);
++		corruption |= plist_list_invalid(&plist_first(head)->prio_list);
++	corruption |= plist_list_invalid(&head->node_list);
++	return !corruption;
+ }
+ 
+ #else
+-# define plist_check_head(h)	do { } while (0)
++# define plist_head_valid(h)	(true)
+ #endif
+ 
+ /**
+@@ -75,9 +82,12 @@ void plist_add(struct plist_node *node, struct plist_head *head)
+ 	struct plist_node *first, *iter, *prev = NULL;
+ 	struct list_head *node_next = &head->node_list;
+ 
+-	plist_check_head(head);
+-	WARN_ON(!plist_node_empty(node));
+-	WARN_ON(!list_empty(&node->prio_list));
++	if (!plist_head_valid(head) ||
++	    CHECK_DATA_CORRUPTION(!plist_node_empty(node),
++			"plist_add corruption. node list is not empty.\n") ||
++	    CHECK_DATA_CORRUPTION(!list_empty(&node->prio_list),
++			"plist_add corruption. node prio list is not empty.\n"))
++		return;
+ 
+ 	if (plist_head_empty(head))
+ 		goto ins_node;
+@@ -100,7 +110,8 @@ void plist_add(struct plist_node *node, struct plist_head *head)
+ ins_node:
+ 	list_add_tail(&node->node_list, node_next);
+ 
+-	plist_check_head(head);
++	if (!plist_head_valid(head))
++		return;
+ }
+ 
+ /**
+@@ -111,7 +122,8 @@ void plist_add(struct plist_node *node, struct plist_head *head)
+  */
+ void plist_del(struct plist_node *node, struct plist_head *head)
+ {
+-	plist_check_head(head);
++	if (!plist_head_valid(head))
++		return;
+ 
+ 	if (!list_empty(&node->prio_list)) {
+ 		if (node->node_list.next != &head->node_list) {
+@@ -129,7 +141,8 @@ void plist_del(struct plist_node *node, struct plist_head *head)
+ 
+ 	list_del_init(&node->node_list);
+ 
+-	plist_check_head(head);
++	if (!plist_head_valid(head))
++		return;
+ }
+ 
+ /**
+@@ -147,9 +160,12 @@ void plist_requeue(struct plist_node *node, struct plist_head *head)
+ 	struct plist_node *iter;
+ 	struct list_head *node_next = &head->node_list;
+ 
+-	plist_check_head(head);
+-	BUG_ON(plist_head_empty(head));
+-	BUG_ON(plist_node_empty(node));
++	if (!plist_head_valid(head) ||
++	    CHECK_DATA_CORRUPTION(plist_head_empty(head),
++			"plist_requeue corruption. head list is empty.\n") ||
++	    CHECK_DATA_CORRUPTION(plist_node_empty(node),
++			"plist_requeue corruption. node list is empty.\n"))
++		return;
+ 
+ 	if (node == plist_last(head))
+ 		return;
+@@ -169,7 +185,8 @@ void plist_requeue(struct plist_node *node, struct plist_head *head)
+ 	}
+ 	list_add_tail(&node->node_list, node_next);
+ 
+-	plist_check_head(head);
++	if (!plist_head_valid(head))
++		return;
+ }
+ 
+ #ifdef CONFIG_CHECK_INTEGRITY_PLIST
 -- 
 2.20.1
 
