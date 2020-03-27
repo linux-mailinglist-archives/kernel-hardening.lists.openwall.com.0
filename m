@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18249-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18254-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id CBF1119518A
-	for <lists+kernel-hardening@lfdr.de>; Fri, 27 Mar 2020 07:48:57 +0100 (CET)
-Received: (qmail 26256 invoked by uid 550); 27 Mar 2020 06:48:39 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 6D0FA195191
+	for <lists+kernel-hardening@lfdr.de>; Fri, 27 Mar 2020 07:49:43 +0100 (CET)
+Received: (qmail 27681 invoked by uid 550); 27 Mar 2020 06:48:45 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,37 +13,37 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 26156 invoked from network); 27 Mar 2020 06:48:37 -0000
+Received: (qmail 26353 invoked from network); 27 Mar 2020 06:48:41 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mgxC9d4qXy1U6S4xZZ93iQn9OATjbx+7aDsjHxYmoto=;
-        b=Tm4FMyfyM+cogSruDE6HvsM+6ZwmCpC70VZfPJPeA0p+kq4CJe5z5I2DHZ9LX+tWXU
-         +NQzb1bYQeo9YhPAv4Z4oabDJ4d38VX5KW8GF7YKk2UeP4oHUqCJe3joDSiC6v18w10H
-         Kq7G4OI4gxFxFK+ZrGvyhlubqD/l0vQZ9EUtM=
+        bh=9LO2LzsxD2r9Xv+srqALdfcgB8lxU6x5iZM1oUedN0w=;
+        b=JROchnuoQhF2R/Mx5z01GK7uJjfXpDKE0LvGoYpHwUfQ1LM+YDoX9iNWypkcK6H8ga
+         Y52O13oWS8BcrW5QYSCbprsyCVbOVMXojnxUDi6FH0Bi6Y3Zq7JyhA+8mCT1Z1cEBymy
+         PJxdNR/1VyMhsLDwzYotBhML4MtN9DLzspX50=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mgxC9d4qXy1U6S4xZZ93iQn9OATjbx+7aDsjHxYmoto=;
-        b=hlsPkurHeTAYblshAGUfNV/7rVSdfDn5Qadlya98NapHOqgTIL8F+VVloFL2bR4l+O
-         TovNNaPdM/XR8KwhSYG/sbhRhPBWjkgUUh2oval+4m7gFbf2V5r3RrnGTZs+OG3etQxz
-         UmuqdqzZCXl66913zHZzIImbC++EELFWnwdDf1E8gfzoGwF0To18glGFYNMqdziV7OAm
-         6xu1BZ+vwhhpnmJDoYar+yooOOti8PlLpKbrVdSIR1/0xIevctDhlaEBYuNRCV/eHzob
-         G2F+eTnuvw8nyt8fG8SaDY9LRaIf/21oCq8a1VDicg6BKWosDyT5ltxWSNdBus3qnXSl
-         WApg==
-X-Gm-Message-State: ANhLgQ09LRXD9K1BGQpeP+wzORqvYXTXXi63TE3kf9/inmg3iYq9qisy
-	4q/4dFVRWmALPXYKofIGTr6+nA==
-X-Google-Smtp-Source: ADFU+vvUCTEaE7rTCmfqpNAlHIP1Nzssf0r27kJDIMaQrHcgZSr12IA4FWWsjvLo1vxI4YLA34ar7w==
-X-Received: by 2002:a17:90a:33c1:: with SMTP id n59mr4125261pjb.4.1585291705258;
-        Thu, 26 Mar 2020 23:48:25 -0700 (PDT)
+        bh=9LO2LzsxD2r9Xv+srqALdfcgB8lxU6x5iZM1oUedN0w=;
+        b=aCtmCZzLZQYKlCFnMFSFuqRu57YyvyYrcwZcZJpCGqfm1l2DJ1P5f78uUyyh8au4qz
+         6vgqqfTH7/ONerKfd+MczFP5f3pQE8G68/DfHvuUU+I4yNgIPegrsuO7QS75LCnv0o1z
+         pgf/BTy7annDgKZb5jkyp32DLmJmkG2MUKhu83ED/B32kYMfG48wCJxWR2xMGpB7NV7i
+         AffO0M++mA8En1JLc+heY3B5jShTXTtqJCA18J9hr4OAsn3zDQwtoppZF9ljPGsHLolR
+         a7/+kvpkv3pyeG1D0EcpaQKRxLe6uzgEpjen1v/bZsEUdLwT5+I2fCWQmvpjq2p1De6A
+         Hghw==
+X-Gm-Message-State: ANhLgQ1DzhI+eA2rcMKihjfL29uIA2GmaKgdtsh3BXUP8uSmIqKuXwhF
+	7JI8K4PM3IPK5E6Bpor+O7tacA==
+X-Google-Smtp-Source: ADFU+vuA1LFfImtyYtbDmLUlKIzpXJoC5cD77qNyfHDvBSDw6ezHZbSgFf8tN7H3qURKXYRhUoj5iA==
+X-Received: by 2002:a62:2c8c:: with SMTP id s134mr13352706pfs.253.1585291709337;
+        Thu, 26 Mar 2020 23:48:29 -0700 (PDT)
 From: Kees Cook <keescook@chromium.org>
 To: Borislav Petkov <bp@alien8.de>
 Cc: Kees Cook <keescook@chromium.org>,
+	Hector Marco-Gisbert <hecmargi@upv.es>,
 	Jason Gunthorpe <jgg@mellanox.com>,
 	Catalin Marinas <catalin.marinas@arm.com>,
-	Hector Marco-Gisbert <hecmargi@upv.es>,
 	Jason Gunthorpe <jgg@ziepe.ca>,
 	Russell King <linux@armlinux.org.uk>,
 	Will Deacon <will@kernel.org>,
@@ -52,9 +52,9 @@ Cc: Kees Cook <keescook@chromium.org>,
 	linux-arm-kernel@lists.infradead.org,
 	kernel-hardening@lists.openwall.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v5 4/6] arm32/64, elf: Add tables to document READ_IMPLIES_EXEC
-Date: Thu, 26 Mar 2020 23:48:18 -0700
-Message-Id: <20200327064820.12602-5-keescook@chromium.org>
+Subject: [PATCH v5 5/6] arm32/64, elf: Split READ_IMPLIES_EXEC from executable PT_GNU_STACK
+Date: Thu, 26 Mar 2020 23:48:19 -0700
+Message-Id: <20200327064820.12602-6-keescook@chromium.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200327064820.12602-1-keescook@chromium.org>
 References: <20200327064820.12602-1-keescook@chromium.org>
@@ -62,83 +62,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Add tables to document the current behavior of READ_IMPLIES_EXEC in
-preparation for changing the behavior for both arm64 and arm.
+The READ_IMPLIES_EXEC work-around was designed for old toolchains that
+lacked the ELF PT_GNU_STACK marking under the assumption that toolchains
+that couldn't specify executable permission flags for the stack may not
+know how to do it correctly for any memory region.
 
+This logic is sensible for having ancient binaries coexist in a system
+with possibly NX memory, but was implemented in a way that equated having
+a PT_GNU_STACK marked executable as being as "broken" as lacking the
+PT_GNU_STACK marking entirely. Things like unmarked assembly and stack
+trampolines may cause PT_GNU_STACK to need an executable bit, but they
+do not imply all mappings must be executable.
+
+This confusion has led to situations where modern programs with explicitly
+marked executable stack are forced into the READ_IMPLIES_EXEC state when
+no such thing is needed. (And leads to unexpected failures when mmap()ing
+regions of device driver memory that wish to disallow VM_EXEC[1].)
+
+In looking for other reasons for the READ_IMPLIES_EXEC behavior, Jann
+Horn noted that glibc thread stacks have always been marked RWX (until
+2003 when they started tracking the PT_GNU_STACK flag instead[2]). And
+musl doesn't support executable stacks at all[3]. As such, no breakage
+for multithreaded applications is expected from this change.
+
+This changes arm32 and arm64 compat together, to keep behavior the same.
+
+[1] https://lkml.kernel.org/r/20190418055759.GA3155@mellanox.com
+[2] https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=54ee14b3882
+[3] https://lkml.kernel.org/r/20190423192534.GN23599@brightrain.aerifal.cx
+
+Suggested-by: Hector Marco-Gisbert <hecmargi@upv.es>
 Signed-off-by: Kees Cook <keescook@chromium.org>
 Reviewed-by: Jason Gunthorpe <jgg@mellanox.com>
 Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
 ---
- arch/arm/kernel/elf.c        | 24 +++++++++++++++++++++---
- arch/arm64/include/asm/elf.h | 20 ++++++++++++++++++++
- 2 files changed, 41 insertions(+), 3 deletions(-)
+ arch/arm/kernel/elf.c        | 5 +++--
+ arch/arm64/include/asm/elf.h | 5 +++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/arch/arm/kernel/elf.c b/arch/arm/kernel/elf.c
-index 182422981386..5ccd4aced6cc 100644
+index 5ccd4aced6cc..254ab7138c85 100644
 --- a/arch/arm/kernel/elf.c
 +++ b/arch/arm/kernel/elf.c
-@@ -78,9 +78,27 @@ void elf_set_personality(const struct elf32_hdr *x)
- EXPORT_SYMBOL(elf_set_personality);
- 
- /*
-- * Set READ_IMPLIES_EXEC if:
-- *  - the binary requires an executable stack
-- *  - we're running on a CPU which doesn't support NX.
-+ * An executable for which elf_read_implies_exec() returns TRUE will
-+ * have the READ_IMPLIES_EXEC personality flag set automatically.
-+ *
-+ * The decision process for determining the results are:
-+ *
-+ *                 CPU: | lacks NX*  | has NX     |
-+ * ELF:                 |            |            |
-+ * ---------------------|------------|------------|
-+ * missing PT_GNU_STACK | exec-all   | exec-all   |
-+ * PT_GNU_STACK == RWX  | exec-all   | exec-all   |
-+ * PT_GNU_STACK == RW   | exec-all   | exec-none  |
-+ *
-+ *  exec-all  : all PROT_READ user mappings are executable, except when
-+ *              backed by files on a noexec-filesystem.
-+ *  exec-none : only PROT_EXEC user mappings are executable.
-+ *
-+ *  *this column has no architectural effect: NX markings are ignored by
-+ *   hardware, but may have behavioral effects when "wants X" collides with
-+ *   "cannot be X" constraints in memory permission flags, as in
-+ *   https://lkml.kernel.org/r/20190418055759.GA3155@mellanox.com
-+ *
+@@ -87,12 +87,13 @@ EXPORT_SYMBOL(elf_set_personality);
+  * ELF:                 |            |            |
+  * ---------------------|------------|------------|
+  * missing PT_GNU_STACK | exec-all   | exec-all   |
+- * PT_GNU_STACK == RWX  | exec-all   | exec-all   |
++ * PT_GNU_STACK == RWX  | exec-all   | exec-stack |
+  * PT_GNU_STACK == RW   | exec-all   | exec-none  |
+  *
+  *  exec-all  : all PROT_READ user mappings are executable, except when
+  *              backed by files on a noexec-filesystem.
+  *  exec-none : only PROT_EXEC user mappings are executable.
++ *  exec-stack: only the stack and PROT_EXEC user mappings are executable.
+  *
+  *  *this column has no architectural effect: NX markings are ignored by
+  *   hardware, but may have behavioral effects when "wants X" collides with
+@@ -102,7 +103,7 @@ EXPORT_SYMBOL(elf_set_personality);
   */
  int arm_elf_read_implies_exec(int executable_stack)
  {
+-	if (executable_stack != EXSTACK_DISABLE_X)
++	if (executable_stack == EXSTACK_DEFAULT)
+ 		return 1;
+ 	if (cpu_architecture() < CPU_ARCH_ARMv6)
+ 		return 1;
 diff --git a/arch/arm64/include/asm/elf.h b/arch/arm64/include/asm/elf.h
-index b618017205a3..986ecf41fc0f 100644
+index 986ecf41fc0f..0074e9fd6431 100644
 --- a/arch/arm64/include/asm/elf.h
 +++ b/arch/arm64/include/asm/elf.h
-@@ -96,6 +96,26 @@
+@@ -106,17 +106,18 @@
+  * ELF:                 |            |            |
+  * ---------------------|------------|------------|
+  * missing PT_GNU_STACK | exec-all   | exec-all   |
+- * PT_GNU_STACK == RWX  | exec-all   | exec-all   |
++ * PT_GNU_STACK == RWX  | exec-stack | exec-stack |
+  * PT_GNU_STACK == RW   | exec-none  | exec-none  |
+  *
+  *  exec-all  : all PROT_READ user mappings are executable, except when
+  *              backed by files on a noexec-filesystem.
+  *  exec-none : only PROT_EXEC user mappings are executable.
++ *  exec-stack: only the stack and PROT_EXEC user mappings are executable.
+  *
+  *  *all arm64 CPUs support NX, so there is no "lacks NX" column.
+  *
   */
- #define elf_check_arch(x)		((x)->e_machine == EM_AARCH64)
- 
-+/*
-+ * An executable for which elf_read_implies_exec() returns TRUE will
-+ * have the READ_IMPLIES_EXEC personality flag set automatically.
-+ *
-+ * The decision process for determining the results are:
-+ *
-+ *                CPU*: | arm32      | arm64      |
-+ * ELF:                 |            |            |
-+ * ---------------------|------------|------------|
-+ * missing PT_GNU_STACK | exec-all   | exec-all   |
-+ * PT_GNU_STACK == RWX  | exec-all   | exec-all   |
-+ * PT_GNU_STACK == RW   | exec-none  | exec-none  |
-+ *
-+ *  exec-all  : all PROT_READ user mappings are executable, except when
-+ *              backed by files on a noexec-filesystem.
-+ *  exec-none : only PROT_EXEC user mappings are executable.
-+ *
-+ *  *all arm64 CPUs support NX, so there is no "lacks NX" column.
-+ *
-+ */
- #define elf_read_implies_exec(ex,stk)	(stk != EXSTACK_DISABLE_X)
+-#define elf_read_implies_exec(ex,stk)	(stk != EXSTACK_DISABLE_X)
++#define elf_read_implies_exec(ex, stk)	(stk == EXSTACK_DEFAULT)
  
  #define CORE_DUMP_USE_REGSET
+ #define ELF_EXEC_PAGESIZE	PAGE_SIZE
 -- 
 2.20.1
 
