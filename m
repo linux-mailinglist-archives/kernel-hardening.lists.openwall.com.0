@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18276-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18277-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 517EC1969F2
-	for <lists+kernel-hardening@lfdr.de>; Sun, 29 Mar 2020 00:01:06 +0100 (CET)
-Received: (qmail 7887 invoked by uid 550); 28 Mar 2020 23:01:01 -0000
+	by mail.lfdr.de (Postfix) with SMTP id F1AA8196ACC
+	for <lists+kernel-hardening@lfdr.de>; Sun, 29 Mar 2020 05:17:25 +0200 (CEST)
+Received: (qmail 20084 invoked by uid 550); 29 Mar 2020 03:17:20 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,10 +13,34 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 7867 invoked from network); 28 Mar 2020 23:01:01 -0000
-Date: Sun, 29 Mar 2020 00:00:46 +0100
-From: Alexey Gladkov <gladkov.alexey@gmail.com>
-To: Kees Cook <keescook@chromium.org>
+Received: (qmail 20064 invoked from network); 29 Mar 2020 03:17:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=4II2bc92WqcI1jJHIbHJBRCr9XHybTRKP72pOZ2vBn8=;
+        b=m9oqaykcy7+GRfPUA0qekrpwJwNqG0S1mlKb9K3dSMoiUplMP4jDXKYYiUxNSn1n+v
+         4oyL3E8RvMsSp58YQD7MyGe1pOXmUDh3zVX3F14wt1es3/kyO62xLP1vqLHROC2/iG5A
+         NA5fTeT/j2lxo6j6d+AbeShqGk6CPpwln0Emo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=4II2bc92WqcI1jJHIbHJBRCr9XHybTRKP72pOZ2vBn8=;
+        b=BuafzDDE5gkRT5a+Hv5NR9vdYugHGQpFc60JvKg/E9orM1vM7rDuAKDWciHCMRdpqm
+         YTGDjYtSrEPxHLAEZxzxZeyt97xHNX5a9o5I49dX1h28m3auF4BcnpQsdELSuoiGQV06
+         WdS451xOzzw2EyGkDwP6qM0tZR/d3xbjb03O6731W4YqULKWr7ZZnAkNyhkvdItFArxr
+         WuKY0Jz6xaIHSs+94HYKd9zptujWc9Opm3kSp7R2/he5MyNrrbH/HhlF1ZPqu1gWM18d
+         1AFc3j5EM13lKlvyRCyV21gcXuLF47ykuSWvkygjc6Yj6+Qx5XcmcHlUwVMAJIQwZ+xI
+         Xx7Q==
+X-Gm-Message-State: ANhLgQ2GAdD8lQLIuNLlwiIj9n0QbhvaRp5fIWHRjhtojTlzxix1V026
+	Sw3hFx1UqJ/faZzO9jdIdI4uNw==
+X-Google-Smtp-Source: ADFU+vtseLSYN5So1Oobu2UiukVUxTzuZN3FTYmpLjJuga7kllNUrhEyIWnwcYJIyJMu6YW0JBI/4Q==
+X-Received: by 2002:a17:90a:7105:: with SMTP id h5mr8294662pjk.54.1585451827508;
+        Sat, 28 Mar 2020 20:17:07 -0700 (PDT)
+Date: Sat, 28 Mar 2020 20:17:05 -0700
+From: Kees Cook <keescook@chromium.org>
+To: Alexey Gladkov <gladkov.alexey@gmail.com>
 Cc: LKML <linux-kernel@vger.kernel.org>,
 	Kernel Hardening <kernel-hardening@lists.openwall.com>,
 	Linux API <linux-api@vger.kernel.org>,
@@ -40,36 +64,40 @@ Cc: LKML <linux-kernel@vger.kernel.org>,
 	Oleg Nesterov <oleg@redhat.com>
 Subject: Re: [PATCH v10 7/9] proc: move hidepid values to uapi as they are
  user interface to mount
-Message-ID: <20200328230046.v3qbffmbtl4sd7tg@comp-core-i7-2640m-0182e6>
+Message-ID: <202003282016.19E071712@keescook>
 References: <20200327172331.418878-1-gladkov.alexey@gmail.com>
  <20200327172331.418878-8-gladkov.alexey@gmail.com>
  <202003281340.B73225DCC9@keescook>
  <20200328212547.xxiqxqhxzwp6w5n5@comp-core-i7-2640m-0182e6>
  <202003281453.CED94974@keescook>
+ <20200328230046.v3qbffmbtl4sd7tg@comp-core-i7-2640m-0182e6>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <202003281453.CED94974@keescook>
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.6.1 (raptor.unsafe.ru [5.9.43.93]); Sat, 28 Mar 2020 23:00:49 +0000 (UTC)
+In-Reply-To: <20200328230046.v3qbffmbtl4sd7tg@comp-core-i7-2640m-0182e6>
 
-On Sat, Mar 28, 2020 at 02:53:49PM -0700, Kees Cook wrote:
-> > > > +/* definitions for hide_pid field */
-> > > > +enum {
-> > > > +	HIDEPID_OFF            = 0,
-> > > > +	HIDEPID_NO_ACCESS      = 1,
-> > > > +	HIDEPID_INVISIBLE      = 2,
-> > > > +	HIDEPID_NOT_PTRACEABLE = 4,
-> > > > +};
-> > > Should the numeric values still be UAPI if there is string parsing now?
+On Sun, Mar 29, 2020 at 12:00:46AM +0100, Alexey Gladkov wrote:
+> On Sat, Mar 28, 2020 at 02:53:49PM -0700, Kees Cook wrote:
+> > > > > +/* definitions for hide_pid field */
+> > > > > +enum {
+> > > > > +	HIDEPID_OFF            = 0,
+> > > > > +	HIDEPID_NO_ACCESS      = 1,
+> > > > > +	HIDEPID_INVISIBLE      = 2,
+> > > > > +	HIDEPID_NOT_PTRACEABLE = 4,
+> > > > > +};
+> > > > Should the numeric values still be UAPI if there is string parsing now?
+> > > 
+> > > I think yes, because these are still valid hidepid= values.
 > > 
-> > I think yes, because these are still valid hidepid= values.
+> > But if we don't expose the values, we can do whatever we like with
+> > future numbers (e.g. the "is this a value or a bit field?" question).
 > 
-> But if we don't expose the values, we can do whatever we like with
-> future numbers (e.g. the "is this a value or a bit field?" question).
+> Alexey Dobriyan suggested to put these parameters into the UAPI and it
+> makes sense because these are user parameters.
 
-Alexey Dobriyan suggested to put these parameters into the UAPI and it
-makes sense because these are user parameters.
+Okidokey. :) Anyway, ignore my HIDEPID_MAX idea then, since this could
+become a bitfield. Just checking for individual bits is the way to go
+for now. Sorry for the noise.
 
 -- 
-Rgrds, legion
-
+Kees Cook
