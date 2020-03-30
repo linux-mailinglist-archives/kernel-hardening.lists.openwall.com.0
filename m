@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18337-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18338-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id D7D2B19983C
-	for <lists+kernel-hardening@lfdr.de>; Tue, 31 Mar 2020 16:15:41 +0200 (CEST)
-Received: (qmail 9995 invoked by uid 550); 31 Mar 2020 14:15:36 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 6D022199862
+	for <lists+kernel-hardening@lfdr.de>; Tue, 31 Mar 2020 16:25:40 +0200 (CEST)
+Received: (qmail 15556 invoked by uid 550); 31 Mar 2020 14:25:34 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,32 +13,32 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 9960 invoked from network); 31 Mar 2020 14:15:35 -0000
+Received: (qmail 15510 invoked from network); 31 Mar 2020 14:25:33 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=zTyZUZyP+zXDM17uOl5EO7jnuzHUmLuralf0hD1C7uQ=;
-        b=X+fgDi3MlKSPCh2sgIYL+gkLlsZfyMGWwuidp67Y/1xJSJpN6GiCrcKj4vscCntt5X
-         AsoSD/y4zBkHXejpqSRnno4P4EIdp8HhS1WuvfQUKvsUfsyvyJIqVP5BNhp1WI9YXqSe
-         Z6QL0bcqJwst77oznDjNOVFNBeNpNp6rUlFeQ=
+        bh=zFezxGPsyLpYhR0ox7KaSCSsmOf9Nv4P7a8TQy3AEWA=;
+        b=kui63y9FrsIxlmLnNNmwJXRNc4d5KtuCI1cHY11sSFYq2KfwtdcIa936YyorHFthi2
+         u51IRjzHkfjRWkdg1nOlfPmBiFRpfWsRggkVi8wPGm7uCexv7iA+C+qluXeiGIDUXryq
+         k1YhMeoXHScS5YyYxvg51WLdW+V/wYDY0fkl4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=zTyZUZyP+zXDM17uOl5EO7jnuzHUmLuralf0hD1C7uQ=;
-        b=soWUEF3iSn6gwm+2yFmcn+x0EGYKVGS+TYppXTe3dlPvACOL4Y4PgWkISTsRzO84E7
-         F20W6UyzlphMSNf3d1owMQvTWL6csfmz/9JSskk32lHoVwv+GGqs36LKUNYDianyNQIG
-         Obv82dGzhc18PRcQw31oENIS0ED/YatGvXBoc0z12efdPvuYTWYS5WM3JR6+xNHL4ZKw
-         j78Vb+t0Z3+Ja7SBOVrOf6v/FIqG4yfZNjYyasH2/+jXyai1nwjheD+AAmcqLrpsRP/S
-         EFov6QxAI2ECzld9DFR5Uv2QBXUMQ3TScAB7kqO5Y1BiBn5bVmvxONvfVSUSvaEaDGjB
-         QAHw==
-X-Gm-Message-State: AGi0PubVWZTFyKvaFC5ds0jcsu3tLQu8k7QYoTzimL/msBXZ8AocteXJ
-	nsbvoZEYBxOV4jNU4R80J0A4dw==
-X-Google-Smtp-Source: APiQypIT3n7KLf8ko7LebvhJ17T7gGW5sDePBsyltHCF4aEdKZNxQ/m3qhCvFd7PBcLmqZTusgipUw==
-X-Received: by 2002:a17:90a:202f:: with SMTP id n44mr4330392pjc.150.1585664122467;
-        Tue, 31 Mar 2020 07:15:22 -0700 (PDT)
-Date: Mon, 30 Mar 2020 11:18:40 -0700
+        bh=zFezxGPsyLpYhR0ox7KaSCSsmOf9Nv4P7a8TQy3AEWA=;
+        b=KC3yWVbKf5SaVVRw+Y8nFbQejQh4H4MYsIZK8R5NjSA6TxkiXE8+rTumGTX0hU67wH
+         6O+if4vnf8NF7h5KrvDaGR2V3d8nl66bqexUTkT7F6WIMbV3mAm0KFQQOcy/Qad5kIxQ
+         11G0tXc7FaLWG4RQCOxyzDMrZDN6kxbP2nW4KRIgUD4VPi5fzeH5Mf9L2BTZfjGixRz1
+         2B0mzO4QUllRvZeGMWq0sFAQ+n70EwVwHi+xHCBbf6YrlBKy9h1Wl4+oAEPIW2u/zUPX
+         7rGXknjOmScTqETASxfoXQ+o2o/mcfeod5z4d1IPuA9Pz7o9LLHdqwlu7CCLUr4YQqCf
+         jI2A==
+X-Gm-Message-State: ANhLgQ0UhB/ULxeT+CjMkMjJEkpILi6fqlmtP7kdp+VtngXXuHyYrQ8X
+	Z86YfRkJwpga/RZcPhKeLIDiOA==
+X-Google-Smtp-Source: ADFU+vtkTDKkSRJvhWJLA7hYxbwYlTJ0X4a7SDipA3reIPvc6zMuV2c0VM5b15ltd1k0YTjdeBT8eQ==
+X-Received: by 2002:a62:8f0c:: with SMTP id n12mr18284422pfd.226.1585664721989;
+        Tue, 31 Mar 2020 07:25:21 -0700 (PDT)
+Date: Mon, 30 Mar 2020 11:27:19 -0700
 From: Kees Cook <keescook@chromium.org>
 To: Mark Rutland <mark.rutland@arm.com>
 Cc: Thomas Gleixner <tglx@linutronix.de>,
@@ -56,7 +56,7 @@ Cc: Thomas Gleixner <tglx@linutronix.de>,
 	linux-kernel@vger.kernel.org
 Subject: Re: [PATCH v2 3/5] stack: Optionally randomize kernel stack offset
  each syscall
-Message-ID: <202003301116.081DB02@keescook>
+Message-ID: <202003301122.354B722@keescook>
 References: <20200324203231.64324-1-keescook@chromium.org>
  <20200324203231.64324-4-keescook@chromium.org>
  <20200330112536.GD1309@C02TD0UTHF1T.local>
@@ -87,9 +87,29 @@ On Mon, Mar 30, 2020 at 12:25:36PM +0100, Mark Rutland wrote:
 > constraints generate metter code, could we add those as alternative
 > constraints in OPTIMIZER_HIDE_VAR() ?
 
-Hah, yes, it is. And this produces identical asm, so I've replaced it
-with OPTIMIZER_HIDE_VAR() now. Now if I could figure out how to hide it
-from stack protector. :(
+Er, no, sorry, not the same. I disassembled the wrong binary. :)
+
+With     asm volatile("" : "=m"(*ptr))
+
+ffffffff810038bc:       48 8d 44 24 0f          lea    0xf(%rsp),%rax
+ffffffff810038c1:       48 83 e0 f0             and    $0xfffffffffffffff0,%rax
+
+
+With   __asm__ ("" : "=r" (var) : "0" (var))
+
+ffffffff810038bc:       48 8d 54 24 0f          lea    0xf(%rsp),%rdx
+ffffffff810038c1:       48 83 e2 f0             and    $0xfffffffffffffff0,%rdx
+ffffffff810038c5:       0f b6 02                movzbl (%rdx),%eax
+ffffffff810038c8:       88 02                   mov    %al,(%rdx)
+
+
+It looks like OPTIMIZER_HIDE_VAR() is basically just:
+
+	var = var;
+
+In the former case, we avoid the write and retain the allocation. So I
+think don't think OPTIMIZER_HIDE_VAR() should be used here, nor should
+OPTIMIZER_HIDE_VAR() be changed to remove the "0" (var) bit.
 
 -- 
 Kees Cook
