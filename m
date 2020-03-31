@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18323-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18314-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 7CE47199565
-	for <lists+kernel-hardening@lfdr.de>; Tue, 31 Mar 2020 13:36:31 +0200 (CEST)
-Received: (qmail 30389 invoked by uid 550); 31 Mar 2020 11:36:25 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 35472198B66
+	for <lists+kernel-hardening@lfdr.de>; Tue, 31 Mar 2020 06:49:07 +0200 (CEST)
+Received: (qmail 17562 invoked by uid 550); 31 Mar 2020 04:49:00 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,158 +13,90 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 11549 invoked from network); 31 Mar 2020 04:30:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=pi3.com.pl; s=default;
-	t=1585628997; bh=S/sqsZXh4c0HiC7oiYQrHwHAsYjWmaKQdUkMuQncFzk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nTgH2VAvffuUSjBDnqjOcWm2SIAHPhqpPswtjpS/nWdDBofZQfRyDM0VCEM7JnlAy
-	 X8nyQIVtAbjQUmKn2eOVxdCqF2yFjGGF87UNOvsHKDaVtI0MlUHBmrhea6S+LmIUf0
-	 Q7+KJCfh6DjjaJGpyVQ80LWyh5fCp6fseAlG02BOYNd6dCqbMqMyOv09LkoSuxLx9a
-	 QxX7d+A3ZD9PzL5Vd6Ff+i3Muw2SaK4VmVSvz+bW9UfEwWCS+1ocY+De+iPxZJWACs
-	 rlK9Ak3v2Vqjpe1gDnjmtECKKRcgDTPj/0YZa49jwwxt5wHbZCBYyB+pz0qBsNiaSC
-	 avU3udQzl2iRQ==
-X-Virus-Scanned: Debian amavisd-new at pi3.com.pl
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=pi3.com.pl; s=default;
-	t=1585628994; bh=S/sqsZXh4c0HiC7oiYQrHwHAsYjWmaKQdUkMuQncFzk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Rp3+de1Hs6t8uul8ccFB28NRWTmHQHtkzfTW04o2op8j6cYDC1NwIuTxPdPZDny7w
-	 1V4STuCjBHQKw5wYG4f/jK2nulLt67w09hxmwrDCE4u5XiVDkoK9cgxwfA0MVBwINj
-	 /8TLypBOAm3X5+pV4kWzLt65w0uffrbOLOSDyw0NCO0ksR07KRmstImwjjE9npxUqe
-	 jMeTSDn1gfV+7vIkYH3mPwxXN6zsGXRyGJnrDM+njJ73p+/YMQED0bxHCQm+/YKsjB
-	 nAQb7XbUY0Cvs9DxFDASN2cz3REzf9gcG3olhBXahg8Zo1KgLuq4dlT10S+LckR41U
-	 bo54SIyXCUdNA==
-Date: Tue, 31 Mar 2020 06:29:54 +0200
-From: Adam Zabrocki <pi3@pi3.com.pl>
-To: Kees Cook <keescook@chromium.org>
-Cc: linux-kernel@vger.kernel.org, kernel-hardening@lists.openwall.com,
-	Jann Horn <jannh@google.com>, Oleg Nesterov <oleg@redhat.com>,
-	Andy Lutomirski <luto@amacapital.net>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Bernd Edlinger <bernd.edlinger@hotmail.de>,
-	Solar Designer <solar@openwall.com>
-Subject: Re: Curiosity around 'exec_id' and some problems associated with it
-Message-ID: <20200331042954.GA26058@pi3.com.pl>
-References: <20200324215049.GA3710@pi3.com.pl>
- <202003291528.730A329@keescook>
+Received: (qmail 17530 invoked from network); 31 Mar 2020 04:48:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=russell.cc; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding; s=fm1; bh=yY8X33qvg/yRwHhINvujWxa4XK
+	uItnDDjdDahuZGPeg=; b=WTVQJnlWEiOA/heukWV5Hwoz7jZwL7h7p0pYQcCp4u
+	2kvFvq08tkHLEQpc55+H1I+1MR8XbcuRw4/Ntpu5FHvzlhQLnu0J0yCYi/HyjQDX
+	1km1XHQ2CfXzt42O5AR+EYPNiddupYpublxsN3CgyD98CFM7UT38yt2DqVSposHJ
+	zd+EFm/zBnb1Xa7EwtyjDBbKauWLzVRErcyAIlapUXIvHewsBgXNjS9xMABz3kAC
+	823ZS/b/34WeSSySGI29pE00KgC4R6Zr/UWga4MWzbBjnSk8seCqhPsYvjOBMRBY
+	lqImRO3eoc18pldJ2njEkRbmMeP6kSeYb0P3Y/5/U2uw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:date:from
+	:message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=yY8X33qvg/yRwHhIN
+	vujWxa4XKuItnDDjdDahuZGPeg=; b=rf5sU28amT7+teD62/QPQPQcdO+aAZURi
+	4jrvcCHgCQacTOWvrAF+i8Oqnt/fjwtCw2eHhzBnyKHt1MAuFmk+nuIxLC3LLIy5
+	gfb+lTs2AXq/IBSYY4bButzBAIAiHyz1Z75mNZV9HlR6yzQrPUIMV4XuFZrSFmBL
+	bP3RlAA+hEL97vJP8+j5rcxwlgvkP0gLz3X2nBJcKYkcc2sW5bRT2smLsq6dkU8B
+	nvgCPwgGX1EJSvf/SoYBPWNbcqxvLLcIxz/p2K7J6EI6EPJixonku1u+j+jikO/y
+	ylKp6IlOFRcuvflDNmPp3V86g/zRa5WLyIdwsq0cXjZ5W5oN0RrIg==
+X-ME-Sender: <xms:q8uCXhZ89m7wgrEPr1azLl5QZR58fjOjmz5kTXgFjNJew5ucRiRWkg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrudeiiedgkeeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdludehmdenogevohgrshhtrg
+    hlqdfhgeduvddqtddvucdludehtddmnecujfgurhephffvufffkffoggfgsedtkeertder
+    tddtnecuhfhrohhmpeftuhhsshgvlhhlucevuhhrrhgvhicuoehruhhstghurhesrhhush
+    hsvghllhdrtggtqeenucffohhmrghinhepohiilhgrsghsrdhorhhgnecukfhppeduvddu
+    rdeghedrvdduvddrvdefleenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehruhhstghurhesrhhushhsvghllhdrtggt
+X-ME-Proxy: <xmx:q8uCXogqcm2Iv85hPvg9qfoyXQSuO4ca17wK4VvwCdZEuUi5vhOBZg>
+    <xmx:q8uCXrZgZ9hIm-f06xH2JJul-hbkV1bEe4G4I8LudNzXm1FwC8Awqw>
+    <xmx:q8uCXmNRdq16GQBtZxe_eFJvvu5eWLrNKo6ntuIpxmlCe5IV4DR4WA>
+    <xmx:rcuCXreEe-rdDx-XBwx9KHd2PqAo0db0iIP-UPGVtAwqP-cKRz5ZWA>
+From: Russell Currey <ruscur@russell.cc>
+To: linuxppc-dev@lists.ozlabs.org
+Cc: Russell Currey <ruscur@russell.cc>,
+	christophe.leroy@c-s.fr,
+	mpe@ellerman.id.au,
+	ajd@linux.ibm.com,
+	dja@axtens.net,
+	npiggin@gmail.com,
+	kernel-hardening@lists.openwall.com
+Subject: [PATCH v7 0/7] set_memory() routines and STRICT_MODULE_RWX
+Date: Tue, 31 Mar 2020 15:48:18 +1100
+Message-Id: <20200331044825.591653-1-ruscur@russell.cc>
+X-Mailer: git-send-email 2.26.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <202003291528.730A329@keescook>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 
-Hey,
+Addressing review comments from Daniel Axtens.
 
-On Sun, Mar 29, 2020 at 03:43:14PM -0700, Kees Cook wrote:
-> Hi!
-> 
-> Sorry, I missed this originally because it got filed into my lkml
-> archive and not kernel-hardening, but no one actually reads lkml
-> directly, myself included -- it's mostly a thread archive. I'll update
-> my filters, and I've added a handful of people to CC that might be
-> interested in looking at this too. Here's the full email, I trimmed
-> heavily since it's very detailed:
-> https://lore.kernel.org/lkml/20200324215049.GA3710@pi3.com.pl/
-> 
+v6: https://patchwork.ozlabs.org/project/linuxppc-dev/list/?series=163335
+v5: https://patchwork.ozlabs.org/project/linuxppc-dev/list/?series=160869
 
-No worries ;-)
+Changes since v6:
+	[1/7] and [6/7]: Check for negative values of numpages and use
+	      	  	 apply_to_existing_page_range() thanks to dja
 
-> On Tue, Mar 24, 2020 at 10:50:49PM +0100, Adam Zabrocki wrote:
-> > Some curiosities which are interesting to point out:
-> > 
-> >  1) Linus Torvalds in 2012 suspected that such 'overflow' might be possible.
-> >     You can read more about it here:
-> > 
-> >     https://www.openwall.com/lists/kernel-hardening/2012/03/11/4
-> > 
-> >  2) Solar Designer in 1999(!) was aware about the problem that 'exit_signal' can
-> >     be abused. The kernel didn't protect it at all at that time. So he came up
-> >     with the idea to introduce those two counters to deal with that problem.
-> >     Originally, these counters were defined as "long long" type. However, during
-> >     the revising between September 14 and September 16, 1999 he switched from
-> >     "long long" to "int" and introduced integer wraparound handling. His patches
-> >     were merged to the kernel 2.0.39 and 2.0.40.
-> > 
-> >  3) It is worth to read the Solar Designer's message during the discussion about
-> >     the fix for the problem CVE-2012-0056 (I'm referencing this problem later in
-> >     that write-up about "Problem II"):
-> > 
-> >     https://www.openwall.com/lists/kernel-hardening/2012/03/11/12
-> 
-> There was some effort made somewhat recently to get this area fixed:
-> https://lore.kernel.org/linux-fsdevel/1474663238-22134-3-git-send-email-jann@thejh.net/
-> 
+Thanks for the feedback.
 
-These changes looks comprehensive and definitely fix current issue.
+Christophe Leroy (2):
+  powerpc/mm: implement set_memory_attr()
+  powerpc/32: use set_memory_attr()
 
-> Nothing ultimately landed, but it's worth seeing if we could revitalize
-> interest. Part of Jann's series was also related to fixing issues with
-> cred_guard_mutex, which is getting some traction now too:
-> https://lore.kernel.org/lkml/AM6PR03MB5170938306F22C3CF61CC573E4CD0@AM6PR03MB5170.eurprd03.prod.outlook.com/
-> 
+Russell Currey (5):
+  powerpc/mm: Implement set_memory() routines
+  powerpc/kprobes: Mark newly allocated probes as RO
+  powerpc/mm/ptdump: debugfs handler for W+X checks at runtime
+  powerpc: Set ARCH_HAS_STRICT_MODULE_RWX
+  powerpc/configs: Enable STRICT_MODULE_RWX in skiroot_defconfig
 
-Thanks for pointing to that discussion. Definately both of that changes fix 
-problems which I've described (and not only that). However, what are the 
-reasons behind not merging them in? Especially, the first part (exec_id) looks 
-harmless and don't require any other updates.
-
-> > In short, if you hold the file descriptor open over an execve() (e.g. share it
-> > with child) the old VM is preserved (refcounted) and might be never released.
-> > Essentially, mother process' VM will be still in memory (and pointer to it is
-> > valid) even if the mother process passed an execve().
-> > This is some kind of 'memory leak' scenario. I did a simple test where process
-> > open /proc/self/maps file and calls clone() with CLONE_FILES flag. Next mother
-> > 'overwrite' itself by executing SUID binary (doesn't need to be SUID), and child
-> > was still able to use the original file descriptor - it's valid.
-> 
-> It'd be worth exploring where the resource counting is happening for
-> this. I haven't looked to see how much of the VM stays in kernel memory
-> in this situation. It probably wouldn't be hard to count it against an
-> rlimit or something.
-> 
-> Thanks for the details! I hope someone will have time to look into this.
-> It's a bit of a "long timeframe attack", so it's not gotta a lot of
-> priority (obviously). :)
-> 
-
-Thanks :) However, I did not focus on optimizing the '*exec_id overflow' 
-scenario and that's certainly possible. E.g. by creating the code as small as 
-possible, don't link with external libraries (or statically compile them in), 
-etc. In such case the time will be significantly smaller.
-
-Another interesting fact (not possible for performing 'overflow' attack but 
-worth to mention) is that we might increment '*exec_id' and force execve() to 
-fail. Function load_elf_binary() calls setup_new_exec() (which increments the 
-counter) and then continue execution of a more heavy work. In such case an 
-'overflow' would be a matter of hours. However, search_binary_handler() 
-function "protects" from such scenario and in case of error in 
-load_elf_binary() sends SIGSEGV:
-
-    int search_binary_handler(struct linux_binprm *bprm)
-    {
-    ...
-        retval = fmt->load_binary(bprm);
-    ...
-        if (retval < 0 && !bprm->mm) {
-            /* we got to flush_old_exec() and failed after it */
-            read_unlock(&binfmt_lock);
-            force_sigsegv(SIGSEGV, current);
-            return retval;
-        }
-    ...
-    }
-
-flush_old_exec() is called before setup_new_exec().
-
-Thanks,
-Adam
-
-> -Kees
-> 
-> -- 
-> Kees Cook
+ arch/powerpc/Kconfig                   |   2 +
+ arch/powerpc/Kconfig.debug             |   6 +-
+ arch/powerpc/configs/skiroot_defconfig |   1 +
+ arch/powerpc/include/asm/set_memory.h  |  34 ++++++++
+ arch/powerpc/kernel/kprobes.c          |  17 +++-
+ arch/powerpc/mm/Makefile               |   2 +-
+ arch/powerpc/mm/pageattr.c             | 114 +++++++++++++++++++++++++
+ arch/powerpc/mm/pgtable_32.c           |  95 +++------------------
+ arch/powerpc/mm/ptdump/ptdump.c        |  21 ++++-
+ 9 files changed, 199 insertions(+), 93 deletions(-)
+ create mode 100644 arch/powerpc/include/asm/set_memory.h
+ create mode 100644 arch/powerpc/mm/pageattr.c
 
 -- 
-pi3 (pi3ki31ny) - pi3 (at) itsec pl
-http://pi3.com.pl
+2.26.0
 
