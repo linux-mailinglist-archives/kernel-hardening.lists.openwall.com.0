@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18313-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18323-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 213751989A6
-	for <lists+kernel-hardening@lfdr.de>; Tue, 31 Mar 2020 03:50:21 +0200 (CEST)
-Received: (qmail 7344 invoked by uid 550); 31 Mar 2020 01:50:13 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 7CE47199565
+	for <lists+kernel-hardening@lfdr.de>; Tue, 31 Mar 2020 13:36:31 +0200 (CEST)
+Received: (qmail 30389 invoked by uid 550); 31 Mar 2020 11:36:25 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,318 +13,158 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 7312 invoked from network); 31 Mar 2020 01:50:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=russell.cc; h=
-	message-id:subject:from:to:cc:date:in-reply-to:references
-	:content-type:mime-version:content-transfer-encoding; s=fm1; bh=
-	p2KSOaTwCizI8NrfTNMFOYqWNJj9mQsC7SYLZS210X4=; b=Lpnp+6Qd62r57AI8
-	w5UZSpXqQXuFVfr46N/aPdfOE4qCb+p8IKH4GkK/bPOXdTHbGL+rCXCYMCcbcOQk
-	WWT8URf+8K8K1kJwqckL5JOP2EXWm8OQK9sRswr3S7oBFy++o2GDcP+qa/x4Lcv6
-	v1FCy7AoxA+VqdKq9rWvP1L+E9FWOaUBOOE5AeIQg4mV7e+wXevaOurxuWGAVaC6
-	6lU/e5g4S034JhXtRz3FHTpSXjRGyosMwkUrttW6sP9263OMhrTibiYEJDEbMRyQ
-	Blo/TsrL84uE0ysgvT9jS+EHeH3yjhX0qDZ6hP7J+4xpiS8nudo0x6vziK9cbJKr
-	XUU4ig==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm2; bh=p2KSOaTwCizI8NrfTNMFOYqWNJj9mQsC7SYLZS210
-	X4=; b=sHEgQ3pLqN4XlzRqunk7ikJyyogVVAUTcpBK4ek00vee9YQGrJ/ulaDvV
-	WD+Zya4vUSFerCi4t2CBJpOH9wH1wkGNA5F4NrN94KSoXjedKKb0EL8hb5dzb3KG
-	90HtF8ELYCeBpq2oXQ4SPA8hOUVo9YGcCBRwU4NcecPyYNugvaUgBYpPcPSYGOtS
-	YkW24dCT9WVOCMpMVVIRxKEPo+T/nvAI12ov0wMottebELNf/K6Mu+ddLEvYSZek
-	FAKwlfLQfR1bcpuOuc+U7UmLv5cISN4rhg3/POWdYEJ1DjL8JZCoTzwyABlURfOP
-	xoqC4WrOdnvi3oACU98Op9D/RsrNA==
-X-ME-Sender: <xms:xqGCXlSkEc0M8jFwOVAOCXDatkG289cklFhiaiaXsPBFsk4fOh4IcQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrudeiiedgheduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdluddtmdenucfjughrpefkuf
-    fhvfffjghftggfggfgsehtjeertddtreejnecuhfhrohhmpeftuhhsshgvlhhlucevuhhr
-    rhgvhicuoehruhhstghurhesrhhushhsvghllhdrtggtqeenucfkphepuddvuddrgeehrd
-    dvuddvrddvfeelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
-    rhhomheprhhushgtuhhrsehruhhsshgvlhhlrdgttg
-X-ME-Proxy: <xmx:xqGCXiBQg7To1wQvKJZWR361wnN5tqiGf84Stgu0T0uOTlYimga05Q>
-    <xmx:xqGCXhfUp7sB7fAHKwat1JULsAl0rbTryGEjQC-WMTRzozkCHzedqQ>
-    <xmx:xqGCXgU7LytCDn1k8n1u_BbgEJGeYcz8-imN0cJUXEBRd2gkSANsIw>
-    <xmx:yKGCXo06zHut1WVVyXNCfyd07JDhzOXJhFEEuA0t2Ya7vy2pQ7HaHw>
-Message-ID: <7b275ce545dc289ec0e072bf79ce03fbf633160c.camel@russell.cc>
-Subject: Re: [PATCH v6 1/7] powerpc/mm: Implement set_memory() routines
-From: Russell Currey <ruscur@russell.cc>
-To: Daniel Axtens <dja@axtens.net>, linuxppc-dev@lists.ozlabs.org
-Cc: christophe.leroy@c-s.fr, joel@jms.id.au, mpe@ellerman.id.au, 
-	ajd@linux.ibm.com, npiggin@gmail.com, kernel-hardening@lists.openwall.com
-Date: Tue, 31 Mar 2020 12:49:52 +1100
-In-Reply-To: <87imjbpgw2.fsf@dja-thinkpad.axtens.net>
-References: <20200310010338.21205-1-ruscur@russell.cc>
-	 <20200310010338.21205-2-ruscur@russell.cc>
-	 <87imjbpgw2.fsf@dja-thinkpad.axtens.net>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.0 
+Delivered-To: moderator for kernel-hardening@lists.openwall.com
+Received: (qmail 11549 invoked from network); 31 Mar 2020 04:30:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=pi3.com.pl; s=default;
+	t=1585628997; bh=S/sqsZXh4c0HiC7oiYQrHwHAsYjWmaKQdUkMuQncFzk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=nTgH2VAvffuUSjBDnqjOcWm2SIAHPhqpPswtjpS/nWdDBofZQfRyDM0VCEM7JnlAy
+	 X8nyQIVtAbjQUmKn2eOVxdCqF2yFjGGF87UNOvsHKDaVtI0MlUHBmrhea6S+LmIUf0
+	 Q7+KJCfh6DjjaJGpyVQ80LWyh5fCp6fseAlG02BOYNd6dCqbMqMyOv09LkoSuxLx9a
+	 QxX7d+A3ZD9PzL5Vd6Ff+i3Muw2SaK4VmVSvz+bW9UfEwWCS+1ocY+De+iPxZJWACs
+	 rlK9Ak3v2Vqjpe1gDnjmtECKKRcgDTPj/0YZa49jwwxt5wHbZCBYyB+pz0qBsNiaSC
+	 avU3udQzl2iRQ==
+X-Virus-Scanned: Debian amavisd-new at pi3.com.pl
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=pi3.com.pl; s=default;
+	t=1585628994; bh=S/sqsZXh4c0HiC7oiYQrHwHAsYjWmaKQdUkMuQncFzk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Rp3+de1Hs6t8uul8ccFB28NRWTmHQHtkzfTW04o2op8j6cYDC1NwIuTxPdPZDny7w
+	 1V4STuCjBHQKw5wYG4f/jK2nulLt67w09hxmwrDCE4u5XiVDkoK9cgxwfA0MVBwINj
+	 /8TLypBOAm3X5+pV4kWzLt65w0uffrbOLOSDyw0NCO0ksR07KRmstImwjjE9npxUqe
+	 jMeTSDn1gfV+7vIkYH3mPwxXN6zsGXRyGJnrDM+njJ73p+/YMQED0bxHCQm+/YKsjB
+	 nAQb7XbUY0Cvs9DxFDASN2cz3REzf9gcG3olhBXahg8Zo1KgLuq4dlT10S+LckR41U
+	 bo54SIyXCUdNA==
+Date: Tue, 31 Mar 2020 06:29:54 +0200
+From: Adam Zabrocki <pi3@pi3.com.pl>
+To: Kees Cook <keescook@chromium.org>
+Cc: linux-kernel@vger.kernel.org, kernel-hardening@lists.openwall.com,
+	Jann Horn <jannh@google.com>, Oleg Nesterov <oleg@redhat.com>,
+	Andy Lutomirski <luto@amacapital.net>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Bernd Edlinger <bernd.edlinger@hotmail.de>,
+	Solar Designer <solar@openwall.com>
+Subject: Re: Curiosity around 'exec_id' and some problems associated with it
+Message-ID: <20200331042954.GA26058@pi3.com.pl>
+References: <20200324215049.GA3710@pi3.com.pl>
+ <202003291528.730A329@keescook>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <202003291528.730A329@keescook>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 
-On Wed, 2020-03-11 at 17:03 +1100, Daniel Axtens wrote:
-> Russell Currey <ruscur@russell.cc> writes:
+Hey,
+
+On Sun, Mar 29, 2020 at 03:43:14PM -0700, Kees Cook wrote:
+> Hi!
 > 
-> > The set_memory_{ro/rw/nx/x}() functions are required for
-> > STRICT_MODULE_RWX,
-> > and are generally useful primitives to have.  This implementation
-> > is
-> > designed to be completely generic across powerpc's many MMUs.
+> Sorry, I missed this originally because it got filed into my lkml
+> archive and not kernel-hardening, but no one actually reads lkml
+> directly, myself included -- it's mostly a thread archive. I'll update
+> my filters, and I've added a handful of people to CC that might be
+> interested in looking at this too. Here's the full email, I trimmed
+> heavily since it's very detailed:
+> https://lore.kernel.org/lkml/20200324215049.GA3710@pi3.com.pl/
+> 
+
+No worries ;-)
+
+> On Tue, Mar 24, 2020 at 10:50:49PM +0100, Adam Zabrocki wrote:
+> > Some curiosities which are interesting to point out:
 > > 
-> > It's possible that this could be optimised to be faster for
-> > specific
-> > MMUs, but the focus is on having a generic and safe implementation
-> > for
-> > now.
+> >  1) Linus Torvalds in 2012 suspected that such 'overflow' might be possible.
+> >     You can read more about it here:
 > > 
-> > This implementation does not handle cases where the caller is
-> > attempting
-> > to change the mapping of the page it is executing from, or if
-> > another
-> > CPU is concurrently using the page being altered.  These cases
-> > likely
-> > shouldn't happen, but a more complex implementation with MMU-
-> > specific code
-> > could safely handle them, so that is left as a TODO for now.
+> >     https://www.openwall.com/lists/kernel-hardening/2012/03/11/4
 > > 
-> > These functions do nothing if STRICT_KERNEL_RWX is not enabled.
+> >  2) Solar Designer in 1999(!) was aware about the problem that 'exit_signal' can
+> >     be abused. The kernel didn't protect it at all at that time. So he came up
+> >     with the idea to introduce those two counters to deal with that problem.
+> >     Originally, these counters were defined as "long long" type. However, during
+> >     the revising between September 14 and September 16, 1999 he switched from
+> >     "long long" to "int" and introduced integer wraparound handling. His patches
+> >     were merged to the kernel 2.0.39 and 2.0.40.
 > > 
-> > Signed-off-by: Russell Currey <ruscur@russell.cc>
-> > Signed-off-by: Christophe Leroy <christophe.leroy@c-s.fr>
-> > ---
-> > v6: Merge patch 8/8 from v5, handling RWX not being enabled.
-> >     Add note to change_page_attr() in case it's ever made non-
-> > static
-> > ---
-> >  arch/powerpc/Kconfig                  |  1 +
-> >  arch/powerpc/include/asm/set_memory.h | 32 +++++++++++
-> >  arch/powerpc/mm/Makefile              |  2 +-
-> >  arch/powerpc/mm/pageattr.c            | 79
-> > +++++++++++++++++++++++++++
-> >  4 files changed, 113 insertions(+), 1 deletion(-)
-> >  create mode 100644 arch/powerpc/include/asm/set_memory.h
-> >  create mode 100644 arch/powerpc/mm/pageattr.c
+> >  3) It is worth to read the Solar Designer's message during the discussion about
+> >     the fix for the problem CVE-2012-0056 (I'm referencing this problem later in
+> >     that write-up about "Problem II"):
 > > 
-> > diff --git a/arch/powerpc/Kconfig b/arch/powerpc/Kconfig
-> > index 497b7d0b2d7e..bd074246e34e 100644
-> > --- a/arch/powerpc/Kconfig
-> > +++ b/arch/powerpc/Kconfig
-> > @@ -129,6 +129,7 @@ config PPC
-> >  	select ARCH_HAS_PTE_SPECIAL
-> >  	select ARCH_HAS_MEMBARRIER_CALLBACKS
-> >  	select ARCH_HAS_SCALED_CPUTIME		if
-> > VIRT_CPU_ACCOUNTING_NATIVE && PPC_BOOK3S_64
-> > +	select ARCH_HAS_SET_MEMORY
-> >  	select ARCH_HAS_STRICT_KERNEL_RWX	if ((PPC_BOOK3S_64 ||
-> > PPC32) && !HIBERNATION)
-> >  	select ARCH_HAS_TICK_BROADCAST		if
-> > GENERIC_CLOCKEVENTS_BROADCAST
-> >  	select ARCH_HAS_UACCESS_FLUSHCACHE
-> > diff --git a/arch/powerpc/include/asm/set_memory.h
-> > b/arch/powerpc/include/asm/set_memory.h
-> > new file mode 100644
-> > index 000000000000..64011ea444b4
-> > --- /dev/null
-> > +++ b/arch/powerpc/include/asm/set_memory.h
-> > @@ -0,0 +1,32 @@
-> > +/* SPDX-License-Identifier: GPL-2.0 */
-> > +#ifndef _ASM_POWERPC_SET_MEMORY_H
-> > +#define _ASM_POWERPC_SET_MEMORY_H
-> > +
-> > +#define SET_MEMORY_RO	0
-> > +#define SET_MEMORY_RW	1
-> > +#define SET_MEMORY_NX	2
-> > +#define SET_MEMORY_X	3
-> > +
-> > +int change_memory_attr(unsigned long addr, int numpages, long
-> > action);
-> > +
-> > +static inline int set_memory_ro(unsigned long addr, int numpages)
-> > +{
-> > +	return change_memory_attr(addr, numpages, SET_MEMORY_RO);
-> > +}
-> > +
-> > +static inline int set_memory_rw(unsigned long addr, int numpages)
-> > +{
-> > +	return change_memory_attr(addr, numpages, SET_MEMORY_RW);
-> > +}
-> > +
-> > +static inline int set_memory_nx(unsigned long addr, int numpages)
-> > +{
-> > +	return change_memory_attr(addr, numpages, SET_MEMORY_NX);
-> > +}
-> > +
-> > +static inline int set_memory_x(unsigned long addr, int numpages)
-> > +{
-> > +	return change_memory_attr(addr, numpages, SET_MEMORY_X);
-> > +}
-> > +
-> > +#endif
-> > diff --git a/arch/powerpc/mm/Makefile b/arch/powerpc/mm/Makefile
-> > index 5e147986400d..a998fdac52f9 100644
-> > --- a/arch/powerpc/mm/Makefile
-> > +++ b/arch/powerpc/mm/Makefile
-> > @@ -5,7 +5,7 @@
-> >  
-> >  ccflags-$(CONFIG_PPC64)	:= $(NO_MINIMAL_TOC)
-> >  
-> > -obj-y				:= fault.o mem.o pgtable.o
-> > mmap.o \
-> > +obj-y				:= fault.o mem.o pgtable.o
-> > mmap.o pageattr.o \
-> >  				   init_$(BITS).o pgtable_$(BITS).o \
-> >  				   pgtable-frag.o ioremap.o
-> > ioremap_$(BITS).o \
-> >  				   init-common.o mmu_context.o drmem.o
-> > diff --git a/arch/powerpc/mm/pageattr.c
-> > b/arch/powerpc/mm/pageattr.c
-> > new file mode 100644
-> > index 000000000000..748fa56d9db0
-> > --- /dev/null
-> > +++ b/arch/powerpc/mm/pageattr.c
-> > @@ -0,0 +1,79 @@
-> > +// SPDX-License-Identifier: GPL-2.0
-> > +
-> > +/*
-> > + * MMU-generic set_memory implementation for powerpc
-> > + *
-> > + * Copyright 2019, IBM Corporation.
-> > + */
-> > +
-> > +#include <linux/mm.h>
-> > +#include <linux/set_memory.h>
-> > +
-> > +#include <asm/mmu.h>
-> > +#include <asm/page.h>
-> > +#include <asm/pgtable.h>
-> > +
-> > +
-> > +/*
-> > + * Updates the attributes of a page in three steps:
-> > + *
-> > + * 1. invalidate the page table entry
-> > + * 2. flush the TLB
-> > + * 3. install the new entry with the updated attributes
-> > + *
-> > + * This is unsafe if the caller is attempting to change the
-> > mapping of the
-> > + * page it is executing from, or if another CPU is concurrently
-> > using the
-> > + * page being altered.
-> > + *
-> > + * TODO make the implementation resistant to this.
-> > + *
-> > + * NOTE: can be dangerous to call without STRICT_KERNEL_RWX
-> > + */
-> > +static int change_page_attr(pte_t *ptep, unsigned long addr, void
-> > *data)
-> > +{
-> > +	long action = (long)data;
-> > +	pte_t pte;
-> > +
-> > +	spin_lock(&init_mm.page_table_lock);
-> > +
-> > +	/* invalidate the PTE so it's safe to modify */
-> > +	pte = ptep_get_and_clear(&init_mm, addr, ptep);
-> > +	flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
-> > +
-> > +	/* modify the PTE bits as desired, then apply */
-> > +	switch (action) {
-> > +	case SET_MEMORY_RO:
-> > +		pte = pte_wrprotect(pte);
-> > +		break;
-> > +	case SET_MEMORY_RW:
-> > +		pte = pte_mkwrite(pte);
-> > +		break;
-> > +	case SET_MEMORY_NX:
-> > +		pte = pte_exprotect(pte);
-> > +		break;
-> > +	case SET_MEMORY_X:
-> > +		pte = pte_mkexec(pte);
-> > +		break;
-> > +	default:
-> > +		break;
+> >     https://www.openwall.com/lists/kernel-hardening/2012/03/11/12
 > 
-> Should this have a WARN_ON_ONCE to let you know you're doing
-> something
-> that doesn't work? I know it's only ever called by things in this
-> file,
-> but still... Anyway it's very minor and I'm not fussed either way.
-
-True, might as well.
-
+> There was some effort made somewhat recently to get this area fixed:
+> https://lore.kernel.org/linux-fsdevel/1474663238-22134-3-git-send-email-jann@thejh.net/
 > 
-> > +	}
-> > +
-> > +	set_pte_at(&init_mm, addr, ptep, pte);
-> > +	spin_unlock(&init_mm.page_table_lock);
-> 
-> Initially I thought: shouldn't you put the PTL lock/unlock in the
-> outer
-> function? Then I remembered that apply_to_page_range can potentially
-> allocate new page table entries which would deadlock if you held the
-> lock.
-> 
-> Speaking of which - apply_to_page_range will create new pte entries
-> if
-> you apply it over an address range that isn't filled in. That doesn't
-> really make sense here - should you use apply_to_existing_page_range
-> instead?
-> 
-> You _might_ be able to move the PTL lock if you use
-> apply_to_existing_page_range but I'm not completely sure if that's
-> safe
-> or if the speed boost is worth it. You could check mm/memory.c if you
-> wanted.
 
-Seems like I should definitely be using apply_to_existing_page_range()
-but I'm not too keen on moving the lock in case it's unsafe - and these
-only get called on module load so it's not a particularly hot path.
+These changes looks comprehensive and definitely fix current issue.
 
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +int change_memory_attr(unsigned long addr, int numpages, long
-> > action)
-> > +{
-> > +	unsigned long start = ALIGN_DOWN(addr, PAGE_SIZE);
-> > +	unsigned long sz = numpages * PAGE_SIZE;
-> > +
-> > +	if (!IS_ENABLED(CONFIG_STRICT_KERNEL_RWX))
-> > +		return 0;
-> > +
-> > +	if (!numpages)
-> > +		return 0;
+> Nothing ultimately landed, but it's worth seeing if we could revitalize
+> interest. Part of Jann's series was also related to fixing issues with
+> cred_guard_mutex, which is getting some traction now too:
+> https://lore.kernel.org/lkml/AM6PR03MB5170938306F22C3CF61CC573E4CD0@AM6PR03MB5170.eurprd03.prod.outlook.com/
 > 
-> What happens if numpages is negative? Doesn't the guard need to check
-> for that rather than just for zero?
 
-I don't know why numpages isn't unsigned in the set_memory API, that
-sounds like another potential patch.
+Thanks for pointing to that discussion. Definately both of that changes fix 
+problems which I've described (and not only that). However, what are the 
+reasons behind not merging them in? Especially, the first part (exec_id) looks 
+harmless and don't require any other updates.
 
-Anyway, yes.
-
-> With those caveats, and noting that I've been focused only on:
->  - lock/unlock paths
->  - integer arithmetic
->  - stuff about apply_page_range semantics
-> this patch is:
+> > In short, if you hold the file descriptor open over an execve() (e.g. share it
+> > with child) the old VM is preserved (refcounted) and might be never released.
+> > Essentially, mother process' VM will be still in memory (and pointer to it is
+> > valid) even if the mother process passed an execve().
+> > This is some kind of 'memory leak' scenario. I did a simple test where process
+> > open /proc/self/maps file and calls clone() with CLONE_FILES flag. Next mother
+> > 'overwrite' itself by executing SUID binary (doesn't need to be SUID), and child
+> > was still able to use the original file descriptor - it's valid.
 > 
-> Reviewed-by: Daniel Axtens <dja@axtens.net>
-
-Thanks for the review, I wasn't aware apply_to_existing_page_range()
-existed.
-
+> It'd be worth exploring where the resource counting is happening for
+> this. I haven't looked to see how much of the VM stays in kernel memory
+> in this situation. It probably wouldn't be hard to count it against an
+> rlimit or something.
 > 
-> Regards,
-> Daniel
+> Thanks for the details! I hope someone will have time to look into this.
+> It's a bit of a "long timeframe attack", so it's not gotta a lot of
+> priority (obviously). :)
 > 
-> > +
-> > +	return apply_to_page_range(&init_mm, start, sz,
-> > change_page_attr, (void *)action);
-> > +}
-> > -- 
-> > 2.25.1
+
+Thanks :) However, I did not focus on optimizing the '*exec_id overflow' 
+scenario and that's certainly possible. E.g. by creating the code as small as 
+possible, don't link with external libraries (or statically compile them in), 
+etc. In such case the time will be significantly smaller.
+
+Another interesting fact (not possible for performing 'overflow' attack but 
+worth to mention) is that we might increment '*exec_id' and force execve() to 
+fail. Function load_elf_binary() calls setup_new_exec() (which increments the 
+counter) and then continue execution of a more heavy work. In such case an 
+'overflow' would be a matter of hours. However, search_binary_handler() 
+function "protects" from such scenario and in case of error in 
+load_elf_binary() sends SIGSEGV:
+
+    int search_binary_handler(struct linux_binprm *bprm)
+    {
+    ...
+        retval = fmt->load_binary(bprm);
+    ...
+        if (retval < 0 && !bprm->mm) {
+            /* we got to flush_old_exec() and failed after it */
+            read_unlock(&binfmt_lock);
+            force_sigsegv(SIGSEGV, current);
+            return retval;
+        }
+    ...
+    }
+
+flush_old_exec() is called before setup_new_exec().
+
+Thanks,
+Adam
+
+> -Kees
+> 
+> -- 
+> Kees Cook
+
+-- 
+pi3 (pi3ki31ny) - pi3 (at) itsec pl
+http://pi3.com.pl
 
