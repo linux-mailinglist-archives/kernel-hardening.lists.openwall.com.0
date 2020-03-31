@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18342-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18352-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 22A97199F8F
-	for <lists+kernel-hardening@lfdr.de>; Tue, 31 Mar 2020 21:58:49 +0200 (CEST)
-Received: (qmail 30154 invoked by uid 550); 31 Mar 2020 19:58:44 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 622AA19A669
+	for <lists+kernel-hardening@lfdr.de>; Wed,  1 Apr 2020 09:42:40 +0200 (CEST)
+Received: (qmail 30638 invoked by uid 550); 1 Apr 2020 07:42:35 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,118 +13,128 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 30120 invoked from network); 31 Mar 2020 19:58:43 -0000
+Delivered-To: moderator for kernel-hardening@lists.openwall.com
+Received: (qmail 7365 invoked from network); 31 Mar 2020 20:23:52 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=iIE5XFM5K7QbE20yyDiZj6SZSyFq4hlwbNrIPIzU0gY=;
-        b=S+w7GqDb769CQ8xv21FIHZaNTBTZm/T6OlidzROuKsDVAboV/EyN3Llh6Rz9mTZIft
-         zotPnmEPIB8CQiPZpqd8ptbr4VcDp3TNcS1e4/py50PXxoyy27AenDHwc+9tWLcOub7S
-         xUXQTmtjjTRF4Le26nz+prjPz5JX7fc6k5RGU=
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=O2Xjl+tu9dt8lDajpKq9iYoZKBoTg+AzZ/EUYxNULVg=;
+        b=na7OGF7zEZXkjsSc155up/B44h/+USLLAKn0yG0ZSFNpmrGE1ABeuCfapIAVixMiF8
+         /dHbb85d3ytEF1NLoxbE4lsaZr6n+S6miZp7Sn1FYhBLTIGdE5CazDL2g7/okM0BlZBo
+         QQ3M/ZJ2qmQw3CjH3nZ9iaeHcuOkq5/bqao/t/LyS6C0ucj36FSd9J4DqbbIxjuUcGZU
+         qkNotg3R+XA+4bmGDXE/WNsSnUvLtZd4hb6IG3ColWKzvG6kX17O++kO7Yv8I9bCvNFN
+         psbsDVVfL6jJ4B/1W3Wim9bSVSV9Y1pYUt9Bkf/is/JA/0eezU7p/oxkqUdrwdfbNtCV
+         IIqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=iIE5XFM5K7QbE20yyDiZj6SZSyFq4hlwbNrIPIzU0gY=;
-        b=KqzB21AdXVRtiffARvqhQZhFpUIbjouTN/HnEYV+rK2+4FsvG2mK03KCseI0orrJBO
-         bfOyTpLQfj4tQUxDVR7sie8oqGZ1BwmDs07C/vmHa1qvxyEnwUEVoxDlImrb8g0yUCaI
-         Tt+rmBrVKy9rjXmRhiw6dnhtQGHNIklrYFqCEOQ2xNrQqSosvx2Hyb/6YgH+yvc5tDvb
-         mIywE34O89BICIAaHZ1qrSi5MjFhuKbFuWBIfDqPdWSKYg9NdCOMWJfdzq+vCG9mVEu2
-         FmiwV34U0WvfsgNXUtl+HiNHORAyN/0Mt9HggezypfzNRBz57u3ZKPtBwfd20knLWBJ0
-         Xnzg==
-X-Gm-Message-State: ANhLgQ2AaDLI4eW+vwwQeo3i6b9rb1k1eIeQO7wcYvBPxBvOfOvlNFhc
-	2/gSNyNFB+G9CXWO/7H+FP/MBA==
-X-Google-Smtp-Source: ADFU+vthYqtijXEiYJ1M7gXE9t+NnabDok25352WJK4rM43tVjWFqpSgeiB1d/0wichYw3yjyVfreg==
-X-Received: by 2002:a17:902:8648:: with SMTP id y8mr18766618plt.153.1585684711969;
-        Tue, 31 Mar 2020 12:58:31 -0700 (PDT)
-Date: Tue, 31 Mar 2020 12:58:30 -0700
-From: Kees Cook <keescook@chromium.org>
-To: Andrii Nakryiko <andrii.nakryiko@gmail.com>
-Cc: Daniel Borkmann <daniel@iogearbox.net>, Jann Horn <jannh@google.com>,
-	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
-	bpf <bpf@vger.kernel.org>,
-	Kernel Hardening <kernel-hardening@lists.openwall.com>
-Subject: Re: CONFIG_DEBUG_INFO_BTF and CONFIG_GCC_PLUGIN_RANDSTRUCT
-Message-ID: <202003311257.3372EC63@keescook>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=O2Xjl+tu9dt8lDajpKq9iYoZKBoTg+AzZ/EUYxNULVg=;
+        b=bkudfP96o/eKpy+WI/enE/6CGKi19x74fbZ9ak84NJRHcCrLSQPHiKgaU6BfhHjp8a
+         DT/AzWuL9OI57kZFKkWb/0wKrYtEx9eZNa5HCuwDeYiT5VEKWADM0oIo3k1JpsEEtyYk
+         XohNOW4IhwbOhd8tCE3rzATQa2DdiCypNEI75H7n1cA4kPE5SwgCIdRLOsUSZcPy24eW
+         cAXnCVpuGQZJc4o7u7D+0fiFYjbrAzgRUUnV7tv7eWDcxWItrDtg9fwvdvDwv807AzCX
+         5stPn79g6PPj4BzYLxgmYqfBfZQgGj6utThBkuW08wSfH27VFl94wAIuPQra9Z6fvGzz
+         8CAA==
+X-Gm-Message-State: ANhLgQ1EfYm/tyI5N46KWjUOiOA7Hu7IEc0D9gahBJVvMsAXuX1pExtv
+	fc7Z5XK6LdCRt9aDR84/bEN7Srxpjxy2omdyHZ4=
+X-Google-Smtp-Source: ADFU+vvzLoOQupQEE/JE45FafsskjhAXiekCkRxUaEeeBCYJGZpyr6VsELMrWgDYhV0SA1r2TCgTjnyXrQIPYANunvc=
+X-Received: by 2002:a37:992:: with SMTP id 140mr6277399qkj.36.1585686221047;
+ Tue, 31 Mar 2020 13:23:41 -0700 (PDT)
+MIME-Version: 1.0
 References: <CAG48ez2sZ58VQ4+LJu39H1M0Y98LhRYR19G_fDAPJPBf7imxuw@mail.gmail.com>
  <CAADnVQ+Ux3-D_7ytRJx_Pz4fStRLS1vkM=-tGZ0paoD7n+JCLQ@mail.gmail.com>
  <CAG48ez0ajun-ujQQqhDRooha1F0BZd3RYKvbJ=8SsRiHAQjUzw@mail.gmail.com>
- <202003301016.D0E239A0@keescook>
- <c332da87-a770-8cf9-c252-5fb64c06c17e@iogearbox.net>
- <202003311110.2B08091E@keescook>
- <CAEf4BzYZsiuQGYVozwB=7nNhVYzCr=fQq6PLgHF3M5AXbhZyig@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAEf4BzYZsiuQGYVozwB=7nNhVYzCr=fQq6PLgHF3M5AXbhZyig@mail.gmail.com>
+ <202003301016.D0E239A0@keescook> <c332da87-a770-8cf9-c252-5fb64c06c17e@iogearbox.net>
+ <202003311110.2B08091E@keescook> <CAEf4BzYZsiuQGYVozwB=7nNhVYzCr=fQq6PLgHF3M5AXbhZyig@mail.gmail.com>
+ <202003311257.3372EC63@keescook>
+In-Reply-To: <202003311257.3372EC63@keescook>
+From: Andrii Nakryiko <andrii.nakryiko@gmail.com>
+Date: Tue, 31 Mar 2020 13:23:30 -0700
+Message-ID: <CAEf4BzYODtQtuO79BAn-m=2n8QwPRLd74UP-rwivHj6uLk3ycA@mail.gmail.com>
+Subject: Re: CONFIG_DEBUG_INFO_BTF and CONFIG_GCC_PLUGIN_RANDSTRUCT
+To: Kees Cook <keescook@chromium.org>
+Cc: Daniel Borkmann <daniel@iogearbox.net>, Jann Horn <jannh@google.com>, 
+	Alexei Starovoitov <alexei.starovoitov@gmail.com>, bpf <bpf@vger.kernel.org>, 
+	Kernel Hardening <kernel-hardening@lists.openwall.com>, Slava Bacherikov <slava@bacher09.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Mar 31, 2020 at 12:50:07PM -0700, Andrii Nakryiko wrote:
-> On Tue, Mar 31, 2020 at 11:12 AM Kees Cook <keescook@chromium.org> wrote:
-> >
-> > On Tue, Mar 31, 2020 at 12:41:04AM +0200, Daniel Borkmann wrote:
-> > > On 3/30/20 7:20 PM, Kees Cook wrote:
-> > > > On Mon, Mar 30, 2020 at 06:17:32PM +0200, Jann Horn wrote:
-> > > > > On Mon, Mar 30, 2020 at 5:59 PM Alexei Starovoitov
-> > > > > <alexei.starovoitov@gmail.com> wrote:
-> > > > > > On Mon, Mar 30, 2020 at 8:14 AM Jann Horn <jannh@google.com> wrote:
-> > > > > > >
-> > > > > > > I noticed that CONFIG_DEBUG_INFO_BTF seems to partly defeat the point
-> > > > > > > of CONFIG_GCC_PLUGIN_RANDSTRUCT.
-> > > > > >
-> > > > > > Is it a theoretical stmt or you have data?
-> > > > > > I think it's the other way around.
-> > > > > > gcc-plugin breaks dwarf and breaks btf.
-> > > > > > But I only looked at gcc patches without applying them.
-> > > > >
-> > > > > Ah, interesting - I haven't actually tested it, I just assumed
-> > > > > (perhaps incorrectly) that the GCC plugin would deal with DWARF info
-> > > > > properly.
-> > > >
-> > > > Yeah, GCC appears to create DWARF before the plugin does the
-> > > > randomization[1], so it's not an exposure, but yes, struct randomization
-> > > > is pretty completely incompatible with a bunch of things in the kernel
-> > > > (by design). I'm happy to add negative "depends" in the Kconfig if it
-> > > > helps clarify anything.
+On Tue, Mar 31, 2020 at 12:58 PM Kees Cook <keescook@chromium.org> wrote:
+>
+> On Tue, Mar 31, 2020 at 12:50:07PM -0700, Andrii Nakryiko wrote:
+> > On Tue, Mar 31, 2020 at 11:12 AM Kees Cook <keescook@chromium.org> wrote:
 > > >
-> > > Is this expected to get fixed at some point wrt DWARF? Perhaps would make
+> > > On Tue, Mar 31, 2020 at 12:41:04AM +0200, Daniel Borkmann wrote:
+> > > > On 3/30/20 7:20 PM, Kees Cook wrote:
+> > > > > On Mon, Mar 30, 2020 at 06:17:32PM +0200, Jann Horn wrote:
+> > > > > > On Mon, Mar 30, 2020 at 5:59 PM Alexei Starovoitov
+> > > > > > <alexei.starovoitov@gmail.com> wrote:
+> > > > > > > On Mon, Mar 30, 2020 at 8:14 AM Jann Horn <jannh@google.com> wrote:
+> > > > > > > >
+> > > > > > > > I noticed that CONFIG_DEBUG_INFO_BTF seems to partly defeat the point
+> > > > > > > > of CONFIG_GCC_PLUGIN_RANDSTRUCT.
+> > > > > > >
+> > > > > > > Is it a theoretical stmt or you have data?
+> > > > > > > I think it's the other way around.
+> > > > > > > gcc-plugin breaks dwarf and breaks btf.
+> > > > > > > But I only looked at gcc patches without applying them.
+> > > > > >
+> > > > > > Ah, interesting - I haven't actually tested it, I just assumed
+> > > > > > (perhaps incorrectly) that the GCC plugin would deal with DWARF info
+> > > > > > properly.
+> > > > >
+> > > > > Yeah, GCC appears to create DWARF before the plugin does the
+> > > > > randomization[1], so it's not an exposure, but yes, struct randomization
+> > > > > is pretty completely incompatible with a bunch of things in the kernel
+> > > > > (by design). I'm happy to add negative "depends" in the Kconfig if it
+> > > > > helps clarify anything.
+> > > >
+> > > > Is this expected to get fixed at some point wrt DWARF? Perhaps would make
+> > >
+> > > No, gcc closed the issue as "won't fix".
+> > >
+> > > > sense then to add a negative "depends" for both DWARF and BTF if the option
+> > > > GCC_PLUGIN_RANDSTRUCT is set given both would be incompatible/broken.
+> > >
+> > > I hadn't just to keep wider randconfig build test coverage. That said, I
+> > > could make it be: depends COMPILE_TEST || !DWARF ...
+> > >
+> > > I can certainly do that.
 > >
-> > No, gcc closed the issue as "won't fix".
+> > I've asked Slava in [0] to disable all three known configs that break
+> > DWARF and subsequently BTF, I hope it's ok to just do it in one patch.
+> > Currently all these appear to result in invalid BTF due to various
+> > DWARF modifications:
 > >
-> > > sense then to add a negative "depends" for both DWARF and BTF if the option
-> > > GCC_PLUGIN_RANDSTRUCT is set given both would be incompatible/broken.
+> >   - DEBUG_INFO_REDUCED (see [1])
+> >   - DEBUG_INFO_SPLIT (see [0]
+> >   - GCC_PLUGIN_RANDSTRUCT (this discussion).
 > >
-> > I hadn't just to keep wider randconfig build test coverage. That said, I
-> > could make it be: depends COMPILE_TEST || !DWARF ...
-> >
-> > I can certainly do that.
-> 
-> I've asked Slava in [0] to disable all three known configs that break
-> DWARF and subsequently BTF, I hope it's ok to just do it in one patch.
-> Currently all these appear to result in invalid BTF due to various
-> DWARF modifications:
-> 
->   - DEBUG_INFO_REDUCED (see [1])
->   - DEBUG_INFO_SPLIT (see [0]
->   - GCC_PLUGIN_RANDSTRUCT (this discussion).
-> 
->   [0] https://lore.kernel.org/bpf/CAEf4BzadnfAwfa1D0jZb=01Ou783GpK_U7PAYeEJca-L9kdnVA@mail.gmail.com/
->   [1] https://lore.kernel.org/bpf/CAEf4BzZri8KpwLcoPgjiVx_=QmJ2W9UzBkDqSO2rUWMzWogkKg@mail.gmail.com/
+> >   [0] https://lore.kernel.org/bpf/CAEf4BzadnfAwfa1D0jZb=01Ou783GpK_U7PAYeEJca-L9kdnVA@mail.gmail.com/
+> >   [1] https://lore.kernel.org/bpf/CAEf4BzZri8KpwLcoPgjiVx_=QmJ2W9UzBkDqSO2rUWMzWogkKg@mail.gmail.com/
+>
+> Sure! That'd by fine by me. I'd just like it to be a "|| COMPILE_TEST"
+> for GCC_PLUGIN_RANDSTRUCT. Feel free to CC me for an Ack. :)
+>
 
-Sure! That'd by fine by me. I'd just like it to be a "|| COMPILE_TEST"
-for GCC_PLUGIN_RANDSTRUCT. Feel free to CC me for an Ack. :)
++cc Slava
 
--Kees
+I'm unsure what COMPILE_TEST dependency (or is it anti-dependency?)
+has to do with BTF generation and reading description in Kconfig
+didn't clarify it for me. Can you please elaborate just a bit? Thanks!
 
-> 
-> 
+> -Kees
+>
 > >
-> > -Kees
 > >
-> > [1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=84052
-> >
-> > --
-> > Kees Cook
-
--- 
-Kees Cook
+> > >
+> > > -Kees
+> > >
+> > > [1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=84052
+> > >
+> > > --
+> > > Kees Cook
+>
+> --
+> Kees Cook
