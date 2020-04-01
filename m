@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18347-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18350-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id D092019A643
-	for <lists+kernel-hardening@lfdr.de>; Wed,  1 Apr 2020 09:32:48 +0200 (CEST)
-Received: (qmail 21964 invoked by uid 550); 1 Apr 2020 07:32:42 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 58DF519A651
+	for <lists+kernel-hardening@lfdr.de>; Wed,  1 Apr 2020 09:35:11 +0200 (CEST)
+Received: (qmail 26273 invoked by uid 550); 1 Apr 2020 07:35:06 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,91 +13,81 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 21931 invoked from network); 1 Apr 2020 07:32:42 -0000
+Received: (qmail 26235 invoked from network); 1 Apr 2020 07:35:06 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=Q2zlprsjpvbH/CUCgF6/KaFZrKtD3zRPUib4YqmUolQ=;
-        b=eH7GQi4Fb+gecHNihtjNMlPCkT58qolygnegnhh5hSJE1vBUBJ66LNnElFLF0DunMT
-         FDAwRc5Hey0enMXIuTw8vOI9JR6u+IfleFr/zhPd9/fbIfhyQFu1uS1hiiX8gUWqR+RG
-         PBAMcJAeTHpk9Uk9APR8+Vb/7wsuXYEM+S8fs=
+         :content-disposition:in-reply-to;
+        bh=e9j0gXLS8BiPnG8hg4KhkQMvt4m3nuldxIMCe99NUSM=;
+        b=CzwRDrj2h0sa5kX72PUVDeT6L3fY9qudsdi8KkOaBKK9gQI9Rk35RY8a+tf/7T/90X
+         Zl5oGkGuBSVb657tgNqL16cqTQjKM3o1b6z/xqQcfhcf5YAqC/8MEoQ6vJl0xnuS4T1p
+         bLhOvG+N19w8AdK3xAI90GJXQBJzHg/Idzk0c=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=Q2zlprsjpvbH/CUCgF6/KaFZrKtD3zRPUib4YqmUolQ=;
-        b=bVRItl34sd8bX3qGyHO9833eOXj3VjYodo7hwtEinT/q5Lg3xe9CFT59ZiI6HGMA2L
-         xzio7kGoUqK38ePefWfpNy4kUwz3FdQV0gsfDPZi4nhAvsnfD7m+i5YyQUXlHN1dmUI/
-         YDS3cyo7Zb3dSx92tkqSJjNtszxSGKkc/Tc7N8AohMdIaAZ28ZaoqIftb78YeuDzSmY7
-         FdtffSbay200dMxQqn7EW13iaL4Nd+KFISwybcrlhetMyMY4Yn2Ald/uGqX6okISfLR3
-         d4/Z8H1h9SgD7Lf0G5Y89pL00PLn4VHZSecoEtdCUWshUNzp7q8cSNbIqRml1R/BFbh6
-         Yo0w==
-X-Gm-Message-State: AGi0PubKVFMxiy7fwZwNquuw1PjYbO3KU+7rVJKcmeXytI7eSdyi6f1a
-	RPx9KdgeVfj/5z++NnnReCYHpg==
-X-Google-Smtp-Source: APiQypKmwoN+WlTZJjmydYo5ouItfzTZNL+lOANxC/eXYfxIziyQqxNU1yxknZE8OOqBHFK5Z7Q0QA==
-X-Received: by 2002:a17:90b:4396:: with SMTP id in22mr3252194pjb.10.1585726350003;
-        Wed, 01 Apr 2020 00:32:30 -0700 (PDT)
-Date: Wed, 1 Apr 2020 00:32:28 -0700
+         :mime-version:content-disposition:in-reply-to;
+        bh=e9j0gXLS8BiPnG8hg4KhkQMvt4m3nuldxIMCe99NUSM=;
+        b=TlrU/AMr2cCa/VaOrm5B7OJ+SQIwAuIVB4spBtet4IB6/GxbUKf+cOBSExvdZ8/t8e
+         GLcnMqgQWTI+ITCD8gkFaapC7es9hgdrlY35AAtBxAJ0YbovKXmCOvNfnx6NPGcOaQ+3
+         4qjiplLzNbuD0NzYFu3LdRW2qUgvxC+bb40DKgQG+qJ5iREEZmfvZm2yFYCUW/0Yg/ab
+         UgIXFRrsq59Axh0LXo60H4vLuAbnoqoCgZhBs+/IRklPJxIWjP7d6bH5AWAZOe1rJGGS
+         egPCiu/kmCrUuQuwlZWlUgYcjQDetssDqHlumyl/w1YP/LiQ0oL3wxrKZMqNToBcsp6r
+         DjFg==
+X-Gm-Message-State: AGi0PubnR8BfrH/UZJZw7TLxPjr7qORH/sgZABP6Rnyn4WXNnRmIqOpQ
+	tBEnIZunqdEb2zPQoOpf0CIt0g==
+X-Google-Smtp-Source: APiQypJDNRDZ33Sc9rxPUXsp2xFXUXbugulWQqiDDPonuNaxSEsO5TuU3WlX80cycoM1zufaEYn2wA==
+X-Received: by 2002:a17:902:6acc:: with SMTP id i12mr7180158plt.61.1585726494195;
+        Wed, 01 Apr 2020 00:34:54 -0700 (PDT)
+Date: Wed, 1 Apr 2020 00:34:52 -0700
 From: Kees Cook <keescook@chromium.org>
 To: Slava Bacherikov <slava@bacher09.org>
-Cc: Andrii Nakryiko <andrii.nakryiko@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jann Horn <jannh@google.com>,
-	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
-	bpf <bpf@vger.kernel.org>,
-	Kernel Hardening <kernel-hardening@lists.openwall.com>
-Subject: Re: CONFIG_DEBUG_INFO_BTF and CONFIG_GCC_PLUGIN_RANDSTRUCT
-Message-ID: <202004010029.167BA4AA1F@keescook>
-References: <CAG48ez2sZ58VQ4+LJu39H1M0Y98LhRYR19G_fDAPJPBf7imxuw@mail.gmail.com>
- <CAADnVQ+Ux3-D_7ytRJx_Pz4fStRLS1vkM=-tGZ0paoD7n+JCLQ@mail.gmail.com>
- <CAG48ez0ajun-ujQQqhDRooha1F0BZd3RYKvbJ=8SsRiHAQjUzw@mail.gmail.com>
- <202003301016.D0E239A0@keescook>
- <c332da87-a770-8cf9-c252-5fb64c06c17e@iogearbox.net>
- <202003311110.2B08091E@keescook>
- <CAEf4BzYZsiuQGYVozwB=7nNhVYzCr=fQq6PLgHF3M5AXbhZyig@mail.gmail.com>
- <202003311257.3372EC63@keescook>
- <CAEf4BzYODtQtuO79BAn-m=2n8QwPRLd74UP-rwivHj6uLk3ycA@mail.gmail.com>
- <8962ffa8-69b7-ab6b-3969-3029a95dfcec@bacher09.org>
+Cc: andriin@fb.com, bpf@vger.kernel.org, linux-kernel@vger.kernel.org,
+	jannh@google.com, alexei.starovoitov@gmail.com,
+	daniel@iogearbox.net, kernel-hardening@lists.openwall.com,
+	Liu Yiding <liuyd.fnst@cn.fujitsu.com>
+Subject: Re: [PATCH v2 bpf] kbuild: fix dependencies for DEBUG_INFO_BTF
+Message-ID: <202004010033.A1523890@keescook>
+References: <20200331215536.34162-1-slava@bacher09.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <8962ffa8-69b7-ab6b-3969-3029a95dfcec@bacher09.org>
+In-Reply-To: <20200331215536.34162-1-slava@bacher09.org>
 
-On Wed, Apr 01, 2020 at 12:24:46AM +0300, Slava Bacherikov wrote:
-> 31.03.2020 23:23, Andrii Nakryiko пишет:
-> > On Tue, Mar 31, 2020 at 12:58 PM Kees Cook <keescook@chromium.org> wrote:
-> >> Sure! That'd by fine by me. I'd just like it to be a "|| COMPILE_TEST"
-> >> for GCC_PLUGIN_RANDSTRUCT. Feel free to CC me for an Ack. :)
-> >>
-> > 
-> > +cc Slava
-> > 
-> > I'm unsure what COMPILE_TEST dependency (or is it anti-dependency?)
-> > has to do with BTF generation and reading description in Kconfig
-> > didn't clarify it for me. Can you please elaborate just a bit? Thanks!
-> > 
-> >> -Kees
+On Wed, Apr 01, 2020 at 12:55:37AM +0300, Slava Bacherikov wrote:
+> Currently turning on DEBUG_INFO_SPLIT when DEBUG_INFO_BTF is also
+> enabled will produce invalid btf file, since gen_btf function in
+> link-vmlinux.sh script doesn't handle *.dwo files.
 > 
-> Hi,
+> Enabling DEBUG_INFO_REDUCED will also produce invalid btf file, and
+> using GCC_PLUGIN_RANDSTRUCT with BTF makes no sense.
 > 
-> Regarding COMPILE_TEST, DEBUG_INFO has dependency on:
+> Signed-off-by: Slava Bacherikov <slava@bacher09.org>
+> Reported-by: Jann Horn <jannh@google.com>
+> Reported-by: Liu Yiding <liuyd.fnst@cn.fujitsu.com>
+> Fixes: e83b9f55448a ("kbuild: add ability to generate BTF type info for vmlinux")
+> ---
+>  lib/Kconfig.debug | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> DEBUG_KERNEL && !COMPILE_TEST
-> 
-> And DEBUG_INFO_BTF depends on DEBUG_INFO, so enabling COMPILE_TEST
-> would block DEBUG_INFO and so DEBUG_INFO_BTF as well. Unless I don't
-> understand something and there is some other reason to add it.
+> diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
+> index f61d834e02fe..9ae288e2a6c0 100644
+> --- a/lib/Kconfig.debug
+> +++ b/lib/Kconfig.debug
+> @@ -223,6 +223,7 @@ config DEBUG_INFO_DWARF4
+>  config DEBUG_INFO_BTF
+>  	bool "Generate BTF typeinfo"
+>  	depends on DEBUG_INFO
+> +	depends on !DEBUG_INFO_SPLIT && !DEBUG_INFO_REDUCED && !GCC_PLUGIN_RANDSTRUCT
+>  	help
+>  	  Generate deduplicated BTF type information from DWARF debug info.
+>  	  Turning this on expects presence of pahole tool, which will convert
 
-I meant that if you're adjusting the depends for GCC_PLUGIN_RANDSTRUCT,
-I'd like it to be:
+Please make this:
 
-	depends on COMPILE_TEST || !DEBUG_INFO
+depends on !DEBUG_INFO_SPLIT && !DEBUG_INFO_REDUCED
+depends on COMPILE_TEST || !GCC_PLUGIN_RANDSTRUCT
 
-That way randconfig, all*config, etc, will still select
-GCC_PLUGIN_RANDSTRUCT with everything else, regardless of DEBUG_INFO.
+-Kees
 
 -- 
 Kees Cook
