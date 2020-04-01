@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18363-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18364-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 96C9A19B913
-	for <lists+kernel-hardening@lfdr.de>; Thu,  2 Apr 2020 01:52:13 +0200 (CEST)
-Received: (qmail 22429 invoked by uid 550); 1 Apr 2020 23:52:08 -0000
+	by mail.lfdr.de (Postfix) with SMTP id B1D6519B926
+	for <lists+kernel-hardening@lfdr.de>; Thu,  2 Apr 2020 01:56:17 +0200 (CEST)
+Received: (qmail 25857 invoked by uid 550); 1 Apr 2020 23:56:13 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,41 +13,42 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 22409 invoked from network); 1 Apr 2020 23:52:07 -0000
+Received: (qmail 25837 invoked from network); 1 Apr 2020 23:56:12 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linux-foundation.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=H9rQ+4MX6AGqiS4gDh7zcouPJInPh/6Vm7fyt3tgD0k=;
-        b=JX+jSiMzF2RZC7X1UHsV906x8DewgkAwWN6EQ17vLXZEJQX6swhg/zVI1vxFEEZxIH
-         PbSD0KAyottCcGb/rT1bEA1sm5NRoFsrhBrQoH3A79V86rZeArdSk7sJvXfa6DN/8YJY
-         Q2hGYFvnvtsGpe9Mfmd01M2hX1hq6hVJbWiug=
+        bh=/BfWZS5+9as5lD6vEMwl/6xxGz06a9gloYkQ+RKeiao=;
+        b=JfE6FWMW0WrTIHwAtwqL3bo+qhTInr5LXI005KEawz6BRmX/rJrge8UmPsiMK5pPpc
+         uTi9rFGFrfCf6pGgobgz2x2SN1yInjn8O4MwUNtnjY4Fxxg3pNbTXYvif4DrVZeLWFYk
+         NwMooEZifjvk8bHNwWTVKU9ykqNbijKLOcb/k=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=H9rQ+4MX6AGqiS4gDh7zcouPJInPh/6Vm7fyt3tgD0k=;
-        b=YGDJGDMeTu0kRmqKDEb3qwguLrBvz8rVALvlWVN4l5SrDfZpBos751OVlgXkAb9fJO
-         sACd4/9Cv+SYk54Q/2RoZNUfeFPh+zH2390isuQHRVzsqU0siMen/+KQ1cmhySpNuHTk
-         enmDfO5T5khjzfyN3bsnn/enpsgs/H1RIpZYrw62a90R1pQ7BAzBFKC1XnF7HmNmuwi4
-         L/x0WLhMlUYc8nS+Mhx/XjyOzhshaSos68ANMAwR85+R8AXlyXUAcw3W6RjYQ/I5I9eM
-         lK0HMS23iX0t4gtxQHm5w3YWwSBMU01FtoN4EAzXIO0/XjZK7TJnMzTRuGDCnOEGF7GR
-         m3xA==
-X-Gm-Message-State: AGi0Pua+kg6XjlastQZnTAf20yQndKs8nJxNgHl5lULGKjfugmGC8bi7
-	ls7ViA6+l+h7EPbbMLrBJ4blz9aKPOo=
-X-Google-Smtp-Source: APiQypJ6PKebZ2J92cswyQGoFWnzCa6ctAjdOjNCnnbH3lYxRYup2Ks7aLiPGWtd+/s/ySS0dsFA0g==
-X-Received: by 2002:a2e:9959:: with SMTP id r25mr377692ljj.200.1585785115656;
-        Wed, 01 Apr 2020 16:51:55 -0700 (PDT)
-X-Received: by 2002:a2e:8652:: with SMTP id i18mr373016ljj.265.1585785113845;
- Wed, 01 Apr 2020 16:51:53 -0700 (PDT)
+        bh=/BfWZS5+9as5lD6vEMwl/6xxGz06a9gloYkQ+RKeiao=;
+        b=BVpbgCdJbllnSY59Z25HuVi0hwF+hYuR6UKWO0hC2g9CXxa9idczIDwSba8LZjyHeA
+         fBc+SnLezmiEhjwsX6boyacyE/MAGJze8pnCmdHbNKda0lnAYjNZhZgbOB5HfvVonDkg
+         dmxt12Y5EEQxV4e67CUizmLrw3ycxKJP8bn+0hItdohx8kDE1ZApvoj54IepEemFY3vt
+         LmZs9VY/U5AbSw3rJs7JHF0oLcXiOAw12CktsE409rPGCejH7eHxmctnLN1yVB+m6mMX
+         5bS4otwF8TTXhQ9PDFP9YneKYfxgJwjcaYyoeKIYyhsrLoMCa7uFJpZktiY5SMZatvQT
+         6kag==
+X-Gm-Message-State: AGi0PuaF8EOT6EKEIJkjIvLKofjPNHUBm5i+tc8T+x5AghfUP9qESQGi
+	yUgA0UnXNfT2LY+9u5Dgd0p7uz0VZRY=
+X-Google-Smtp-Source: APiQypJi20g7wYESJp1kDEQeKKcBIbv8GQ7gDuC6sNUfWlOlDuoDzV6kANwvdp4EMT4wZp3pXXUUnw==
+X-Received: by 2002:a2e:9718:: with SMTP id r24mr326765lji.287.1585785360505;
+        Wed, 01 Apr 2020 16:56:00 -0700 (PDT)
+X-Received: by 2002:a2e:b4cb:: with SMTP id r11mr371604ljm.201.1585785358260;
+ Wed, 01 Apr 2020 16:55:58 -0700 (PDT)
 MIME-Version: 1.0
 References: <20200324215049.GA3710@pi3.com.pl> <202003291528.730A329@keescook>
  <87zhbvlyq7.fsf_-_@x220.int.ebiederm.org> <CAG48ez3nYr7dj340Rk5-QbzhsFq0JTKPf2MvVJ1-oi1Zug1ftQ@mail.gmail.com>
-In-Reply-To: <CAG48ez3nYr7dj340Rk5-QbzhsFq0JTKPf2MvVJ1-oi1Zug1ftQ@mail.gmail.com>
+ <CAHk-=wjz0LEi68oGJSQzZ--3JTFF+dX2yDaXDRKUpYxtBB=Zfw@mail.gmail.com>
+In-Reply-To: <CAHk-=wjz0LEi68oGJSQzZ--3JTFF+dX2yDaXDRKUpYxtBB=Zfw@mail.gmail.com>
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Wed, 1 Apr 2020 16:51:38 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wjz0LEi68oGJSQzZ--3JTFF+dX2yDaXDRKUpYxtBB=Zfw@mail.gmail.com>
-Message-ID: <CAHk-=wjz0LEi68oGJSQzZ--3JTFF+dX2yDaXDRKUpYxtBB=Zfw@mail.gmail.com>
+Date: Wed, 1 Apr 2020 16:55:42 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wgM3qZeChs_1yFt8p8ye1pOaM_cX57BZ_0+qdEPcAiaCQ@mail.gmail.com>
+Message-ID: <CAHk-=wgM3qZeChs_1yFt8p8ye1pOaM_cX57BZ_0+qdEPcAiaCQ@mail.gmail.com>
 Subject: Re: [PATCH] signal: Extend exec_id to 64bits
 To: Jann Horn <jannh@google.com>
 Cc: "Eric W. Biederman" <ebiederm@xmission.com>, Alan Stern <stern@rowland.harvard.edu>, 
@@ -64,17 +65,18 @@ Cc: "Eric W. Biederman" <ebiederm@xmission.com>, Alan Stern <stern@rowland.harva
 	stable <stable@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Apr 1, 2020 at 4:37 PM Jann Horn <jannh@google.com> wrote:
+On Wed, Apr 1, 2020 at 4:51 PM Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
 >
-> GCC will generate code for this without complaining, but I think it'll
-> probably generate a tearing store on 32-bit platforms:
+> It's literally testing a sequence counter for equality. If you get
+> tearing in the high bits on the write (or the read), you'd still need
+> to have the low bits turn around 4G times to get a matching value.
 
-This is very much a "we don't care" case.
+Put another way: first you'd have to work however many weeks to do 4
+billion execve() calls, and then you need to hit basically a
+single-instruction race to take advantage of it.
 
-It's literally testing a sequence counter for equality. If you get
-tearing in the high bits on the write (or the read), you'd still need
-to have the low bits turn around 4G times to get a matching value.
+Good luck with that. If you have that kind of God-like capability,
+whoever you're attacking stands no chance in the first place.
 
-So no. We're not doing atomics for the 32-bit case. That's insane.
-
-               Linus
+                  Linus
