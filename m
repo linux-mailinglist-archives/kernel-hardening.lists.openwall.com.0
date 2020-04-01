@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18350-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18353-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 58DF519A651
-	for <lists+kernel-hardening@lfdr.de>; Wed,  1 Apr 2020 09:35:11 +0200 (CEST)
-Received: (qmail 26273 invoked by uid 550); 1 Apr 2020 07:35:06 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 182C819A791
+	for <lists+kernel-hardening@lfdr.de>; Wed,  1 Apr 2020 10:40:39 +0200 (CEST)
+Received: (qmail 16195 invoked by uid 550); 1 Apr 2020 08:40:33 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,81 +13,79 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 26235 invoked from network); 1 Apr 2020 07:35:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=e9j0gXLS8BiPnG8hg4KhkQMvt4m3nuldxIMCe99NUSM=;
-        b=CzwRDrj2h0sa5kX72PUVDeT6L3fY9qudsdi8KkOaBKK9gQI9Rk35RY8a+tf/7T/90X
-         Zl5oGkGuBSVb657tgNqL16cqTQjKM3o1b6z/xqQcfhcf5YAqC/8MEoQ6vJl0xnuS4T1p
-         bLhOvG+N19w8AdK3xAI90GJXQBJzHg/Idzk0c=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=e9j0gXLS8BiPnG8hg4KhkQMvt4m3nuldxIMCe99NUSM=;
-        b=TlrU/AMr2cCa/VaOrm5B7OJ+SQIwAuIVB4spBtet4IB6/GxbUKf+cOBSExvdZ8/t8e
-         GLcnMqgQWTI+ITCD8gkFaapC7es9hgdrlY35AAtBxAJ0YbovKXmCOvNfnx6NPGcOaQ+3
-         4qjiplLzNbuD0NzYFu3LdRW2qUgvxC+bb40DKgQG+qJ5iREEZmfvZm2yFYCUW/0Yg/ab
-         UgIXFRrsq59Axh0LXo60H4vLuAbnoqoCgZhBs+/IRklPJxIWjP7d6bH5AWAZOe1rJGGS
-         egPCiu/kmCrUuQuwlZWlUgYcjQDetssDqHlumyl/w1YP/LiQ0oL3wxrKZMqNToBcsp6r
-         DjFg==
-X-Gm-Message-State: AGi0PubnR8BfrH/UZJZw7TLxPjr7qORH/sgZABP6Rnyn4WXNnRmIqOpQ
-	tBEnIZunqdEb2zPQoOpf0CIt0g==
-X-Google-Smtp-Source: APiQypJDNRDZ33Sc9rxPUXsp2xFXUXbugulWQqiDDPonuNaxSEsO5TuU3WlX80cycoM1zufaEYn2wA==
-X-Received: by 2002:a17:902:6acc:: with SMTP id i12mr7180158plt.61.1585726494195;
-        Wed, 01 Apr 2020 00:34:54 -0700 (PDT)
-Date: Wed, 1 Apr 2020 00:34:52 -0700
-From: Kees Cook <keescook@chromium.org>
-To: Slava Bacherikov <slava@bacher09.org>
-Cc: andriin@fb.com, bpf@vger.kernel.org, linux-kernel@vger.kernel.org,
-	jannh@google.com, alexei.starovoitov@gmail.com,
-	daniel@iogearbox.net, kernel-hardening@lists.openwall.com,
-	Liu Yiding <liuyd.fnst@cn.fujitsu.com>
-Subject: Re: [PATCH v2 bpf] kbuild: fix dependencies for DEBUG_INFO_BTF
-Message-ID: <202004010033.A1523890@keescook>
-References: <20200331215536.34162-1-slava@bacher09.org>
+Received: (qmail 16148 invoked from network); 1 Apr 2020 08:40:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1585730419;
+	bh=yOZ6t/Gl6Iy7HVC0u60CLMokCXrPywPPg/GEC4Tb6K8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=rTTk8b3G6QIpfgO26cm3aA8BrUITT9Y4fB1u6SUaeS/clr7LIkwPxJuHpPqBgPZHn
+	 GlDqC9tLDR8JRJltMeLXcNqXe7H7MY606DxVN2a7EqGogHa7wo7NjDH7O+keIQZHN9
+	 bDBGIsrFgjnLSafMyMWS3zZAisL5LPN7wrkdGmPs=
+Date: Wed, 1 Apr 2020 09:40:15 +0100
+From: Will Deacon <will@kernel.org>
+To: Marco Elver <elver@google.com>
+Cc: LKML <linux-kernel@vger.kernel.org>, Eric Dumazet <edumazet@google.com>,
+	Jann Horn <jannh@google.com>, Kees Cook <keescook@chromium.org>,
+	Maddie Stone <maddiestone@google.com>,
+	"Paul E . McKenney" <paulmck@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>, kernel-team@android.com,
+	kernel-hardening@lists.openwall.com
+Subject: Re: [RFC PATCH 03/21] list: Annotate lockless list primitives with
+ data_race()
+Message-ID: <20200401084014.GC16446@willie-the-truck>
+References: <20200324153643.15527-1-will@kernel.org>
+ <20200324153643.15527-4-will@kernel.org>
+ <CANpmjNPWpkxqZQJJOwmx0oqvzfcxhtqErjCzjRO_y0BQSmre8A@mail.gmail.com>
+ <20200331131002.GA30975@willie-the-truck>
+ <CANpmjNN-nN1OfGNXmsaTtM=11sth7YJTJMePzXgBRU73ohkBjQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200331215536.34162-1-slava@bacher09.org>
+In-Reply-To: <CANpmjNN-nN1OfGNXmsaTtM=11sth7YJTJMePzXgBRU73ohkBjQ@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Wed, Apr 01, 2020 at 12:55:37AM +0300, Slava Bacherikov wrote:
-> Currently turning on DEBUG_INFO_SPLIT when DEBUG_INFO_BTF is also
-> enabled will produce invalid btf file, since gen_btf function in
-> link-vmlinux.sh script doesn't handle *.dwo files.
+On Wed, Apr 01, 2020 at 08:34:36AM +0200, Marco Elver wrote:
+> On Tue, 31 Mar 2020 at 15:10, Will Deacon <will@kernel.org> wrote:
+> > On Tue, Mar 24, 2020 at 05:23:30PM +0100, Marco Elver wrote:
+> > > Then, my suggestion would be to mark the write with data_race() and
+> > > just leave this as a READ_ONCE(). Having a data_race() somewhere only
+> > > makes KCSAN stop reporting the race if the paired access is also
+> > > marked (be it with data_race() or _ONCE, etc.).
+> >
+> > The problem with taking that approach is that it ends up much of the
+> > list implementation annotated with either WRITE_ONCE() or data_race(),
+> > meaning that concurrent, racy list operations will no longer be reported
+> > by KCSAN. I think that's a pretty big deal and I'm strongly against
+> > annotating the internals of library code such as this because it means
+> > that buggy callers will largely go undetected.
+> >
+> > The situation we have here is that some calls, e.g. hlist_empty() are
+> > safe even in the presence of a racy write and I'd like to suppress KCSAN
+> > reports without annotating the writes at all.
+> >
+> > > Alternatively, if marking the write is impossible, you can surround
+> > > the access with kcsan_disable_current()/kcsan_enable_current(). Or, as
+> > > a last resort, just leaving as-is is fine too, because KCSAN's default
+> > > config (still) has KCSAN_ASSUME_PLAIN_WRITES_ATOMIC selected.
+> >
+> > Hmm, I suppose some bright spark will want to change the default at the some
+> > point though, no? ;) I'll look at using
+> > kcsan_disable_current()/kcsan_enable_current(), thanks.
 > 
-> Enabling DEBUG_INFO_REDUCED will also produce invalid btf file, and
-> using GCC_PLUGIN_RANDSTRUCT with BTF makes no sense.
-> 
-> Signed-off-by: Slava Bacherikov <slava@bacher09.org>
-> Reported-by: Jann Horn <jannh@google.com>
-> Reported-by: Liu Yiding <liuyd.fnst@cn.fujitsu.com>
-> Fixes: e83b9f55448a ("kbuild: add ability to generate BTF type info for vmlinux")
-> ---
->  lib/Kconfig.debug | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-> index f61d834e02fe..9ae288e2a6c0 100644
-> --- a/lib/Kconfig.debug
-> +++ b/lib/Kconfig.debug
-> @@ -223,6 +223,7 @@ config DEBUG_INFO_DWARF4
->  config DEBUG_INFO_BTF
->  	bool "Generate BTF typeinfo"
->  	depends on DEBUG_INFO
-> +	depends on !DEBUG_INFO_SPLIT && !DEBUG_INFO_REDUCED && !GCC_PLUGIN_RANDSTRUCT
->  	help
->  	  Generate deduplicated BTF type information from DWARF debug info.
->  	  Turning this on expects presence of pahole tool, which will convert
+> I think this will come up again (it did already come up in some other
+> patch I reviewed, and Paul also mentioned it), so it seems best to
+> change data_race() to match the intuitive semantics of just completely
+> ignoring the access marked with it. I.e. marking accesses racing with
+> accesses marked with data_race() is now optional:
+>   https://lkml.kernel.org/r/20200331193233.15180-1-elver@google.com
 
-Please make this:
+/me goes look. Thanks!
 
-depends on !DEBUG_INFO_SPLIT && !DEBUG_INFO_REDUCED
-depends on COMPILE_TEST || !GCC_PLUGIN_RANDSTRUCT
+> In which case, the original patch you had here works just fine.
 
--Kees
+Ah yes, so now data_race(READ_ONCE(...)) does make sense as a combination.
+It's tempting to wrap that up as an accessor, but actually forcing people to
+spell it out might not be a bad thing after all.
 
--- 
-Kees Cook
+Will
