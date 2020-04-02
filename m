@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18398-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18399-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 6588419CB44
-	for <lists+kernel-hardening@lfdr.de>; Thu,  2 Apr 2020 22:34:52 +0200 (CEST)
-Received: (qmail 1265 invoked by uid 550); 2 Apr 2020 20:34:46 -0000
+	by mail.lfdr.de (Postfix) with SMTP id C992319CBB5
+	for <lists+kernel-hardening@lfdr.de>; Thu,  2 Apr 2020 22:38:40 +0200 (CEST)
+Received: (qmail 3536 invoked by uid 550); 2 Apr 2020 20:38:36 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,83 +13,100 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 1232 invoked from network); 2 Apr 2020 20:34:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=yY13RK0cKLrRjyvVBZully+r67kfxos978vIN0ruhpk=;
-        b=KM2DmTOwPos0F7tLttvMAVY1LIa4ppIAmoFp2MqTGkdJDILQMA+dZFGoZUczJkP06n
-         tIY11T4DiaYxZ3XpYIcaUADijDTLfmnhM6w5KLWiXD/U/5E644jQ7tBWEtkWTvI15PEr
-         VVKHw3OqKjW7vcSabDsfT8G6FUxq86I+tgWHI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=yY13RK0cKLrRjyvVBZully+r67kfxos978vIN0ruhpk=;
-        b=meNScW3CJMUlHHwuRETTsDOPO3+qHjphf8WX/EI/TaPSFR5zFLaNWrFq84jLmwIZrl
-         XvCj2L+VL5EPz40xgPhFxK7S2OZlT9tJoFhwuHQsydyIRHYB9wbtP/CiXcv0PQQTss2N
-         jIx218T/qfHq6yZwgs8kif9Nqpi3yMFhGnVX4eoklRcFJn6rm1EqzUdPfnrJHLwxGIa+
-         eiUJZYDTaOnyUpf1dL5+uylBimc1n0wYxc0VGS957J95zVkBZLLn6nMSQF8+mEvbv+yj
-         SWGv/lwKSIBkSSLWgGluQyvzV23Owk/MfGGEoadHLu7g154lW/wjvZEyaBappS5lq9GP
-         OUVQ==
-X-Gm-Message-State: AGi0PuYxsGRM+E1UfxanTm9wL6lUOddkofWwW0OfJtBtVycxtw1+HVwM
-	FUgkJHzYHma8CPZsXEPqWKDgcw==
-X-Google-Smtp-Source: APiQypIs5T+kRG38bpYFVlAfcbXCyZRjGu+qpBmjvk/e/tatzFR3rVbYNciSAuDjjUc5Jz4/iCXxsA==
-X-Received: by 2002:a63:8f17:: with SMTP id n23mr5078110pgd.417.1585859673922;
-        Thu, 02 Apr 2020 13:34:33 -0700 (PDT)
-Date: Thu, 2 Apr 2020 13:34:32 -0700
-From: Kees Cook <keescook@chromium.org>
-To: Andrii Nakryiko <andrii.nakryiko@gmail.com>
-Cc: Slava Bacherikov <slava@bacher09.org>, Andrii Nakryiko <andriin@fb.com>,
-	bpf <bpf@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Kernel Hardening <kernel-hardening@lists.openwall.com>,
-	Liu Yiding <liuyd.fnst@cn.fujitsu.com>, kpsingh@google.com
+Received: (qmail 3501 invoked from network); 2 Apr 2020 20:38:35 -0000
 Subject: Re: [PATCH v4 bpf] kbuild: fix dependencies for DEBUG_INFO_BTF
-Message-ID: <202004021328.E6161480@keescook>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bacher09.org;
+	s=reg; t=1585859903;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=yU9hKHsWF04/aHMSAoqtWXojqC2smH8PJdSe85WG+s0=;
+	b=ZCMoDjDEQ+JMvQThTix0Oq40GUHZekLHqu/CMFOVQHlLzDzemAnV0G9FfYylWzY445heWK
+	jghG+YF5yjomUG0DryIiXNHyQHEZJ+HFnYokjYUD4Y2pMRmRehNbw5dQfgTI5J3rprAQt0
+	SA3TqCtBHlEzjZosZtNEXBknwyCTt6c=
+To: Kees Cook <keescook@chromium.org>,
+ Andrii Nakryiko <andrii.nakryiko@gmail.com>
+Cc: Andrii Nakryiko <andriin@fb.com>, bpf <bpf@vger.kernel.org>,
+ open list <linux-kernel@vger.kernel.org>, Jann Horn <jannh@google.com>,
+ Alexei Starovoitov <alexei.starovoitov@gmail.com>,
+ Daniel Borkmann <daniel@iogearbox.net>,
+ Kernel Hardening <kernel-hardening@lists.openwall.com>,
+ Liu Yiding <liuyd.fnst@cn.fujitsu.com>, kpsingh@google.com
 References: <202004010849.CC7E9412@keescook>
  <20200402153335.38447-1-slava@bacher09.org>
  <f43f4e17-f496-9ee1-7d89-c8f742720a5f@bacher09.org>
  <CAEf4Bzb2mgDPcdNGWnBgoqsuWYqDiv39U2irn4iCp=7B3kx1nA@mail.gmail.com>
+ <202004021328.E6161480@keescook>
+From: Slava Bacherikov <slava@bacher09.org>
+Autocrypt: addr=slava@bacher09.org; prefer-encrypt=mutual; keydata=
+ mQINBFFdcIUBEAC9HZz+DbqCs+jyJjpvRyped8U4bz716OZKvZCTH4fNxrrV0fYWRn7LJ/dU
+ r5tBnwhmlTWD4v6hk88qpD9flagkSP4UuIAo+3aopxvrkyWXXYiEAjSL2uTFolcEO40HuYPk
+ 7nprTEzHcHgcYq2wzJfE046gimzFYcUXkrv1gC89RdkwOgLTFb80QUpKyVeoKJWKWHPfRqGF
+ FxpFwMnW3IrgZhOnl8X859WwKUc/agPz05LjaksGpAP8ayfruxtG/3Hl7OulYPWIkTuxHAtK
+ xW9QL7Vt24P8rVLC7sgNZYcjaOcY70PCkGLnquETuIeeCwhKr/e2n+ymH+CxlAiUY+blNpO5
+ S5P+rwb0qPvGDzjF+Drdp0ye/S3kMa+FNrELW06Fp74p7BgsPgNsuBVg300JWMFXiS7YeMZV
+ cyedAzGbcO8yxrY6ZnuNF8rLiZOYde79yN82wTNw/fWZtHhz8QJELZzMNjZd3/w61ztSs9ng
+ mduiqv9EyNKlEEuxy6N4jGTQ2YYLE/YcIx654rCfpJWJhj2kDd4k2uNRrhJI7t4duHC86K4M
+ HiOwC7PIKlIbtrpYnTZPXXcQHp69LDzxCAA6dgGkhjZsUTVci0rTEfRQjkXYvK/f3P1SHF1M
+ EHoeEaclqvpkuvPcbHQ/TBwBJs+ekdFCTmBzv0UwqZKfaPW5yQARAQABtDJTbGF2YSBCYWNo
+ ZXJpa292IChNeSBOZXcgS2V5KSA8c2xhdmFAYmFjaGVyMDkub3JnPokCWQQTAQIAQwIbIwUJ
+ DShogAcLCQgHAwIBBhUIAgkKCwQWAgMBAh4BAheAFiEEZkmc+DLOftzkG8AWUSYbvb34nfMF
+ AlkF95wCGQEACgkQUSYbvb34nfO7FQ//drNtAxFi294vVZnN+wyVimXGiyBHpBPnEK5/hSQ5
+ oBVvjFl8Ws7q13WWklhdPgM3atAukADMG5wr3IM3ctS1L2+502TYGv8W5jvUlso/TxjNdVQz
+ SDicmPCMMs91BWHiJHkYKErUXxNtCaBQqVV2rAKiDoK1gtFrWfH/3OgP6RS+mLMt5eJ/PHsc
+ kAuvaXOIzWxjclGMB2yAQzmK7SImOHp7YUBqXrOt523sz29p+1q0+y6ZRlPNctys/okUdnoK
+ bi0rMBqbHngaoi/al9Clh9jrhqjZHJLPSM091u3ubuQkvtg3BOhqs0I/b7Xz83VxN0pj8XHI
+ z4MRFwfhVSKW4pRLf92DKAa9PEYxA9QtboKafZG2EJfrUauba29/JoIh8Evi5MIuWNeZK7pK
+ t3+NadAwXwcLP4RlLuOkVrF+DAuhEktvdJBvTfUkipeQo3YGcffm1daJWoUKiP2a3tqJ9fz8
+ Zd5cy8hvKFCv5VsoqF2voc6uaadH1/Pwylnw2fzTfGzFP0bsz/HI8F7g3WFv0PrrtkXnPUCD
+ 2IbmIGe8fi7NBTIqtc+mDMsqOIa4hlLBGkP8jHnCPv6oaGYlWemzcVhehU3XQOKyT2lroZan
+ nnARpEW9lSSeWPba99+PJu0q2rEaQj/Vhy/m2db89kYeLcEuItd4DYKk7rHZSrHBKwM=
+Message-ID: <ddd2ac2e-fc7e-3216-69cd-4e9a01df1958@bacher09.org>
+Date: Thu, 2 Apr 2020 23:38:21 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAEf4Bzb2mgDPcdNGWnBgoqsuWYqDiv39U2irn4iCp=7B3kx1nA@mail.gmail.com>
+In-Reply-To: <202004021328.E6161480@keescook>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 
-On Thu, Apr 02, 2020 at 12:31:36PM -0700, Andrii Nakryiko wrote:
-> On Thu, Apr 2, 2020 at 8:40 AM Slava Bacherikov <slava@bacher09.org> wrote:
-> >
-> >
-> >
-> > 02.04.2020 18:33, Slava Bacherikov wrote:
-> > > +     depends on DEBUG_INFO || COMPILE_TEST
-> >
-> > Andrii are you fine by this ?
+
+
+02.04.2020 23:34, Kees Cook wrote:
+> On Thu, Apr 02, 2020 at 12:31:36PM -0700, Andrii Nakryiko wrote:
+>> On Thu, Apr 2, 2020 at 8:40 AM Slava Bacherikov <slava@bacher09.org> wrote:
+>>>
+>>>
+>>>
+>>> 02.04.2020 18:33, Slava Bacherikov wrote:
+>>>> +     depends on DEBUG_INFO || COMPILE_TEST
+>>>
+>>> Andrii are you fine by this ?
+>>
+>> I think it needs a good comment explaining this weirdness, at least.
+>> As I said, if there is no DEBUG_INFO, there is not point in doing
+>> DWARF-to-BTF conversion, even more -- it actually might fail, I
+>> haven't checked what pahole does in that case. So I'd rather drop
+>> GCC_PLUGIN_RANDSTRUCT is that's the issue here. DEBUG_INFO_SPLIT and
+>> DEBUG_INFO_REDUCED look good.
+
+Yesterday before sending it I tested it against latest bpf git with
+allyesconfig and it compiled fine, even worked in vm ;)
 > 
-> I think it needs a good comment explaining this weirdness, at least.
-> As I said, if there is no DEBUG_INFO, there is not point in doing
-> DWARF-to-BTF conversion, even more -- it actually might fail, I
-> haven't checked what pahole does in that case. So I'd rather drop
-> GCC_PLUGIN_RANDSTRUCT is that's the issue here. DEBUG_INFO_SPLIT and
-> DEBUG_INFO_REDUCED look good.
+> The DEBUG_INFO is separate, AIUI -- it sounds like BTF may entirely
+> break on a compile with weird DWARF configs.
+> 
+> The GCC_PLUGIN_RANDSTRUCT issue is separate: it doesn't make sense to
+> run a kernel built with BTF and GCC_PLUGIN_RANDSTRUCT. But they should
+> have nothing to do with each other with regard to compilation. So, to
+> keep GCC_PLUGIN_RANDSTRUCT disable for "real" builds but leave it on for
+> all*config, randconfig, etc, I'd like to keep the || COMPILE_TEST,
+> otherwise GCC_PLUGIN_RANDSTRUCT won't be part of the many CIs doing
+> compilation testing.
+> 
+> And FWIW, I'm fine to let GCC_PLUGIN_RANDSTRUCT and BTF build together.
+> But if they want to be depends-conflicted, I wanted to keep the test
+> compile trap door.
+> 
 
-The DEBUG_INFO is separate, AIUI -- it sounds like BTF may entirely
-break on a compile with weird DWARF configs.
-
-The GCC_PLUGIN_RANDSTRUCT issue is separate: it doesn't make sense to
-run a kernel built with BTF and GCC_PLUGIN_RANDSTRUCT. But they should
-have nothing to do with each other with regard to compilation. So, to
-keep GCC_PLUGIN_RANDSTRUCT disable for "real" builds but leave it on for
-all*config, randconfig, etc, I'd like to keep the || COMPILE_TEST,
-otherwise GCC_PLUGIN_RANDSTRUCT won't be part of the many CIs doing
-compilation testing.
-
-And FWIW, I'm fine to let GCC_PLUGIN_RANDSTRUCT and BTF build together.
-But if they want to be depends-conflicted, I wanted to keep the test
-compile trap door.
-
--- 
-Kees Cook
+Oh, seems I misunderstood you, if everyone agree I'll drop it.
