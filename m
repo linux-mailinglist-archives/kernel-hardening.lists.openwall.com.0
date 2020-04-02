@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18369-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18382-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 6846919BCA2
-	for <lists+kernel-hardening@lfdr.de>; Thu,  2 Apr 2020 09:23:20 +0200 (CEST)
-Received: (qmail 3673 invoked by uid 550); 2 Apr 2020 07:23:15 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 4576819C1EE
+	for <lists+kernel-hardening@lfdr.de>; Thu,  2 Apr 2020 15:18:04 +0200 (CEST)
+Received: (qmail 30246 invoked by uid 550); 2 Apr 2020 13:17:58 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,162 +13,89 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 3510 invoked from network); 2 Apr 2020 07:22:41 -0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=SiNOZHMxpkKMBa6yuvQ8xTPdsWHI2ALPl1ggDv5AsaulH/k71k3Kpxb3zJ3c8CroLACqB9jYW3cJE+hwac2mGBNvKkjIZ1gRRcg1Az1QVmKTsPScMkw6kgpicNrHPYcPwPdXJef+LZiLlOCtI87cAJlZ0YnCoj6WmYJcaAx2rKPptk3pesLIMGkaKwDEB1RMCfX2ZE9dfP0nIQ7LSFq/lNtPYKBqdkRlnAAOo2idO0/texpwA6eLlUJwbLxrhp2cMdH0Fj+ISxgFhesFXM6cf+Lqa+g0F/UgzyfCwNjgxWHhyDCkpJPrPufjISDWESW0c/7v5mCW02W2l4VGCOMorg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qBVJqtgMdQtnFcQSqwHmVcy5aH977kgvW7Xg+tZeWPc=;
- b=bB9fE1/UyozaAie9fjYcBYQzCDBL0DnzTS1/OAXCcLgPn/iZeQuRlpjcY8Nrrw6uIuY3WACqnVBTzf+QvT9Bmfwtl142ErjsSmPfKqOEElxuGrbq+t418XpS0pMAsGRgasJfI3nPlH0FH9IDaCV/JKrB9IFNO3nTcngWJTtSUikaosIjnha5yjh7hLTkbDg7l7fMCiJn0njPhOoX79RImT8zNi2ajOMiwRxsPjDad3faW9zpPVH8KoNwV7aLWr8cYeX9+HQf3pPm4tmvJOLTiybPxWO5WGITbHqJNqXfFm65IJ0nnj836yUUITnJWzHHcRRrarUb5HqvN+craU4taA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=hotmail.de; dmarc=pass action=none header.from=hotmail.de;
- dkim=pass header.d=hotmail.de; arc=none
-X-IncomingTopHeaderMarker:
- OriginalChecksum:E7B5E17202D6A90C04C325695E3FAE5128698D345945BB92FCDBA0F020470AD7;UpperCasedChecksum:6A14A83A027B343DDFAFF9CF8B12B8576AD0143054F668726F7F8F3A51721EAF;SizeAsReceived:8374;Count:50
-Subject: Re: [PATCH] signal: Extend exec_id to 64bits
-To: "Eric W. Biederman" <ebiederm@xmission.com>,
- Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Adam Zabrocki <pi3@pi3.com.pl>, linux-kernel@vger.kernel.org,
- kernel-hardening@lists.openwall.com, Jann Horn <jannh@google.com>,
- Oleg Nesterov <oleg@redhat.com>, Andy Lutomirski <luto@amacapital.net>,
- Kees Cook <keescook@chromium.org>, Andrew Morton
- <akpm@linux-foundation.org>, stable@vger.kernel.org
-References: <20200324215049.GA3710@pi3.com.pl> <202003291528.730A329@keescook>
- <87zhbvlyq7.fsf_-_@x220.int.ebiederm.org>
-From: Bernd Edlinger <bernd.edlinger@hotmail.de>
-Message-ID:
- <AM6PR03MB51701153BF3E55EB4285EADFE4C60@AM6PR03MB5170.eurprd03.prod.outlook.com>
-Date: Thu, 2 Apr 2020 09:22:28 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
-In-Reply-To: <87zhbvlyq7.fsf_-_@x220.int.ebiederm.org>
-Content-Type: text/plain; charset=windows-1252
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: AM0PR10CA0001.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:208:17c::11) To AM6PR03MB5170.eurprd03.prod.outlook.com
- (2603:10a6:20b:ca::23)
-X-Microsoft-Original-Message-ID:
- <46ac0369-ff40-733f-bb2a-2a6919a48eee@hotmail.de>
+Received: (qmail 30214 invoked from network); 2 Apr 2020 13:17:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :content-transfer-encoding;
+        bh=rr2+JiyOTzs2D6VximK33Aonne21icc+eHi8FG/OnsQ=;
+        b=OHFqzXVgCRW79+evfsGJ+kuZ94Ph3DbjI/cTcvPV402yG5nto9O5kiCL6nH1/ilwad
+         P6532gUewqNBMEgllX6tCRBOtx3JEva1KlJfeC0UgLZdWSfZwkIgEzx0gn3MZuq/clpu
+         xzv5W/9bmWHbnCVGIKEOWh01uMHGtNQu0mxXY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:content-transfer-encoding;
+        bh=rr2+JiyOTzs2D6VximK33Aonne21icc+eHi8FG/OnsQ=;
+        b=ROpHz6NGg5dlvkPqr055ltsMBCrWuvtHkhTHHGV7V9/MpT8tSHBDi2ALpbSLK9qGEF
+         ScV1bEuWxaSfw5qdMGxqM0QSRXAt97shkRxF+5Lp1ZXjxfyvjJwRTAjUAcO8PDnhAHw/
+         F3e0z7/nlzLqzD7dVoUrSbWzYUZmQ8uU1a3ioc9UejFdFu/vC/n9r5AY4jb0iO4bEJIz
+         zJae7fLB8RkfDPzSluqI/nDGHUnCjpCIwWjUsbUk0ukgZ4sRyMbI/wQkY2sbIEXBpIMx
+         vfxL4o5/bjeS4lWd8jchs560EZBjrwXOApiFVDhcSHFH7WmYIHXtiCabq11JROUs4p3+
+         PVNg==
+X-Gm-Message-State: AGi0PuZ3Qg6nUZHpnpeoKR/zNfaXNQEO8d8Rt13F3DZlWLfx7PGx6nTt
+	Vk9FFqj/UCCWA1H5V9MD2YMnhXEZRQ0=
+X-Google-Smtp-Source: APiQypJ1LS6Q4XLKxKhj4KtCkhkkBK2oMRUFgRtWym8HkRx+R3SgX2/W68HhQ4MfO49pRYbr+N4Gmw==
+X-Received: by 2002:a63:cf50:: with SMTP id b16mr2200848pgj.189.1585815049479;
+        Thu, 02 Apr 2020 01:10:49 -0700 (PDT)
+Date: Thu, 2 Apr 2020 01:10:47 -0700
+From: Kees Cook <keescook@chromium.org>
+To: kernel-hardening@lists.openwall.com
+Cc: Alexander Popov <alex.popov@linux.com>,
+	Emese Revfy <re.emese@gmail.com>, linux-kernel@vger.kernel.org
+Subject: [PATCH] gcc-plugins/stackleak: Avoid assignment for unused macro
+ argument
+Message-ID: <202004020103.731F201@keescook>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-Microsoft-Original-Message-ID:
- <46ac0369-ff40-733f-bb2a-2a6919a48eee@hotmail.de>
-X-TMN: [tiG2wbnlWRVxx08YkgRHuaN5VFK7C3H0]
-X-MS-PublicTrafficType: Email
-X-IncomingHeaderCount: 50
-X-EOPAttributedMessage: 0
-X-MS-Office365-Filtering-Correlation-Id: 88af6c2b-72f4-43b2-87b2-08d7d6d69a06
-X-MS-TrafficTypeDiagnostic: HE1EUR04HT014:
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	Vm9mxdpuYK8ONT77erL+LkK2OyGrTGQYbgZJWSY+/T8i1UnES7/hfotlBAs3ATJGfbvapvj9SXlb4I0mT2Npabpn5jZ9TRSMRE7Y7dtjLC8wnyRuUUhJ5DWkjAkQX808ADEz8o8gOS16cw9saekcZ6BU6CCEIJAPGfMiQix8wGvTcPp4EQWpl5kwes3Np9d/w4KLKRzfletMS5sO0uU4oIXTtCV1eWnHiZTvEHZIleg=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:0;SRV:;IPV:NLI;SFV:NSPM;H:AM6PR03MB5170.eurprd03.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:;DIR:OUT;SFP:1901;
-X-MS-Exchange-AntiSpam-MessageData:
-	W+KtyJgIKA9trqB39M/vA4OFmZqevmrFIVXWsvioHdXVYlUUcj1XCSvwrdSnpKwQhEsn64QWA/t5dd7j/k8HimAd71Q1Vuuhltw9TyP4Y10A8A9K1TlaBxCW4ZPgKHEf60NPwB06qfcxRc1jkOuluA==
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 88af6c2b-72f4-43b2-87b2-08d7d6d69a06
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Apr 2020 07:22:29.4907
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HE1EUR04HT014
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+
+With GCC version >= 8, the cgraph_create_edge() macro argument using
+"frequency" goes unused. Instead of assigning a temporary variable for
+the argument, pass the compute_call_stmt_bb_frequency() call directly
+as the macro argument so that it will just not be uncalled when it is
+not wanted by the macros.
+
+Silences the warning:
+
+scripts/gcc-plugins/stackleak_plugin.c:54:6: warning: variable ‘frequency’ set but not used [-Wunused-but-set-variable]
+
+Now builds cleanly with gcc-7 and gcc-9. Both boot and pass
+STACKLEAK_ERASING LKDTM test.
+
+Signed-off-by: Kees Cook <keescook@chromium.org>
+---
+ scripts/gcc-plugins/stackleak_plugin.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/scripts/gcc-plugins/stackleak_plugin.c b/scripts/gcc-plugins/stackleak_plugin.c
+index dbd37460c573..cc75eeba0be1 100644
+--- a/scripts/gcc-plugins/stackleak_plugin.c
++++ b/scripts/gcc-plugins/stackleak_plugin.c
+@@ -51,7 +51,6 @@ static void stackleak_add_track_stack(gimple_stmt_iterator *gsi, bool after)
+ 	gimple stmt;
+ 	gcall *stackleak_track_stack;
+ 	cgraph_node_ptr node;
+-	int frequency;
+ 	basic_block bb;
+ 
+ 	/* Insert call to void stackleak_track_stack(void) */
+@@ -68,9 +67,9 @@ static void stackleak_add_track_stack(gimple_stmt_iterator *gsi, bool after)
+ 	bb = gimple_bb(stackleak_track_stack);
+ 	node = cgraph_get_create_node(track_function_decl);
+ 	gcc_assert(node);
+-	frequency = compute_call_stmt_bb_frequency(current_function_decl, bb);
+ 	cgraph_create_edge(cgraph_get_node(current_function_decl), node,
+-			stackleak_track_stack, bb->count, frequency);
++			stackleak_track_stack, bb->count,
++			compute_call_stmt_bb_frequency(current_function_decl, bb));
+ }
+ 
+ static bool is_alloca(gimple stmt)
+-- 
+2.20.1
 
 
-
-On 4/1/20 10:47 PM, Eric W. Biederman wrote:
-> 
-> Replace the 32bit exec_id with a 64bit exec_id to make it impossible
-> to wrap the exec_id counter.  With care an attacker can cause exec_id
-> wrap and send arbitrary signals to a newly exec'd parent.  This
-> bypasses the signal sending checks if the parent changes their
-> credentials during exec.
-> 
-> The severity of this problem can been seen that in my limited testing
-> of a 32bit exec_id it can take as little as 19s to exec 65536 times.
-> Which means that it can take as little as 14 days to wrap a 32bit
-> exec_id.  Adam Zabrocki has succeeded wrapping the self_exe_id in 7
-> days.  Even my slower timing is in the uptime of a typical server.
-> Which means self_exec_id is simply a speed bump today, and if exec
-> gets noticably faster self_exec_id won't even be a speed bump.
-> 
-> Extending self_exec_id to 64bits introduces a problem on 32bit
-> architectures where reading self_exec_id is no longer atomic and can
-> take two read instructions.  Which means that is is possible to hit
-> a window where the read value of exec_id does not match the written
-> value.  So with very lucky timing after this change this still
-> remains expoiltable.
-> 
-> I have updated the update of exec_id on exec to use WRITE_ONCE
-> and the read of exec_id in do_notify_parent to use READ_ONCE
-> to make it clear that there is no locking between these two
-> locations.
-> 
-> Link: https://lore.kernel.org/kernel-hardening/20200324215049.GA3710@pi3.com.pl
-> Fixes: 2.3.23pre2
-> Cc: stable@vger.kernel.org
-> Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
-
-Reviewed-by: Bernd Edlinger <bernd.edlinger@hotmail.de>
-
-
-Thanks
-Bernd.
-> ---
-> 
-> Linus would you prefer to take this patch directly or I could put it in
-> a brach and send you a pull request.
->  
->  fs/exec.c             | 2 +-
->  include/linux/sched.h | 4 ++--
->  kernel/signal.c       | 2 +-
->  3 files changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/fs/exec.c b/fs/exec.c
-> index 0e46ec57fe0a..d55710a36056 100644
-> --- a/fs/exec.c
-> +++ b/fs/exec.c
-> @@ -1413,7 +1413,7 @@ void setup_new_exec(struct linux_binprm * bprm)
->  
->  	/* An exec changes our domain. We are no longer part of the thread
->  	   group */
-> -	current->self_exec_id++;
-> +	WRITE_ONCE(current->self_exec_id, current->self_exec_id + 1);
->  	flush_signal_handlers(current, 0);
->  }
->  EXPORT_SYMBOL(setup_new_exec);
-> diff --git a/include/linux/sched.h b/include/linux/sched.h
-> index 04278493bf15..0323e4f0982a 100644
-> --- a/include/linux/sched.h
-> +++ b/include/linux/sched.h
-> @@ -939,8 +939,8 @@ struct task_struct {
->  	struct seccomp			seccomp;
->  
->  	/* Thread group tracking: */
-> -	u32				parent_exec_id;
-> -	u32				self_exec_id;
-> +	u64				parent_exec_id;
-> +	u64				self_exec_id;
->  
->  	/* Protection against (de-)allocation: mm, files, fs, tty, keyrings, mems_allowed, mempolicy: */
->  	spinlock_t			alloc_lock;
-> diff --git a/kernel/signal.c b/kernel/signal.c
-> index 9ad8dea93dbb..5383b562df85 100644
-> --- a/kernel/signal.c
-> +++ b/kernel/signal.c
-> @@ -1926,7 +1926,7 @@ bool do_notify_parent(struct task_struct *tsk, int sig)
->  		 * This is only possible if parent == real_parent.
->  		 * Check if it has changed security domain.
->  		 */
-> -		if (tsk->parent_exec_id != tsk->parent->self_exec_id)
-> +		if (tsk->parent_exec_id != READ_ONCE(tsk->parent->self_exec_id))
->  			sig = SIGCHLD;
->  	}
->  
-> 
+-- 
+Kees Cook
