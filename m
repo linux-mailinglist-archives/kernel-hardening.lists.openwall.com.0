@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18386-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18387-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 00ED319C61C
-	for <lists+kernel-hardening@lfdr.de>; Thu,  2 Apr 2020 17:40:36 +0200 (CEST)
-Received: (qmail 3415 invoked by uid 550); 2 Apr 2020 15:40:31 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 261F919C6C3
+	for <lists+kernel-hardening@lfdr.de>; Thu,  2 Apr 2020 18:08:40 +0200 (CEST)
+Received: (qmail 16199 invoked by uid 550); 2 Apr 2020 16:08:34 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,61 +13,110 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 3380 invoked from network); 2 Apr 2020 15:40:31 -0000
-Subject: Re: [PATCH v4 bpf] kbuild: fix dependencies for DEBUG_INFO_BTF
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bacher09.org;
-	s=reg; t=1585842020;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=GZLGLGK0Ts+nwMLTKpmMA0gphkPeoQjdvofgRxfo/XQ=;
-	b=rp5rZGQMd0ceRJDBWcpjiTnamXyUc3Rl/Y4P4pOlgIRcRqMERZduQGjA0aCXJhoQ25trW7
-	dYNDBhqoGw2qpfMPpU7A9i4hNv3FUhWGxozJ2zJFJ3mZjVJ/95UG0TJmPCuQxiHrsOx/xS
-	s7bKQF55nqFd0X5/wZIkfL5QFa91urI=
-Cc: Kees Cook <keescook@chromium.org>, bpf@vger.kernel.org,
- linux-kernel@vger.kernel.org, jannh@google.com,
- alexei.starovoitov@gmail.com, daniel@iogearbox.net,
- kernel-hardening@lists.openwall.com, liuyd.fnst@cn.fujitsu.com,
- kpsingh@google.com
-References: <202004010849.CC7E9412@keescook>
- <20200402153335.38447-1-slava@bacher09.org>
-To: Andrii Nakryiko <andriin@fb.com>
-From: Slava Bacherikov <slava@bacher09.org>
-Autocrypt: addr=slava@bacher09.org; prefer-encrypt=mutual; keydata=
- mQINBFFdcIUBEAC9HZz+DbqCs+jyJjpvRyped8U4bz716OZKvZCTH4fNxrrV0fYWRn7LJ/dU
- r5tBnwhmlTWD4v6hk88qpD9flagkSP4UuIAo+3aopxvrkyWXXYiEAjSL2uTFolcEO40HuYPk
- 7nprTEzHcHgcYq2wzJfE046gimzFYcUXkrv1gC89RdkwOgLTFb80QUpKyVeoKJWKWHPfRqGF
- FxpFwMnW3IrgZhOnl8X859WwKUc/agPz05LjaksGpAP8ayfruxtG/3Hl7OulYPWIkTuxHAtK
- xW9QL7Vt24P8rVLC7sgNZYcjaOcY70PCkGLnquETuIeeCwhKr/e2n+ymH+CxlAiUY+blNpO5
- S5P+rwb0qPvGDzjF+Drdp0ye/S3kMa+FNrELW06Fp74p7BgsPgNsuBVg300JWMFXiS7YeMZV
- cyedAzGbcO8yxrY6ZnuNF8rLiZOYde79yN82wTNw/fWZtHhz8QJELZzMNjZd3/w61ztSs9ng
- mduiqv9EyNKlEEuxy6N4jGTQ2YYLE/YcIx654rCfpJWJhj2kDd4k2uNRrhJI7t4duHC86K4M
- HiOwC7PIKlIbtrpYnTZPXXcQHp69LDzxCAA6dgGkhjZsUTVci0rTEfRQjkXYvK/f3P1SHF1M
- EHoeEaclqvpkuvPcbHQ/TBwBJs+ekdFCTmBzv0UwqZKfaPW5yQARAQABtDJTbGF2YSBCYWNo
- ZXJpa292IChNeSBOZXcgS2V5KSA8c2xhdmFAYmFjaGVyMDkub3JnPokCWQQTAQIAQwIbIwUJ
- DShogAcLCQgHAwIBBhUIAgkKCwQWAgMBAh4BAheAFiEEZkmc+DLOftzkG8AWUSYbvb34nfMF
- AlkF95wCGQEACgkQUSYbvb34nfO7FQ//drNtAxFi294vVZnN+wyVimXGiyBHpBPnEK5/hSQ5
- oBVvjFl8Ws7q13WWklhdPgM3atAukADMG5wr3IM3ctS1L2+502TYGv8W5jvUlso/TxjNdVQz
- SDicmPCMMs91BWHiJHkYKErUXxNtCaBQqVV2rAKiDoK1gtFrWfH/3OgP6RS+mLMt5eJ/PHsc
- kAuvaXOIzWxjclGMB2yAQzmK7SImOHp7YUBqXrOt523sz29p+1q0+y6ZRlPNctys/okUdnoK
- bi0rMBqbHngaoi/al9Clh9jrhqjZHJLPSM091u3ubuQkvtg3BOhqs0I/b7Xz83VxN0pj8XHI
- z4MRFwfhVSKW4pRLf92DKAa9PEYxA9QtboKafZG2EJfrUauba29/JoIh8Evi5MIuWNeZK7pK
- t3+NadAwXwcLP4RlLuOkVrF+DAuhEktvdJBvTfUkipeQo3YGcffm1daJWoUKiP2a3tqJ9fz8
- Zd5cy8hvKFCv5VsoqF2voc6uaadH1/Pwylnw2fzTfGzFP0bsz/HI8F7g3WFv0PrrtkXnPUCD
- 2IbmIGe8fi7NBTIqtc+mDMsqOIa4hlLBGkP8jHnCPv6oaGYlWemzcVhehU3XQOKyT2lroZan
- nnARpEW9lSSeWPba99+PJu0q2rEaQj/Vhy/m2db89kYeLcEuItd4DYKk7rHZSrHBKwM=
-Message-ID: <f43f4e17-f496-9ee1-7d89-c8f742720a5f@bacher09.org>
-Date: Thu, 2 Apr 2020 18:40:19 +0300
+Received: (qmail 16179 invoked from network); 2 Apr 2020 16:08:33 -0000
+From: ebiederm@xmission.com (Eric W. Biederman)
+To: Alexey Gladkov <gladkov.alexey@gmail.com>
+Cc: LKML <linux-kernel@vger.kernel.org>,
+ Kernel Hardening <kernel-hardening@lists.openwall.com>,
+ Linux API <linux-api@vger.kernel.org>,
+ Linux FS Devel <linux-fsdevel@vger.kernel.org>,
+ Linux Security Module <linux-security-module@vger.kernel.org>,
+ Akinobu Mita <akinobu.mita@gmail.com>,
+ Alexander Viro <viro@zeniv.linux.org.uk>,
+ Alexey Dobriyan <adobriyan@gmail.com>,
+ Alexey Gladkov <legion@kernel.org>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Andy Lutomirski <luto@kernel.org>,
+ Daniel Micay <danielmicay@gmail.com>,
+ Djalal Harouni <tixxdz@gmail.com>,
+ "Dmitry V . Levin" <ldv@altlinux.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Ingo Molnar <mingo@kernel.org>,
+ "J . Bruce Fields" <bfields@fieldses.org>,
+ Jeff Layton <jlayton@poochiereds.net>,
+ Jonathan Corbet <corbet@lwn.net>,  Kees Cook <keescook@chromium.org>,
+ Linus Torvalds <torvalds@linux-foundation.org>,
+ Oleg Nesterov <oleg@redhat.com>, David Howells <dhowells@redhat.com>
+References: <20200327172331.418878-1-gladkov.alexey@gmail.com>
+	<20200327172331.418878-9-gladkov.alexey@gmail.com>
+Date: Thu, 02 Apr 2020 11:05:21 -0500
+In-Reply-To: <20200327172331.418878-9-gladkov.alexey@gmail.com> (Alexey
+	Gladkov's message of "Fri, 27 Mar 2020 18:23:30 +0100")
+Message-ID: <87d08pkh4u.fsf@x220.int.ebiederm.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20200402153335.38447-1-slava@bacher09.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-XM-SPF: eid=1jK2Nx-00044C-IX;;;mid=<87d08pkh4u.fsf@x220.int.ebiederm.org>;;;hst=in02.mta.xmission.com;;;ip=68.227.160.95;;;frm=ebiederm@xmission.com;;;spf=neutral
+X-XM-AID: U2FsdGVkX19Wu6fmQHfDofF39L0DBA9uLm55GXDDZi0=
+X-SA-Exim-Connect-IP: 68.227.160.95
+X-SA-Exim-Mail-From: ebiederm@xmission.com
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on sa01.xmission.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.3 required=8.0 tests=ALL_TRUSTED,BAYES_20,
+	DCC_CHECK_NEGATIVE,T_TM2_M_HEADER_IN_MSG,T_TooManySym_01,XMSubLong
+	autolearn=disabled version=3.4.2
+X-Spam-Virus: No
+X-Spam-Report: 
+	* -1.0 ALL_TRUSTED Passed through trusted hosts only via SMTP
+	* -0.0 BAYES_20 BODY: Bayes spam probability is 5 to 20%
+	*      [score: 0.1157]
+	*  0.7 XMSubLong Long Subject
+	*  0.0 T_TM2_M_HEADER_IN_MSG BODY: No description available.
+	* -0.0 DCC_CHECK_NEGATIVE Not listed in DCC
+	*      [sa01 1397; Body=1 Fuz1=1 Fuz2=1]
+	*  0.0 T_TooManySym_01 4+ unique symbols in subject
+X-Spam-DCC: XMission; sa01 1397; Body=1 Fuz1=1 Fuz2=1 
+X-Spam-Combo: ;Alexey Gladkov <gladkov.alexey@gmail.com>
+X-Spam-Relay-Country: 
+X-Spam-Timing: total 9459 ms - load_scoreonly_sql: 0.03 (0.0%),
+	signal_user_changed: 4.0 (0.0%), b_tie_ro: 2.8 (0.0%), parse: 0.72
+	(0.0%), extract_message_metadata: 2.3 (0.0%), get_uri_detail_list:
+	0.77 (0.0%), tests_pri_-1000: 3.3 (0.0%), tests_pri_-950: 0.94 (0.0%),
+	tests_pri_-900: 0.83 (0.0%), tests_pri_-90: 108 (1.1%), check_bayes:
+	105 (1.1%), b_tokenize: 6 (0.1%), b_tok_get_all: 5 (0.1%),
+	b_comp_prob: 1.34 (0.0%), b_tok_touch_all: 89 (0.9%), b_finish: 0.85
+	(0.0%), tests_pri_0: 220 (2.3%), check_dkim_signature: 0.64 (0.0%),
+	check_dkim_adsp: 2.3 (0.0%), poll_dns_idle: 9101 (96.2%),
+	tests_pri_10: 1.72 (0.0%), tests_pri_500: 9111 (96.3%), rewrite_mail:
+	0.00 (0.0%)
+Subject: Re: [PATCH v10 8/9] proc: use human-readable values for hidehid
+X-Spam-Flag: No
+X-SA-Exim-Version: 4.2.1 (built Thu, 05 May 2016 13:38:54 -0600)
+X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
 
+Alexey Gladkov <gladkov.alexey@gmail.com> writes:
 
+> The hidepid parameter values are becoming more and more and it becomes
+> difficult to remember what each new magic number means.
 
-02.04.2020 18:33, Slava Bacherikov wrote:
-> +	depends on DEBUG_INFO || COMPILE_TEST
+In principle I like this change.  In practice I think you have just
+broken ABI compatiblity with the new mount ABI.
 
-Andrii are you fine by this ?
+In particular the following line seems broken.
+
+> diff --git a/fs/proc/root.c b/fs/proc/root.c
+> index dbcd96f07c7a..ba782d6e6197 100644
+> --- a/fs/proc/root.c
+> +++ b/fs/proc/root.c
+> @@ -45,7 +45,7 @@ enum proc_param {
+>  
+>  static const struct fs_parameter_spec proc_fs_parameters[] = {
+>  	fsparam_u32("gid",	Opt_gid),
+> -	fsparam_u32("hidepid",	Opt_hidepid),
+> +	fsparam_string("hidepid",	Opt_hidepid),
+>  	fsparam_string("subset",	Opt_subset),
+>  	{}
+>  };
+
+As I read fs_parser.c fs_param_is_u32 handles string inputs and turns them
+into numbers, and it handles binary numbers.  However fs_param_is_string
+appears to only handle strings.  It appears to have not capacity to turn
+raw binary numbers into strings.
+
+So I think we probably need to fix fs_param_is_string to raw binary
+numbers before we can safely make this change to fs/proc/root.c
+
+David am I reading the fs_parser.c code correctly?  If I am are you ok
+with a change like the above?
+
+Eric
