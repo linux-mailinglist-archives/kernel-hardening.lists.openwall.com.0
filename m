@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18395-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18397-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 8AFBA19C924
-	for <lists+kernel-hardening@lfdr.de>; Thu,  2 Apr 2020 20:51:24 +0200 (CEST)
-Received: (qmail 13316 invoked by uid 550); 2 Apr 2020 18:51:16 -0000
+	by mail.lfdr.de (Postfix) with SMTP id CCDF119CA08
+	for <lists+kernel-hardening@lfdr.de>; Thu,  2 Apr 2020 21:32:04 +0200 (CEST)
+Received: (qmail 13658 invoked by uid 550); 2 Apr 2020 19:31:59 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,105 +13,62 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 11626 invoked from network); 2 Apr 2020 18:48:29 -0000
-Date: Fri, 03 Apr 2020 00:18:06 +0530
-From: "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>
-Subject: Re: [PATCH v8 2/7] powerpc/kprobes: Mark newly allocated probes as RO
-To: linuxppc-dev@lists.ozlabs.org, Russell Currey <ruscur@russell.cc>
-Cc: ajd@linux.ibm.com, dja@axtens.net, kernel-hardening@lists.openwall.com,
-        npiggin@gmail.com
-References: <20200402084053.188537-1-ruscur@russell.cc>
-	<20200402084053.188537-2-ruscur@russell.cc>
-	<1585844035.o235bvxmq0.naveen@linux.ibm.com>
-In-Reply-To: <1585844035.o235bvxmq0.naveen@linux.ibm.com>
+Received: (qmail 13625 invoked from network); 2 Apr 2020 19:31:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=7I6mCCWO0NI2W9Hv1j2ODnDFaCT13IrYKH20fIeShyM=;
+        b=qtiL8TpB80vLSxlF06cwi699QC+hLcU4dTsjnFf39v34jsBq6n0YTbCvrIiysheT5e
+         0iDCSMRVYq48fkYuwf7bD68+pxz7nQ74cvtLS3nYaJvZ/0obYVA+yCpyTHkq7mg+SMkQ
+         8f1FSy+tnNukU5h6Ew2OMmoz4LRVMG1Hy91BKk6TaIta7EWlN7Im+cdyphWu6CHElvxQ
+         DI6YuEBFoXYi0/2CuK1IpIDQrK2TiGauWUnjjcXO3tbCTNXIgzwz0uY+weQQYLLwH4qV
+         HMR0Up/BJT+QPMlycRANAHWJQePSQ3f0ZrLLcHFbcQdmKZVoe2t3s0mBEG/syw612Eko
+         iu4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7I6mCCWO0NI2W9Hv1j2ODnDFaCT13IrYKH20fIeShyM=;
+        b=c6xZqjXMagfbJFrUxfP6hotGrnXzt96vVX8GTfynBcjWwfDYlua95d60RlfqUV43yE
+         WHluMfnvHCfgx4jfzkr9VRTjoVGssUchONyGRazL+mXq7oikRqnfm1zUNatc5ShAn0e7
+         4OqaA0V+6Iq5/tntbG8q+dm4dGTlISHjQwe4GaeyNrxH8ktEmrM4rRQIXXSUePxhCzmz
+         hDP+5pfrggPY/OQoxuF0T55+gI+NFjEqlDIoV4aN5dNHuApXaCjiXkbSqNbQWPhRxeS6
+         ICXaDjxg4NYtHeTzrrRosAiHTqnbOIOqe8entvCGDe3NAhnGVypEwFiti6Xk396dRwmR
+         5AZw==
+X-Gm-Message-State: AGi0PuYpxao2NMzahVhqPvFS1lyeIEhnkuNjniWg5qwz9YQ3PxWO4Sdj
+	/t5RU+/HYqtj62ZouaYAGY0JMLdOpHmPG4pkGqA=
+X-Google-Smtp-Source: APiQypK/ZbpMk9Dj0Hosok9jPEo30Su45nhINvZzVFcgTSuckkMrLuD8FT88jQlIP1pGI5Y6rlhHf2KJzp2UlipKQtA=
+X-Received: by 2002:a37:6411:: with SMTP id y17mr5397810qkb.437.1585855906945;
+ Thu, 02 Apr 2020 12:31:46 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: astroid/v0.15-13-gb675b421
- (https://github.com/astroidmail/astroid)
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-TM-AS-GCONF: 00
-x-cbid: 20040218-0020-0000-0000-000003C05FAF
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 20040218-0021-0000-0000-000022190C76
-Message-Id: <1585852977.oiikywo1jz.naveen@linux.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138,18.0.676
- definitions=2020-04-02_08:2020-04-02,2020-04-02 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
- suspectscore=0 adultscore=0 priorityscore=1501 mlxscore=0
- lowpriorityscore=0 clxscore=1015 spamscore=0 mlxlogscore=999
- malwarescore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2004020138
+References: <202004010849.CC7E9412@keescook> <20200402153335.38447-1-slava@bacher09.org>
+ <f43f4e17-f496-9ee1-7d89-c8f742720a5f@bacher09.org>
+In-Reply-To: <f43f4e17-f496-9ee1-7d89-c8f742720a5f@bacher09.org>
+From: Andrii Nakryiko <andrii.nakryiko@gmail.com>
+Date: Thu, 2 Apr 2020 12:31:36 -0700
+Message-ID: <CAEf4Bzb2mgDPcdNGWnBgoqsuWYqDiv39U2irn4iCp=7B3kx1nA@mail.gmail.com>
+Subject: Re: [PATCH v4 bpf] kbuild: fix dependencies for DEBUG_INFO_BTF
+To: Slava Bacherikov <slava@bacher09.org>
+Cc: Andrii Nakryiko <andriin@fb.com>, Kees Cook <keescook@chromium.org>, bpf <bpf@vger.kernel.org>, 
+	open list <linux-kernel@vger.kernel.org>, Jann Horn <jannh@google.com>, 
+	Alexei Starovoitov <alexei.starovoitov@gmail.com>, Daniel Borkmann <daniel@iogearbox.net>, 
+	Kernel Hardening <kernel-hardening@lists.openwall.com>, 
+	Liu Yiding <liuyd.fnst@cn.fujitsu.com>, kpsingh@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-Naveen N. Rao wrote:
-> Russell Currey wrote:
->> With CONFIG_STRICT_KERNEL_RWX=3Dy and CONFIG_KPROBES=3Dy, there will be =
-one
->> W+X page at boot by default.  This can be tested with
->> CONFIG_PPC_PTDUMP=3Dy and CONFIG_PPC_DEBUG_WX=3Dy set, and checking the
->> kernel log during boot.
->>=20
->> powerpc doesn't implement its own alloc() for kprobes like other
->> architectures do, but we couldn't immediately mark RO anyway since we do
->> a memcpy to the page we allocate later.  After that, nothing should be
->> allowed to modify the page, and write permissions are removed well
->> before the kprobe is armed.
->>=20
->> The memcpy() would fail if >1 probes were allocated, so use
->> patch_instruction() instead which is safe for RO.
->>=20
->> Reviewed-by: Daniel Axtens <dja@axtens.net>
->> Signed-off-by: Russell Currey <ruscur@russell.cc>
->> Signed-off-by: Christophe Leroy <christophe.leroy@c-s.fr>
->> ---
->>  arch/powerpc/kernel/kprobes.c | 17 +++++++++++++----
->>  1 file changed, 13 insertions(+), 4 deletions(-)
->>=20
->> diff --git a/arch/powerpc/kernel/kprobes.c b/arch/powerpc/kernel/kprobes=
-.c
->> index 81efb605113e..fa4502b4de35 100644
->> --- a/arch/powerpc/kernel/kprobes.c
->> +++ b/arch/powerpc/kernel/kprobes.c
->> @@ -24,6 +24,8 @@
->>  #include <asm/sstep.h>
->>  #include <asm/sections.h>
->>  #include <linux/uaccess.h>
->> +#include <linux/set_memory.h>
->> +#include <linux/vmalloc.h>
->> =20
->>  DEFINE_PER_CPU(struct kprobe *, current_kprobe) =3D NULL;
->>  DEFINE_PER_CPU(struct kprobe_ctlblk, kprobe_ctlblk);
->> @@ -102,6 +104,16 @@ kprobe_opcode_t *kprobe_lookup_name(const char *nam=
-e, unsigned int offset)
->>  	return addr;
->>  }
->> =20
->> +void *alloc_insn_page(void)
->> +{
->> +	void *page =3D vmalloc_exec(PAGE_SIZE);
->> +
->> +	if (page)
->> +		set_memory_ro((unsigned long)page, 1);
->> +
->> +	return page;
->> +}
->> +
->=20
-> This crashes for me with KPROBES_SANITY_TEST during the kretprobe test. =20
+On Thu, Apr 2, 2020 at 8:40 AM Slava Bacherikov <slava@bacher09.org> wrote:
+>
+>
+>
+> 02.04.2020 18:33, Slava Bacherikov wrote:
+> > +     depends on DEBUG_INFO || COMPILE_TEST
+>
+> Andrii are you fine by this ?
 
-That isn't needed to reproduce this. After bootup, disabling optprobes=20
-also shows the crash with kretprobes:
-	sysctl debug.kprobes-optimization=3D0
-
-The problem happens to be with patch_instruction() in=20
-arch_prepare_kprobe(). During boot, on kprobe init, we register a probe=20
-on kretprobe_trampoline for use with kretprobes (see=20
-arch_init_kprobes()). This results in an instruction slot being=20
-allocated, and arch_prepare_kprobe() to be called for copying the=20
-instruction (nop) at kretprobe_trampoline. patch_instruction() is=20
-failing resulting in corrupt instruction which we try to emulate/single=20
-step causing the crash.
-
-
-- Naveen
-
+I think it needs a good comment explaining this weirdness, at least.
+As I said, if there is no DEBUG_INFO, there is not point in doing
+DWARF-to-BTF conversion, even more -- it actually might fail, I
+haven't checked what pahole does in that case. So I'd rather drop
+GCC_PLUGIN_RANDSTRUCT is that's the issue here. DEBUG_INFO_SPLIT and
+DEBUG_INFO_REDUCED look good.
