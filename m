@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18408-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18405-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 1D2DF19D31D
-	for <lists+kernel-hardening@lfdr.de>; Fri,  3 Apr 2020 11:07:31 +0200 (CEST)
-Received: (qmail 5972 invoked by uid 550); 3 Apr 2020 09:07:25 -0000
+	by mail.lfdr.de (Postfix) with SMTP id C2D8B19D0CE
+	for <lists+kernel-hardening@lfdr.de>; Fri,  3 Apr 2020 09:07:47 +0200 (CEST)
+Received: (qmail 23594 invoked by uid 550); 3 Apr 2020 07:07:41 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,32 +13,68 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 21738 invoked from network); 3 Apr 2020 05:29:51 -0000
-From: =?utf-8?q?joao=40overdrivepizza=2Ecom?= <joao@overdrivepizza.com>
-Content-Type: text/plain; charset="utf-8"
-X-Forward: 127.0.0.1
-Date: Fri, 03 Apr 2020 07:29:38 +0200
-Cc: keescook@chromium.org, vasileios_kemerlis@brown.edu, sandro@ic.unicamp.br
-To: kernel-hardening@lists.openwall.com
+Received: (qmail 23562 invoked from network); 3 Apr 2020 07:07:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1585897648;
+	bh=48ZncQum678f3DrW2C1lr3dFNQ1A9uAJJlABWTqboDc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=WuEckcFjkFkaXQ6hxhM+4L05U6jKO2uJth28Fv3JAz6qWz7cB/a7sbf/LEU/swgMg
+	 zb8d+UqP3PRT9mAHpjqEtLDnVi/33yjh3ja1svsYyeEdMfXU2s2XQg1e1pSY4xwviK
+	 rfp5vu7SiM+nAk7Y/xLrnqKJIH8sLfCoNRIJSwOI=
+Date: Fri, 3 Apr 2020 08:07:24 +0100
+From: Will Deacon <will@kernel.org>
+To: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>,
+	Linux ARM <linux-arm-kernel@lists.infradead.org>,
+	kernel-hardening@lists.openwall.com,
+	Mark Rutland <mark.rutland@arm.com>
+Subject: Re: [RFC PATCH] arm64: remove CONFIG_DEBUG_ALIGN_RODATA feature
+Message-ID: <20200403070723.GB16361@willie-the-truck>
+References: <20200329141258.31172-1-ardb@kernel.org>
+ <20200330135121.GD10633@willie-the-truck>
+ <CAMj1kXEZARZ1FYZFt4CZ33b-A64zj1JswR0OAHw-eZdzkxiEOQ@mail.gmail.com>
+ <20200330140441.GE10633@willie-the-truck>
+ <CAMj1kXHJ5n-EZMgGSYm+ekO-e7XTp7fv-FZ2NJ1EttJ=-kc8fw@mail.gmail.com>
+ <20200330142805.GA11312@willie-the-truck>
+ <CAMj1kXFcvHcU2kzP=N4bHgSkw_eE7wvbPJ=7w1pNeCWHbcPvTQ@mail.gmail.com>
+ <20200402113033.GD21087@mbp>
 MIME-Version: 1.0
-Message-ID: <3446-5e86ca00-7-77f96080@18228891>
-Subject: kCFI sources
-User-Agent: SOGoMail 4.3.0
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200402113033.GD21087@mbp>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-Hi,
+On Thu, Apr 02, 2020 at 12:30:33PM +0100, Catalin Marinas wrote:
+> On Mon, Mar 30, 2020 at 04:32:31PM +0200, Ard Biesheuvel wrote:
+> > On Mon, 30 Mar 2020 at 16:28, Will Deacon <will@kernel.org> wrote:
+> > > > On Mon, 30 Mar 2020 at 16:04, Will Deacon <will@kernel.org> wrote:
+> > > > > On Mon, Mar 30, 2020 at 03:53:04PM +0200, Ard Biesheuvel wrote:
+> > > > > > On Mon, 30 Mar 2020 at 15:51, Will Deacon <will@kernel.org> wrote:
+> > > > > > > But I would really like to go a step further and rip out the block mapping
+> > > > > > > support altogether so that we can fix non-coherent DMA aliases:
+> > > > > > >
+> > > > > > > https://lore.kernel.org/lkml/20200224194446.690816-1-hch@lst.de
+> > > > > >
+> > > > > > I'm not sure I follow - is this about mapping parts of the static
+> > > > > > kernel Image for non-coherent DMA?
+> > > > >
+> > > > > Sorry, it's not directly related to your patch, just that if we're removing
+> > > > > options relating to kernel mappings then I'd be quite keen on effectively
+> > > > > forcing page-granularity on the linear map, as is currently done by default
+> > > > > thanks to RODATA_FULL_DEFAULT_ENABLED, so that we can nobble cacheable
+> > > > > aliases for non-coherent streaming DMA mappings by hooking into Christoph's
+> > > > > series above.
+> 
+> Have we ever hit this issue in practice? At least from the CPU
+> perspective, we've assumed that a non-cacheable access would not hit in
+> the cache. Reading the ARM ARM rules, it doesn't seem to state this
+> explicitly but we can ask for clarification (I dug out an email from
+> 2015, left unanswered).
+> 
+> Assuming that the CPU is behaving as we'd expect, are there other issues
+> with peripherals/SMMU?
 
-FWIW, In case someone has any interest in looking into it, a month ago =
-I uploaded the old sources for a kernel CFI prototype I implemented bac=
-k in 2015/2016 (kCFI) here: https://github.com/kcfi/kcfi
+Any clarification would need to be architectural, I think, and not specific
+to the CPU. Worth asking again though.
 
-As is, the code supports kernel 3.19. It is no longer maintained and, g=
-iven that the upstream Linux kernel may have its own CFI scheme somewha=
-t soon, I don't believe that there is much sense in trying to forward-p=
-ort it or anything. Either way, if it is useful for anyone, there you g=
-o.
-
-Cheers,
-Joao.
-
+Will
