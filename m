@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18407-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18409-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 8C73819D2DA
-	for <lists+kernel-hardening@lfdr.de>; Fri,  3 Apr 2020 10:59:22 +0200 (CEST)
-Received: (qmail 1459 invoked by uid 550); 3 Apr 2020 08:59:16 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 51B4919D3DF
+	for <lists+kernel-hardening@lfdr.de>; Fri,  3 Apr 2020 11:38:15 +0200 (CEST)
+Received: (qmail 19627 invoked by uid 550); 3 Apr 2020 09:38:09 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,103 +13,131 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 1424 invoked from network); 3 Apr 2020 08:59:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1585904343;
-	bh=kw8a4FktnFz4oTw1Esyzp1wV1xha1xRoe0FkNkJtf88=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=MDQXCbIfbu742riJo/kUNAH7JNGYXmNsZ5E/t3s4OP7cd+N2inCHrNWMw4jMIYzMk
-	 hhow0pZlm0skVFt5U8MaAOBp+Gf+4tVye43kxyGssoh3rGD+lzXhXvbfFtv5F69r40
-	 65b3/iTE1eo15VXCN6nL+sPIeQ7ym3XwEO+xmh60=
-X-Gm-Message-State: AGi0Pua8fhPd9WeQXw7E2ZD/orwyVo/y0KlTLuWu20pgoX2yDB9IaiIk
-	rZJ5G9dH4Ba6mR3L3riD5kbhcFWtx/YDMXsF6sQ=
-X-Google-Smtp-Source: APiQypL6LDByoMGOHzbLBsN9qknqnWp7ntm1vw0lrMbPcQn5Kq8mPbPbxxp0PS+jeVV+YJdMxPs1ozZ3hnrD3ONG7so=
-X-Received: by 2002:a05:6638:a22:: with SMTP id 2mr7657847jao.74.1585904343067;
- Fri, 03 Apr 2020 01:59:03 -0700 (PDT)
+Delivered-To: moderator for kernel-hardening@lists.openwall.com
+Received: (qmail 18232 invoked from network); 3 Apr 2020 09:36:46 -0000
+Date: Fri, 03 Apr 2020 15:06:25 +0530
+From: "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>
+Subject: Re: [PATCH v8 2/7] powerpc/kprobes: Mark newly allocated probes as RO
+To: linuxppc-dev@lists.ozlabs.org, Russell Currey <ruscur@russell.cc>
+Cc: ajd@linux.ibm.com, dja@axtens.net, kernel-hardening@lists.openwall.com,
+        npiggin@gmail.com
+References: <20200402084053.188537-1-ruscur@russell.cc>
+	<20200402084053.188537-2-ruscur@russell.cc>
+	<1585844035.o235bvxmq0.naveen@linux.ibm.com>
+	<1585852977.oiikywo1jz.naveen@linux.ibm.com>
+	<c336400d5b7765eb72b3090cd9f8a3c57761d0b6.camel@russell.cc>
+In-Reply-To: <c336400d5b7765eb72b3090cd9f8a3c57761d0b6.camel@russell.cc>
 MIME-Version: 1.0
-References: <20200329141258.31172-1-ardb@kernel.org> <20200330135121.GD10633@willie-the-truck>
- <CAMj1kXEZARZ1FYZFt4CZ33b-A64zj1JswR0OAHw-eZdzkxiEOQ@mail.gmail.com>
- <20200330140441.GE10633@willie-the-truck> <CAMj1kXHJ5n-EZMgGSYm+ekO-e7XTp7fv-FZ2NJ1EttJ=-kc8fw@mail.gmail.com>
- <20200330142805.GA11312@willie-the-truck> <CAMj1kXFcvHcU2kzP=N4bHgSkw_eE7wvbPJ=7w1pNeCWHbcPvTQ@mail.gmail.com>
- <20200402113033.GD21087@mbp>
-In-Reply-To: <20200402113033.GD21087@mbp>
-From: Ard Biesheuvel <ardb@kernel.org>
-Date: Fri, 3 Apr 2020 10:58:51 +0200
-X-Gmail-Original-Message-ID: <CAMj1kXGLMWqTHbWftoAq=WdVqyf+i=6SvsMogzWHh6SL3b=4sQ@mail.gmail.com>
-Message-ID: <CAMj1kXGLMWqTHbWftoAq=WdVqyf+i=6SvsMogzWHh6SL3b=4sQ@mail.gmail.com>
-Subject: Re: [RFC PATCH] arm64: remove CONFIG_DEBUG_ALIGN_RODATA feature
-To: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>, Linux ARM <linux-arm-kernel@lists.infradead.org>, 
-	kernel-hardening@lists.openwall.com, Mark Rutland <mark.rutland@arm.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: astroid/v0.15-13-gb675b421
+ (https://github.com/astroidmail/astroid)
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-TM-AS-GCONF: 00
+x-cbid: 20040309-0020-0000-0000-000003C0C2C6
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 20040309-0021-0000-0000-00002219721C
+Message-Id: <1585906281.fbqgtc3kpy.naveen@linux.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138,18.0.676
+ definitions=2020-04-03_05:2020-04-02,2020-04-03 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
+ mlxlogscore=999 priorityscore=1501 lowpriorityscore=0 clxscore=1015
+ phishscore=0 malwarescore=0 bulkscore=0 mlxscore=0 impostorscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2003020000 definitions=main-2004030078
 
-On Thu, 2 Apr 2020 at 13:30, Catalin Marinas <catalin.marinas@arm.com> wrote:
->
-> On Mon, Mar 30, 2020 at 04:32:31PM +0200, Ard Biesheuvel wrote:
-> > On Mon, 30 Mar 2020 at 16:28, Will Deacon <will@kernel.org> wrote:
-> > > > On Mon, 30 Mar 2020 at 16:04, Will Deacon <will@kernel.org> wrote:
-> > > > > On Mon, Mar 30, 2020 at 03:53:04PM +0200, Ard Biesheuvel wrote:
-> > > > > > On Mon, 30 Mar 2020 at 15:51, Will Deacon <will@kernel.org> wrote:
-> > > > > > > But I would really like to go a step further and rip out the block mapping
-> > > > > > > support altogether so that we can fix non-coherent DMA aliases:
-> > > > > > >
-> > > > > > > https://lore.kernel.org/lkml/20200224194446.690816-1-hch@lst.de
-> > > > > >
-> > > > > > I'm not sure I follow - is this about mapping parts of the static
-> > > > > > kernel Image for non-coherent DMA?
-> > > > >
-> > > > > Sorry, it's not directly related to your patch, just that if we're removing
-> > > > > options relating to kernel mappings then I'd be quite keen on effectively
-> > > > > forcing page-granularity on the linear map, as is currently done by default
-> > > > > thanks to RODATA_FULL_DEFAULT_ENABLED, so that we can nobble cacheable
-> > > > > aliases for non-coherent streaming DMA mappings by hooking into Christoph's
-> > > > > series above.
->
-> Have we ever hit this issue in practice? At least from the CPU
-> perspective, we've assumed that a non-cacheable access would not hit in
-> the cache. Reading the ARM ARM rules, it doesn't seem to state this
-> explicitly but we can ask for clarification (I dug out an email from
-> 2015, left unanswered).
->
+Russell Currey wrote:
+> On Fri, 2020-04-03 at 00:18 +0530, Naveen N. Rao wrote:
+>> Naveen N. Rao wrote:
+>> > Russell Currey wrote:
+>> > > With CONFIG_STRICT_KERNEL_RWX=3Dy and CONFIG_KPROBES=3Dy, there will
+>> > > be one
+>> > > W+X page at boot by default.  This can be tested with
+>> > > CONFIG_PPC_PTDUMP=3Dy and CONFIG_PPC_DEBUG_WX=3Dy set, and checking
+>> > > the
+>> > > kernel log during boot.
+>> > >=20
+>> > > powerpc doesn't implement its own alloc() for kprobes like other
+>> > > architectures do, but we couldn't immediately mark RO anyway
+>> > > since we do
+>> > > a memcpy to the page we allocate later.  After that, nothing
+>> > > should be
+>> > > allowed to modify the page, and write permissions are removed
+>> > > well
+>> > > before the kprobe is armed.
+>> > >=20
+>> > > The memcpy() would fail if >1 probes were allocated, so use
+>> > > patch_instruction() instead which is safe for RO.
+>> > >=20
+>> > > Reviewed-by: Daniel Axtens <dja@axtens.net>
+>> > > Signed-off-by: Russell Currey <ruscur@russell.cc>
+>> > > Signed-off-by: Christophe Leroy <christophe.leroy@c-s.fr>
+>> > > ---
+>> > >  arch/powerpc/kernel/kprobes.c | 17 +++++++++++++----
+>> > >  1 file changed, 13 insertions(+), 4 deletions(-)
+>> > >=20
+>> > > diff --git a/arch/powerpc/kernel/kprobes.c
+>> > > b/arch/powerpc/kernel/kprobes.c
+>> > > index 81efb605113e..fa4502b4de35 100644
+>> > > --- a/arch/powerpc/kernel/kprobes.c
+>> > > +++ b/arch/powerpc/kernel/kprobes.c
+>> > > @@ -24,6 +24,8 @@
+>> > >  #include <asm/sstep.h>
+>> > >  #include <asm/sections.h>
+>> > >  #include <linux/uaccess.h>
+>> > > +#include <linux/set_memory.h>
+>> > > +#include <linux/vmalloc.h>
+>> > > =20
+>> > >  DEFINE_PER_CPU(struct kprobe *, current_kprobe) =3D NULL;
+>> > >  DEFINE_PER_CPU(struct kprobe_ctlblk, kprobe_ctlblk);
+>> > > @@ -102,6 +104,16 @@ kprobe_opcode_t *kprobe_lookup_name(const
+>> > > char *name, unsigned int offset)
+>> > >  	return addr;
+>> > >  }
+>> > > =20
+>> > > +void *alloc_insn_page(void)
+>> > > +{
+>> > > +	void *page =3D vmalloc_exec(PAGE_SIZE);
+>> > > +
+>> > > +	if (page)
+>> > > +		set_memory_ro((unsigned long)page, 1);
+>> > > +
+>> > > +	return page;
+>> > > +}
+>> > > +
+>> >=20
+>> > This crashes for me with KPROBES_SANITY_TEST during the kretprobe
+>> > test. =20
+>>=20
+>> That isn't needed to reproduce this. After bootup, disabling
+>> optprobes=20
+>> also shows the crash with kretprobes:
+>> 	sysctl debug.kprobes-optimization=3D0
+>>=20
+>> The problem happens to be with patch_instruction() in=20
+>> arch_prepare_kprobe(). During boot, on kprobe init, we register a
+>> probe=20
+>> on kretprobe_trampoline for use with kretprobes (see=20
+>> arch_init_kprobes()). This results in an instruction slot being=20
+>> allocated, and arch_prepare_kprobe() to be called for copying the=20
+>> instruction (nop) at kretprobe_trampoline. patch_instruction() is=20
+>> failing resulting in corrupt instruction which we try to
+>> emulate/single=20
+>> step causing the crash.
+>=20
+> OK I think I've fixed it, KPROBES_SANITY_TEST passes too.  I'd
+> appreciate it if you could test v9, and thanks again for finding this -
+> very embarrassing bug on my side.
 
-There is some wording in D4.4.5 (Behavior of caches at reset) that
-suggests that implementations may permit cache hits in regions that
-are mapped Non-cacheable (although the paragraph in question talks
-about global controls and not page table attributes)
+Great! Thanks.
 
-> Assuming that the CPU is behaving as we'd expect, are there other issues
-> with peripherals/SMMU?
->
+I think I should also add appropriate error checking to kprobes' use of=20
+patch_instruction() which would have caught this much more easily.
 
-There is the NoSnoop PCIe issue as well: PCIe masters that are DMA
-coherent in general can generate transactions with non-cacheable
-attributes. I guess this is mostly orthogonal, but I'm sure it would
-be much easier to reason about correctness if it is guaranteed that no
-mappings with mismatched attributes exist anywhere.
+On a related note, I notice that x86 seems to prefer not having any RWX=20
+pages, and so they continue to do 'module_alloc()' followed by=20
+'set_memory_ro()' and then 'set_memory_x()'. Is that something worth=20
+following for powerpc?
 
-> > > Fair enough, but I'd still like to see some numbers. If they're compelling,
-> > > then we could explore something like CONFIG_OF_DMA_DEFAULT_COHERENT, but
-> > > that doesn't really help the kconfig maze :(
->
-> I'd prefer not to have a config option, we could easily break single
-> Image at some point.
->
-> > Could we make this a runtime thing? E.g., remap the entire linear
-> > region down to pages under stop_machine() the first time we probe a
-> > device that uses non-coherent DMA?
->
-> That could be pretty expensive at run-time. With the ARMv8.4-TTRem
-> feature, I wonder whether we could do this lazily when allocating
-> non-coherent DMA buffers.
->
-> (I still hope there isn't a problem at all with this mismatch ;)).
->
 
-Now that we have the pieces to easily remap the linear region down to
-pages, and [apparently] some generic infrastructure to manage the
-linear aliases, the only downside is the alleged performance hit
-resulting from increased TLB pressure. This is obviously highly
-micro-architecture dependent, but with Xgene1 and ThunderX1 out of the
-picture, I wonder if the tradeoffs are different now. Maybe by now, we
-should just suck it up (Note that we had no complaints afaik regarding
-the fact that we map the linear map down to pages by default now)
+- Naveen
+
