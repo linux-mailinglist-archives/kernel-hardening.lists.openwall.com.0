@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18445-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18447-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id BEB0C19FDF0
-	for <lists+kernel-hardening@lfdr.de>; Mon,  6 Apr 2020 21:16:18 +0200 (CEST)
-Received: (qmail 8096 invoked by uid 550); 6 Apr 2020 19:16:13 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 0ED7D1A0175
+	for <lists+kernel-hardening@lfdr.de>; Tue,  7 Apr 2020 01:16:40 +0200 (CEST)
+Received: (qmail 24113 invoked by uid 550); 6 Apr 2020 23:16:25 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,147 +13,116 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 8062 invoked from network); 6 Apr 2020 19:16:12 -0000
+Received: (qmail 23913 invoked from network); 6 Apr 2020 23:16:24 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=8alLqiTjU8UOc7F2lsFYEc9aYMbiDKRzOGKJAQNbNp8=;
-        b=HtAz363J+42i6LrowqmUaBLMRHjE0UqrPwxe3TrxPcwSzjt4bWOjE3oX+G1GXoFwfD
-         DuXlRv7NvZpKmZfnDSUxUPveN30QwxuCT9ERPIKvKdtHnHCERsPH7+XeUgJY9/EdRDXw
-         najiMRbhEHp+rfNfO0dd568Slq+q8+dd32DrQ=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Kj0fYRHBAuDC6xz5T3+IMY573Uf4TkncfKhylRhRKr8=;
+        b=Rnk2RVuDB3re41BD3czt9clTzzC/cySvN48by3vzvbYksd47leEn0+g33oR+D6OVLF
+         uXnS/s3ykH8Z394kfgC1rK54rvOztdgYEYgrOrRJV5V3tiF0pL7Q/1fZwsVEAzo0r6Bj
+         pI05/jTCAIBznKwWxphMyFNjRNChw4MmGQa1A=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=8alLqiTjU8UOc7F2lsFYEc9aYMbiDKRzOGKJAQNbNp8=;
-        b=VhWFXm7CWJULjMR8c/BcQOF8OtfyzCmHSpYnJ7Nvhbrwm4LbFyaxvUrWZ+P6aG7MHd
-         CsaiRpB0bM4cREEeYE2O/jYKhZNrIs6Xk/i+Yg9A390nrX7C/W65gxQUuhjwPKrh1qbd
-         3AjdOBW1sCsmSx7bhFMFDHTCwOHugXymmKxKXXUfncydWAq5624FNaBzzNe60bbkG3TA
-         SK+53LCIslvqH9YU/KJS4wUTyU0/yeaV60kzxWqe7NQov6BoUu/jXANyWjxuV3MU0IbH
-         b392d5fdQYoauektaOlzVuTLhoQlPvzb0bUqIWvvlLQpc1K43ZtdqeCMbzXWU5QbwwR5
-         KnZQ==
-X-Gm-Message-State: AGi0PubBhCyBTQ4FgEmItECUqLOQjgoUu7n1tcydvpGIRx4Sq6t/kHDp
-	qGmEgdRTa2DgwIp1sEjHUZDopQ==
-X-Google-Smtp-Source: APiQypK3ki4ah6xMd7z9egiMYxyYeQ4F0636VFVogWdv5Css/C8K0fP3E0E+JxIAm+GnSrHWsx8Hbg==
-X-Received: by 2002:a17:902:6acc:: with SMTP id i12mr21512840plt.61.1586200559797;
-        Mon, 06 Apr 2020 12:15:59 -0700 (PDT)
-Date: Mon, 6 Apr 2020 12:15:57 -0700
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Kj0fYRHBAuDC6xz5T3+IMY573Uf4TkncfKhylRhRKr8=;
+        b=Dw+zDMBWdzw2zvoxYK65cAhzy628gs7aWoHj5nuTGO/2e/I1vMrhnAsEyzHoHW42ht
+         y4s10wla2VypshQDSgo9wRlE5HseQLggmcbGOnVMBohWTHoDlap7QplLSXytP8zE1pcR
+         jGSteEt9yI1FFmylwQoWcAYpdFnkqjn19Vqq3XfW3jvAelbcWFWa4BQDwGLWG2At6Usx
+         L7WezYkL9J1IfoanqZ6WC3+G4nBCUrsQPcuaB5zIz9UM7K8gbLF4roV2fvHFNUFiTWys
+         d1G0offRxYhy9uWl+42MVnVGNFxz52Y9cCKl15SXdE/KAdzse9wwZUN6HVGGguekHBma
+         x+Og==
+X-Gm-Message-State: AGi0Puayec7ko+jOY1yXE2dzojo1wu1q9x8S9XekUPA57jJFItDGoVxc
+	QhJKJxWhaBWUxAA459qNBnG7Sg==
+X-Google-Smtp-Source: APiQypLe1NK0ouaCbwea2Ar/mlZdKQ8TmXJhYkOr0ndqJkk1T9pLSfqEkeDLbIKHtYCq5a4S/3PzgQ==
+X-Received: by 2002:a17:902:22e:: with SMTP id 43mr21611580plc.119.1586214972026;
+        Mon, 06 Apr 2020 16:16:12 -0700 (PDT)
 From: Kees Cook <keescook@chromium.org>
-To: Lev Olshvang <levonshe@gmail.com>
-Cc: arnd@arndb.de, kernel-hardening@lists.openwall.com,
-	Jann Horn <jannh@google.com>
-Subject: Re: [RFC PATCH 1/5] security : hardening : prevent write to proces's
- read-only pages from another process
-Message-ID: <202004061201.27B0972@keescook>
-References: <20200406142045.32522-1-levonshe@gmail.com>
- <20200406142045.32522-2-levonshe@gmail.com>
+To: Thomas Gleixner <tglx@linutronix.de>
+Cc: Kees Cook <keescook@chromium.org>,
+	Elena Reshetova <elena.reshetova@intel.com>,
+	x86@kernel.org,
+	Andy Lutomirski <luto@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Alexander Potapenko <glider@google.com>,
+	Ard Biesheuvel <ard.biesheuvel@linaro.org>,
+	Jann Horn <jannh@google.com>,
+	kernel-hardening@lists.openwall.com,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v3 0/5] Optionally randomize kernel stack offset each syscall
+Date: Mon,  6 Apr 2020 16:16:01 -0700
+Message-Id: <20200406231606.37619-1-keescook@chromium.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200406142045.32522-2-levonshe@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Apr 06, 2020 at 05:20:41PM +0300, Lev Olshvang wrote:
-> The purpose of this patch is produce hardened kernel for Embedded
-> or Production systems.
-> 
-> Typically debuggers, such as gdb, write to read-only code [text]
-> sections of target process.(ptrace)
-> This kind of page protectiion violation raises minor page fault, but
-> kernel's fault handler allows it by default.
-> This is clearly attack surface for adversary.
-> 
-> The proposed kernel hardening configuration option checks the type of
-> protection of the foreign vma and blocks writes to read only vma.
-> 
-> When enabled, it will stop attacks modifying code or jump tables, etc.
-> 
-> Code of arch_vma_access_permitted() function was extended to
-> check foreign vma flags.
-> 
-> Tested on x86_64 and ARM(QEMU) with dd command which writes to
-> /proc/PID/mem in r--p or r--xp of vma area addresses range
-> 
-> dd reports IO failure when tries to write to adress taken from
-> from /proc/PID/maps (PLT or code section)
+v3:
+- added review/ack tags (peterz, glider)
+- further clarified commit logs and public attack references
+- added -fstack-protector downgrades and details
+v2: https://lore.kernel.org/lkml/20200324203231.64324-1-keescook@chromium.org/
+rfc: https://lore.kernel.org/kernel-hardening/20190329081358.30497-1-elena.reshetova@intel.com/
 
-So, just to give some background here: the reason for this behavior is
-so debuggers can insert software breakpoints in the .text section (0xcc)
-etc. This is implemented with the "FOLL_FORCE" flag, and an attempt to
-remove it was made here:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8ee74a91ac30
-but it was later reverted (see below).
+Hi,
 
-There have been many prior discussions about this behavior, and a
-good thread (which I link from https://github.com/KSPP/linux/issues/37
-"Block process from writing to its own /proc/$pid/mem") is this one:
-https://lore.kernel.org/lkml/CAGXu5j+PHzDwnJxJwMJ=WuhacDn_vJWe9xZx+Kbsh28vxOGRiA@mail.gmail.com/
+This is a continuation and refactoring of Elena's earlier effort to add
+kernel stack base offset randomization. In the time since the previous
+discussions, two attacks[1][2] were made public that depended on stack
+determinism, so we're no longer in the position of "this is a good idea
+but we have no examples of attacks". :)
 
-For details on the revert see:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f511c0b17b08
+Earlier discussions also devolved into debates on entropy sources, which
+is mostly a red herring, given the already low entropy available due
+to stack size. Regardless, entropy can be changed/improved separately
+from this series as needed.
 
-All this said, I think this feature would still be nice to have,
-available with some kind of knob to control it. Do you get the
-results you were expecting from just re-applying 8ee74a91ac30? If
-so, that's a much smaller change, and a single place to apply
-a knob. It would likely be best implemented with a sysctl and a
-static_branch(). A possible example for this can be seen here:
-https://lore.kernel.org/lkml/20200324203231.64324-4-keescook@chromium.org/
-Though it doesn't use a sysctl. (And perhaps this feature needs to be a
-per-process setting like "dumpable", but let's start simple with a
-system-wide control.)
+Earlier discussions also got stuck debating how much syscall overhead
+was too much, but this is also a red herring since the feature itself
+needs to be selectable at boot with no cost for those that don't want it:
+this is solved here with static branches.
 
-Can you test the FOLL_FORCE removal and refactor things to use a
-static_branch() instead?
+So, here is an improved version, made as arch-agnostic as possible,
+with usage added for x86 and arm64. It also includes some small static
+branch clean ups, and addresses some surprise performance issues due to
+the stack canary[3].
+
+Thanks!
 
 -Kees
 
-> Signed-off-by: Lev Olshvang <levonshe@gmail.com>
-> ---
->  include/asm-generic/mm_hooks.h |  5 +++++
->  security/Kconfig               | 10 ++++++++++
->  2 files changed, 15 insertions(+)
-> 
-> diff --git a/include/asm-generic/mm_hooks.h b/include/asm-generic/mm_hooks.h
-> index 4dbb177d1150..6e1fcce44cc2 100644
-> --- a/include/asm-generic/mm_hooks.h
-> +++ b/include/asm-generic/mm_hooks.h
-> @@ -25,6 +25,11 @@ static inline void arch_unmap(struct mm_struct *mm,
->  static inline bool arch_vma_access_permitted(struct vm_area_struct *vma,
->  		bool write, bool execute, bool foreign)
->  {
-> +#ifdef CONFIG_PROTECT_READONLY_USER_MEMORY
-> +	/* Forbid write to PROT_READ pages of foreign process */
-> +	if (write && foreign && (!(vma->vm_flags & VM_WRITE)))
-> +		return false;
-> +#endif
->  	/* by default, allow everything */
->  	return true;
->  }
-> diff --git a/security/Kconfig b/security/Kconfig
-> index cd3cc7da3a55..d92e79c90d67 100644
-> --- a/security/Kconfig
-> +++ b/security/Kconfig
-> @@ -143,6 +143,16 @@ config LSM_MMAP_MIN_ADDR
->  	  this low address space will need the permission specific to the
->  	  systems running LSM.
->  
-> +config PROTECT_READONLY_USER_MEMORY
-> +	bool "Protect read only process memory"
-> +	help
-> +	  Protects read only memory of process code and PLT table
-> +	  from possible attack through /proc/PID/mem or through /dev/mem.
-> +	  Refuses to insert and stop at debuggers breakpoints (prtace,gdb)
-> +	  Mostly advised for embedded and production system.
-> +	  Stops attempts of the malicious process to modify read only memory of another process
-> +
-> +
->  config HAVE_HARDENED_USERCOPY_ALLOCATOR
->  	bool
->  	help
-> -- 
-> 2.17.1
-> 
+[1] https://a13xp0p0v.github.io/2020/02/15/CVE-2019-18683.html
+[2] https://repositorio-aberto.up.pt/bitstream/10216/125357/2/374717.pdf
+[3] https://lore.kernel.org/lkml/202003281520.A9BFF461@keescook/
+
+Kees Cook (5):
+  jump_label: Provide CONFIG-driven build state defaults
+  init_on_alloc: Unpessimize default-on builds
+  stack: Optionally randomize kernel stack offset each syscall
+  x86/entry: Enable random_kstack_offset support
+  arm64: entry: Enable random_kstack_offset support
+
+ Makefile                         |  4 ++++
+ arch/Kconfig                     | 23 ++++++++++++++++++
+ arch/arm64/Kconfig               |  1 +
+ arch/arm64/kernel/Makefile       |  4 ++++
+ arch/arm64/kernel/syscall.c      | 10 ++++++++
+ arch/x86/Kconfig                 |  1 +
+ arch/x86/entry/Makefile          |  9 +++++++
+ arch/x86/entry/common.c          | 12 +++++++++-
+ include/linux/jump_label.h       | 19 +++++++++++++++
+ include/linux/mm.h               | 18 +++++---------
+ include/linux/randomize_kstack.h | 40 ++++++++++++++++++++++++++++++++
+ init/main.c                      | 23 ++++++++++++++++++
+ mm/page_alloc.c                  | 12 ++--------
+ 13 files changed, 153 insertions(+), 23 deletions(-)
+ create mode 100644 include/linux/randomize_kstack.h
 
 -- 
-Kees Cook
+2.20.1
+
