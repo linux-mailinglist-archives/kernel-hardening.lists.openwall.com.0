@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18466-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18468-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 390441A3312
-	for <lists+kernel-hardening@lfdr.de>; Thu,  9 Apr 2020 13:20:23 +0200 (CEST)
-Received: (qmail 30132 invoked by uid 550); 9 Apr 2020 11:18:36 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 018EC1A342B
+	for <lists+kernel-hardening@lfdr.de>; Thu,  9 Apr 2020 14:39:17 +0200 (CEST)
+Received: (qmail 30191 invoked by uid 550); 9 Apr 2020 12:38:54 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,142 +13,301 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 32462 invoked from network); 9 Apr 2020 10:54:06 -0000
-X-IronPort-AV: E=Sophos;i="5.72,362,1580770800"; 
-   d="scan'208";a="444554909"
-Date: Thu, 9 Apr 2020 12:53:54 +0200 (CEST)
-From: Julia Lawall <julia.lawall@inria.fr>
-X-X-Sender: jll@hadrien
-To: Alexander Popov <alex.popov@linux.com>
-cc: Gilles Muller <Gilles.Muller@lip6.fr>, 
-    Nicolas Palix <nicolas.palix@imag.fr>, 
-    Michal Marek <michal.lkml@markovi.net>, cocci@systeme.lip6.fr, 
-    "kernel-hardening@lists.openwall.com" <kernel-hardening@lists.openwall.com>, 
-    Jann Horn <jannh@google.com>, Kees Cook <keescook@chromium.org>, 
-    Hans Verkuil <hverkuil@xs4all.nl>, 
-    Mauro Carvalho Chehab <mchehab@kernel.org>, 
-    Linux Media Mailing List <linux-media@vger.kernel.org>, 
-    LKML <linux-kernel@vger.kernel.org>, jannh@google.com
-Subject: Re: [Cocci] Coccinelle rule for CVE-2019-18683
-In-Reply-To: <fff664e9-06c9-d2fb-738f-e8e591e09569@linux.com>
-Message-ID: <alpine.DEB.2.21.2004091248190.2403@hadrien>
-References: <fff664e9-06c9-d2fb-738f-e8e591e09569@linux.com>
-User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
+Received: (qmail 30107 invoked from network); 9 Apr 2020 12:38:53 -0000
+From: Alexey Gladkov <gladkov.alexey@gmail.com>
+To: LKML <linux-kernel@vger.kernel.org>
+Cc: Kernel Hardening <kernel-hardening@lists.openwall.com>,
+	Linux API <linux-api@vger.kernel.org>,
+	Linux FS Devel <linux-fsdevel@vger.kernel.org>,
+	Linux Security Module <linux-security-module@vger.kernel.org>,
+	Akinobu Mita <akinobu.mita@gmail.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Alexey Gladkov <legion@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Andy Lutomirski <luto@kernel.org>,
+	Daniel Micay <danielmicay@gmail.com>,
+	Djalal Harouni <tixxdz@gmail.com>,
+	"Dmitry V . Levin" <ldv@altlinux.org>,
+	"Eric W . Biederman" <ebiederm@xmission.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	"J . Bruce Fields" <bfields@fieldses.org>,
+	Jeff Layton <jlayton@poochiereds.net>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Kees Cook <keescook@chromium.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	David Howells <dhowells@redhat.com>
+Subject: [PATCH RESEND v11 0/8] proc: modernize proc to support multiple private instances
+Date: Thu,  9 Apr 2020 14:37:44 +0200
+Message-Id: <20200409123752.1070597-1-gladkov.alexey@gmail.com>
+X-Mailer: git-send-email 2.25.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.6.1 (raptor.unsafe.ru [5.9.43.93]); Thu, 09 Apr 2020 12:38:41 +0000 (UTC)
+
+Preface:
+--------
+This is patchset v11 to modernize procfs and make it able to support multiple
+private instances per the same pid namespace.
+
+This patchset can be applied on top of:
+
+git.kernel.org/pub/scm/linux/kernel/git/ebiederm/user-namespace.git 4b871ce26ab2
 
 
+Procfs modernization:
+---------------------
+Historically procfs was always tied to pid namespaces, during pid
+namespace creation we internally create a procfs mount for it. However,
+this has the effect that all new procfs mounts are just a mirror of the
+internal one, any change, any mount option update, any new future
+introduction will propagate to all other procfs mounts that are in the
+same pid namespace.
 
-On Thu, 9 Apr 2020, Alexander Popov wrote:
+This may have solved several use cases in that time. However today we
+face new requirements, and making procfs able to support new private
+instances inside same pid namespace seems a major point. If we want to
+to introduce new features and security mechanisms we have to make sure
+first that we do not break existing usecases. Supporting private procfs
+instances will allow to support new features and behaviour without
+propagating it to all other procfs mounts.
 
-> Hello!
->
-> Some time ago I fixed CVE-2019-18683 in the V4L2 subsystem of the Linux kernel.
->
-> I created a Coccinelle rule that detects that bug pattern. Let me show it.
+Today procfs is more of a burden especially to some Embedded, IoT,
+sandbox, container use cases. In user space we are over-mounting null
+or inaccessible files on top to hide files and information. If we want
+to hide pids we have to create PID namespaces otherwise mount options
+propagate to all other proc mounts, changing a mount option value in one
+mount will propagate to all other proc mounts. If we want to introduce
+new features, then they will propagate to all other mounts too, resulting
+either maybe new useful functionality or maybe breaking stuff. We have
+also to note that userspace should not workaround procfs, the kernel
+should just provide a sane simple interface.
 
-Thanks for the discussion :)
+In this regard several developers and maintainers pointed out that
+there are problems with procfs and it has to be modernized:
 
->
->
-> Bug pattern
-> ===========
->
-> CVE-2019-18683 refers to three similar vulnerabilities caused by the same
-> incorrect approach to locking that is used in vivid_stop_generating_vid_cap(),
-> vivid_stop_generating_vid_out(), and sdr_cap_stop_streaming().
->
-> For fixes please see the commit 6dcd5d7a7a29c1e4 (media: vivid: Fix wrong
-> locking that causes race conditions on streaming stop).
->
-> These three functions are called during streaming stopping with vivid_dev.mutex
-> locked. And they all do the same mistake while stopping their kthreads, which
-> need to lock this mutex as well. See the example from
-> vivid_stop_generating_vid_cap():
->     /* shutdown control thread */
->     vivid_grab_controls(dev, false);
->     mutex_unlock(&dev->mutex);
->     kthread_stop(dev->kthread_vid_cap);
->     dev->kthread_vid_cap = NULL;
->     mutex_lock(&dev->mutex);
->
-> But when this mutex is unlocked, another vb2_fop_read() can lock it instead of
-> the kthread and manipulate the buffer queue. That causes use-after-free.
->
-> I created a Coccinelle rule that detects mutex_unlock+kthread_stop+mutex_lock
-> within one function.
->
->
-> Coccinelle rule
-> ===============
->
-> virtual report
->
-> @race exists@
-> expression E;
-> position stop_p;
-> position unlock_p;
-> position lock_p;
-> @@
->
-> mutex_unlock@unlock_p(E)
-> ...
+"Here's another one: split up and modernize /proc." by Andy Lutomirski [1]
 
-It would be good to put when != mutex_lock(E) after the ... above.  Your
-rule doesn't actually prevent the lock from being retaken.
+Discussion about kernel pointer leaks:
 
-> kthread_stop@stop_p(...)
-> ...
-> mutex_lock@lock_p(E)
->
-> @script:python@
-> stop_p << race.stop_p;
-> unlock_p << race.unlock_p;
-> lock_p << race.lock_p;
-> E << race.E;
-> @@
->
-> coccilib.report.print_report(unlock_p[0], 'mutex_unlock(' + E + ') here')
-> coccilib.report.print_report(stop_p[0], 'kthread_stop here')
-> coccilib.report.print_report(lock_p[0], 'mutex_lock(' + E + ') here\n')
->
->
-> Testing the rule
-> ================
->
-> I reverted the commit 6dcd5d7a7a29c1e4 and called:
-> COCCI=./scripts/coccinelle/kthread_race.cocci make coccicheck MODE=report
->
-> The result:
->
-> ./drivers/media/platform/vivid/vivid-kthread-out.c:347:1-13: mutex_unlock(& dev
-> -> mutex) here
-> ./drivers/media/platform/vivid/vivid-kthread-out.c:348:1-13: kthread_stop here
-> ./drivers/media/platform/vivid/vivid-kthread-out.c:350:1-11: mutex_lock(& dev ->
-> mutex) here
->
-> ./drivers/media/platform/vivid/vivid-sdr-cap.c:306:1-13: mutex_unlock(& dev ->
-> mutex) here
-> ./drivers/media/platform/vivid/vivid-sdr-cap.c:307:1-13: kthread_stop here
-> ./drivers/media/platform/vivid/vivid-sdr-cap.c:309:1-11: mutex_lock(& dev ->
-> mutex) here
->
-> ./drivers/media/platform/vivid/vivid-kthread-cap.c:1001:1-13: mutex_unlock(& dev
-> -> mutex) here
-> ./drivers/media/platform/vivid/vivid-kthread-cap.c:1002:1-13: kthread_stop here
-> ./drivers/media/platform/vivid/vivid-kthread-cap.c:1004:1-11: mutex_lock(& dev
-> -> mutex) here
->
-> There are no other bugs detected.
->
-> Do you have any idea how to improve it?
-> Do we need that rule for regression testing in the upstream?
+"And yes, as Kees and Daniel mentioned, it's definitely not just dmesg.
+In fact, the primary things tend to be /proc and /sys, not dmesg
+itself." By Linus Torvalds [2]
 
-Based on Jann's suggestion, it seem like it could be interesting to find
-these locking pauses, and then collect functions that are used in locks
-and in lock pauses.  If a function is mostly used with locks held, then
-using it in a lock pause could be a sign of a bug.  I will see if it turns
-up anything interesting.
+Lot of other areas in the kernel and filesystems have been updated to be
+able to support private instances, devpts is one major example [3].
 
-julia
+Which will be used for:
+
+1) Embedded systems and IoT: usually we have one supervisor for
+apps, we have some lightweight sandbox support, however if we create
+pid namespaces we have to manage all the processes inside too,
+where our goal is to be able to run a bunch of apps each one inside
+its own mount namespace, maybe use network namespaces for vlans
+setups, but right now we only want mount namespaces, without all the
+other complexity. We want procfs to behave more like a real file system,
+and block access to inodes that belong to other users. The 'hidepid=' will
+not work since it is a shared mount option.
+
+2) Containers, sandboxes and Private instances of file systems - devpts case
+Historically, lot of file systems inside Linux kernel view when instantiated
+were just a mirror of an already created and mounted filesystem. This was the
+case of devpts filesystem, it seems at that time the requirements were to
+optimize things and reuse the same memory, etc. This design used to work but not
+anymore with today's containers, IoT, hostile environments and all the privacy
+challenges that Linux faces.
+
+In that regards, devpts was updated so that each new mounts is a total
+independent file system by the following patches:
+
+"devpts: Make each mount of devpts an independent filesystem" by
+Eric W. Biederman [3] [4]
+
+3) Linux Security Modules have multiple ptrace paths inside some
+subsystems, however inside procfs, the implementation does not guarantee
+that the ptrace() check which triggers the security_ptrace_check() hook
+will always run. We have the 'hidepid' mount option that can be used to
+force the ptrace_may_access() check inside has_pid_permissions() to run.
+The problem is that 'hidepid' is per pid namespace and not attached to
+the mount point, any remount or modification of 'hidepid' will propagate
+to all other procfs mounts.
+
+This also does not allow to support Yama LSM easily in desktop and user
+sessions. Yama ptrace scope which restricts ptrace and some other
+syscalls to be allowed only on inferiors, can be updated to have a
+per-task context, where the context will be inherited during fork(),
+clone() and preserved across execve(). If we support multiple private
+procfs instances, then we may force the ptrace_may_access() on
+/proc/<pids>/ to always run inside that new procfs instances. This will
+allow to specifiy on user sessions if we should populate procfs with
+pids that the user can ptrace or not.
+
+By using Yama ptrace scope, some restricted users will only be able to see
+inferiors inside /proc, they won't even be able to see their other
+processes. Some software like Chromium, Firefox's crash handler, Wine
+and others are already using Yama to restrict which processes can be
+ptracable. With this change this will give the possibility to restrict
+/proc/<pids>/ but more importantly this will give desktop users a
+generic and usuable way to specifiy which users should see all processes
+and which user can not.
+
+Side notes:
+
+* This covers the lack of seccomp where it is not able to parse
+arguments, it is easy to install a seccomp filter on direct syscalls
+that operate on pids, however /proc/<pid>/ is a Linux ABI using
+filesystem syscalls. With this change all LSMs should be able to analyze
+open/read/write/close... on /proc/<pid>/
+
+4) This will allow to implement new features either in kernel or
+userspace without having to worry about procfs.
+In containers, sandboxes, etc we have workarounds to hide some /proc
+inodes, this should be supported natively without doing extra complex
+work, the kernel should be able to support sane options that work with
+today and future Linux use cases.
+
+5) Creation of new superblock with all procfs options for each procfs
+mount will fix the ignoring of mount options. The problem is that the
+second mount of procfs in the same pid namespace ignores the mount
+options. The mount options are ignored without error until procfs is
+remounted.
+
+Before:
+
+# grep ^proc /proc/mounts
+proc /proc proc rw,relatime,hidepid=2 0 0
+
+# strace -e mount mount -o hidepid=1 -t proc proc /tmp/proc
+mount("proc", "/tmp/proc", "proc", 0, "hidepid=1") = 0
++++ exited with 0 +++
+
+# grep ^proc /proc/mounts
+proc /proc proc rw,relatime,hidepid=2 0 0
+proc /tmp/proc proc rw,relatime,hidepid=2 0 0
+
+# mount -o remount,hidepid=1 -t proc proc /tmp/proc
+
+# grep ^proc /proc/mounts
+proc /proc proc rw,relatime,hidepid=1 0 0
+proc /tmp/proc proc rw,relatime,hidepid=1 0 0
+
+After:
+
+# grep ^proc /proc/mounts
+proc /proc proc rw,relatime,hidepid=ptraceable 0 0
+
+# mount -o hidepid=invisible -t proc proc /tmp/proc
+
+# grep ^proc /proc/mounts
+proc /proc proc rw,relatime,hidepid=ptraceable 0 0
+proc /tmp/proc proc rw,relatime,hidepid=invisible 0 0
+
+
+Introduced changes:
+-------------------
+Each mount of procfs creates a separate procfs instance with its own
+mount options.
+
+This series adds few new mount options:
+
+* New 'hidepid=ptraceable' or 'hidepid=4' mount option to show only ptraceable
+processes in the procfs. This allows to support lightweight sandboxes in
+Embedded Linux, also solves the case for LSM where now with this mount option,
+we make sure that they have a ptrace path in procfs.
+
+* 'subset=pid' that allows to hide non-pid inodes from procfs. It can be used
+in containers and sandboxes, as these are already trying to hide and block
+access to procfs inodes anyway.
+
+
+ChangeLog:
+----------
+# v11:
+* After a discussion with Eric W. Biederman, the numerical values for hidepid 
+  parameter have been removed from uapi.
+* Remove proc_self and proc_thread_self from the pid_namespace struct.
+* I took into account the comment of Kees Cook.
+* Update Reviewed-by tags.
+
+# v10:
+* 'subset=pidfs' renamed to 'subset=pid' as suggested by Alexey Dobriyan.
+* Include Reviewed-by tags.
+
+# v9:
+* Rebase on top of Eric W. Biederman's procfs changes.
+* Add human readable values of 'hidepid' as suggested by Andy Lutomirski.
+
+# v8:
+* Started using RCU lock to clean dcache entries as suggested by Linus Torvalds.
+
+# v7:
+* 'pidonly=1' renamed to 'subset=pidfs' as suggested by Alexey Dobriyan.
+* HIDEPID_* moved to uapi/ as they are user interface to mount().
+  Suggested-by Alexey Dobriyan <adobriyan@gmail.com>
+
+# v6:
+* 'hidepid=' and 'gid=' mount options are moved from pid namespace to superblock.
+* 'newinstance' mount option removed as suggested by Eric W. Biederman.
+   Mount of procfs always creates a new instance.
+* 'limit_pids' renamed to 'hidepid=3'.
+* I took into account the comment of Linus Torvalds [7].
+* Documentation added.
+
+# v5:
+* Fixed a bug that caused a problem with the Fedora boot.
+* The 'pidonly' option is visible among the mount options.
+
+# v2:
+* Renamed mount options to 'newinstance' and 'pids='
+   Suggested-by: Andy Lutomirski <luto@kernel.org>
+* Fixed order of commit, Suggested-by: Andy Lutomirski <luto@kernel.org>
+* Many bug fixes.
+
+# v1:
+* Removed 'unshared' mount option and replaced it with 'limit_pids'
+   which is attached to the current procfs mount.
+   Suggested-by Andy Lutomirski <luto@kernel.org>
+* Do not fill dcache with pid entries that we can not ptrace.
+* Many bug fixes.
+
+
+References:
+-----------
+[1] https://lists.linuxfoundation.org/pipermail/ksummit-discuss/2017-January/004215.html
+[2] http://www.openwall.com/lists/kernel-hardening/2017/10/05/5
+[3] https://lwn.net/Articles/689539/
+[4] http://lxr.free-electrons.com/source/Documentation/filesystems/devpts.txt?v=3.14
+[5] https://lkml.org/lkml/2017/5/2/407
+[6] https://lkml.org/lkml/2017/5/3/357
+[7] https://lkml.org/lkml/2018/5/11/505
+
+
+Alexey Gladkov (8):
+  proc: rename struct proc_fs_info to proc_fs_opts
+  proc: allow to mount many instances of proc in one pid namespace
+  proc: move hide_pid, pid_gid from pid_namespace to proc_fs_info
+  proc: instantiate only pids that we can ptrace on 'hidepid=4' mount
+    option
+  proc: add option to mount only a pids subset
+  docs: proc: add documentation for "hidepid=4" and "subset=pid" options
+    and new mount behavior
+  proc: use human-readable values for hidepid
+  proc: use named enums for better readability
+
+ Documentation/filesystems/proc.txt |  93 ++++++++++++++++-----
+ fs/proc/base.c                     |  48 +++++++----
+ fs/proc/generic.c                  |   9 ++
+ fs/proc/inode.c                    |  30 +++++--
+ fs/proc/root.c                     | 128 +++++++++++++++++++++++------
+ fs/proc/self.c                     |   6 +-
+ fs/proc/thread_self.c              |   6 +-
+ fs/proc_namespace.c                |  14 ++--
+ include/linux/pid_namespace.h      |  12 ---
+ include/linux/proc_fs.h            |  29 +++++++
+ 10 files changed, 286 insertions(+), 89 deletions(-)
+
+-- 
+2.25.2
+
