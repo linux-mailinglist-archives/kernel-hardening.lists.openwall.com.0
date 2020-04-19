@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18558-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18559-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 1DC541AFB4F
-	for <lists+kernel-hardening@lfdr.de>; Sun, 19 Apr 2020 16:17:50 +0200 (CEST)
-Received: (qmail 12196 invoked by uid 550); 19 Apr 2020 14:17:44 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 8D6031AFB5E
+	for <lists+kernel-hardening@lfdr.de>; Sun, 19 Apr 2020 16:19:38 +0200 (CEST)
+Received: (qmail 14193 invoked by uid 550); 19 Apr 2020 14:19:32 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,8 +13,8 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 12173 invoked from network); 19 Apr 2020 14:17:44 -0000
-Date: Sun, 19 Apr 2020 16:17:27 +0200
+Received: (qmail 14173 invoked from network); 19 Apr 2020 14:19:32 -0000
+Date: Sun, 19 Apr 2020 16:19:15 +0200
 From: Alexey Gladkov <gladkov.alexey@gmail.com>
 To: "Eric W. Biederman" <ebiederm@xmission.com>
 Cc: LKML <linux-kernel@vger.kernel.org>,
@@ -38,102 +38,38 @@ Cc: LKML <linux-kernel@vger.kernel.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Oleg Nesterov <oleg@redhat.com>,
 	David Howells <dhowells@redhat.com>
-Subject: Re: [PATCH RESEND v11 2/8] proc: allow to mount many instances of
- proc in one pid namespace
-Message-ID: <20200419141727.zjstym5kbp5efoz6@comp-core-i7-2640m-0182e6>
+Subject: Re: [PATCH RESEND v11 7/8] proc: use human-readable values for
+ hidepid
+Message-ID: <20200419141915.g4bdjbwvhpre7mra@comp-core-i7-2640m-0182e6>
 References: <20200409123752.1070597-1-gladkov.alexey@gmail.com>
- <20200409123752.1070597-3-gladkov.alexey@gmail.com>
- <87tv1iaqnq.fsf@x220.int.ebiederm.org>
+ <20200409123752.1070597-8-gladkov.alexey@gmail.com>
+ <87imhyaq5t.fsf@x220.int.ebiederm.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87tv1iaqnq.fsf@x220.int.ebiederm.org>
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.6.1 (raptor.unsafe.ru [5.9.43.93]); Sun, 19 Apr 2020 14:17:32 +0000 (UTC)
+In-Reply-To: <87imhyaq5t.fsf@x220.int.ebiederm.org>
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.6.1 (raptor.unsafe.ru [5.9.43.93]); Sun, 19 Apr 2020 14:19:20 +0000 (UTC)
 
-On Fri, Apr 17, 2020 at 01:55:05PM -0500, Eric W. Biederman wrote:
+On Fri, Apr 17, 2020 at 02:05:50PM -0500, Eric W. Biederman wrote:
 > Alexey Gladkov <gladkov.alexey@gmail.com> writes:
 > 
-> > This patch allows to have multiple procfs instances inside the
-> > same pid namespace. The aim here is lightweight sandboxes, and to allow
-> > that we have to modernize procfs internals.
-> >
-> > 1) The main aim of this work is to have on embedded systems one
-> > supervisor for apps. Right now we have some lightweight sandbox support,
-> > however if we create pid namespacess we have to manages all the
-> > processes inside too, where our goal is to be able to run a bunch of
-> > apps each one inside its own mount namespace without being able to
-> > notice each other. We only want to use mount namespaces, and we want
-> > procfs to behave more like a real mount point.
-> >
-> > 2) Linux Security Modules have multiple ptrace paths inside some
-> > subsystems, however inside procfs, the implementation does not guarantee
-> > that the ptrace() check which triggers the security_ptrace_check() hook
-> > will always run. We have the 'hidepid' mount option that can be used to
-> > force the ptrace_may_access() check inside has_pid_permissions() to run.
-> > The problem is that 'hidepid' is per pid namespace and not attached to
-> > the mount point, any remount or modification of 'hidepid' will propagate
-> > to all other procfs mounts.
-> >
-> > This also does not allow to support Yama LSM easily in desktop and user
-> > sessions. Yama ptrace scope which restricts ptrace and some other
-> > syscalls to be allowed only on inferiors, can be updated to have a
-> > per-task context, where the context will be inherited during fork(),
-> > clone() and preserved across execve(). If we support multiple private
-> > procfs instances, then we may force the ptrace_may_access() on
-> > /proc/<pids>/ to always run inside that new procfs instances. This will
-> > allow to specifiy on user sessions if we should populate procfs with
-> > pids that the user can ptrace or not.
-> >
-> > By using Yama ptrace scope, some restricted users will only be able to see
-> > inferiors inside /proc, they won't even be able to see their other
-> > processes. Some software like Chromium, Firefox's crash handler, Wine
-> > and others are already using Yama to restrict which processes can be
-> > ptracable. With this change this will give the possibility to restrict
-> > /proc/<pids>/ but more importantly this will give desktop users a
-> > generic and usuable way to specifiy which users should see all processes
-> > and which users can not.
-> >
-> > Side notes:
-> > * This covers the lack of seccomp where it is not able to parse
-> > arguments, it is easy to install a seccomp filter on direct syscalls
-> > that operate on pids, however /proc/<pid>/ is a Linux ABI using
-> > filesystem syscalls. With this change LSMs should be able to analyze
-> > open/read/write/close...
-> >
-> > In the new patchset version I removed the 'newinstance' option
-> > as suggested by Eric W. Biederman.
+> > The hidepid parameter values are becoming more and more and it becomes
+> > difficult to remember what each new magic number means.
 > 
-> Some very small requests.
+> So I relooked at the code.  And I think I was misreading things.
+> However I think it is a legitimate concern.
 > 
-> 1) Can you please not place fs_info in fs_context, and instead allocate
->    fs_info in fill_super?  Unless I have misread introduced a resource
->    leak if proc is not mounted or if proc is simply reconfigured.
+> Can you please mention in your description of this change that
+> switching from fsparam_u32 to fs_param_string is safe even when
+> using the new mount api because fsparam_u32 and fs_param_string
+> both are sent from userspace with "fsconfig(fd, FSCONFIG_SET_STRING, ...)".
 
-Hm ... it seems you're right.
+Sure.
 
-> 2) Can you please move hide_pid and pid_gid into fs_info in this patch?
->    As was shown by my recent bug fix 
+> Or words to that effect.  Ideally you will even manually test that case
+> to confirm.
 
-OK. I’ll do it in the next version.
-
-> 3) Can you please rebase on on v5.7-rc1 or v5.7-rc2 and repost these
->    patches please?  I thought I could do it safely but between my bug
->    fixes, and Alexey Dobriyan's parallel changes to proc these patches
->    do not apply cleanly.
-> 
->    Plus there is a resource leak in this patch.
-
-On my way.
-
-> >  struct proc_fs_context {
-> > -	struct pid_namespace	*pid_ns;
-> > +	struct proc_fs_info	*fs_info;
->         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> Please don't do this. As best as I can tell that introduces a memory
-> leak of proc is not mounted.  Please allocate fs_info in 
-
-OK.
+I will add a selftest for this.
 
 -- 
 Rgrds, legion
