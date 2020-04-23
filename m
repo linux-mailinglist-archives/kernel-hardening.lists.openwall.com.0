@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18617-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18618-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id A612A1B6300
-	for <lists+kernel-hardening@lfdr.de>; Thu, 23 Apr 2020 20:09:47 +0200 (CEST)
-Received: (qmail 29922 invoked by uid 550); 23 Apr 2020 18:09:40 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 310311B63C1
+	for <lists+kernel-hardening@lfdr.de>; Thu, 23 Apr 2020 20:29:02 +0200 (CEST)
+Received: (qmail 28317 invoked by uid 550); 23 Apr 2020 18:28:55 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,35 +13,35 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 29899 invoked from network); 23 Apr 2020 18:09:39 -0000
+Received: (qmail 28291 invoked from network); 23 Apr 2020 18:28:54 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=KWVTVR9QPt8YpEnS6+rG3cx9IAZdQ2Peqca4Ud6UmSY=;
-        b=CdFotNnqSpurMKkIu6CgBx6OkkmuS4dmePbH5JYO6Yb24rHfaG6bv/j6W3gwVuvGlR
-         64PbSSNPaH8ceQMVqvMs5BZdL4WabMg/+3TPoVNadaUwZ1CIY5Ft1srs/S6AInLWxtLR
-         iKNcf7yWw+tp7Mv+in+N3g014ylhLnJOJ++nc=
+        bh=6Y/9ITAGgGN1ObZLXZNElUJooxFBQUxzx7tXw0tLGrw=;
+        b=b6zdPxuhwvf6mbGggB4PksAI1ex0t7K0elOYcg58ZwrTjn8AjcWwZGTTkOt8xtEop1
+         QgJUSGvj+wJ1HD5HRDh4RvxxaMJq6yj8Ef8yIBSVdRMjVYw9bGTWpKc07ah08JcYCbF3
+         RdvWKOb7jr8FUoUPlrx507urw3KMBQUv7F7bI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=KWVTVR9QPt8YpEnS6+rG3cx9IAZdQ2Peqca4Ud6UmSY=;
-        b=ir3weRnMdd2l51/hoLsEkRkJAhsnHjio/jPIhsp2h/ab6VF4h3WgqAOCYIlNZrm3V9
-         XHswJ8SRdsR1bxv//QFWRBa1Yd9C52hioPa9y6YCdB1qXCcGNcfXcv75BYRhLzUUwZNa
-         ObdJsvrYy+AT7bWgUl9NRV/arT3Zl+sDA8FRzunlnSguzFqdtc2UbLoMTMNQdZAXMYOF
-         6Gcm22aEskmm3ZEkESomoPOSIIvS6hMD5cXXN78X7B0kkrTQzmZEjGjX4I3JAa8RkL89
-         NJFV+Tf43b/iOjoJNibxamYtGCX0hU/tSO3pd0hsboAcTbnbxwL6Zl9WekcbKAI8phh0
-         bZUg==
-X-Gm-Message-State: AGi0PuZn49RROPquj5DYTYeCYY+JuDpiFgIxRjeMrzQQ21IO41sNdNuE
-	lt+fY/t2QjJlTTALFFTHyZ6ybQ==
-X-Google-Smtp-Source: APiQypLMPu77yfYvTCVDe2sNxmi176/dfhJmzHOmLBk67EV18fTOD0x11gPSr7XgMYCWAsHYZmXLuw==
-X-Received: by 2002:a63:5c01:: with SMTP id q1mr4899728pgb.177.1587665367464;
-        Thu, 23 Apr 2020 11:09:27 -0700 (PDT)
-Date: Thu, 23 Apr 2020 11:09:24 -0700
+        bh=6Y/9ITAGgGN1ObZLXZNElUJooxFBQUxzx7tXw0tLGrw=;
+        b=NzsefbLPs3s5EmqSd/5w28PWd9Q5Mq2bUZhaZTA6DJ8RKFIqKe7ueaIZJNtChMDfTD
+         9k+s8C8q4pkd0mpFPFD99hGjDRebj30YI4a1HYZyWREpdM8n64aBEZNlmqXmglvdTPdK
+         X/YmTiBSvKFkJO19eawpxwsi0E4Yl5bPpT4sRIpT9YRczawGLRR0wZFsutO8kZ6Ch67C
+         SZ31Tt4HuZH6ZyoN2oqMMIfkRMw7wI9uUziuTfUxaGj+d3jz7jOgm4k+ehDIRpu8jZKV
+         A+kPj//8BG0JWscLLeJWqzmWNwGUnhCMpSt/biEN8XwBoTFndPjtv0DOMbfm3GDIcs61
+         ngeg==
+X-Gm-Message-State: AGi0PuYGWMHVMXgnaXb3ovLCswD67avVhNqtOPiKMLHU6Zd4KEv4A4cM
+	CgTFLuZKOybBI6WhC35+I2vLhA==
+X-Google-Smtp-Source: APiQypL3X1xlYzw2iOcrrAvDuDiryUSnxNiAeJYrDux+iWD+qj2k8HUN3EnuJVtWslaYhtMemGHUDw==
+X-Received: by 2002:a62:1c97:: with SMTP id c145mr5322854pfc.68.1587666522523;
+        Thu, 23 Apr 2020 11:28:42 -0700 (PDT)
+Date: Thu, 23 Apr 2020 11:28:40 -0700
 From: Kees Cook <keescook@chromium.org>
-To: Will Deacon <will@kernel.org>
-Cc: Sami Tolvanen <samitolvanen@google.com>,
+To: Sami Tolvanen <samitolvanen@google.com>
+Cc: Will Deacon <will@kernel.org>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	James Morse <james.morse@arm.com>,
 	Steven Rostedt <rostedt@goodmis.org>,
@@ -62,44 +62,70 @@ Cc: Sami Tolvanen <samitolvanen@google.com>,
 	clang-built-linux@googlegroups.com,
 	kernel-hardening@lists.openwall.com,
 	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v12 01/12] add support for Clang's Shadow Call Stack (SCS)
-Message-ID: <202004231108.1AC704F609@keescook>
+Subject: Re: [PATCH v11 01/12] add support for Clang's Shadow Call Stack (SCS)
+Message-ID: <202004231121.A13FDA100@keescook>
 References: <20191018161033.261971-1-samitolvanen@google.com>
- <20200421021453.198187-1-samitolvanen@google.com>
- <20200421021453.198187-2-samitolvanen@google.com>
- <202004221052.489CCFEBC@keescook>
- <20200422180040.GC3121@willie-the-truck>
+ <20200416161245.148813-1-samitolvanen@google.com>
+ <20200416161245.148813-2-samitolvanen@google.com>
+ <20200420171727.GB24386@willie-the-truck>
+ <20200420211830.GA5081@google.com>
+ <20200422173938.GA3069@willie-the-truck>
+ <20200422235134.GA211149@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200422180040.GC3121@willie-the-truck>
+In-Reply-To: <20200422235134.GA211149@google.com>
 
-On Wed, Apr 22, 2020 at 07:00:40PM +0100, Will Deacon wrote:
-> On Wed, Apr 22, 2020 at 10:54:45AM -0700, Kees Cook wrote:
-> > On Mon, Apr 20, 2020 at 07:14:42PM -0700, Sami Tolvanen wrote:
-> > > +void scs_release(struct task_struct *tsk)
-> > > +{
-> > > +	void *s;
-> > > +
-> > > +	s = __scs_base(tsk);
-> > > +	if (!s)
-> > > +		return;
-> > > +
-> > > +	WARN_ON(scs_corrupted(tsk));
-> > > +
+On Wed, Apr 22, 2020 at 04:51:34PM -0700, Sami Tolvanen wrote:
+> On Wed, Apr 22, 2020 at 06:39:47PM +0100, Will Deacon wrote:
+> > On Mon, Apr 20, 2020 at 02:18:30PM -0700, Sami Tolvanen wrote:
+> > > On Mon, Apr 20, 2020 at 06:17:28PM +0100, Will Deacon wrote:
+> > > > > +	 * The shadow call stack is aligned to SCS_SIZE, and grows
+> > > > > +	 * upwards, so we can mask out the low bits to extract the base
+> > > > > +	 * when the task is not running.
+> > > > > +	 */
+> > > > > +	return (void *)((unsigned long)task_scs(tsk) & ~(SCS_SIZE - 1));
+> > > > 
+> > > > Could we avoid forcing this alignment it we stored the SCS pointer as a
+> > > > (base,offset) pair instead? That might be friendlier on the allocations
+> > > > later on.
+> > > 
+> > > The idea is to avoid storing the current task's shadow stack address in
+> > > memory, which is why I would rather not store the base address either.
 > > 
-> > I'd like to have task_set_scs(tsk, NULL) retained here, to avoid need to
-> > depend on the released task memory getting scrubbed at a later time.
+> > What I mean is that, instead of storing the current shadow stack pointer,
+> > we instead store a base and an offset. We can still clear the base, as you
+> > do with the pointer today, and I don't see that the offset is useful to
+> > an attacker on its own.
 > 
-> Hmm, doesn't it get zeroed almost immediately by kmem_cache_free() if
-> INIT_ON_FREE_DEFAULT_ON is set? That seems much better than special-casing
-> SCS, as there's a tonne of other useful stuff kicking around in the
-> task_struct and treating this specially feels odd to me.
+> I see what you mean. However, even if we store the base address +
+> the offset, we still need aligned allocation if we want to clear
+> the address. This would basically just move __scs_base() logic to
+> cpu_switch_to() / scs_save().
 
-That's going to be an uncommon config except for the most paranoid of
-system builders. :) Having this get wiped particular thing wiped is just
-a decent best practice for what is otherwise treated as a "secret", just
-like crypto routines wipe their secrets before free().
+Okay, so, I feel like this has gotten off into the weeds, or I'm really
+dense (or both). :) Going back to the original comment:
+
+> > > > Could we avoid forcing this alignment it we stored the SCS
+> > > > pointer as a (base,offset) pair instead? That might be friendlier
+> > > > on the allocations later on.
+
+I think there was some confusion about mixing the "we want to be able to
+wipe the value" combined with the masking in __scs_base(). These are
+unrelated, as was correctly observed with "We can still clear the base".
+
+What I don't understand here is the suggestion to store two values:
+
+Why is two better than storing one? With one, we only need a single access.
+
+Why would storing the base be "friendlier on the allocations later on"?
+This is coming out of a single kmem cache, in 1K chunks. They will be
+naturally aligned to 1K (unless redzoing has been turned on for some
+slab debugging reason). The base masking is a way to avoid needing to
+store two values, and only happens at task death.
+
+Storing two values eats memory for all tasks for seemingly no meaningful
+common benefit. What am I missing here?
 
 -- 
 Kees Cook
