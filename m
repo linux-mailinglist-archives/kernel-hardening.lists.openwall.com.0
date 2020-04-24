@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18629-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18630-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 631911B71AF
-	for <lists+kernel-hardening@lfdr.de>; Fri, 24 Apr 2020 12:12:58 +0200 (CEST)
-Received: (qmail 17760 invoked by uid 550); 24 Apr 2020 10:12:51 -0000
+	by mail.lfdr.de (Postfix) with SMTP id B138E1B7286
+	for <lists+kernel-hardening@lfdr.de>; Fri, 24 Apr 2020 12:53:38 +0200 (CEST)
+Received: (qmail 6052 invoked by uid 550); 24 Apr 2020 10:53:32 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,89 +13,151 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 17737 invoked from network); 24 Apr 2020 10:12:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1587723158;
-	bh=fKU2iKdaO5V4T6aQoOLQEGsSBw4yYPCuYH7VaMC/eI4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kSbPHK0wqHUeZAx9aecwnpy9ShuMSbMzEpsNdzkiRkR+RFN1VJhrAPY0PtUxIniT/
-	 /wGBoKmysJ8CLXyd8f+lLlmKyEC4ej+hXUEjlSAbRI/eBWZ8LXlTour55sGrZaQ3Fm
-	 Ed1oqAak/yYVJ2wRfjZdMUjAgrADXoM7Kob9i6ME=
-Date: Fri, 24 Apr 2020 11:12:31 +0100
-From: Will Deacon <will@kernel.org>
-To: Kees Cook <keescook@chromium.org>
-Cc: Sami Tolvanen <samitolvanen@google.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	James Morse <james.morse@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ard Biesheuvel <ard.biesheuvel@linaro.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Michal Marek <michal.lkml@markovi.net>,
-	Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dave Martin <Dave.Martin@arm.com>,
-	Laura Abbott <labbott@redhat.com>, Marc Zyngier <maz@kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Jann Horn <jannh@google.com>,
-	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
-	clang-built-linux@googlegroups.com,
-	kernel-hardening@lists.openwall.com,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v12 01/12] add support for Clang's Shadow Call Stack (SCS)
-Message-ID: <20200424101230.GB21141@willie-the-truck>
-References: <20191018161033.261971-1-samitolvanen@google.com>
- <20200421021453.198187-1-samitolvanen@google.com>
- <20200421021453.198187-2-samitolvanen@google.com>
- <202004221052.489CCFEBC@keescook>
- <20200422180040.GC3121@willie-the-truck>
- <202004231108.1AC704F609@keescook>
+Received: (qmail 6020 invoked from network); 24 Apr 2020 10:53:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=cc:subject:to:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=R8t+7888K7kzJGE2cpI0Gewrm7h/D6gEhogwIFx31Lk=;
+        b=Qcq/8rBl9g732jhNkxk/yLJfMtvESceHcAhNq8mjG1GxTvJ8IX7OsX4ULyv5aXcf6A
+         XZK65r0qm0zbgUZaDhunfmvAaUraaq1Y6pUQlG4QNpejre+aIew2/3nYeZhhxpLmaImq
+         Qh00PpyAIBtDR0WZAoXZWMVSkicj+a+lzCswFroD6uPU8b9ctuKg4IKn/3d9UQcjA01j
+         ENSqq8/hZkrORRlXWjzHqqqvZ9p2m5rZkD6K4IF7Uh3fCXN9H36cjfmcn1gmPrrCc4n8
+         Juui253ahHG/SHnntUm/R4FJExyknpHv9GAo8z7R68twYuW74qB9ihE/KeE27+xXQtbc
+         yRbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:cc:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=R8t+7888K7kzJGE2cpI0Gewrm7h/D6gEhogwIFx31Lk=;
+        b=izBZlBHwtlnHGfj+m8LK/xD8SzDADjYLy0+G4XqQhbCxhSQguKkthwKzd+TQRjtlSF
+         cs4u84tnYXg5neJ04sYcofQmsvb7F0Hdjty6+1UIRnQj/T9A/odW2gQ9aK9h10ekluvh
+         /2AI4dUoq2pAfj8ImA+kTGTbf/XNtLXTpeOGjaEv3/2iX1Kr3gHpb1YCgGrzJbx3J4pS
+         X5IRo2C8Fm+vGgEaqIdqrclkWnduthLcKzvhyFObgo5y3DD8D96FX3zlmlifqtUCmSjV
+         zrPej9SFWdEqfUTHErG0udX2ugsCraSeTgGk/HuDW6F/8eJrlxkTs2f1S9KHaTgrscxt
+         v+ew==
+X-Gm-Message-State: AGi0PuZfv20VVMqDhgkjZUO1gTETvxnIrSHeL/e+q/nQVfl8v6TpsGRl
+	7GCHpNXMDhcltsRfKnyd8Ww=
+X-Google-Smtp-Source: APiQypK5+esVN5CdbnzPWeW2IhtsX++39F6f0uikR/CRyclafcDhXyyY7JjiOPtD6LG9xwD0kd49Ew==
+X-Received: by 2002:a17:90a:328f:: with SMTP id l15mr5666046pjb.77.1587725599462;
+        Fri, 24 Apr 2020 03:53:19 -0700 (PDT)
+Cc: tranmanphong@gmail.com, steve.capper@arm.com, steven.price@arm.com,
+ keescook@chromium.org, greg@kroah.com, akpm@linux-foundation.org,
+ alexios.zavras@intel.com, broonie@kernel.org,
+ kernel-hardening@lists.openwall.com, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, tglx@linutronix.de
+Subject: Re: Re: [PATCH v2] arm64: add check_wx_pages debugfs for CHECK_WX
+To: Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+ ruscur@russell.cc
+References: <20200307093926.27145-1-tranmanphong@gmail.com>
+ <20200421173557.10817-1-tranmanphong@gmail.com>
+ <20200422143526.GD54796@lakrids.cambridge.arm.com>
+ <20200422152656.GF676@willie-the-truck>
+From: Phong Tran <tranmanphong@gmail.com>
+Message-ID: <e06b1ad1-08ca-ec50-7ca1-7d08bbea81b3@gmail.com>
+Date: Fri, 24 Apr 2020 17:52:41 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <202004231108.1AC704F609@keescook>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20200422152656.GF676@willie-the-truck>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 
-On Thu, Apr 23, 2020 at 11:09:24AM -0700, Kees Cook wrote:
-> On Wed, Apr 22, 2020 at 07:00:40PM +0100, Will Deacon wrote:
-> > On Wed, Apr 22, 2020 at 10:54:45AM -0700, Kees Cook wrote:
-> > > On Mon, Apr 20, 2020 at 07:14:42PM -0700, Sami Tolvanen wrote:
-> > > > +void scs_release(struct task_struct *tsk)
-> > > > +{
-> > > > +	void *s;
-> > > > +
-> > > > +	s = __scs_base(tsk);
-> > > > +	if (!s)
-> > > > +		return;
-> > > > +
-> > > > +	WARN_ON(scs_corrupted(tsk));
-> > > > +
-> > > 
-> > > I'd like to have task_set_scs(tsk, NULL) retained here, to avoid need to
-> > > depend on the released task memory getting scrubbed at a later time.
-> > 
-> > Hmm, doesn't it get zeroed almost immediately by kmem_cache_free() if
-> > INIT_ON_FREE_DEFAULT_ON is set? That seems much better than special-casing
-> > SCS, as there's a tonne of other useful stuff kicking around in the
-> > task_struct and treating this specially feels odd to me.
+On 4/22/20 10:26 PM, Will Deacon wrote:
+> On Wed, Apr 22, 2020 at 03:35:27PM +0100, Mark Rutland wrote:
+>> On Wed, Apr 22, 2020 at 12:35:58AM +0700, Phong Tran wrote:
+>>> follow the suggestion from
+>>> https://github.com/KSPP/linux/issues/35
+>>>
+>>> Signed-off-by: Phong Tran <tranmanphong@gmail.com>
+>>> ---
+>>> Change since v1:
+>>> - Update the Kconfig help text
+>>> - Don't check the return value of debugfs_create_file()
+>>> - Tested on QEMU aarch64
+>>
+>> As on v1, I think that this should be generic across all architectures
+>> with CONFIG_DEBUG_WX. Adding this only on arm64 under
+>> CONFIG_PTDUMP_DEBUGFS (which does not generally imply a WX check)
+>> doesn't seem right.
+>>
+>> Maybe we need a new ARCH_HAS_CHECK_WX config to make that simpler, but
+>> that seems simple to me.
 > 
-> That's going to be an uncommon config except for the most paranoid of
-> system builders. :)
+> Agreed. When I asked about respinning, I assumed this would be done in
+> generic code as you requested on the first version. Phong -- do you think
+> you can take a look at that, please?
+> 
 
-Sounds like a perfect fit, then ;)
+sure, plan to make change in mm/ptdump.c with KConfig 
+"ARCH_HAS_CHECK_WX" as suggestion.
 
-> Having this get wiped particular thing wiped is just
-> a decent best practice for what is otherwise treated as a "secret", just
-> like crypto routines wipe their secrets before free().
+Then need align with this patch in PowerPC arch also
 
-Sorry, but I don't buy that analogy. The SCS pointer is stored in memory
-all over the place and if it needs to treated in the same way as crypto
-secrets then this whole thing needs rethinking. On top of that, where
-crypto routines may wipe their secrets, we don't do what is being proposed
-for the SCS pointer to other similar pieces of data, such as pointer
-authentication keys.
+https://lore.kernel.org/kernel-hardening/20200402084053.188537-3-ruscur@russell.cc/
 
-Will
+diff --git a/arch/arm64/Kconfig.debug b/arch/arm64/Kconfig.debug
+index a1efa246c9ed..50f18e7ff2ae 100644
+--- a/arch/arm64/Kconfig.debug
++++ b/arch/arm64/Kconfig.debug
+@@ -25,6 +25,7 @@ config ARM64_RANDOMIZE_TEXT_OFFSET
+
+  config DEBUG_WX
+         bool "Warn on W+X mappings at boot"
++       select ARCH_HAS_CHECK_WX
+         select PTDUMP_CORE
+         ---help---
+           Generate a warning if any W+X mappings are found at boot.
+diff --git a/mm/Kconfig.debug b/mm/Kconfig.debug
+index 0271b22e063f..40c9ac5a4db2 100644
+--- a/mm/Kconfig.debug
++++ b/mm/Kconfig.debug
+@@ -138,3 +138,6 @@ config PTDUMP_DEBUGFS
+           kernel.
+
+           If in doubt, say N.
++
++config ARCH_HAS_CHECK_WX
++       bool
+diff --git a/mm/ptdump.c b/mm/ptdump.c
+index 26208d0d03b7..8f54db007aaa 100644
+--- a/mm/ptdump.c
++++ b/mm/ptdump.c
+@@ -137,3 +137,29 @@ void ptdump_walk_pgd(struct ptdump_state *st, 
+struct mm_struct *mm, pgd_t *pgd)
+         /* Flush out the last page */
+         st->note_page(st, 0, -1, 0);
+  }
++
++#ifdef CONFIG_ARCH_HAS_CHECK_WX
++#include <linux/debugfs.h>
++#include <asm/ptdump.h>
++
++static int check_wx_debugfs_set(void *data, u64 val)
++{
++       if (val != 1ULL)
++               return -EINVAL;
++
++       ptdump_check_wx();
++
++       return 0;
++}
++
++DEFINE_SIMPLE_ATTRIBUTE(check_wx_fops, NULL, check_wx_debugfs_set, 
+"%llu\n");
++
++static int ptdump_debugfs_check_wx_init(void)
++{
++       debugfs_create_file("check_wx_pages", 0200, NULL,
++                       NULL, &check_wx_fops) ? 0 : -ENOMEM;
++       return 0;
++}
++
++device_initcall(ptdump_debugfs_check_wx_init);
++#endif
+
+
+Regards,
+Phong.
