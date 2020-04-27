@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18639-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18640-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id D625F1BA98C
-	for <lists+kernel-hardening@lfdr.de>; Mon, 27 Apr 2020 18:01:28 +0200 (CEST)
-Received: (qmail 11715 invoked by uid 550); 27 Apr 2020 16:00:46 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 7FD731BA9A1
+	for <lists+kernel-hardening@lfdr.de>; Mon, 27 Apr 2020 18:02:05 +0200 (CEST)
+Received: (qmail 12234 invoked by uid 550); 27 Apr 2020 16:00:54 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,41 +13,41 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 11643 invoked from network); 27 Apr 2020 16:00:45 -0000
+Received: (qmail 12177 invoked from network); 27 Apr 2020 16:00:53 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=kikYfFSTfca/HkjJiT4VwZFMKgohIqKorfyIql1wDNc=;
-        b=LKPo6Bc/Q5MtQzUK3oQa6NKadNaC15z3lO/zjdaounxLr3Yr/P6IlUdUGblL+xU5k4
-         spAtU8NF5ubk32gUq0m5VXjp6kv3GAFhZ4b47WHO1jV9Re1P0wgxqNnIy78PYlqK6iHg
-         Lz7JdX7MXdIx+DHcDceIZRSq68+3ppbTa32fDBBMVQUsXCdSeZ2Rk0+iayOXLcIpH0mh
-         1y8jfaqoFffOSgqi3glfbRygtn76YwRgqeTcaTsWT5Ma8vEPSbQu5Sf1lQXSpiWIQ5jH
-         osRX2DeCrw1RtV2JiczAkw6ANMNeNCpzDPw4w/B5fxj55cgpesof+s+eghyxXIYIpJqz
-         Cp7A==
+        bh=jTb4YPIUPKL1E1OLE2ifNkQg2x2HSYmo0hj4Ci3DZ3A=;
+        b=fqLi0SkyPjbXxPX/hPsXZeMNhq35aYqBNJAvT/Xx+BzPh7YlBx6i8WTACzT4FBHIRv
+         yB3PamKTCHUBg04d9KVAhujS595QnxeeGH1EBSaBLJkOM7C2p6uhVroooOZkVWSFANBo
+         EQq7r79O7lYvn3jVBEw+TI04/17VIVUaDIXO9ddhSuge+F4kykHowiB4XA1PixFt7f06
+         knShlLB1Y6N5OLuGmCs4M7eKqc6BblFu2RW9cdCpUqsLmxzOIrCdokmS7rXLST3WR3EJ
+         4YBYToSahIZ4xPJWmk/lOEd0e03hxC16yaJ1xBfFhei9FtsLMetBOg+CemUkcnsn0gik
+         hibA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=kikYfFSTfca/HkjJiT4VwZFMKgohIqKorfyIql1wDNc=;
-        b=Y+UkuGAZLnOe8kFVGhmYyl+6FdRlLISv6+xxjWajW6T2E5oB9zCphloR53GJ25vlVA
-         NW83fj8QJPye/egyWQEnEBHpav2tLF0SQ35f9mC8Z4C+cTZ+Wyc9Gwl9PxpEgLCsgXo7
-         HgRmgItBbaeF7ZU3aK2KVFvZ3o5Qn+cW4FoVbBVO98SLifZgX33GO5MkzC12bmlcWFv+
-         Fr4MC+7+8M10sYs7Ls7g6DyW5mtOjGEpc/mlT6sO5D39vc56lPFbdtcuT0d+eu9h5Fj1
-         R3H/L2uQ6LJMELVCvJdwOpe8ZK4IfoWd0fVevB/W0a8BR7euCVMj2uoDM6qqcHwvCoF8
-         zIlA==
-X-Gm-Message-State: AGi0PuaAgqaPGoI7msxJeRMh158ccDn4paAq9lWe7IvI5vvaYbbZ/26S
-	ndGsN/GPyd9lILRwcoqZTv0E1mPrXKilu68+VdE=
-X-Google-Smtp-Source: APiQypIgO4clcO6Z7kvhUaBuvYACtL+F9hDoKmeBmaTp5Edf0BzJT+qKnh+MwC69KhaGLcQ8wc5C0JEBbMo44i2AOQM=
-X-Received: by 2002:a25:ddc3:: with SMTP id u186mr36888616ybg.383.1588003232559;
- Mon, 27 Apr 2020 09:00:32 -0700 (PDT)
-Date: Mon, 27 Apr 2020 09:00:09 -0700
+        bh=jTb4YPIUPKL1E1OLE2ifNkQg2x2HSYmo0hj4Ci3DZ3A=;
+        b=mzjOOI4qNZ8KDFQLW5EJ3Jt0L9Gc+OxY916GiX9Ki+EyPraSg8+snbC5TgtTHkQpJM
+         bnhguJmb15DIsB0sfYsYk/S29Jitw/9ltySu/FzKbYhAO7OvNFK18NfbouUayKIhTsHB
+         VYTbUwwgGaeLwJFvOSRzBe2Pu3swvpQrg8Deq10W1vGY5RR7DiTeJl8v8EaHEskfI1K5
+         E+zsszobZtnSZU0b4uhB3K2r77zHDjH3ENCkMXC8WWe+o3qra05tAGOkscF7/bkI0Wb1
+         05pf9fExPg5SNgUr6qgrKgcHIwT8MXow+wobfvyQVllPTss469k5YMN6ajxl86OgQc5N
+         gRbA==
+X-Gm-Message-State: AGi0PuZQY/awW5Jhw6e/O+unuMJ0gjuYrNXW7u4h0C1+/8VQM+QIk55/
+	IDdQS4pIXEjckzAtyrWG98hPhKoKdzRxC8XZw5U=
+X-Google-Smtp-Source: APiQypLDtauRhcKiTQyzgC2LQ3XamOTxT1OCw5Clsp9y71dsXWMyuVGmw4gnWIV3Yp64XvmFFiqiRAvcGkJl+hJ0vkc=
+X-Received: by 2002:a05:6214:1513:: with SMTP id e19mr22507959qvy.75.1588003237430;
+ Mon, 27 Apr 2020 09:00:37 -0700 (PDT)
+Date: Mon, 27 Apr 2020 09:00:10 -0700
 In-Reply-To: <20200427160018.243569-1-samitolvanen@google.com>
-Message-Id: <20200427160018.243569-4-samitolvanen@google.com>
+Message-Id: <20200427160018.243569-5-samitolvanen@google.com>
 Mime-Version: 1.0
 References: <20191018161033.261971-1-samitolvanen@google.com> <20200427160018.243569-1-samitolvanen@google.com>
 X-Mailer: git-send-email 2.26.2.303.gf8c07b1a785-goog
-Subject: [PATCH v13 03/12] scs: add support for stack usage debugging
+Subject: [PATCH v13 04/12] scs: disable when function graph tracing is enabled
 From: Sami Tolvanen <samitolvanen@google.com>
 To: Will Deacon <will@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
 	James Morse <james.morse@arm.com>, Steven Rostedt <rostedt@goodmis.org>, 
@@ -64,72 +64,49 @@ Cc: Dave Martin <Dave.Martin@arm.com>, Kees Cook <keescook@chromium.org>,
 	Sami Tolvanen <samitolvanen@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-Implements CONFIG_DEBUG_STACK_USAGE for shadow stacks. When enabled,
-also prints out the highest shadow stack usage per process.
+The graph tracer hooks returns by modifying frame records on the
+(regular) stack, but with SCS the return address is taken from the
+shadow stack, and the value in the frame record has no effect. As we
+don't currently have a mechanism to determine the corresponding slot
+on the shadow stack (and to pass this through the ftrace
+infrastructure), for now let's disable SCS when the graph tracer is
+enabled.
+
+With SCS the return address is taken from the shadow stack and the
+value in the frame record has no effect. The mcount based graph tracer
+hooks returns by modifying frame records on the (regular) stack, and
+thus is not compatible. The patchable-function-entry graph tracer
+used for DYNAMIC_FTRACE_WITH_REGS modifies the LR before it is saved
+to the shadow stack, and is compatible.
+
+Modifying the mcount based graph tracer to work with SCS would require
+a mechanism to determine the corresponding slot on the shadow stack
+(and to pass this through the ftrace infrastructure), and we expect
+that everyone will eventually move to the patchable-function-entry
+based graph tracer anyway, so for now let's disable SCS when the
+mcount-based graph tracer is enabled.
+
+SCS and patchable-function-entry are both supported from LLVM 10.x.
 
 Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
 Reviewed-by: Kees Cook <keescook@chromium.org>
-Acked-by: Will Deacon <will@kernel.org>
+Reviewed-by: Mark Rutland <mark.rutland@arm.com>
 ---
- kernel/scs.c | 38 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+ arch/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/scs.c b/kernel/scs.c
-index 8769016c714c..2a96573f2b1b 100644
---- a/kernel/scs.c
-+++ b/kernel/scs.c
-@@ -68,6 +68,43 @@ int scs_prepare(struct task_struct *tsk, int node)
- 	return 0;
- }
- 
-+#ifdef CONFIG_DEBUG_STACK_USAGE
-+static unsigned long __scs_used(struct task_struct *tsk)
-+{
-+	unsigned long *p = task_scs(tsk);
-+	unsigned long *end = __scs_magic(p);
-+	unsigned long s = (unsigned long)p;
-+
-+	while (p < end && READ_ONCE_NOCHECK(*p))
-+		p++;
-+
-+	return (unsigned long)p - s;
-+}
-+
-+static void scs_check_usage(struct task_struct *tsk)
-+{
-+	static unsigned long highest;
-+	unsigned long used = __scs_used(tsk);
-+	unsigned long prev;
-+	unsigned long curr = highest;
-+
-+	while (used > curr) {
-+		prev = cmpxchg_relaxed(&highest, curr, used);
-+
-+		if (prev == curr) {
-+			pr_info("%s (%d): highest shadow stack usage: "
-+				"%lu bytes\n",
-+				tsk->comm, task_pid_nr(tsk), used);
-+			break;
-+		}
-+
-+		curr = prev;
-+	}
-+}
-+#else
-+static inline void scs_check_usage(struct task_struct *tsk) {}
-+#endif
-+
- void scs_release(struct task_struct *tsk)
- {
- 	void *s;
-@@ -77,6 +114,7 @@ void scs_release(struct task_struct *tsk)
- 		return;
- 
- 	WARN_ON(scs_corrupted(tsk));
-+	scs_check_usage(tsk);
- 
- 	scs_account(tsk, -1);
- 	scs_free(s);
+diff --git a/arch/Kconfig b/arch/Kconfig
+index 334a3d9b19df..45dfca9a98d3 100644
+--- a/arch/Kconfig
++++ b/arch/Kconfig
+@@ -543,6 +543,7 @@ config ARCH_SUPPORTS_SHADOW_CALL_STACK
+ config SHADOW_CALL_STACK
+ 	bool "Clang Shadow Call Stack"
+ 	depends on CC_IS_CLANG && ARCH_SUPPORTS_SHADOW_CALL_STACK
++	depends on DYNAMIC_FTRACE_WITH_REGS || !FUNCTION_GRAPH_TRACER
+ 	help
+ 	  This option enables Clang's Shadow Call Stack, which uses a
+ 	  shadow stack to protect function return addresses from being
 -- 
 2.26.2.303.gf8c07b1a785-goog
 
