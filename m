@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18679-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18681-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 4D07E1BD799
-	for <lists+kernel-hardening@lfdr.de>; Wed, 29 Apr 2020 10:50:40 +0200 (CEST)
-Received: (qmail 19681 invoked by uid 550); 29 Apr 2020 08:50:34 -0000
+	by mail.lfdr.de (Postfix) with SMTP id E236A1BEDEF
+	for <lists+kernel-hardening@lfdr.de>; Thu, 30 Apr 2020 03:55:15 +0200 (CEST)
+Received: (qmail 31923 invoked by uid 550); 30 Apr 2020 01:55:07 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,92 +13,94 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 19657 invoked from network); 29 Apr 2020 08:50:33 -0000
+Received: (qmail 31897 invoked from network); 30 Apr 2020 01:55:07 -0000
+X-Virus-Scanned: amavisd-new at heinlein-support.de
+Date: Thu, 30 Apr 2020 11:54:29 +1000
+From: Aleksa Sarai <cyphar@cyphar.com>
+To: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
+Cc: linux-kernel@vger.kernel.org, Alexei Starovoitov <ast@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Andy Lutomirski <luto@kernel.org>,
+	Christian Heimes <christian@python.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Deven Bowers <deven.desai@linux.microsoft.com>,
+	Eric Chiang <ericchiang@google.com>,
+	Florian Weimer <fweimer@redhat.com>,
+	James Morris <jmorris@namei.org>, Jan Kara <jack@suse.cz>,
+	Jann Horn <jannh@google.com>, Jonathan Corbet <corbet@lwn.net>,
+	Kees Cook <keescook@chromium.org>,
+	Matthew Garrett <mjg59@google.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Michael Kerrisk <mtk.manpages@gmail.com>,
+	=?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mickael.salaun@ssi.gouv.fr>,
+	Mimi Zohar <zohar@linux.ibm.com>,
+	Philippe =?utf-8?Q?Tr=C3=A9buchet?= <philippe.trebuchet@ssi.gouv.fr>,
+	Scott Shell <scottsh@microsoft.com>,
+	Sean Christopherson <sean.j.christopherson@intel.com>,
+	Shuah Khan <shuah@kernel.org>, Steve Dower <steve.dower@python.org>,
+	Steve Grubb <sgrubb@redhat.com>,
+	Thibaut Sautereau <thibaut.sautereau@ssi.gouv.fr>,
+	Vincent Strubel <vincent.strubel@ssi.gouv.fr>,
+	kernel-hardening@lists.openwall.com, linux-api@vger.kernel.org,
+	linux-security-module@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org
 Subject: Re: [PATCH v3 0/5] Add support for RESOLVE_MAYEXEC
-To: Jann Horn <jannh@google.com>, Florian Weimer <fw@deneb.enyo.de>
-Cc: kernel list <linux-kernel@vger.kernel.org>,
- Aleksa Sarai <cyphar@cyphar.com>, Alexei Starovoitov <ast@kernel.org>,
- Al Viro <viro@zeniv.linux.org.uk>, Andy Lutomirski <luto@kernel.org>,
- Christian Heimes <christian@python.org>,
- Daniel Borkmann <daniel@iogearbox.net>,
- Deven Bowers <deven.desai@linux.microsoft.com>,
- Eric Chiang <ericchiang@google.com>, James Morris <jmorris@namei.org>,
- Jan Kara <jack@suse.cz>, Jonathan Corbet <corbet@lwn.net>,
- Kees Cook <keescook@chromium.org>, Matthew Garrett <mjg59@google.com>,
- Matthew Wilcox <willy@infradead.org>,
- Michael Kerrisk <mtk.manpages@gmail.com>,
- =?UTF-8?Q?Micka=c3=abl_Sala=c3=bcn?= <mickael.salaun@ssi.gouv.fr>,
- Mimi Zohar <zohar@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Tr=c3=a9buchet?= <philippe.trebuchet@ssi.gouv.fr>,
- Scott Shell <scottsh@microsoft.com>,
- Sean Christopherson <sean.j.christopherson@intel.com>,
- Shuah Khan <shuah@kernel.org>, Steve Dower <steve.dower@python.org>,
- Steve Grubb <sgrubb@redhat.com>,
- Thibaut Sautereau <thibaut.sautereau@ssi.gouv.fr>,
- Vincent Strubel <vincent.strubel@ssi.gouv.fr>,
- Kernel Hardening <kernel-hardening@lists.openwall.com>,
- Linux API <linux-api@vger.kernel.org>,
- linux-security-module <linux-security-module@vger.kernel.org>,
- linux-fsdevel <linux-fsdevel@vger.kernel.org>
+Message-ID: <20200430015429.wuob7m5ofdewubui@yavin.dot.cyphar.com>
 References: <20200428175129.634352-1-mic@digikod.net>
- <CAG48ez1bKzh1YvbD_Lcg0AbMCH_cdZmrRRumU7UCJL=qPwNFpQ@mail.gmail.com>
- <87blnb48a3.fsf@mid.deneb.enyo.de>
- <CAG48ez2TphTj-VdDaSjvnr0Q8BhNmT3n86xYz4bF3wRJmAMsMw@mail.gmail.com>
-From: =?UTF-8?Q?Micka=c3=abl_Sala=c3=bcn?= <mic@digikod.net>
-Message-ID: <ece281a5-8944-65fd-2a76-e4479a0cccaf@digikod.net>
-Date: Wed, 29 Apr 2020 10:50:19 +0200
-User-Agent:
 MIME-Version: 1.0
-In-Reply-To: <CAG48ez2TphTj-VdDaSjvnr0Q8BhNmT3n86xYz4bF3wRJmAMsMw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Antivirus: Dr.Web (R) for Unix mail servers drweb plugin ver.6.0.2.8
-X-Antivirus-Code: 0x100000
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="udruashf3djnhxyp"
+Content-Disposition: inline
+In-Reply-To: <20200428175129.634352-1-mic@digikod.net>
+X-Rspamd-Queue-Id: 185431774
+X-Rspamd-Score: -5.53 / 15.00 / 15.00
 
 
+--udruashf3djnhxyp
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 29/04/2020 00:01, Jann Horn wrote:
-> On Tue, Apr 28, 2020 at 11:21 PM Florian Weimer <fw@deneb.enyo.de> wrote:
->> * Jann Horn:
->>
->>> Just as a comment: You'd probably also have to use RESOLVE_MAYEXEC in
->>> the dynamic linker.
->>
->> Absolutely.  In typical configurations, the kernel does not enforce
->> that executable mappings must be backed by files which are executable.
->> It's most obvious with using an explicit loader invocation to run
->> executables on noexec mounts.  RESOLVE_MAYEXEC is much more useful
->> than trying to reimplement the kernel permission checks (or what some
->> believe they should be) in userspace.
+On 2020-04-28, Micka=EBl Sala=FCn <mic@digikod.net> wrote:
+> The goal of this patch series is to enable to control script execution
+> with interpreters help.  A new RESOLVE_MAYEXEC flag, usable through
+> openat2(2), is added to enable userspace script interpreter to delegate
+> to the kernel (and thus the system security policy) the permission to
+> interpret/execute scripts or other files containing what can be seen as
+> commands.
+>=20
+> This third patch series mainly differ from the previous one by relying
+> on the new openat2(2) system call to get rid of the undefined behavior
+> of the open(2) flags.  Thus, the previous O_MAYEXEC flag is now replaced
+> with the new RESOLVE_MAYEXEC flag and benefits from the openat2(2)
+> strict check of this kind of flags.
 
-Indeed it makes sense to use RESOLVE_MAYEXEC for the dynamic linker too.
-Only the noexec mount option is taken into account for mmap(2) with
-PROT_EXEC, and if you can trick the dynamic linker with JOP as Jann
-explained, it may enable to execute new code. However, a kernel which
-forbids remapping memory with PROT_EXEC still enables to implement a W^X
-policy. Any JOP/ROP still enables unexpected code execution though.
+My only strong upfront objection is with this being a RESOLVE_ flag.
 
-> 
-> Oh, good point.
-> 
-> That actually seems like something Mickaël could add to his series? If
-> someone turns on that knob for "When an interpreter wants to execute
-> something, enforce that we have execute access to it", they probably
-> also don't want it to be possible to just map files as executable? So
-> perhaps when that flag is on, the kernel should either refuse to map
-> anything as executable if it wasn't opened with RESOLVE_MAYEXEC or
-> (less strict) if RESOLVE_MAYEXEC wasn't used, print a warning, then
-> check whether the file is executable and bail out if not?
-> 
-> A configuration where interpreters verify that scripts are executable,
-> but other things can just mmap executable pages, seems kinda
-> inconsistent...
+RESOLVE_ flags have a specific meaning (they generally apply to all
+components, and affect the rules of path resolution). RESOLVE_MAYEXEC
+does neither of these things and so seems out of place among the other
+RESOLVE_ flags.
 
-As it is written in the documentation patch, this RESOLVE_MAYEXEC
-feature is an important missing piece, but to implement a consistent
-security policy we need to enable other restrictions starting with a
-noexec mount point policy. The purpose of this patch series is not to
-bring a full-feature LSM with process states handling, but it brings
-what is needed for LSMs such as SELinux, IMA or IPE to extend their
-capabilities to reach what you would expect.
+I would argue this should be an O_ flag, but not supported for the
+old-style open(2). This is what the O_SPECIFIC_FD patchset does[1] and I
+think it's a reasonable way of solving such problems.
+
+--=20
+Aleksa Sarai
+Senior Software Engineer (Containers)
+SUSE Linux GmbH
+<https://www.cyphar.com/>
+
+--udruashf3djnhxyp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQSxZm6dtfE8gxLLfYqdlLljIbnQEgUCXqov0QAKCRCdlLljIbnQ
+Es1XAP4pdpkX/auZ9BMKqDz4Q71lNx9hZ2pPWO2GKtz3HxWg3QD/d346yEY1nSmz
+4QrB06Se4f0JFMG5Fy1QoGIpSoBx+Qk=
+=DOB3
+-----END PGP SIGNATURE-----
+
+--udruashf3djnhxyp--
