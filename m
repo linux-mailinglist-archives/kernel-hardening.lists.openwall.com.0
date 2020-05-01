@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18691-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18692-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 1F0131C0CD7
-	for <lists+kernel-hardening@lfdr.de>; Fri,  1 May 2020 05:54:59 +0200 (CEST)
-Received: (qmail 12017 invoked by uid 550); 1 May 2020 03:54:51 -0000
+	by mail.lfdr.de (Postfix) with SMTP id D98A31C0D00
+	for <lists+kernel-hardening@lfdr.de>; Fri,  1 May 2020 06:03:10 +0200 (CEST)
+Received: (qmail 21853 invoked by uid 550); 1 May 2020 04:03:05 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,8 +13,8 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 11994 invoked from network); 1 May 2020 03:54:50 -0000
-Date: Fri, 1 May 2020 13:53:50 +1000 (AEST)
+Received: (qmail 21833 invoked from network); 1 May 2020 04:03:04 -0000
+Date: Fri, 1 May 2020 14:02:16 +1000 (AEST)
 From: James Morris <jmorris@namei.org>
 To: =?ISO-8859-15?Q?Micka=EBl_Sala=FCn?= <mic@digikod.net>
 cc: linux-kernel@vger.kernel.org, Aleksa Sarai <cyphar@cyphar.com>,
@@ -40,35 +40,46 @@ cc: linux-kernel@vger.kernel.org, Aleksa Sarai <cyphar@cyphar.com>,
         Vincent Strubel <vincent.strubel@ssi.gouv.fr>,
         kernel-hardening@lists.openwall.com, linux-api@vger.kernel.org,
         linux-security-module@vger.kernel.org, linux-fsdevel@vger.kernel.org
-Subject: Re: [PATCH v3 0/5] Add support for RESOLVE_MAYEXEC
-In-Reply-To: <20200428175129.634352-1-mic@digikod.net>
-Message-ID: <alpine.LRH.2.21.2005011352300.29679@namei.org>
-References: <20200428175129.634352-1-mic@digikod.net>
+Subject: Re: [PATCH v3 2/5] fs: Add a MAY_EXECMOUNT flag to infer the noexec
+ mount property
+In-Reply-To: <20200428175129.634352-3-mic@digikod.net>
+Message-ID: <alpine.LRH.2.21.2005011357290.29679@namei.org>
+References: <20200428175129.634352-1-mic@digikod.net> <20200428175129.634352-3-mic@digikod.net>
 User-Agent: Alpine 2.21 (LRH 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="1665246916-598047033-1588305232=:29679"
+Content-Type: multipart/mixed; BOUNDARY="1665246916-2066436414-1588305635=:29679"
+Content-ID: <alpine.LRH.2.21.2005011402110.29679@namei.org>
 
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---1665246916-598047033-1588305232=:29679
-Content-Type: text/plain; charset=UTF-8
+--1665246916-2066436414-1588305635=:29679
+Content-Type: text/plain; CHARSET=ISO-8859-15
 Content-Transfer-Encoding: 8BIT
+Content-ID: <alpine.LRH.2.21.2005011402111.29679@namei.org>
 
-On Tue, 28 Apr 2020, MickaÃ«l SalaÃ¼n wrote:
+On Tue, 28 Apr 2020, Mickaël Salaün wrote:
 
-> Furthermore, the security policy can also be delegated to an LSM, either
-> a MAC system or an integrity system.  For instance, the new kernel
-> MAY_OPENEXEC flag closes a major IMA measurement/appraisal interpreter
-> integrity gap by bringing the ability to check the use of scripts [1].
-> Other uses are expected, such as for openat2(2) [2], SGX integration
-> [3], bpffs [4] or IPE [5].
+> An LSM doesn't get path information related to an access request to open
+> an inode.  This new (internal) MAY_EXECMOUNT flag enables an LSM to
+> check if the underlying mount point of an inode is marked as executable.
+> This is useful to implement a security policy taking advantage of the
+> noexec mount option.
+> 
+> This flag is set according to path_noexec(), which checks if a mount
+> point is mounted with MNT_NOEXEC or if the underlying superblock is
+> SB_I_NOEXEC.
+> 
+> Signed-off-by: Mickaël Salaün <mic@digikod.net>
+> Reviewed-by: Philippe Trébuchet <philippe.trebuchet@ssi.gouv.fr>
+> Reviewed-by: Thibaut Sautereau <thibaut.sautereau@ssi.gouv.fr>
+> Cc: Aleksa Sarai <cyphar@cyphar.com>
+> Cc: Al Viro <viro@zeniv.linux.org.uk>
+> Cc: Kees Cook <keescook@chromium.org>
 
-Confirming that this is a highly desirable feature for the proposed IPE 
-LSM.
+Are there any existing LSMs which plan to use this aspect?
 
 -- 
 James Morris
 <jmorris@namei.org>
-
---1665246916-598047033-1588305232=:29679--
+--1665246916-2066436414-1588305635=:29679--
