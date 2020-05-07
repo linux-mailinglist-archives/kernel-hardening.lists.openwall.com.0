@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18729-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18736-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 9B4AB1C752C
-	for <lists+kernel-hardening@lfdr.de>; Wed,  6 May 2020 17:42:02 +0200 (CEST)
-Received: (qmail 1420 invoked by uid 550); 6 May 2020 15:41:55 -0000
+	by mail.lfdr.de (Postfix) with SMTP id CC7651C867D
+	for <lists+kernel-hardening@lfdr.de>; Thu,  7 May 2020 12:18:18 +0200 (CEST)
+Received: (qmail 21831 invoked by uid 550); 7 May 2020 10:18:12 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,168 +13,167 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 1396 invoked from network); 6 May 2020 15:41:54 -0000
-X-Virus-Scanned: amavisd-new at heinlein-support.de
-Date: Thu, 7 May 2020 01:41:17 +1000
-From: Aleksa Sarai <cyphar@cyphar.com>
-To: "Lev R. Oshvang ." <levonshe@gmail.com>
-Cc: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>,
-	linux-kernel@vger.kernel.org, Alexei Starovoitov <ast@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Andy Lutomirski <luto@kernel.org>,
-	Christian Heimes <christian@python.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Deven Bowers <deven.desai@linux.microsoft.com>,
-	Eric Chiang <ericchiang@google.com>,
-	Florian Weimer <fweimer@redhat.com>,
-	James Morris <jmorris@namei.org>, Jan Kara <jack@suse.cz>,
-	Jann Horn <jannh@google.com>, Jonathan Corbet <corbet@lwn.net>,
-	Kees Cook <keescook@chromium.org>,
-	Lakshmi Ramasubramanian <nramas@linux.microsoft.com>,
-	Matthew Garrett <mjg59@google.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Michael Kerrisk <mtk.manpages@gmail.com>,
-	=?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mickael.salaun@ssi.gouv.fr>,
-	Mimi Zohar <zohar@linux.ibm.com>,
-	Philippe =?utf-8?Q?Tr=C3=A9buchet?= <philippe.trebuchet@ssi.gouv.fr>,
-	Scott Shell <scottsh@microsoft.com>,
-	Sean Christopherson <sean.j.christopherson@intel.com>,
-	Shuah Khan <shuah@kernel.org>, Steve Dower <steve.dower@python.org>,
-	Steve Grubb <sgrubb@redhat.com>,
-	Thibaut Sautereau <thibaut.sautereau@ssi.gouv.fr>,
-	Vincent Strubel <vincent.strubel@ssi.gouv.fr>,
-	kernel-hardening@lists.openwall.com, linux-api@vger.kernel.org,
-	linux-integrity@vger.kernel.org,
-	LSM List <linux-security-module@vger.kernel.org>,
-	linux-fsdevel@vger.kernel.org
-Subject: Re: [PATCH v5 0/6] Add support for O_MAYEXEC
-Message-ID: <20200506154117.gibiibfytrdl4exo@yavin.dot.cyphar.com>
-References: <20200505153156.925111-1-mic@digikod.net>
- <d4616bc0-39df-5d6c-9f5b-d84cf6e65960@digikod.net>
- <CAP22eLHres_shVWEC+2=wcKXRsQzfNKDAnyRd8yuO_gJ3Wi_JA@mail.gmail.com>
+Delivered-To: moderator for kernel-hardening@lists.openwall.com
+Received: (qmail 7923 invoked from network); 7 May 2020 07:07:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=RQbMvC1ag/SPzt3A0iv4z8R55U/VKwxU9VmHI0/FJRU=;
+        b=HuBe5N6XnGvBabUFlomvKFuULmswvV6IlY50t+tlQh3qqFeVo5mlJMIvc7M96A6QjC
+         j3LZOLKTSOkTavRzmk9QLDOed90qTi8J5m3bCK/GvzbOX5+fQnqzZ2lrFFlL9zSBb7bK
+         XAFcn2P2vqnrYdpevPVAct9mZB7yGVFNe7rfbteS1bSoApWNTeI58mDIb5AlotWlL2pa
+         f6sensKTOJeJLEEFoM777CUpUg8U1KZPaHrhXNqS+3kVcZqWfT9/i1vrGvq/wP09QPjM
+         JTwRcQ3BaHtmTWAgaJUkpGH6Yyk3vceaghoSvRuvmphb3vT0EJ+OnF4YC8Ni9cgd0/t6
+         EkYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=RQbMvC1ag/SPzt3A0iv4z8R55U/VKwxU9VmHI0/FJRU=;
+        b=XeDM59NEl6Sac4uGOBQth7KB4EBxx5KHbfV6Fb3zUOkJILbSsGFaVbCaI10O5riRX6
+         SwQniQPuiyRHXldg17nXR8gqKgcgikO9WlbwRQsHwsNZuTyu0ahEMjRITuWeu52CFDAp
+         XT9UEX/6d8EQDCoAiGsQsaRSlWwslzPV2vj6bdprN+8uv9EiwQDOzSIQnGaIu+Wds2Jt
+         84aDto7oAsDkCzXtkY1GQL08iQrGn7cwQvCg2iS8ToRRJx26f38AG4ne+0GwXG1k+oob
+         zIqNMmxR33Kjz2/Bh+sC5lTPbxKeltXW1aY5LoUdX9jhtMxxxiUgkoYzy8mAzoHbriLY
+         s8Ow==
+X-Gm-Message-State: AGi0Pua4LLeXzIZswHdbKDZczI2hwrApwXoMB7nCJrxJ/As7gsIgOoCg
+	oT5Okq28OsO0Z5hIN+4zgDaKpJrkWNi1SyP3A6w=
+X-Google-Smtp-Source: APiQypL8AC7ZUZnP0qgOLELJh2mB0qf4DRtMwN4Iryo60fDs4rqEG8PDwXDJX033RYCz1rFZGBj6H05V6VK++Hv+CxM=
+X-Received: by 2002:aa7:c2d2:: with SMTP id m18mr10709938edp.142.1588835249498;
+ Thu, 07 May 2020 00:07:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="ljnqns477wlvxj5l"
-Content-Disposition: inline
-In-Reply-To: <CAP22eLHres_shVWEC+2=wcKXRsQzfNKDAnyRd8yuO_gJ3Wi_JA@mail.gmail.com>
-X-Rspamd-Queue-Id: BECC31754
-X-Rspamd-Score: -7.67 / 15.00 / 15.00
-
-
---ljnqns477wlvxj5l
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+References: <alpine.LRH.2.21.2002041054320.12768@namei.org> <CALrft9_tam87oevNC6LDG_bZoH+BgfrD4Or3yQudDoVqTqBdvg@mail.gmail.com>
+In-Reply-To: <CALrft9_tam87oevNC6LDG_bZoH+BgfrD4Or3yQudDoVqTqBdvg@mail.gmail.com>
+From: Elena Reshetova <elena.reshetova@gmail.com>
+Date: Thu, 7 May 2020 10:07:18 +0300
+Message-ID: <CALrft98SzLkw3M0shurUsNxsNSuSR3qN236rX4mEvC8GsrnnWQ@mail.gmail.com>
+Subject: [ANNOUNCE][CFP] Linux Security Summit Europe 2020
+To: linux-security-module@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org, lwn@lwn.net, fedora-selinux-list@redhat.com, 
+	linux-crypto@vger.kernel.org, kernel-hardening@lists.openwall.com, 
+	linux-integrity@vger.kernel.org, selinux@vger.kernel.org, 
+	Audit-ML <linux-audit@redhat.com>, gentoo-hardened@gentoo.org, keyrings@linux-nfs.org, 
+	tpmdd-devel@lists.sourceforge.net, 
+	Linux Security Summit Program Committee <lss-pc@lists.linuxfoundation.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 2020-05-06, Lev R. Oshvang . <levonshe@gmail.com> wrote:
-> On Tue, May 5, 2020 at 6:36 PM Micka=EBl Sala=FCn <mic@digikod.net> wrote:
-> >
-> >
-> > On 05/05/2020 17:31, Micka=EBl Sala=FCn wrote:
-> > > Hi,
-> > >
-> > > This fifth patch series add new kernel configurations (OMAYEXEC_STATI=
-C,
-> > > OMAYEXEC_ENFORCE_MOUNT, and OMAYEXEC_ENFORCE_FILE) to enable to
-> > > configure the security policy at kernel build time.  As requested by
-> > > Mimi Zohar, I completed the series with one of her patches for IMA.
-> > >
-> > > The goal of this patch series is to enable to control script execution
-> > > with interpreters help.  A new O_MAYEXEC flag, usable through
-> > > openat2(2), is added to enable userspace script interpreter to delega=
-te
-> > > to the kernel (and thus the system security policy) the permission to
-> > > interpret/execute scripts or other files containing what can be seen =
-as
-> > > commands.
-> > >
-> > > A simple system-wide security policy can be enforced by the system
-> > > administrator through a sysctl configuration consistent with the mount
-> > > points or the file access rights.  The documentation patch explains t=
-he
-> > > prerequisites.
-> > >
-> > > Furthermore, the security policy can also be delegated to an LSM, eit=
-her
-> > > a MAC system or an integrity system.  For instance, the new kernel
-> > > MAY_OPENEXEC flag closes a major IMA measurement/appraisal interpreter
-> > > integrity gap by bringing the ability to check the use of scripts [1].
-> > > Other uses are expected, such as for openat2(2) [2], SGX integration
-> > > [3], bpffs [4] or IPE [5].
-> > >
-> > > Userspace needs to adapt to take advantage of this new feature.  For
-> > > example, the PEP 578 [6] (Runtime Audit Hooks) enables Python 3.8 to =
-be
-> > > extended with policy enforcement points related to code interpretatio=
-n,
-> > > which can be used to align with the PowerShell audit features.
-> > > Additional Python security improvements (e.g. a limited interpreter
-> > > withou -c, stdin piping of code) are on their way.
-> > >
-> > > The initial idea come from CLIP OS 4 and the original implementation =
-has
-> > > been used for more than 12 years:
-> > > https://github.com/clipos-archive/clipos4_doc
-> > >
-> > > An introduction to O_MAYEXEC was given at the Linux Security Summit
-> > > Europe 2018 - Linux Kernel Security Contributions by ANSSI:
-> > > https://www.youtube.com/watch?v=3DchNjCRtPKQY&t=3D17m15s
-> > > The "write xor execute" principle was explained at Kernel Recipes 201=
-8 -
-> > > CLIP OS: a defense-in-depth OS:
-> > > https://www.youtube.com/watch?v=3DPjRE0uBtkHU&t=3D11m14s
-> > >
-> > > This patch series can be applied on top of v5.7-rc4.  This can be tes=
-ted
-> > > with CONFIG_SYSCTL.  I would really appreciate constructive comments =
-on
-> > > this patch series.
-> > >
-> > > Previous version:
-> > > https://lore.kernel.org/lkml/20200428175129.634352-1-mic@digikod.net/
-> >
-> > The previous version (v4) is
-> > https://lore.kernel.org/lkml/20200430132320.699508-1-mic@digikod.net/
->=20
->=20
-> Hi Michael
->=20
-> I have couple of question
-> 1. Why you did not add O_MAYEXEC to open()?
-> Some time ago (around v4.14) open() did not return EINVAL when
-> VALID_OPEN_FLAGS check failed.
-> Now it does, so I do not see a problem that interpreter will use
-> simple open(),  ( Although that path might be manipulated, but file
-> contents will be verified by IMA)
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D
+                   ANNOUNCEMENT AND CALL FOR PARTICIPATION
 
-You don't get -EINVAL from open() in the case of unknown flags, that's
-something only openat2() does in the open*() family. Hence why it's only
-introduced for openat2().
+                        LINUX SECURITY SUMMIT EUROPE 2020
 
-> 2. When you apply a new flag to mount, it means that IMA will check
-> all files under this mount and it does not matter whether the file in
-> question is a script or not.
-> IMHO it is too hard overhead for performance reasons.
->=20
-> Regards,
-> LEv
+                                     29-30 OCTOBER
+                                    DUBLIN, IRELAND
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D
 
+DESCRIPTION
 
---=20
-Aleksa Sarai
-Senior Software Engineer (Containers)
-SUSE Linux GmbH
-<https://www.cyphar.com/>
+Linux Security Summit Europe (LSS-EU) is a technical forum for
+collaboration between Linux developers, researchers, and end-users.  Its
+primary aim is to foster community efforts in analyzing and solving Linux
+security challenges.
 
---ljnqns477wlvxj5l
-Content-Type: application/pgp-signature; name="signature.asc"
+ The program committee currently seeks proposals for:
 
------BEGIN PGP SIGNATURE-----
+   * Refereed Presentations:
+     45 minutes in length.
 
-iHUEABYIAB0WIQSxZm6dtfE8gxLLfYqdlLljIbnQEgUCXrLamgAKCRCdlLljIbnQ
-Eo2EAQDv6NtU9F0Nl45n0HGqLDKRn1IEH5GBUZwhlkUR72xbbAD8CqwZXGFnsYZB
-+Che7WXy1zSGWAJq84tQAqCqj97ABAQ=
-=EWAe
------END PGP SIGNATURE-----
+   * Panel Discussion Topics:
+     45 minutes in length.
 
---ljnqns477wlvxj5l--
+   * Short Topics:
+     30 minutes in total, including at least 10 minutes discussion.
+
+   * Tutorials
+     90 minutes in length.
+
+Tutorial sessions should be focused on advanced Linux security defense
+topics within areas such as the kernel, compiler, and security-related
+libraries.  Priority will be given to tutorials created for this conference=
+,
+and those where the presenter a leading subject matter expert on the topic.
+
+Topic areas include, but are not limited to:
+
+   * Kernel self-protection
+   * Access control
+   * Cryptography and key management
+   * Integrity policy and enforcement
+   * Hardware Security
+   * IoT and embedded security
+   * Virtualization and containers
+   * System-specific system hardening
+   * Case studies
+   * Security tools
+   * Security UX
+   * Emerging technologies, threats & techniques
+
+  Proposals should be submitted via:
+
+   https://events.linuxfoundation.org/linux-security-summit-europe/program/=
+cfp/
+
+DATES
+
+  * CFP close:            July 31
+  * CFP notifications:    August 10
+  * Schedule announced:   September 1
+  * Event:                October 29-30
+
+COVID-19 SITUATION
+
+Currently LSS-EU is planned as in-person event, however this would be
+re-evaluated closer to the event itself and if the situation in Europe does
+not permit such events, it would be switched to a virtual event, similarly
+as this year=E2=80=99s LSS-NA.
+
+WHO SHOULD ATTEND
+
+We're seeking a diverse range of attendees and welcome participation by
+people involved in Linux security development, operations, and research.
+
+LSS-EU is a unique global event that provides the opportunity to present an=
+d
+discuss your work or research with key Linux security community members and
+maintainers.  It=E2=80=99s also useful for those who wish to keep up with t=
+he latest
+in Linux security development and to provide input to the development
+process.
+
+WEB SITE
+
+    https://events.linuxfoundation.org/linux-security-summit-europe/
+
+TWITTER
+
+  For event updates and announcements, follow:
+
+    https://twitter.com/LinuxSecSummit
+
+    #linuxsecuritysummit
+
+PROGRAM COMMITTEE
+
+  The program committee for LSS 2020 is:
+
+    * James Morris, Microsoft
+    * Serge Hallyn, Cisco
+    * Paul Moore, Cisco
+    * Stephen Smalley, NSA
+    * Elena Reshetova, Intel
+    * John Johansen, Canonical
+    * Kees Cook, Google
+    * Casey Schaufler, Intel
+    * Mimi Zohar, IBM
+    * David A. Wheeler, Institute for Defense Analyses
+
+  The program committee may be contacted as a group via email:
+    lss-pc () lists.linuxfoundation.org
