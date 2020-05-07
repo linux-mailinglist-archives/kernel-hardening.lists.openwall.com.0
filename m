@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18736-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18730-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id CC7651C867D
-	for <lists+kernel-hardening@lfdr.de>; Thu,  7 May 2020 12:18:18 +0200 (CEST)
-Received: (qmail 21831 invoked by uid 550); 7 May 2020 10:18:12 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 555FB1C844A
+	for <lists+kernel-hardening@lfdr.de>; Thu,  7 May 2020 10:05:27 +0200 (CEST)
+Received: (qmail 20000 invoked by uid 550); 7 May 2020 08:05:19 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,167 +13,99 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 7923 invoked from network); 7 May 2020 07:07:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=RQbMvC1ag/SPzt3A0iv4z8R55U/VKwxU9VmHI0/FJRU=;
-        b=HuBe5N6XnGvBabUFlomvKFuULmswvV6IlY50t+tlQh3qqFeVo5mlJMIvc7M96A6QjC
-         j3LZOLKTSOkTavRzmk9QLDOed90qTi8J5m3bCK/GvzbOX5+fQnqzZ2lrFFlL9zSBb7bK
-         XAFcn2P2vqnrYdpevPVAct9mZB7yGVFNe7rfbteS1bSoApWNTeI58mDIb5AlotWlL2pa
-         f6sensKTOJeJLEEFoM777CUpUg8U1KZPaHrhXNqS+3kVcZqWfT9/i1vrGvq/wP09QPjM
-         JTwRcQ3BaHtmTWAgaJUkpGH6Yyk3vceaghoSvRuvmphb3vT0EJ+OnF4YC8Ni9cgd0/t6
-         EkYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=RQbMvC1ag/SPzt3A0iv4z8R55U/VKwxU9VmHI0/FJRU=;
-        b=XeDM59NEl6Sac4uGOBQth7KB4EBxx5KHbfV6Fb3zUOkJILbSsGFaVbCaI10O5riRX6
-         SwQniQPuiyRHXldg17nXR8gqKgcgikO9WlbwRQsHwsNZuTyu0ahEMjRITuWeu52CFDAp
-         XT9UEX/6d8EQDCoAiGsQsaRSlWwslzPV2vj6bdprN+8uv9EiwQDOzSIQnGaIu+Wds2Jt
-         84aDto7oAsDkCzXtkY1GQL08iQrGn7cwQvCg2iS8ToRRJx26f38AG4ne+0GwXG1k+oob
-         zIqNMmxR33Kjz2/Bh+sC5lTPbxKeltXW1aY5LoUdX9jhtMxxxiUgkoYzy8mAzoHbriLY
-         s8Ow==
-X-Gm-Message-State: AGi0Pua4LLeXzIZswHdbKDZczI2hwrApwXoMB7nCJrxJ/As7gsIgOoCg
-	oT5Okq28OsO0Z5hIN+4zgDaKpJrkWNi1SyP3A6w=
-X-Google-Smtp-Source: APiQypL8AC7ZUZnP0qgOLELJh2mB0qf4DRtMwN4Iryo60fDs4rqEG8PDwXDJX033RYCz1rFZGBj6H05V6VK++Hv+CxM=
-X-Received: by 2002:aa7:c2d2:: with SMTP id m18mr10709938edp.142.1588835249498;
- Thu, 07 May 2020 00:07:29 -0700 (PDT)
+Received: (qmail 19979 invoked from network); 7 May 2020 08:05:18 -0000
+X-MC-Unique: zMK3yQ5kPIe6BMT91EbWpA-1
+From: David Laight <David.Laight@ACULAB.COM>
+To: =?utf-8?B?J01pY2thw6tsIFNhbGHDvG4n?= <mic@digikod.net>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+CC: Aleksa Sarai <cyphar@cyphar.com>, Alexei Starovoitov <ast@kernel.org>, "Al
+ Viro" <viro@zeniv.linux.org.uk>, Andy Lutomirski <luto@kernel.org>,
+	"Christian Heimes" <christian@python.org>, Daniel Borkmann
+	<daniel@iogearbox.net>, "Deven Bowers" <deven.desai@linux.microsoft.com>,
+	Eric Chiang <ericchiang@google.com>, Florian Weimer <fweimer@redhat.com>,
+	James Morris <jmorris@namei.org>, Jan Kara <jack@suse.cz>, Jann Horn
+	<jannh@google.com>, Jonathan Corbet <corbet@lwn.net>, Kees Cook
+	<keescook@chromium.org>, "Lakshmi Ramasubramanian"
+	<nramas@linux.microsoft.com>, Matthew Garrett <mjg59@google.com>, Matthew
+ Wilcox <willy@infradead.org>, Michael Kerrisk <mtk.manpages@gmail.com>,
+	=?utf-8?B?TWlja2HDq2wgU2FsYcO8bg==?= <mickael.salaun@ssi.gouv.fr>, Mimi Zohar
+	<zohar@linux.ibm.com>, =?utf-8?B?UGhpbGlwcGUgVHLDqWJ1Y2hldA==?=
+	<philippe.trebuchet@ssi.gouv.fr>, Scott Shell <scottsh@microsoft.com>, Sean
+ Christopherson <sean.j.christopherson@intel.com>, Shuah Khan
+	<shuah@kernel.org>, Steve Dower <steve.dower@python.org>, Steve Grubb
+	<sgrubb@redhat.com>, Thibaut Sautereau <thibaut.sautereau@ssi.gouv.fr>,
+	Vincent Strubel <vincent.strubel@ssi.gouv.fr>,
+	"kernel-hardening@lists.openwall.com" <kernel-hardening@lists.openwall.com>,
+	"linux-api@vger.kernel.org" <linux-api@vger.kernel.org>,
+	"linux-integrity@vger.kernel.org" <linux-integrity@vger.kernel.org>,
+	"linux-security-module@vger.kernel.org"
+	<linux-security-module@vger.kernel.org>, "linux-fsdevel@vger.kernel.org"
+	<linux-fsdevel@vger.kernel.org>
+Subject: RE: [PATCH v5 0/6] Add support for O_MAYEXEC
+Thread-Topic: [PATCH v5 0/6] Add support for O_MAYEXEC
+Thread-Index: AQHWIvJxeV/0BLZ+8kuLT1dTVkm+SqicRhNg
+Date: Thu, 7 May 2020 08:05:04 +0000
+Message-ID: <20b24b9ca0a64afb9389722845738ec8@AcuMS.aculab.com>
+References: <20200505153156.925111-1-mic@digikod.net>
+In-Reply-To: <20200505153156.925111-1-mic@digikod.net>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.202.205.107]
 MIME-Version: 1.0
-References: <alpine.LRH.2.21.2002041054320.12768@namei.org> <CALrft9_tam87oevNC6LDG_bZoH+BgfrD4Or3yQudDoVqTqBdvg@mail.gmail.com>
-In-Reply-To: <CALrft9_tam87oevNC6LDG_bZoH+BgfrD4Or3yQudDoVqTqBdvg@mail.gmail.com>
-From: Elena Reshetova <elena.reshetova@gmail.com>
-Date: Thu, 7 May 2020 10:07:18 +0300
-Message-ID: <CALrft98SzLkw3M0shurUsNxsNSuSR3qN236rX4mEvC8GsrnnWQ@mail.gmail.com>
-Subject: [ANNOUNCE][CFP] Linux Security Summit Europe 2020
-To: linux-security-module@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org, lwn@lwn.net, fedora-selinux-list@redhat.com, 
-	linux-crypto@vger.kernel.org, kernel-hardening@lists.openwall.com, 
-	linux-integrity@vger.kernel.org, selinux@vger.kernel.org, 
-	Audit-ML <linux-audit@redhat.com>, gentoo-hardened@gentoo.org, keyrings@linux-nfs.org, 
-	tpmdd-devel@lists.sourceforge.net, 
-	Linux Security Summit Program Committee <lss-pc@lists.linuxfoundation.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: aculab.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D
-                   ANNOUNCEMENT AND CALL FOR PARTICIPATION
+RnJvbTogTWlja2HDq2wgU2FsYcO8bg0KPiBTZW50OiAwNSBNYXkgMjAyMCAxNjozMg0KPiANCj4g
+VGhpcyBmaWZ0aCBwYXRjaCBzZXJpZXMgYWRkIG5ldyBrZXJuZWwgY29uZmlndXJhdGlvbnMgKE9N
+QVlFWEVDX1NUQVRJQywNCj4gT01BWUVYRUNfRU5GT1JDRV9NT1VOVCwgYW5kIE9NQVlFWEVDX0VO
+Rk9SQ0VfRklMRSkgdG8gZW5hYmxlIHRvDQo+IGNvbmZpZ3VyZSB0aGUgc2VjdXJpdHkgcG9saWN5
+IGF0IGtlcm5lbCBidWlsZCB0aW1lLiAgQXMgcmVxdWVzdGVkIGJ5DQo+IE1pbWkgWm9oYXIsIEkg
+Y29tcGxldGVkIHRoZSBzZXJpZXMgd2l0aCBvbmUgb2YgaGVyIHBhdGNoZXMgZm9yIElNQS4NCj4g
+DQo+IFRoZSBnb2FsIG9mIHRoaXMgcGF0Y2ggc2VyaWVzIGlzIHRvIGVuYWJsZSB0byBjb250cm9s
+IHNjcmlwdCBleGVjdXRpb24NCj4gd2l0aCBpbnRlcnByZXRlcnMgaGVscC4gIEEgbmV3IE9fTUFZ
+RVhFQyBmbGFnLCB1c2FibGUgdGhyb3VnaA0KPiBvcGVuYXQyKDIpLCBpcyBhZGRlZCB0byBlbmFi
+bGUgdXNlcnNwYWNlIHNjcmlwdCBpbnRlcnByZXRlciB0byBkZWxlZ2F0ZQ0KPiB0byB0aGUga2Vy
+bmVsIChhbmQgdGh1cyB0aGUgc3lzdGVtIHNlY3VyaXR5IHBvbGljeSkgdGhlIHBlcm1pc3Npb24g
+dG8NCj4gaW50ZXJwcmV0L2V4ZWN1dGUgc2NyaXB0cyBvciBvdGhlciBmaWxlcyBjb250YWluaW5n
+IHdoYXQgY2FuIGJlIHNlZW4gYXMNCj4gY29tbWFuZHMuDQo+IA0KPiBBIHNpbXBsZSBzeXN0ZW0t
+d2lkZSBzZWN1cml0eSBwb2xpY3kgY2FuIGJlIGVuZm9yY2VkIGJ5IHRoZSBzeXN0ZW0NCj4gYWRt
+aW5pc3RyYXRvciB0aHJvdWdoIGEgc3lzY3RsIGNvbmZpZ3VyYXRpb24gY29uc2lzdGVudCB3aXRo
+IHRoZSBtb3VudA0KPiBwb2ludHMgb3IgdGhlIGZpbGUgYWNjZXNzIHJpZ2h0cy4gIFRoZSBkb2N1
+bWVudGF0aW9uIHBhdGNoIGV4cGxhaW5zIHRoZQ0KPiBwcmVyZXF1aXNpdGVzLg0KPiANCj4gRnVy
+dGhlcm1vcmUsIHRoZSBzZWN1cml0eSBwb2xpY3kgY2FuIGFsc28gYmUgZGVsZWdhdGVkIHRvIGFu
+IExTTSwgZWl0aGVyDQo+IGEgTUFDIHN5c3RlbSBvciBhbiBpbnRlZ3JpdHkgc3lzdGVtLiAgRm9y
+IGluc3RhbmNlLCB0aGUgbmV3IGtlcm5lbA0KPiBNQVlfT1BFTkVYRUMgZmxhZyBjbG9zZXMgYSBt
+YWpvciBJTUEgbWVhc3VyZW1lbnQvYXBwcmFpc2FsIGludGVycHJldGVyDQo+IGludGVncml0eSBn
+YXAgYnkgYnJpbmdpbmcgdGhlIGFiaWxpdHkgdG8gY2hlY2sgdGhlIHVzZSBvZiBzY3JpcHRzIFsx
+XS4NCj4gT3RoZXIgdXNlcyBhcmUgZXhwZWN0ZWQsIHN1Y2ggYXMgZm9yIG9wZW5hdDIoMikgWzJd
+LCBTR1ggaW50ZWdyYXRpb24NCj4gWzNdLCBicGZmcyBbNF0gb3IgSVBFIFs1XS4NCj4gDQo+IFVz
+ZXJzcGFjZSBuZWVkcyB0byBhZGFwdCB0byB0YWtlIGFkdmFudGFnZSBvZiB0aGlzIG5ldyBmZWF0
+dXJlLiAgRm9yDQo+IGV4YW1wbGUsIHRoZSBQRVAgNTc4IFs2XSAoUnVudGltZSBBdWRpdCBIb29r
+cykgZW5hYmxlcyBQeXRob24gMy44IHRvIGJlDQo+IGV4dGVuZGVkIHdpdGggcG9saWN5IGVuZm9y
+Y2VtZW50IHBvaW50cyByZWxhdGVkIHRvIGNvZGUgaW50ZXJwcmV0YXRpb24sDQo+IHdoaWNoIGNh
+biBiZSB1c2VkIHRvIGFsaWduIHdpdGggdGhlIFBvd2VyU2hlbGwgYXVkaXQgZmVhdHVyZXMuDQo+
+IEFkZGl0aW9uYWwgUHl0aG9uIHNlY3VyaXR5IGltcHJvdmVtZW50cyAoZS5nLiBhIGxpbWl0ZWQg
+aW50ZXJwcmV0ZXINCj4gd2l0aG91IC1jLCBzdGRpbiBwaXBpbmcgb2YgY29kZSkgYXJlIG9uIHRo
+ZWlyIHdheS4NCj4gDQo+IFRoZSBpbml0aWFsIGlkZWEgY29tZSBmcm9tIENMSVAgT1MgNCBhbmQg
+dGhlIG9yaWdpbmFsIGltcGxlbWVudGF0aW9uIGhhcw0KPiBiZWVuIHVzZWQgZm9yIG1vcmUgdGhh
+biAxMiB5ZWFyczoNCj4gaHR0cHM6Ly9naXRodWIuY29tL2NsaXBvcy1hcmNoaXZlL2NsaXBvczRf
+ZG9jDQo+IA0KPiBBbiBpbnRyb2R1Y3Rpb24gdG8gT19NQVlFWEVDIHdhcyBnaXZlbiBhdCB0aGUg
+TGludXggU2VjdXJpdHkgU3VtbWl0DQo+IEV1cm9wZSAyMDE4IC0gTGludXggS2VybmVsIFNlY3Vy
+aXR5IENvbnRyaWJ1dGlvbnMgYnkgQU5TU0k6DQo+IGh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dh
+dGNoP3Y9Y2hOakNSdFBLUVkmdD0xN20xNXMNCj4gVGhlICJ3cml0ZSB4b3IgZXhlY3V0ZSIgcHJp
+bmNpcGxlIHdhcyBleHBsYWluZWQgYXQgS2VybmVsIFJlY2lwZXMgMjAxOCAtDQo+IENMSVAgT1M6
+IGEgZGVmZW5zZS1pbi1kZXB0aCBPUzoNCj4gaHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/
+dj1QalJFMHVCdGtIVSZ0PTExbTE0cw0KPiANCj4gVGhpcyBwYXRjaCBzZXJpZXMgY2FuIGJlIGFw
+cGxpZWQgb24gdG9wIG9mIHY1LjctcmM0LiAgVGhpcyBjYW4gYmUgdGVzdGVkDQo+IHdpdGggQ09O
+RklHX1NZU0NUTC4gIEkgd291bGQgcmVhbGx5IGFwcHJlY2lhdGUgY29uc3RydWN0aXZlIGNvbW1l
+bnRzIG9uDQo+IHRoaXMgcGF0Y2ggc2VyaWVzLg0KDQpOb25lIG9mIHRoYXQgZGVzY3JpcHRpb24g
+YWN0dWFsbHkgc2F5cyB3aGF0IHRoZSBwYXRjaCBhY3R1YWxseSBkb2VzLg0KDQoJRGF2aWQNCg0K
+LQ0KUmVnaXN0ZXJlZCBBZGRyZXNzIExha2VzaWRlLCBCcmFtbGV5IFJvYWQsIE1vdW50IEZhcm0s
+IE1pbHRvbiBLZXluZXMsIE1LMSAxUFQsIFVLDQpSZWdpc3RyYXRpb24gTm86IDEzOTczODYgKFdh
+bGVzKQ0K
 
-                        LINUX SECURITY SUMMIT EUROPE 2020
-
-                                     29-30 OCTOBER
-                                    DUBLIN, IRELAND
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D
-
-DESCRIPTION
-
-Linux Security Summit Europe (LSS-EU) is a technical forum for
-collaboration between Linux developers, researchers, and end-users.  Its
-primary aim is to foster community efforts in analyzing and solving Linux
-security challenges.
-
- The program committee currently seeks proposals for:
-
-   * Refereed Presentations:
-     45 minutes in length.
-
-   * Panel Discussion Topics:
-     45 minutes in length.
-
-   * Short Topics:
-     30 minutes in total, including at least 10 minutes discussion.
-
-   * Tutorials
-     90 minutes in length.
-
-Tutorial sessions should be focused on advanced Linux security defense
-topics within areas such as the kernel, compiler, and security-related
-libraries.  Priority will be given to tutorials created for this conference=
-,
-and those where the presenter a leading subject matter expert on the topic.
-
-Topic areas include, but are not limited to:
-
-   * Kernel self-protection
-   * Access control
-   * Cryptography and key management
-   * Integrity policy and enforcement
-   * Hardware Security
-   * IoT and embedded security
-   * Virtualization and containers
-   * System-specific system hardening
-   * Case studies
-   * Security tools
-   * Security UX
-   * Emerging technologies, threats & techniques
-
-  Proposals should be submitted via:
-
-   https://events.linuxfoundation.org/linux-security-summit-europe/program/=
-cfp/
-
-DATES
-
-  * CFP close:            July 31
-  * CFP notifications:    August 10
-  * Schedule announced:   September 1
-  * Event:                October 29-30
-
-COVID-19 SITUATION
-
-Currently LSS-EU is planned as in-person event, however this would be
-re-evaluated closer to the event itself and if the situation in Europe does
-not permit such events, it would be switched to a virtual event, similarly
-as this year=E2=80=99s LSS-NA.
-
-WHO SHOULD ATTEND
-
-We're seeking a diverse range of attendees and welcome participation by
-people involved in Linux security development, operations, and research.
-
-LSS-EU is a unique global event that provides the opportunity to present an=
-d
-discuss your work or research with key Linux security community members and
-maintainers.  It=E2=80=99s also useful for those who wish to keep up with t=
-he latest
-in Linux security development and to provide input to the development
-process.
-
-WEB SITE
-
-    https://events.linuxfoundation.org/linux-security-summit-europe/
-
-TWITTER
-
-  For event updates and announcements, follow:
-
-    https://twitter.com/LinuxSecSummit
-
-    #linuxsecuritysummit
-
-PROGRAM COMMITTEE
-
-  The program committee for LSS 2020 is:
-
-    * James Morris, Microsoft
-    * Serge Hallyn, Cisco
-    * Paul Moore, Cisco
-    * Stephen Smalley, NSA
-    * Elena Reshetova, Intel
-    * John Johansen, Canonical
-    * Kees Cook, Google
-    * Casey Schaufler, Intel
-    * Mimi Zohar, IBM
-    * David A. Wheeler, Institute for Defense Analyses
-
-  The program committee may be contacted as a group via email:
-    lss-pc () lists.linuxfoundation.org
