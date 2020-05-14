@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18802-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18803-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 02BBC1D39BC
-	for <lists+kernel-hardening@lfdr.de>; Thu, 14 May 2020 20:52:13 +0200 (CEST)
-Received: (qmail 20436 invoked by uid 550); 14 May 2020 18:52:07 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 0D2BA1D39FB
+	for <lists+kernel-hardening@lfdr.de>; Thu, 14 May 2020 20:53:35 +0200 (CEST)
+Received: (qmail 23743 invoked by uid 550); 14 May 2020 18:53:30 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,14 +13,14 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 20399 invoked from network); 14 May 2020 18:52:07 -0000
+Received: (qmail 23711 invoked from network); 14 May 2020 18:53:29 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1589482314;
-	bh=gdd5JmHs0veB59rm39sCYztS+yPmh9hn9aPXEvVy/xk=;
+	s=default; t=1589482397;
+	bh=vrzhGL7SuHBe2px6S5O4M+HMKDdLb8UmSBWBYruGUag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UYkJC83RjsFthUKAIiPttdaAftrCVxsTairgXbHny3EDf1aEwG25uTqwSiwGuvv8b
-	 SX+t9qWMbhSoKDf6dN83mN5fOO+KVM3e0EXcn9FVUirzPSHD9WZ4mviy4fgdrtf0Qy
-	 zgpnyCiTExvowinbiNE2uOmReZTll88Q85eHtkKo=
+	b=oRaAEnLk8NaYl08+ZuqUNHcUx9S+FnFnktxvz5e63ERlmU2n9mKbhPKSuRkex0eNt
+	 hEQsM2XSfi6Pvac/Ox+YW1J10qpoIB2glh2Z9UdOlppj+wR/Ax/q1HL/WVXcNaYw56
+	 G4imDnNN+6Zgb7kkTIjJmH0MqBWD4qCAKNHTLfSc=
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -28,12 +28,12 @@ Cc: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Pierret=20=28fepitre=29?= <frederic.pierret@q
 	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>,
 	kernel-hardening@lists.openwall.com
-Subject: [PATCH AUTOSEL 5.6 04/62] gcc-common.h: Update for GCC 10
-Date: Thu, 14 May 2020 14:50:49 -0400
-Message-Id: <20200514185147.19716-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 04/49] gcc-common.h: Update for GCC 10
+Date: Thu, 14 May 2020 14:52:25 -0400
+Message-Id: <20200514185311.20294-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200514185147.19716-1-sashal@kernel.org>
-References: <20200514185147.19716-1-sashal@kernel.org>
+In-Reply-To: <20200514185311.20294-1-sashal@kernel.org>
+References: <20200514185311.20294-1-sashal@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 X-stable: review
@@ -78,7 +78,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  2 files changed, 5 insertions(+)
 
 diff --git a/scripts/gcc-plugins/Makefile b/scripts/gcc-plugins/Makefile
-index f2ee8bd7abc62..1d0b9382e759d 100644
+index aa0d0ec6936d7..9e95862f27882 100644
 --- a/scripts/gcc-plugins/Makefile
 +++ b/scripts/gcc-plugins/Makefile
 @@ -11,6 +11,7 @@ else
