@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18966-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18964-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id D2A521F8D1E
-	for <lists+kernel-hardening@lfdr.de>; Mon, 15 Jun 2020 06:27:22 +0200 (CEST)
-Received: (qmail 27715 invoked by uid 550); 15 Jun 2020 04:27:17 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 508B21F8CD0
+	for <lists+kernel-hardening@lfdr.de>; Mon, 15 Jun 2020 06:01:35 +0200 (CEST)
+Received: (qmail 9664 invoked by uid 550); 15 Jun 2020 04:01:30 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,7 +13,7 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 27670 invoked from network); 15 Jun 2020 04:27:15 -0000
+Received: (qmail 9597 invoked from network); 15 Jun 2020 04:01:24 -0000
 From: Jason Yan <yanaijie@huawei.com>
 To: <jaegeuk@kernel.org>, <chao@kernel.org>,
 	<linux-f2fs-devel@lists.sourceforge.net>, <linux-kernel@vger.kernel.org>
