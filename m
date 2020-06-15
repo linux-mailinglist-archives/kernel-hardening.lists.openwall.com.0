@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-18964-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-18965-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 508B21F8CD0
-	for <lists+kernel-hardening@lfdr.de>; Mon, 15 Jun 2020 06:01:35 +0200 (CEST)
-Received: (qmail 9664 invoked by uid 550); 15 Jun 2020 04:01:30 -0000
+	by mail.lfdr.de (Postfix) with SMTP id D60E21F8CD1
+	for <lists+kernel-hardening@lfdr.de>; Mon, 15 Jun 2020 06:01:46 +0200 (CEST)
+Received: (qmail 11464 invoked by uid 550); 15 Jun 2020 04:01:40 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,15 +13,15 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 9597 invoked from network); 15 Jun 2020 04:01:24 -0000
+Received: (qmail 11426 invoked from network); 15 Jun 2020 04:01:39 -0000
 From: Jason Yan <yanaijie@huawei.com>
-To: <jaegeuk@kernel.org>, <chao@kernel.org>,
-	<linux-f2fs-devel@lists.sourceforge.net>, <linux-kernel@vger.kernel.org>
+To: <axboe@kernel.dk>, <b.zolnierkie@samsung.com>,
+	<linux-ide@vger.kernel.org>, <linux-kernel@vger.kernel.org>
 CC: <kernel-hardening@lists.openwall.com>, Jason Yan <yanaijie@huawei.com>,
 	Kees Cook <keescook@chromium.org>
-Subject: [PATCH] f2fs: Eliminate usage of uninitialized_var() macro
-Date: Mon, 15 Jun 2020 12:02:12 +0800
-Message-ID: <20200615040212.3681503-1-yanaijie@huawei.com>
+Subject: [PATCH] ata: Eliminate usage of uninitialized_var() macro
+Date: Mon, 15 Jun 2020 12:02:36 +0800
+Message-ID: <20200615040236.3720734-1-yanaijie@huawei.com>
 X-Mailer: git-send-email 2.25.4
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -50,22 +50,22 @@ will not produce any warnnings even with "make W=1".
 Cc: Kees Cook <keescook@chromium.org>
 Signed-off-by: Jason Yan <yanaijie@huawei.com>
 ---
- fs/f2fs/data.c | 2 +-
+ drivers/ata/libata-scsi.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 326c63879ddc..e6ec61274d76 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -2856,7 +2856,7 @@ static int f2fs_write_cache_pages(struct address_space *mapping,
- 	};
- #endif
- 	int nr_pages;
--	pgoff_t uninitialized_var(writeback_index);
-+	pgoff_t writeback_index;
- 	pgoff_t index;
- 	pgoff_t end;		/* Inclusive */
- 	pgoff_t done_index;
+diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+index 435781a16875..fcb00f2825fe 100644
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -93,7 +93,7 @@ static ssize_t ata_scsi_park_show(struct device *device,
+ 	struct ata_link *link;
+ 	struct ata_device *dev;
+ 	unsigned long now;
+-	unsigned int uninitialized_var(msecs);
++	unsigned int msecs;
+ 	int rc = 0;
+ 
+ 	ap = ata_shost_to_port(sdev->host);
 -- 
 2.25.4
 
