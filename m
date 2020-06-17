@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19004-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19005-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 304131FD608
-	for <lists+kernel-hardening@lfdr.de>; Wed, 17 Jun 2020 22:28:22 +0200 (CEST)
-Received: (qmail 22267 invoked by uid 550); 17 Jun 2020 20:28:16 -0000
+	by mail.lfdr.de (Postfix) with SMTP id CD4181FD680
+	for <lists+kernel-hardening@lfdr.de>; Wed, 17 Jun 2020 22:56:36 +0200 (CEST)
+Received: (qmail 13439 invoked by uid 550); 17 Jun 2020 20:56:31 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,38 +13,45 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 22242 invoked from network); 17 Jun 2020 20:28:15 -0000
-Date: Wed, 17 Jun 2020 16:28:00 -0400
+Received: (qmail 13407 invoked from network); 17 Jun 2020 20:56:30 -0000
+Date: Wed, 17 Jun 2020 16:56:16 -0400
 From: Steven Rostedt <rostedt@goodmis.org>
-To: Oscar Carter <oscar.carter@gmx.com>
-Cc: Kees Cook <keescook@chromium.org>, Ingo Molnar <mingo@redhat.com>,
- kernel-hardening@lists.openwall.com, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] kernel/trace: Remove function callback casts
-Message-ID: <20200617162800.05a12502@oasis.local.home>
-In-Reply-To: <20200615162245.13d3feff@oasis.local.home>
-References: <20200614070154.6039-1-oscar.carter@gmx.com>
-	<20200615161738.18d07ce6@oasis.local.home>
-	<20200615162245.13d3feff@oasis.local.home>
+To: LKML <linux-kernel@vger.kernel.org>
+Cc: Ingo Molnar <mingo@kernel.org>, Kees Cook <keescook@chromium.org>,
+ kernel-hardening@lists.openwall.com, Oscar Carter <oscar.carter@gmx.com>,
+ Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH] tracing: Use linker magic instead of recasting
+ ftrace_ops_list_func()
+Message-ID: <20200617165616.52241bde@oasis.local.home>
 X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-On Mon, 15 Jun 2020 16:22:45 -0400
-Steven Rostedt <rostedt@goodmis.org> wrote:
+From: "Steven Rostedt (VMware)" <rostedt@goodmis.org>
 
-> As I was saying. This typecast is being paranoid, as archs will call
-> the ftrace_ops_list_func directly, and only pass in two parameters.
-> 
-> Now one way around this is to instead of having the typecast, I could
-> use linker magic to create another function that I can define without
-> the typecast to get the same effect. Similar to what I did in commit:
-> 
-> 46f9469247c6f ("ftrace: Rename ftrace_graph_stub to ftrace_stub_graph")
+In an effort to enable -Wcast-function-type in the top-level Makefile to
+support Control Flow Integrity builds, all function casts need to be
+removed.
 
-Would something like this work for you?
+This means that ftrace_ops_list_func() can no longer be defined as
+ftrace_ops_no_ops(). The reason for ftrace_ops_no_ops() is to use that when
+an architecture calls ftrace_ops_list_func() with only two parameters
+(called from assembly). And to make sure there's no C side-effects, those
+archs call ftrace_ops_no_ops() which only has two parameters, as
+ftrace_ops_list_func() has four parameters.
 
--- Steve
+Instead of a typecast, use vmlinux.lds.h to define ftrace_ops_list_func() to
+arch_ftrace_ops_list_func() that will define the proper set of parameters.
+
+Link: https://lore.kernel.org/r/20200614070154.6039-1-oscar.carter@gmx.com
+
+Requested-by: Oscar Carter <oscar.carter@gmx.com>
+Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
+---
+ include/asm-generic/vmlinux.lds.h |  7 ++++++-
+ kernel/trace/ftrace.c             | 23 ++++++++++-------------
+ 2 files changed, 16 insertions(+), 14 deletions(-)
 
 diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
 index db600ef218d7..120babd9ba44 100644
@@ -121,3 +128,6 @@ index f060838e9cbb..b775d399026e 100644
  
  /*
   * If there's only one function registered but it does not support
+-- 
+2.25.4
+
