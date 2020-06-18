@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19019-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19020-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 8CBFD1FF43F
-	for <lists+kernel-hardening@lfdr.de>; Thu, 18 Jun 2020 16:09:42 +0200 (CEST)
-Received: (qmail 26357 invoked by uid 550); 18 Jun 2020 14:09:35 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 765C81FF489
+	for <lists+kernel-hardening@lfdr.de>; Thu, 18 Jun 2020 16:18:36 +0200 (CEST)
+Received: (qmail 31813 invoked by uid 550); 18 Jun 2020 14:18:30 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,21 +13,20 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 26337 invoked from network); 18 Jun 2020 14:09:34 -0000
-IronPort-SDR: 7oA8lQxEYVvbcQfxwkDplp2Paa8Zd+Nlm6+mE9floiOrMM9NBQmtZtTikptc1jSx+doIQ6ktS4
- XaFKqCqzUCUw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9655"; a="141657442"
+Received: (qmail 31793 invoked from network); 18 Jun 2020 14:18:30 -0000
+IronPort-SDR: 67KA3/TNBtK2h/s5iJKqfRicP3uGFBTPQGnj533G6ALj9SUdf4EklGfjbKsoSwH2s4DOZ0CkEg
+ r2XI7j99EToQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9655"; a="204074083"
 X-IronPort-AV: E=Sophos;i="5.73,526,1583222400"; 
-   d="scan'208";a="141657442"
+   d="scan'208";a="204074083"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-IronPort-SDR: xOK2I18398q2bmHJzuXqSreeiFdtuKhbyKrvQdbyZ1Vtbwufhq4RsqmJvxkzrdXG+X+63VfnyO
- DYa2L07P7BKw==
+IronPort-SDR: Z3EwOfLlV2OW9hD3bZAORhaaaJXjZT3oK6CMXq2HjaoC/5xRKHBH8qvIpgsk9o744/qlyJ7jWT
+ RvboVXVkhOdw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.73,526,1583222400"; 
-   d="scan'208";a="277635259"
-Subject: Re: [PATCH 1/4] X86: Update mmu_cr4_features during feature
- identification
+   d="scan'208";a="277637357"
+Subject: Re: [PATCH 2/4] KVM: x86: Introduce paravirt feature CR0/CR4 pinning
 To: John Andersen <john.s.andersen@intel.com>, corbet@lwn.net,
  pbonzini@redhat.com, tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
  x86@kernel.org, hpa@zytor.com, shuah@kernel.org,
@@ -46,7 +45,7 @@ Cc: vkuznets@redhat.com, wanpengli@tencent.com, jmattson@google.com,
  linux-kernel@vger.kernel.org, kvm@vger.kernel.org,
  linux-kselftest@vger.kernel.org, kernel-hardening@lists.openwall.com
 References: <20200617190757.27081-1-john.s.andersen@intel.com>
- <20200617190757.27081-2-john.s.andersen@intel.com>
+ <20200617190757.27081-3-john.s.andersen@intel.com>
 From: Dave Hansen <dave.hansen@intel.com>
 Autocrypt: addr=dave.hansen@intel.com; keydata=
  xsFNBE6HMP0BEADIMA3XYkQfF3dwHlj58Yjsc4E5y5G67cfbt8dvaUq2fx1lR0K9h1bOI6fC
@@ -91,59 +90,27 @@ Autocrypt: addr=dave.hansen@intel.com; keydata=
  OPsw5tV/LmQ5GXH0JQ/TZXWygyRFyyI2FqNTx4WHqUn3yFj8rwTAU1tluRUYyeLy0ayUlKBH
  ybj0N71vWO936MqP6haFERzuPAIpxj2ezwu0xb1GjTk4ynna6h5GjnKgdfOWoRtoWndMZxbA
  z5cecg==
-Message-ID: <539ad252-599f-1be5-3bde-196829929af2@intel.com>
-Date: Thu, 18 Jun 2020 07:09:15 -0700
+Message-ID: <0fa9682e-59d4-75f7-366f-103d6b8e71b8@intel.com>
+Date: Thu, 18 Jun 2020 07:18:09 -0700
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.8.0
 MIME-Version: 1.0
-In-Reply-To: <20200617190757.27081-2-john.s.andersen@intel.com>
+In-Reply-To: <20200617190757.27081-3-john.s.andersen@intel.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 
-Overall this looks pretty good.  For all the maintainers on cc, we try
-to do internal reviews of these before they're submitted.  This one got
-missed, sorry about that.
-
 On 6/17/20 12:07 PM, John Andersen wrote:
-> In identify_cpu when setting up SMEP/SMAP/UMIP call
-> cr4_set_bits_and_update_boot instead of cr4_set_bits. This ensures that
-> mmu_cr4_features contains those bits, and does not disable those
-> protections when in hibernation asm.
+> +#define KVM_CR0_PIN_ALLOWED	(X86_CR0_WP)
+> +#define KVM_CR4_PIN_ALLOWED	(X86_CR4_SMEP | X86_CR4_SMAP | X86_CR4_UMIP)
 
-When I'm writing comments, I try to use parenthesis for functions(),
-which leaves variable_names plain.
+Why *is* there an allowed set?  Why don't we just allow everything?
 
-I also try not to dive directly into the function names.  This
-description assumes that the reader knows the subtle difference between
-cr4_set_bits_and_update_boot() and of cr4_set_bits().  A sentence or two
-of background here can save a reviewer a dive into the source code.
+Shouldn't we also pin any unknown bits?  The CR4.FSGSBASE bit is an
+example of something that showed up CPUs without Linux knowing about it.
+ If set, it causes problems.  This set couldn't have helped FSGSBASE
+because it is not in the allowed set.
 
-> setup_arch updates mmu_cr4_features to save what identified features are
-> supported for later use in hibernation asm when cr4 needs to be modified
-> to toggle PGE. cr4 writes happen in restore_image and restore_registers.
-> setup_arch occurs before identify_cpu, this leads to mmu_cr4_features
-> not containing some of the cr4 features which were enabled via
-> identify_cpu when hibernation asm is executed.
-
-This fails to address the bigger picture.  I assume you end up wanting
-this because without it hibernation is not compatible with CR pinning.
-Shouldn't that be mentioned?
-
-I also wonder why we even need two classes of cr4_set_bits().  Are there
-features we *want* to disable before entering the hibernation assembly?
-
-For instance, why not leave MCE enabled in there?  What about PCIDs or
-OSPKE?  Does it hurt?
-
-> On CPU bringup when cr4_set_bits_and_update_boot is called 
-> mmu_cr4_features will now be written to. For the boot CPU, the
-> __ro_after_init on mmu_cr4_features does not cause a fault. However, 
-> __ro_after_init was removed due to it triggering faults on non-boot 
-> CPUs
-Before this patch, cr4_set_bits_and_update_boot() was only ever called
-during init.  But, after this patch, it gets called later in boot and
-causes problems.  We're surely not making _real_ updates to it, right?
-In that case the writes are superfluous and we would be better off just
-not writing to it (and retaining __ro_after_init) rather than allowing
-superfluous writes.
+Let's say Intel loses its marbles and adds a CR4 bit that lets userspace
+write to kernel memory.  Linux won't set it, but an attacker would go
+after it, first thing.
