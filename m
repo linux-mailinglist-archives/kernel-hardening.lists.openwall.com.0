@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19049-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19050-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 0DB9F2044F0
-	for <lists+kernel-hardening@lfdr.de>; Tue, 23 Jun 2020 02:05:31 +0200 (CEST)
-Received: (qmail 28530 invoked by uid 550); 23 Jun 2020 00:05:24 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 6E916204663
+	for <lists+kernel-hardening@lfdr.de>; Tue, 23 Jun 2020 02:56:42 +0200 (CEST)
+Received: (qmail 25606 invoked by uid 550); 23 Jun 2020 00:56:36 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,41 +13,35 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 28495 invoked from network); 23 Jun 2020 00:05:24 -0000
+Received: (qmail 24504 invoked from network); 23 Jun 2020 00:56:35 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:date:to:cc:subject:message-id:references:mime-version
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=ci1H/D9yRBKgCOs8CwvIjI+cliPNnLJY+ZZdvthmHrE=;
-        b=bZnR5cxj0yVhupPYbVTZrUAGY9nNkIrFLLNIPmuoAvUQ4OHK1sHDJWoL2/SJRkwpMI
-         m7Prz2r4QOf6lv5YTO11dfUPOF7IdsLIzGE0bbPrwh0Jqu3SwX4PVrjDyEqr2hhiOwnd
-         8ZhWv03Dhkn/QmOUGiO+wbhlnkTVoyz0ypeJQhxVs+38DxTgnv8VKRIqiXcRvjAjFL2B
-         PY3M7tpF+3Cje3f8ltlW1ZoL/ABW7ca3n/B+EM/ouagHylGpp4Fnj9zLrVUfXu2HmB2c
-         rMGukrOiBhktkdYYOtt74ENxCSvvGBtzzC/JD9jGDjulPVNC8e2L3Rw63kb/ditJ9R4B
-         48CQ==
+        bh=ddZISy/nnQaDTw5hRGQzjmZlz/IMEisCTFQ7iFu0Th0=;
+        b=nAdHPfYXVzWTBCeDEMmkeKJ+hHfd7oErRWwLQb9dB7/Ol4YD/npR6fC0vwGRXy/c29
+         GGQ0oMgXVfEfwUNLWB5Mq3C346cIetMwNMMUd76j9Ztr+rPIR33dCIUpM2i+4VJOQ8xU
+         A1KmHa9YIl4kewOB9Lmi3GBsCMQ5u7F38OPjo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:date:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=ci1H/D9yRBKgCOs8CwvIjI+cliPNnLJY+ZZdvthmHrE=;
-        b=Kheh7zP/PQlLVywynlVf7ixKgsWO2+X0VNo2tmBtfDPx5GjAfjJDc0UCO844icPjqP
-         VGUByxewUIqir0o2wG6dM13rM706zzWiRg1TwKrj9x1MuFLtFbGlJqnBUMKhAK0CA6fO
-         juePzJibv8u/j9V1F+OQ6T2SdxqA3f93r5KbcevKZ6xrkEkeyT2FuJgPdFNgl5gnmkzR
-         4YcI/peEKnQLRkWrmOmTCEDUUcpUVvAgWYajspLeoKx02M81CSqIgdYvCwl/PBD8txZs
-         BahC1J0AikM4/WN7XN9781ZZCVHpv2Zme/D2F/7XhgGwhWoM9HxUgU5hDAcN72OsDwZv
-         z/Ag==
-X-Gm-Message-State: AOAM53074amJbr1wxVpvdmFVxbM5PTS5dlLPnJbxNpfptHfnFtOLPgT0
-	c2N5o12kFdDIluD8eftlVWw=
-X-Google-Smtp-Source: ABdhPJxYjTLo2qfOd0wWwuZ+o+bwZ1DSHNPGSAzwRuX6m2CVu0k46bPOAgySdkGRIdv61Zccfg9lPw==
-X-Received: by 2002:ac8:6602:: with SMTP id c2mr11641275qtp.243.1592870712468;
-        Mon, 22 Jun 2020 17:05:12 -0700 (PDT)
-Sender: Arvind Sankar <niveditas98@gmail.com>
-From: Arvind Sankar <nivedita@alum.mit.edu>
-X-Google-Original-From: Arvind Sankar <arvind@rani.riverdale.lan>
-Date: Mon, 22 Jun 2020 20:05:10 -0400
-To: Kees Cook <keescook@chromium.org>
-Cc: Arvind Sankar <nivedita@alum.mit.edu>,
-	Thomas Gleixner <tglx@linutronix.de>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ddZISy/nnQaDTw5hRGQzjmZlz/IMEisCTFQ7iFu0Th0=;
+        b=C+zVqay/0LZ6oOPyYXtcLDneWo2GHjB2i4Ds/T3U+Vgs8EgGLDNUm7h4ctHMegDxRD
+         sBobYgtCV8maC/JuMMM6IxPWCuLkgcVHndP+HhkpMS+Ws/NFKG/z4JwV5cWTQ9AU7NIQ
+         5C8bFx6eF/slh6GftMFYCmnFtyzjkmgrNzOeKJLKPZgjSRneSrqWt2FJECDAOaNeyzxn
+         tldinr8xFfzzBbl5q6/U/kgEfFoqI4xXV7ZQIa3Aj2AHEUfXnEScKXpNHoaSHQlBcZaf
+         XoQ/NLw/FZS4FV1IRC1ovi1qJnDoDTtTuFKP18+STKi5/sBEg7S+BKhbWoftwey9zUAP
+         8ZLQ==
+X-Gm-Message-State: AOAM532oWhR1QXzOMFfLXJtTceNqBHxCuHtFP7pCKvNX0MkwGyxC/NAa
+	8PhBZ7lcRWJVmLadBtXxYIoNlg==
+X-Google-Smtp-Source: ABdhPJzcouPDWEUYGfs6mnKQxNW21WTL2h/cvt4aWHu1LneMG7v+1KMi+E4KPxR8Q7oPaJp1wkS5WA==
+X-Received: by 2002:a63:35cc:: with SMTP id c195mr14777269pga.180.1592873783576;
+        Mon, 22 Jun 2020 17:56:23 -0700 (PDT)
+Date: Mon, 22 Jun 2020 17:56:21 -0700
+From: Kees Cook <keescook@chromium.org>
+To: Arvind Sankar <nivedita@alum.mit.edu>
+Cc: Thomas Gleixner <tglx@linutronix.de>,
 	Elena Reshetova <elena.reshetova@intel.com>, x86@kernel.org,
 	Andy Lutomirski <luto@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
@@ -61,61 +55,38 @@ Cc: Arvind Sankar <nivedita@alum.mit.edu>,
 	linux-kernel@vger.kernel.org
 Subject: Re: [PATCH v4 3/5] stack: Optionally randomize kernel stack offset
  each syscall
-Message-ID: <20200623000510.GA3542245@rani.riverdale.lan>
+Message-ID: <202006221748.DA27A7FFC@keescook>
 References: <20200622193146.2985288-1-keescook@chromium.org>
  <20200622193146.2985288-4-keescook@chromium.org>
  <20200622225615.GA3511702@rani.riverdale.lan>
  <202006221604.871B13DE3@keescook>
+ <20200623000510.GA3542245@rani.riverdale.lan>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <202006221604.871B13DE3@keescook>
+In-Reply-To: <20200623000510.GA3542245@rani.riverdale.lan>
 
-On Mon, Jun 22, 2020 at 04:07:11PM -0700, Kees Cook wrote:
-> On Mon, Jun 22, 2020 at 06:56:15PM -0400, Arvind Sankar wrote:
-> > On Mon, Jun 22, 2020 at 12:31:44PM -0700, Kees Cook wrote:
-> > > +
-> > > +#define add_random_kstack_offset() do {					\
-> > > +	if (static_branch_maybe(CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT,	\
-> > > +				&randomize_kstack_offset)) {		\
-> > > +		u32 offset = this_cpu_read(kstack_offset);		\
-> > > +		u8 *ptr = __builtin_alloca(offset & 0x3FF);		\
-> > > +		asm volatile("" : "=m"(*ptr));				\
-> > > +	}								\
-> > > +} while (0)
-> > 
-> > This feels a little fragile. ptr doesn't escape the block, so the
-> > compiler is free to restore the stack immediately after this block. In
-> > fact, given that all you've said is that the asm modifies *ptr, but
-> > nothing uses that output, the compiler could eliminate the whole thing,
-> > no?
-> > 
-> > https://godbolt.org/z/HT43F5
-> > 
-> > gcc restores the stack immediately, if no function calls come after it.
-> > 
-> > clang completely eliminates the code if no function calls come after.
-> 
-> nothing uses the stack in your example. And adding a barrier (which is
-> what the "=m" is, doesn't change it.
+On Mon, Jun 22, 2020 at 08:05:10PM -0400, Arvind Sankar wrote:
+> But I still don't see anything _stopping_ the compiler from optimizing
+> this better in the future. The "=m" is not a barrier: it just informs
+> the compiler that the asm produces an output value in *ptr (and no other
+> outputs). If nothing can consume that output, it doesn't stop the
+> compiler from freeing the allocation immediately after the asm instead
+> of at the end of the function.
 
-Yeah, I realized that that was what's going on. And clang isn't actually
-DCE'ing it, it's taking advantage of the red zone since my alloca was
-small enough.
+Ah, yeah, I get what you mean.
 
-But I still don't see anything _stopping_ the compiler from optimizing
-this better in the future. The "=m" is not a barrier: it just informs
-the compiler that the asm produces an output value in *ptr (and no other
-outputs). If nothing can consume that output, it doesn't stop the
-compiler from freeing the allocation immediately after the asm instead
-of at the end of the function.
+> I'm talking about something like
+> 	asm volatile("" : : "r" (ptr) : "memory");
+> which tells the compiler that the asm may change memory arbitrarily.
 
-I'm talking about something like
-	asm volatile("" : : "r" (ptr) : "memory");
-which tells the compiler that the asm may change memory arbitrarily.
+Yeah, I will adjust it.
 
-Here, we don't use it really as a barrier, but to tell the compiler that
-the asm may have stashed the value of ptr somewhere in memory, so it's
-not free to reuse the space that it pointed to until the function
-returns (unless it can prove that nothing accesses memory, not just that
-nothing accesses ptr).
+> Here, we don't use it really as a barrier, but to tell the compiler that
+> the asm may have stashed the value of ptr somewhere in memory, so it's
+> not free to reuse the space that it pointed to until the function
+> returns (unless it can prove that nothing accesses memory, not just that
+> nothing accesses ptr).
+
+-- 
+Kees Cook
