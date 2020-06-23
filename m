@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19066-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19068-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 3D8222053B6
-	for <lists+kernel-hardening@lfdr.de>; Tue, 23 Jun 2020 15:42:51 +0200 (CEST)
-Received: (qmail 12025 invoked by uid 550); 23 Jun 2020 13:42:45 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 67B65205768
+	for <lists+kernel-hardening@lfdr.de>; Tue, 23 Jun 2020 18:41:05 +0200 (CEST)
+Received: (qmail 30669 invoked by uid 550); 23 Jun 2020 16:41:00 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,88 +13,177 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 11988 invoked from network); 23 Jun 2020 13:42:44 -0000
-X-MC-Unique: tuWEcT22NmmyTjcRjBXV1g-1
-From: David Laight <David.Laight@ACULAB.COM>
-To: 'Kees Cook' <keescook@chromium.org>, Arvind Sankar <nivedita@alum.mit.edu>
-CC: Thomas Gleixner <tglx@linutronix.de>, Elena Reshetova
-	<elena.reshetova@intel.com>, "x86@kernel.org" <x86@kernel.org>, "Andy
- Lutomirski" <luto@kernel.org>, Peter Zijlstra <peterz@infradead.org>,
-	"Catalin Marinas" <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
-	"Mark Rutland" <mark.rutland@arm.com>, Alexander Potapenko
-	<glider@google.com>, Alexander Popov <alex.popov@linux.com>, Ard Biesheuvel
-	<ard.biesheuvel@linaro.org>, Jann Horn <jannh@google.com>,
-	"kernel-hardening@lists.openwall.com" <kernel-hardening@lists.openwall.com>,
-	"linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, "linux-mm@kvack.org"
-	<linux-mm@kvack.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>
-Subject: RE: [PATCH v4 3/5] stack: Optionally randomize kernel stack offset
- each syscall
-Thread-Topic: [PATCH v4 3/5] stack: Optionally randomize kernel stack offset
- each syscall
-Thread-Index: AQHWSPkh/p0bc5D3iUelrjbiR4wWCajmNFDA
-Date: Tue, 23 Jun 2020 13:42:30 +0000
-Message-ID: <917458f43d194385a760d75292d4eb47@AcuMS.aculab.com>
-References: <20200622193146.2985288-1-keescook@chromium.org>
- <20200622193146.2985288-4-keescook@chromium.org>
- <20200622225615.GA3511702@rani.riverdale.lan>
- <202006221604.871B13DE3@keescook>
- <20200623000510.GA3542245@rani.riverdale.lan>
- <202006221748.DA27A7FFC@keescook>
-In-Reply-To: <202006221748.DA27A7FFC@keescook>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.202.205.107]
+Delivered-To: moderator for kernel-hardening@lists.openwall.com
+Received: (qmail 24028 invoked from network); 23 Jun 2020 16:27:14 -0000
+Date: Tue, 23 Jun 2020 17:26:55 +0100
+From: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To: Ard Biesheuvel <ardb@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org, linux-acpi@vger.kernel.org,
+	will@kernel.org, catalin.marinas@arm.com, sudeep.holla@arm.com,
+	kernel-hardening@lists.openwall.com,
+	"Jason A . Donenfeld" <Jason@zx2c4.com>
+Subject: Re: [RFC PATCH v2] arm64/acpi: disallow AML memory opregions to
+ access kernel memory
+Message-ID: <20200623162655.GA22650@red-moon.cambridge.arm.com>
+References: <20200623093755.1534006-1-ardb@kernel.org>
 MIME-Version: 1.0
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=C51A453 smtp.mailfrom=david.laight@aculab.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: aculab.com
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200623093755.1534006-1-ardb@kernel.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 
-From: Kees Cook
-> Sent: 23 June 2020 01:56
-> On Mon, Jun 22, 2020 at 08:05:10PM -0400, Arvind Sankar wrote:
-> > But I still don't see anything _stopping_ the compiler from optimizing
-> > this better in the future. The "=3Dm" is not a barrier: it just informs
-> > the compiler that the asm produces an output value in *ptr (and no othe=
-r
-> > outputs). If nothing can consume that output, it doesn't stop the
-> > compiler from freeing the allocation immediately after the asm instead
-> > of at the end of the function.
->=20
-> Ah, yeah, I get what you mean.
->=20
-> > I'm talking about something like
-> > =09asm volatile("" : : "r" (ptr) : "memory");
-> > which tells the compiler that the asm may change memory arbitrarily.
->=20
-> Yeah, I will adjust it.
->=20
-> > Here, we don't use it really as a barrier, but to tell the compiler tha=
-t
-> > the asm may have stashed the value of ptr somewhere in memory, so it's
-> > not free to reuse the space that it pointed to until the function
-> > returns (unless it can prove that nothing accesses memory, not just tha=
-t
-> > nothing accesses ptr).
+On Tue, Jun 23, 2020 at 11:37:55AM +0200, Ard Biesheuvel wrote:
+> AML uses SystemMemory opregions to allow AML handlers to access MMIO
+> registers of, e.g., GPIO controllers, or access reserved regions of
+> memory that are owned by the firmware.
+> 
+> Currently, we also allow AML access to memory that is owned by the
+> kernel and mapped via the linear region, which does not seem to be
+> supported by a valid use case, and exposes the kernel's internal
+> state to AML methods that may be buggy and exploitable.
+> 
+> On arm64, ACPI support requires booting in EFI mode, and so we can cross
+> reference the requested region against the EFI memory map, rather than
+> just do a minimal check on the first page. So let's only permit regions
+> to be remapped by the ACPI core if
+> - they don't appear in the EFI memory map at all (which is the case for
+>   most MMIO), or
+> - they are covered by a single region in the EFI memory map, which is not
+>   of a type that describes memory that is given to the kernel at boot.
+> 
+> Reported-by: Jason A. Donenfeld <Jason@zx2c4.com>
+> Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+> ---
+> v2: do a more elaborate check on the region, against the EFI memory map
+> 
+>  arch/arm64/include/asm/acpi.h | 15 +---
+>  arch/arm64/kernel/acpi.c      | 72 ++++++++++++++++++++
+>  2 files changed, 73 insertions(+), 14 deletions(-)
+> 
+> diff --git a/arch/arm64/include/asm/acpi.h b/arch/arm64/include/asm/acpi.h
+> index a45366c3909b..bd68e1b7f29f 100644
+> --- a/arch/arm64/include/asm/acpi.h
+> +++ b/arch/arm64/include/asm/acpi.h
+> @@ -47,20 +47,7 @@
+>  pgprot_t __acpi_get_mem_attribute(phys_addr_t addr);
+>  
+>  /* ACPI table mapping after acpi_permanent_mmap is set */
+> -static inline void __iomem *acpi_os_ioremap(acpi_physical_address phys,
+> -					    acpi_size size)
+> -{
+> -	/* For normal memory we already have a cacheable mapping. */
+> -	if (memblock_is_map_memory(phys))
+> -		return (void __iomem *)__phys_to_virt(phys);
+> -
+> -	/*
+> -	 * We should still honor the memory's attribute here because
+> -	 * crash dump kernel possibly excludes some ACPI (reclaim)
+> -	 * regions from memblock list.
+> -	 */
+> -	return __ioremap(phys, size, __acpi_get_mem_attribute(phys));
+> -}
+> +void __iomem *acpi_os_ioremap(acpi_physical_address phys, acpi_size size);
+>  #define acpi_os_ioremap acpi_os_ioremap
+>  
+>  typedef u64 phys_cpuid_t;
+> diff --git a/arch/arm64/kernel/acpi.c b/arch/arm64/kernel/acpi.c
+> index a7586a4db142..4696f765d1ac 100644
+> --- a/arch/arm64/kernel/acpi.c
+> +++ b/arch/arm64/kernel/acpi.c
+> @@ -261,6 +261,78 @@ pgprot_t __acpi_get_mem_attribute(phys_addr_t addr)
+>  	return __pgprot(PROT_DEVICE_nGnRnE);
+>  }
+>  
+> +void __iomem *acpi_os_ioremap(acpi_physical_address phys, acpi_size size)
+> +{
+> +	efi_memory_desc_t *md, *region = NULL;
+> +	pgprot_t prot;
+> +
+> +	if (WARN_ON_ONCE(!efi_enabled(EFI_MEMMAP)))
+> +		return NULL;
+> +
+> +	for_each_efi_memory_desc(md) {
+> +		u64 end = md->phys_addr + (md->num_pages << EFI_PAGE_SHIFT);
+> +
+> +		if (phys < md->phys_addr || phys >= end)
+> +			continue;
+> +
+> +		if (phys + size > end) {
+> +			pr_warn(FW_BUG "requested region covers multiple EFI memory regions\n");
+> +			return NULL;
+> +		}
+> +		region = md;
+> +		break;
+> +	}
+> +
+> +	/*
+> +	 * It is fine for AML to remap regions that are not represented in the
+> +	 * EFI memory map at all, as it only describes normal memory, and MMIO
+> +	 * regions that require a virtual mapping to make them accessible to
+> +	 * the EFI runtime services.
+> +	 */
+> +	prot = __pgprot(PROT_DEVICE_nGnRnE);
+> +	if (region) {
+> +		switch (region->type) {
+> +		case EFI_LOADER_CODE:
+> +		case EFI_LOADER_DATA:
+> +		case EFI_BOOT_SERVICES_CODE:
+> +		case EFI_BOOT_SERVICES_DATA:
+> +		case EFI_CONVENTIONAL_MEMORY:
+> +		case EFI_PERSISTENT_MEMORY:
+> +			pr_warn(FW_BUG "requested region covers kernel memory @ %pa\n", &phys);
+> +			return NULL;
+> +
+> +		case EFI_ACPI_RECLAIM_MEMORY:
+> +			/*
+> +			 * ACPI reclaim memory is used to pass firmware tables
+> +			 * and other data that is intended for consumption by
+> +			 * the OS only, which may decide it wants to reclaim
+> +			 * that memory and use it for something else. We never
+> +			 * do that, but we add it to the linear map anyway, and
+> +			 * so we must use the existing mapping.
+> +			 */
+> +			return (void __iomem *)__phys_to_virt(phys);
 
-Do you need another asm volatile("" : : "r" (ptr) : "memory");
-(or similar) at the bottom of the function - that the compiler thinks
-might access the memory whose address it thought got saved earlier?
+For my own understanding - we have to keep this mapping (given the
+current kernel code and tables handling) which means that this patch
+mitigates (correctly) the issue but can't solve it in its entirety.
 
-I wonder if it would be easier to allocate the stack space
-in the asm wrapper? At least as an architecture option.
+> +		case EFI_RUNTIME_SERVICES_CODE:
+> +			/*
+> +			 * This would be unusual, but not problematic per se,
+> +			 * as long as we take care not to create a writable
+> +			 * mapping for executable code.
+> +			 */
+> +			prot = PAGE_KERNEL_RO;
 
-=09David
+Nit: IIUC this tweaks the current behaviour (so it is probably better
+to move this change to another patch).
 
--
-Registered Address Lakeside, Bramley Road, Mount Farm, Milton Keynes, MK1 1=
-PT, UK
-Registration No: 1397386 (Wales)
+Other than that the patch is sound and probably the best we could
+do to harden the code, goes without saying - it requires testing.
 
+Thanks for putting it together.
+
+Lorenzo
+
+> +			break;
+> +
+> +		default:
+> +			if (region->attribute & EFI_MEMORY_WB)
+> +				prot = PAGE_KERNEL;
+> +			else if (region->attribute & EFI_MEMORY_WT)
+> +				prot = __pgprot(PROT_NORMAL_WT);
+> +			else if (region->attribute & EFI_MEMORY_WC)
+> +				prot = __pgprot(PROT_NORMAL_NC);
+> +		}
+> +	}
+> +	return __ioremap(phys, size, prot);
+> +}
+> +
+>  /*
+>   * Claim Synchronous External Aborts as a firmware first notification.
+>   *
+> -- 
+> 2.27.0
+> 
