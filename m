@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19142-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19143-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 80335207E91
-	for <lists+kernel-hardening@lfdr.de>; Wed, 24 Jun 2020 23:30:39 +0200 (CEST)
-Received: (qmail 32108 invoked by uid 550); 24 Jun 2020 21:30:34 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 6C360207E9A
+	for <lists+kernel-hardening@lfdr.de>; Wed, 24 Jun 2020 23:31:52 +0200 (CEST)
+Received: (qmail 1222 invoked by uid 550); 24 Jun 2020 21:31:48 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,77 +13,73 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 32073 invoked from network); 24 Jun 2020 21:30:34 -0000
+Received: (qmail 1190 invoked from network); 24 Jun 2020 21:31:47 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=BLAueZueQmLo+U3ff1yWRTxI4RTBZr5ie/D1r3LUxVk=;
-        b=UTpKVD20ozvTdWMRMhXjRuDa7E6nhyfuuFzbPsLPOJkgDHZzpnipT7xh2/Wno0v2Oq
-         jdpABPkcKmrg491zzfi9zOks98eQJaOLDTz406Z4w2MgG351GRHcHMzGWpNAyEJdLecz
-         ji/dnLP69LQeXVwamBUI0SmjGSavdPaLzdKRaDqcWl5xT7zXOVfMtWSCERwyPWhmuC8a
-         4KDq5FM9YdU0RrraXVR/hGh5TC7cw1r0O3lilGh9m2vHjgmv1WKElLUiabdJW2m76HZC
-         7iRUNTtGTKyZS7schzBZuKhvkys5qQmNg4oE6XUh6jUFgmi+eFh4EE769mR4zWRz8YdS
-         PQmw==
+        bh=/O3ShsYHI31KeAbcJImqBKhK7RmR1YrkXinaLdbS2cc=;
+        b=km0rbdasUCx++8x0lRTpl9dRVPlkvvgXmXH5VDqn1z/oWbZzfjocNBIe3ZynP1hSKb
+         KVFJqPSTAVKH6Bv/v1uTTgpFU33rli2X3C/m74frA2+rWkygENBnngQ6aWJvCvtTwisK
+         ZbNyudsS3PRLC9fuaxb8wpD7eLdi56OzlUX+Ro85RkehRMCJuUd9kGrUaJVjx1Rm6zjq
+         OX9MIPdaaEsCkipcX4Eh8R80M8kBtbcIH8WUg2cLSf9HDDLe4n46v5madSBqNDFMNyys
+         VlZ3/ZtSFkzDrwh90gPCorp7EeMVtZmCvszFtKxrIAgZiR2lx7HkBAL7Cd84LfmKQ6Hq
+         Sr/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=BLAueZueQmLo+U3ff1yWRTxI4RTBZr5ie/D1r3LUxVk=;
-        b=mzyIDdB+rWs2TGnVnG6K9dw9HZ7iG/zzBYKWD2XyjHfzZwljSPKvW28TOz0eTxn9/v
-         hft5JvsI6W+Fb2BU/qaR7PIX6ZNibzpzm/eBhFQOzGp4aLTOrFbwu8QWg9DLNnUIBgOi
-         xZ7BC/aLbNLdp8GwfgoHP0zn+xKGAoFgENfD9uJNEwBOc4PVU/e6+KK5N/Wc2lH7ugKf
-         3VUXhD7SnYQS4qPsLuZJoUFPmTWpFnyN6V+UudpHCJL+lL+FlyJECsmeBJZaSOKXTC0U
-         Efjm9dKYRlptYdkuvxAb0GXi+2x9+gnWW9ea28AvwjvOUe8Bxw/86sIk+ULcyFoY++es
-         L5Qw==
-X-Gm-Message-State: AOAM530vIE93IrqhHSViIbpd2IP5zQj/6X51HL4RHJrh9fUSnD/oeQz4
-	ZMYAvs0LtxXd/W5mW5NBQO5h+A==
-X-Google-Smtp-Source: ABdhPJxhxSeUIX3+whzU3DS6SVAWzNuff6r9HMO0IkuALFVi/g2AiuvayCKmK1FcYKc9xkjwmkX3MQ==
-X-Received: by 2002:a65:6393:: with SMTP id h19mr6687231pgv.278.1593034221896;
-        Wed, 24 Jun 2020 14:30:21 -0700 (PDT)
-Date: Wed, 24 Jun 2020 14:30:14 -0700
+        bh=/O3ShsYHI31KeAbcJImqBKhK7RmR1YrkXinaLdbS2cc=;
+        b=gTmT9raNkGAdPZAzYD3s/te4O3VEd78zcngCpc7qSOmMdzL4UK2MqZJKmuY6Uo9/B9
+         P3un4Pf2nn43KYIB+B8TMzOa1tWaeF7oE6Fu5xqboIrAF13/bOYVBhcYrYoBIqn1OHaE
+         L5ThhUzVzTEdhRRMaaJygCqEX8MS47zic7lWIDnrmlYBZzRXTgq3NiVXkidW6tz1oy1W
+         S7eEcr42lla6Ayq+nsoYGgPFwIWroipEQ6J75lJWrcBbwt6GKRa/Laz/CsqKFe5UaExq
+         FGiGEZhFsF3TJzA/wdkDlK/AgwLp/mxNFU8yS1+6Xv14p+bQJIM4CC3SM5ZtUD55HT+v
+         hH8w==
+X-Gm-Message-State: AOAM533RwimAXBIy6nf3uUoZFnY+0rG+N98AdKgFBoRj07zRPohLnfmw
+	jnwwTU6zfeNdMSZNBqJIHmdDfg==
+X-Google-Smtp-Source: ABdhPJzL1k5l4bBaYzFfIDW/jK3TA6LlmzQ3rQievoHb7W2HsUj9qo9LTDOdsz8oDhdojeg/j6HFOw==
+X-Received: by 2002:a17:90a:4ecb:: with SMTP id v11mr29922206pjl.75.1593034294906;
+        Wed, 24 Jun 2020 14:31:34 -0700 (PDT)
+Date: Wed, 24 Jun 2020 14:31:29 -0700
 From: Sami Tolvanen <samitolvanen@google.com>
-To: Peter Zijlstra <peterz@infradead.org>
+To: Nick Desaulniers <ndesaulniers@google.com>
 Cc: Masahiro Yamada <masahiroy@kernel.org>, Will Deacon <will@kernel.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Paul E. McKenney" <paulmck@kernel.org>,
 	Kees Cook <keescook@chromium.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	clang-built-linux@googlegroups.com,
-	kernel-hardening@lists.openwall.com, linux-arch@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kbuild@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	x86@kernel.org
-Subject: Re: [PATCH 00/22] add support for Clang LTO
-Message-ID: <20200624213014.GB26253@google.com>
+	clang-built-linux <clang-built-linux@googlegroups.com>,
+	Kernel Hardening <kernel-hardening@lists.openwall.com>,
+	linux-arch <linux-arch@vger.kernel.org>,
+	Linux ARM <linux-arm-kernel@lists.infradead.org>,
+	Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>,
+	LKML <linux-kernel@vger.kernel.org>, linux-pci@vger.kernel.org,
+	"maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT)" <x86@kernel.org>
+Subject: Re: [PATCH 07/22] kbuild: lto: merge module sections
+Message-ID: <20200624213129.GC26253@google.com>
 References: <20200624203200.78870-1-samitolvanen@google.com>
- <20200624211540.GS4817@hirez.programming.kicks-ass.net>
+ <20200624203200.78870-8-samitolvanen@google.com>
+ <CAKwvOdkY2M9+BgA5FELK+7bjv1sZYMuTmVOztCYijas_OHfVDQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200624211540.GS4817@hirez.programming.kicks-ass.net>
+In-Reply-To: <CAKwvOdkY2M9+BgA5FELK+7bjv1sZYMuTmVOztCYijas_OHfVDQ@mail.gmail.com>
 
-On Wed, Jun 24, 2020 at 11:15:40PM +0200, Peter Zijlstra wrote:
-> On Wed, Jun 24, 2020 at 01:31:38PM -0700, Sami Tolvanen wrote:
-> > This patch series adds support for building x86_64 and arm64 kernels
-> > with Clang's Link Time Optimization (LTO).
-> > 
-> > In addition to performance, the primary motivation for LTO is to allow
-> > Clang's Control-Flow Integrity (CFI) to be used in the kernel. Google's
-> > Pixel devices have shipped with LTO+CFI kernels since 2018.
-> > 
-> > Most of the patches are build system changes for handling LLVM bitcode,
-> > which Clang produces with LTO instead of ELF object files, postponing
-> > ELF processing until a later stage, and ensuring initcall ordering.
-> > 
-> > Note that first objtool patch in the series is already in linux-next,
-> > but as it's needed with LTO, I'm including it also here to make testing
-> > easier.
+On Wed, Jun 24, 2020 at 02:01:59PM -0700, 'Nick Desaulniers' via Clang Built Linux wrote:
+> On Wed, Jun 24, 2020 at 1:33 PM Sami Tolvanen <samitolvanen@google.com> wrote:
+> >
+> > LLD always splits sections with LTO, which increases module sizes. This
+> > change adds a linker script that merges the split sections in the final
+> > module and discards the .eh_frame section that LLD may generate.
 > 
-> I'm very sad that yet again, memory ordering isn't addressed. LTO vastly
-> increases the range of the optimizer to wreck things.
+> For discarding .eh_frame, Kees is currently fighting with a series
+> that I would really like to see land that enables warnings on orphan
+> section placement.  I don't see any new flags to inhibit .eh_frame
+> generation, or discard it in the linker script, so I'd expect it to be
+> treated as an orphan section and kept.  Was that missed, or should
+> that be removed from the commit message?
 
-I believe Will has some thoughts about this, and patches, but I'll let
-him talk about it.
+It should be removed from the commit message, thanks for pointing it
+out.
 
 Sami
