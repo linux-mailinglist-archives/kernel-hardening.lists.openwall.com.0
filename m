@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19127-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19128-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 7C40A207D48
-	for <lists+kernel-hardening@lfdr.de>; Wed, 24 Jun 2020 22:36:06 +0200 (CEST)
-Received: (qmail 3405 invoked by uid 550); 24 Jun 2020 20:33:45 -0000
+	by mail.lfdr.de (Postfix) with SMTP id B4878207D61
+	for <lists+kernel-hardening@lfdr.de>; Wed, 24 Jun 2020 22:36:16 +0200 (CEST)
+Received: (qmail 3590 invoked by uid 550); 24 Jun 2020 20:33:47 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,41 +13,41 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 3306 invoked from network); 24 Jun 2020 20:33:44 -0000
+Received: (qmail 3500 invoked from network); 24 Jun 2020 20:33:46 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=A7cPf0bNRtzZYfE1vc1rDopHSIr0k7cT2ZUm+OLZjv0=;
-        b=QdroIDfhWPMl7iB8nPdG8F9r+Jm4224Qh0WRTBS1efFhFRpvTdOpw1Wqlz8qn+FYQH
-         CFYve9pYyAVcIOznwtpq4QOlb+uiIUyfq16PYsXpTvWntxsZXcxPZ5lIUBkOt4NXo1Sm
-         PFaSdzav1KtGvpCE5Ob7mVSvukaW8AVYgaIRlUr52jjyj1zFJ6R084rNzCDR/va5Iujh
-         UoakKiURAbGW8xR0S2+Nw0cEeLy4uPMRYJtFclzKSks+5zyjfrBf44Qy3NgDTq9URhoR
-         JWQuukFmtbdz9DrqDBlQZj0VkdPwnrqlxkdn89XzL10tIPUOY5/Zz6v6QbMuu+nDt0wT
-         e8dA==
+        bh=39oSk63TLcybcU14SgKvCDK3H6XzHtEtduXPCr/44ss=;
+        b=ZOpDZdrGdHh1ZJonf0E/5dDbHERSe6TbCFmdB2U6jPIiwcNANMbLkyJvmpov2k2xOy
+         UVWsqBFfeytL+Hgc/oR6FsAd9G11hUgAXJsCWawlND5MVBWd0mWD5Dc0EmC9ABVsRrwk
+         SuNrnMuN7GhuqelKUl2otkPK4jEY0L0Bm6whau77q3fZbpcyNGO1mB7+EOqkQJEsefdW
+         zLLLl7cpOUj8LxrFN5V51O7w7SPh0uXELCQRumvXzfHQsZ4xwEEn1hGOm5BLrbAhkADT
+         mOeNJdhYt+ZgbwtN0PEW0MGrw4iretwo3Lq6tyaoaAFryjr8t8wGNBEOp88gmFSQ4dk6
+         T0OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=A7cPf0bNRtzZYfE1vc1rDopHSIr0k7cT2ZUm+OLZjv0=;
-        b=UJqF3nN2O4QqGfVt9ZvpMNpDee765qEWDUUA1nJR4sMVtDGxsJ3Uzkm2QUnTFoq+mF
-         2MSFzvFzTEXANSMM9agkO/ya+roS4lHxHEPO+PTzGyD4xqJMwPEv8wvbwyOP4o5ycPiu
-         vgU3VMv5239KBjshg2BLjmrUfg0zYEqiJEtor/46cM0P+aAp5mP0cJv0Rm9I748P5g6P
-         QOHEbw8Q5i/SQuotrwRCVEO2ZBP5jqDsnfshXSbWb9JAQogOUuP5rsujsW63NTMA00ix
-         1LoxMo/v9Lk5QNLvyEoP82hTNIXuzKNOBJMGjVotggukU7FC4nWp1YUL+yMzdoQTGGF5
-         xdrw==
-X-Gm-Message-State: AOAM530KAObyi8BEJt1fhF3Tb7Dykc82vdkAEQm2kdKQ+HmgdenmSE7D
-	1ZEHe4JDZYsZH0NRw0hSZJ8G19/+4GtTeJ0KwCA=
-X-Google-Smtp-Source: ABdhPJzex3csdM9Cm9Zm5kqXnJN1Q6l9vC80id+c8eDzSpyHr7eNMt7lOs0z0JRAKDBh+QA/j3WYj56ZTQDnUtqmFPY=
-X-Received: by 2002:a0c:fcca:: with SMTP id i10mr21455652qvq.150.1593030812853;
- Wed, 24 Jun 2020 13:33:32 -0700 (PDT)
-Date: Wed, 24 Jun 2020 13:31:57 -0700
+        bh=39oSk63TLcybcU14SgKvCDK3H6XzHtEtduXPCr/44ss=;
+        b=e0pATD3OFAklGXFdU/t7srdITbdahoMluk8PTXEwUmAVk7HuTB1hhOE7GTey/LNL0u
+         eDhkARNvFSXt9rFwSgKbneu0lDKDdcExSjhlUT9RNB6LBm0LtEJSc4oywemhJ+HEGTid
+         fCgGHaqJbvMBbBaGZQIbS/pjABLNmdNqPjm0BtCGUxaZlRBcefK2Cci0L8yX+/rrzurW
+         7LLvF0sxEjsxr6WI/Uk83cSvFYcDJzL2ohrunV23u9InTjM3zz1+JGZZ6SAKRrAgNWUk
+         sBbNOYR21U2GQR744XxRbc82dwTfK4OHKX6wXz9A9Xfp+2yIWKLlf4AL08QcraRMVEeE
+         5LCA==
+X-Gm-Message-State: AOAM530U6GNpILAqtKZC/W9CPhbUxXFDH+5FCtbHfJnE+T4sRS8cOLK8
+	PGaFkAJVKOP9OH5U7USGadSBT0HlMC28w7STl7c=
+X-Google-Smtp-Source: ABdhPJzI2BesdcUkxRPNmsNayE+wa07nV1TDxi5hKxZeEiEV2jo0nWBCJ/1Nmj0kWHXA23yigO5wL2sAexNblZcBJws=
+X-Received: by 2002:ad4:52e2:: with SMTP id p2mr33679309qvu.100.1593030814530;
+ Wed, 24 Jun 2020 13:33:34 -0700 (PDT)
+Date: Wed, 24 Jun 2020 13:31:58 -0700
 In-Reply-To: <20200624203200.78870-1-samitolvanen@google.com>
-Message-Id: <20200624203200.78870-20-samitolvanen@google.com>
+Message-Id: <20200624203200.78870-21-samitolvanen@google.com>
 Mime-Version: 1.0
 References: <20200624203200.78870-1-samitolvanen@google.com>
 X-Mailer: git-send-email 2.27.0.212.ge8ba1cc988-goog
-Subject: [PATCH 19/22] x86, vdso: disable LTO only for vDSO
+Subject: [PATCH 20/22] x86, ftrace: disable recordmcount for ftrace_make_nop
 From: Sami Tolvanen <samitolvanen@google.com>
 To: Masahiro Yamada <masahiroy@kernel.org>, Will Deacon <will@kernel.org>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Paul E. McKenney" <paulmck@kernel.org>, 
@@ -59,44 +59,25 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Paul E. McKenney" <paulmck
 	Sami Tolvanen <samitolvanen@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-Remove the undefined DISABLE_LTO flag from the vDSO, and filter out
-CC_FLAGS_LTO flags instead where needed.
+Ignore mcount relocations in ftrace_make_nop.
 
 Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
 ---
- arch/x86/entry/vdso/Makefile | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/x86/kernel/ftrace.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/entry/vdso/Makefile b/arch/x86/entry/vdso/Makefile
-index 04e65f0698f6..67f60662830a 100644
---- a/arch/x86/entry/vdso/Makefile
-+++ b/arch/x86/entry/vdso/Makefile
-@@ -9,8 +9,6 @@ ARCH_REL_TYPE_ABS := R_X86_64_JUMP_SLOT|R_X86_64_GLOB_DAT|R_X86_64_RELATIVE|
- ARCH_REL_TYPE_ABS += R_386_GLOB_DAT|R_386_JMP_SLOT|R_386_RELATIVE
- include $(srctree)/lib/vdso/Makefile
+diff --git a/arch/x86/kernel/ftrace.c b/arch/x86/kernel/ftrace.c
+index 51504566b3a6..c3b28b81277b 100644
+--- a/arch/x86/kernel/ftrace.c
++++ b/arch/x86/kernel/ftrace.c
+@@ -121,6 +121,7 @@ ftrace_modify_code_direct(unsigned long ip, const char *old_code,
+ 	return 0;
+ }
  
--KBUILD_CFLAGS += $(DISABLE_LTO)
--
- # Sanitizer runtimes are unavailable and cannot be linked here.
- KASAN_SANITIZE			:= n
- UBSAN_SANITIZE			:= n
-@@ -92,7 +90,7 @@ ifneq ($(RETPOLINE_VDSO_CFLAGS),)
- endif
- endif
- 
--$(vobjs): KBUILD_CFLAGS := $(filter-out $(GCC_PLUGINS_CFLAGS) $(RETPOLINE_CFLAGS),$(KBUILD_CFLAGS)) $(CFL)
-+$(vobjs): KBUILD_CFLAGS := $(filter-out $(CC_FLAGS_LTO) $(GCC_PLUGINS_CFLAGS) $(RETPOLINE_CFLAGS),$(KBUILD_CFLAGS)) $(CFL)
- 
- #
- # vDSO code runs in userspace and -pg doesn't help with profiling anyway.
-@@ -150,6 +148,7 @@ KBUILD_CFLAGS_32 := $(filter-out -fno-pic,$(KBUILD_CFLAGS_32))
- KBUILD_CFLAGS_32 := $(filter-out -mfentry,$(KBUILD_CFLAGS_32))
- KBUILD_CFLAGS_32 := $(filter-out $(GCC_PLUGINS_CFLAGS),$(KBUILD_CFLAGS_32))
- KBUILD_CFLAGS_32 := $(filter-out $(RETPOLINE_CFLAGS),$(KBUILD_CFLAGS_32))
-+KBUILD_CFLAGS_32 := $(filter-out $(CC_FLAGS_LTO),$(KBUILD_CFLAGS_32))
- KBUILD_CFLAGS_32 += -m32 -msoft-float -mregparm=0 -fpic
- KBUILD_CFLAGS_32 += $(call cc-option, -fno-stack-protector)
- KBUILD_CFLAGS_32 += $(call cc-option, -foptimize-sibling-calls)
++__nomcount
+ int ftrace_make_nop(struct module *mod, struct dyn_ftrace *rec, unsigned long addr)
+ {
+ 	unsigned long ip = rec->ip;
 -- 
 2.27.0.212.ge8ba1cc988-goog
 
