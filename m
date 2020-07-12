@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19288-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19289-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id B154C21C83C
-	for <lists+kernel-hardening@lfdr.de>; Sun, 12 Jul 2020 11:26:15 +0200 (CEST)
-Received: (qmail 27718 invoked by uid 550); 12 Jul 2020 09:26:08 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 0BC5B21CB0C
+	for <lists+kernel-hardening@lfdr.de>; Sun, 12 Jul 2020 21:01:30 +0200 (CEST)
+Received: (qmail 7367 invoked by uid 550); 12 Jul 2020 19:01:22 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -14,92 +14,130 @@ List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
 Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 18413 invoked from network); 12 Jul 2020 08:59:41 -0000
+Received: (qmail 1329 invoked from network); 12 Jul 2020 18:40:58 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=+Dl8Q1XzZiYA4GO8ZZtoY/mYTNvNLG4yL/TSgXjOVXM=;
-        b=et8c4srf7jKz/ghq6ldgJw1wpsajAh/iicKsgGLSk5HCxGZ5CQ86IFUST3G/dAZS9R
-         BK+JEehQthnnir07FeiPcL/qpVUZ2NGCyUjND9byzvK8PnixOnaWkF96m/M5kUymOL2C
-         LII6vqDG01OkywVTUDEiMrt1QcYjd+y6es/0VA01BLEP3VrfKh/wxRZhab4S/+5xDWOB
-         xe88vsXrHJ2oYLtwubG993g1CAsa5aM8/V0M7++JN1XNtMqDZiEmh7FXGrho8fAIGKiT
-         KJW0LpTSPQuedYjKrMO8KvYmRECOyDbXavBRUCJEaU4kO1PGAriZ+FRdd/Me8DIzlfab
-         p9uA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=5TJ+34sQAVUrawBXByyfuwrbgj6i1cli/YCTjxtCBqw=;
+        b=N0HHcMjVGeZLZKs6kySBi/kLjx//vGsHRhAgAn70NbsmCWAMm2ggej1XEym1TkTrI2
+         1RaGmxT5o0gLydjCDJGV76FDHQsG0/MeBmIbxTv5DSaT3TULK/IfbYlfepfNEkiMQmk9
+         pMxE7Rt2/EFgEH7Quq7GvESDdpvWY+RbR8tRKc/SElrWfewWr1bDfzmOZAel5bastYU4
+         l+o96BGwta1qZ7PRMbDolq2P/ebYU/wwwO2jQcK/mwQ0tlDCRPQ2vZa/eEBWU7Y6nUZT
+         K+Ku0Xl1nF8NMzl71Sss8yD4qs25ojddZtL3UAw9gfH97kt9dPHm6QwrFWkINM8fPBxh
+         i8Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
-         :from:date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=+Dl8Q1XzZiYA4GO8ZZtoY/mYTNvNLG4yL/TSgXjOVXM=;
-        b=iW19X+si0LVL/+YOoa3uymCJIa8hj7g+U1o7yNhaZwCVZUm9isAFmeXuZ1lzvFeiEW
-         Ll7WF2ZfryIUjmsmzXJU0SIstPkcpre5nDSe4cjF0bLqfOAhk6GGga9VEEk4n4lr8BXj
-         7bENdyHgc+M3KnS9AnAGXPt1dQ6VyWz09P00LQ/CxPnDk/5kxJt9Z0A3enp3fO/iw8nZ
-         9ffvw6Rz31S99pbkSoZcUzEbwHdBNuc+HgWfOagUy3tR1Lbt5ExlecxVglEtQH4fzXYS
-         Fop/Dd3h1tjJJaXxDY5UVgFAi5oiPy1cCz87bSyeW91vnPcWbI15S66dXMmGTxKD0PtX
-         GsuA==
-X-Gm-Message-State: AOAM533GlGJMpkK3Ip4CxvKd1PENRdGDYebSBq1/Y59joxBtvuRdHEy6
-	mbrkEhCS6N5pzEPV9klzbMQJzvMYydSKFE/Tl0I=
-X-Google-Smtp-Source: ABdhPJz6yajbht8v21aUb5AqbeseJZbW7WiEMt9+Xzj6unIHhgR9p8E/p5dg9MyRRh3U33wQNCR5IYqWyZHeGZXnsKY=
-X-Received: by 2002:a05:6602:1555:: with SMTP id h21mr6773338iow.163.1594544369052;
- Sun, 12 Jul 2020 01:59:29 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200624203200.78870-1-samitolvanen@google.com> <671d8923-ed43-4600-2628-33ae7cb82ccb@molgen.mpg.de>
-In-Reply-To: <671d8923-ed43-4600-2628-33ae7cb82ccb@molgen.mpg.de>
-From: Sedat Dilek <sedat.dilek@gmail.com>
-Date: Sun, 12 Jul 2020 10:59:17 +0200
-Message-ID: <CA+icZUXPB_C1bjA13zi3OLFCpiZh+GsgHT0y6kumzVRavs4LkQ@mail.gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=5TJ+34sQAVUrawBXByyfuwrbgj6i1cli/YCTjxtCBqw=;
+        b=dq6Cw2mfMU7QyF/UgRORwIzpm7rgf/MqX8cAhIj0gU+oxat53GeauuhxqtBARRlNqh
+         X0Qd5F41GkML0dzUcvpLqRwsaw2sCWhsFIk1r0N+pE5U2fkWBxF/0d3qYZLE5JHJGlVU
+         3bC+nK82WF4ekMuhkQ7IFDEyPHhFXq8kOaCqYvOerYCn0cxDXaUqymLwRXb44KQ46W4Z
+         X9mmRCi3fzBcdTjskQwCFGxxs7VMLA6mDx3NFJczy/ddsA1Db6dv3bnSwRlSiIcG4LEL
+         bKEfcN1TV6LX8GxHhNz2jcnhBfta6OiZdRPpmwknaIvP/tQ2qCnvkw+VqPVcNXO4iFcL
+         /fcQ==
+X-Gm-Message-State: AOAM5302WTrisgHQHZboMelO2t1M5k+rG9V1nN5Ax+GtLgFl4XWA6UM5
+	4BGQzwA6YDEY8E/TqrbVsQU=
+X-Google-Smtp-Source: ABdhPJwaLeWOxzmuhJhjgAdmI0j3ddtpspQ4OkHVexe7PvXeW20GC370vRPp3GnVrW9KjIJcaky3VQ==
+X-Received: by 2002:a62:29c6:: with SMTP id p189mr52732155pfp.55.1594579245655;
+        Sun, 12 Jul 2020 11:40:45 -0700 (PDT)
+Date: Sun, 12 Jul 2020 11:40:41 -0700
+From: Nathan Chancellor <natechancellor@gmail.com>
+To: Sedat Dilek <sedat.dilek@gmail.com>
+Cc: Paul Menzel <pmenzel@molgen.mpg.de>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Clang-Built-Linux ML <clang-built-linux@googlegroups.com>,
+	kernel-hardening@lists.openwall.com, linux-arch@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	x86@kernel.org
 Subject: Re: [PATCH 00/22] add support for Clang LTO
-To: Paul Menzel <pmenzel@molgen.mpg.de>
-Cc: Sami Tolvanen <samitolvanen@google.com>, Masahiro Yamada <masahiroy@kernel.org>, 
-	Will Deacon <will@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	"Paul E. McKenney" <paulmck@kernel.org>, Kees Cook <keescook@chromium.org>, 
-	Nick Desaulniers <ndesaulniers@google.com>, 
-	Clang-Built-Linux ML <clang-built-linux@googlegroups.com>, kernel-hardening@lists.openwall.com, 
-	linux-arch@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pci@vger.kernel.org, x86@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <20200712184041.GA1838@Ryzen-9-3900X.localdomain>
+References: <20200624203200.78870-1-samitolvanen@google.com>
+ <671d8923-ed43-4600-2628-33ae7cb82ccb@molgen.mpg.de>
+ <CA+icZUXPB_C1bjA13zi3OLFCpiZh+GsgHT0y6kumzVRavs4LkQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CA+icZUXPB_C1bjA13zi3OLFCpiZh+GsgHT0y6kumzVRavs4LkQ@mail.gmail.com>
 
-On Sat, Jul 11, 2020 at 6:32 PM Paul Menzel <pmenzel@molgen.mpg.de> wrote:
->
-> Dear Sami,
->
->
-> Am 24.06.20 um 22:31 schrieb Sami Tolvanen:
-> > This patch series adds support for building x86_64 and arm64 kernels
-> > with Clang's Link Time Optimization (LTO).
+On Sun, Jul 12, 2020 at 10:59:17AM +0200, Sedat Dilek wrote:
+> On Sat, Jul 11, 2020 at 6:32 PM Paul Menzel <pmenzel@molgen.mpg.de> wrote:
 > >
-> > In addition to performance, the primary motivation for LTO is to allow
-> > Clang's Control-Flow Integrity (CFI) to be used in the kernel. Google's
-> > Pixel devices have shipped with LTO+CFI kernels since 2018.
+> > Dear Sami,
 > >
-> > Most of the patches are build system changes for handling LLVM bitcode,
-> > which Clang produces with LTO instead of ELF object files, postponing
-> > ELF processing until a later stage, and ensuring initcall ordering.
 > >
-> > Note that first objtool patch in the series is already in linux-next,
-> > but as it's needed with LTO, I'm including it also here to make testing
-> > easier.
->
-> [=E2=80=A6]
->
-> Thank you very much for sending these changes.
->
-> Do you have a branch, where your current work can be pulled from? Your
-> branch on GitHub [1] seems 15 months old.
->
+> > Am 24.06.20 um 22:31 schrieb Sami Tolvanen:
+> > > This patch series adds support for building x86_64 and arm64 kernels
+> > > with Clang's Link Time Optimization (LTO).
+> > >
+> > > In addition to performance, the primary motivation for LTO is to allow
+> > > Clang's Control-Flow Integrity (CFI) to be used in the kernel. Google's
+> > > Pixel devices have shipped with LTO+CFI kernels since 2018.
+> > >
+> > > Most of the patches are build system changes for handling LLVM bitcode,
+> > > which Clang produces with LTO instead of ELF object files, postponing
+> > > ELF processing until a later stage, and ensuring initcall ordering.
+> > >
+> > > Note that first objtool patch in the series is already in linux-next,
+> > > but as it's needed with LTO, I'm including it also here to make testing
+> > > easier.
+> >
+> > […]
+> >
+> > Thank you very much for sending these changes.
+> >
+> > Do you have a branch, where your current work can be pulled from? Your
+> > branch on GitHub [1] seems 15 months old.
+> >
+> 
+> Agreed it's easier to git-pull.
+> I have seen [1] - not sure if this is the latest version.
+> Alternatively, you can check patchwork LKML by searching for $submitter.
+> ( You can open patch 01/22 and download the whole patch-series by
+> following the link "series", see [3]. )
+> 
+> - Sedat -
+> 
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/masahiroy/linux-kbuild.git/log/?h=lto
+> [2] https://lore.kernel.org/patchwork/project/lkml/list/?series=&submitter=19676
+> [3] https://lore.kernel.org/patchwork/series/450026/mbox/
+> 
 
-Agreed it's easier to git-pull.
-I have seen [1] - not sure if this is the latest version.
-Alternatively, you can check patchwork LKML by searching for $submitter.
-( You can open patch 01/22 and download the whole patch-series by
-following the link "series", see [3]. )
+Sami tagged this series on his GitHub:
 
-- Sedat -
+https://github.com/samitolvanen/linux/releases/tag/lto-v1
 
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/masahiroy/linux-kbuild.=
-git/log/?h=3Dlto
-[2] https://lore.kernel.org/patchwork/project/lkml/list/?series=3D&submitte=
-r=3D19676
-[3] https://lore.kernel.org/patchwork/series/450026/mbox/
+git pull https://github.com/samitolvanen/linux lto-v1
+
+Otherwise, he is updating the clang-cfi branch that includes both the
+LTO and CFI patchsets. You can pull that and just turn on
+CONFIG_LTO_CLANG.
+
+Lastly, for the future, I would recommend grabbing b4 to easily apply
+patches (specifically full series) from lore.kernel.org.
+
+https://git.kernel.org/pub/scm/utils/b4/b4.git/
+https://git.kernel.org/pub/scm/utils/b4/b4.git/tree/README.rst
+
+You could grab this series and apply it easily by either downloading the
+mbox file and following the instructions it gives for applying the mbox
+file:
+
+$ b4 am 20200624203200.78870-1-samitolvanen@google.com
+
+or I prefer piping so that I don't have to clean up later:
+
+$ b4 am -o - 20200624203200.78870-1-samitolvanen@google.com | git am
+
+Cheers,
+Nathan
