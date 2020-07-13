@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19295-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19296-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 22D4421D798
-	for <lists+kernel-hardening@lfdr.de>; Mon, 13 Jul 2020 15:52:59 +0200 (CEST)
-Received: (qmail 32319 invoked by uid 550); 13 Jul 2020 13:52:52 -0000
+	by mail.lfdr.de (Postfix) with SMTP id C1BF921DB6C
+	for <lists+kernel-hardening@lfdr.de>; Mon, 13 Jul 2020 18:16:34 +0200 (CEST)
+Received: (qmail 3561 invoked by uid 550); 13 Jul 2020 16:16:28 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,106 +13,68 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 31866 invoked from network); 13 Jul 2020 13:50:38 -0000
-From: "Alexander A. Klimov" <grandmaster@al2klimov.de>
-To: keescook@chromium.org,
-	re.emese@gmail.com,
-	kernel-hardening@lists.openwall.com,
-	linux-kernel@vger.kernel.org
-Cc: "Alexander A. Klimov" <grandmaster@al2klimov.de>
-Subject: [PATCH] gcc-plugins: Replace HTTP links with HTTPS ones
-Date: Mon, 13 Jul 2020 15:50:18 +0200
-Message-Id: <20200713135018.34708-1-grandmaster@al2klimov.de>
+Received: (qmail 3526 invoked from network); 13 Jul 2020 16:16:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=arF9/WfQf8O+zXfqHDfW3zJEksp4/JkE/sE/kjxelos=;
+        b=WugZOMCGJNyDO4AC1fQGNcOaQsax8CTDyR8XhxeG+tOVefm2zk+cgTFBIoAq/+ta86
+         qRsy0MrhimuoKxetVSVQn7T9y1yZEKkbw3obFXNqPV0WN0VnHQBh6D+EkyYRoAN9DqxH
+         o4lnXvQOCDDHBhShHkSbeY4nmrVmPma6zA6+0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=arF9/WfQf8O+zXfqHDfW3zJEksp4/JkE/sE/kjxelos=;
+        b=ENQAJDbvNkBqgQmCqBttgNZfEn98DKKgWw2Q3dY8s6xAo6zPUMMOSsmPeBnT9Z55gG
+         vUC6S+Q6g2N+6VTBsDgCswYs+1cUtq13sSHEzzWyTakXexbmd564uVxNxEkEoXJHxGcA
+         xmEUmbNoCTaY6KhR2gtTt58IQ9HDWxbgsWuJFsDoosWgAzvCrHRqENGgdywCxNyyfme9
+         WI5BVIt+1z7mnehUiPwjp+KNO2yJQ+dvkOSZRlrCrzj/a66Ye6iG5HDHiuWYfCnSRiZQ
+         NLVF43887Nt7kI5YLb4TMzsi0trdO/W6rG/QVi8ii5AcPSaidQLVwPcaN4JSMEO2t7Wz
+         lywg==
+X-Gm-Message-State: AOAM531eh9NE1U0SxjKcR3M+gD8tEBuiFAPuBYjEZFiseRKFTpqskp6x
+	qd1pCed5DQ6ncVAK4Qamxq8Lcg==
+X-Google-Smtp-Source: ABdhPJweB6DZUW5dbFNYa7U3T0bZFjMrr/pVD3pZPVbMUNxcNYaWR9I89+g+l/lFeQChgOBoFu76fA==
+X-Received: by 2002:a63:ab0d:: with SMTP id p13mr68725214pgf.327.1594656975178;
+        Mon, 13 Jul 2020 09:16:15 -0700 (PDT)
+Date: Mon, 13 Jul 2020 09:16:12 -0700
+From: Kees Cook <keescook@chromium.org>
+To: Allen <allen.lkml@gmail.com>
+Cc: Oscar Carter <oscar.carter@gmx.com>,
+	Kernel Hardening <kernel-hardening@lists.openwall.com>
+Subject: Re: Clarification about the series to modernize the tasklet api
+Message-ID: <202007130914.E9157B3@keescook>
+References: <20200711174239.GA3199@ubuntu>
+ <CAOMdWSLFSci1DCMsQLBoX-ADP0cHbhudfvRKokdM+pEQEfpnAQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: +++++
-X-Spam-Level: *****
-Authentication-Results: smtp.al2klimov.de;
-	auth=pass smtp.auth=aklimov@al2klimov.de smtp.mailfrom=grandmaster@al2klimov.de
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOMdWSLFSci1DCMsQLBoX-ADP0cHbhudfvRKokdM+pEQEfpnAQ@mail.gmail.com>
 
-Rationale:
-Reduces attack surface on kernel devs opening the links for MITM
-as HTTPS traffic is much harder to manipulate.
+On Mon, Jul 13, 2020 at 02:55:22PM +0530, Allen wrote:
+> Oscar,
+> >
+> > I'm working to modernize the tasklet api but I don't understand the reply
+> > to the patch 12/16 [1] of the patch series of Romain Perier [2].
+> 
+>  Am working on the same too. I did try reaching out to Romain but not luck.
+> Let's hope we are not duplicating efforts.
+> 
+> > If this patch is combined with the first one, and the function prototypes
+> > are not changed accordingly and these functions don't use the from_tasklet()
+> > helper, all the users that use the DECLARE_TASKLET macro don't pass the
+> > correct argument to the .data field.
+> >
+> >  #define DECLARE_TASKLET(name, func, data) \
+> > -struct tasklet_struct name = { NULL, 0, ATOMIC_INIT(0), func, data }
+> > +struct tasklet_struct name = { NULL, 0, ATOMIC_INIT(0), (TASKLET_FUNC_TYPE)func, (TASKLET_DATA_TYPE)&name }
+> >
+> 
+>  Ideally this above bit should have been part of the first patch.
 
-Deterministic algorithm:
-For each file:
-  If not .svg:
-    For each line:
-      If doesn't contain `\bxmlns\b`:
-        For each link, `\bhttp://[^# \t\r\n]*(?:\w|/)`:
-	  If neither `\bgnu\.org/license`, nor `\bmozilla\.org/MPL\b`:
-            If both the HTTP and HTTPS versions
-            return 200 OK and serve the same content:
-              Replace HTTP with HTTPS.
+Right, the idea was to have a single patch that contained all the
+infrastructure changes to support the conversion patches.
 
-Signed-off-by: Alexander A. Klimov <grandmaster@al2klimov.de>
----
- Continuing my work started at 93431e0607e5.
- See also: git log --oneline '--author=Alexander A. Klimov <grandmaster@al2klimov.de>' v5.7..master
- (Actually letting a shell for loop submit all this stuff for me.)
-
- If there are any URLs to be removed completely or at least not just HTTPSified:
- Just clearly say so and I'll *undo my change*.
- See also: https://lkml.org/lkml/2020/6/27/64
-
- If there are any valid, but yet not changed URLs:
- See: https://lkml.org/lkml/2020/6/26/837
-
- If you apply the patch, please let me know.
-
- Sorry again to all maintainers who complained about subject lines.
- Now I realized that you want an actually perfect prefixes,
- not just subsystem ones.
- I tried my best...
- And yes, *I could* (at least half-)automate it.
- Impossible is nothing! :)
-
-
- scripts/gcc-plugins/cyc_complexity_plugin.c | 2 +-
- scripts/gcc-plugins/sancov_plugin.c         | 2 +-
- scripts/gcc-plugins/structleak_plugin.c     | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/scripts/gcc-plugins/cyc_complexity_plugin.c b/scripts/gcc-plugins/cyc_complexity_plugin.c
-index 1909ec617431..73124c2b3edd 100644
---- a/scripts/gcc-plugins/cyc_complexity_plugin.c
-+++ b/scripts/gcc-plugins/cyc_complexity_plugin.c
-@@ -5,7 +5,7 @@
-  * Homepage:
-  * https://github.com/ephox-gcc-plugins/cyclomatic_complexity
-  *
-- * http://en.wikipedia.org/wiki/Cyclomatic_complexity
-+ * https://en.wikipedia.org/wiki/Cyclomatic_complexity
-  * The complexity M is then defined as:
-  * M = E - N + 2P
-  * where
-diff --git a/scripts/gcc-plugins/sancov_plugin.c b/scripts/gcc-plugins/sancov_plugin.c
-index 0f98634c20a0..caff4a6c7e9a 100644
---- a/scripts/gcc-plugins/sancov_plugin.c
-+++ b/scripts/gcc-plugins/sancov_plugin.c
-@@ -11,7 +11,7 @@
-  *
-  * You can read about it more here:
-  *  https://gcc.gnu.org/viewcvs/gcc?limit_changes=0&view=revision&revision=231296
-- *  http://lwn.net/Articles/674854/
-+ *  https://lwn.net/Articles/674854/
-  *  https://github.com/google/syzkaller
-  *  https://lwn.net/Articles/677764/
-  *
-diff --git a/scripts/gcc-plugins/structleak_plugin.c b/scripts/gcc-plugins/structleak_plugin.c
-index e89be8f5c859..b9ef2e162107 100644
---- a/scripts/gcc-plugins/structleak_plugin.c
-+++ b/scripts/gcc-plugins/structleak_plugin.c
-@@ -11,7 +11,7 @@
-  * otherwise leak kernel stack to userland if they aren't properly initialized
-  * by later code
-  *
-- * Homepage: http://pax.grsecurity.net/
-+ * Homepage: https://pax.grsecurity.net/
-  *
-  * Options:
-  * -fplugin-arg-structleak_plugin-disable
 -- 
-2.27.0
-
+Kees Cook
