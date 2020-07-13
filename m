@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19296-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19297-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id C1BF921DB6C
-	for <lists+kernel-hardening@lfdr.de>; Mon, 13 Jul 2020 18:16:34 +0200 (CEST)
-Received: (qmail 3561 invoked by uid 550); 13 Jul 2020 16:16:28 -0000
+	by mail.lfdr.de (Postfix) with SMTP id B70C521DBB2
+	for <lists+kernel-hardening@lfdr.de>; Mon, 13 Jul 2020 18:27:55 +0200 (CEST)
+Received: (qmail 11421 invoked by uid 550); 13 Jul 2020 16:27:49 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,68 +13,137 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 3526 invoked from network); 13 Jul 2020 16:16:27 -0000
+Received: (qmail 11389 invoked from network); 13 Jul 2020 16:27:49 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=arF9/WfQf8O+zXfqHDfW3zJEksp4/JkE/sE/kjxelos=;
-        b=WugZOMCGJNyDO4AC1fQGNcOaQsax8CTDyR8XhxeG+tOVefm2zk+cgTFBIoAq/+ta86
-         qRsy0MrhimuoKxetVSVQn7T9y1yZEKkbw3obFXNqPV0WN0VnHQBh6D+EkyYRoAN9DqxH
-         o4lnXvQOCDDHBhShHkSbeY4nmrVmPma6zA6+0=
+        bh=zA4WyeDE9ADeqGFI5fpsrtnR+977K2LTQwEIrm/1uEI=;
+        b=AnGAsnmlV0cyXjeZhSWuutDDOfYj1/lmyXyMjRUJpNKMSBPY/rXFm7ZuGzSpUmTrQf
+         rVjLMAW9SYubqQhfkaYuWgCZuxAvdYfsROMHZfHvj/87XrtDtCwZWpkeH7O6nQdHbFBu
+         Gn0VR3+qXad/8E8x5H8+jfBCdCktjLNs4Mm9g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=arF9/WfQf8O+zXfqHDfW3zJEksp4/JkE/sE/kjxelos=;
-        b=ENQAJDbvNkBqgQmCqBttgNZfEn98DKKgWw2Q3dY8s6xAo6zPUMMOSsmPeBnT9Z55gG
-         vUC6S+Q6g2N+6VTBsDgCswYs+1cUtq13sSHEzzWyTakXexbmd564uVxNxEkEoXJHxGcA
-         xmEUmbNoCTaY6KhR2gtTt58IQ9HDWxbgsWuJFsDoosWgAzvCrHRqENGgdywCxNyyfme9
-         WI5BVIt+1z7mnehUiPwjp+KNO2yJQ+dvkOSZRlrCrzj/a66Ye6iG5HDHiuWYfCnSRiZQ
-         NLVF43887Nt7kI5YLb4TMzsi0trdO/W6rG/QVi8ii5AcPSaidQLVwPcaN4JSMEO2t7Wz
-         lywg==
-X-Gm-Message-State: AOAM531eh9NE1U0SxjKcR3M+gD8tEBuiFAPuBYjEZFiseRKFTpqskp6x
-	qd1pCed5DQ6ncVAK4Qamxq8Lcg==
-X-Google-Smtp-Source: ABdhPJweB6DZUW5dbFNYa7U3T0bZFjMrr/pVD3pZPVbMUNxcNYaWR9I89+g+l/lFeQChgOBoFu76fA==
-X-Received: by 2002:a63:ab0d:: with SMTP id p13mr68725214pgf.327.1594656975178;
-        Mon, 13 Jul 2020 09:16:15 -0700 (PDT)
-Date: Mon, 13 Jul 2020 09:16:12 -0700
+        bh=zA4WyeDE9ADeqGFI5fpsrtnR+977K2LTQwEIrm/1uEI=;
+        b=bQrLe7NLrDtMH2KBP2V3fQTVSFzUADYF1Uzpwzun2CcQAheQ7CwpQHtWRktRGn8hvu
+         m8q/xNrj2/B7ynBRVVorvsEA3che9nPmfdRFTwz/6849lxoXyk5GP+SwrPU16dZ9coBx
+         gceeZYmlCabmMyxoIWACt/E29AM6o/pJtY9rTxHT+vngkPOfbd3vG65mUFSSTEJdLG3B
+         RlcpfNAeMVgrIrl/8gqzSfO8HTlS2FvNXI3cgd8LyAJnPFIvr4aVJoqdyK+Ev2ULZCfU
+         SxsjmOrRKBxgYmWcYdtd+KVSG/ZHQHFCiRjFwtPutx2wNDG2wbn4nqNR8bf0fSjN9BQb
+         9C/g==
+X-Gm-Message-State: AOAM5308iuq8aMBD1VxyVvZDTrnuh5LU+gVpIZ53+VMmFwcs3e7bXf3F
+	A7nEvk2Y3lu9UnykPxLxbt3t+A==
+X-Google-Smtp-Source: ABdhPJxVYFPB5E95sf3Kw4Iv3tCI5lDLACoSfwJ+Mtx0vXDnwgL2lybxI1R3nRMBamCRf7oTTZhIfg==
+X-Received: by 2002:a17:90a:8a07:: with SMTP id w7mr142280pjn.219.1594657656890;
+        Mon, 13 Jul 2020 09:27:36 -0700 (PDT)
+Date: Mon, 13 Jul 2020 09:27:34 -0700
 From: Kees Cook <keescook@chromium.org>
 To: Allen <allen.lkml@gmail.com>
 Cc: Oscar Carter <oscar.carter@gmx.com>,
 	Kernel Hardening <kernel-hardening@lists.openwall.com>
 Subject: Re: Clarification about the series to modernize the tasklet api
-Message-ID: <202007130914.E9157B3@keescook>
+Message-ID: <202007130916.CD26577@keescook>
 References: <20200711174239.GA3199@ubuntu>
  <CAOMdWSLFSci1DCMsQLBoX-ADP0cHbhudfvRKokdM+pEQEfpnAQ@mail.gmail.com>
+ <CAOMdWSJSXj4uC_=WRkqDoare-s1rcOtp=xJ7idCDAxhnTHacVw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOMdWSLFSci1DCMsQLBoX-ADP0cHbhudfvRKokdM+pEQEfpnAQ@mail.gmail.com>
+In-Reply-To: <CAOMdWSJSXj4uC_=WRkqDoare-s1rcOtp=xJ7idCDAxhnTHacVw@mail.gmail.com>
 
-On Mon, Jul 13, 2020 at 02:55:22PM +0530, Allen wrote:
-> Oscar,
+On Mon, Jul 13, 2020 at 03:54:44PM +0530, Allen wrote:
 > >
-> > I'm working to modernize the tasklet api but I don't understand the reply
-> > to the patch 12/16 [1] of the patch series of Romain Perier [2].
+> > I have a few more things to complete, I shall have it done and pushed
+> > to github. Will write back
+> > once that's done.
 > 
->  Am working on the same too. I did try reaching out to Romain but not luck.
-> Let's hope we are not duplicating efforts.
+> Here's the link to the list of patches so far. I should hopefully
+> complete the rest in about
+> a  week.
 > 
-> > If this patch is combined with the first one, and the function prototypes
-> > are not changed accordingly and these functions don't use the from_tasklet()
-> > helper, all the users that use the DECLARE_TASKLET macro don't pass the
-> > correct argument to the .data field.
-> >
-> >  #define DECLARE_TASKLET(name, func, data) \
-> > -struct tasklet_struct name = { NULL, 0, ATOMIC_INIT(0), func, data }
-> > +struct tasklet_struct name = { NULL, 0, ATOMIC_INIT(0), (TASKLET_FUNC_TYPE)func, (TASKLET_DATA_TYPE)&name }
-> >
-> 
->  Ideally this above bit should have been part of the first patch.
+> https://github.com/allenpais/tasklets/commits/ref_tasklets
 
-Right, the idea was to have a single patch that contained all the
-infrastructure changes to support the conversion patches.
+Thanks for the update! I wonder if there is a way to collaborate better
+on this, so we're not all waiting on each other? (i.e. Romain got busy,
+Allen picked up the work, then Allen got busy, then Oscar picked up the
+work, then Allen returned, etc...)
+
+Perhaps split up testing? I'll like you and Oscar work it out. :)
+
+> What I have done so far is to keep patches close to the original
+> series, but with changes
+> from the feedback received to those patches.
+> 
+> Patches 1-10 have been retained as is, except for DECLARE_TASKLET which has been
+> moved to patch 1 from patch 12 in the series.
+
+I think the "prepare" patches should be collapsed into the "convert"
+patches (i.e. let's just touch a given driver once with a single patch).
+
+> Patch 11 is broken down to sub-systems(as it was done for Timer
+> changes in the past).
+> Sub-systems:
+>  arch/*
+>  drivers/atm/*
+>  drivers/block/*
+>  drivers/char/ipmi/*
+>  drivers/crypto/*
+>  drivers/dma/*
+>  drivers/firewire/*
+>  drivers/gpu/drm/*
+>  drivers/hsi/*
+>  drivers/hv/*
+>  drivers/infiniband/*
+>  drivers/input/*
+>  drivers/mailbox/*
+>  drivers/media/*
+>  drivers/memstick/*
+>  drivers/misc/*
+>  drivers/mmc/*
+>  drivers/net/*
+>  drivers/net/ethernet/*
+>  drivers/net/ppp/*
+>  drivers/net/usb/*
+>  drivers/net/wireless/*
+>  drivers/ntb/*
+>  drivers/platform/*
+>  drivers/rapidio/*
+>  drivers/s390/*
+>  drivers/scsi/*
+>  drivers/spi/*
+>  drivers/tty/*
+>  drivers/usb/*
+>  drivers/vme/*
+>  net/dccp/*
+>  net/ipv4/*
+>  net/mac80211/*
+>  net/mac802154/*
+>  net/rds/*
+>  net/sched/*
+>  net/smc/*
+>  net/xfrm/*
+>  sound/core/*
+>  sound/*
+>  and ofcourse staging/*
+> 
+>  Patches 12, 13 comments will be addressed and broken down.
+>  Patches 14, 15 will remain as is.
+>  Patch 16 will have it's comments addressed.
+> 
+> With this approach, I think it will be a little easier to get the
+> patches into the kernel and also will be easier for maintainers to have
+> them reviewed.
+
+Yup -- it's that first patch that needs to land in a release so the rest can start
+landing too. (Timing here is the awkward part: the infrastructure change
+needs to be in -rc1 or -rc2 so the next development cycle can use it
+(i.e. subsystem maintainers effectively fork after the merge window is
+over). We can play other tricks (common merged branch) but I don't think
+that's needed here.
+
+Thanks to all three of you for poking at this!
 
 -- 
 Kees Cook
