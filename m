@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19294-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19292-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 1FF4921D4C2
-	for <lists+kernel-hardening@lfdr.de>; Mon, 13 Jul 2020 13:22:07 +0200 (CEST)
-Received: (qmail 20433 invoked by uid 550); 13 Jul 2020 11:22:01 -0000
+	by mail.lfdr.de (Postfix) with SMTP id DD54F21D2BD
+	for <lists+kernel-hardening@lfdr.de>; Mon, 13 Jul 2020 11:25:51 +0200 (CEST)
+Received: (qmail 14016 invoked by uid 550); 13 Jul 2020 09:25:46 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,103 +13,75 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 13850 invoked from network); 13 Jul 2020 09:24:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1594632283;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8taBpeNWfYvGCIuu+3RcwP8mgr+DtPBfUd45yt6a9tM=;
-	b=Rq8Rk1KvIVnuE9eYYjiOeQ8iU3fgbPSFk90s3TDWA9aFuTBE8OBVmFP+MhQcogqy2KPiIp
-	n4B1bUjXZ/e6csGYxU3jBi/I6JnRvkXBEIq/Ue/FjoC8HwdZhAuO/Mow+MXbqhBQsv6+p+
-	OchEItMGSsA09QWziXFLwaqw098zjqA=
-X-MC-Unique: p6tDz3eYNamNtlQUM20UWg-1
-Date: Mon, 13 Jul 2020 10:24:35 +0100
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>
-Cc: Jens Axboe <axboe@kernel.dk>, Sargun Dhillon <sargun@sargun.me>,
-	Kees Cook <keescook@chromium.org>, linux-fsdevel@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Kernel Hardening <kernel-hardening@lists.openwall.com>,
-	Jann Horn <jannh@google.com>, Aleksa Sarai <asarai@suse.de>,
-	Christian Brauner <christian.brauner@ubuntu.com>,
-	io-uring@vger.kernel.org, Alexander Viro <viro@zeniv.linux.org.uk>,
-	Jeff Moyer <jmoyer@redhat.com>,
-	Stefano Garzarella <sgarzare@redhat.com>
-Subject: Re: [PATCH RFC 0/3] io_uring: add restrictions to support untrusted
- applications and guests
-Message-ID: <20200713092435.GC28639@stefanha-x1.localdomain>
-References: <20200710141945.129329-1-sgarzare@redhat.com>
- <20200710153309.GA4699@char.us.oracle.com>
- <20200710162017.qdu34ermtxh3rfgl@steredhat>
+Received: (qmail 13981 invoked from network); 13 Jul 2020 09:25:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=mfjt+rT0LYL8M4sgmWneFOp+iGUVCuq3mFYeIhVzkp4=;
+        b=hNA5J16QLVtzFa9J39Jk+eyw+DNaeCMZkWN6AGE5IpWmbMa/kcgEgU4hdIRNIpRprO
+         Hj0CPDV9B4EJ19k/szajI4PcmmZdaG2Me/At/c6rE5nRoC9bXspwMLqNzfxXPB3ZwJC8
+         XTKsNx+umfq6LHu2Sg71oMMeZ/oMbWq9mZIsHQKYQI4v22R7EZTmSwNYvetMhmiu4sS0
+         JUYW9iswhcWNDfesVoRxPbF7QXWJ0jYcU7DcCYO07uoC5Sd5JiD90obXb0D5jXbsOZ6W
+         RXXvB5ncJrRcgGXNjD5STou9Ap9LTd5WXpqXZwfrHfq4cI4QZTctwmt+N0DzKGTBweZT
+         hsHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mfjt+rT0LYL8M4sgmWneFOp+iGUVCuq3mFYeIhVzkp4=;
+        b=LOCNcR5uWgErhLITOXEsUfn2fFQmnO7C+ULLoD/+irOlLnIgM7sM7BPirvUxP3cVkZ
+         GRKTNJksl4doEPl+axgOhP44rSliAkg83sLBZk0Td4iRnDRp5ditmCZH5FREwHwnekSP
+         XR2lT27Wg5EQOcqvqTSQSsAt5lYsfT2IFbsAnc/832scTZeiYvQgywVmqgMzEhY+2IrS
+         BMTviIZUCH3lSiIK1c2KowX0z6iIwLscWjk6PssOuc3fZqGzBV6nz28f05pDdr5u78L+
+         3hU5mPHvQvLWh/YcH/TY2hGT0eS0FcwrrZvzq1MXXo+jJYBPx1D4lVXK9vi324mm4If8
+         Gqng==
+X-Gm-Message-State: AOAM531OXGeRZNc3reGr/f5ONafjUQ3xeLgdJvDkeOdXmfbeEwAyQOZF
+	Tt96pXX/xt+tg6KGBAkrm9arO4UG/THtCAKkfYg=
+X-Google-Smtp-Source: ABdhPJzAElJh82uwvlfDG6qlwg286UiCsRRJtlYOqGTY5M8Z9b9ezjko49wDEOnRlGxcbH70J8oAQ31YvHv2gkeoIm4=
+X-Received: by 2002:aca:6c6:: with SMTP id 189mr12655564oig.134.1594632333766;
+ Mon, 13 Jul 2020 02:25:33 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200710162017.qdu34ermtxh3rfgl@steredhat>
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="ZwgA9U+XZDXt4+m+"
-Content-Disposition: inline
+References: <20200711174239.GA3199@ubuntu>
+In-Reply-To: <20200711174239.GA3199@ubuntu>
+From: Allen <allen.lkml@gmail.com>
+Date: Mon, 13 Jul 2020 14:55:22 +0530
+Message-ID: <CAOMdWSLFSci1DCMsQLBoX-ADP0cHbhudfvRKokdM+pEQEfpnAQ@mail.gmail.com>
+Subject: Re: Clarification about the series to modernize the tasklet api
+To: Oscar Carter <oscar.carter@gmx.com>
+Cc: Kees Cook <keescook@chromium.org>, 
+	Kernel Hardening <kernel-hardening@lists.openwall.com>
+Content-Type: text/plain; charset="UTF-8"
 
---ZwgA9U+XZDXt4+m+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Oscar,
+>
+> I'm working to modernize the tasklet api but I don't understand the reply
+> to the patch 12/16 [1] of the patch series of Romain Perier [2].
 
-On Fri, Jul 10, 2020 at 06:20:17PM +0200, Stefano Garzarella wrote:
-> On Fri, Jul 10, 2020 at 11:33:09AM -0400, Konrad Rzeszutek Wilk wrote:
-> > .snip..
-> > > Just to recap the proposal, the idea is to add some restrictions to t=
-he
-> > > operations (sqe, register, fixed file) to safely allow untrusted appl=
-ications
-> > > or guests to use io_uring queues.
-> >=20
-> > Hi!
-> >=20
-> > This is neat and quite cool - but one thing that keeps nagging me is
-> > what how much overhead does this cut from the existing setup when you u=
-se
-> > virtio (with guests obviously)?
->=20
-> I need to do more tests, but the preliminary results that I reported on
-> the original proposal [1] show an overhead of ~ 4.17 uS (with iodepth=3D1=
-)
-> when I'm using virtio ring processed in a dedicated iothread:
->=20
->   - 73 kIOPS using virtio-blk + QEMU iothread + io_uring backend
->   - 104 kIOPS using io_uring passthrough
->=20
-> >                                 That is from a high level view the
-> > beaty of io_uring being passed in the guest is you don't have the
-> > virtio ring -> io_uring processing, right?
->=20
-> Right, and potentially we can share the io_uring queues directly to the
-> guest userspace applications, cutting down the cost of Linux block
-> layer in the guest.
+ Am working on the same too. I did try reaching out to Romain but not luck.
+Let's hope we are not duplicating efforts.
 
-Another factor is that the guest submits requests directly to the host
-kernel sqpoll thread. When a virtqueue is used the sqpoll thread cannot
-poll it directly so another host thread (QEMU) needs to poll the
-virtqueue. The same applies for the completion code path.
+> If this patch is combined with the first one, and the function prototypes
+> are not changed accordingly and these functions don't use the from_tasklet()
+> helper, all the users that use the DECLARE_TASKLET macro don't pass the
+> correct argument to the .data field.
+>
+>  #define DECLARE_TASKLET(name, func, data) \
+> -struct tasklet_struct name = { NULL, 0, ATOMIC_INIT(0), func, data }
+> +struct tasklet_struct name = { NULL, 0, ATOMIC_INIT(0), (TASKLET_FUNC_TYPE)func, (TASKLET_DATA_TYPE)&name }
+>
 
-Stefan
+ Ideally this above bit should have been part of the first patch.
 
---ZwgA9U+XZDXt4+m+
-Content-Type: application/pgp-signature; name="signature.asc"
+> The data argument is lost.
+>
+> If this patch is splitted in two, the first part will build correctly since
+> there are casts protecting the arguments, but it will not run correctly until
+> we apply the second part.
+>
 
------BEGIN PGP SIGNATURE-----
+I have a few more things to complete, I shall have it done and pushed
+to github. Will write back
+once that's done.
 
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAl8MKFMACgkQnKSrs4Gr
-c8iWaQgAkvf4Ga+PHPaSTucaASbYCgeYbSgiUPCLRsOB0g2+3HM6buSTHpdfYoUk
-Fy1Y3Yl7cDqGmCCHdTx9rYTQCd6SYSElqylNNnn6yEMiMgvcYcK4xn+wgY8BxVGy
-yIv0Rl52ucmtkQ4Iry5mA/vSNZiiVnDyP5Mq9EahEKDO9RtC0duf4xJeR1Lhyk9G
-QDbDx9I2/TZgsxar1+Tettaf6vbC1d8S5WCSSktvMl7Jn2zP/uyJg9DyuMCRWMVl
-YPX8SPGK/Kr0uKRWkWtBdbK0TuDJtM5i8hdD59ppdQaSwt7JrmowOFDKg9iznl4r
-Z9f95iJ6QD2dHTtGo4Yc5WKyhZ9BmA==
-=KoLY
------END PGP SIGNATURE-----
-
---ZwgA9U+XZDXt4+m+--
-
+- Allen
