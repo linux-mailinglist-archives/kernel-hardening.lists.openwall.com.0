@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19345-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19346-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 5CF8A2222C9
-	for <lists+kernel-hardening@lfdr.de>; Thu, 16 Jul 2020 14:49:18 +0200 (CEST)
-Received: (qmail 26165 invoked by uid 550); 16 Jul 2020 12:49:11 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 0E59C2222CD
+	for <lists+kernel-hardening@lfdr.de>; Thu, 16 Jul 2020 14:49:26 +0200 (CEST)
+Received: (qmail 26298 invoked by uid 550); 16 Jul 2020 12:49:12 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,17 +13,18 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 26145 invoked from network); 16 Jul 2020 12:49:10 -0000
+Received: (qmail 26166 invoked from network); 16 Jul 2020 12:49:11 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1594903738;
+	s=mimecast20190719; t=1594903739;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=uaIPW54kqULYezLBNEp1wzYUF/CfEEz3Uiiha/ZVVF4=;
-	b=BrOie1YjNHmyIUQki9usp5T15LXyJMSAV1PphQ93nb/RhcRmh644137/i8qQQxNXpRRQe0
-	K838Hmdyhk7Pjg1DwjRbgsi3iUGtDBx0mOvp2D/VMU4ZjX/kCXAsip/Ocv2ZvYjk3jtT8G
-	szq7vSwsj89jsYhj6zVeqpQj2KU3VLI=
-X-MC-Unique: TG6ruVBSN5WSYIjOFApk0w-1
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Odxlq9Ln5GrmGx+aMPEKeiGZ+J1+ZE/sVWWvuPsLyGs=;
+	b=P2Tk3NYxzbjMVMQ6rgH3yWBV+MhzDAUpN275PjR8xSsf3tNtAwky33tXK5D+4jbeU7Uj46
+	nLRAcmJUp4g5LVitFzenGrX4DpGO4fhSiQc3ug6ytPns/PSJJzLjdYjOEXJf1NQpdkEzsx
+	aivW6UPDljkTrdF2OGmBDFh2GafB/L8=
+X-MC-Unique: opOtX4U3M22wtJYFkI7UFQ-1
 From: Stefano Garzarella <sgarzare@redhat.com>
 To: Jens Axboe <axboe@kernel.dk>
 Cc: Alexander Viro <viro@zeniv.linux.org.uk>,
@@ -38,80 +39,63 @@ Cc: Alexander Viro <viro@zeniv.linux.org.uk>,
 	linux-fsdevel@vger.kernel.org,
 	Jeff Moyer <jmoyer@redhat.com>,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH RFC v2 0/3] io_uring: add restrictions to support untrusted
- applications and guests
-Date: Thu, 16 Jul 2020 14:48:30 +0200
-Message-Id: <20200716124833.93667-1-sgarzare@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Subject: [PATCH RFC v2 1/3] io_uring: use an enumeration for io_uring_register(2) opcodes
+Date: Thu, 16 Jul 2020 14:48:31 +0200
+Message-Id: <20200716124833.93667-2-sgarzare@redhat.com>
+In-Reply-To: <20200716124833.93667-1-sgarzare@redhat.com>
+References: <20200716124833.93667-1-sgarzare@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
 
-I fixed some issues that Jens pointed out, and also the TODOs that I left
-in the previous version.
+The enumeration allows us to keep track of the last
+io_uring_register(2) opcode available.
 
-I still have any doubts about patch 3, any advice?
+Behaviour and opcodes names don't change.
 
-RFC v1 -> RFC v2:
-    - added 'restricted' flag in the ctx [Jens]
-    - added IORING_MAX_RESTRICTIONS define
-    - returned EBUSY instead of EINVAL when restrictions are already
-      registered
-    - reset restrictions if an error happened during the registration
-    - removed return value of io_sq_offload_start()
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+---
+ include/uapi/linux/io_uring.h | 27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
-RFC v1: https://lore.kernel.org/io-uring/20200710141945.129329-1-sgarzare@redhat.com
-
-Following the proposal that I send about restrictions [1], I wrote this series
-to add restrictions in io_uring.
-
-I also wrote helpers in liburing and a test case (test/register-restrictions.c)
-available in this repository:
-https://github.com/stefano-garzarella/liburing (branch: io_uring_restrictions)
-
-Just to recap the proposal, the idea is to add some restrictions to the
-operations (sqe, register, fixed file) to safely allow untrusted applications
-or guests to use io_uring queues.
-
-The first patch changes io_uring_register(2) opcodes into an enumeration to
-keep track of the last opcode available.
-
-The second patch adds IOURING_REGISTER_RESTRICTIONS opcode and the code to
-handle restrictions.
-
-The third patch adds IORING_SETUP_R_DISABLED flag to start the rings disabled,
-allowing the user to register restrictions, buffers, files, before to start
-processing SQEs.
-I'm not sure if this could help seccomp. An alternative pointed out by Jann
-Horn could be to register restrictions during io_uring_setup(2), but this
-requires some intrusive changes (there is no space in the struct
-io_uring_params to pass a pointer to restriction arrays, maybe we can add a
-flag and add the pointer at the end of the struct io_uring_params).
-
-Another limitation now is that I need to enable every time
-IORING_REGISTER_ENABLE_RINGS in the restrictions to be able to start the rings,
-I'm not sure if we should treat it as an exception.
-
-Maybe registering restrictions during io_uring_setup(2) could solve both issues
-(seccomp integration and IORING_REGISTER_ENABLE_RINGS registration), but I need
-some suggestions to properly extend the io_uring_setup(2).
-
-Comments and suggestions are very welcome.
-
-Thank you in advance,
-Stefano
-
-[1] https://lore.kernel.org/io-uring/20200609142406.upuwpfmgqjeji4lc@steredhat/
-
-Stefano Garzarella (3):
-  io_uring: use an enumeration for io_uring_register(2) opcodes
-  io_uring: add IOURING_REGISTER_RESTRICTIONS opcode
-  io_uring: allow disabling rings during the creation
-
- fs/io_uring.c                 | 152 ++++++++++++++++++++++++++++++++--
- include/uapi/linux/io_uring.h |  56 ++++++++++---
- 2 files changed, 188 insertions(+), 20 deletions(-)
-
+diff --git a/include/uapi/linux/io_uring.h b/include/uapi/linux/io_uring.h
+index 7843742b8b74..efc50bd0af34 100644
+--- a/include/uapi/linux/io_uring.h
++++ b/include/uapi/linux/io_uring.h
+@@ -253,17 +253,22 @@ struct io_uring_params {
+ /*
+  * io_uring_register(2) opcodes and arguments
+  */
+-#define IORING_REGISTER_BUFFERS		0
+-#define IORING_UNREGISTER_BUFFERS	1
+-#define IORING_REGISTER_FILES		2
+-#define IORING_UNREGISTER_FILES		3
+-#define IORING_REGISTER_EVENTFD		4
+-#define IORING_UNREGISTER_EVENTFD	5
+-#define IORING_REGISTER_FILES_UPDATE	6
+-#define IORING_REGISTER_EVENTFD_ASYNC	7
+-#define IORING_REGISTER_PROBE		8
+-#define IORING_REGISTER_PERSONALITY	9
+-#define IORING_UNREGISTER_PERSONALITY	10
++enum {
++	IORING_REGISTER_BUFFERS,
++	IORING_UNREGISTER_BUFFERS,
++	IORING_REGISTER_FILES,
++	IORING_UNREGISTER_FILES,
++	IORING_REGISTER_EVENTFD,
++	IORING_UNREGISTER_EVENTFD,
++	IORING_REGISTER_FILES_UPDATE,
++	IORING_REGISTER_EVENTFD_ASYNC,
++	IORING_REGISTER_PROBE,
++	IORING_REGISTER_PERSONALITY,
++	IORING_UNREGISTER_PERSONALITY,
++
++	/* this goes last */
++	IORING_REGISTER_LAST
++};
+ 
+ struct io_uring_files_update {
+ 	__u32 offset;
 -- 
 2.26.2
 
