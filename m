@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19409-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19410-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 81036229CCA
-	for <lists+kernel-hardening@lfdr.de>; Wed, 22 Jul 2020 18:07:58 +0200 (CEST)
-Received: (qmail 24124 invoked by uid 550); 22 Jul 2020 16:07:51 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 18F3C229CFD
+	for <lists+kernel-hardening@lfdr.de>; Wed, 22 Jul 2020 18:20:18 +0200 (CEST)
+Received: (qmail 28518 invoked by uid 550); 22 Jul 2020 16:20:12 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,54 +13,102 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 24101 invoked from network); 22 Jul 2020 16:07:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1595434059;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bE26wHn/H6+Nxep03XAoDVa8RROZuwKayFCoxg4SHVI=;
-	b=dfLpvKEffSckngJbhAkTPCnt6COrYtqaOCsCLwOndOmWAA68jU0U2srLH7WLH7PXFtzKFB
-	WhV+8RpPe/Z5IOz+H5UJXCXcZq7BXgbKdRYPP5ZyQOWQed7sMfBIZ8DiCqO2H6SpUSjr+x
-	KaYx25+xa/ZnLjy8me5q3uNsksOa1vg=
-X-MC-Unique: ZOruSB_gPSe_y9gfuhk1QQ-1
-Date: Wed, 22 Jul 2020 11:07:30 -0500
-From: Josh Poimboeuf <jpoimboe@redhat.com>
-To: Kees Cook <keescook@chromium.org>
-Cc: Miroslav Benes <mbenes@suse.cz>,
-	Kristen Carlson Accardi <kristen@linux.intel.com>,
-	tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
-	arjan@linux.intel.com, x86@kernel.org, linux-kernel@vger.kernel.org,
-	kernel-hardening@lists.openwall.com, rick.p.edgecombe@intel.com,
-	live-patching@vger.kernel.org
-Subject: Re: [PATCH v4 00/10] Function Granular KASLR
-Message-ID: <20200722160730.cfhcj4eisglnzolr@treble>
-References: <20200717170008.5949-1-kristen@linux.intel.com>
- <alpine.LSU.2.21.2007221122110.10163@pobox.suse.cz>
- <202007220738.72F26D2480@keescook>
+Delivered-To: moderator for kernel-hardening@lists.openwall.com
+Received: (qmail 27955 invoked from network); 22 Jul 2020 16:17:01 -0000
+X-Originating-IP: 90.63.246.187
+Date: Wed, 22 Jul 2020 18:16:39 +0200
+From: Thibaut Sautereau <thibaut.sautereau@clip-os.org>
+To: Kees Cook <keescook@chromium.org>,
+	=?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
+Cc: linux-kernel@vger.kernel.org, Aleksa Sarai <cyphar@cyphar.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Andy Lutomirski <luto@kernel.org>,
+	Christian Brauner <christian.brauner@ubuntu.com>,
+	Christian Heimes <christian@python.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Deven Bowers <deven.desai@linux.microsoft.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Eric Chiang <ericchiang@google.com>,
+	Florian Weimer <fweimer@redhat.com>,
+	James Morris <jmorris@namei.org>, Jan Kara <jack@suse.cz>,
+	Jann Horn <jannh@google.com>, Jonathan Corbet <corbet@lwn.net>,
+	Lakshmi Ramasubramanian <nramas@linux.microsoft.com>,
+	Matthew Garrett <mjg59@google.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Michael Kerrisk <mtk.manpages@gmail.com>,
+	=?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mickael.salaun@ssi.gouv.fr>,
+	Mimi Zohar <zohar@linux.ibm.com>,
+	Philippe =?utf-8?Q?Tr=C3=A9buchet?= <philippe.trebuchet@ssi.gouv.fr>,
+	Scott Shell <scottsh@microsoft.com>,
+	Sean Christopherson <sean.j.christopherson@intel.com>,
+	Shuah Khan <shuah@kernel.org>, Steve Dower <steve.dower@python.org>,
+	Steve Grubb <sgrubb@redhat.com>,
+	Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>,
+	Thibaut Sautereau <thibaut.sautereau@ssi.gouv.fr>,
+	Vincent Strubel <vincent.strubel@ssi.gouv.fr>,
+	kernel-hardening@lists.openwall.com, linux-api@vger.kernel.org,
+	linux-integrity@vger.kernel.org,
+	linux-security-module@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org
+Subject: Re: [PATCH v6 5/7] fs,doc: Enable to enforce noexec mounts or file
+ exec through O_MAYEXEC
+Message-ID: <20200722161639.GA24129@gandi.net>
+References: <20200714181638.45751-1-mic@digikod.net>
+ <20200714181638.45751-6-mic@digikod.net>
+ <202007151312.C28D112013@keescook>
+ <35ea0914-7360-43ab-e381-9614d18cceba@digikod.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <202007220738.72F26D2480@keescook>
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <35ea0914-7360-43ab-e381-9614d18cceba@digikod.net>
 
-On Wed, Jul 22, 2020 at 07:39:55AM -0700, Kees Cook wrote:
-> On Wed, Jul 22, 2020 at 11:27:30AM +0200, Miroslav Benes wrote:
-> > Let me CC live-patching ML, because from a quick glance this is something 
-> > which could impact live patching code. At least it invalidates assumptions 
-> > which "sympos" is based on.
+On Thu, Jul 16, 2020 at 04:39:14PM +0200, Mickaël Salaün wrote:
 > 
-> In a quick skim, it looks like the symbol resolution is using
-> kallsyms_on_each_symbol(), so I think this is safe? What's a good
-> selftest for live-patching?
+> On 15/07/2020 22:37, Kees Cook wrote:
+> > On Tue, Jul 14, 2020 at 08:16:36PM +0200, Mickaël Salaün wrote:
+> >> @@ -2849,7 +2855,7 @@ static int may_open(const struct path *path, int acc_mode, int flag)
+> >>  	case S_IFLNK:
+> >>  		return -ELOOP;
+> >>  	case S_IFDIR:
+> >> -		if (acc_mode & (MAY_WRITE | MAY_EXEC))
+> >> +		if (acc_mode & (MAY_WRITE | MAY_EXEC | MAY_OPENEXEC))
+> >>  			return -EISDIR;
+> >>  		break;
+> > 
+> > (I need to figure out where "open for reading" rejects S_IFDIR, since
+> > it's clearly not here...)
 
-The problem is duplicate symbols.  If there are two static functions
-named 'foo' then livepatch needs a way to distinguish them.
+Doesn't it come from generic_read_dir() in fs/libfs.c?
 
-Our current approach to that problem is "sympos".  We rely on the fact
-that the second foo() always comes after the first one in the symbol
-list and kallsyms.  So they're referred to as foo,1 and foo,2.
+> > 
+> >>  	case S_IFBLK:
+> >> @@ -2859,13 +2865,26 @@ static int may_open(const struct path *path, int acc_mode, int flag)
+> >>  		fallthrough;
+> >>  	case S_IFIFO:
+> >>  	case S_IFSOCK:
+> >> -		if (acc_mode & MAY_EXEC)
+> >> +		if (acc_mode & (MAY_EXEC | MAY_OPENEXEC))
+> >>  			return -EACCES;
+> >>  		flag &= ~O_TRUNC;
+> >>  		break;
+> > 
+> > This will immediately break a system that runs code with MAY_OPENEXEC
+> > set but reads from a block, char, fifo, or socket, even in the case of
+> > a sysadmin leaving the "file" sysctl disabled.
+> 
+> As documented, O_MAYEXEC is for regular files. The only legitimate use
+> case seems to be with pipes, which should probably be allowed when
+> enforcement is disabled.
+
+By the way Kees, while we fix that for the next series, do you think it
+would be relevant, at least for the sake of clarity, to add a
+WARN_ON_ONCE(acc_mode & MAY_OPENEXEC) for the S_IFSOCK case, since a
+socket cannot be open anyway?
 
 -- 
-Josh
-
+Thibaut Sautereau
+CLIP OS developer
