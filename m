@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19423-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19424-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 4FE2522A16F
-	for <lists+kernel-hardening@lfdr.de>; Wed, 22 Jul 2020 23:33:43 +0200 (CEST)
-Received: (qmail 9724 invoked by uid 550); 22 Jul 2020 21:33:37 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 1209422A369
+	for <lists+kernel-hardening@lfdr.de>; Thu, 23 Jul 2020 01:56:53 +0200 (CEST)
+Received: (qmail 19892 invoked by uid 550); 22 Jul 2020 23:56:46 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,99 +13,70 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 9701 invoked from network); 22 Jul 2020 21:33:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1595453605;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=6UgVjjJcVGP42I9xFZ1qZP7ITGojf/KeQGKFYq4eMxc=;
-	b=fPLJYEzqFwnLnkCyB2iR28rvmb490oyQew5VM1Uyg6iujpaJRULFtIUmrAUJZtEtAiE3SS
-	H49AJo8QWoSiwDWbFdszwdRNOIgU46WNABfj0YE3Zc2mDfEDOVjSl9dFq8XBWiGiEyrTES
-	GAVsC3KWFXkQnnHp1sASD9MDWO2ncbs=
-X-MC-Unique: 2z4NQGofNKiv8rFqmw4fnw-1
-Date: Wed, 22 Jul 2020 16:33:13 -0500
-From: Josh Poimboeuf <jpoimboe@redhat.com>
-To: Kristen Carlson Accardi <kristen@linux.intel.com>
-Cc: Kees Cook <keescook@chromium.org>, Miroslav Benes <mbenes@suse.cz>,
-	tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
-	arjan@linux.intel.com, x86@kernel.org, linux-kernel@vger.kernel.org,
-	kernel-hardening@lists.openwall.com, rick.p.edgecombe@intel.com,
-	live-patching@vger.kernel.org
-Subject: Re: [PATCH v4 00/10] Function Granular KASLR
-Message-ID: <20200722213313.aetl3h5rkub6ktmw@treble>
-References: <20200717170008.5949-1-kristen@linux.intel.com>
- <alpine.LSU.2.21.2007221122110.10163@pobox.suse.cz>
- <202007220738.72F26D2480@keescook>
- <20200722160730.cfhcj4eisglnzolr@treble>
- <202007221241.EBC2215A@keescook>
- <301c7fb7d22ad6ef97856b421873e32c2239d412.camel@linux.intel.com>
+Received: (qmail 19867 invoked from network); 22 Jul 2020 23:56:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=merlin.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=+o+RK6ajhbuXa8t53WrOJ/qO/QqSI4MSwqISfWHz0Bo=; b=AOTr95qzy3NNS7ydya0oEhrj0x
+	IXsE0BLHInLxK7LMENdQilIfh2cpaGkvHT95pCgdQwNllmzwOLo3+ojeCbEeS4ONogdi/FdZvcsKA
+	vAAlb2nO3vfaHmXrCG9JS/bvR5nFxAh//2dmSV204vs1qw1GWAabgr/uWXOtCYgSy/mF0P8ZAPH1a
+	0M834X7yscfS6C56SWvXovBm3e9oXECz2XoS4GyQhiQw3PA9SiSIXRP8eb+3AJdmfYbzvrwZxEpS7
+	UoeZWuAa/x/uCWzeKIKFz1PRB4jr7Bgi4tjCA67T2axhMjY8cp+HgOR0/H1DXp/uKqGGDB/OHYF0s
+	5GlHzNUw==;
+Date: Thu, 23 Jul 2020 01:56:20 +0200
+From: Peter Zijlstra <peterz@infradead.org>
+To: Steven Rostedt <rostedt@goodmis.org>
+Cc: Sami Tolvanen <samitolvanen@google.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	clang-built-linux@googlegroups.com,
+	kernel-hardening@lists.openwall.com, linux-arch@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	x86@kernel.org, Josh Poimboeuf <jpoimboe@redhat.com>
+Subject: Re: [RFC][PATCH] objtool,x86_64: Replace recordmcount with objtool
+Message-ID: <20200722235620.GR10769@hirez.programming.kicks-ass.net>
+References: <20200624212737.GV4817@hirez.programming.kicks-ass.net>
+ <20200624214530.GA120457@google.com>
+ <20200625074530.GW4817@hirez.programming.kicks-ass.net>
+ <20200625161503.GB173089@google.com>
+ <20200625200235.GQ4781@hirez.programming.kicks-ass.net>
+ <20200625224042.GA169781@google.com>
+ <20200626112931.GF4817@hirez.programming.kicks-ass.net>
+ <20200722135542.41127cc4@oasis.local.home>
+ <20200722184137.GP10769@hirez.programming.kicks-ass.net>
+ <20200722150943.53046592@oasis.local.home>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <301c7fb7d22ad6ef97856b421873e32c2239d412.camel@linux.intel.com>
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
+In-Reply-To: <20200722150943.53046592@oasis.local.home>
 
-On Wed, Jul 22, 2020 at 12:56:10PM -0700, Kristen Carlson Accardi wrote:
-> On Wed, 2020-07-22 at 12:42 -0700, Kees Cook wrote:
-> > On Wed, Jul 22, 2020 at 11:07:30AM -0500, Josh Poimboeuf wrote:
-> > > On Wed, Jul 22, 2020 at 07:39:55AM -0700, Kees Cook wrote:
-> > > > On Wed, Jul 22, 2020 at 11:27:30AM +0200, Miroslav Benes wrote:
-> > > > > Let me CC live-patching ML, because from a quick glance this is
-> > > > > something 
-> > > > > which could impact live patching code. At least it invalidates
-> > > > > assumptions 
-> > > > > which "sympos" is based on.
-> > > > 
-> > > > In a quick skim, it looks like the symbol resolution is using
-> > > > kallsyms_on_each_symbol(), so I think this is safe? What's a good
-> > > > selftest for live-patching?
-> > > 
-> > > The problem is duplicate symbols.  If there are two static
-> > > functions
-> > > named 'foo' then livepatch needs a way to distinguish them.
-> > > 
-> > > Our current approach to that problem is "sympos".  We rely on the
-> > > fact
-> > > that the second foo() always comes after the first one in the
-> > > symbol
-> > > list and kallsyms.  So they're referred to as foo,1 and foo,2.
-> > 
-> > Ah. Fun. In that case, perhaps the LTO series has some solutions. I
-> > think builds with LTO end up renaming duplicate symbols like that, so
-> > it'll be back to being unique.
-> > 
+On Wed, Jul 22, 2020 at 03:09:43PM -0400, Steven Rostedt wrote:
+> On Wed, 22 Jul 2020 20:41:37 +0200
+> Peter Zijlstra <peterz@infradead.org> wrote:
 > 
-> Well, glad to hear there might be some precendence for how to solve
-> this, as I wasn't able to think of something reasonable off the top of
-> my head. Are you speaking of the Clang LTO series? 
-> https://lore.kernel.org/lkml/20200624203200.78870-1-samitolvanen@google.com/
+> > > That said, Andi Kleen added an option to gcc called -mnop-mcount which
+> > > will have gcc do both create the mcount section and convert the calls
+> > > into nops. When doing so, it defines CC_USING_NOP_MCOUNT which will
+> > > tell ftrace to expect the calls to already be converted.  
+> > 
+> > That seems like the much easier solution, then we can forget about
+> > recordmcount / objtool entirely for this.
+> 
+> Of course that was only for some gcc compilers, and I'm not sure if
+> clang can do this.
+> 
+> Or do you just see all compilers doing this in the future, and not
+> worrying about record-mcount at all, and bothering with objtool?
 
-I'm not sure how LTO does it, but a few more (half-brained) ideas that
-could work:
+I got the GCC version wrong :/ Both -mnop-mcount and -mrecord-mcount
+landed in GCC-5, where our minimum GCC is now at 4.9.
 
-1) Add a field in kallsyms to keep track of a symbol's original offset
-   before randomization/re-sorting.  Livepatch could use that field to
-   determine the original sympos.
-
-2) In fgkaslr code, go through all the sections and mark the ones which
-   have duplicates (i.e. same name).  Then when shuffling the sections,
-   skip a shuffle if it involves a duplicate section.  That way all the
-   duplicates would retain their original sympos.
-
-3) Livepatch could uniquely identify symbols by some feature other than
-   sympos.  For example:
-
-   Symbol/function size - obviously this would only work if duplicately
-   named symbols have different sizes.
-
-   Checksum - as part of a separate feature we're also looking at giving
-   each function its own checksum, calculated based on its instruction
-   opcodes.  Though calculating checksums at runtime could be
-   complicated by IP-relative addressing.
-
-I'm thinking #1 or #2 wouldn't be too bad.  #3 might be harder.
-
--- 
-Josh
-
+Anyway, what do you prefer, I suppose I can make objtool whatever we
+need, that patch is trivial. Simply recording the sites and not
+rewriting them should be simple enough.
