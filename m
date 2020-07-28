@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19482-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19483-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 18370231103
-	for <lists+kernel-hardening@lfdr.de>; Tue, 28 Jul 2020 19:40:19 +0200 (CEST)
-Received: (qmail 24411 invoked by uid 550); 28 Jul 2020 17:40:13 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 259E3231203
+	for <lists+kernel-hardening@lfdr.de>; Tue, 28 Jul 2020 20:52:23 +0200 (CEST)
+Received: (qmail 16035 invoked by uid 550); 28 Jul 2020 18:52:16 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,15 +13,15 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 24385 invoked from network); 28 Jul 2020 17:40:12 -0000
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com EFB9B20B4908
+Received: (qmail 16015 invoked from network); 28 Jul 2020 18:52:15 -0000
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D9CA720B4908
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1595958000;
-	bh=OWWDkY3sg+0Hy6NDKMgflfpDtA2CgO3csqL7Uid/wVU=;
+	s=default; t=1595962323;
+	bh=4VqGIlTMQb0KmRbW1ECdJsuWGdo+ykQfeo4qSABGj8g=;
 	h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-	b=BD8peru37WXTYWBqj5OMIGNR9eoysAlugyqLDVTBV7w4kOP+8hTAhlmNbuHLu2zxq
-	 BAe3qmozLc1x5RhrrRLkdkoFmsJNoPrTf/LsfjmUXd6yl0jYTkjwlmSijRnjte7hxb
-	 h/uMH3jra/wLEJewhLEScRvmJf8hFnDjqSPBMM4c=
+	b=N5ASgrJbpo8ewcnejqNlOMHW1LlvWw6Pa2UCzET1NHRPpRnwTSki0Dk44+lBNhwyc
+	 0Oczcbp+TB0JMzyxyK22fLDJcHQra90UOmtWziVf9oqC+T8MJc1Dn+vnJuvj0FVugv
+	 h+6UG1h/10vIpOjMBqWpPTkZqsk7ZujJKLdE1AKo=
 Subject: Re: [PATCH v1 0/4] [RFC] Implement Trampoline File Descriptor
 To: Andy Lutomirski <luto@kernel.org>
 Cc: David Laight <David.Laight@aculab.com>,
@@ -40,20 +40,15 @@ References: <20200728131050.24443-1-madvenka@linux.microsoft.com>
  <f5cfd11b-04fe-9db7-9d67-7ee898636edb@linux.microsoft.com>
  <CALCETrUta5-0TLJ9-jfdehpTAp2Efmukk2npYadFzz9ozOrG2w@mail.gmail.com>
 From: "Madhavan T. Venkataraman" <madvenka@linux.microsoft.com>
-Message-ID: <81d744c0-923e-35ad-6063-8b186f6a153c@linux.microsoft.com>
-Date: Tue, 28 Jul 2020 12:39:59 -0500
+Message-ID: <59246260-e535-a9f1-d89e-4e953288b977@linux.microsoft.com>
+Date: Tue, 28 Jul 2020 13:52:01 -0500
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.10.0
 MIME-Version: 1.0
 In-Reply-To: <CALCETrUta5-0TLJ9-jfdehpTAp2Efmukk2npYadFzz9ozOrG2w@mail.gmail.com>
-Content-Type: multipart/alternative;
- boundary="------------AD9A0AC3BF44AC5296C62689"
-Content-Language: en-US
-
-This is a multi-part message in MIME format.
---------------AD9A0AC3BF44AC5296C62689
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 
 
 
@@ -83,175 +78,33 @@ On 7/28/20 12:16 PM, Andy Lutomirski wrote:
 > What did you test this on?  A page fault on any modern x86_64 system
 > is much, much, much, much slower than a syscall.
 
-I tested it in on a KVM guest running Ubuntu. So, when you say
-that a page fault is much slower, do you mean a regular page
-fault that is handled through the VM layer? Here is the relevant code
-in do_user_addr_fault():
+I sent a response to this. But the mail was returned to me.
+I am resending.
 
-            if (unlikely(access_error(hw_error_code, vma))) {
-                    /*
-                     * If it is a user execute fault, it could be a trampoline
-                     * invocation.
-                     */
-                    if ((hw_error_code & tflags) == tflags &&
-                        trampfd_fault(vma, regs)) {
-                            up_read(&mm->mmap_sem);
-                            return;
-                    }
-                    bad_area_access_error(regs, hw_error_code, address, vma);
-                    return;
-            }
+I tested it in on a KVM guest running Ubuntu. So, when you say that a
+page fault is much slower, do you mean a regular page fault that is handled
+through the VM layer? Here is the relevant code in do_user_addr_fault():
 
-            /*
-             * If for any reason at all we couldn't handle the fault,
-             * make sure we exit gracefully rather than endlessly redo
-             * the fault.  Since we never set FAULT_FLAG_RETRY_NOWAIT, if
-             * we get VM_FAULT_RETRY back, the mmap_sem has been unlocked.
-             *
-             * Note that handle_userfault() may also release and reacquire mmap_sem
-             * (and not return with VM_FAULT_RETRY), when returning to userland to
-             * repeat the page fault later with a VM_FAULT_NOPAGE retval
-             * (potentially after handling any pending signal during the return to
-             * userland). The return to userland is identified whenever
-             * FAULT_FLAG_USER|FAULT_FLAG_KILLABLE are both set in flags.
-             */
-            fault = handle_mm_fault(vma, address, flags);
+        if (unlikely(access_error(hw_error_code, vma))) {
+                /*                 
+                 * If it is a user execute fault, it could be a trampoline
+                 * invocation.
+                 */
+                if ((hw_error_code & tflags) == tflags &&
+                     trampfd_fault(vma, regs)) {
+                         up_read(&mm->mmap_sem);
+                         return;
+                 }
+                 bad_area_access_error(regs, hw_error_code, address, vma);
+                 return;
+         }
+         ...
+         fault = handle_mm_fault(vma, address, flags);
 
-trampfd faults are instruction faults that go through a different code
-path than the one that calls handle_mm_fault().
-
-Could you clarify?
+trampfd faults are instruction faults that go through a different code path than
+the one that calls handle_mm_fault(). Perhaps, it is the handle_mm_fault() that
+is time consuming. Could you clarify?
 
 Thanks.
 
 Madhavan
-
-
---------------AD9A0AC3BF44AC5296C62689
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <br>
-    <br>
-    <div class="moz-cite-prefix">On 7/28/20 12:16 PM, Andy Lutomirski
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-cite="mid:CALCETrUta5-0TLJ9-jfdehpTAp2Efmukk2npYadFzz9ozOrG2w@mail.gmail.com">
-      <pre class="moz-quote-pre" wrap="">On Tue, Jul 28, 2020 at 9:32 AM Madhavan T. Venkataraman
-<a class="moz-txt-link-rfc2396E" href="mailto:madvenka@linux.microsoft.com">&lt;madvenka@linux.microsoft.com&gt;</a> wrote:
-</pre>
-      <blockquote type="cite">
-        <pre class="moz-quote-pre" wrap="">
-Thanks. See inline..
-
-On 7/28/20 10:13 AM, David Laight wrote:
-</pre>
-        <blockquote type="cite">
-          <pre class="moz-quote-pre" wrap="">From:  <a class="moz-txt-link-abbreviated" href="mailto:madvenka@linux.microsoft.com">madvenka@linux.microsoft.com</a>
-</pre>
-          <blockquote type="cite">
-            <pre class="moz-quote-pre" wrap="">Sent: 28 July 2020 14:11
-</pre>
-          </blockquote>
-          <pre class="moz-quote-pre" wrap="">...
-</pre>
-          <blockquote type="cite">
-            <pre class="moz-quote-pre" wrap="">The kernel creates the trampoline mapping without any permissions. When
-the trampoline is executed by user code, a page fault happens and the
-kernel gets control. The kernel recognizes that this is a trampoline
-invocation. It sets up the user registers based on the specified
-register context, and/or pushes values on the user stack based on the
-specified stack context, and sets the user PC to the requested target
-PC. When the kernel returns, execution continues at the target PC.
-So, the kernel does the work of the trampoline on behalf of the
-application.
-</pre>
-          </blockquote>
-          <pre class="moz-quote-pre" wrap="">Isn't the performance of this going to be horrid?
-</pre>
-        </blockquote>
-        <pre class="moz-quote-pre" wrap="">
-It takes about the same amount of time as getpid(). So, it is
-one quick trip into the kernel. I expect that applications will
-typically not care about this extra overhead as long as
-they are able to run.
-</pre>
-      </blockquote>
-      <pre class="moz-quote-pre" wrap="">
-What did you test this on?  A page fault on any modern x86_64 system
-is much, much, much, much slower than a syscall.</pre>
-    </blockquote>
-    <br>
-    I tested it in on a KVM guest running Ubuntu. So, when you say<br>
-    that a page fault is much slower, do you mean a regular page<br>
-    fault that is handled through the VM layer? Here is the relevant
-    code<br>
-    in do_user_addr_fault():<br>
-    <br>
-    <blockquote> <font size="-1">       if
-        (unlikely(access_error(hw_error_code, vma))) {</font><br>
-      <font size="-1">                /*</font><br>
-      <font size="-1">                 * If it is a user execute fault,
-        it could be a trampoline</font><br>
-      <font size="-1">                 * invocation.</font><br>
-      <font size="-1">                 */</font><br>
-      <font size="-1">                if ((hw_error_code &amp; tflags)
-        == tflags &amp;&amp;</font><br>
-      <font size="-1">                    trampfd_fault(vma, regs)) {</font><br>
-      <font size="-1">                       
-        up_read(&amp;mm-&gt;mmap_sem);</font><br>
-      <font size="-1">                        return;</font><br>
-      <font size="-1">                }</font><br>
-      <font size="-1">                bad_area_access_error(regs,
-        hw_error_code, address, vma);</font><br>
-      <font size="-1">                return;</font><br>
-      <font size="-1">        }</font><br>
-      <br>
-      <font size="-1">        /*</font><br>
-      <font size="-1">         * If for any reason at all we couldn't
-        handle the fault,</font><br>
-      <font size="-1">         * make sure we exit gracefully rather
-        than endlessly redo</font><br>
-      <font size="-1">         * the fault.  Since we never set
-        FAULT_FLAG_RETRY_NOWAIT, if</font><br>
-      <font size="-1">         * we get VM_FAULT_RETRY back, the
-        mmap_sem has been unlocked.</font><br>
-      <font size="-1">         *</font><br>
-      <font size="-1">         * Note that handle_userfault() may also
-        release and reacquire mmap_sem</font><br>
-      <font size="-1">         * (and not return with VM_FAULT_RETRY),
-        when returning to userland to</font><br>
-      <font size="-1">         * repeat the page fault later with a
-        VM_FAULT_NOPAGE retval</font><br>
-      <font size="-1">         * (potentially after handling any pending
-        signal during the return to</font><br>
-      <font size="-1">         * userland). The return to userland is
-        identified whenever</font><br>
-      <font size="-1">         * FAULT_FLAG_USER|FAULT_FLAG_KILLABLE are
-        both set in flags.</font><br>
-      <font size="-1">         */</font><br>
-      <font size="-1">        fault = handle_mm_fault(vma, address,
-        flags);</font><br>
-    </blockquote>
-    trampfd faults are instruction faults that go through a different
-    code<br>
-    path than the one that calls handle_mm_fault().<br>
-    <br>
-    Could you clarify?<br>
-    <br>
-    Thanks.<br>
-    <br>
-    Madhavan
-    <blockquote type="cite"
-cite="mid:CALCETrUta5-0TLJ9-jfdehpTAp2Efmukk2npYadFzz9ozOrG2w@mail.gmail.com"></blockquote>
-    <br>
-  </body>
-</html>
-
---------------AD9A0AC3BF44AC5296C62689--
