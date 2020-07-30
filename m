@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19501-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19502-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id BA20C2337AB
-	for <lists+kernel-hardening@lfdr.de>; Thu, 30 Jul 2020 19:28:44 +0200 (CEST)
-Received: (qmail 1364 invoked by uid 550); 30 Jul 2020 17:25:44 -0000
+	by mail.lfdr.de (Postfix) with SMTP id D764923383B
+	for <lists+kernel-hardening@lfdr.de>; Thu, 30 Jul 2020 20:15:12 +0200 (CEST)
+Received: (qmail 11813 invoked by uid 550); 30 Jul 2020 18:15:05 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,105 +13,90 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 24287 invoked from network); 30 Jul 2020 17:14:58 -0000
+Received: (qmail 11778 invoked from network); 30 Jul 2020 18:15:05 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SBf5My5eZ9Wekb7IVsuPtVhYipAan0zbC8RnkLTkJqI=;
-        b=hGWbqQEimRseVKiLJ2aLyaeEBNSRa/i3JJph8QSJU0RFkeWBCFppFMJ1SnZ6BKMl3n
-         2z67hfVY9sWZ0X92G4+oGBaOnDgLGnu7ruxFA3XwU5VtkftpiqIU0T0Scwn2F1PnTQd+
-         sabtmjKSe6hEYW802JfSHRidGBj//9+FYx6cELY//aI739x5c2XnzHytWX5mwfI278bO
-         RZXfVPuJno+gzfuo7/5Tpl5WRZJYqJs7Ol54cLwfcp6Usx52b2E4hL2gdv7mKTZtbh5l
-         Fkuj9KtTCpJeZQJVeaVF0YjEVPIDBJSVkKkEI5pYdO/kVmMqL1KgU+UJOoF7cUGrlJ1G
-         b/Gw==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=R3XH19x0j9mpAwBbmALhrl+K1g6ws6AmAQc8yDsKxwc=;
+        b=Rd+sngN9fVYhzl82nqy0DTTR682+o7qxhCC/+ghYliHvyO1hzJDTm0Q4K9N2e2sjvd
+         N6jmVrVP1K+zH7o8lQSP7igJY1O84vbHMVMFz6s9vC7DFwyG9aRzqW/9TFWhy9bGwJDD
+         8rWbAMt/fh9RSp/q+tWRyrXHkaKeB34igvVHo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SBf5My5eZ9Wekb7IVsuPtVhYipAan0zbC8RnkLTkJqI=;
-        b=P9B+rpwsBR1MaEMMxaVgV/bib/UJO3/99fA/Q0DJCwuWhPz+B2qDhHZBZ1HanNEax8
-         nrhppSDJvDsGKpupzRFVLd/4UPuV057qzefm12Ita2NtWOzTg1fFv5yjosZWCIcYHHHF
-         MoKvPymiZSv7zZCVPHmvbocHqYiFAgEY1/iHYbzD6NWQUnKQ+06JXEE5Cr9zWjh7Q9cs
-         r9rSaF1EvzJQtW0AGBK7CByMuic904zv+7Ym3xy4PpODY4ZakS0j81Ku+s9NErWeOeGx
-         zvd3RkM1gnYuo0C/9OSZnTUuwlouzr8pt7L96mhSrnc0ZHmOOtBq346to07qhG61ej3W
-         lNaQ==
-X-Gm-Message-State: AOAM532SLaWEkM4x8HERFVKa5UH81Jvwqhf9nCamnHPwvzlHV+qXy0cJ
-	X2NNQJefgdpUzkTEgllxSccSoCJtSj6V1w48O6o=
-X-Google-Smtp-Source: ABdhPJzBS/IU12Q2YLBhyoz+6vJfUVaXcX4FrEtco80BQRcU0QzLZowxG3h7R3bmgOXFDeycWurJBTy2GY7RgpuGUiE=
-X-Received: by 2002:a92:874a:: with SMTP id d10mr40497264ilm.273.1596129286567;
- Thu, 30 Jul 2020 10:14:46 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=R3XH19x0j9mpAwBbmALhrl+K1g6ws6AmAQc8yDsKxwc=;
+        b=rSyGpZvI3/yhnPjklH2eBeJc2oeO7f1J1pF6FZIbn3DjwHZVDvbDw9/Br1o7FgkgC7
+         KzEYTAme7Npsj4R0Krr9kS5GWv3RRbK92lgUS2fVJct6tinsoypiAnYdFkaHJeXQoCr3
+         1ag0L4Z04loxHyZW732gNq/nao8CkZ+uNzQME5cEFT+TQOCJz74ovUWAKyCK6xSzDI5w
+         tHFv8s0i8G+Ah7XdL9n5mDUgQ5BQm+1tRiXcATREjNDTSEoDM8X1jXvkqk5nQWo560o2
+         o+QOWPrwYjqQip89417SS9NOlwmEAdFQqskWt+ovSOqReFmDDcUmP4sRlQI8yid07jtx
+         8ayw==
+X-Gm-Message-State: AOAM533vkSx9kS0sO23vmlfYpBtafL22l6OOSz/S0BhnYU3j9yn45C/V
+	CNmC55O8jSGadNsTwOe0Msrj4g==
+X-Google-Smtp-Source: ABdhPJxh4YSRJo64KtvfOflwHcynTg8W1GmMjR98OKYM43hau9SWD31eOcjpDevGju3jfuntinpu7g==
+X-Received: by 2002:a17:90a:884:: with SMTP id v4mr318901pjc.27.1596132893170;
+        Thu, 30 Jul 2020 11:14:53 -0700 (PDT)
+Date: Thu, 30 Jul 2020 11:14:50 -0700
+From: Kees Cook <keescook@chromium.org>
+To: Thomas Gleixner <tglx@linutronix.de>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Allen Pais <allen.lkml@gmail.com>,
+	Oscar Carter <oscar.carter@gmx.com>,
+	Romain Perier <romain.perier@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Will Deacon <will@kernel.org>, linux-input@vger.kernel.org,
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+	linux-s390@vger.kernel.org, devel@driverdev.osuosl.org,
+	linux-usb@vger.kernel.org, kgdb-bugreport@lists.sourceforge.net,
+	alsa-devel@alsa-project.org, kernel-hardening@lists.openwall.com
+Subject: Re: [PATCH 0/3] Modernize tasklet callback API
+Message-ID: <202007301113.45D24C9D@keescook>
+References: <20200716030847.1564131-1-keescook@chromium.org>
+ <87h7tpa3hg.fsf@nanos.tec.linutronix.de>
 MIME-Version: 1.0
-References: <87k0ylgff0.fsf@oldenburg2.str.redhat.com> <CAG48ez3OF7DPupKv9mBBKmg-9hDVhVe83KrJ4Jk=CL0nOc7=Jg@mail.gmail.com>
- <87h7tpeyed.fsf@oldenburg2.str.redhat.com>
-In-Reply-To: <87h7tpeyed.fsf@oldenburg2.str.redhat.com>
-From: "H.J. Lu" <hjl.tools@gmail.com>
-Date: Thu, 30 Jul 2020 10:14:10 -0700
-Message-ID: <CAMe9rOqnPJMC+d9cRTc-zHaj7Pp5JvW-Zfqxhy3M3P6zG_CE0A@mail.gmail.com>
-Subject: Re: Alternative CET ABI
-To: Florian Weimer <fweimer@redhat.com>
-Cc: Jann Horn <jannh@google.com>, oss-security@lists.openwall.com, 
-	x86-64-abi <x86-64-abi@googlegroups.com>, 
-	Kernel Hardening <kernel-hardening@lists.openwall.com>, Szabolcs Nagy <szabolcs.nagy@arm.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87h7tpa3hg.fsf@nanos.tec.linutronix.de>
 
-On Thu, Jul 30, 2020 at 9:54 AM Florian Weimer <fweimer@redhat.com> wrote:
->
-> * Jann Horn:
->
-> > On Thu, Jul 30, 2020 at 6:02 PM Florian Weimer <fweimer@redhat.com> wrote:
-> >> Functions no longer start with the ENDBR64 prefix.  Instead, the link
-> >> editor produces a PLT entry with an ENDBR64 prefix if it detects any
-> >> address-significant relocation for it.  The PLT entry performs a NOTRACK
-> >> jump to the target address.  This assumes that the target address is
-> >> subject to RELRO, of course, so that redirection is not possible.
-> >> Without address-significant relocations, the link editor produces a PLT
-> >> entry without the ENDBR64 prefix (but still with the NOTRACK jump), or
-> >> perhaps no PLT entry at all.
+[heavily trimmed CC list because I think lkml is ignoring this
+thread...]
+
+On Thu, Jul 30, 2020 at 09:03:55AM +0200, Thomas Gleixner wrote:
+> Kees,
+> 
+> Kees Cook <keescook@chromium.org> writes:
+> > This is the infrastructure changes to prepare the tasklet API for
+> > conversion to passing the tasklet struct as the callback argument instead
+> > of an arbitrary unsigned long. The first patch details why this is useful
+> > (it's the same rationale as the timer_struct changes from a bit ago:
+> > less abuse during memory corruption attacks, more in line with existing
+> > ways of doing things in the kernel, save a little space in struct,
+> > etc). Notably, the existing tasklet API use is much less messy, so there
+> > is less to clean up.
 > >
-> > How would this interact with function pointer comparisons? As in, if
-> > library A exports a function func1 without referencing it, and
-> > libraries B and C both take references to func1, would they end up
-> > with different function pointers (pointing to their respective PLT
-> > entries)?
->
-> Same as today.  ELF already deals with this by picking one canonical
-> function address per process.
->
-> Some targets already need PLTs for inter-DSO calls, so the problem is
-> not new.  It happens even on x86 because the main program can refer to
-> its PLT stubs without run-time relocations, so those determine the
-> canonical address of those functions, and not the actual implementation
-> in a shared object.
->
-> > Would this mean that the behavior of a program that compares
-> > function pointers obtained through different shared libraries might
-> > change?
->
-> Hopefully not, because that would break things quite horribly (as it's
-> sometimes possible to observe if the RTLD_DEEPBIND flag is used).
->
-> Both the canonicalization and the fact in order to observe the function
-> pointer, you need to take its address should take care of this.
->
-> > I guess you could maybe canonicalize function pointers somehow, but
-> > that'd probably at least break dlclose(), right?
->
-> Ahh, dlclose.  I think in this case, my idea to generate a PLT stub
-> locally in the address-generating DSO will not work because the
-> canonical address must survive dlclose if it refers to another DSO.
-> There are two ways to deal with this: do not unload the PLT stub until
-> the target DSO is also unloaded (but make sure that the DSO can be
-> reloaded at a different address; probably not worth the complexity),
-> or use the dlsym hack I sketched for regular symbol binding as well.
-> Even more room for experiments, I guess.
->
-> Thanks,
-> Florian
+> > It's not clear to me which tree this should go through... Greg since it
+> > starts with a USB clean-up, -tip for timer or interrupt, or if I should
+> > just carry it. I'm open to suggestions, but if I don't hear otherwise,
+> > I'll just carry it.
+> >
+> > My goal is to have this merged for v5.9-rc1 so that during the v5.10
+> > development cycle the new API will be available. The entire tree of
+> > changes is here[1] currently, but to split it up by maintainer the
+> > infrastructure changes need to be landed first.
+> >
+> > Review and Acks appreciated! :)
+> 
+> I'd rather see tasklets vanish from the planet completely, but that's
+> going to be a daring feat. So, grudgingly:
 
-FWIW, we can introduce a different CET PLT as long as it is compatible
-with the past, current and future binaries.
+Understood! I will update the comments near the tasklet API.
+
+> Acked-by: Thomas Gleixner <tglx@linutronix.de>
+
+Thanks!
 
 -- 
-H.J.
+Kees Cook
