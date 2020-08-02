@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19512-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19513-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id F2A5A235748
-	for <lists+kernel-hardening@lfdr.de>; Sun,  2 Aug 2020 15:58:00 +0200 (CEST)
-Received: (qmail 22077 invoked by uid 550); 2 Aug 2020 13:57:54 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 80F39235A0E
+	for <lists+kernel-hardening@lfdr.de>; Sun,  2 Aug 2020 20:54:56 +0200 (CEST)
+Received: (qmail 1250 invoked by uid 550); 2 Aug 2020 18:54:50 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,47 +13,168 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 22057 invoked from network); 2 Aug 2020 13:57:54 -0000
-From: Florian Weimer <fw@deneb.enyo.de>
-To: "Madhavan T. Venkataraman" <madvenka@linux.microsoft.com>
-Cc: Andy Lutomirski <luto@kernel.org>,  Kernel Hardening <kernel-hardening@lists.openwall.com>,  Linux API <linux-api@vger.kernel.org>,  linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,  Linux FS Devel <linux-fsdevel@vger.kernel.org>,  linux-integrity <linux-integrity@vger.kernel.org>,  LKML <linux-kernel@vger.kernel.org>,  LSM List <linux-security-module@vger.kernel.org>,  Oleg Nesterov <oleg@redhat.com>,  X86 ML <x86@kernel.org>
+Received: (qmail 1227 invoked from network); 2 Aug 2020 18:54:49 -0000
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8B20620B4908
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1596394477;
+	bh=Bi0Avm087nVKLtlYIbtSWKURIDHCpmDKtLVQ5vuWflc=;
+	h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+	b=fHpnzFOJOlzwXKwSY8zPf6k+L+PvjjAKdLTYmh86GcRZ1GlLSdgkG9g2/aH5jJhcq
+	 rLnj76Yu6QdnUO6KTpkXFwOCQ9jicshEkSNSDxcUKT9TPhmvEepbEQ05Wq5VephZTP
+	 PadVn+hOSExc6VqPzwe7hlZHes7rqpGKqv+UP3nE=
 Subject: Re: [PATCH v1 0/4] [RFC] Implement Trampoline File Descriptor
+To: Andy Lutomirski <luto@kernel.org>
+Cc: Kernel Hardening <kernel-hardening@lists.openwall.com>,
+ Linux API <linux-api@vger.kernel.org>,
+ linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+ Linux FS Devel <linux-fsdevel@vger.kernel.org>,
+ linux-integrity <linux-integrity@vger.kernel.org>,
+ LKML <linux-kernel@vger.kernel.org>,
+ LSM List <linux-security-module@vger.kernel.org>,
+ Oleg Nesterov <oleg@redhat.com>, X86 ML <x86@kernel.org>
 References: <20200728131050.24443-1-madvenka@linux.microsoft.com>
-	<CALCETrVy5OMuUx04-wWk9FJbSxkrT2vMfN_kANinudrDwC4Cig@mail.gmail.com>
-	<6540b4b7-3f70-adbf-c922-43886599713a@linux.microsoft.com>
-	<CALCETrWnNR5v3ZCLfBVQGYK8M0jAvQMaAc9uuO05kfZuh-4d6w@mail.gmail.com>
-	<46a1adef-65f0-bd5e-0b17-54856fb7e7ee@linux.microsoft.com>
-Date: Sun, 02 Aug 2020 15:57:35 +0200
-In-Reply-To: <46a1adef-65f0-bd5e-0b17-54856fb7e7ee@linux.microsoft.com>
-	(Madhavan T. Venkataraman's message of "Fri, 31 Jul 2020 12:13:49
-	-0500")
-Message-ID: <87o8nttak0.fsf@mid.deneb.enyo.de>
+ <CALCETrVy5OMuUx04-wWk9FJbSxkrT2vMfN_kANinudrDwC4Cig@mail.gmail.com>
+From: "Madhavan T. Venkataraman" <madvenka@linux.microsoft.com>
+Message-ID: <3b916198-3a98-bd19-9a1c-f2d8d44febe8@linux.microsoft.com>
+Date: Sun, 2 Aug 2020 13:54:35 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <CALCETrVy5OMuUx04-wWk9FJbSxkrT2vMfN_kANinudrDwC4Cig@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 
-* Madhavan T. Venkataraman:
+More responses inline..
 
-> Standardization
-> ---------------------
+On 7/28/20 12:31 PM, Andy Lutomirski wrote:
+>> On Jul 28, 2020, at 6:11 AM, madvenka@linux.microsoft.com wrote:
+>>
+>> ﻿From: "Madhavan T. Venkataraman" <madvenka@linux.microsoft.com>
+>>
 >
-> Trampfd is a framework that can be used to implement multiple
-> things. May be, a few of those things can also be implemented in
-> user land itself. But I think having just one mechanism to execute
-> dynamic code objects is preferable to having multiple mechanisms not
-> standardized across all applications.
+> 2. Use existing kernel functionality.  Raise a signal, modify the
+> state, and return from the signal.  This is very flexible and may not
+> be all that much slower than trampfd.
+
+Let me understand this. You are saying that the trampoline code
+would raise a signal and, in the signal handler, set up the context
+so that when the signal handler returns, we end up in the target
+function with the context correctly set up. And, this trampoline code
+can be generated statically at build time so that there are no
+security issues using it.
+
+Have I understood your suggestion correctly?
+
+So, my argument would be that this would always incur the overhead
+of a trip to the kernel. I think twice the overhead if I am not mistaken.
+With trampfd, we can have the kernel generate the code so that there
+is no performance penalty at all.
+
+Signals have many problems. Which signal number should we use for this
+purpose? If we use an existing one, that might conflict with what the application
+is already handling. Getting a new signal number for this could meet
+with resistance from the community.
+
+Also, signals are asynchronous. So, they are vulnerable to race conditions.
+To prevent other signals from coming in while handling the raised signal,
+we would need to block and unblock signals. This will cause more
+overhead.
+
+> 3. Use a syscall.  Instead of having the kernel handle page faults,
+> have the trampoline code push the syscall nr register, load a special
+> new syscall nr into the syscall nr register, and do a syscall. On
+> x86_64, this would be:
 >
-> As an example, let us say that I am able to implement support for
-> JIT code. Let us say that an interpreter uses libffi to execute a
-> generated function. The interpreter would use trampfd for the JIT
-> code object and get an address. Then, it would pass that to libffi
-> which would then use trampfd for the trampoline. So, trampfd based
-> code objects can be chained.
+> pushq %rax
+> movq __NR_magic_trampoline, %rax
+> syscall
+>
+> with some adjustment if the stack slot you're clobbering is important.
 
-There is certainly value in coordination.  For example, it would be
-nice if unwinders could recognize the trampolines during all phases
-and unwind correctly through them (including when interrupted by an
-asynchronous symbol).  That requires some level of coordination with
-the unwinder and dynamic linker.
+How is this better than the kernel handling an address fault?
+The system call still needs to do the same work as the fault handler.
+We do need to specify the register and stack contexts before hand
+so the system call can do its job.
 
-A kernel solution could hide the intermediate state in a kernel-side
-trap handler, but I think it wouldn't reduce the overall complexity.
+Also, this always incurs a trip to the kernel. With trampfd, the kernel
+could generate the code to avoid the performance penalty.
+
+
+>
+> Also, will using trampfd cause issues with various unwinders?  I can
+> easily imagine unwinders expecting code to be readable, although this
+> is slowly going away for other reasons.
+
+I need to study unwinders a little before I respond to this question.
+So, bear with me.
+
+> All this being said, I think that the kernel should absolutely add a
+> sensible interface for JITs to use to materialize their code.  This
+> would integrate sanely with LSMs and wouldn't require hacks like using
+> files, etc.  A cleverly designed JIT interface could function without
+> seriailization IPIs, and even lame architectures like x86 could
+> potentially avoid shootdown IPIs if the interface copied code instead
+> of playing virtual memory games.  At its very simplest, this could be:
+>
+> void *jit_create_code(const void *source, size_t len);
+>
+> and the result would be a new anonymous mapping that contains exactly
+> the code requested.  There could also be:
+>
+> int jittfd_create(...);
+>
+> that does something similar but creates a memfd.  A nicer
+> implementation for short JIT sequences would allow appending more code
+> to an existing JIT region.  On x86, an appendable JIT region would
+> start filled with 0xCC, and I bet there's a way to materialize new
+> code into a previously 0xcc-filled virtual page wthout any
+> synchronization.  One approach would be to start with:
+>
+> <some code>
+> 0xcc
+> 0xcc
+> ...
+> 0xcc
+>
+> and to create a whole new page like:
+>
+> <some code>
+> <some more code>
+> 0xcc
+> ...
+> 0xcc
+>
+> so that the only difference is that some code changed to some more
+> code.  Then replace the PTE to swap from the old page to the new page,
+> and arrange to avoid freeing the old page until we're sure it's gone
+> from all TLBs.  This may not work if <some more code> spans a page
+> boundary.  The #BP fixup would zap the TLB and retry.  Even just
+> directly copying code over some 0xcc bytes almost works, but there's a
+> nasty corner case involving instructions that fetch I$ fetch
+> boundaries.  I'm not sure to what extent I$ snooping helps.
+
+I am thinking that the trampfd API can be used for addressing JIT
+code as well. I have not yet started thinking about the details. But I
+think the API is sufficient. E.g.,
+
+    struct trampfd_jit {
+        void    *source;
+        size_t    len;
+    };
+
+    struct trampfd_jit    jit;
+    struct trampfd_map    map;
+    void    *addr;
+
+    jit.source = blah;
+    jit.size = blah;
+
+    fd = syscall(440, TRAMPFD_JIT, &jit, flags);
+    pread(fd, &map, sizeof(map), TRAMPFD_MAP_OFFSET);
+    addr = mmap(NULL, map.size, map.prot, map.flags, fd, map.offset);
+
+And addr would be used to invoke the generated JIT code.
+
+Madhavan
+
