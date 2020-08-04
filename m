@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19548-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19549-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 77B3C23AFBC
-	for <lists+kernel-hardening@lfdr.de>; Mon,  3 Aug 2020 23:41:27 +0200 (CEST)
-Received: (qmail 1047 invoked by uid 550); 3 Aug 2020 21:41:22 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 46D3523B4DA
+	for <lists+kernel-hardening@lfdr.de>; Tue,  4 Aug 2020 08:12:08 +0200 (CEST)
+Received: (qmail 8181 invoked by uid 550); 4 Aug 2020 06:12:01 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,83 +13,96 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 1026 invoked from network); 3 Aug 2020 21:41:21 -0000
+Received: (qmail 8159 invoked from network); 4 Aug 2020 06:12:00 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=AoXxxzPdcjWwfJPdErgifOsTsvhhfF5cKu6R8ZrrXiE=;
-        b=cP3b+JMQBwVvMgicWaLrhYHCtWd5xoSj8dj2pYNIWtzEsYYJHvm6UFtv4fCjHWdqV/
-         80FE7JTPA3xE9NC1kzqojZBRfaL8sYYxgslYAa7F69WcFl+x2nosPcFZb2Ok+yHsL99p
-         qpAG8+RGZRwE8k74YOkvNHoo5nYxA1SiGOgV8=
+        d=rasmusvillemoes.dk; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=YATFUmsQEtwZnfgWdl5UeyWgtQO3fVAktQVuTkdNN84=;
+        b=GxbN4MBWT2QnFQZOx0XJ9UA0oemVZKu8DVMcXSsOQTdcD5FgLP+FKSLs1NUfxgZ1ym
+         13SSwtjix3edIdHB/LzKs3oQPpp39yjbZz0rI2IhiLddmW+F8UNZh+wk+XgOcUFSgWpL
+         KgS9WEfdPGYlDqwPVcA8ZupXspDOsB04Qv0+k=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=AoXxxzPdcjWwfJPdErgifOsTsvhhfF5cKu6R8ZrrXiE=;
-        b=oXR/cdEAeHi9U4JWFBNyb4fDfX1rLuOWo/3WpaCdePuQqlx8P2v7nocpARWawHmObo
-         BK6FhOAQWbd/V500OSvN4p6wPrVmqJ0/SOl76JTu4U1xhrQlW1Gqu0hFPsGedKSzJdP1
-         Z2tGZ+tf3BatZu1hFs2UOhzIDZyecKhrasH2pImS2Fes4EkANaq7qCFIXLoXbhPy9niu
-         T1GVSPmOkIM0DVlw88UQmIL+x8r+1MFCbL9gZShZSnuIliyt5H8215YpGL2UtXyQTYau
-         qXpQN+mrV2Ywo97a2p/4yB4yK7uVIfIpH24dg+lc4J/BCsCTupGJreoZTWlSb+dDsFIs
-         XfMQ==
-X-Gm-Message-State: AOAM530iRM3D3di8XicbN7N3xOZFH4IfjlWVFFJgNk7g0PGsNEdn/wAj
-	W/rITCMOoxGD2503UrPvBR0WgQ==
-X-Google-Smtp-Source: ABdhPJzKfOSTGggKfBY9ChUZm4EGBh+2aAyWRhVuvypuYHUArV91N1Rdgtgk5e2SPvx0o4R9ZogITA==
-X-Received: by 2002:a17:90a:6d96:: with SMTP id a22mr1158690pjk.26.1596490869599;
-        Mon, 03 Aug 2020 14:41:09 -0700 (PDT)
-Date: Mon, 3 Aug 2020 14:41:07 -0700
-From: Kees Cook <keescook@chromium.org>
-To: "Frank Ch. Eigler" <fche@redhat.com>
-Cc: Joe Lawrence <joe.lawrence@redhat.com>,
-	Evgenii Shatokhin <eshatokhin@virtuozzo.com>,
-	Kristen Carlson Accardi <kristen@linux.intel.com>,
-	Miroslav Benes <mbenes@suse.cz>, tglx@linutronix.de,
-	mingo@redhat.com, bp@alien8.de, arjan@linux.intel.com,
-	x86@kernel.org, linux-kernel@vger.kernel.org,
-	kernel-hardening@lists.openwall.com, rick.p.edgecombe@intel.com,
-	live-patching@vger.kernel.org, Josh Poimboeuf <jpoimboe@redhat.com>,
-	Jessica Yu <jeyu@kernel.org>
-Subject: Re: [PATCH v4 00/10] Function Granular KASLR
-Message-ID: <202008031439.F1399A588@keescook>
-References: <20200717170008.5949-1-kristen@linux.intel.com>
- <alpine.LSU.2.21.2007221122110.10163@pobox.suse.cz>
- <e9c4d88b-86db-47e9-4299-3fac45a7e3fd@virtuozzo.com>
- <202008031043.FE182E9@keescook>
- <fc6d2289-af97-5cf8-a4bb-77c2b0b8375c@redhat.com>
- <20200803193837.GB30810@redhat.com>
- <202008031310.4F8DAA20@keescook>
- <20200803211228.GC30810@redhat.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=YATFUmsQEtwZnfgWdl5UeyWgtQO3fVAktQVuTkdNN84=;
+        b=nstE/stCCXTC9bvVD6pPUBfqhJcEWT+fwTy5BL+8ZAdnBMSbp/HXLFQtnlj6N+AFkL
+         UcMJyeIKNVFvv+vCe3Z1ivKY9sOI8ulfcp/85kw4wggN2geobpfxj4/yRedkflHVb6D8
+         YVZEjZXM5roPWVCqUhTdH9jlloxKaJDvBQagRJ475xrZBU9MBizSKPxTe2ngCTq+EYHx
+         rYyPD9Zfj37VAdw1NtZs/0K3T5nG7PF6lUldfgz3JSHGVp+39blMKYt/Ff7Jy2Xy3QYU
+         VVIuxWZHzLqYskwUm7F6o1H2PTVD0VoNHKHPkispG11nkA8+28319BY9FhekfGf/0Pi6
+         XCew==
+X-Gm-Message-State: AOAM530DK0TkFR2LGEkqFbVU1oskS1+o+1beIPB6sZ6+0VBrYjbHE5BJ
+	7QfH2NT2W6LCFSeOw7bN1VaRVcmzVzuZiQ==
+X-Google-Smtp-Source: ABdhPJw9B+y91jBYvJrq3JdL+1NJK33QAr8Ejd8dI1ooDFvkOCojii4KB0OKr7Er4VMWcj3Xw/uijg==
+X-Received: by 2002:a2e:93cd:: with SMTP id p13mr7914891ljh.460.1596521509227;
+        Mon, 03 Aug 2020 23:11:49 -0700 (PDT)
+Subject: Re: [RFC] saturate check_*_overflow() output?
+To: Kees Cook <keescook@chromium.org>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky <leon@kernel.org>,
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+ Matthew Wilcox <willy@infradead.org>, linux-kernel@vger.kernel.org,
+ kernel-hardening@lists.openwall.com
+References: <202008031118.36756FAD04@keescook>
+From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Message-ID: <f177a821-74a3-e868-81d3-55accfb5b161@rasmusvillemoes.dk>
+Date: Tue, 4 Aug 2020 08:11:45 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200803211228.GC30810@redhat.com>
+In-Reply-To: <202008031118.36756FAD04@keescook>
+Content-Type: text/plain; charset=windows-1252
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 
-On Mon, Aug 03, 2020 at 05:12:28PM -0400, Frank Ch. Eigler wrote:
-> Hi -
+On 03/08/2020 20.29, Kees Cook wrote:
+> Hi,
 > 
-> On Mon, Aug 03, 2020 at 01:11:27PM -0700, Kees Cook wrote:
-> > [...]
-> > > Systemtap needs to know base addresses of loaded text & data sections,
-> > > in order to perform relocation of probe point PCs and context data
-> > > addresses.  It uses /sys/module/...., kind of under protest, because
-> > > there seems to exist no MODULE_EXPORT'd API to get at that information
-> > > some other way.
-> > 
-> > Wouldn't /proc/kallsysms entries cover this? I must be missing
-> > something...
-> 
-> We have relocated based on sections, not some subset of function
-> symbols accessible that way, partly because DWARF line- and DIE- based
-> probes can map to addresses some way away from function symbols, into
-> function interiors, or cloned/moved bits of optimized code.  It would
-> take some work to prove that function-symbol based heuristic
-> arithmetic would have just as much reach.
+> I wonder if we should explicitly saturate the output of the overflow
+> helpers as a side-effect of overflow detection? 
 
-Interesting. Do you have an example handy? It seems like something like
-that would reference the enclosing section, which means we can't just
-leave them out of the sysfs list... (but if such things never happen in
-the function-sections, then we *can* remove them...)
+Please no.
 
--- 
-Kees Cook
+(That way the output
+> is never available with a "bad" value, if the caller fails to check the
+> result or forgets that *d was written...) since right now, *d will hold
+> the wrapped value.
+
+Exactly. I designed the fallback ones so they would have the same
+semantics as when using gcc's __builtin_* - though with the "all
+operands have same type" restriction, since it would be completely
+unwieldy to handle stuff like (s8) + (u64) -> (s32) in macros.
+
+> Also, if we enable arithmetic overflow detection sanitizers, we're going
+> to trip over the fallback implementation (since it'll wrap and then do
+> the overflow test in the macro).
+
+Huh? The fallback code only ever uses unsigned arithmetic, precisely to
+avoid triggering such warnings. Or are you saying there are some
+sanitizers out there which also warn for, say, (~0u) + 1u? Yes,
+detecting overflow/underflow for a (s32)-(s32)->(s32) without relying on
+-fwrapv is a bit messy, but it's done and AFAIK works just fine even
+with UBSAN enabled.
+
+
+What we might do, to deal with the "caller fails to check the result",
+is to add a
+
+static inline bool __must_check must_check_overflow(bool b) { return
+unlikely(b); }
+
+and wrap all the final "did it overflow" results in that one - perhaps
+also for the __builtin_* cases, I don't know if those are automatically
+equipped with that attribute. [I also don't know if gcc propagates
+likely/unlikely out to the caller, but it shouldn't hurt to have it
+there and might improve code gen if it does.]
+
+Rasmus
+
+PS: Another reason not to saturate is that there are two extreme values,
+and choosing between them makes the code very messy (especially when
+using the __builtins). 5u-10u should saturate to 0u, not UINT_MAX, and
+even for for underflowing a signed computation like INT_MIN + (-7); it
+makes no sense for that to saturate to INT_MAX.
