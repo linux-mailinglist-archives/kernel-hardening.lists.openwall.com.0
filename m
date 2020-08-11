@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19591-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19592-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id E406F241B11
-	for <lists+kernel-hardening@lfdr.de>; Tue, 11 Aug 2020 14:41:35 +0200 (CEST)
-Received: (qmail 32376 invoked by uid 550); 11 Aug 2020 12:41:30 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 23C6B241B5E
+	for <lists+kernel-hardening@lfdr.de>; Tue, 11 Aug 2020 15:08:18 +0200 (CEST)
+Received: (qmail 17925 invoked by uid 550); 11 Aug 2020 13:08:11 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,100 +13,82 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 32356 invoked from network); 11 Aug 2020 12:41:29 -0000
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 7A2A120B4908
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1597149677;
-	bh=/01YYim8UON1WnW57/jtTiKZ9zMxYZQ09Mw9cbuIu4A=;
-	h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-	b=PFQNuX5mWMquO2HGENEzafqUyJUE7/be/jyBGj5BPS+LLzBuKDCp8oxu/gpMGiuzS
-	 6nmE9EJ+VCIZo4ZznNZO0l1rypST2o/WGeVSn+KjlmzrdKh1od3CFRwpGX0UIvppY1
-	 +3sGwRwS/5aecpkyVSZ45vXgzNz/7thzHMTdnYOE=
-Subject: Re: [PATCH v1 0/4] [RFC] Implement Trampoline File Descriptor
-To: Pavel Machek <pavel@ucw.cz>
-Cc: Mark Rutland <mark.rutland@arm.com>, kernel-hardening@lists.openwall.com,
- linux-api@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-fsdevel@vger.kernel.org, linux-integrity@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-security-module@vger.kernel.org,
- oleg@redhat.com, x86@kernel.org
-References: <aefc85852ea518982e74b233e11e16d2e707bc32>
- <20200728131050.24443-1-madvenka@linux.microsoft.com>
- <20200731180955.GC67415@C02TD0UTHF1T.local>
- <6236adf7-4bed-534e-0956-fddab4fd96b6@linux.microsoft.com>
- <20200804143018.GB7440@C02TD0UTHF1T.local>
- <b3368692-afe6-89b5-d634-12f4f0a601f8@linux.microsoft.com>
- <20200808221748.GA1020@bug>
-From: "Madhavan T. Venkataraman" <madvenka@linux.microsoft.com>
-Message-ID: <6cca8eac-f767-b891-dc92-eaa7504a0e8b@linux.microsoft.com>
-Date: Tue, 11 Aug 2020 07:41:15 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+Received: (qmail 17895 invoked from network); 11 Aug 2020 13:08:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1597151279;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=GEcUQe9UY6xIXezS6UK1KppXLYMBh6QTCdnZ8sG8rsY=;
+	b=b8RMOZT7S15LfTx8cyS/VOurV3QUGT7zYUod0G9frMYAin/CUapro1mP3NQkX2AiOtpeje
+	NxL/hJKD+DjyGrzgewajO2+BPKb2CrSQP4HjmLxoSxAh358wpF7W9gpq90OCZFPK102lLd
+	B0debG7a10TikAUuPfQ38RQA39G9yPk=
+X-MC-Unique: xDkIZWOiMMyhcP7SUKS3CQ-1
+From: Steve Grubb <sgrubb@redhat.com>
+To: David Laight <David.Laight@aculab.com>, Al Viro <viro@zeniv.linux.org.uk>, =?ISO-8859-1?Q?Micka=EBl_Sala=FCn?= <mic@digikod.net>
+Cc: Kees Cook <keescook@chromium.org>, Andrew Morton <akpm@linux-foundation.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, Aleksa Sarai <cyphar@cyphar.com>, Alexei Starovoitov <ast@kernel.org>, Andy Lutomirski <luto@kernel.org>, Christian Brauner <christian.brauner@ubuntu.com>, Christian Heimes <christian@python.org>, Daniel Borkmann <daniel@iogearbox.net>, Deven Bowers <deven.desai@linux.microsoft.com>, Dmitry Vyukov <dvyukov@google.com>, Eric Biggers <ebiggers@kernel.org>, Eric Chiang <ericchiang@google.com>, Florian Weimer <fweimer@redhat.com>, James Morris <jmorris@namei.org>, Jan Kara <jack@suse.cz>, Jann Horn <jannh@google.com>, Jonathan Corbet <corbet@lwn.net>, Lakshmi Ramasubramanian <nramas@linux.microsoft.com>, Matthew Garrett <mjg59@google.com>, Matthew Wilcox <willy@infradead.org>, Michael Kerrisk <mtk.manpages@gmail.com>, Mimi Zohar <zohar@linux.ibm.com>, Philippe =?ISO-8859-1?Q?Tr=E9buchet?= <philippe.trebuchet@ssi.gouv.fr>, Scott Shell <scottsh@mi
+ crosoft.com>, Sean Christopherson <sean.j.christopherson@intel.com>, Shuah Khan <shuah@kernel.org>, Steve Dower <steve.dower@python.org>, Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>, Thibaut Sautereau <thibaut.sautereau@clip-os.org>, Vincent Strubel <vincent.strubel@ssi.gouv.fr>, "kernel-hardening@lists.openwall.com" <kernel-hardening@lists.openwall.com>, "linux-api@vger.kernel.org" <linux-api@vger.kernel.org>, "linux-integrity@vger.kernel.org" <linux-integrity@vger.kernel.org>, "linux-security-module@vger.kernel.org" <linux-security-module@vger.kernel.org>, "linux-fsdevel@vger.kernel.org" <linux-fsdevel@vger.kernel.org>
+Subject: Re: [PATCH v7 0/7] Add support for O_MAYEXEC
+Date: Tue, 11 Aug 2020 09:07:41 -0400
+Message-ID: <2542427.mvXUDI8C0e@x2>
+Organization: Red Hat
+In-Reply-To: <c0224c08-f669-168e-3bb4-35eceec96a8b@digikod.net>
+References: <20200723171227.446711-1-mic@digikod.net> <26a4a8378f3b4ad28eaa476853092716@AcuMS.aculab.com> <c0224c08-f669-168e-3bb4-35eceec96a8b@digikod.net>
 MIME-Version: 1.0
-In-Reply-To: <20200808221748.GA1020@bug>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
+
+On Tuesday, August 11, 2020 4:50:53 AM EDT Micka=EBl Sala=FCn wrote:
+> On 11/08/2020 10:09, David Laight wrote:
+> >> On 11/08/2020 00:28, Al Viro wrote:
+> >>> On Mon, Aug 10, 2020 at 10:09:09PM +0000, David Laight wrote:
+> >>>>> On Mon, Aug 10, 2020 at 10:11:53PM +0200, Micka=EBl Sala=FCn wrote:
+> >>>>>> It seems that there is no more complains nor questions. Do you want
+> >>>>>> me
+> >>>>>> to send another series to fix the order of the S-o-b in patch 7?
+> >>>>>=20
+> >>>>> There is a major question regarding the API design and the choice of
+> >>>>> hooking that stuff on open().  And I have not heard anything
+> >>>>> resembling
+> >>>>> a coherent answer.
+> >>>>=20
+> >>>> To me O_MAYEXEC is just the wrong name.
+> >>>> The bit would be (something like) O_INTERPRET to indicate
+> >>>> what you want to do with the contents.
+> >>=20
+> >> The properties is "execute permission". This can then be checked by
+> >> interpreters or other applications, then the generic O_MAYEXEC name.
+> >=20
+> > The english sense of MAYEXEC is just wrong for what you are trying
+> > to check.
+>=20
+> We think it reflects exactly what it's purpose is.
+>=20
+> >>> ... which does not answer the question - name of constant is the least
+> >>> of
+> >>> the worries here.  Why the hell is "apply some unspecified checks to
+> >>> file" combined with opening it, rather than being an independent
+> >>> primitive
+> >>> you apply to an already opened file?  Just in case - "'cuz that's how
+> >>> we'd
+> >>> done it" does not make a good answer...
+> >=20
+> > Maybe an access_ok() that acts on an open fd would be more
+> > appropriate.
+> > Which might end up being an fcntrl() action.
+> > That would give you a full 32bit mask of options.
+>=20
+> I previously talk about fcntl(2):
+> https://lore.kernel.org/lkml/eaf5bc42-e086-740b-a90c-93e67c535eee@digikod=
+=2En
+> et/
+
+=46cntl is too late for anything using FANOTIFY. Everything needs to be upf=
+ront=20
+or other security systems cannot use it.
+
+=2DSteve
 
 
-
-On 8/8/20 5:17 PM, Pavel Machek wrote:
-> Hi!
-> 
->> Thanks for the lively discussion. I have tried to answer some of the
->> comments below.
-> 
->>> There are options today, e.g.
->>>
->>> a) If the restriction is only per-alias, you can have distinct aliases
->>>    where one is writable and another is executable, and you can make it
->>>    hard to find the relationship between the two.
->>>
->>> b) If the restriction is only temporal, you can write instructions into
->>>    an RW- buffer, transition the buffer to R--, verify the buffer
->>>    contents, then transition it to --X.
->>>
->>> c) You can have two processes A and B where A generates instrucitons into
->>>    a buffer that (only) B can execute (where B may be restricted from
->>>    making syscalls like write, mprotect, etc).
->>
->> The general principle of the mitigation is W^X. I would argue that
->> the above options are violations of the W^X principle. If they are
->> allowed today, they must be fixed. And they will be. So, we cannot
->> rely on them.
-> 
-> Would you mind describing your threat model?
-> 
-> Because I believe you are using model different from everyone else.
-> 
-> In particular, I don't believe b) is a problem or should be fixed.
-
-It is a problem because a kernel that implements W^X properly
-will not allow it. It has no idea what has been done in userland.
-It has no idea that the user has checked and verified the buffer
-contents after transitioning the page to R--.
-
-
-> 
-> I'll add d), application mmaps a file(R--), and uses write syscall to change
-> trampolines in it.
-> 
-
-No matter how you do it, these are all user-level methods that can be
-hacked. The kernel cannot be sure that an attacker's code has
-not found its way into the file.
-
->> b) This is again a violation. The kernel should refuse to give execute
->> ???????? permission to a page that was writeable in the past and refuse to
->> ???????? give write permission to a page that was executable in the past.
-> 
-> Why?
-
-I don't know about the latter part. I guess I need to think about it.
-But the former is valid. When a page is RW-, a hacker could hack the
-page. Then it does not matter that the page is transitioned to R--.
-Again, the kernel cannot be sure that the user has verified the contents
-after R--.
-
-IMO, W^X needs to be enforced temporally as well.
-
-Madhavan
