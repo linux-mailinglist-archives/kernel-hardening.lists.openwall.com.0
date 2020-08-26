@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19665-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19666-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 609FE25354A
-	for <lists+kernel-hardening@lfdr.de>; Wed, 26 Aug 2020 18:47:59 +0200 (CEST)
-Received: (qmail 3532 invoked by uid 550); 26 Aug 2020 16:47:51 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 5A555253868
+	for <lists+kernel-hardening@lfdr.de>; Wed, 26 Aug 2020 21:40:46 +0200 (CEST)
+Received: (qmail 28634 invoked by uid 550); 26 Aug 2020 19:40:40 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,72 +13,76 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 3510 invoked from network); 26 Aug 2020 16:47:51 -0000
+Received: (qmail 28613 invoked from network); 26 Aug 2020 19:40:39 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kernel-dk.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=knubijAt0jlcEgyfGnp3DjNef2Zkl9PnsPdwfFoIfEE=;
-        b=zSSLNQs+V1I4LENOdushsj3nmnFYyqaQdhtY5oY/Xt286k3qGUQkI26czvfppN49LX
-         o3Tp4yTmeV5j/D62zFr+TZuZSAvYv005z7/th9LrEbutQHP1CwTihB/xVI7k6JoZyaHp
-         lWDxEUGFmqx3gxPUDHBKylXtpbMwlh+un+m7DU0q3tJFNZofLUWtXKiZ9GZET0F5tVTY
-         fYDAShfuEIZPjMnRUBcpC8JYIDOljcBdpY5bi4kGbq9JOcHt1TSgVWnjjmPKuQXIJMXe
-         PSBxzsnrt7YBgW5E6P92+1x5UVOk2AELav7ofZ3IFlYkZ/pTRhRCbbBFCZOLrK7oMuDQ
-         TdMw==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=OG8uhnCA9kG3csdFryFQgnoVrLmqM/Aisjk2iXjlTO4=;
+        b=CCtjUjayr/qntPIykQMCTBeZZeCK50TmOXnltMMVDBp3CR9A65E334WHfJcIaB+qj5
+         lM0Ab5TQ23N8QqsdlltlQODO+OGXq6MmQcJBd+tA7A5w2hgKBd/HXsYX/JCZnPLsvU76
+         Fc4t/yR7DlFMji9jHEtdubrTqLh5q1Ob78A9U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=knubijAt0jlcEgyfGnp3DjNef2Zkl9PnsPdwfFoIfEE=;
-        b=knmiI6cALOZ0w1zCVZwK1NuQ9ZQLi6WpW+3/nezHfZcPMXvFuLpkiNqKWpplINSO0T
-         uJHoSvKWAa3yAhu0GyJjqNBMotTdUBAlu0KDYufSLn/mFF4Z3twY5w8Y4cwj8tq8udm4
-         oJ01PqlaXuwL2y9M23Up2be0iP48CSjrJbQLAZXBp5qyEskRkit0XeOBjUWxfO9yo1a+
-         eAeOgL3Y5D+oLmcG3+f9gy/HLtzm84H0b9wrKBRQGeyycwFTo5UHlJHx8jA8PQd7751Y
-         h34DPWw7AKPhbcb4kp+MI/pc9joQ7TmRz50bBLUf3IxIrNuKq1wXwhQB9QD9w5owTG2n
-         Ut6Q==
-X-Gm-Message-State: AOAM532gt4mTJJCGszvXXe4+KRRgv9eM6d0Xk8aVBF1YlNRRP5NSTopg
-	iCl8pxEbyaZSwX73qYB5r+nDCQ==
-X-Google-Smtp-Source: ABdhPJw6tqipY5aYgIN5ObL9GNtF7hYUHQ1OYqLEU+5VRRsLKuPz0AHe/fnvaAJIPrska52FeW4ZcQ==
-X-Received: by 2002:a05:6638:248e:: with SMTP id x14mr15661824jat.135.1598460458830;
-        Wed, 26 Aug 2020 09:47:38 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=OG8uhnCA9kG3csdFryFQgnoVrLmqM/Aisjk2iXjlTO4=;
+        b=l9x+ztjS4vVBFux8DI260/Zs3TsiZFJmn0eWnCY9HS0ntrlFs3F8PzsDVrsmQDUTbu
+         LAC26jppjWZAaJ2hXTOoxaMPnzSSUv0tJzxNU0v/XEJ0N0fOLO2jSCE7W9BOmWzaRwgl
+         0lUwniDjwZ8Bd3s09WcVDpAqCNJdHoTHS34m0TcTfcgPmCtWIDPKjSoyzVCE45L+Bx3p
+         lHIlGJcMKGMIZWA/ThmscRuUKOpoCzRRcyOjOtXQpn5A1C/l6GBLdODAPouGdJJaH/7E
+         25AVJUbJArIbhLUs+Ohu25LY+loWfTobpu9ZveXs+AtIHVHGKLzUWwzdr/8nCqJnG4DM
+         ruoA==
+X-Gm-Message-State: AOAM530zoWcmX0SAjw1cB/F56p4CtH7cSVpPfzzWeAw7R5DM9djxKlty
+	7J8+UJhmPkfxK3vWmIUB+tqkoA==
+X-Google-Smtp-Source: ABdhPJwoFPtYUC9LMuzuxI/JkcSQzWHlHT55l/323/HECz8Y1hZ6XBGrFMmE05TvFRpD7eDwLUE2Aw==
+X-Received: by 2002:a63:516:: with SMTP id 22mr12143709pgf.316.1598470827209;
+        Wed, 26 Aug 2020 12:40:27 -0700 (PDT)
+Date: Wed, 26 Aug 2020 12:40:24 -0700
+From: Kees Cook <keescook@chromium.org>
+To: Jens Axboe <axboe@kernel.dk>
+Cc: Stefano Garzarella <sgarzare@redhat.com>,
+	Christian Brauner <christian.brauner@ubuntu.com>,
+	Jann Horn <jannh@google.com>, Jeff Moyer <jmoyer@redhat.com>,
+	Linux FS Devel <linux-fsdevel@vger.kernel.org>,
+	Sargun Dhillon <sargun@sargun.me>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Kernel Hardening <kernel-hardening@lists.openwall.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	kernel list <linux-kernel@vger.kernel.org>,
+	Aleksa Sarai <asarai@suse.de>, io-uring <io-uring@vger.kernel.org>
 Subject: Re: [PATCH v4 0/3] io_uring: add restrictions to support untrusted
  applications and guests
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: Christian Brauner <christian.brauner@ubuntu.com>,
- Jann Horn <jannh@google.com>, Jeff Moyer <jmoyer@redhat.com>,
- Linux FS Devel <linux-fsdevel@vger.kernel.org>,
- Sargun Dhillon <sargun@sargun.me>, Kees Cook <keescook@chromium.org>,
- Alexander Viro <viro@zeniv.linux.org.uk>,
- Kernel Hardening <kernel-hardening@lists.openwall.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- kernel list <linux-kernel@vger.kernel.org>, Aleksa Sarai <asarai@suse.de>,
- io-uring <io-uring@vger.kernel.org>
+Message-ID: <202008261237.904C1E6@keescook>
 References: <20200813153254.93731-1-sgarzare@redhat.com>
  <CAGxU2F55zzMzc043P88TWJNr2poUTVwrRmu86qyh0uM-8gimng@mail.gmail.com>
-From: Jens Axboe <axboe@kernel.dk>
-Message-ID: <82061082-42c8-1e1c-1f36-6f42e7dd10cb@kernel.dk>
-Date: Wed, 26 Aug 2020 10:47:36 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+ <82061082-42c8-1e1c-1f36-6f42e7dd10cb@kernel.dk>
 MIME-Version: 1.0
-In-Reply-To: <CAGxU2F55zzMzc043P88TWJNr2poUTVwrRmu86qyh0uM-8gimng@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <82061082-42c8-1e1c-1f36-6f42e7dd10cb@kernel.dk>
 
-On 8/25/20 9:20 AM, Stefano Garzarella wrote:
-> Hi Jens,
-> this is a gentle ping.
+On Wed, Aug 26, 2020 at 10:47:36AM -0600, Jens Axboe wrote:
+> On 8/25/20 9:20 AM, Stefano Garzarella wrote:
+> > Hi Jens,
+> > this is a gentle ping.
+> > 
+> > I'll respin, using memdup_user() for restriction registration.
+> > I'd like to get some feedback to see if I should change anything else.
+> > 
+> > Do you think it's in good shape?
 > 
-> I'll respin, using memdup_user() for restriction registration.
-> I'd like to get some feedback to see if I should change anything else.
-> 
-> Do you think it's in good shape?
+> As far as I'm concerned, this is fine. But I want to make sure that Kees
+> is happy with it, as he's the one that's been making noise on this front.
 
-As far as I'm concerned, this is fine. But I want to make sure that Kees
-is happy with it, as he's the one that's been making noise on this front.
+Oop! Sorry, I didn't realize this was blocked on me. Once I saw how
+orthogonal io_uring was to "regular" process trees, I figured this
+series didn't need seccomp input. (I mean, I am still concerned about
+attack surface reduction, but that seems like a hard problem given
+io_uring's design -- it is, however, totally covered by the LSMs, so I'm
+satisfied from that perspective.)
+
+I'll go review... thanks for the poke. :)
 
 -- 
-Jens Axboe
-
+Kees Cook
