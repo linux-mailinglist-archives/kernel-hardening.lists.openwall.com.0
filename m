@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19671-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19673-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 9E2C2253895
-	for <lists+kernel-hardening@lfdr.de>; Wed, 26 Aug 2020 21:52:59 +0200 (CEST)
-Received: (qmail 8077 invoked by uid 550); 26 Aug 2020 19:52:54 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 1E134253D33
+	for <lists+kernel-hardening@lfdr.de>; Thu, 27 Aug 2020 07:25:04 +0200 (CEST)
+Received: (qmail 8186 invoked by uid 550); 27 Aug 2020 05:24:44 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,150 +13,179 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 8055 invoked from network); 26 Aug 2020 19:52:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dilger-ca.20150623.gappssmtp.com; s=20150623;
-        h=from:message-id:mime-version:subject:date:in-reply-to:cc:to
-         :references;
-        bh=VbJ9M0x7/6kdVUf5kyNPDEStbpnR2XDArodticGgnuw=;
-        b=rRl+Udx0c/tGT5sCZv6zDX1U97/r6hjWIJ1etf9yfwwvdhzwi+WnMpG8Qgm/MUoHJn
-         Ee4rGok0Wx4355BscUdPeV2RoMj6B5E9CiOF1MWXin/kkuRtjLAxhVt7FzOKKIYCnDBn
-         wy38Xp0nqiwlcVZ3HoDTBTTB6GOwKFLhD1XGxB8Ud1p55FRo9REe8djvCD/9myaSshs3
-         pjoSDjYgzeOQpVP3xPaYQ9LXXofKLVXT40825djtQaGq8HL3SUKL6UlGHfyYMFZ+v4zC
-         bEhMqDfO7oUnl3LMOLhPUPzJnm4Zr4xu6TxhiveZ1ND+AULjsg25FkSiel1XDB2cxyNn
-         l84A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:message-id:mime-version:subject:date
-         :in-reply-to:cc:to:references;
-        bh=VbJ9M0x7/6kdVUf5kyNPDEStbpnR2XDArodticGgnuw=;
-        b=p8dfHigizw1R49bQ6uRhAZd2DaJRQyBW4sG4gCVMUD77BHQA1Q0kzwxhSNTz3rBnjV
-         zjoSYQugqVZgy/4xu//SSAb0wnrjAPz0WiRybpTmZHPBNrsPFZnWm0uBGsuqz1yv5XAZ
-         rpN9NVpPhal03Ju8yOIPJnWUevLLRbwdsxWZAWhlJL7e+DiMiUqkWM54r890kVwdqnhG
-         itNMhvnPh1Z80gv0VNsjivIhj6z03ChkiLJ8CBZ3vQaYs0wKa/zvA6d5/7/whzL3eoKi
-         XoAlMDYj4qa6LQKXdU9XWS+pXP5suerzd8kNYBrKlbSZq5fUlQvbpDu/i29PpkrIg/b3
-         zhQA==
-X-Gm-Message-State: AOAM530UDG1bg+9krHJ09XuInG57JU0TFGTcAIWluCiZmCvrBz8b1VWc
-	k86yXVNQp/Mav7DulpkenOoEqg==
-X-Google-Smtp-Source: ABdhPJz2tJUnfEf0SqTON1++961s4mS80Ys4vUdtGo5FqM5ZbNWVgz7JG4vIUMYBfxdhxOnPXyMo2A==
-X-Received: by 2002:a62:f843:: with SMTP id c3mr13624152pfm.247.1598471562130;
-        Wed, 26 Aug 2020 12:52:42 -0700 (PDT)
-From: Andreas Dilger <adilger@dilger.ca>
-Message-Id: <C1F49852-C886-4522-ACD6-DDBF7DE3B838@dilger.ca>
-Content-Type: multipart/signed;
- boundary="Apple-Mail=_97ED6957-F79E-438A-BEE2-A42EA0D99B36";
- protocol="application/pgp-signature"; micalg=pgp-sha256
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Subject: Re: [PATCH v4 1/3] io_uring: use an enumeration for
- io_uring_register(2) opcodes
-Date: Wed, 26 Aug 2020 13:52:38 -0600
-In-Reply-To: <202008261241.074D8765@keescook>
-Cc: Stefano Garzarella <sgarzare@redhat.com>,
- Jens Axboe <axboe@kernel.dk>,
- Christian Brauner <christian.brauner@ubuntu.com>,
- Jann Horn <jannh@google.com>,
- Jeff Moyer <jmoyer@redhat.com>,
- linux-fsdevel <linux-fsdevel@vger.kernel.org>,
- Sargun Dhillon <sargun@sargun.me>,
- Alexander Viro <viro@zeniv.linux.org.uk>,
- Kernel Hardening <kernel-hardening@lists.openwall.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Aleksa Sarai <asarai@suse.de>,
- io-uring@vger.kernel.org
-To: Kees Cook <keescook@chromium.org>
-References: <20200813153254.93731-1-sgarzare@redhat.com>
- <20200813153254.93731-2-sgarzare@redhat.com> <202008261241.074D8765@keescook>
-X-Mailer: Apple Mail (2.3273)
+Received: (qmail 8075 invoked from network); 27 Aug 2020 05:24:42 -0000
+From: "Christopher M. Riedl" <cmr@codefail.de>
+To: linuxppc-dev@lists.ozlabs.org
+Cc: kernel-hardening@lists.openwall.com
+Subject: [PATCH v3 0/6] Use per-CPU temporary mappings for patching
+Date: Thu, 27 Aug 2020 00:26:53 -0500
+Message-Id: <20200827052659.24922-1-cmr@codefail.de>
+X-Mailer: git-send-email 2.28.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: ClamAV using ClamSMTP
+X-Originating-IP: 198.54.122.47
+X-SpamExperts-Domain: o3.privateemail.com
+X-SpamExperts-Username: out-03
+Authentication-Results: registrar-servers.com; auth=pass (plain) smtp.auth=out-03@o3.privateemail.com
+X-SpamExperts-Outgoing-Class: ham
+X-SpamExperts-Outgoing-Evidence: Combined (0.01)
+X-Recommended-Action: accept
+X-Filter-ID: Mvzo4OR0dZXEDF/gcnlw0fJi3Ojdyt5h9PLOIGvr3lipSDasLI4SayDByyq9LIhVBghYtpEuDn29
+ fDjaafOyv0TNWdUk1Ol2OGx3IfrIJKyP9eGNFz9TW9u+Jt8z2T3Kq02yUY2BU41HLqp9U+7si8M8
+ LdvJpZ7k99Lvu8YZXeI6p5bbhGYzvfahQ7X4A9L0Ye/JicEYVQv1wTfnWwJUGLoHT+TiZ2cHCmVO
+ a6Hj9oiJnwMHUOtSt5IUSJa6HnS6JODXbtOodkPED+RkHjVGH2xZ/WG2ZLv5RT/cF5Q6687AHRjU
+ JmjnvGEokRBTZJpViFKfD1jKgYfH+6S5qDVYoJU2GVfilQJSaX7ehrnJEB/bhw3Crbac1ieeuRax
+ ITFpzO11BRKqT8B4uLrn7iz8uvLBMzbIQcSG8L0jOzL80Q1MxDcqDeEvahfPkDkTlH91LgaQnmF8
+ H6pa6B8MTK1ligAJ9G0GMvMSOAhk0taEj8weJNI+C0vMCMVtmGEXbiaC3YEY+sq0ALsWxTj0qWKj
+ 35ixdMKk3BBfka4DffHpBWqkz6wxIGi04aIm8At0f8rObIE4IPBEuGByelw7CsYrZplKOaZVvWPN
+ YKOkeGHVaNmpda9O3Jm3n4TasdFPGI49Ap/fepC1NisM+LESvgPZp60jiD6XqsJZtjQxlyCdsezj
+ agBN88lVV9DZyVHyu83kFRA3eAVqquD0SMTqBT7kVWTnVC9cXCCs8iiOPvLvGxI1t5GaqW/eByjC
+ /a4JzYI0tTHX0DLUbl+m5hodVFL8tfzmJxmVEJ3Gt5OBM/oetP/F4zH/akUxwpSQe0Z72IpD5v0x
+ upj3x9Ek7RafJauJpU8IL9xGC9Aq1yswy54RHHeZI1J5rnsNXFl1Nrzse/fLYat3W1Qy2nqNI9ke
+ 0BM4ESs5mw8UZwIbwaQoUagpNuN48vZO5vqyKRzY1/C3LtRhfqb5R4VemuUI6bcEARsm0AHffUwf
+ 1Fe8+QQDoh1JX3JL6YEhoUUiZ+gDjRJBlVjGFjOk+oYG9HSSzX8ii5KOS3syFMyRibh35fUGz9A0
+ wQ0EsJrzPSLMV4ckOwy/RJQMQij2rNMC/ijhnA2ohL4kJucUv81X66s2aS76WMD99KzHKlSFZnsN
+ X9C2FSfjBOMW
+X-Report-Abuse-To: spam@se5.registrar-servers.com
+
+When compiled with CONFIG_STRICT_KERNEL_RWX, the kernel must create
+temporary mappings when patching itself. These mappings temporarily
+override the strict RWX text protections to permit a write. Currently,
+powerpc allocates a per-CPU VM area for patching. Patching occurs as
+follows:
+
+	1. Map page of text to be patched to per-CPU VM area w/
+	   PAGE_KERNEL protection
+	2. Patch text
+	3. Remove the temporary mapping
+
+While the VM area is per-CPU, the mapping is actually inserted into the
+kernel page tables. Presumably, this could allow another CPU to access
+the normally write-protected text - either malicously or accidentally -
+via this same mapping if the address of the VM area is known. Ideally,
+the mapping should be kept local to the CPU doing the patching (or any
+other sensitive operations requiring temporarily overriding memory
+protections) [0].
+
+x86 introduced "temporary mm" structs which allow the creation of
+mappings local to a particular CPU [1]. This series intends to bring the
+notion of a temporary mm to powerpc and harden powerpc by using such a
+mapping for patching a kernel with strict RWX permissions.
+
+The first, second, and third patches implement an LKDTM test
+"proof-of-concept" which exploits the potential vulnerability (ie. the
+mapping during patching is exposed in kernel page tables and accessible
+by other CPUS). The LKDTM test is somewhat "rough" in that it uses a
+brute-force approach - I am open to any suggestions and/or ideas to
+improve this. Currently, the LKDTM test passes with this series on
+POWER8 (hash) and POWER9 (radix, hash) and fails without this series
+(ie. the temporary mapping for patching is exposed to CPUs other than
+the patching CPU).
+
+The test is also implemented on x86_64 where it passes with a current
+tree and fails only when using a tree prior to the temporary mappings. I
+have such a tree here which intentionally fails:
+https://github.com/cmr-informatik/linux/tree/x86_64-non-percpu-lkdtm
+
+The fourth patch introduces the temporary mm struct and API for powerpc
+along with a new function to retrieve a current hw breakpoint.
+
+The fifth patch uses the `poking_init` init hook added by the x86
+patches to initialize a temporary mm and patching address. The patching
+address is randomized between PAGE_SIZE and DEFAULT_MAP_WINDOW-PAGE_SIZE.
+The upper limit is necessary due to how the hash MMU operates - by default
+the space above DEFAULT_MAP_WINDOW is not available. For now, both hash
+and radix randomize inside this range. The number of possible random
+addresses is dependent on PAGE_SIZE and limited by DEFAULT_MAP_WINDOW.
+
+Bits of entropy with 64K page size on BOOK3S_64:
+
+	bits of entropy = log2(DEFAULT_MAP_WINDOW_USER64 / PAGE_SIZE)
+
+	PAGE_SIZE=64K, DEFAULT_MAP_WINDOW_USER64=128TB
+	bits of entropy = log2(128TB / 64K)
+	bits of entropy = 31
+
+Randomization occurs only once during initialization at boot.
+
+The sixth patch replaces the VM area with the temporary mm in the
+patching code. The page for patching has to be mapped PAGE_SHARED with
+the hash MMU since hash prevents the kernel from accessing userspace
+pages with PAGE_PRIVILEGED bit set. On the radix MMU the page is mapped
+with PAGE_KERNEL which has the added benefit that we can skip KUAP. 
+
+Tested on Blackbird (8-core POWER9) w/ Hash (`disable_radix`) and Radix
+MMUs, QEMU (TCG) POWER8 and POWER9, POWER8 VM.
+
+Tested LKDTM test (passing and failing situations) on QEMU x86_64.
+
+v3:	* Rebase on linuxppc/next:
+	  commit 9123e3a74ec7 ("Linux 5.9-rc1")
+	* Move temporary mm implementation into code-patching.c where it
+	  belongs
+	* Implement LKDTM hijacker test on x86_64 (on IBM time oof)
+	* Do not use address zero for the patching address in the
+	  temporary mm (thanks @dja for pointing this out!)
+	* Wrap the LKDTM test w/ CONFIG_SMP as suggested by Christophe
+	  Leroy
+	* Comments to clarify PTE pre-allocation and patching addr
+	  selection
+
+v2:	* Rebase on linuxppc/next:
+	  commit 105fb38124a4 ("powerpc/8xx: Modify ptep_get()")
+	* Always dirty pte when mapping patch
+	* Use `ppc_inst_len` instead of `sizeof` on instructions
+	* Declare LKDTM patching addr accessor in header where it
+	  belongs	
+
+v1:	* Rebase on linuxppc/next (4336b9337824)
+	* Save and restore second hw watchpoint
+	* Use new ppc_inst_* functions for patching check and in LKDTM
+	  test
+
+rfc-v2:	* Many fixes and improvements mostly based on extensive feedback and
+          testing by Christophe Leroy (thanks!).
+	* Make patching_mm and patching_addr static and mode '__ro_after_init'
+	  to after the variable name (more common in other parts of the kernel)
+	* Use 'asm/debug.h' header instead of 'asm/hw_breakpoint.h' to fix
+	  PPC64e compile
+	* Add comment explaining why we use BUG_ON() during the init call to
+	  setup for patching later
+	* Move ptep into patch_mapping to avoid walking page tables a second
+	  time when unmapping the temporary mapping
+	* Use KUAP under non-radix, also manually dirty the PTE for patch
+	  mapping on non-BOOK3S_64 platforms
+	* Properly return any error from __patch_instruction
+	* Do not use 'memcmp' where a simple comparison is appropriate
+	* Simplify expression for patch address by removing pointer maths
+	* Add LKDTM test
 
 
---Apple-Mail=_97ED6957-F79E-438A-BEE2-A42EA0D99B36
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain;
-	charset=us-ascii
-
-On Aug 26, 2020, at 1:43 PM, Kees Cook <keescook@chromium.org> wrote:
-> 
-> On Thu, Aug 13, 2020 at 05:32:52PM +0200, Stefano Garzarella wrote:
->> The enumeration allows us to keep track of the last
->> io_uring_register(2) opcode available.
->> 
->> Behaviour and opcodes names don't change.
->> 
->> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
->> ---
->> include/uapi/linux/io_uring.h | 27 ++++++++++++++++-----------
->> 1 file changed, 16 insertions(+), 11 deletions(-)
->> 
->> diff --git a/include/uapi/linux/io_uring.h b/include/uapi/linux/io_uring.h
->> index d65fde732518..cdc98afbacc3 100644
->> --- a/include/uapi/linux/io_uring.h
->> +++ b/include/uapi/linux/io_uring.h
->> @@ -255,17 +255,22 @@ struct io_uring_params {
->> /*
->>  * io_uring_register(2) opcodes and arguments
->>  */
->> -#define IORING_REGISTER_BUFFERS		0
->> -#define IORING_UNREGISTER_BUFFERS	1
->> -#define IORING_REGISTER_FILES		2
->> -#define IORING_UNREGISTER_FILES		3
->> -#define IORING_REGISTER_EVENTFD		4
->> -#define IORING_UNREGISTER_EVENTFD	5
->> -#define IORING_REGISTER_FILES_UPDATE	6
->> -#define IORING_REGISTER_EVENTFD_ASYNC	7
->> -#define IORING_REGISTER_PROBE		8
->> -#define IORING_REGISTER_PERSONALITY	9
->> -#define IORING_UNREGISTER_PERSONALITY	10
->> +enum {
->> +	IORING_REGISTER_BUFFERS,
-> 
-> Actually, one *tiny* thought. Since this is UAPI, do we want to be extra
-> careful here and explicitly assign values? We can't change the meaning
-> of a number (UAPI) but we can add new ones, etc? This would help if an
-> OP were removed (to stop from triggering a cascade of changed values)...
-> 
-> for example:
-> 
-> enum {
-> 	IORING_REGISTER_BUFFERS = 0,
-> 	IORING_UNREGISTER_BUFFERS = 1,
-> 	...
-
-Definitely that is preferred, IMHO, for enums used as part of UAPI,
-as it avoids accidental changes to the values, and it also makes it
-easier to see what the actual values are.
-
-Cheers, Andreas
+[0]: https://github.com/linuxppc/issues/issues/224
+[1]: https://lore.kernel.org/kernel-hardening/20190426232303.28381-1-nadav.amit@gmail.com/
 
 
 
+Christopher M. Riedl (6):
+  powerpc: Add LKDTM accessor for patching addr
+  x86: Add LKDTM accessor for patching addr
+  Add LKDTM test to hijack a patch mapping (powerpc,x86_64)
+  powerpc: Introduce temporary mm
+  powerpc: Initialize a temporary mm for code patching
+  powerpc: Use a temporary mm for code patching
 
+ arch/powerpc/include/asm/code-patching.h |   4 +
+ arch/powerpc/include/asm/debug.h         |   1 +
+ arch/powerpc/kernel/process.c            |   5 +
+ arch/powerpc/lib/code-patching.c         | 239 +++++++++++++++--------
+ arch/x86/include/asm/text-patching.h     |   4 +
+ arch/x86/kernel/alternative.c            |   7 +
+ drivers/misc/lkdtm/core.c                |   1 +
+ drivers/misc/lkdtm/lkdtm.h               |   1 +
+ drivers/misc/lkdtm/perms.c               | 146 ++++++++++++++
+ 9 files changed, 322 insertions(+), 86 deletions(-)
 
+-- 
+2.28.0
 
---Apple-Mail=_97ED6957-F79E-438A-BEE2-A42EA0D99B36
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP
-
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - http://gpgtools.org
-
-iQIzBAEBCAAdFiEEDb73u6ZejP5ZMprvcqXauRfMH+AFAl9GvYYACgkQcqXauRfM
-H+CDqw/+M9+szTISRR0mIIv0L6q5oHSmmJFu6N4WmXH9ZZfUYkGvC7f4CTNhd2k5
-mF1lXbrMAF4i2/0Aui4WjWC5UoW77PBFwOpPYrTw/dbF16AbXEw1HoFamlgZ1Ote
-APczb6wzuFTYYdN9rgX+jdSDUBnvjmdomJz++4ZmScTqTOzUHBkgIS7O4Lw+O6o/
-Hu9oXp/VS3WvHQyDFYFAuaUR+UPAUeOec4AXfRNbC0RdadsFKtNZKI5p3VV16I3v
-v5M9vGUxH/bweRVwBe7w2J0X0mQvtOKwXYVEFxpUrIHIMMzxBKx1FY8KbMpudyPB
-lgECtvuCo+fDQrEMZ7xaE8xclFQa0ts/YnHFi9qrPHH0AvtNY+zA//OQjBNm06tc
-t8uKkMnPuxWDv5krYrFZhtM9DM/YKJrdSf4Bq08u9aiRKYkE0HgoS3J7pZ9Vq2Kz
-+d2RFoEm0cpZMW5ut7jbcXO1tW1RnXadKCkvoVcYZ2yK+WytE5Y+S5vXg7jtLpML
-PKKWgX6hxJPQ3Nz+DOQGvnNQ/Xr0eT7BF2d9BSu2q5B4+s+NPKLunjnFZaWiAq5g
-Y2okqZKRc2hdkb+fAG0Qn3dTLJ/PooXW2V0zaTGI7Nx7KgqaAI+w/mb8TX48BhAk
-ZCjtvI/znZFgtzZjuDIfSa1pN2K2VJPBYla1Bdrx7r+CEhA7mEY=
-=gPQ0
------END PGP SIGNATURE-----
-
---Apple-Mail=_97ED6957-F79E-438A-BEE2-A42EA0D99B36--
