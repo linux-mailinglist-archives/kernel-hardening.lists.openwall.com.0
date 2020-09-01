@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19716-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19717-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id CE0D02586F1
-	for <lists+kernel-hardening@lfdr.de>; Tue,  1 Sep 2020 06:25:16 +0200 (CEST)
-Received: (qmail 29992 invoked by uid 550); 1 Sep 2020 04:25:07 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 079C62594B6
+	for <lists+kernel-hardening@lfdr.de>; Tue,  1 Sep 2020 17:42:41 +0200 (CEST)
+Received: (qmail 1564 invoked by uid 550); 1 Sep 2020 15:42:34 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,143 +13,46 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 29948 invoked from network); 1 Sep 2020 04:25:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tobin.cc; h=date
-	:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=fm1; bh=i1CaXqatYxST7OBQcDDUEW58eAn
-	uK/6c6XXGkd4pEJA=; b=jI5K8x8NUS4K7J2dQwNO6c+oXdyD/1Qh0X3fdjn7/Y2
-	8jWhwAAeHgWu+2VDBM3FkY8Ezk58qtYuJ5JNhEpovWU2qA5mZRZfGO2Hz4o4ZENj
-	ntmQiYN+ibrQd4oXcki+Uyy6ZJz9idRvNPlp3J5YnTRp+MI1TpP6zihNg+zb6osN
-	O0huRqCEX/jdjKMBn/q+ZdQEC5HzgjmI1ZXQJY6OosFNZIw9Ibk+VJki0/op8de9
-	O9iEu1lKEgKj/swXWEm0Am+vGX0rxaDwKcYmwY/OeL8ro5F8gcCGTj9l230WYHFi
-	p8LVPvPF+RlJnVBi+tIyt/l0VVFeOAsrPEn2M9Nf5aA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=i1CaXq
-	atYxST7OBQcDDUEW58eAnuK/6c6XXGkd4pEJA=; b=rIJtKYPLY2g/ycsvSiVBxu
-	bVN5aGhoLbM5/pj0B8aFXje//kMBYOwuVzKkkWW10uAEiFRRey7PsgBn60ti3Kd1
-	raKTcIwP85RG7tBqgvcA46aa8LFnubeOo/yGkoJtT8EgTruwZ5e4FtUAa4S/Sjd3
-	9ZUkhZkts5fLET+8Y00Y1+Z35hG3GaOAshuZOm9FZ6kdk3DGjRJfQWw5ECzbGMhI
-	CyP54T/xiSTLYtPWlpVZPyPFahqLvTf5djZIFulfSGwNskYZmpo0JnougQlxVlr1
-	24wGjrRSbCpDBVIz0VXznInBbops7nDbRNLlNqN0sYZuTFWbLMw2Oemu/8KnZ90A
-	==
-X-ME-Sender: <xms:Fs1NXwkAdylgcZMy5AHFUEcIH9odvD6aMqAwp4ZxrBQLce-NBquVFg>
-    <xme:Fs1NX_019a-SGsmfTQrAAqy32pMGn4wGgR2Js-JTt_7w01Y-BZMsQtvTMHox1jXFX
-    qydbf7EgflK5HHCEA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrudefiedgkeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    gfrhhlucfvnfffucdludegmdenucfjughrpeffhffvuffkfhggtggujgfofgesthdtredt
-    ofervdenucfhrhhomhepfdfvohgsihhnucevrdcujfgrrhguihhnghdfuceomhgvsehtoh
-    gsihhnrdgttgeqnecuggftrfgrthhtvghrnhepueeiieejueeuhfffuedtfefgieehgeel
-    keelleeuuedtgeeuveegtddtffeijeeinecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
-    enucfkphepuddtiedrieelrdduudelrddujeeinecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomhepmhgvsehtohgsihhnrdgttg
-X-ME-Proxy: <xmx:Fs1NX-qihVwq6Ho-mGRvTbp_qlhra0USdftBrTzqw8TZffomlzZL_w>
-    <xmx:Fs1NX8kF4NUZMXwQjoTmunWQKTSriJzFEKZikG6GB1zD8S5KgP-1Dg>
-    <xmx:Fs1NX-3QJDUdPvscxernT1FzUHv77_hY14sAaE-scXAVTZBKflE7NA>
-    <xmx:F81NXzxxiQeXcW1L3GuxJevtR5QZw3YHygA4G_QPH7wnTzNqZZfkXg>
-Date: Tue, 1 Sep 2020 14:24:50 +1000
-From: "Tobin C. Harding" <me@tobin.cc>
-To: Tycho Andersen <tycho@tycho.ws>
-Cc: Kees Cook <keescook@chromium.org>, Solar Designer <solar@openwall.com>,
-	kernel-hardening@lists.openwall.com,
-	Mrinal Pandey <mrinalmni@gmail.com>,
-	Tycho Andersen <tycho@tycho.pizza>
-Subject: Re: [PATCH] scripts: Add intended executable mode and SPDX license
-Message-ID: <20200901042450.GA780@ares>
-References: <20200827092405.b6hymjxufn2nvgml@mrinalpandey>
- <20200827130653.GA25408@openwall.com>
- <202008271056.8B4B59C9@keescook>
- <20200901001519.GA567924@cisco>
+Received: (qmail 1541 invoked from network); 1 Sep 2020 15:42:34 -0000
+Date: Tue, 1 Sep 2020 16:42:17 +0100
+From: Mark Rutland <mark.rutland@arm.com>
+To: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
+Cc: "Madhavan T. Venkataraman" <madvenka@linux.microsoft.com>,
+	kernel-hardening@lists.openwall.com, linux-api@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-fsdevel@vger.kernel.org,
+	linux-integrity@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-security-module@vger.kernel.org, oleg@redhat.com,
+	x86@kernel.org
+Subject: Re: [PATCH v1 0/4] [RFC] Implement Trampoline File Descriptor
+Message-ID: <20200901154217.GD95447@C02TD0UTHF1T.local>
+References: <aefc85852ea518982e74b233e11e16d2e707bc32>
+ <20200728131050.24443-1-madvenka@linux.microsoft.com>
+ <20200731180955.GC67415@C02TD0UTHF1T.local>
+ <6236adf7-4bed-534e-0956-fddab4fd96b6@linux.microsoft.com>
+ <20200804143018.GB7440@C02TD0UTHF1T.local>
+ <b3368692-afe6-89b5-d634-12f4f0a601f8@linux.microsoft.com>
+ <20200812100650.GB28154@C02TD0UTHF1T.local>
+ <41c4de64-68d0-6fcb-e5c3-63ebd459262e@digikod.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200901001519.GA567924@cisco>
-X-Mailer: Mutt 1.9.4 (2018-02-28)
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <41c4de64-68d0-6fcb-e5c3-63ebd459262e@digikod.net>
 
-On Mon, Aug 31, 2020 at 06:15:19PM -0600, Tycho Andersen wrote:
-> On Thu, Aug 27, 2020 at 11:02:00AM -0700, Kees Cook wrote:
-> > On Thu, Aug 27, 2020 at 03:06:53PM +0200, Solar Designer wrote:
-> > > On Thu, Aug 27, 2020 at 02:54:05PM +0530, Mrinal Pandey wrote:
-> > > >  mode change 100644 => 100755 scripts/gcc-plugins/gen-random-seed.sh
-> > > 
-> > > This is basically the only change relevant to the contribution initially
-> > > made via kernel-hardening, and in my opinion (and I am list admin) isn't
-> > > worth bringing to the list.  Now we have this bikeshed thread in here
-> > > (and I'm guilty for adding to it), and would have more (which I hope
-> > > this message of mine will prevent) if changes to something else in the
-> > > patch(es) are requested (which Greg KH sort of already did).
-> > > 
-> > > I recall we previously had lots of "similar" bikeshedding in here when
-> > > someone was converting the documentation to rST.  The more bikeshedding
-> > > we have, the less actual kernel-hardening work is going to happen,
-> > > because the list gets the reputation of yet another kernel maintenance
-> > > list rather than the place where actual/potential new contributions to
-> > > improve the kernel's security are discussed, and because bikeshedding
-> > > makes the most capable people unsubscribe or stop paying attention.
-> > > 
-> > > How about we remove kernel-hardening from the MAINTAINERS entries it's
-> > > currently in? -
-> > > 
-> > > GCC PLUGINS
-> > > M:      Kees Cook <keescook@chromium.org>
-> > > R:      Emese Revfy <re.emese@gmail.com>
-> > > L:      kernel-hardening@lists.openwall.com
-> > > S:      Maintained
-> > > F:      Documentation/kbuild/gcc-plugins.rst
-> > > F:      scripts/Makefile.gcc-plugins
-> > > F:      scripts/gcc-plugin.sh
-> > > F:      scripts/gcc-plugins/
-> > > 
-> > > LEAKING_ADDRESSES
-> > > M:      Tobin C. Harding <me@tobin.cc>
-> > > M:      Tycho Andersen <tycho@tycho.ws>
-> > > L:      kernel-hardening@lists.openwall.com
-> > > S:      Maintained
-> > > T:      git git://git.kernel.org/pub/scm/linux/kernel/git/tobin/leaks.git
-> > > F:      scripts/leaking_addresses.pl
-> > > 
-> > > Alternatively, would this be acceptable? -
-> > > 
-> > > L:      kernel-hardening@lists.openwall.com (only for messages focused on core functionality, not for maintenance detail)
-> > > 
-> > > I think the latter would be best, if allowed.
-> > > 
-> > > Kees, please comment (so that we'd hopefully not need that next time),
-> > > and if you agree please make a change to MAINTAINERS.
-> > 
-> > A comment isn't going to really help fix this (much of the CCing is done
-> > by scripts, etc).
-> > 
-> > I've tended to prefer more emails than missing discussions, and I think
-> > it's not unreasonable to have the list mentioned in MAINTAINERS for
-> > those things. It does, of course, mean that "maintenance" patches get
-> > directed there too, as you say.
-> > 
-> > If it's really something you'd like to avoid, I can drop those
-> > references. My instinct is to leave it as-is, but the strength of my
-> > opinion is pretty small. Let me know what you prefer...
+On Wed, Aug 19, 2020 at 08:53:42PM +0200, Mickaël Salaün wrote:
+> On 12/08/2020 12:06, Mark Rutland wrote:
+> > Contemporary W^X means that a given virtual alias cannot be writeable
+> > and executeable simultaneously, permitting (a) and (b). If you read the
+> > references on the Wikipedia page for W^X you'll see the OpenBSD 3.3
+> > release notes and related presentation make this clear, and further they
+> > expect (b) to occur with JITS flipping W/X with mprotect().
 > 
-> One thing about leaking_addresses.pl is that I'm not sure anyone is
-> actively using it at this point. I told Tobin I'd help review stuff,
-> but I don't even have a GPG key with enough signatures to send PRs.
-> I'm slowly working on figuring that out, but in the meantime I wonder
-> if we couldn't move it into some self test somehow, so that at least
-> nobody adds new leaks? Does that seem worth doing?
+> W^X (with "permanent" mprotect restrictions [1]) goes back to 2000 with
+> PaX [2] (which predates partial OpenBSD implementation from 2003).
 > 
-> It would then probably go away as a separate perl script and live
-> under selftests, which could mean we could drop the reference to the
-> list. But that's me making it someone else's problem then, kind of :)
-> 
-> Also, I'm switching my e-mail address to tycho@tycho.pizza, so future
-> replies will be from there.
+> [1] https://pax.grsecurity.net/docs/mprotect.txt
+> [2] https://undeadly.org/cgi?action=article;sid=20030417082752
 
-I don't mind if the reference to kernel-hardening is removed, if in
-the event that someone sends a patch that needs input from the kernel
-hardening community we can always mail the list.
+Thanks for the pointers!
 
-Thanks,
-Tobin
+Mark.
