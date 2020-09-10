@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19861-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19863-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 23C7F265085
-	for <lists+kernel-hardening@lfdr.de>; Thu, 10 Sep 2020 22:22:00 +0200 (CEST)
-Received: (qmail 19970 invoked by uid 550); 10 Sep 2020 20:21:33 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 65E1B26508D
+	for <lists+kernel-hardening@lfdr.de>; Thu, 10 Sep 2020 22:22:18 +0200 (CEST)
+Received: (qmail 20187 invoked by uid 550); 10 Sep 2020 20:21:36 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,31 +13,31 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 19906 invoked from network); 10 Sep 2020 20:21:32 -0000
+Received: (qmail 20023 invoked from network); 10 Sep 2020 20:21:34 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7r1rfre30aGq4hYAj5mMZd9aKhfhtSFtGbHwMdeYlE0=;
-        b=WSKxrRh1zgAfDwGMo9L1sYHyOSqjXp+wb+YwpqiJT/Zb3NKDCzaVVT0HbYRYHs8jtw
-         syDcuriSzwueAxNmNoSgZJ3aO/+dNCwSIlBAmgYX5A9wHlOOfBJPa/yeELcCY0MiEm+v
-         nylpABXf8ROfraF5ukN6PNGINg1dckKo/9qxQ=
+        bh=fekJawXuRCxGrjYQI8OQvxsZTGlCFbLJj9FaUGr/A7E=;
+        b=QqSA5OLvk2Qdik/W7fOSu9hkPXdjQzGi3H6oVrZUyklZ+UzgX6HE9UM609d6dK+kyh
+         54tXPlf8gvwGJYpP5jiKL4Mqt3GvS4R+0mJa2dhY7V+8gDdXSbCJ3tIl9uerrba1ObNl
+         fq3FyNkenrkMAEkbOEdq32NFyGXYfubBxsfyo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7r1rfre30aGq4hYAj5mMZd9aKhfhtSFtGbHwMdeYlE0=;
-        b=RZwC4Xh/8bCeXEpbnQDolZTZZZ+eYLl9f4V/28HrAPzWaFnlMijyLVuoD97HvQZ+YS
-         LFBNMi4r891gTjS1slTBYaskqc45yWZu2C/1hsmmQ2fWbmZykfhTSwq3xU/zrWh7OR7A
-         djz4gyFVnZwwpWRAPx5NPYD6yr3NtoUfD+H3xJs5kdV+TCpALZwxrU36yVYHoZ8DPj9h
-         A0wulU4tqpzb6PiMitI7lIQTDIFA/QuQHXDl/Ixlod8CKV1lQ8jKz4237XAieIxaAsD3
-         Fjcj+dJLg89PJWBgDjQbakuFkJ5MGa/0CZGjfhku6k6+T/9NKcPpsOM378d2NuTDZNxZ
-         nenQ==
-X-Gm-Message-State: AOAM531BYu2nAwc5myrH79c5nWI/xcDkULCb259CmZrg5JD28K7jxdSK
-	IzJJbgMOzWHLO199YqFHAXXzsg==
-X-Google-Smtp-Source: ABdhPJzItNXJVhR75anYSdIs4NQSDmbgQALJfcnBGhftyYgbxgDuvZlpz5suFQW/PoYrnFwTWnHvYQ==
-X-Received: by 2002:a62:7809:: with SMTP id t9mr6934123pfc.105.1599769280337;
-        Thu, 10 Sep 2020 13:21:20 -0700 (PDT)
+        bh=fekJawXuRCxGrjYQI8OQvxsZTGlCFbLJj9FaUGr/A7E=;
+        b=gHm3j8kJGqo3fU65jFtNTNjzFPHOMMfR5JRvrgYg0Z1jZ2kWTCBGB5pwmiT4zcshbu
+         ts/gAiukQ9zsy5B+ZR5OrqVJk2LtE6QXaJJm412UBn1Awgn0k3+wPhwn9t3QrVL7rWnc
+         45mFIcFHZx+nNmLymT9xxNemM+vu9S5lfyZb65Oh4S2NiM6ykMEsxLkLOex91Ut2j/3F
+         5eqtEAFR/dnqzNBus00fzBWco8rekhvrStw7M+nSxmi8ZdO4uU2dlGJmI/XWfGM4iLhY
+         G6WU8V8bkK/PlWSVwReeMQB4KqHY8UyDNYcK+4TXhbVlHkfrSr6cyW2z4st+7oS79F0U
+         Rl0w==
+X-Gm-Message-State: AOAM532INAkUUE44X5ezoWpREO8jafY172oO40NBMGNGmt59j1sjVmbg
+	X0adZgAPH/RXJz7Euo8XS99PIw==
+X-Google-Smtp-Source: ABdhPJymFVJ+9HWBVHudVut19/nL7d3aLa8ZpMZHZNa4qlaiqrKo1FAhdiapRQw62yOFnHB/LJtf8A==
+X-Received: by 2002:a17:90b:a51:: with SMTP id gw17mr1654063pjb.118.1599769282707;
+        Thu, 10 Sep 2020 13:21:22 -0700 (PDT)
 From: Kees Cook <keescook@chromium.org>
 To: kernel-hardening@lists.openwall.com
 Cc: Kees Cook <keescook@chromium.org>,
@@ -61,9 +61,9 @@ Cc: Kees Cook <keescook@chromium.org>,
 	linux-kernel@vger.kernel.org,
 	linux-fsdevel@vger.kernel.org,
 	linux-security-module@vger.kernel.org
-Subject: [RFC PATCH 4/6] security/fbfam: Add a new sysctl to control the crashing rate threshold
-Date: Thu, 10 Sep 2020 13:21:05 -0700
-Message-Id: <20200910202107.3799376-5-keescook@chromium.org>
+Subject: [RFC PATCH 5/6] security/fbfam: Detect a fork brute force attack
+Date: Thu, 10 Sep 2020 13:21:06 -0700
+Message-Id: <20200910202107.3799376-6-keescook@chromium.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200910202107.3799376-1-keescook@chromium.org>
 References: <20200910202107.3799376-1-keescook@chromium.org>
@@ -72,126 +72,113 @@ Content-Transfer-Encoding: 8bit
 
 From: John Wood <john.wood@gmx.com>
 
-This is a previous step to add the detection feature.
+To detect a fork brute force attack it is necessary to compute the
+crashing rate of the application. This calculation is performed in each
+fatal fail of a task, or in other words, when a core dump is triggered.
+If this rate shows that the application is crashing quickly, there is a
+clear signal that an attack is happening.
 
-A fork brute force attack will be detected when an application crashes
-quickly. Since, a rate can be defined as a time per fault, add a new
-sysctl to control the crashing rate threshold.
-
-This way, each system can tune the detection's sensibility adjusting the
-milliseconds per fault. So, if the application's crashing rate falls
-under this threshold an attack will be detected. So, the higher this
-value, the faster an attack will be detected.
+Since the crashing rate is computed in milliseconds per fault, if this
+rate goes under a certain threshold a warning is triggered.
 
 Signed-off-by: John Wood <john.wood@gmx.com>
 ---
- include/fbfam/fbfam.h   |  4 ++++
- kernel/sysctl.c         |  9 +++++++++
- security/fbfam/Makefile |  1 +
- security/fbfam/fbfam.c  | 11 +++++++++++
- security/fbfam/sysctl.c | 20 ++++++++++++++++++++
- 5 files changed, 45 insertions(+)
- create mode 100644 security/fbfam/sysctl.c
+ fs/coredump.c          |  2 ++
+ include/fbfam/fbfam.h  |  2 ++
+ security/fbfam/fbfam.c | 39 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 43 insertions(+)
 
+diff --git a/fs/coredump.c b/fs/coredump.c
+index 76e7c10edfc0..d4ba4e1828d5 100644
+--- a/fs/coredump.c
++++ b/fs/coredump.c
+@@ -51,6 +51,7 @@
+ #include "internal.h"
+ 
+ #include <trace/events/sched.h>
++#include <fbfam/fbfam.h>
+ 
+ int core_uses_pid;
+ unsigned int core_pipe_limit;
+@@ -825,6 +826,7 @@ void do_coredump(const kernel_siginfo_t *siginfo)
+ fail_creds:
+ 	put_cred(cred);
+ fail:
++	fbfam_handle_attack(siginfo->si_signo);
+ 	return;
+ }
+ 
 diff --git a/include/fbfam/fbfam.h b/include/fbfam/fbfam.h
-index b5b7d1127a52..2cfe51d2b0d5 100644
+index 2cfe51d2b0d5..9ac8e33d8291 100644
 --- a/include/fbfam/fbfam.h
 +++ b/include/fbfam/fbfam.h
-@@ -3,8 +3,12 @@
- #define _FBFAM_H_
- 
- #include <linux/sched.h>
-+#include <linux/sysctl.h>
- 
- #ifdef CONFIG_FBFAM
-+#ifdef CONFIG_SYSCTL
-+extern struct ctl_table fbfam_sysctls[];
-+#endif
+@@ -12,10 +12,12 @@ extern struct ctl_table fbfam_sysctls[];
  int fbfam_fork(struct task_struct *child);
  int fbfam_execve(void);
  int fbfam_exit(void);
-diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index 09e70ee2332e..c3b4d737bef3 100644
---- a/kernel/sysctl.c
-+++ b/kernel/sysctl.c
-@@ -77,6 +77,8 @@
- #include <linux/uaccess.h>
- #include <asm/processor.h>
- 
-+#include <fbfam/fbfam.h>
-+
- #ifdef CONFIG_X86
- #include <asm/nmi.h>
- #include <asm/stacktrace.h>
-@@ -2660,6 +2662,13 @@ static struct ctl_table kern_table[] = {
- 		.extra1		= SYSCTL_ZERO,
- 		.extra2		= SYSCTL_ONE,
- 	},
-+#endif
-+#ifdef CONFIG_FBFAM
-+	{
-+		.procname	= "fbfam",
-+		.mode		= 0555,
-+		.child		= fbfam_sysctls,
-+	},
++int fbfam_handle_attack(int signal);
+ #else
+ static inline int fbfam_fork(struct task_struct *child) { return 0; }
+ static inline int fbfam_execve(void) { return 0; }
+ static inline int fbfam_exit(void) { return 0; }
++static inline int fbfam_handle_attack(int signal) { return 0; }
  #endif
- 	{ }
- };
-diff --git a/security/fbfam/Makefile b/security/fbfam/Makefile
-index f4b9f0b19c44..b8d5751ecea4 100644
---- a/security/fbfam/Makefile
-+++ b/security/fbfam/Makefile
-@@ -1,2 +1,3 @@
- # SPDX-License-Identifier: GPL-2.0
- obj-$(CONFIG_FBFAM) += fbfam.o
-+obj-$(CONFIG_SYSCTL) += sysctl.o
+ 
+ #endif /* _FBFAM_H_ */
 diff --git a/security/fbfam/fbfam.c b/security/fbfam/fbfam.c
-index 0387f95f6408..9be4639b72eb 100644
+index 9be4639b72eb..3aa669e4ea51 100644
 --- a/security/fbfam/fbfam.c
 +++ b/security/fbfam/fbfam.c
-@@ -7,6 +7,17 @@
+@@ -4,7 +4,9 @@
+ #include <linux/errno.h>
+ #include <linux/gfp.h>
+ #include <linux/jiffies.h>
++#include <linux/printk.h>
  #include <linux/refcount.h>
++#include <linux/signal.h>
  #include <linux/slab.h>
  
-+/**
-+ * sysctl_crashing_rate_threshold - Crashing rate threshold.
-+ *
-+ * The rate's units are in milliseconds per fault.
-+ *
-+ * A fork brute force attack will be detected if the application's crashing rate
-+ * falls under this threshold. So, the higher this value, the faster an attack
-+ * will be detected.
-+ */
-+unsigned long sysctl_crashing_rate_threshold = 30000;
-+
  /**
-  * struct fbfam_stats - Fork brute force attack mitigation statistics.
-  * @refc: Reference counter.
-diff --git a/security/fbfam/sysctl.c b/security/fbfam/sysctl.c
-new file mode 100644
-index 000000000000..430323ad8e9f
---- /dev/null
-+++ b/security/fbfam/sysctl.c
-@@ -0,0 +1,20 @@
-+// SPDX-License-Identifier: GPL-2.0
-+#include <linux/sysctl.h>
+@@ -172,3 +174,40 @@ int fbfam_exit(void)
+ 	return 0;
+ }
+ 
++/**
++ * fbfam_handle_attack() - Fork brute force attack detection.
++ * @signal: Signal number that causes the core dump.
++ *
++ * The crashing rate of an application is computed in milliseconds per fault in
++ * each crash. So, if this rate goes under a certain threshold there is a clear
++ * signal that the application is crashing quickly. At this moment, a fork brute
++ * force attack is happening.
++ *
++ * Return: -EFAULT if the current task doesn't have statistical data. Zero
++ *         otherwise.
++ */
++int fbfam_handle_attack(int signal)
++{
++	struct fbfam_stats *stats = current->fbfam_stats;
++	u64 delta_jiffies, delta_time;
++	u64 crashing_rate;
 +
-+extern unsigned long sysctl_crashing_rate_threshold;
-+static unsigned long ulong_one = 1;
-+static unsigned long ulong_max = ULONG_MAX;
++	if (!stats)
++		return -EFAULT;
 +
-+struct ctl_table fbfam_sysctls[] = {
-+	{
-+		.procname	= "crashing_rate_threshold",
-+		.data		= &sysctl_crashing_rate_threshold,
-+		.maxlen		= sizeof(sysctl_crashing_rate_threshold),
-+		.mode		= 0644,
-+		.proc_handler	= proc_doulongvec_minmax,
-+		.extra1		= &ulong_one,
-+		.extra2		= &ulong_max,
-+	},
-+	{ }
-+};
++	if (!(signal == SIGILL || signal == SIGBUS || signal == SIGKILL ||
++	      signal == SIGSEGV || signal == SIGSYS))
++		return 0;
++
++	stats->faults += 1;
++
++	delta_jiffies = get_jiffies_64() - stats->jiffies;
++	delta_time = jiffies64_to_msecs(delta_jiffies);
++	crashing_rate = delta_time / (u64)stats->faults;
++
++	if (crashing_rate < (u64)sysctl_crashing_rate_threshold)
++		pr_warn("fbfam: Fork brute force attack detected\n");
++
++	return 0;
++}
 +
 -- 
 2.25.1
