@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19853-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19854-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 254D3264D60
-	for <lists+kernel-hardening@lfdr.de>; Thu, 10 Sep 2020 20:41:35 +0200 (CEST)
-Received: (qmail 3963 invoked by uid 550); 10 Sep 2020 18:41:29 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 60ED3264E82
+	for <lists+kernel-hardening@lfdr.de>; Thu, 10 Sep 2020 21:17:16 +0200 (CEST)
+Received: (qmail 19567 invoked by uid 550); 10 Sep 2020 19:17:10 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,72 +13,59 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 3943 invoked from network); 10 Sep 2020 18:41:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Transfer-Encoding:
-	Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:
-	Sender:Reply-To:Content-ID:Content-Description;
-	bh=SVMzvLSxHR4YQ7P25QME/n/EPljnU8bFV5nCGi/Qx44=; b=nuYXudjIOEKrlWaHHeZyFkpQS2
-	wwcSZk0K6RlZlYBKUfyyPTDC6keEIXtAj5sR8cW6zZPcdJenYgtUpeSbsI/A6IqqzX7UwTm3cLU54
-	7NZMZ6oZ/ZnahlBszJVIHI9ljDrIk4+VtqAzRV0N6OKnwAuaXO690x5NJgJOP3DQUNmKZAKgzJFs3
-	oOAuecoKw+/7+aDwFjfO1p5WdkwiGcJj2QfkXDILLlWhYQbcDm5GVAFw3XMqEGiWENVP58kACpBub
-	AqdkMeObcGfzgvZvocq6uoEzPznHnpjFWZBJFcgewoWlHp6VxFSUUTNnxJtmcgtpnGt38QNE919lg
-	kgp2qS6Q==;
-Date: Thu, 10 Sep 2020 19:40:33 +0100
-From: Matthew Wilcox <willy@infradead.org>
-To: =?iso-8859-1?Q?Micka=EBl_Sala=FCn?= <mic@digikod.net>
-Cc: Mimi Zohar <zohar@linux.ibm.com>, linux-kernel@vger.kernel.org,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Andy Lutomirski <luto@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-	Casey Schaufler <casey@schaufler-ca.com>,
-	Christian Brauner <christian.brauner@ubuntu.com>,
-	Christian Heimes <christian@python.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Deven Bowers <deven.desai@linux.microsoft.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Eric Chiang <ericchiang@google.com>,
-	Florian Weimer <fweimer@redhat.com>,
-	James Morris <jmorris@namei.org>, Jan Kara <jack@suse.cz>,
-	Jann Horn <jannh@google.com>, Jonathan Corbet <corbet@lwn.net>,
-	Kees Cook <keescook@chromium.org>,
-	Lakshmi Ramasubramanian <nramas@linux.microsoft.com>,
-	Matthew Garrett <mjg59@google.com>,
-	Michael Kerrisk <mtk.manpages@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Philippe =?iso-8859-1?Q?Tr=E9buchet?= <philippe.trebuchet@ssi.gouv.fr>,
-	Scott Shell <scottsh@microsoft.com>,
-	Sean Christopherson <sean.j.christopherson@intel.com>,
-	Shuah Khan <shuah@kernel.org>, Steve Dower <steve.dower@python.org>,
-	Steve Grubb <sgrubb@redhat.com>,
-	Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>,
-	Thibaut Sautereau <thibaut.sautereau@clip-os.org>,
-	Vincent Strubel <vincent.strubel@ssi.gouv.fr>,
-	kernel-hardening@lists.openwall.com, linux-api@vger.kernel.org,
-	linux-integrity@vger.kernel.org,
-	linux-security-module@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org
-Subject: Re: [RFC PATCH v9 0/3] Add introspect_access(2) (was O_MAYEXEC)
-Message-ID: <20200910184033.GX6583@casper.infradead.org>
-References: <20200910164612.114215-1-mic@digikod.net>
- <20200910170424.GU6583@casper.infradead.org>
- <f6e2358c-8e5e-e688-3e66-2cdd943e360e@digikod.net>
- <a48145770780d36e90f28f1526805a7292eb74f6.camel@linux.ibm.com>
- <880bb4ee-89a2-b9b0-747b-0f779ceda995@digikod.net>
+Received: (qmail 19533 invoked from network); 10 Sep 2020 19:17:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=WTUCcqNRIoS33fWn/0Jo09nwI98p4mA4fR3hKii5V3g=;
+        b=GP5wEXl8UxhK+wcw6bvQ8Am/4d+n1zlegGhFVlx19po9y+fxYln7mlXhhNrTC3K8aT
+         1Kpc4olKCW9bvLkkS8hjjHSD9uwEbHfJkuYPnUbjnGPZbnVQ6u58EWyooJkMwgGX8n7h
+         EsOtvSQQsa/3CRyuEbiS3dBB8W0i4oB9WOQOA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=WTUCcqNRIoS33fWn/0Jo09nwI98p4mA4fR3hKii5V3g=;
+        b=dQsWtudu+r0CMcrXSldioezEddcO5DDGJ035tEw3Cfz95ht/aNVr5xXBHuwdthYkxy
+         /axLb1JXXTbBj+AANLFatlhK9tvwYhdtuMVuvUudonfTd2LJDAgMofsVAgYuM0msw/ih
+         GkYceGVv4wirzuanx2FPtwVLm1Iu70ouszN6slKeDjAlWKnkZ0XQz+DvKxL4TJ7kygeE
+         0cEUpUHdcI2qeyeCfIjsIliwelu7k2o5pN1VIkp7UCiGK1WOAWRQmKipPO7PcwlOr4Hm
+         9dFPRDtp9A3Olef9++b+IMw2wAYs2tvXqBYMSHab7I4atBpOe9PfHgFSwznOVUeD8Oqu
+         SyHg==
+X-Gm-Message-State: AOAM533AiZBUx4/Qero8E/s2VYDk65kiC7LqNNmmUxgBCr/+o/wzXzMw
+	NmCgIfj1tWsuXVAbc4h4Mim6yQ==
+X-Google-Smtp-Source: ABdhPJxB4PeK4jJudm2ddbNQtmc+Mb5hPIfiGDzHr6/1df0l5PgqUj2b0a/gbvPaj2mmUYK8b9fLJQ==
+X-Received: by 2002:a17:902:8f88:b029:d0:cbe1:e719 with SMTP id z8-20020a1709028f88b02900d0cbe1e719mr7176681plo.39.1599765417304;
+        Thu, 10 Sep 2020 12:16:57 -0700 (PDT)
+Date: Thu, 10 Sep 2020 12:16:55 -0700
+From: Kees Cook <keescook@chromium.org>
+To: Elena Petrova <lenaptr@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Cc: kernel-hardening@lists.openwall.com, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] sched.h: drop in_ubsan field when UBSAN is in trap mode
+Message-ID: <202009101216.1F173BD87D@keescook>
+References: <20200910134802.3160311-1-lenaptr@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <880bb4ee-89a2-b9b0-747b-0f779ceda995@digikod.net>
+In-Reply-To: <20200910134802.3160311-1-lenaptr@google.com>
 
-On Thu, Sep 10, 2020 at 08:38:21PM +0200, Mickaël Salaün wrote:
-> There is also the use case of noexec mounts and file permissions. From
-> user space point of view, it doesn't matter which kernel component is in
-> charge of defining the policy. The syscall should then not be tied with
-> a verification/integrity/signature/appraisal vocabulary, but simply an
-> access control one.
+On Thu, Sep 10, 2020 at 02:48:02PM +0100, Elena Petrova wrote:
+> in_ubsan field of task_struct is only used in lib/ubsan.c, which in its
+> turn is used only `ifneq ($(CONFIG_UBSAN_TRAP),y)`.
+> 
+> Removing unnecessary field from a task_struct will help preserve the
+> ABI between vanilla and CONFIG_UBSAN_TRAP'ed kernels. In particular,
+> this will help enabling bounds sanitizer transparently for Android's
+> GKI.
+> 
+> Signed-off-by: Elena Petrova <lenaptr@google.com>
 
-permission()?
+Acked-by: Kees Cook <keescook@chromium.org>
+
+(This should be CCed to akpm who has been taking most of the ubsan
+patches lately.)
+
+-- 
+Kees Cook
