@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-19911-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-19912-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 0CA4C26E280
-	for <lists+kernel-hardening@lfdr.de>; Thu, 17 Sep 2020 19:33:32 +0200 (CEST)
-Received: (qmail 23975 invoked by uid 550); 17 Sep 2020 17:33:25 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 373AA26E410
+	for <lists+kernel-hardening@lfdr.de>; Thu, 17 Sep 2020 20:41:15 +0200 (CEST)
+Received: (qmail 1134 invoked by uid 550); 17 Sep 2020 18:41:08 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,21 +13,20 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 23955 invoked from network); 17 Sep 2020 17:33:24 -0000
+Received: (qmail 1111 invoked from network); 17 Sep 2020 18:41:07 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-	s=badeba3b8450; t=1600363948;
-	bh=AtpaLz5T0doiwW45rKTXhN9OPitxExJgCcjhtNz0x98=;
+	s=badeba3b8450; t=1600368012;
+	bh=BJaSI38+zQjgcLqD+dMdPDjGZYHwT/xid39c3EhZ514=;
 	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Ohypy2arTKNnnt5P7OISH5u0hYMNI9QHrKofdzzgZeUnStbOrMbKMVNOYKh4xW/CT
-	 DdVMbhxcC1Qe2rl+QUlZwiTimUC6iyTlXiG9lmFNd7zDu3xrJ+nTV5k+qUalyXpXsI
-	 kup9FdV36ywl0bYuqPHc4cYzLP5MNpRkNYBUHOsY=
+	b=e9t1Z/p/aOHSebcLMutxKwgppPMe/c4ATNfVeaagoYuVRoFaa2lcxDVvXkzWR76hB
+	 YofRiSl0Oz66n/3Ox6RXXKJl0zCEVor4IEaBtxU8K7RZNYnhgrVIaB3LpC3/tCCxMV
+	 KpFqJTeep7knJ//m+d/o4g/0m+imNEeAr2az4VAk=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Date: Thu, 17 Sep 2020 19:32:09 +0200
+Date: Thu, 17 Sep 2020 20:40:06 +0200
 From: John Wood <john.wood@gmx.com>
-To: Jann Horn <jannh@google.com>
-Cc: Kees Cook <keescook@chromium.org>, John Wood <john.wood@gmx.com>,
-	Kernel Hardening <kernel-hardening@lists.openwall.com>,
-	Matthew Wilcox <willy@infradead.org>,
+To: Kees Cook <keescook@chromium.org>
+Cc: Jann Horn <jannh@google.com>, kernel-hardening@lists.openwall.com,
+	John Wood <john.wood@gmx.com>, Matthew Wilcox <willy@infradead.org>,
 	Jonathan Corbet <corbet@lwn.net>,
 	Alexander Viro <viro@zeniv.linux.org.uk>,
 	Ingo Molnar <mingo@redhat.com>,
@@ -40,86 +39,99 @@ Cc: Kees Cook <keescook@chromium.org>, John Wood <john.wood@gmx.com>,
 	Luis Chamberlain <mcgrof@kernel.org>,
 	Iurii Zaikin <yzaikin@google.com>, James Morris <jmorris@namei.org>,
 	"Serge E. Hallyn" <serge@hallyn.com>, linux-doc@vger.kernel.org,
-	kernel list <linux-kernel@vger.kernel.org>,
-	linux-fsdevel <linux-fsdevel@vger.kernel.org>,
-	linux-security-module <linux-security-module@vger.kernel.org>
+	linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+	linux-security-module@vger.kernel.org
 Subject: Re: [RFC PATCH 1/6] security/fbfam: Add a Kconfig to enable the
  fbfam feature
-Message-ID: <20200917173209.GA3637@ubuntu>
+Message-ID: <20200917175146.GB3637@ubuntu>
 References: <20200910202107.3799376-1-keescook@chromium.org>
  <20200910202107.3799376-2-keescook@chromium.org>
- <CAG48ez1V=oVczCCSuRaWX=bbN2cOi0Y9q48=e-Fuhg7mwMOi0A@mail.gmail.com>
+ <202009101615.8566BA3967@keescook>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAG48ez1V=oVczCCSuRaWX=bbN2cOi0Y9q48=e-Fuhg7mwMOi0A@mail.gmail.com>
-X-Provags-ID: V03:K1:R5ZkovHXd6oUrfcKmVNF76tjDIn4TAPnGKJDjlfIyNZe9chhDUt
- Esh/G27SFDsxpGe3eTJoHTkEtlKWjMzGSWaf4NY77J0KknyMS4Kn3FifB6lpQ9wSsgJm6aR
- GWM1FOcKZJ7nuqitu7T9wYT0c/x3o41HPECfOOo6S21tnSwhYbEzXGPZ8NK/o/DFW7XB3Cr
- jdRHD05vg7a/XdyN7NGVA==
+In-Reply-To: <202009101615.8566BA3967@keescook>
+X-Provags-ID: V03:K1:hfSrV/JuouzV96KqzDpTM0p1F5fgksRQkQ6glwDqKnplLy7aA51
+ LEXmlmjhZhsKwcw5j0kbmt75CSucf6iASudyPU5ybTSp6TwgdsHyhmEvzYWejOaYtXBaxA/
+ PnRKC9PzHtt0+UFq1WxYfr9s9ZeCojzAxzMMqSLlO3HjvJvoExAeNrCrqI6qFldyYkuwPt5
+ pa5DJIH2/13k0Vpfy5WPw==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:2EwjqjK0MgQ=:/EQ9AcFBVAGmYLV0pBWY8o
- gGXaUX/Hrs+puPZlxpfVGLXljFqWb6OiDmPwAY2thvJg4l6AbbOyWUdB4nBcfr7iKOdENAuhx
- pQ4bNDY7GY1UU1d6Pv8DcngCqiZaYa4/DawXqocZWNM1Tz5y/bhozMcuP56FRjvuff8OxA+9X
- HLRazrcudN8ngT4em/zcaDW45kFKUZTYutAJd2+EiyDuO85dyqK4jTcEp9KQMx/D8VfAsjLZZ
- Q4wtOIJWsOabrl7PYLK/VxJ5qyz9OPiCUsA1HDP4xMZ80DAokIaZouvDQ+fQmwyZaK7S/wjpI
- Bkfs9DOXHXJLyCkesWegBHVL0VW/faumfNSmW+UgcBUESsbpJ83fBYIjmib/XNZ9e7QbGlSa5
- YrEgFd+CXFX4DXFJSreOitylLWFRvdHQXOwTUpd2edPFkbNncR4gUhuj3r+SThc7SUSaZNzSz
- uURl/7xuQc70tcAeiVkIZENia5TPm+TskYe363azzRMCG/7zehjUIKOqjrAwLozehmz1X4cBi
- AqkSQFkb3bMKHhIMpSqHZsQMpdCOUQPH303CclE8vyHY4MrfzmuyAg0Eb8YYOCW/SAiKckLuS
- JMZ1zc0lzLubYvPgMZ13Q90eMfljXzUF8kEfTSLx/pC3ra4UpvpC5WcJ8Nr0wtxWteHuJsXO1
- c4cxi/F7vkNHk6wUNs1SEJGjdX1DcIrP/opUd3FNsPKVdobJTBB1Ww362z1AilN3N34l/ugCT
- U+O0XR8EtrojZ+EBfPCW0AhNZ2eoRmJC297qrM96zLc2EHMP4DRIel73HJbRt1MncUkmQLkJN
- aMXWoGHiu0kRlECH7Q9uNw17jiSPFliufWs1lLXyuemIetIPyMANdTxT7RItjKu0Ptxn4Ox3d
- 2PlT6jxh0+MFIq3oNy6YnQA+xo9VoC/lB9mQFU1by/IJGHucsLX13TQCM/C8cbm5AiHNxYYmE
- BvMl5UbU42mynW17o3O/gPVqDraNibeoll5csMsjYYkWsObrS7rbUQevlLvGaNcRqndummrz6
- GPxkOTfn2/SXeWQVtoTsPYc/KDTFUm3N6PO595ABECxEs+dZSUhC5wjh6ML+HXhe0CFgkyiN+
- cHhIPiVFu1o2hEFblWyOc8X6PP8i2ZQd87HTv6hrOhsbK9CPBlEbFPiATC7F9iJJdXpxPcQuP
- N62qqddxXJ0qJjvYSgwvHQi5cW2GGOzTRSr6rWfV4kvJpdeac0CyuonkHkAnf+IA4Qmz/eq3n
- FaQlsdU1+IuVNDpWlBn7tE3lYxb/PxZdeZwcn7A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:F+CYmWgFS1M=:BsRffWDkQBmHd+tKnquYN/
+ 8GM8gVMJzJUHm1wLN6sXJNkaM1TtRt/1V5S2aDYLosqzA7/u+EEtothfBo8QFKI9FsOFNyOFy
+ H4gOTJ0PF86fTmrXj6o7Tz1Z6U8o7uI4HIj5/mIYwLFl/TTv52z/+P6riiqXobBwn6C+80my/
+ gFNP+8JTHOp6yYAVBo+A8OSWoCQ5MagOVy0OoyK9mTw/3jXZItatZ2UsEYTSyPeb9+sQXm2tH
+ LLvGlF9TZ83maf5WrMyEJMqXha5sf7FjN4voWB3UEc8J4dWImKh15qpA/hr2sicARZPIKPe6F
+ K6QNgXaMIap5HLkHsnQETPu+cPdKK61VbmNLxFBwlfNcvFNu4y05X0UuH7IrTqMxlfV4MSus1
+ mkxSH4DErxV9mJfPRiannVBfsktkpXJAC8eczFtHls1VXsqZ+UTYg6BRGmdK4MGtH1ReFH9ZA
+ ywFRgt+be+8LcK4jyQAFgZQpRqrGJRqYUGTdFbGZ/tEdNcBc/q8s9ygAr7KMCKBmITyFkDRYN
+ E2K4u3EPUFOIaJqgd7EZ84wtGR39Sqniot95q5qpQEC8HNFBJ6yGzLnHy311i48kU+X2Z2yjp
+ kfxfaNP66eE/U59rDWestmaYslNyqva/9g2civeO4EtLuH3mpUwArmBzb0/qlIit5/fVwI/Cf
+ RN1Ur93LTn76zDgltjycZ8ALztU4UiZeDL5ChGXw3vK1pDz8pndc4M+kTZMdxWLAjKfqQURqJ
+ PKMjOcNHsujSTb9s3fJVMCIuM1ndW0RPV89rtBn38eMK77nv3r4yrzQpZdykSZQmvi2wgvWiK
+ HUz6U8VlqmJVX0IcIupeW1EWfrtdYb9JcWvMnhX8yfjg7N0/4Ijrly8zmsppeNTu3kZrMdLj1
+ VO7J368MKPC0a5VAZ510UDgycg7VfOfLijEnyU5EmK6FwTQJ3AodhBVWJJt/b4CUCs1gdsrIC
+ dXLbIuM177k0+HIj51B+7ikdPWBivlOy8obh0XKgsNk5GliXVn6jCrxTUtT+C1WvaxSYOlUxm
+ 8ZSYhm/OSApgQDJD2mvOL9huMsK/GHuEMP5N2x78Ewd6j8QsvmGBY3daU7p5WFAac5BELEUmp
+ IOhwYHNGrrQI/FUuAy1z5G/w46UgEIYf4p5lOTNp+lmjx9tHvtb0EoAdpU/1t1rzPsPSwXc5d
+ jQWlqvI38Yv94/imXFKlXrwpMtvjpHh39fqQxvy1z7m85HSQrL5DuN01Fp0JhxQtXd/s24Dsq
+ V81jzjHU6ZR+y6kUDixI7ItGZU/kNMJFd4Eerpw==
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Sep 10, 2020 at 11:21:58PM +0200, Jann Horn wrote:
-> On Thu, Sep 10, 2020 at 10:21 PM Kees Cook <keescook@chromium.org> wrote=
-:
+Hi,
+
+On Thu, Sep 10, 2020 at 04:18:08PM -0700, Kees Cook wrote:
+> On Thu, Sep 10, 2020 at 01:21:02PM -0700, Kees Cook wrote:
 > > From: John Wood <john.wood@gmx.com>
 > >
 > > Add a menu entry under "Security options" to enable the "Fork brute
 > > force attack mitigation" feature.
-> [...]
+> >
+> > Signed-off-by: John Wood <john.wood@gmx.com>
+> > ---
+> >  security/Kconfig       |  1 +
+> >  security/fbfam/Kconfig | 10 ++++++++++
+> >  2 files changed, 11 insertions(+)
+> >  create mode 100644 security/fbfam/Kconfig
+> >
+> > diff --git a/security/Kconfig b/security/Kconfig
+> > index 7561f6f99f1d..00a90e25b8d5 100644
+> > --- a/security/Kconfig
+> > +++ b/security/Kconfig
+> > @@ -290,6 +290,7 @@ config LSM
+> >  	  If unsure, leave this as the default.
+> >
+> >  source "security/Kconfig.hardening"
+> > +source "security/fbfam/Kconfig"
+>
+> Given the layout you've chosen and the interface you've got, I think
+> this should just be treated like a regular LSM.
+
+Yes, throughout the review it seems the most appropiate is treat
+this feature as a regular LSM. Thanks.
+
+> >
+> >  endmenu
+> >
+> > diff --git a/security/fbfam/Kconfig b/security/fbfam/Kconfig
+> > new file mode 100644
+> > index 000000000000..bbe7f6aad369
+> > --- /dev/null
+> > +++ b/security/fbfam/Kconfig
+> > @@ -0,0 +1,10 @@
+> > +# SPDX-License-Identifier: GPL-2.0
 > > +config FBFAM
 >
-> Please give this a more descriptive name than FBFAM. Some name where,
-> if a random kernel developer sees an "#ifdef" with that name in some
-> random piece of kernel code, they immediately have a rough idea for
-> what kind of feature this is.
->
-> Perhaps something like THROTTLE_FORK_CRASHES. Or something else that
-> is equally descriptive.
+> To jump on the bikeshed: how about just calling this
+> FORK_BRUTE_FORCE_DETECTION or FORK_BRUTE, and the directory could be
+> "brute", etc. "fbfam" doesn't tell anyone anything.
 
-Ok, understood. This will be fixed for the next version. Thanks.
+Understood. But how about use the fbfam abbreviation in the code? Like as
+function name prefix, struct name prefix, ... It would be better to use a
+more descriptive name in this scenario? It is not clear to me.
 
-> > +       bool "Fork brute force attack mitigation"
-> > +       default n
->
-> "default n" is superfluous and should AFAIK be omitted.
-
-Ok. I will remove it. Thanks.
-
-> > +       help
-> > +         This is a user defense that detects any fork brute force att=
-ack
-> > +         based on the application's crashing rate. When this measure =
-is
-> > +         triggered the fork system call is blocked.
->
-> This help text claims that the mitigation will block fork(), but patch
-> 6/6 actually kills the process hierarchy.
-
-Sorry, it's a mistake. It was the first idea but finally the implementatio=
-n
-changed and this description not was modified. Apologies. It will be fixed
-for the next version.
+> --
+> Kees Cook
 
 Thanks,
 John Wood
+
