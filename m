@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-20028-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-20029-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 0E46227D647
-	for <lists+kernel-hardening@lfdr.de>; Tue, 29 Sep 2020 20:59:19 +0200 (CEST)
-Received: (qmail 23675 invoked by uid 550); 29 Sep 2020 18:59:13 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 1435B27D6D6
+	for <lists+kernel-hardening@lfdr.de>; Tue, 29 Sep 2020 21:25:49 +0200 (CEST)
+Received: (qmail 14310 invoked by uid 550); 29 Sep 2020 19:25:42 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,59 +13,88 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 23644 invoked from network); 29 Sep 2020 18:59:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=dk1cTODLxYw48Etf8ZXYv1O0s0b1u8jvfbtZJWNF/FU=;
-        b=iUYptqhO1Cb1oqT70B6OiYOEYPvUtMv6DmPRynZqXb0UsVj/WglJDwZUkMpyqS2El8
-         Fd8UtabAKffredo2BSoKxIcFQbo25h/vpQ00kE9PoG5u9WEJ0ixa5dWISEAnpDqMzojB
-         +00ID59hznF2RjXcFfPz2RjUs2bfCHrZQogjU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=dk1cTODLxYw48Etf8ZXYv1O0s0b1u8jvfbtZJWNF/FU=;
-        b=ecYm3m/mlYtjGb2Q23Zs6pGHWvZ04mt7YWZnVUevspd1W0CNThnjb27O5NtWMtZww8
-         lJKfNS+jNv4l8URrwpeUkWv443p09gV9AcdkW4UkdXft21yrYi0szj9z67EN0FHBJXcG
-         +wzqdOk4/Gt0CtCz0IP/zg5ijJ239nIWueYv30o10RwXdLFjoU6rD/w7NiRzIIGT6qzs
-         gSxagd5PmFvCr5PAnABbRfed+73iPPFGZvv13jCCVL7alk50CPXMLyW41DaIWl0g7GLR
-         T30Al12/sJbUvozMh7qcOsKmO96PxcvuWdp33BEQm8m02xRcN7bc80R4C3r6SXa545qD
-         oP2A==
-X-Gm-Message-State: AOAM532FYuh/VixQeaC3VfpPjRLIqMwFqQMIiBg0AseJe8RNodbXSEDR
-	Favs5ETZA2UUZSd2xsOklmZ/1g==
-X-Google-Smtp-Source: ABdhPJzU/8kPj+74FsXi5Gk92Xw8EMgcTBYX8nGMWdrd6Q+OG2MvX/M1oO4s/mu3/8z3kZaxwqcXlA==
-X-Received: by 2002:a62:1dc1:0:b029:13e:d13d:a051 with SMTP id d184-20020a621dc10000b029013ed13da051mr5198108pfd.23.1601405940393;
-        Tue, 29 Sep 2020 11:59:00 -0700 (PDT)
-Date: Tue, 29 Sep 2020 11:58:58 -0700
-From: Kees Cook <keescook@chromium.org>
-To: Kristen Carlson Accardi <kristen@linux.intel.com>
-Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
-	arjan@linux.intel.com, x86@kernel.org, linux-kernel@vger.kernel.org,
-	kernel-hardening@lists.openwall.com, rick.p.edgecombe@intel.com
-Subject: Re: [PATCH v5 00/10] Function Granular KASLR
-Message-ID: <202009291156.075F4215@keescook>
-References: <20200923173905.11219-1-kristen@linux.intel.com>
-MIME-Version: 1.0
+Delivered-To: moderator for kernel-hardening@lists.openwall.com
+Received: (qmail 14121 invoked from network); 29 Sep 2020 19:25:24 -0000
+Date: Tue, 29 Sep 2020 21:25:17 +0200
+From: Solar Designer <solar@openwall.com>
+To: Kees Cook <keescook@chromium.org>
+Cc: kernel-hardening@lists.openwall.com, linux-hardening@vger.kernel.org
+Subject: Re: Linux-specific kernel hardening
+Message-ID: <20200929192517.GA2718@openwall.com>
+References: <202009281907.946FBE7B@keescook>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200923173905.11219-1-kristen@linux.intel.com>
+In-Reply-To: <202009281907.946FBE7B@keescook>
+User-Agent: Mutt/1.4.2.3i
 
-On Wed, Sep 23, 2020 at 10:38:54AM -0700, Kristen Carlson Accardi wrote:
-> This patch set is an implementation of finer grained kernel address space
-> randomization. It rearranges your kernel code at load time 
-> on a per-function level granularity, with only around a second added to
-> boot time.
+Hi Kees,
+
+Ouch.  I wouldn't have suggested we do anything at all about that minor
+problem if I knew you'd split the list in two as a result.  That's very
+confusing.  Assuming that's what you already did anyway, some comments:
+
+On Tue, Sep 29, 2020 at 10:14:03AM -0700, Kees Cook wrote:
+> The work of improving the Linux kernel's security is, of course,
+> and endless task. While many of the new features come through on the
+> kernel-hardening@lists.openwall.com list[1], there is a stated desire
+> to avoid "maintenance" topics[2] on the list, and that isn't compatible
+> with the on-going work done within the upstream Linux kernel development
+> community, which may need to discuss the nuances of performing that work.
 > 
-> Changes in v5:
-> --------------
-> [...]
+> As such there is now a new list, linux-hardening@vger.kernel.org[3],
+> which will take kernel-hardening's place in the Linux MAINTAINERS
+> file.
 
-Builds and boots; looks happy. Hopefully this can go into -tip after
-the coming v5.10 merge window, for v5.11? Thoughts?
+OK'ish so far.
 
-Tested-by: Kees Cook <keescook@chromium.org>
+> New topics and on-going work will be discussed there, and I urge
+> anyone interested in Linux kernel hardening to join the new list. It's
+> my intention that all future upstream work can be CCed there, following
+> the standard conventions of the Linux development model, for better or
+> worse. ;)
+> 
+> For anyone discussing new topics or ideas, please continue to CC
+> kernel-hardening too, as there will likely be many people only subscribed
+> there. Hopefully this will get the desired split of topics between the
+> two lists.
 
--- 
-Kees Cook
+I find this confusing.  Given that "new topics and on-going work will be
+discussed" on the new linux-hardening list, what's left for the old
+kernel-hardening list?  Just a legacy list to be CC'ed because people
+are still subscribed to it?  If so, it looks like basically because of
+my concern about a minor issue you chose to move the list from one place
+to another without actually addressing my concern in any way but causing
+lots of inconvenience.  That would be weird, so I hope I misunderstand.
+
+To me, "new topics" are certainly desirable on kernel-hardening.  Ditto
+for "on-going work" as long as it's work on kernel hardening per se
+(patch review, etc.) rather than e.g. documentation formatting fixes for
+former kernel hardening changes that are already accepted upstream and
+are only CC'ed here because of a formality (link from MAINTAINERS)
+rather than anyone's well-reasoned decision.
+
+I suggested that a small minority of messages on kernel-hardening be
+removed from here.  You're effectively replacing one list with another,
+or if that's not what you're doing then you haven't described it well,
+and I wouldn't expect to "get the desired split of topics".
+
+Then there's also the lists' naming and the Subject on this message.
+Are you suggesting that the kernel-hardening list be used for kernel
+hardening that is not Linux specific?  That would be a reuse of an
+abandoned list, if it would be, but I don't know whether there's demand
+for that and it's probably incompatible with continuing to CC the list
+on Linux-specific topics and it might not be well-received by all
+current subscribers who assumed it was a Linux list, which it was.
+
+Please clarify.
+
+> [1] https://www.openwall.com/lists/kernel-hardening/
+>     https://lore.kernel.org/kernel-hardening/
+> 
+> [2] https://lore.kernel.org/kernel-hardening/20200902121604.GA10684@openwall.com/
+> 
+> [3] http://vger.kernel.org/vger-lists.html#linux-hardening
+>     https://lore.kernel.org/linux-hardening/
+
+Alexander
