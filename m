@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-20019-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-20027-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 5A12E27D5A9
-	for <lists+kernel-hardening@lfdr.de>; Tue, 29 Sep 2020 20:19:13 +0200 (CEST)
-Received: (qmail 7486 invoked by uid 550); 29 Sep 2020 18:19:08 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 8D52F27D633
+	for <lists+kernel-hardening@lfdr.de>; Tue, 29 Sep 2020 20:55:50 +0200 (CEST)
+Received: (qmail 19659 invoked by uid 550); 29 Sep 2020 18:55:44 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,72 +13,254 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 7451 invoked from network); 29 Sep 2020 18:19:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=glZ74uXs4uVYpYfsBsjhUYHj82y51C7rtcPVZ0nTWqQ=;
-        b=EgdYcQxE7ZZjtGIKn7hfGvTL2dAAS4WYGICct/4ovCNiMZS8Km97CjFJt3irHOI5b0
-         1NWe9X+2BEnZBNDw5VjAHScU5u1VsM0MZGeZL2ZPww6WQLY/oSfCJ+ylsXnv6zQCov1F
-         A9BS2Ff1KEPFtA7BOyPRVy9zLkxBaesNC7P0U=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=glZ74uXs4uVYpYfsBsjhUYHj82y51C7rtcPVZ0nTWqQ=;
-        b=S2/QJ0XkNUc0ejxE1/UhOfvCvGwWKx/8XBhF3ChkNN3vke9QhjcRqYP7ND+DC88zBa
-         mcaHo7rhEIag6Xyd6ou5bemHQkBgVUGnTBLSk9J4lf1xs3tFXshRKnTjwPfGH6721noC
-         cZRqD6gY6x07Jq1cRY3i2CnmInwfrQyYurxYLhFBBNO/dE4xYXPGJW9BXyaOCKYgvm7d
-         fGrNP4Rw+TEdgqaIe2klGitPhaH4COFZacYgtb0lQHnpbGkLm4P/4fJtdMlQYMXMvpVt
-         KCpMtl4aw13f1LGwt/m+uCYJW68do5eVbPOl1PZl3Qj/vQi7m6O9Wbwm0uKTS144BSA2
-         TObg==
-X-Gm-Message-State: AOAM530sfcOGyu+ILnbwXwGhJElUWWC4r4oNBZErEZt6hdmkiwPp2pCf
-	0oNp0ayf02FyhZ7skVX8MSbLwtMUdKsQLE7C
-X-Google-Smtp-Source: ABdhPJzuL2+fzVC78Z9pEdc5ORcVZEwJAqOmtAdORpe3kHYq4M0bJk0KZSyfqie2KFGEJ6y7C2rEtg==
-X-Received: by 2002:a63:2319:: with SMTP id j25mr3946103pgj.75.1601399645297;
-        Tue, 29 Sep 2020 10:14:05 -0700 (PDT)
-Date: Tue, 29 Sep 2020 10:14:03 -0700
-From: Kees Cook <keescook@chromium.org>
-To: kernel-hardening@lists.openwall.com, linux-hardening@vger.kernel.org
-Subject: Linux-specific kernel hardening
-Message-ID: <202009281907.946FBE7B@keescook>
+Received: (qmail 19618 invoked from network); 29 Sep 2020 18:55:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1601371800;
+	bh=qMz6dRBu3xkLlmzQHM9cqNVc+YCxlNKFzcDQQoCWO/I=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=UQv3dVmmT8U/gdLlgDY9ISgc0E7BgAECsqrzx5sLjo43mM5nlMD88aScXu/0oaePT
+	 Qrnz1MKc2k28xa2IuMxjQlKmIPfh6i5j4uTMfp1yXCh+WiqJ/KVFtKeSVMmsxty9F5
+	 FhMSJjgz6pySHelT/QURWDnEH5oVwzqy6G12aBOc=
+X-Gm-Message-State: AOAM533XE1di+2HS0wuEuaSfe8mjetfxaABYFuRN3iXobNNlgyXL/Bu2
+	Lv9tAwlUDV00T3v5u7F/OElLKxYBNSCUZp0eG7o=
+X-Google-Smtp-Source: ABdhPJyY6uZlla3OzxkQ1DhZvy1VQBn/jIKVupdYVPaldzVzoy+bnpoNQ0/fgxcitRqWipl6JQ1y9ONgb+n9PHfeTrA=
+X-Received: by 2002:a4a:4910:: with SMTP id z16mr3882473ooa.41.1601371799755;
+ Tue, 29 Sep 2020 02:29:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20200626155832.2323789-1-ardb@kernel.org> <20200626155832.2323789-2-ardb@kernel.org>
+ <20200928170216.00006ff2@huawei.com> <CAMj1kXH1LZ15gzfW+7X5A4dMCD33DqNLnVrnLRo1zpw1Ekg+Lw@mail.gmail.com>
+ <20200928181755.000019bf@huawei.com>
+In-Reply-To: <20200928181755.000019bf@huawei.com>
+From: Ard Biesheuvel <ardb@kernel.org>
+Date: Tue, 29 Sep 2020 11:29:48 +0200
+X-Gmail-Original-Message-ID: <CAMj1kXGLVgAc0u9pSy0cKkmQXntdqjkkoM5wpdwLiwZfKOXKPA@mail.gmail.com>
+Message-ID: <CAMj1kXGLVgAc0u9pSy0cKkmQXntdqjkkoM5wpdwLiwZfKOXKPA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] arm64/acpi: disallow AML memory opregions to
+ access kernel memory
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Linux ARM <linux-arm-kernel@lists.infradead.org>, 
+	"Jason A . Donenfeld" <Jason@zx2c4.com>, Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>, 
+	Kernel Hardening <kernel-hardening@lists.openwall.com>, 
+	Catalin Marinas <catalin.marinas@arm.com>, 
+	ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Sudeep Holla <sudeep.holla@arm.com>, 
+	Will Deacon <will@kernel.org>, Linuxarm <linuxarm@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hello!
+On Mon, 28 Sep 2020 at 19:18, Jonathan Cameron
+<Jonathan.Cameron@huawei.com> wrote:
+>
+> On Mon, 28 Sep 2020 18:49:35 +0200
+> Ard Biesheuvel <ardb@kernel.org> wrote:
+>
+> > On Mon, 28 Sep 2020 at 18:02, Jonathan Cameron
+> > <Jonathan.Cameron@huawei.com> wrote:
+> > >
+> > > On Fri, 26 Jun 2020 17:58:31 +0200
+> > > Ard Biesheuvel <ardb@kernel.org> wrote:
+> > >
+> > > > AML uses SystemMemory opregions to allow AML handlers to access MMIO
+> > > > registers of, e.g., GPIO controllers, or access reserved regions of
+> > > > memory that are owned by the firmware.
+> > > >
+> > > > Currently, we also allow AML access to memory that is owned by the
+> > > > kernel and mapped via the linear region, which does not seem to be
+> > > > supported by a valid use case, and exposes the kernel's internal
+> > > > state to AML methods that may be buggy and exploitable.
+> > > >
+> > > > On arm64, ACPI support requires booting in EFI mode, and so we can cross
+> > > > reference the requested region against the EFI memory map, rather than
+> > > > just do a minimal check on the first page. So let's only permit regions
+> > > > to be remapped by the ACPI core if
+> > > > - they don't appear in the EFI memory map at all (which is the case for
+> > > >   most MMIO), or
+> > > > - they are covered by a single region in the EFI memory map, which is not
+> > > >   of a type that describes memory that is given to the kernel at boot.
+> > > >
+> > > > Reported-by: Jason A. Donenfeld <Jason@zx2c4.com>
+> > > > Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+> > >
+> > > Hi Ard,
+> > >
+> > > Ran into a problem with this one. See below
+> > >
+> > > > ---
+> > > >  arch/arm64/include/asm/acpi.h | 15 +----
+> > > >  arch/arm64/kernel/acpi.c      | 66 ++++++++++++++++++++
+> > > >  2 files changed, 67 insertions(+), 14 deletions(-)
+> > > >
+> > > > diff --git a/arch/arm64/include/asm/acpi.h b/arch/arm64/include/asm/acpi.h
+> > > > index a45366c3909b..bd68e1b7f29f 100644
+> > > > --- a/arch/arm64/include/asm/acpi.h
+> > > > +++ b/arch/arm64/include/asm/acpi.h
+> > > > @@ -47,20 +47,7 @@
+> > > >  pgprot_t __acpi_get_mem_attribute(phys_addr_t addr);
+> > > >
+> > > >  /* ACPI table mapping after acpi_permanent_mmap is set */
+> > > > -static inline void __iomem *acpi_os_ioremap(acpi_physical_address phys,
+> > > > -                                         acpi_size size)
+> > > > -{
+> > > > -     /* For normal memory we already have a cacheable mapping. */
+> > > > -     if (memblock_is_map_memory(phys))
+> > > > -             return (void __iomem *)__phys_to_virt(phys);
+> > > > -
+> > > > -     /*
+> > > > -      * We should still honor the memory's attribute here because
+> > > > -      * crash dump kernel possibly excludes some ACPI (reclaim)
+> > > > -      * regions from memblock list.
+> > > > -      */
+> > > > -     return __ioremap(phys, size, __acpi_get_mem_attribute(phys));
+> > > > -}
+> > > > +void __iomem *acpi_os_ioremap(acpi_physical_address phys, acpi_size size);
+> > > >  #define acpi_os_ioremap acpi_os_ioremap
+> > > >
+> > > >  typedef u64 phys_cpuid_t;
+> > > > diff --git a/arch/arm64/kernel/acpi.c b/arch/arm64/kernel/acpi.c
+> > > > index a7586a4db142..01b861e225b0 100644
+> > > > --- a/arch/arm64/kernel/acpi.c
+> > > > +++ b/arch/arm64/kernel/acpi.c
+> > > > @@ -261,6 +261,72 @@ pgprot_t __acpi_get_mem_attribute(phys_addr_t addr)
+> > > >       return __pgprot(PROT_DEVICE_nGnRnE);
+> > > >  }
+> > > >
+> > > > +void __iomem *acpi_os_ioremap(acpi_physical_address phys, acpi_size size)
+> > > > +{
+> > > > +     efi_memory_desc_t *md, *region = NULL;
+> > > > +     pgprot_t prot;
+> > > > +
+> > > > +     if (WARN_ON_ONCE(!efi_enabled(EFI_MEMMAP)))
+> > > > +             return NULL;
+> > > > +
+> > > > +     for_each_efi_memory_desc(md) {
+> > > > +             u64 end = md->phys_addr + (md->num_pages << EFI_PAGE_SHIFT);
+> > > > +
+> > > > +             if (phys < md->phys_addr || phys >= end)
+> > > > +                     continue;
+> > > > +
+> > > > +             if (phys + size > end) {
+> > > > +                     pr_warn(FW_BUG "requested region covers multiple EFI memory regions\n");
+> > > > +                     return NULL;
+> > > > +             }
+> > > > +             region = md;
+> > > > +             break;
+> > > > +     }
+> > > > +
+> > > > +     /*
+> > > > +      * It is fine for AML to remap regions that are not represented in the
+> > > > +      * EFI memory map at all, as it only describes normal memory, and MMIO
+> > > > +      * regions that require a virtual mapping to make them accessible to
+> > > > +      * the EFI runtime services.
+> > > > +      */
+> > > > +     prot = __pgprot(PROT_DEVICE_nGnRnE);
+> > > > +     if (region) {
+> > > > +             switch (region->type) {
+> > > > +             case EFI_LOADER_CODE:
+> > > > +             case EFI_LOADER_DATA:
+> > >
+> > > Unfortunately this seems to have broken overriding of ACPI tables from an initrd.
+> > > My particular test environment is qemu + EDK2.
+> > >
+> > > It only has obvious visible affect on tables that are used late in the boot such as PPTT
+> > > as they get dropped before they are used.
+> > >
+> > > These are read after ACPICA is initialized and acpi_reallocate_root_table()
+> > > has been called.  The back trace is:
+> > >
+> > > acpi_os_ioremap+0xfc/0x288
+> > > acpi_os_map_iomem+0xc4/0x188
+> > > acpi_os_map_memory+0x18/0x28
+> > > acpi_tb_acquire_table+0x54/0x8c
+> > > acpi_tb_validate_table+0x34/0x5c
+> > > acpi_tb_validate_temp_table+0x34/0x40
+> > > acpi_tb_verify_temp_table+0x48/0x250
+> > > acpi_reallocate_root_table+0x12c/0x160
+> > >
+> > > Seems that the table is in a region of type EFI_LOADER_DATA.
+> > >
+> > > I don't really know enough about this area to be sure what the right fix is or
+> > > even whether this is a kernel issue, or one that should be fixed elsewhere in
+> > > the stack.
+> > >
+> > > For now I'm just carry a hack that treats EFI_LOADER_DATA in the same fashion as
+> > > EFI_ACPI_RECLAIM_MEMORY below.
+> > >
+> > > What's the right way to fix this?
+> > >
+> >
+> > Hi Jonathan,
+> >
+> > That is an excellent question.
+> >
+> > The purpose of this change is to ensure that firmware cannot
+> > manipulate the internal state of the kernel. So as long as we can
+> > ensure that this memory is not claimed by the kernel's memory
+> > subsystem, we should be fine.
+> >
+> > Since this is an obvious debug feature, what we could do is reserve
+> > this memory permanently in some way, and make the test take this into
+> > account.
+>
+> Whilst it is a debug feature, I wonder if it gets shipped in production
+> hardware.  If not, could be we cynical and just drop the check if the
+> relevant config option is enabled?
+>
+> Perhaps just don't release the EFI_LOADER_DATA for other use? (if
+> this option is enabled only)
+>
+> >
+> > Do you have a full stack trace? How early does this run?
+>
+> For the place where it first occurs, ie the trace above, the acpi_reallocate_root_table() is
+> the call from acpi_early_init() from start_kernel().
+>
+> We hit the table a lot during later calls though and hence would run into the
+> same problem.
+>
 
-The work of improving the Linux kernel's security is, of course,
-and endless task. While many of the new features come through on the
-kernel-hardening@lists.openwall.com list[1], there is a stated desire
-to avoid "maintenance" topics[2] on the list, and that isn't compatible
-with the on-going work done within the upstream Linux kernel development
-community, which may need to discuss the nuances of performing that work.
+Could you try the patch below? Since the memory holding the tables is
+already memblock_reserve()d, we can just mark it NOMAP, and permit r/o
+remapping of NOMAP regions.
 
-As such there is now a new list, linux-hardening@vger.kernel.org[3],
-which will take kernel-hardening's place in the Linux MAINTAINERS
-file. New topics and on-going work will be discussed there, and I urge
-anyone interested in Linux kernel hardening to join the new list. It's
-my intention that all future upstream work can be CCed there, following
-the standard conventions of the Linux development model, for better or
-worse. ;)
+diff --git a/arch/arm64/kernel/acpi.c b/arch/arm64/kernel/acpi.c
+index a85174d05473..84da869c5ac4 100644
+--- a/arch/arm64/kernel/acpi.c
++++ b/arch/arm64/kernel/acpi.c
+@@ -298,8 +298,11 @@ void __iomem
+*acpi_os_ioremap(acpi_physical_address phys, acpi_size size)
+                case EFI_BOOT_SERVICES_DATA:
+                case EFI_CONVENTIONAL_MEMORY:
+                case EFI_PERSISTENT_MEMORY:
+-                       pr_warn(FW_BUG "requested region covers kernel
+memory @ %pa\n", &phys);
+-                       return NULL;
++                       if (memblock_is_map_memory(phys)) {
++                               pr_warn(FW_BUG "requested region
+covers kernel memory @ %pa\n", &phys);
++                               return NULL;
++                       }
++                       fallthrough;
 
-For anyone discussing new topics or ideas, please continue to CC
-kernel-hardening too, as there will likely be many people only subscribed
-there. Hopefully this will get the desired split of topics between the
-two lists.
+                case EFI_RUNTIME_SERVICES_CODE:
+                        /*
+@@ -388,3 +391,8 @@ int apei_claim_sea(struct pt_regs *regs)
 
-Thanks and take care,
+        return err;
+ }
++
++void arch_reserve_mem_area(acpi_physical_address addr, size_t size)
++{
++       memblock_mark_nomap(addr, size);
++}
+diff --git a/include/linux/acpi.h b/include/linux/acpi.h
+index 1e4cdc6c7ae2..64ae25c59d55 100644
+--- a/include/linux/acpi.h
++++ b/include/linux/acpi.h
+@@ -958,7 +958,7 @@ void acpi_os_set_prepare_extended_sleep(int
+(*func)(u8 sleep_state,
+ acpi_status acpi_os_prepare_extended_sleep(u8 sleep_state,
+                                           u32 val_a, u32 val_b);
 
--Kees
-
-[1] https://www.openwall.com/lists/kernel-hardening/
-    https://lore.kernel.org/kernel-hardening/
-
-[2] https://lore.kernel.org/kernel-hardening/20200902121604.GA10684@openwall.com/
-
-[3] http://vger.kernel.org/vger-lists.html#linux-hardening
-    https://lore.kernel.org/linux-hardening/
-
--- 
-Kees Cook
+-#ifdef CONFIG_X86
++#ifndef CONFIG_IA64
+ void arch_reserve_mem_area(acpi_physical_address addr, size_t size);
+ #else
+ static inline void arch_reserve_mem_area(acpi_physical_address addr,
