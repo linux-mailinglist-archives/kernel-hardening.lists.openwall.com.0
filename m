@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-20070-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-20071-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 13FDE27F086
-	for <lists+kernel-hardening@lfdr.de>; Wed, 30 Sep 2020 19:29:54 +0200 (CEST)
-Received: (qmail 24251 invoked by uid 550); 30 Sep 2020 17:28:25 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 0AF2627F380
+	for <lists+kernel-hardening@lfdr.de>; Wed, 30 Sep 2020 22:45:24 +0200 (CEST)
+Received: (qmail 22106 invoked by uid 550); 30 Sep 2020 20:45:18 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,54 +13,65 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Delivered-To: moderator for kernel-hardening@lists.openwall.com
-Received: (qmail 19728 invoked from network); 30 Sep 2020 17:19:25 -0000
-Date: Wed, 30 Sep 2020 18:19:08 +0100
-From: Catalin Marinas <catalin.marinas@arm.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Ard Biesheuvel <ardb@kernel.org>,
-	Linux ARM <linux-arm-kernel@lists.infradead.org>,
-	"Jason A . Donenfeld" <Jason@zx2c4.com>,
-	Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-	Kernel Hardening <kernel-hardening@lists.openwall.com>,
-	ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
-	Sudeep Holla <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>,
-	Linuxarm <linuxarm@huawei.com>
-Subject: Re: [PATCH v3 1/2] arm64/acpi: disallow AML memory opregions to
- access kernel memory
-Message-ID: <20200930171908.GA1732@gaia>
-References: <20200626155832.2323789-1-ardb@kernel.org>
- <20200626155832.2323789-2-ardb@kernel.org>
- <20200928170216.00006ff2@huawei.com>
- <CAMj1kXH1LZ15gzfW+7X5A4dMCD33DqNLnVrnLRo1zpw1Ekg+Lw@mail.gmail.com>
- <20200928181755.000019bf@huawei.com>
- <CAMj1kXGLVgAc0u9pSy0cKkmQXntdqjkkoM5wpdwLiwZfKOXKPA@mail.gmail.com>
- <20200930102722.00000bff@huawei.com>
+Received: (qmail 22074 invoked from network); 30 Sep 2020 20:45:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=JgQmmymEepmTyKfdtmZJjASTO5kyTURiWqToh5meDKE=;
+        b=N1JSnjgIbsN1xv7O/7f3T3QNscpYc+Oc8Onavg+xJhKmu87Vl5txC0mRnj581yP+T5
+         vji39GuQ54k3KnvTyItbHHJyjV7n/9yiIdpidKzXo0JDXhzi+h96aiFk9fi64j8d2bCt
+         gMDMVPAGpbUo9icFxVDwyRsfPfCjPc7VT3l7U=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=JgQmmymEepmTyKfdtmZJjASTO5kyTURiWqToh5meDKE=;
+        b=tRF9f9vfpGgyl9B4CXwffZorZa3Te2FWKnNz+tN7/ATQpgrT5zpgN3dSb5GhvBrsmG
+         SOl9vW3+p7gsZP18902v535AxENB77cvysItJcDTscQ2G4d81kDolrWw0XJXETFnITlD
+         HOFnqurU7RWVnbScjxR14g5wJNKCDPCd5K7dOXU7jc8lQlB4uk+LTXLFc5Gaq0rkgiAq
+         NAOoAJj+WHpY2S4JSFYUIEfJWs/zWpHw0LsyxkZ8pHn/tBW0d/reKYSMELzX4J28wIP7
+         1otOFlFvittmUg8mtO5I3EDU1piJhewlUYmAdNw2GvbdXVMihbg+nn3DGw5/Zc0UDBwx
+         Srmw==
+X-Gm-Message-State: AOAM5314TAxhYomfBAu2dNpJsuRGWcXI90iesl024z479u2oS7bcZKft
+	kKBM7/M7GJ+M9Egce/KxBKCukg==
+X-Google-Smtp-Source: ABdhPJwj25UpjOCh8s4y4qnI0EKHGhfilZz0SCC4DlHMi6btWQ6hwRXxTigXsih3jOgTEpH2lz1kwQ==
+X-Received: by 2002:a63:4d4a:: with SMTP id n10mr3430255pgl.96.1601498706030;
+        Wed, 30 Sep 2020 13:45:06 -0700 (PDT)
+Date: Wed, 30 Sep 2020 13:45:04 -0700
+From: Kees Cook <keescook@chromium.org>
+To: Sami Tolvanen <samitolvanen@google.com>
+Cc: Masahiro Yamada <masahiroy@kernel.org>, Will Deacon <will@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	clang-built-linux@googlegroups.com,
+	kernel-hardening@lists.openwall.com, linux-arch@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	x86@kernel.org
+Subject: Re: [PATCH v4 10/29] treewide: remove DISABLE_LTO
+Message-ID: <202009301344.3949D2FA8@keescook>
+References: <20200929214631.3516445-1-samitolvanen@google.com>
+ <20200929214631.3516445-11-samitolvanen@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200930102722.00000bff@huawei.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20200929214631.3516445-11-samitolvanen@google.com>
 
-Hi Jonathan,
-
-On Wed, Sep 30, 2020 at 10:27:22AM +0100, Jonathan Cameron wrote:
-> On Tue, 29 Sep 2020 11:29:48 +0200 Ard Biesheuvel <ardb@kernel.org> wrote:
-> > Could you try the patch below? Since the memory holding the tables is
-> > already memblock_reserve()d, we can just mark it NOMAP, and permit r/o
-> > remapping of NOMAP regions.
+On Tue, Sep 29, 2020 at 02:46:12PM -0700, Sami Tolvanen wrote:
+> This change removes all instances of DISABLE_LTO from
+> Makefiles, as they are currently unused, and the preferred
+> method of disabling LTO is to filter out the flags instead.
 > 
-> Looks good.  Thanks.
-> 
-> Tested-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Suggested-by: Kees Cook <keescook@chromium.org>
+> Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
 
-Could you please try the updated patch that Ard posted. There are a few
-minor differences:
+Thanks! I think this makes things cleaner in the later patches. :)
 
-https://lore.kernel.org/linux-acpi/20200929132522.18067-1-ardb@kernel.org/
-
-Thanks.
+Reviewed-by: Kees Cook <keescook@chromium.org>
 
 -- 
-Catalin
+Kees Cook
