@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-20088-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-20090-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 29595282357
-	for <lists+kernel-hardening@lfdr.de>; Sat,  3 Oct 2020 11:53:29 +0200 (CEST)
-Received: (qmail 12000 invoked by uid 550); 3 Oct 2020 09:53:21 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 8FB3928309F
+	for <lists+kernel-hardening@lfdr.de>; Mon,  5 Oct 2020 09:10:28 +0200 (CEST)
+Received: (qmail 15531 invoked by uid 550); 5 Oct 2020 07:10:20 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,111 +13,51 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 11977 invoked from network); 3 Oct 2020 09:53:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-	s=badeba3b8450; t=1601718746;
-	bh=+J10i8bNFrOqOG+3GURM3R/KC2tKxHk7bbB91+yozrE=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=YgyxAo9ipXCQEdwyhONQS+h1PTqn+hieEUf2kcfmMKmC2iYTGHN7xL2TmTFzp0TtB
-	 mf5ffJupFNvyQJoKYlHbI2fMpjGIMKdHsig7UZZDDhhNc/MOlDRh66QmtxQASKpHsh
-	 uBc2ARI0Bt9UPKGOIeW6rbl2UzdAcJDvpo0/4NVg=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Date: Sat, 3 Oct 2020 11:52:12 +0200
-From: John Wood <john.wood@gmx.com>
-To: Steven Rostedt <rostedt@goodmis.org>
-Cc: Kees Cook <keescook@chromium.org>, kernel-hardening@lists.openwall.com,
-	John Wood <john.wood@gmx.com>, Matthew Wilcox <willy@infradead.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Iurii Zaikin <yzaikin@google.com>, James Morris <jmorris@namei.org>,
-	"Serge E. Hallyn" <serge@hallyn.com>, linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-	linux-security-module@vger.kernel.org
-Subject: Re: [RFC PATCH 3/6] security/fbfam: Use the api to manage statistics
-Message-ID: <20201003095212.GA2911@ubuntu>
-References: <20200910202107.3799376-1-keescook@chromium.org>
- <20200910202107.3799376-4-keescook@chromium.org>
- <202009101625.0E3B6242@keescook>
- <20200929194712.541c860c@oasis.local.home>
- <20200929194924.31640617@oasis.local.home>
+Received: (qmail 15508 invoked from network); 5 Oct 2020 07:10:19 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Mon, 5 Oct 2020 09:10:07 +0200 (CEST)
+From: Miroslav Benes <mbenes@suse.cz>
+To: Josh Poimboeuf <jpoimboe@redhat.com>
+cc: Peter Zijlstra <peterz@infradead.org>, 
+    Sami Tolvanen <samitolvanen@google.com>, 
+    Masahiro Yamada <masahiroy@kernel.org>, Will Deacon <will@kernel.org>, 
+    Steven Rostedt <rostedt@goodmis.org>, 
+    Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+    "Paul E. McKenney" <paulmck@kernel.org>, Kees Cook <keescook@chromium.org>, 
+    Nick Desaulniers <ndesaulniers@google.com>, 
+    clang-built-linux@googlegroups.com, kernel-hardening@lists.openwall.com, 
+    linux-arch@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+    linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org, 
+    linux-pci@vger.kernel.org, x86@kernel.org, jthierry@redhat.com
+Subject: Re: [PATCH v4 04/29] objtool: Add a pass for generating
+ __mcount_loc
+In-Reply-To: <20201002141303.hyl72to37wudoi66@treble>
+Message-ID: <alpine.LSU.2.21.2010050909510.12678@pobox.suse.cz>
+References: <20200929214631.3516445-1-samitolvanen@google.com> <20200929214631.3516445-5-samitolvanen@google.com> <alpine.LSU.2.21.2010011504340.6689@pobox.suse.cz> <20201001133612.GQ2628@hirez.programming.kicks-ass.net>
+ <20201002141303.hyl72to37wudoi66@treble>
+User-Agent: Alpine 2.21 (LSU 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200929194924.31640617@oasis.local.home>
-X-Provags-ID: V03:K1:ggAP+Xm36kOZKXGb8H7ns8txs5t75Yr2LN5k1wKKGh7OrSyP4rv
- hABdr9ji9QjJMvdKJxa0Bo3pYk88oKRhyy8fuCUgx+hQKixmUvHbc1MDhKrV5cNsE+bxTP2
- Dk9PDaf2LUhtvdfHI+c0tcesCUkPkqHAYbnqWHE26/KCx1PlkWnubZnT6EbHkaMsMgXGyuU
- xlSBDE65qQDt9mTbJg9QA==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:3i4hMYig/Sg=:QgDlo3Fo4OAuy7Zosj84zw
- ldZ6Q2QLZiTRCIufr3bSmOYnjwZ1lFU18uEMJkn+4Fr8NbsA9s42eEVDlMksDspaRsYMexdGO
- 45XVRt/IoXnOVWdrg2jyNDsQsFsDT+3H1Ktx5oT8R9JIL9uxREu+JqSjEwscQEoNmE+2FDWK9
- w3ENzD6ACmNPB7bStYhkzZXhtS3OlXIMeRHFBKaPl4LjgliDTwfcZ42K2KSfJaV2ut3iyunwk
- OvrkZsHIHx2N+CC45RRk+zAse5/4ZmTd2llFRdGacvZyVD5G5Amt5tmbhEK8Io7fSkxqtQMTb
- yDTVfCdXw9Ou2YjoTZGdc29O3NWP9ksSQr2s0Jm4KF+PSAIFY0MVvQ3tkz9QEGZeCTNiJl24t
- AYWmCP8MFQunYK+/7KQUkV4syjZfKQsOGhWoBeGCogNxTVGAl7eau5NWc506r8MwznKGP0E7X
- 5H/soS8iQ9tGJsbrQW2bi4Cr9aI+n9aKj8QSpG9Gyg+tJSh7pnxX7nDG0r5KOYZIavMNAoJTm
- 7O1XtZagVphvyo8BF5X4B0nqUuRwvWiHSa0j31be255+FxswtdXj4AGteOxTeHdryUNcC2N4c
- IXfBlvZOOtceo/mv8+KomewuYW8ZJyA2FiOXYI98B17Ox7ywOnqeJ33erC301YOEqIhKqpSUB
- +SnDwitQk+63gfTYzwTfBb6WyjfY0SG+ko9aDzqPTtrRgQU9k9GDC50hN0+lTY6UcxuKz2GWx
- 3rsTrH4I5k+HD4pxZRyybfx9ezKoAeC+CW17blJUyroVYsqcc7BoaOllFwrrHUqHL8MY4U8Wn
- gaaOtEm4hIEfgxa4uztTg0NUDg7O7ioBZqC/x+IvNEswdLiS1uYlqTYNUvFhyO49Is7036EVX
- LiR8BLxqRq3Q+T9OXQQzLOe1RMa2iZjvWxCHq0e9nKAq/mZxo+ZeNv24yNDjQ4pafCASpkTl5
- 70/RcD2tUgsEg2XVTTpfBuOCUXF3pJr8FyW26PMeJ87GMMR/QCJWUzw4O7E/hT95AP5/rpNIL
- VaoQENCp6HmFy1Y4ufI99vRrKQHUYIhaGbVh8XMbtSsb9LUS0MtfJUWhVAO0d1T9xywLoHp/e
- ZgQE09w+RUrtSAEjD6tj+aj/MuFI7e4IMmAqlimOSAnwzxIyC44HiVHojeYn6G4FKtK74g6sC
- NtpHowXAs6E12LUUobi0vXwNrCdz1IgyUGcpsfaU6OcKS4f50Pb61rPs/b3S5+WDqCnUgcMhI
- US28q0ydgG9GDKNrO6/GL+5MNwwcCb3XfMxjC9g==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
 
-Hi Steven,
+On Fri, 2 Oct 2020, Josh Poimboeuf wrote:
 
-On Tue, Sep 29, 2020 at 07:49:24PM -0400, Steven Rostedt wrote:
-> On Tue, 29 Sep 2020 19:47:12 -0400
-> Steven Rostedt <rostedt@goodmis.org> wrote:
->
-> > On Thu, 10 Sep 2020 16:33:38 -0700
-> > Kees Cook <keescook@chromium.org> wrote:
-> >
-> > > > @@ -1940,6 +1941,7 @@ static int bprm_execve(struct linux_binprm *=
-bprm,
-> > > >  	task_numa_free(current, false);
-> > > >  	if (displaced)
-> > > >  		put_files_struct(displaced);
-> > > > +	fbfam_execve();
-> > >
-> > > As mentioned in the other emails, I think this could trivially be
-> > > converted into an LSM: all the hooks are available AFAICT. If you on=
-ly
-> > > want to introspect execve _happening_, you can use bprm_creds_for_ex=
-ec
-> > > which is called a few lines above. Otherwise, my prior suggestion ("=
-the
-> > > exec has happened" hook via brpm_cred_committing, etc).
-> >
-> > And if its information only, you could just register a callback to the
-> > trace_sched_process_exec() tracepoint and do whatever you want then.
-> >
-> > The tracepoints are available for anyone to attach to. Not just tracin=
-g.
-> >
-> And there's also trace_sched_process_fork() and
-> trace_sched_process_exit().
+> On Thu, Oct 01, 2020 at 03:36:12PM +0200, Peter Zijlstra wrote:
+> > On Thu, Oct 01, 2020 at 03:17:07PM +0200, Miroslav Benes wrote:
+> > 
+> > > I also wonder about making 'mcount' command separate from 'check'. Similar 
+> > > to what is 'orc' now. But that could be done later.
+> > 
+> > I'm not convinced more commands make sense. That only begets us the
+> > problem of having to run multiple commands.
+> 
+> Agreed, it gets hairy when we need to combine things.  I think "orc" as
+> a separate subcommand was a mistake.
+> 
+> We should change to something like
+> 
+>   objtool run [--check] [--orc] [--mcount]
+>   objtool dump [--orc] [--mcount]
 
-Since this feature requires a pointer to the statistical data in the
-task_struct structure, and the LSM allows this using the security blobs,
-I think that the best for now is convert all the code to an LSM. Anyway,
-thanks for the suggestion.
+Yes, that makes sense.
 
-> -- Steve
-
-Thanks,
-John Wood
-
+Miroslav
