@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-20110-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-20111-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id A28E42848A9
-	for <lists+kernel-hardening@lfdr.de>; Tue,  6 Oct 2020 10:33:11 +0200 (CEST)
-Received: (qmail 15410 invoked by uid 550); 6 Oct 2020 08:33:04 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 3EC6B2848AF
+	for <lists+kernel-hardening@lfdr.de>; Tue,  6 Oct 2020 10:36:08 +0200 (CEST)
+Received: (qmail 17755 invoked by uid 550); 6 Oct 2020 08:36:02 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,13 +13,13 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 15390 invoked from network); 6 Oct 2020 08:33:04 -0000
-Date: Tue, 6 Oct 2020 08:32:52 +0000 (UTC)
+Received: (qmail 17735 invoked from network); 6 Oct 2020 08:36:02 -0000
+Date: Tue, 6 Oct 2020 08:35:50 +0000 (UTC)
 From: Christopher Lameter <cl@linux.com>
 X-X-Sender: cl@www.lameter.com
-To: Matthew Wilcox <willy@infradead.org>
-cc: Jann Horn <jannh@google.com>, Alexander Popov <alex.popov@linux.com>, 
-    Kees Cook <keescook@chromium.org>, Will Deacon <will@kernel.org>, 
+To: Kees Cook <keescook@chromium.org>
+cc: Matthew Wilcox <willy@infradead.org>, Jann Horn <jannh@google.com>, 
+    Alexander Popov <alex.popov@linux.com>, Will Deacon <will@kernel.org>, 
     Andrey Ryabinin <aryabinin@virtuozzo.com>, 
     Alexander Potapenko <glider@google.com>, 
     Dmitry Vyukov <dvyukov@google.com>, Pekka Enberg <penberg@kernel.org>, 
@@ -44,33 +44,33 @@ cc: Jann Horn <jannh@google.com>, Alexander Popov <alex.popov@linux.com>,
     kernel list <linux-kernel@vger.kernel.org>, notify@kernel.org
 Subject: Re: [PATCH RFC v2 0/6] Break heap spraying needed for exploiting
  use-after-free
-In-Reply-To: <20201006004414.GP20115@casper.infradead.org>
-Message-ID: <alpine.DEB.2.22.394.2010060831300.99155@www.lameter.com>
-References: <20200929183513.380760-1-alex.popov@linux.com> <91d564a6-9000-b4c5-15fd-8774b06f5ab0@linux.com> <CAG48ez1tNU_7n8qtnxTYZ5qt-upJ81Fcb0P2rZe38ARK=iyBkA@mail.gmail.com> <20201006004414.GP20115@casper.infradead.org>
+In-Reply-To: <202010051905.62D79560@keescook>
+Message-ID: <alpine.DEB.2.22.394.2010060833000.99155@www.lameter.com>
+References: <20200929183513.380760-1-alex.popov@linux.com> <91d564a6-9000-b4c5-15fd-8774b06f5ab0@linux.com> <CAG48ez1tNU_7n8qtnxTYZ5qt-upJ81Fcb0P2rZe38ARK=iyBkA@mail.gmail.com> <20201006004414.GP20115@casper.infradead.org> <202010051905.62D79560@keescook>
 User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 
 
+On Mon, 5 Oct 2020, Kees Cook wrote:
 
-On Tue, 6 Oct 2020, Matthew Wilcox wrote:
-
-> On Tue, Oct 06, 2020 at 12:56:33AM +0200, Jann Horn wrote:
-> > It seems to me like, if you want to make UAF exploitation harder at
-> > the heap allocator layer, you could do somewhat more effective things
-> > with a probably much smaller performance budget. Things like
-> > preventing the reallocation of virtual kernel addresses with different
-> > types, such that an attacker can only replace a UAF object with
-> > another object of the same type. (That is not an idea I like very much
-> > either, but I would like it more than this proposal.) (E.g. some
-> > browsers implement things along those lines, I believe.)
+> > TYPESAFE_BY_RCU, but if forcing that on by default would enhance security
+> > by a measurable amount, it wouldn't be a terribly hard sell ...
 >
-> The slab allocator already has that functionality.  We call it
-> TYPESAFE_BY_RCU, but if forcing that on by default would enhance security
-> by a measurable amount, it wouldn't be a terribly hard sell ...
+> Isn't the "easy" version of this already controlled by slab_merge? (i.e.
+> do not share same-sized/flagged kmem_caches between different caches)
 
-TYPESAFE functionality switches a lot of debugging off because that also
-allows speculative accesses to the object after it was freed (requires
-for RCU safeness because the object may be freed in an RCU period where
-it is still accessed). I do not think you would like that.
+Right.
+
+> The large trouble are the kmalloc caches, which don't have types
+> associated with them. Having implicit kmem caches based on the type
+> being allocated there would need some pretty extensive plumbing, I
+> think?
+
+Actually typifying those accesses may get rid of a lot of kmalloc
+allocations and could help to ease the management and control of objects.
+
+It may be a big task though given the ubiquity of kmalloc and the need to
+create a massive amount of new slab caches. This is going to reduce the
+cache hit rate significantly.
 
