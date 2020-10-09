@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-20150-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-20151-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 23889288E93
-	for <lists+kernel-hardening@lfdr.de>; Fri,  9 Oct 2020 18:17:44 +0200 (CEST)
-Received: (qmail 7559 invoked by uid 550); 9 Oct 2020 16:14:31 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 7339F288E99
+	for <lists+kernel-hardening@lfdr.de>; Fri,  9 Oct 2020 18:17:55 +0200 (CEST)
+Received: (qmail 7734 invoked by uid 550); 9 Oct 2020 16:14:33 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,43 +13,43 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 7463 invoked from network); 9 Oct 2020 16:14:30 -0000
+Received: (qmail 7637 invoked from network); 9 Oct 2020 16:14:32 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=KGusc3+RBCNZzwrkW+3708RrOouUa5FTnw8PnBTY3Ig=;
-        b=T3uphKT5yiHzmre9bkTK6EvjVmGfnhT7ZFFnV4sLcrb7aMVmDOpxZyPoKPeEcaNKtw
-         bLwWcg0u4RVu56DBE1l/EFAJo/HHanmlaklCdVV/xwdWBpRNFhzn+X3/LxWAUfbhp/U/
-         GNlO7yw6b8BkEnALpByL0X9MzDTLW7NBXjJemt4oO0kn7GZ7tQAc2izO8jd84Mn+pfZ9
-         Q8VycjN+4DsNFujjU1a5crzy/UM0hIFVYyz+EvyZkDNQQ+Ssi6Zd8LRvcNgb7ixFU1dN
-         ctSt5By/Q4V+U/wi5Rp7dpEjeliEfwZMggEzSUoN5urCLveVN2ERv75kNnLo9GLtwhM6
-         5wTQ==
+        bh=IWlwO4V8zfIKj2VoQVJSOpIzEd6XIOwNzizfhzYsm+I=;
+        b=icGF2o4BoUC5H7jDfDcqIeIDmztt1DX3EBV4AR9CIZel1UdghtV62q3fzjA81E5ME4
+         x9g3yQfuIaLSgx21c6ABnIjUmaI4VqxjY4B5WnUXRoUb92nAtC/XbQPpxdBRAKJqH+qH
+         jcvBMX8XEpz4rNBFWhnnnRs6RxEEg7NtFbXbUMhmEcBsm9ep+5oJx3BqoMUfqRJe9eh+
+         HQV2rljyVTcunwoXwynW5GLctChORkFUDmM1/j1sk+6+WxF8Dg5/LcVdGd37dGhF+GtO
+         M9aoDBKTtmJg2M/huHN2yYE2hfJUvsC+WO6y4SzBmnETs4aTNvX9A0N+1ApFOCsrkyFd
+         VCjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=KGusc3+RBCNZzwrkW+3708RrOouUa5FTnw8PnBTY3Ig=;
-        b=CZXrujIMKr/sttl2cxIGFJ10zx/F8FfU59Ln0JnhVgGJ6JwFAMtbnIS3EJymPqrYpf
-         XCLk2hy6FZmy0vk9pSPREJhNHW0AuyRw4yG1rtMUSaKvJfllHDCfnug1RDqFhb2xK+uP
-         vbUOvCB2Ah9lOrW9XP++LtNgUdKM9ltFThM5R350J6JDjnQRhTIdi+NHEaalbLuF/s1+
-         HCYfdbacKbXk3C76K4QvD50Xy07z8xgOyYw15Ng370433q4zyO8E2Tp01+d1G7Dhm04f
-         vrcXu97unMwgqi5h1upeTgelhPPsUDOMqHMIfW9dAwPLkGamS4EY7Wlw02Rbo6ESqHQY
-         zwUg==
-X-Gm-Message-State: AOAM532xdZn9g6ZVaMMZRCDyUdCLbOuVv2OhlJnNsffATadu2+DvoNKI
-	8RDx2VHEKagJXTaMCfIb2YycYbTCLJOphs9oPuU=
-X-Google-Smtp-Source: ABdhPJyXF5PEn5u0UASyOtBGN61NWqU4GwvxlOzGlhXJZtvZt0XNABboerQ6XEYrKTpOJFOpPCSvjnoA42FIJ7VzrPg=
+        bh=IWlwO4V8zfIKj2VoQVJSOpIzEd6XIOwNzizfhzYsm+I=;
+        b=IIGyOtMxtDkI8DiMRIPfPO9glidGlnzYOpR9ji33FcF6P5n6gsEeS3ETS/+M8hBxJA
+         P3nignFWPtItAfddKJFxIHYlgrqi18dOT7CU4LkinIcMKam9IlDidynPgIVFZZWPHkHW
+         Aq8PvJizwaU5DxXHP0w3qScorhi/TtJ1ij3RHZMZ7vTsiDGZvJu24cgG952HHaseXQnX
+         //y+1DJpsfAdUj7rK7MnO5fvUWpBaNOK53XgoMMIlztOQOgrOTdxHL0SS1wSrJtExkah
+         rytPFHTCveCxETSZFNlVf/4nJ8xvhLBYcb3NgRBbElWclm4c0j19UunTn2uXxuCyjwbB
+         KtTg==
+X-Gm-Message-State: AOAM532fm67+ApXFxlmyyoXNR8sfEMTgRvTu4Ssl/oICUXgY3L65g/Jh
+	1PPD83+7L3jHynCQGKGgYul5Tkn+N2mq8/iS7WI=
+X-Google-Smtp-Source: ABdhPJxEWHAvyNkdIDlQRKJ2smQRYfbTU12bNHGd7NqYEmxH7inHJ1sIHSNvQnTIBhdfm/bIQe6W23Fz9FB7iOfrFU0=
 Sender: "samitolvanen via sendgmr" <samitolvanen@samitolvanen1.mtv.corp.google.com>
 X-Received: from samitolvanen1.mtv.corp.google.com ([2620:15c:201:2:f693:9fff:fef4:1b6d])
- (user=samitolvanen job=sendgmr) by 2002:a25:cd05:: with SMTP id
- d5mr18037401ybf.212.1602260058814; Fri, 09 Oct 2020 09:14:18 -0700 (PDT)
-Date: Fri,  9 Oct 2020 09:13:28 -0700
+ (user=samitolvanen job=sendgmr) by 2002:ad4:43e5:: with SMTP id
+ f5mr13905635qvu.12.1602260060762; Fri, 09 Oct 2020 09:14:20 -0700 (PDT)
+Date: Fri,  9 Oct 2020 09:13:29 -0700
 In-Reply-To: <20201009161338.657380-1-samitolvanen@google.com>
-Message-Id: <20201009161338.657380-20-samitolvanen@google.com>
+Message-Id: <20201009161338.657380-21-samitolvanen@google.com>
 Mime-Version: 1.0
 References: <20201009161338.657380-1-samitolvanen@google.com>
 X-Mailer: git-send-email 2.28.0.1011.ga647a8990f-goog
-Subject: [PATCH v5 19/29] scripts/mod: disable LTO for empty.c
+Subject: [PATCH v5 20/29] efi/libstub: disable LTO
 From: Sami Tolvanen <samitolvanen@google.com>
 To: Masahiro Yamada <masahiroy@kernel.org>, Will Deacon <will@kernel.org>, 
 	Steven Rostedt <rostedt@goodmis.org>
@@ -62,27 +62,29 @@ Cc: Peter Zijlstra <peterz@infradead.org>, Greg Kroah-Hartman <gregkh@linuxfound
 	Sami Tolvanen <samitolvanen@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-With CONFIG_LTO_CLANG, clang generates LLVM IR instead of ELF object
-files. As empty.o is used for probing target properties, disable LTO
-for it to produce an object file instead.
+With CONFIG_LTO_CLANG, we produce LLVM bitcode instead of ELF object
+files. Since LTO is not really needed here and the Makefile assumes we
+produce an object file, disable LTO for libstub.
 
 Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
 Reviewed-by: Kees Cook <keescook@chromium.org>
 ---
- scripts/mod/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/firmware/efi/libstub/Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/scripts/mod/Makefile b/scripts/mod/Makefile
-index 78071681d924..c9e38ad937fd 100644
---- a/scripts/mod/Makefile
-+++ b/scripts/mod/Makefile
-@@ -1,5 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0
- OBJECT_FILES_NON_STANDARD := y
-+CFLAGS_REMOVE_empty.o += $(CC_FLAGS_LTO)
+diff --git a/drivers/firmware/efi/libstub/Makefile b/drivers/firmware/efi/libstub/Makefile
+index 0c911e391d75..e927876f3a05 100644
+--- a/drivers/firmware/efi/libstub/Makefile
++++ b/drivers/firmware/efi/libstub/Makefile
+@@ -36,6 +36,8 @@ KBUILD_CFLAGS			:= $(cflags-y) -Os -DDISABLE_BRANCH_PROFILING \
  
- hostprogs-always-y	+= modpost mk_elfconfig
- always-y		+= empty.o
+ # remove SCS flags from all objects in this directory
+ KBUILD_CFLAGS := $(filter-out $(CC_FLAGS_SCS), $(KBUILD_CFLAGS))
++# disable LTO
++KBUILD_CFLAGS := $(filter-out $(CC_FLAGS_LTO), $(KBUILD_CFLAGS))
+ 
+ GCOV_PROFILE			:= n
+ # Sanitizer runtimes are unavailable and cannot be linked here.
 -- 
 2.28.0.1011.ga647a8990f-goog
 
