@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-20200-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-20201-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 953F928E4D2
-	for <lists+kernel-hardening@lfdr.de>; Wed, 14 Oct 2020 18:50:27 +0200 (CEST)
-Received: (qmail 12187 invoked by uid 550); 14 Oct 2020 16:50:19 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 6234728E600
+	for <lists+kernel-hardening@lfdr.de>; Wed, 14 Oct 2020 20:08:06 +0200 (CEST)
+Received: (qmail 24535 invoked by uid 550); 14 Oct 2020 18:07:59 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,111 +13,59 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 12167 invoked from network); 14 Oct 2020 16:50:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=+kKooy8y3/ieceX7ZqDJ+1+nZaa9FZpK4qlfOAJ4xg4=;
-        b=q+bPhxgYA+ZTPkLdf43AbfDU/NVUXp5l+vHvOvwwCnu8EDI0ZTBBe5x7CS7iqFgW6U
-         RPKNLv5TazIRXEB8zpXJfYYNIb0vbS++16n0Vl70eRtBPcT0r/UwvHw/ZjW87DDaUfSx
-         +Xd0/NTf1ApzUVFxGl+8MloHTritdnRiWIjqML6JVm6nZY9VgaoijQM+t1N7K/GhHURP
-         NkTvh6uJwsD2wsYWhoNFsSwxTukwKXmEPyAzgpia3QQ/t+EzYmGkVMjooaxT9iBZyUhX
-         VeofVZViwdeEOym4e9lpV9fWnoiFgWXqxdPZT/fx4VJS8nzxptdXq5xzDzIorjQDqzDq
-         iifQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=+kKooy8y3/ieceX7ZqDJ+1+nZaa9FZpK4qlfOAJ4xg4=;
-        b=iiBVctanoj+8pSkKfG2Qb3nMFNDNjKjxKsRYUAlHKbzW95nAgyIAdAGN8XB5bFC9zc
-         JtR++WB0vaYYGlhVDJppnNSIEDAxEfWOz7PU1wbJc5Bte/LCr7WkE32fiMfhncPY7Z+I
-         PpSePrZlel0KBav8diQojPcWetQPdOCCQJdAEO1Tl+z6OQm6Fm2HGVWdoAz/f73a9eb1
-         b30Fy/fTJ0AYhuPdKHilLb46LLQpkqMj5AvMSn51/k+GbFQshCc4iRsAF/TJ8occHRbA
-         eLU1Tq/78N+jl5OhVAyii5M1hpDT6GvVSZfA4cLrSqC/tgX6lo5207NFDVDJv0ykS22B
-         miaQ==
-X-Gm-Message-State: AOAM5323vBCzi4OvgfWVG91H/emUdNpewrgRIBbhBDtJ7nKRaHiBzptq
-	oEnn+XBJmb73tLMY+AndRnA=
-X-Google-Smtp-Source: ABdhPJxnZz/JvSQgt+bP4GraqaDvLe+xrlEutFj8lORQJcvNdI3kXKHdjhRXRnIr61+pk7L2rCm3hg==
-X-Received: by 2002:a17:907:43ed:: with SMTP id ol21mr6121680ejb.279.1602694207048;
-        Wed, 14 Oct 2020 09:50:07 -0700 (PDT)
-Sender: Ingo Molnar <mingo.kernel.org@gmail.com>
-Date: Wed, 14 Oct 2020 18:50:04 +0200
-From: Ingo Molnar <mingo@kernel.org>
-To: Sami Tolvanen <samitolvanen@google.com>
-Cc: Masahiro Yamada <masahiroy@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>, Will Deacon <will@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	clang-built-linux@googlegroups.com,
-	kernel-hardening@lists.openwall.com, linux-arch@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kbuild@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	x86@kernel.org, Josh Poimboeuf <jpoimboe@redhat.com>
-Subject: Re: [PATCH v6 02/25] objtool: Add a pass for generating __mcount_loc
-Message-ID: <20201014165004.GA3593121@gmail.com>
-References: <20201013003203.4168817-1-samitolvanen@google.com>
- <20201013003203.4168817-3-samitolvanen@google.com>
+Received: (qmail 24498 invoked from network); 14 Oct 2020 18:07:58 -0000
+Date: Thu, 15 Oct 2020 05:07:12 +1100 (AEDT)
+From: James Morris <jmorris@namei.org>
+To: =?ISO-8859-15?Q?Micka=EBl_Sala=FCn?= <mic@digikod.net>
+cc: linux-kernel@vger.kernel.org, "Serge E . Hallyn" <serge@hallyn.com>,
+        Al Viro <viro@zeniv.linux.org.uk>, Richard Weinberger <richard@nod.at>,
+        Andy Lutomirski <luto@amacapital.net>,
+        Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Casey Schaufler <casey@schaufler-ca.com>, Jann Horn <jannh@google.com>,
+        Jeff Dike <jdike@addtoit.com>, Jonathan Corbet <corbet@lwn.net>,
+        Kees Cook <keescook@chromium.org>,
+        Michael Kerrisk <mtk.manpages@gmail.com>,
+        Shuah Khan <shuah@kernel.org>,
+        Vincent Dagonneau <vincent.dagonneau@ssi.gouv.fr>,
+        kernel-hardening@lists.openwall.com, linux-api@vger.kernel.org,
+        linux-arch@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org, linux-kselftest@vger.kernel.org,
+        linux-security-module@vger.kernel.org, x86@kernel.org,
+        =?ISO-8859-15?Q?Micka=EBl_Sala=FCn?= <mic@linux.microsoft.com>
+Subject: Re: [PATCH v21 07/12] landlock: Support filesystem access-control
+In-Reply-To: <20201008153103.1155388-8-mic@digikod.net>
+Message-ID: <alpine.LRH.2.21.2010150504360.26012@namei.org>
+References: <20201008153103.1155388-1-mic@digikod.net> <20201008153103.1155388-8-mic@digikod.net>
+User-Agent: Alpine 2.21 (LRH 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201013003203.4168817-3-samitolvanen@google.com>
+Content-Type: multipart/mixed; boundary="1665246916-928235661-1602698835=:26012"
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--1665246916-928235661-1602698835=:26012
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+
+On Thu, 8 Oct 2020, Mickaël Salaün wrote:
+
+> +config ARCH_EPHEMERAL_STATES
+> +	def_bool n
+> +	help
+> +	  An arch should select this symbol if it does not keep an internal kernel
+> +	  state for kernel objects such as inodes, but instead relies on something
+> +	  else (e.g. the host kernel for an UML kernel).
+> +
+
+This is used to disable Landlock for UML, correct? I wonder if it could be 
+more specific: "ephemeral states" is a very broad term.
+
+How about something like ARCH_OWN_INODES ?
 
 
-* Sami Tolvanen <samitolvanen@google.com> wrote:
+-- 
+James Morris
+<jmorris@namei.org>
 
-> From: Peter Zijlstra <peterz@infradead.org>
-> 
-> Add the --mcount option for generating __mcount_loc sections
-> needed for dynamic ftrace. Using this pass requires the kernel to
-> be compiled with -mfentry and CC_USING_NOP_MCOUNT to be defined
-> in Makefile.
-> 
-> Link: https://lore.kernel.org/lkml/20200625200235.GQ4781@hirez.programming.kicks-ass.net/
-> Signed-off-by: Peter Zijlstra <peterz@infradead.org>
-> [Sami: rebased, dropped config changes, fixed to actually use --mcount,
->        and wrote a commit message.]
-> Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
-> Reviewed-by: Kees Cook <keescook@chromium.org>
-> ---
->  tools/objtool/builtin-check.c |  3 +-
->  tools/objtool/builtin.h       |  2 +-
->  tools/objtool/check.c         | 82 +++++++++++++++++++++++++++++++++++
->  tools/objtool/check.h         |  1 +
->  tools/objtool/objtool.c       |  1 +
->  tools/objtool/objtool.h       |  1 +
->  6 files changed, 88 insertions(+), 2 deletions(-)
-> 
-> diff --git a/tools/objtool/builtin-check.c b/tools/objtool/builtin-check.c
-> index c6d199bfd0ae..e92e76f69176 100644
-> --- a/tools/objtool/builtin-check.c
-> +++ b/tools/objtool/builtin-check.c
-> @@ -18,7 +18,7 @@
->  #include "builtin.h"
->  #include "objtool.h"
->  
-> -bool no_fp, no_unreachable, retpoline, module, backtrace, uaccess, stats, validate_dup, vmlinux;
-> +bool no_fp, no_unreachable, retpoline, module, backtrace, uaccess, stats, validate_dup, vmlinux, mcount;
->  
->  static const char * const check_usage[] = {
->  	"objtool check [<options>] file.o",
-> @@ -35,6 +35,7 @@ const struct option check_options[] = {
->  	OPT_BOOLEAN('s', "stats", &stats, "print statistics"),
->  	OPT_BOOLEAN('d', "duplicate", &validate_dup, "duplicate validation for vmlinux.o"),
->  	OPT_BOOLEAN('l', "vmlinux", &vmlinux, "vmlinux.o validation"),
-> +	OPT_BOOLEAN('M', "mcount", &mcount, "generate __mcount_loc"),
->  	OPT_END(),
->  };
-
-Meh, adding --mcount as an option to 'objtool check' was a valid hack for a 
-prototype patchset, but please turn this into a proper subcommand, just 
-like 'objtool orc' is.
-
-'objtool check' should ... keep checking. :-)
-
-Thanks,
-
-	Ingo
+--1665246916-928235661-1602698835=:26012--
