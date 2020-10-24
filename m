@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-20259-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-20260-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 27BF9297663
-	for <lists+kernel-hardening@lfdr.de>; Fri, 23 Oct 2020 20:05:13 +0200 (CEST)
-Received: (qmail 29953 invoked by uid 550); 23 Oct 2020 18:05:07 -0000
+	by mail.lfdr.de (Postfix) with SMTP id A96D1297C08
+	for <lists+kernel-hardening@lfdr.de>; Sat, 24 Oct 2020 13:02:11 +0200 (CEST)
+Received: (qmail 7829 invoked by uid 550); 24 Oct 2020 11:02:03 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,76 +13,91 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 29933 invoked from network); 23 Oct 2020 18:05:06 -0000
+Received: (qmail 7787 invoked from network); 24 Oct 2020 11:02:03 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=z2CWJzY4MEDXxaHnxhlpdNlYwFX3Mo9zkPfuZorsI9Y=;
-        b=H446iHuFmhIJ0PjfsWOZIKXkYAAiR/qMysy2kifq9bqj5rLg66KEEyAVqwEd6WbUps
-         sED9acTBSiZNv81RCdLvgIloMgQLDb+aFM5BPO1vDUgmdb53vkLHOMlLeHPYF5J2GI/9
-         Z+MbNrJoO74axniKTBHA3C1/D9nDIjz1K4lJHHNl2nRfv6LOv+lKtXlKdyYXYoGp5NB+
-         7T7nAiEeuvoEbWogVAiqxDBfix5RG4KG371ZC7nDh6hwqBoQCAIdn40mLA4qNCiMwGEZ
-         AovbwwbjEYw2V+/jU9UAf4YaXaxsLPa2O+0f0DuRvcHS0eEwto36FosnHGYs9K20Iwe3
-         qTlA==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=J7AXGwZjHBo0cvQ8nOxRhJ0Ve52DSlFqmlnOi+p9Ml4=;
+        b=RB4Ifw11Et8ewDdQ71Y1JyrVaP+QLMh5l+oakjdrwQqGAl+nHe8uPPEeSLuG61NzR1
+         sNlfoKNM/zeyich0IQ1x7luJpp1P6jMpoTUVVoSPsU2FWKW0VjThcIA/BY+ubptMqYcP
+         3TX7OTFWPFRQe36AXd0enGK0j7/iTZ0RkxsX4jm9C4QkD6paQFYN5MRRUIcmOvvXluLO
+         aJBFFdJLrm9qiUoerblrXizM7ULYrs0ROpLNN1rvpc2qY2j+u0jYs0g9nhxBGIYcPuLh
+         RlMyDCwNUtdirjqOiqSuOweLQ7UgzXjflCcohOUD/148FRKfYGfxCgeHAR6lJU/HzaV8
+         Ampg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=z2CWJzY4MEDXxaHnxhlpdNlYwFX3Mo9zkPfuZorsI9Y=;
-        b=OGtAFub+5Ta4kjUigoifBwoBcCnifAmmo1tNwowGWTcNr/ayxHjidgCvmp5KVutGyh
-         oOjp+n85/RdA/CSdbZQHI1y5C/FTKi7ClxTSFXbG0IgNOD7+ckLzJMuDJ8KIvCF8eZ/p
-         sn7WFo5V8iJSEsNV0Ph/Sfn4saC6MfuhYeRmP5JcBOHKg27qHg6DeZ+YGQ45kiz9M6uB
-         LPgllpjNUY+kBSysD0Z02ubKCXcrcUw3K/sOnbUDPPFAHXXnIB2fR0CsfWmul6wysPZM
-         QE020dBuhDANHDqW/xiFrVrvPURY0SQCIcJfBde7iqgw4yeBas82nqWfTxOy8wfAJMBx
-         o8YA==
-X-Gm-Message-State: AOAM533YQzHTJ6jQ7Z84gmsJwgrGXsRnlxCm4NZYmRlaXSOCJCpJddSN
-	QpUXEX2bgTsvZSJXrChkUGKQ9Cr926iMHsaGIu7jlg==
-X-Google-Smtp-Source: ABdhPJwlSbFR06Dbf2v2Zs9Rk9xNmHPrLyORGSrOkf63VY1RitmJdrnqA+NYcyLnEJ0BT0Cjn2BIz92MfzdbNr+EW3s=
-X-Received: by 2002:a63:70d:: with SMTP id 13mr3178657pgh.263.1603476294852;
- Fri, 23 Oct 2020 11:04:54 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=J7AXGwZjHBo0cvQ8nOxRhJ0Ve52DSlFqmlnOi+p9Ml4=;
+        b=htx0YWd6b+cPC8IrPIgg7BtQlx3JowwN8B1ZpYF0/TNm2Yso3bxjD59hu69aofSehg
+         X+OpMyGkrbSjIKJxXPCcShSgFtK0NFHOwZkhuCW0o5cfYexMreY+C3kEs+RXstzsY7PH
+         rhr3HM9Zs8ur+WoQrsSdicum8RrjoWzib8h1SPyu0JZz3BPmAcESO9m2SaDBf3dGOR8s
+         Uxd/mwReDRR6PvtDrfkMobcaJz4JC88PnCslk0z/eKpVof+vwY5ayT3p8ollRCRNhhEK
+         W5Fj3OvYNnSZdbkXzunOAuCRYhrflQc8XDh7cGhA1wM2Zt2Iyxo0uS+x7oHfROnrw/aL
+         bAQg==
+X-Gm-Message-State: AOAM532/Nor445eXb1O51BluwSA78wr6bk2TY+YjLu5pHutqSbORqaW2
+	XTH8OmN1ox7Y5WbzjznHaug=
+X-Google-Smtp-Source: ABdhPJziG/fPpVvjAmCunEwpSNa2+UJyviag/t3AiZqI88dIphjawUEOM+KFCId+O3zeCfP2ehG6zg==
+X-Received: by 2002:a2e:8997:: with SMTP id c23mr2256835lji.132.1603537311739;
+        Sat, 24 Oct 2020 04:01:51 -0700 (PDT)
+Subject: Re: BTI interaction between seccomp filters in systemd and glibc
+ mprotect calls, causing service failures
+To: Catalin Marinas <catalin.marinas@arm.com>,
+ Kees Cook <keescook@chromium.org>
+Cc: Szabolcs Nagy <szabolcs.nagy@arm.com>,
+ Jeremy Linton <jeremy.linton@arm.com>,
+ "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>, libc-alpha@sourceware.org,
+ systemd-devel@lists.freedesktop.org,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ Mark Rutland <mark.rutland@arm.com>, Mark Brown <broonie@kernel.org>,
+ Dave Martin <dave.martin@arm.com>, Will Deacon <will.deacon@arm.com>,
+ Salvatore Mesoraca <s.mesoraca16@gmail.com>,
+ kernel-hardening@lists.openwall.com, linux-hardening@vger.kernel.org
+References: <8584c14f-5c28-9d70-c054-7c78127d84ea@arm.com>
+ <20201022075447.GO3819@arm.com>
+ <78464155-f459-773f-d0ee-c5bdbeb39e5d@gmail.com>
+ <202010221256.A4F95FD11@keescook> <20201023090232.GA25736@gaia>
+From: Topi Miettinen <toiwoton@gmail.com>
+Message-ID: <cf655c11-d854-281a-17ae-262ddf0aaa08@gmail.com>
+Date: Sat, 24 Oct 2020 14:01:30 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-References: <CAG48ez2baAvKDA0wfYLKy-KnM_1CdOwjU873VJGDM=CErjsv_A@mail.gmail.com>
- <20201015102216.GB2611@hirez.programming.kicks-ass.net> <20201015203942.f3kwcohcwwa6lagd@treble>
- <CABCJKufDLmBCwmgGnfLcBw_B_4U8VY-R-dSNNp86TFfuMobPMw@mail.gmail.com>
- <20201020185217.ilg6w5l7ujau2246@treble> <CABCJKucVjFtrOsw58kn4OnW5kdkUh8G7Zs4s6QU9s6O7soRiAA@mail.gmail.com>
- <20201021085606.GZ2628@hirez.programming.kicks-ass.net> <20201021093213.GV2651@hirez.programming.kicks-ass.net>
- <20201021212747.ofk74lugt4hhjdzg@treble> <20201022072553.GN2628@hirez.programming.kicks-ass.net>
- <20201023174822.GA2696347@google.com>
-In-Reply-To: <20201023174822.GA2696347@google.com>
-From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Fri, 23 Oct 2020 11:04:43 -0700
-Message-ID: <CAKwvOdnovKJCv05wHLY28ngqkoR-mU_xoyVmv0rNzWE1C=SNMg@mail.gmail.com>
-Subject: Re: [PATCH v6 22/25] x86/asm: annotate indirect jumps
-To: Sami Tolvanen <samitolvanen@google.com>
-Cc: Peter Zijlstra <peterz@infradead.org>, Josh Poimboeuf <jpoimboe@redhat.com>, 
-	Jann Horn <jannh@google.com>, "the arch/x86 maintainers" <x86@kernel.org>, 
-	Masahiro Yamada <masahiroy@kernel.org>, Steven Rostedt <rostedt@goodmis.org>, 
-	Will Deacon <will@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	"Paul E. McKenney" <paulmck@kernel.org>, Kees Cook <keescook@chromium.org>, 
-	clang-built-linux <clang-built-linux@googlegroups.com>, 
-	Kernel Hardening <kernel-hardening@lists.openwall.com>, 
-	linux-arch <linux-arch@vger.kernel.org>, 
-	Linux ARM <linux-arm-kernel@lists.infradead.org>, 
-	linux-kbuild <linux-kbuild@vger.kernel.org>, kernel list <linux-kernel@vger.kernel.org>, 
-	linux-pci@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20201023090232.GA25736@gaia>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 
-On Fri, Oct 23, 2020 at 10:48 AM Sami Tolvanen <samitolvanen@google.com> wrote:
->
-> On Thu, Oct 22, 2020 at 09:25:53AM +0200, Peter Zijlstra wrote:
-> > > There's a new linker flag for renaming duplicates:
-> > >
-> > >   https://sourceware.org/bugzilla/show_bug.cgi?id=26391
-> > >
-> > > But I guess that doesn't help us now.
-> >
-> > Well, depends a bit if clang can do it; we only need this for LTO builds
-> > for now.
->
-> LLD doesn't seem to support -z unique-symbol.
+On 23.10.2020 12.02, Catalin Marinas wrote:
+> On Thu, Oct 22, 2020 at 01:02:18PM -0700, Kees Cook wrote:
+>> Regardless, it makes sense to me to have the kernel load the executable
+>> itself with BTI enabled by default. I prefer gaining Catalin's suggested
+>> patch[2]. :)
+> [...]
+>> [2] https://lore.kernel.org/linux-arm-kernel/20201022093104.GB1229@gaia/
+> 
+> I think I first heard the idea at Mark R ;).
+> 
+> It still needs glibc changes to avoid the mprotect(), or at least ignore
+> the error. Since this is an ABI change and we don't know which kernels
+> would have it backported, maybe better to still issue the mprotect() but
+> ignore the failure.
 
-https://github.com/ClangBuiltLinux/linux/issues/1184
--- 
-Thanks,
-~Nick Desaulniers
+What about kernel adding an auxiliary vector as a flag to indicate that 
+BTI is supported and recommended by the kernel? Then dynamic loader 
+could use that to detect that a) the main executable is BTI protected 
+and there's no need to mprotect() it and b) PROT_BTI flag should be 
+added to all PROT_EXEC pages.
+
+In absence of the vector, the dynamic loader might choose to skip doing 
+PROT_BTI at all (since the main executable isn't protected anyway 
+either, or maybe even the kernel is up-to-date but it knows that it's 
+not recommended for some reason, or maybe the kernel is so ancient that 
+it doesn't know about BTI). Optionally it could still read the flag from 
+ELF later (for compatibility with old kernels) and then do the 
+mprotect() dance, which may trip seccomp filters, possibly fatally.
+
+-Topi
