@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-20260-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-20261-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id A96D1297C08
-	for <lists+kernel-hardening@lfdr.de>; Sat, 24 Oct 2020 13:02:11 +0200 (CEST)
-Received: (qmail 7829 invoked by uid 550); 24 Oct 2020 11:02:03 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 91A80297C20
+	for <lists+kernel-hardening@lfdr.de>; Sat, 24 Oct 2020 13:34:45 +0200 (CEST)
+Received: (qmail 1784 invoked by uid 550); 24 Oct 2020 11:34:39 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,91 +13,89 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 7787 invoked from network); 24 Oct 2020 11:02:03 -0000
+Received: (qmail 1747 invoked from network); 24 Oct 2020 11:34:38 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=J7AXGwZjHBo0cvQ8nOxRhJ0Ve52DSlFqmlnOi+p9Ml4=;
-        b=RB4Ifw11Et8ewDdQ71Y1JyrVaP+QLMh5l+oakjdrwQqGAl+nHe8uPPEeSLuG61NzR1
-         sNlfoKNM/zeyich0IQ1x7luJpp1P6jMpoTUVVoSPsU2FWKW0VjThcIA/BY+ubptMqYcP
-         3TX7OTFWPFRQe36AXd0enGK0j7/iTZ0RkxsX4jm9C4QkD6paQFYN5MRRUIcmOvvXluLO
-         aJBFFdJLrm9qiUoerblrXizM7ULYrs0ROpLNN1rvpc2qY2j+u0jYs0g9nhxBGIYcPuLh
-         RlMyDCwNUtdirjqOiqSuOweLQ7UgzXjflCcohOUD/148FRKfYGfxCgeHAR6lJU/HzaV8
-         Ampg==
+        bh=IoKvQwjpmgnwDqwDMU0dzPR0LnLnshRSMNK/AI0kcxw=;
+        b=mqiOOs7TyvklH3y6Ood3stRdGCXNjS2vgVdrSrZQ2N5rvNmXE4ypAGwbOH+pu5ZkZU
+         cLFinzJ8s1Tc1dBlP3n6K9U1vTiiudbu4H1PwQEoeFI7WihRODKM6wJlcI16HoaXOosR
+         PQtOWyYZ5vxd3flAAaj+Fgat/sdOALkni45sy0aydIfRvlwxm3dwa0l5WDx3QP/dG3y6
+         pYy6zdGvNsP3Z9aeTINusM1N7KGKTk/bljhK8h8j6gQ8iHYyydmfoS0E2Io29bJlsvT5
+         ZfDv1jpttgUuhifKJENIVwPfjjhn0XCWIAk65JMYKL0UIJotL4bcojoT7g08pknvpe9X
+         BBhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=J7AXGwZjHBo0cvQ8nOxRhJ0Ve52DSlFqmlnOi+p9Ml4=;
-        b=htx0YWd6b+cPC8IrPIgg7BtQlx3JowwN8B1ZpYF0/TNm2Yso3bxjD59hu69aofSehg
-         X+OpMyGkrbSjIKJxXPCcShSgFtK0NFHOwZkhuCW0o5cfYexMreY+C3kEs+RXstzsY7PH
-         rhr3HM9Zs8ur+WoQrsSdicum8RrjoWzib8h1SPyu0JZz3BPmAcESO9m2SaDBf3dGOR8s
-         Uxd/mwReDRR6PvtDrfkMobcaJz4JC88PnCslk0z/eKpVof+vwY5ayT3p8ollRCRNhhEK
-         W5Fj3OvYNnSZdbkXzunOAuCRYhrflQc8XDh7cGhA1wM2Zt2Iyxo0uS+x7oHfROnrw/aL
-         bAQg==
-X-Gm-Message-State: AOAM532/Nor445eXb1O51BluwSA78wr6bk2TY+YjLu5pHutqSbORqaW2
-	XTH8OmN1ox7Y5WbzjznHaug=
-X-Google-Smtp-Source: ABdhPJziG/fPpVvjAmCunEwpSNa2+UJyviag/t3AiZqI88dIphjawUEOM+KFCId+O3zeCfP2ehG6zg==
-X-Received: by 2002:a2e:8997:: with SMTP id c23mr2256835lji.132.1603537311739;
-        Sat, 24 Oct 2020 04:01:51 -0700 (PDT)
+        bh=IoKvQwjpmgnwDqwDMU0dzPR0LnLnshRSMNK/AI0kcxw=;
+        b=iwNw+a29hXpsxsU38A2djfC61cpIRtQi20TIhm3EfaJXH6tQS7qPuQUsOf7L83akL5
+         bF8xaWbPA0vT5U/CVRVpSbqxvHkShtMnd0va+Mq+5N4YH3rOYFu+uoie6abIA4/EmLi4
+         0OTkRW0oBotqueRG1uS/AZ7ukO3OlT8cojnR3ZuM2XyCEFSJu0+QeGnFEjH9iWAPVn67
+         pttXNTBCpaE1ebGeqGLM02ed3dZltnJuflN728SxDFhbQBCsgEcYMOZDENFHSTOL8ok5
+         Q6eGxOmGe4uei2Sso2+EH3B/4MzTr8elMm6zXP0J61+cigNoJkqD+QgXslC/BfVzFapD
+         x4kw==
+X-Gm-Message-State: AOAM533GtvU6ScmCa0ASEGMpWFWf6OOMIuWy6XGLJCmQukreydEirYAZ
+	oN/Q191FF0EZNc+qji/pt+s=
+X-Google-Smtp-Source: ABdhPJzwvsaTluGQK36qa7V3CiVSFtEKeTqt9O3nz3uBAt8xGRnoa/SVo39MAjPgTAB/taz96NuywQ==
+X-Received: by 2002:a19:2355:: with SMTP id j82mr1914155lfj.36.1603539267465;
+        Sat, 24 Oct 2020 04:34:27 -0700 (PDT)
 Subject: Re: BTI interaction between seccomp filters in systemd and glibc
  mprotect calls, causing service failures
-To: Catalin Marinas <catalin.marinas@arm.com>,
- Kees Cook <keescook@chromium.org>
-Cc: Szabolcs Nagy <szabolcs.nagy@arm.com>,
+To: Salvatore Mesoraca <s.mesoraca16@gmail.com>
+Cc: Kees Cook <keescook@chromium.org>, Szabolcs Nagy <szabolcs.nagy@arm.com>,
  Jeremy Linton <jeremy.linton@arm.com>,
  "linux-arm-kernel@lists.infradead.org"
  <linux-arm-kernel@lists.infradead.org>, libc-alpha@sourceware.org,
  systemd-devel@lists.freedesktop.org,
  "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
  Mark Rutland <mark.rutland@arm.com>, Mark Brown <broonie@kernel.org>,
- Dave Martin <dave.martin@arm.com>, Will Deacon <will.deacon@arm.com>,
- Salvatore Mesoraca <s.mesoraca16@gmail.com>,
- kernel-hardening@lists.openwall.com, linux-hardening@vger.kernel.org
+ Dave Martin <dave.martin@arm.com>, Catalin Marinas
+ <Catalin.Marinas@arm.com>, Will Deacon <will.deacon@arm.com>,
+ Kernel Hardening <kernel-hardening@lists.openwall.com>,
+ linux-hardening@vger.kernel.org
 References: <8584c14f-5c28-9d70-c054-7c78127d84ea@arm.com>
  <20201022075447.GO3819@arm.com>
  <78464155-f459-773f-d0ee-c5bdbeb39e5d@gmail.com>
- <202010221256.A4F95FD11@keescook> <20201023090232.GA25736@gaia>
+ <202010221256.A4F95FD11@keescook>
+ <180cd894-d42d-2bdb-093c-b5360b0ecb1e@gmail.com>
+ <CAJHCu1Jrtx=OVEiTVwPJg7CxRkV83tS=HsYeLoAGRf_tgYq_iQ@mail.gmail.com>
 From: Topi Miettinen <toiwoton@gmail.com>
-Message-ID: <cf655c11-d854-281a-17ae-262ddf0aaa08@gmail.com>
-Date: Sat, 24 Oct 2020 14:01:30 +0300
+Message-ID: <3cb894d4-049f-aa25-4450-d1df36a1b92e@gmail.com>
+Date: Sat, 24 Oct 2020 14:34:06 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.12.0
 MIME-Version: 1.0
-In-Reply-To: <20201023090232.GA25736@gaia>
+In-Reply-To: <CAJHCu1Jrtx=OVEiTVwPJg7CxRkV83tS=HsYeLoAGRf_tgYq_iQ@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 
-On 23.10.2020 12.02, Catalin Marinas wrote:
-> On Thu, Oct 22, 2020 at 01:02:18PM -0700, Kees Cook wrote:
->> Regardless, it makes sense to me to have the kernel load the executable
->> itself with BTI enabled by default. I prefer gaining Catalin's suggested
->> patch[2]. :)
-> [...]
->> [2] https://lore.kernel.org/linux-arm-kernel/20201022093104.GB1229@gaia/
+On 23.10.2020 20.52, Salvatore Mesoraca wrote:
+> Hi,
 > 
-> I think I first heard the idea at Mark R ;).
+> On Thu, 22 Oct 2020 at 23:24, Topi Miettinen <toiwoton@gmail.com> wrote:
+>> SARA looks interesting. What is missing is a prctl() to enable all W^X
+>> protections irrevocably for the current process, then systemd could
+>> enable it for services with MemoryDenyWriteExecute=yes.
 > 
-> It still needs glibc changes to avoid the mprotect(), or at least ignore
-> the error. Since this is an ABI change and we don't know which kernels
-> would have it backported, maybe better to still issue the mprotect() but
-> ignore the failure.
+> SARA actually has a procattr[0] interface to do just that.
+> There is also a library[1] to help using it.
 
-What about kernel adding an auxiliary vector as a flag to indicate that 
-BTI is supported and recommended by the kernel? Then dynamic loader 
-could use that to detect that a) the main executable is BTI protected 
-and there's no need to mprotect() it and b) PROT_BTI flag should be 
-added to all PROT_EXEC pages.
-
-In absence of the vector, the dynamic loader might choose to skip doing 
-PROT_BTI at all (since the main executable isn't protected anyway 
-either, or maybe even the kernel is up-to-date but it knows that it's 
-not recommended for some reason, or maybe the kernel is so ancient that 
-it doesn't know about BTI). Optionally it could still read the flag from 
-ELF later (for compatibility with old kernels) and then do the 
-mprotect() dance, which may trip seccomp filters, possibly fatally.
+That means that /proc has to be available and writable at that point, so 
+setting up procattrs has to be done before mount namespaces are set up. 
+In general, it would be nice for sandboxing facilities in kernel if 
+there would be a way to start enforcing restrictions only at next 
+execve(), like setexeccon() for SELinux and aa_change_onexec() for 
+AppArmor. Otherwise the exact order of setting up various sandboxing 
+options can be very tricky to arrange correctly, since each option may 
+have a subtle effect to the sandboxing features enabled later. In case 
+of SARA, the operations done between shuffling the mount namespace and 
+before execve() shouldn't be affected so it isn't important. Even if it 
+did (a new sandboxing feature in the future would need trampolines or 
+JIT code generation), maybe the procattr file could be opened early but 
+it could be written closer to execve().
 
 -Topi
