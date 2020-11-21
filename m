@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-20443-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-20446-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 7CFEE2BBD93
-	for <lists+kernel-hardening@lfdr.de>; Sat, 21 Nov 2020 08:00:41 +0100 (CET)
-Received: (qmail 30379 invoked by uid 550); 21 Nov 2020 07:00:33 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 1202D2BBDB2
+	for <lists+kernel-hardening@lfdr.de>; Sat, 21 Nov 2020 08:01:11 +0100 (CET)
+Received: (qmail 1736 invoked by uid 550); 21 Nov 2020 07:00:59 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,41 +13,41 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 30347 invoked from network); 21 Nov 2020 07:00:33 -0000
+Received: (qmail 1668 invoked from network); 21 Nov 2020 07:00:59 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=X7o0m3hQXVmVofbCR6L473p8htdBcLYyTWc2pJqZOUM=;
-        b=NAf9nl2J7IrdmpQMU2t/+SODdOjUjzxQqsSksle5M3l6Ywri6/LWuLY60ItJmETxox
-         z2485qDtzcZq4U8ptX5mV32Ds+iGsHITL/G++mgluYxor/atna2PNO96gnuZ9eSDli3A
-         5YrOYozkM2esFvaUNe2lQ0jxlcdKo64nZZ8pWX8rKG3JIFhXACukB9nxastIxuNvxQwi
-         m72FEnkLoHzVUECvi7NKtdHoiQma263Ss/twJenvsetmtxc+Fz3/ib+Kowi86tegJZ9T
-         L5IzUl6TiURt6iNTyUYZjfH9tlL3oH6hVOmtT19/HgNgWR2EhrXZODwaZrS85DwyHUuy
-         aGmw==
+        bh=zCcA4sLycmShyMxZ6i9Eumf1OUB1JNsCrcUOdwj1SQI=;
+        b=dyVl3+GKSo/xVNAFCoPUWUc6gQmdnw/aoaQ4OWYQZWi2kHziBvNSeTnr32XAufXgxx
+         hKm1lXxIoBOeyloaPYvydgxjC+QYQhPhdTBvC3QDAyA7AJyAjx1Sfg+qUFcGGSyONF8a
+         rMKz4vmvLjBUQoyU5nljmBLmfmujXCOPYrMhv1QkKNn3puxg8Bv8DNt5W2ZOwFPaeWbF
+         Wzo6H7mzy9nAyHb2lga5U1+/aFxC+fqkiabeBSqjroyj0XzDF5MUiNTLKPowTk9qU32M
+         0Frm4j8FEeopwqA7QqTNyauy419MUnrYWXvN0JzetsvpCro/b6d4UfZLXFRL8XQqSWR4
+         iSWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=X7o0m3hQXVmVofbCR6L473p8htdBcLYyTWc2pJqZOUM=;
-        b=iEBrdy9xSDlwTqZqN6Vcf6lgpg31Bzl1xKkuxPhEOOx30cH6od0sHjXN20yLi47hNd
-         6Kr5kjyBqQtvwZurmyOZsc6xxaGiMJpXCRKRv4BbgrHFmuutUxbgtE7aoYcN/2bZO8R6
-         A0Lb1XJyIFbkk7uzb+8mIIODwbp0lOxyDNLkghmN2nBz5V1s3P5IoRgQ+EimeVqIm7cv
-         0EPYrkcSZdQROlVoXSJ0/UiENZRrvtjGT5gBl5nhm6IWZGfQiPS0KE3sLqBB+aAxFKmj
-         0BisgUX91GyWp4m3Xp2+U8cqJMncmSv9ab3g+TZO+6XcX16hJd7UaPJ6qRTJCj2DZAts
-         z+zg==
-X-Gm-Message-State: AOAM533XU3vnS9J3L0Gkjzi5ZbyLL4q6cBspvA11SB1OF0seznu8DpX6
-	f34QvB+11UkaDlLLjAangeQVs4EuAFPNu0Kou2mPUw==
-X-Google-Smtp-Source: ABdhPJyQlluKPoz0OIWNJejUmA2oBeD6J48fIKEWng63DXZFe9Wj5F7lo9xUW1sQakHx3A+Zc/rgyFU8fgOEwoYO4Ic=
-X-Received: by 2002:a2e:8350:: with SMTP id l16mr9449286ljh.47.1605942021665;
- Fri, 20 Nov 2020 23:00:21 -0800 (PST)
+        bh=zCcA4sLycmShyMxZ6i9Eumf1OUB1JNsCrcUOdwj1SQI=;
+        b=MAx+HGJw1ko+NcC/HddeXDQxlIk/DZ0zO+eVqJcXrAGH8UOFpHJ7oNfDp+wiCcW7b/
+         bXeHjZ3tJxfZrM1/OjLKCGG7JMwZfk4cIuTnXKra2IlbQz0WnBG7pMXE2+GQ7zzi83p8
+         99D/CjR4iZlla+PxLNxg1Tm2m0lt7fmBwLrrol2SOcSp+vCoXJi4xJDufj53iSEGzBZO
+         yspMfJyaYEAq3yIqwYHrdr+uZv5SnPLQUBXYPVpEMi1R9psN914kG6xvSXRwOkLQ5Xew
+         KIeb/slSyL7i1xu0qRkEBDL4UBxrDznomtS/bUcyFeJpV1pQZfCLbCefVJObdXh1NIwC
+         p93w==
+X-Gm-Message-State: AOAM533EZdT9RTyG2McpnIAwP32cWSe1hH5u5RpXg/Rbh12yR9jqCjb9
+	n920MJNnlZORArx3V4A9d0GfTzEdnvJf1QcZ0ubBcA==
+X-Google-Smtp-Source: ABdhPJy8wln+obg/cf+h2tvCfZva23mNjQ3IqbWTfUAeh0QB4VP+04PcFgpYrhykI0RBGORAa7WxIWYKQRHp7mANu3Y=
+X-Received: by 2002:a2e:9d8d:: with SMTP id c13mr9054289ljj.160.1605942047455;
+ Fri, 20 Nov 2020 23:00:47 -0800 (PST)
 MIME-Version: 1.0
-References: <20201112205141.775752-1-mic@digikod.net> <20201112205141.775752-2-mic@digikod.net>
-In-Reply-To: <20201112205141.775752-2-mic@digikod.net>
+References: <20201112205141.775752-1-mic@digikod.net> <20201112205141.775752-8-mic@digikod.net>
+In-Reply-To: <20201112205141.775752-8-mic@digikod.net>
 From: Jann Horn <jannh@google.com>
 Date: Sat, 21 Nov 2020 08:00:00 +0100
-Message-ID: <CAG48ez0GryN4i0xCP22utLTqF5_o5J3nMBs+VC0DpQ+s09Bx6g@mail.gmail.com>
-Subject: Re: [PATCH v24 01/12] landlock: Add object management
+Message-ID: <CAG48ez3HA63CX852LLDFCcNyzRGwAr3x_cvA1-t8tgDxfF1dOQ@mail.gmail.com>
+Subject: Re: [PATCH v24 07/12] landlock: Support filesystem access-control
 To: =?UTF-8?B?TWlja2HDq2wgU2FsYcO8bg==?= <mic@digikod.net>
 Cc: James Morris <jmorris@namei.org>, "Serge E . Hallyn" <serge@hallyn.com>, 
 	Al Viro <viro@zeniv.linux.org.uk>, Andy Lutomirski <luto@amacapital.net>, 
@@ -66,48 +66,149 @@ Cc: James Morris <jmorris@namei.org>, "Serge E . Hallyn" <serge@hallyn.com>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 12, 2020 at 9:51 PM Micka=C3=ABl Sala=C3=BCn <mic@digikod.net> =
+On Thu, Nov 12, 2020 at 9:52 PM Micka=C3=ABl Sala=C3=BCn <mic@digikod.net> =
 wrote:
-> A Landlock object enables to identify a kernel object (e.g. an inode).
-> A Landlock rule is a set of access rights allowed on an object.  Rules
-> are grouped in rulesets that may be tied to a set of processes (i.e.
-> subjects) to enforce a scoped access-control (i.e. a domain).
+> Thanks to the Landlock objects and ruleset, it is possible to identify
+> inodes according to a process's domain.  To enable an unprivileged
+> process to express a file hierarchy, it first needs to open a directory
+> (or a file) and pass this file descriptor to the kernel through
+> landlock_add_rule(2).  When checking if a file access request is
+> allowed, we walk from the requested dentry to the real root, following
+> the different mount layers.  The access to each "tagged" inodes are
+> collected according to their rule layer level, and ANDed to create
+> access to the requested file hierarchy.  This makes possible to identify
+> a lot of files without tagging every inodes nor modifying the
+> filesystem, while still following the view and understanding the user
+> has from the filesystem.
 >
-> Because Landlock's goal is to empower any process (especially
-> unprivileged ones) to sandbox themselves, we cannot rely on a
-> system-wide object identification such as file extended attributes.
-> Indeed, we need innocuous, composable and modular access-controls.
+> Add a new ARCH_EPHEMERAL_INODES for UML because it currently does not
+> keep the same struct inodes for the same inodes whereas these inodes are
+> in use.
 >
-> The main challenge with these constraints is to identify kernel objects
-> while this identification is useful (i.e. when a security policy makes
-> use of this object).  But this identification data should be freed once
-> no policy is using it.  This ephemeral tagging should not and may not be
-> written in the filesystem.  We then need to manage the lifetime of a
-> rule according to the lifetime of its objects.  To avoid a global lock,
-> this implementation make use of RCU and counters to safely reference
-> objects.
+> This commit adds a minimal set of supported filesystem access-control
+> which doesn't enable to restrict all file-related actions.  This is the
+> result of multiple discussions to minimize the code of Landlock to ease
+> review.  Thanks to the Landlock design, extending this access-control
+> without breaking user space will not be a problem.  Moreover, seccomp
+> filters can be used to restrict the use of syscall families which may
+> not be currently handled by Landlock.
 >
-> A following commit uses this generic object management for inodes.
->
+> Cc: Al Viro <viro@zeniv.linux.org.uk>
+> Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
 > Cc: James Morris <jmorris@namei.org>
+> Cc: Jann Horn <jannh@google.com>
+> Cc: Jeff Dike <jdike@addtoit.com>
 > Cc: Kees Cook <keescook@chromium.org>
+> Cc: Richard Weinberger <richard@nod.at>
 > Cc: Serge E. Hallyn <serge@hallyn.com>
 > Signed-off-by: Micka=C3=ABl Sala=C3=BCn <mic@linux.microsoft.com>
-> Reviewed-by: Jann Horn <jannh@google.com>
+> ---
+>
+> Changes since v23:
+> * Enforce deterministic interleaved path rules.  To have consistent
+>   layered rules, granting access to a path implies that all accesses
+>   tied to inodes, from the requested file to the real root, must be
+>   checked.  Otherwise, stacked rules may result to overzealous
+>   restrictions.  By excluding the ability to add exceptions in the same
+>   layer (e.g. /a allowed, /a/b denied, and /a/b/c allowed), we get
+>   deterministic interleaved path rules.  This removes an optimization
 
-Still looks good, except for one comment:
+I don't understand the "deterministic interleaved path rules" part.
 
-[...]
-> +       /**
-> +        * @lock: Guards against concurrent modifications.  This lock mig=
-ht be
-> +        * held from the time @usage drops to zero until any weak referen=
-ces
-> +        * from @underobj to this object have been cleaned up.
-> +        *
-> +        * Lock ordering: inode->i_lock nests inside this.
-> +        */
-> +       spinlock_t lock;
 
-Why did you change this to "might be held" (v22 had "must")? Is the
-"might" a typo?
+What if I have a policy like this?
+
+/home/user READ
+/home/user/Downloads READ+WRITE
+
+That's a reasonable policy, right?
+
+If I then try to open /home/user/Downloads/foo in WRITE mode, the loop
+will first check against the READ+WRITE rule for /home/user, that
+check will pass, and then it will check against the READ rule for /,
+which will deny the access, right? That seems bad.
+
+
+The v22 code ensured that for each layer, the most specific rule (the
+first we encounter on the walk) always wins, right? What's the problem
+with that?
+
+>   which could be replaced by a proper cache mechanism.  This also
+>   further simplifies and explain check_access_path_continue().
+
+From the interdiff between v23 and v24 (git range-diff
+99ade5d59b23~1..99ade5d59b23 faa8c09be9fd~1..faa8c09be9fd):
+
+    @@ security/landlock/fs.c (new)
+     +                  rcu_dereference(landlock_inode(inode)->object));
+     +  rcu_read_unlock();
+     +
+    -+  /* Checks for matching layers. */
+    -+  if (rule && (rule->layers | *layer_mask)) {
+    -+          if ((rule->access & access_request) =3D=3D access_request) =
+{
+    -+                  *layer_mask &=3D ~rule->layers;
+    -+                  return true;
+    -+          } else {
+    -+                  return false;
+    -+          }
+    ++  if (!rule)
+    ++          /* Continues to walk if there is no rule for this inode. */
+    ++          return true;
+    ++  /*
+    ++   * We must check all layers for each inode because we may encounter
+    ++   * multiple different accesses from the same layer in a walk.  Each
+    ++   * layer must at least allow the access request one time (i.e. with=
+ one
+    ++   * inode).  This enables to have a deterministic behavior whatever
+    ++   * inode is tagged within interleaved layers.
+    ++   */
+    ++  if ((rule->access & access_request) =3D=3D access_request) {
+    ++          /* Validates layers for which all accesses are allowed. */
+    ++          *layer_mask &=3D ~rule->layers;
+    ++          /* Continues to walk until all layers are validated. */
+    ++          return true;
+     +  }
+    -+  return true;
+    ++  /* Stops if a rule in the path don't allow all requested access. */
+    ++  return false;
+     +}
+     +
+     +static int check_access_path(const struct landlock_ruleset *const dom=
+ain,
+    @@ security/landlock/fs.c (new)
+     +                          &layer_mask)) {
+     +          struct dentry *parent_dentry;
+     +
+    -+          /* Stops when a rule from each layer granted access. */
+    -+          if (layer_mask =3D=3D 0) {
+    -+                  allowed =3D true;
+    -+                  break;
+    -+          }
+    -+
+
+This change also made it so that disconnected paths aren't accessible
+unless they're internal, right? While previously, the access could be
+permitted if the walk stops before reaching the disconnected point? I
+guess that's fine, but it should probably be documented.
+
+     +jump_up:
+     +          /*
+     +           * Does not work with orphaned/private mounts like overlayf=
+s
+    @@ security/landlock/fs.c (new)
+     +                          goto jump_up;
+     +                  } else {
+     +                          /*
+    -+                           * Stops at the real root.  Denies access
+    -+                           * because not all layers have granted acce=
+ss.
+    ++                           * Stops at the real root.  Denies access i=
+f
+    ++                           * not all layers granted access.
+     +                           */
+    -+                          allowed =3D false;
+    ++                          allowed =3D (layer_mask =3D=3D 0);
+     +                          break;
+     +                  }
+     +          }
