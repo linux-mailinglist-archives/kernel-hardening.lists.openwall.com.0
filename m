@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-20447-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-20444-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 0133F2BBDB3
-	for <lists+kernel-hardening@lfdr.de>; Sat, 21 Nov 2020 08:01:51 +0100 (CET)
-Received: (qmail 3766 invoked by uid 550); 21 Nov 2020 07:01:45 -0000
+	by mail.lfdr.de (Postfix) with SMTP id D885C2BBD9E
+	for <lists+kernel-hardening@lfdr.de>; Sat, 21 Nov 2020 08:00:49 +0100 (CET)
+Received: (qmail 31845 invoked by uid 550); 21 Nov 2020 07:00:37 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,41 +13,41 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 3731 invoked from network); 21 Nov 2020 07:01:44 -0000
+Received: (qmail 31771 invoked from network); 21 Nov 2020 07:00:37 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=3f33ZbSviSsNDuxIsWsq/8c0yuXyzvCPrqPtP0RGi80=;
-        b=QTrvEtnWrrcbOEs5U2zsXrELZY0joXKYt35ttFIfE3ljFGqVTsE2HaDPetDIzNV0Z+
-         SNm0nIBKP392yJ/12exSP2lHAsN3IW99XL9OvKJShdVvhx6hWk5FMgqMLPmf5TLsXGFG
-         +iHnXGnR267ovUqsrTD7TknzGTTVMN0JBhDcMHYa6hy9vumiKnlHEoByxwYUqFCeOJcH
-         8ci6aX3IWWZAS35E7ZUq2QiVC5E+16bSvaDHHgcz3hRf5R5Sqdh41qyVdf7c65t3ii9K
-         kE9FBm0MLZ2YAKu0t3JfnrIMbZ8lpvjGGU8/1aoQSH1X5Qz/sPTU1Mx00P4k2W69USLS
-         xiIw==
+        bh=P7RjcsAj6PX+UJP0fflQn8MvjwEMgqrgy1hcrPo11aE=;
+        b=CqqdXLzD4RSHdi1Ar3pP94BnBGH2/7bkpPzT9SZ3UVxCKNiRlNpe2RQapzql1gIm0T
+         am2xz+0cm1WQPK4hE+ua1jVGF9VC83UFcIaMXQypAw6jE5utgWdZxOUYUFylOjfHEs4k
+         cbp452z2BIJGzCSR/2hAGhsY0QSIsJEbDk4heZBZkmBlDwTtBd/AS/iCd8874yBuTf5T
+         QD+koJXBJ9jZQb3KOZ/bZx4j7vb4L3rrLTabgKItYXXLtwSGDtDG7O0HsRGP6T2iCLK+
+         GNND4eZIvTwEJpJW7cZw1UxpXIjICH63bduH7dU7mXrLoZSkTtgZZS91V8myLILWnfZq
+         nenA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=3f33ZbSviSsNDuxIsWsq/8c0yuXyzvCPrqPtP0RGi80=;
-        b=Nd0MyWrPOhGU9Kt94fasVD1yppkB/3FLnbiB0vPknml+IpMuDKYdkEzTktn3yLulSc
-         pxUqujgJzQOEXS7onqyNcqgvjY5rEdQSjqkxaKyNZYwHi1mO2fSXgQ3k+1riuTXhvYRs
-         xSQQgZLkRLbZtezCUl0O30Avlt1CZ9GnN8hLNhCmv/urKT62b6XFFtDsrv3+ksNJxgrq
-         ev5ZrSOoNryrRQ0hbVGa5YTH/t9PjGTQOdAqa8vUZ//H5Em+N/1vjHjecDx0CJlSOpxU
-         TEUReS2/q5NL398nEz/yBZBYJ1JTe4zm9YPAHy24jzfcM99T2yzQqzmjH73GOLJuqNxj
-         M+SA==
-X-Gm-Message-State: AOAM530HSVxYzYL34zZ6+cwhup1MWDLtLIlK1eDEx6btVdcrbAjedHfk
-	ig7aT6EBz56iSEN1y9bXN2gb9J05lgumsdxPV0L/ug==
-X-Google-Smtp-Source: ABdhPJyH6REifnL9YUZNnFhyFBr7a5RSsJd6XuGMTDWn4PlB6riGiZRNf+nR+kcYWzMs0Zs7hbAeG+15z4SfiIciuC8=
-X-Received: by 2002:a19:4b48:: with SMTP id y69mr9985268lfa.576.1605942093292;
- Fri, 20 Nov 2020 23:01:33 -0800 (PST)
+        bh=P7RjcsAj6PX+UJP0fflQn8MvjwEMgqrgy1hcrPo11aE=;
+        b=GFMO534Go2QEYR1EUWWRYXMWvnGHkA+t3hROH7MJYdiKaQcyfqe0nMiZ7rK5RmVXjS
+         XWHfYWmHtngjf0azYh/xI8fd3h34j2+eWBrZ6BdEk6DbNuWR8cKaG9k/OntyaoQ8sy9Q
+         yLDe3MNk6YVCN1HAu8Dx41UE9k4JLuvoip2ImZMJ3SNcG+vjIxQJ/qsZXrjUyPMXgto4
+         B9SGt27ZgO5CIkatNHQeNNFOFW+8Ii+X3oGbKfK6IN/YdcSXFFAD/FqKbSyVHQH4obn1
+         2yC40IEmkQSwNUc1mNuvFF+ainluNt1PsnSLA5ppf4F6W3+nqYPqg+zXruMYnuEgxZo0
+         XQZQ==
+X-Gm-Message-State: AOAM532LXxkgiabrvdsVrYYQ+16C06/hq8WnVkQoVsTNSsvg9TvKmD0z
+	RoFYEv1Lkka/U1eanzQVCxH/m6MR8nz6Db1QmYvWTw==
+X-Google-Smtp-Source: ABdhPJye0kUCNabvyYI/kru6Sk+gDfuo1c3+OQCYedsONLwptjC7PC4GO6R82FjXNTZ0iHwPOIZ11/4ebb/ZeEYyrjQ=
+X-Received: by 2002:a2e:8891:: with SMTP id k17mr8949700lji.326.1605942025591;
+ Fri, 20 Nov 2020 23:00:25 -0800 (PST)
 MIME-Version: 1.0
-References: <20201112205141.775752-1-mic@digikod.net> <20201112205141.775752-3-mic@digikod.net>
-In-Reply-To: <20201112205141.775752-3-mic@digikod.net>
+References: <20201112205141.775752-1-mic@digikod.net> <20201112205141.775752-9-mic@digikod.net>
+In-Reply-To: <20201112205141.775752-9-mic@digikod.net>
 From: Jann Horn <jannh@google.com>
 Date: Sat, 21 Nov 2020 08:00:00 +0100
-Message-ID: <CAG48ez2RE6S7jKQY3iyoNRM5vV67W4S7OwJ0gmNGy+MB8F56vg@mail.gmail.com>
-Subject: Re: [PATCH v24 02/12] landlock: Add ruleset and domain management
+Message-ID: <CAG48ez28mn2YH65D67sr22Ur25kdNUchDbfuph+0TJ4iPwwvwg@mail.gmail.com>
+Subject: Re: [PATCH v24 08/12] landlock: Add syscall implementations
 To: =?UTF-8?B?TWlja2HDq2wgU2FsYcO8bg==?= <mic@digikod.net>
 Cc: James Morris <jmorris@namei.org>, "Serge E . Hallyn" <serge@hallyn.com>, 
 	Al Viro <viro@zeniv.linux.org.uk>, Andy Lutomirski <luto@amacapital.net>, 
@@ -66,51 +66,44 @@ Cc: James Morris <jmorris@namei.org>, "Serge E . Hallyn" <serge@hallyn.com>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 12, 2020 at 9:51 PM Micka=C3=ABl Sala=C3=BCn <mic@digikod.net> =
+On Thu, Nov 12, 2020 at 9:52 PM Micka=C3=ABl Sala=C3=BCn <mic@digikod.net> =
 wrote:
-> A Landlock ruleset is mainly a red-black tree with Landlock rules as
-> nodes.  This enables quick update and lookup to match a requested
-> access, e.g. to a file.  A ruleset is usable through a dedicated file
-> descriptor (cf. following commit implementing syscalls) which enables a
-> process to create and populate a ruleset with new rules.
+> These 3 system calls are designed to be used by unprivileged processes
+> to sandbox themselves:
+> * landlock_create_ruleset(2): Creates a ruleset and returns its file
+>   descriptor.
+> * landlock_add_rule(2): Adds a rule (e.g. file hierarchy access) to a
+>   ruleset, identified by the dedicated file descriptor.
+> * landlock_enforce_ruleset_current(2): Enforces a ruleset on the current
+>   thread and its future children (similar to seccomp).  This syscall has
+>   the same usage restrictions as seccomp(2): the caller must have the
+>   no_new_privs attribute set or have CAP_SYS_ADMIN in the current user
+>   namespace.
 >
-> A domain is a ruleset tied to a set of processes.  This group of rules
-> defines the security policy enforced on these processes and their future
-> children.  A domain can transition to a new domain which is the
-> intersection of all its constraints and those of a ruleset provided by
-> the current process.  This modification only impact the current process.
-> This means that a process can only gain more constraints (i.e. lose
-> accesses) over time.
+> All these syscalls have a "flags" argument (not currently used) to
+> enable extensibility.
 >
+> Here are the motivations for these new syscalls:
+> * A sandboxed process may not have access to file systems, including
+>   /dev, /sys or /proc, but it should still be able to add more
+>   restrictions to itself.
+> * Neither prctl(2) nor seccomp(2) (which was used in a previous version)
+>   fit well with the current definition of a Landlock security policy.
+>
+> All passed structs (attributes) are checked at build time to ensure that
+> they don't contain holes and that they are aligned the same way for each
+> architecture.
+>
+> See the user and kernel documentation for more details (provided by a
+> following commit):
+> * Documentation/userspace-api/landlock.rst
+> * Documentation/security/landlock.rst
+>
+> Cc: Arnd Bergmann <arnd@arndb.de>
 > Cc: James Morris <jmorris@namei.org>
 > Cc: Jann Horn <jannh@google.com>
 > Cc: Kees Cook <keescook@chromium.org>
 > Cc: Serge E. Hallyn <serge@hallyn.com>
 > Signed-off-by: Micka=C3=ABl Sala=C3=BCn <mic@linux.microsoft.com>
-> ---
->
-> Changes since v23:
-> * Always intersect access rights.  Following the filesystem change
->   logic, make ruleset updates more consistent by always intersecting
->   access rights (boolean AND) instead of combining them (boolean OR) for
->   the same layer.
 
-This seems wrong to me. If some software e.g. builds a policy that
-allows it to execute specific libraries and to open input files
-specified on the command line, and the user then specifies a library
-as an input file, this change will make that fail unless the software
-explicitly deduplicates the rules.
-Userspace will be forced to add extra complexity to work around this.
-
->   This defensive approach could also help avoid user
->   space to inadvertently allow multiple access rights for the same
->   object (e.g.  write and execute access on a path hierarchy) instead of
->   dealing with such inconsistency.  This can happen when there is no
->   deduplication of objects (e.g. paths and underlying inodes) whereas
->   they get different access rights with landlock_add_rule(2).
-
-I don't see why that's an issue. If userspace wants to be able to
-access the same object in different ways for different purposes, it
-should be able to do that, no?
-
-I liked the semantics from the previous version.
+Reviewed-by: Jann Horn <jannh@google.com>
