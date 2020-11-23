@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-20453-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-20454-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 85DDC2BC1F8
-	for <lists+kernel-hardening@lfdr.de>; Sat, 21 Nov 2020 21:11:54 +0100 (CET)
-Received: (qmail 30082 invoked by uid 550); 21 Nov 2020 20:11:44 -0000
+	by mail.lfdr.de (Postfix) with SMTP id B8F822C036F
+	for <lists+kernel-hardening@lfdr.de>; Mon, 23 Nov 2020 11:37:26 +0100 (CET)
+Received: (qmail 9952 invoked by uid 550); 23 Nov 2020 10:37:19 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,116 +13,68 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 30062 invoked from network); 21 Nov 2020 20:11:44 -0000
+Delivered-To: moderator for kernel-hardening@lists.openwall.com
+Received: (qmail 29715 invoked from network); 23 Nov 2020 10:22:03 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=2E/G1+BC++eqc5/VVuVWg3zAaLSLEIJOC7i/xjg7VSs=;
-        b=d6GrwcPvUVOPqv9gOqNrM/bSP2HBSSL4qRmWjJIA4m3hlxWzzEj5T+lfuVhxoorPwR
-         NB2BxSopAcepiomrLE56aIQhqr6iGtiFG6DXeV6iIvBvUM0uetc94YKKaGPVURg9KuKK
-         wPaVmZ+dITTlnTfMDAnpXhgP+pbbnBqLxnBaU=
+        bh=KicNkypOIaNLZNofAMT0/dbRVfdiQb0EG7yDuWE5ulA=;
+        b=TDVt/xqwo7FGjOiB50CURiRd4zX8Glpc/xzed4IR3D50NS0EqlijbKWHNsEmT9A92f
+         opeYzaDlby6Pgpezpy0Z6eYOPQW6ipaIAyEAtip0SZR01YDtd+SICLsxoZ+9krn8s+et
+         lULt1gHvEOthv2285g8UdKxZGn8PuitA3T+FAGLQ/qKxFihLT0OrTedRRYXRz8VblfZD
+         a1sXohEAJiNhEPF+raDuSX6Ta4nQGnI6siEeVnxshXZXFTiwE+mIarl4EbBFaSYp4ZqT
+         zvmMqJJexFfo+5+oFHJeofxyxcmA2hqWZAvCeahk9touSv1o0xYBPyhqFNpgNP0LgZcR
+         CU2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=2E/G1+BC++eqc5/VVuVWg3zAaLSLEIJOC7i/xjg7VSs=;
-        b=pOYd2GLidavybzLPckEYw14Ofmcq5ZBrLyJyLVWujxQfuCCO5pldcnE4Dz1xXRbR+P
-         T5NtBe2POjOtFDPgwOpzyFUMGtbcXC/P4D5N1VwyWdOALKvh8ncIfxfD/0uKM0e163cg
-         LnpIyQIWsJSPyozFGl9JMQmXWdtXoD14AZGRhwC6cLHOC05GEOMw2i6mqbf5lD9/me/j
-         M8rHRqMJ2qlJR2zaM0pXT24+AystmDwbWEAPKtP8NQ8FX0EdWfnTuIqq56llg3UF8G4A
-         /Om5E5Sj2d0cDxmhUKdd27CT93HcssohdxBvdOcqNOQG0zFXrrmP1dkj8vOebaUOgNuj
-         tz1Q==
-X-Gm-Message-State: AOAM533sgUbTlff6XQlCbEVVBFynNMmFQAiJr3NuglXg1g0E1G91Pc5M
-	sKsHdWOFODUNFsat0kIMuJYFFQ==
-X-Google-Smtp-Source: ABdhPJxD+jcfx423cWLQ4O6Da2CSyrYt2pnWQlkBVEKwXqI/6a+7t8fMpRLZBlqwuFIT6m30Fbuv4Q==
-X-Received: by 2002:a17:90a:f406:: with SMTP id ch6mr15105294pjb.134.1605989487549;
-        Sat, 21 Nov 2020 12:11:27 -0800 (PST)
-Date: Sat, 21 Nov 2020 12:11:25 -0800
-From: Kees Cook <keescook@chromium.org>
+        bh=KicNkypOIaNLZNofAMT0/dbRVfdiQb0EG7yDuWE5ulA=;
+        b=ei2MqkpXIBOQabrVQ/bdkq9lRAIhiAakkpxX+YLVLMpmhm0l/TkaSqXNuTUw/TTZkG
+         7FZi6PqbIJI10d3wIZjTAp4sMk67rs60frbqIpf1Lq3L4pmV0SwbrDJ0Sq5zWOYemYCO
+         zADM0ejPDORHNmflbeIOm6PYoQvuOCK8KvhPDfJfsmDivXCEM15j36Vf66fMazFFhf/w
+         SQFSKbaymjJpbPcVM56gkVDJqIJ+XPAnAwH1DRj8d+NJRB7Y36IOFUtWja+vCfSP00vO
+         xaP2ymXmnoPqDI6NfFwxOo9IfAlL2s7idtJQRxElm+nyWDPZTF5zVLrKO7eUyFWDrKuF
+         puBg==
+X-Gm-Message-State: AOAM5321df/zNslDgFas5J0mxCKTC8nqUUc2zb6G9Qop23G3RZfk9viF
+	dRULz7hF9iPM8P2uLZ98wqPZjA==
+X-Google-Smtp-Source: ABdhPJxFSYMYi0puK0drxRNruUpOKNZHKEgE3EPEQ608H69x9iUkj+1IRAw3SWeiVlPLVEVUtEhq+A==
+X-Received: by 2002:a17:906:8058:: with SMTP id x24mr44772875ejw.272.1606126911958;
+        Mon, 23 Nov 2020 02:21:51 -0800 (PST)
+Date: Mon, 23 Nov 2020 10:21:49 +0000
+From: David Brazdil <dbrazdil@google.com>
 To: Sami Tolvanen <samitolvanen@google.com>
-Cc: Nathan Chancellor <natechancellor@gmail.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+Cc: Masahiro Yamada <masahiroy@kernel.org>,
 	Steven Rostedt <rostedt@goodmis.org>, Will Deacon <will@kernel.org>,
 	Josh Poimboeuf <jpoimboe@redhat.com>,
 	Peter Zijlstra <peterz@infradead.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Paul E. McKenney" <paulmck@kernel.org>,
-	clang-built-linux <clang-built-linux@googlegroups.com>,
-	Kernel Hardening <kernel-hardening@lists.openwall.com>,
-	linux-arch <linux-arch@vger.kernel.org>,
-	Linux ARM <linux-arm-kernel@lists.infradead.org>,
-	Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>,
-	LKML <linux-kernel@vger.kernel.org>, linux-pci@vger.kernel.org
-Subject: Re: [PATCH v7 02/17] kbuild: add support for Clang LTO
-Message-ID: <202011211204.211E2B12@keescook>
+	Kees Cook <keescook@chromium.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	clang-built-linux@googlegroups.com,
+	kernel-hardening@lists.openwall.com, linux-arch@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org
+Subject: Re: [PATCH v7 15/17] KVM: arm64: disable LTO for the nVHE directory
+Message-ID: <20201123102149.ogl642tw234qod62@google.com>
 References: <20201118220731.925424-1-samitolvanen@google.com>
- <20201118220731.925424-3-samitolvanen@google.com>
- <CAKwvOdnYTMzaahnBqdNYPz3KMdnkp=jZ4hxiqkTYzM5+BBdezA@mail.gmail.com>
- <CABCJKucj_jUwoiLc35R7qFe+cNKTWgT+gsCa5pPiY66+1--3Lg@mail.gmail.com>
- <202011201144.3F2BB70C@keescook>
- <20201120202935.GA1220359@ubuntu-m3-large-x86>
- <202011201241.B159562D7@keescook>
- <CABCJKucJ87wa73YJkN_dYUyE7foQT+12gdWJZw1PgZ_decFr4w@mail.gmail.com>
- <202011201556.3B910EF@keescook>
- <CABCJKudy5xFfjBFpFPR255-NAb1yOSuVqsL4fFUwJGGWKDnmQQ@mail.gmail.com>
+ <20201118220731.925424-16-samitolvanen@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CABCJKudy5xFfjBFpFPR255-NAb1yOSuVqsL4fFUwJGGWKDnmQQ@mail.gmail.com>
+In-Reply-To: <20201118220731.925424-16-samitolvanen@google.com>
 
-On Fri, Nov 20, 2020 at 05:46:44PM -0800, Sami Tolvanen wrote:
-> Sure, this looks good to me, I'll use this in v8. The only minor
-> concern I have is that ThinLTO cannot be set as the default LTO mode,
-> but I assume anyone who selects LTO is also capable of deciding which
-> mode is better for them.
+Hey Sami,
 
-It could be re-arranged similar to what you had before, but like:
+On Wed, Nov 18, 2020 at 02:07:29PM -0800, Sami Tolvanen wrote:
+> We use objcopy to manipulate ELF binaries for the nVHE code,
+> which fails with LTO as the compiler produces LLVM bitcode
+> instead. Disable LTO for this code to allow objcopy to be used.
 
-config LTO
-	bool "..."
-	depends on HAS_LTO
-	help
-	  ...
+We now partially link the nVHE code (generating machine code) before objcopy,
+so I think you should be able to drop this patch now. Tried building your
+branch without it, ran a couple of unit tests and all seems fine.
 
-choice
-	prompt "LTO mode" if LTO
-	default LTO_GCC if HAS_LTO_GCC
-	default LTO_CLANG_THIN if HAS_LTO_CLANG
-	default LTO_CLANG_FULL
-	help
-	  ...
-
-	config LTO_CLANG_THIN
-	...
-
-	config LTO_CLANG_FULL
-endchoice
-
-Then the LTO is top-level yes/no, but depends on detected capabilities,
-and the mode is visible if LTO is chosen, etc.
-
-I'm not really sure which is better...
-
-> > +config LTO_CLANG_THIN
-> > +       bool "Clang ThinLTO (EXPERIMENTAL)"
-> > +       depends on ARCH_SUPPORTS_LTO_CLANG_THIN
-> > +       select LTO_CLANG
-> > +       help
-> > +         This option enables Clang's ThinLTO, which allows for parallel
-> > +         optimization and faster incremental compiles compared to the
-> > +         CONFIG_LTO_CLANG_FULL option. More information can be found
-> > +         from Clang's documentation:
-> > +
-> > +           https://clang.llvm.org/docs/ThinLTO.html
-> > +
-> > +         If unsure, say Y.
-> >  endchoice
-> 
-> The two LTO_CLANG_* options need to depend on HAS_LTO_CLANG, of course.
-
-Whoops, yes. Thanks for catching that. :)
-
--- 
-Kees Cook
+David
