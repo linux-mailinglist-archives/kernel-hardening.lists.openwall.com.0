@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-20501-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-20502-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 610982CAEAB
-	for <lists+kernel-hardening@lfdr.de>; Tue,  1 Dec 2020 22:39:25 +0100 (CET)
-Received: (qmail 19838 invoked by uid 550); 1 Dec 2020 21:37:54 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 0192C2CAEAC
+	for <lists+kernel-hardening@lfdr.de>; Tue,  1 Dec 2020 22:39:34 +0100 (CET)
+Received: (qmail 20072 invoked by uid 550); 1 Dec 2020 21:37:57 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,43 +13,43 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 19728 invoked from network); 1 Dec 2020 21:37:54 -0000
+Received: (qmail 19997 invoked from network); 1 Dec 2020 21:37:56 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=aPTc8wYkBIIZS9XLhaJqPHrVGew/rHRzWtLqs6SwnEk=;
-        b=vXHUajvUgn40LQCYOvZPKvqCWjM82atINdDHUGd5EhIZaxvZWNECR6Puf1wV/Xm1fz
-         RZFUluVJoen54/2OkeSIKDLooJAqo6nO6jmid/KnIY+pQsB0jUK1FLQCjzUfvDCGjqfW
-         5DsweDMH7mPM+webX4KoPPbT06j0wd8ib/BAqCtFcLiXN9fRxFfzVzezsrV61oCpnhyb
-         7uduG6UItD7EnvVpEffELx2wbLPqlD3Oqd6UlZIDNGhgDg+wEFbzFvokQCivtnRsGs7N
-         92Et/EOjPux1Tii1bL3i8/gTtmbaMJpflMTGhVRAPssOG6ib3nwdVtng5zkY0hoNy4H7
-         BGdg==
+        bh=D9wH7plBpsyKB7z0MJo6lESfcO9at50jK7OVp+0NdAo=;
+        b=ty5f8H7kzpU+lvDsHXGI++1V0wurJB7DQJHEXEwufmtrCxIRoiPJOPP1X/3lLsz1Jb
+         yjTR/AGDyQQn3kRjvvw2d88GiqDY8VcvMWomB5DuCrtNFFxHuktvMeKvMrFz+Xfk1Q77
+         MRmeM7k7VctuQepKTW4pproEuOE+zIwcrFORj2gPW2IlyOU7IhN8JpWoK+mpfeUx5C/d
+         ojaTkHbYjh10G7mgJCJekN588v9SPU5sVPQSTu4fzbRdcVzLgMGzXyAyI0u1gJhvAtr+
+         L9s0tFmZLbeuu51bgQUHw9Ysitz1s+n7ja3zUrLOpDRRdxizWkaeqCKUaIf410z146BI
+         /CXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=aPTc8wYkBIIZS9XLhaJqPHrVGew/rHRzWtLqs6SwnEk=;
-        b=BR8vrqbQsinDP2PSskcjURsTqlfucL9geHDHaIE2dP3nidRpcsER4wen0YMNauBGBd
-         BVd7kUa77ra2nFAhm1CJVSvlxvqPx05vZXmdDfYs+B/hX/dEJKAMgQk+5EkyA2LfiaPo
-         mfBEhqiF2Fa4odLc1Ea+w6XOYIzKCR8ppPNMTfPdG84+ERsMfpCS9V2p1UZZdTccKDZT
-         IpIFVUtVaGgwXHw1kkL4C2ciVRi+Bqg56WKcvQucaGavNM7o1xcKNBrLCTtmLH+go5YL
-         QBiiXRYSE3FSNFn3kaD3zG+tklMQABLy07kkKHfeZxPnwFyIqwbKf/3szXCfxKN+7Z6R
-         Nd7g==
-X-Gm-Message-State: AOAM531IaCYUHSw/hpAfNFgtn1KV26v+fKM0CJiXka9xvUfbg3m7S9BY
-	8EW/ea4n/jTun9XQBIgGwbET61ex4IIicNRM194=
-X-Google-Smtp-Source: ABdhPJx2UMQKvzPc9YbjuAcaOdZsXhK7RlcIM2M9pkfdRpnDBi+U9k28DqELenlSlo2tvxUYIND8c9jWK0Acmjv4ppQ=
+        bh=D9wH7plBpsyKB7z0MJo6lESfcO9at50jK7OVp+0NdAo=;
+        b=CalhbjHn+wTZd0Xt1j15E2Dric/obIr/GBvddW2wZ+iBjpaBQoc6KJzm6LK5R93GI5
+         5GC5TM67xb79pWTTgrP3S3L9gl1fdhuglHPs0km23uv3yk4vNCFGRX8geu1b9CgT0AaI
+         4bHrU94jMVS6lEw7t4vfx2nn6g49nB2CINtGPMtD5LnGJk05MlF4I/qBt2UOyoK+Zru+
+         aAkBTP8rwF083ssMvKzjuGXoL1uYISkVoKKtgJIpJNyCkd091wmM/2B6it5Pcu8vtP+P
+         CadkXiI/Vk/A2sp7M6a+7d5aou5FqmVougHOA8FbXE1KpCXbU28DHsnelS8WeSJve+/j
+         /vBA==
+X-Gm-Message-State: AOAM532I6h37GrXufT2g/6DmjMeyuBeuOxvj+ReRRd4Lb9p521ctbm/B
+	7SSsfzZ6cICRLHc65lMR5Hy58Z7PwmoXXUwxp6g=
+X-Google-Smtp-Source: ABdhPJz0uxxT0ZlEK90fhImd7lL6Fuzds0C69/eAFTomtuQ0mN0EZEi1KhWi4R7wk6mCpdkDbecP4SoP9hzTb5uJL7A=
 Sender: "samitolvanen via sendgmr" <samitolvanen@samitolvanen1.mtv.corp.google.com>
 X-Received: from samitolvanen1.mtv.corp.google.com ([2620:15c:201:2:f693:9fff:fef4:1b6d])
- (user=samitolvanen job=sendgmr) by 2002:ad4:5685:: with SMTP id
- bc5mr5091015qvb.48.1606858662372; Tue, 01 Dec 2020 13:37:42 -0800 (PST)
-Date: Tue,  1 Dec 2020 13:37:04 -0800
+ (user=samitolvanen job=sendgmr) by 2002:ad4:4d84:: with SMTP id
+ cv4mr5421264qvb.14.1606858664762; Tue, 01 Dec 2020 13:37:44 -0800 (PST)
+Date: Tue,  1 Dec 2020 13:37:05 -0800
 In-Reply-To: <20201201213707.541432-1-samitolvanen@google.com>
-Message-Id: <20201201213707.541432-14-samitolvanen@google.com>
+Message-Id: <20201201213707.541432-15-samitolvanen@google.com>
 Mime-Version: 1.0
 References: <20201201213707.541432-1-samitolvanen@google.com>
 X-Mailer: git-send-email 2.29.2.576.ga3fc446d84-goog
-Subject: [PATCH v8 13/16] drivers/misc/lkdtm: disable LTO for rodata.o
+Subject: [PATCH v8 14/16] arm64: vdso: disable LTO
 From: Sami Tolvanen <samitolvanen@google.com>
 To: Masahiro Yamada <masahiroy@kernel.org>, Steven Rostedt <rostedt@goodmis.org>, 
 	Will Deacon <will@kernel.org>
@@ -62,27 +62,30 @@ Cc: Josh Poimboeuf <jpoimboe@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
 	linux-pci@vger.kernel.org, Sami Tolvanen <samitolvanen@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-Disable LTO for rodata.o to allow objcopy to be used to
-manipulate sections.
+Disable LTO for the vDSO by filtering out CC_FLAGS_LTO, as there's no
+point in using link-time optimization for the small amount of C code.
 
 Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
-Acked-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Acked-by: Will Deacon <will@kernel.org>
 ---
- drivers/misc/lkdtm/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/kernel/vdso/Makefile | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/misc/lkdtm/Makefile b/drivers/misc/lkdtm/Makefile
-index c70b3822013f..dd4c936d4d73 100644
---- a/drivers/misc/lkdtm/Makefile
-+++ b/drivers/misc/lkdtm/Makefile
-@@ -13,6 +13,7 @@ lkdtm-$(CONFIG_LKDTM)		+= cfi.o
+diff --git a/arch/arm64/kernel/vdso/Makefile b/arch/arm64/kernel/vdso/Makefile
+index d65f52264aba..50fe49fb4d95 100644
+--- a/arch/arm64/kernel/vdso/Makefile
++++ b/arch/arm64/kernel/vdso/Makefile
+@@ -30,7 +30,8 @@ ldflags-y := -shared -nostdlib -soname=linux-vdso.so.1 --hash-style=sysv	\
+ ccflags-y := -fno-common -fno-builtin -fno-stack-protector -ffixed-x18
+ ccflags-y += -DDISABLE_BRANCH_PROFILING
  
- KASAN_SANITIZE_stackleak.o	:= n
- KCOV_INSTRUMENT_rodata.o	:= n
-+CFLAGS_REMOVE_rodata.o		+= $(CC_FLAGS_LTO)
- 
- OBJCOPYFLAGS :=
- OBJCOPYFLAGS_rodata_objcopy.o	:= \
+-CFLAGS_REMOVE_vgettimeofday.o = $(CC_FLAGS_FTRACE) -Os $(CC_FLAGS_SCS) $(GCC_PLUGINS_CFLAGS)
++CFLAGS_REMOVE_vgettimeofday.o = $(CC_FLAGS_FTRACE) -Os $(CC_FLAGS_SCS) $(GCC_PLUGINS_CFLAGS) \
++				$(CC_FLAGS_LTO)
+ KASAN_SANITIZE			:= n
+ UBSAN_SANITIZE			:= n
+ OBJECT_FILES_NON_STANDARD	:= y
 -- 
 2.29.2.576.ga3fc446d84-goog
 
