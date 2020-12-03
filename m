@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-20514-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-20515-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 26C3C2CCADB
-	for <lists+kernel-hardening@lfdr.de>; Thu,  3 Dec 2020 01:08:24 +0100 (CET)
-Received: (qmail 24018 invoked by uid 550); 3 Dec 2020 00:08:18 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 3C2122CD483
+	for <lists+kernel-hardening@lfdr.de>; Thu,  3 Dec 2020 12:26:50 +0100 (CET)
+Received: (qmail 26046 invoked by uid 550); 3 Dec 2020 11:26:43 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,99 +13,76 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 23995 invoked from network); 3 Dec 2020 00:08:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=kEzbS1TJpZr1zlUaIzJZNjxvOX/ycdroxO9B6D39hfs=;
-        b=XgE4hFlRnyVhoAVXKZpoORytuCszXHlvqvjFiWoMfDwKLHMBAJiLtfdxPUF1Ds0rUD
-         hMy53TCCB3trdymTPnhD/EpvivzoOAAQAXZxETeYSC6+cHzGVMjT4trKGbcy7mVBPbhc
-         EU9XgJtJIhJthGXtFVvljVzi3G5x0AhpPonp2pZCSVp8N7AtEqRR1TIcbgMo+e0jsZ0Z
-         Hc665Mzj1QqTEsrYINBIu3TQZCrLkjHzzC62HS4Y70oidn18XQ6vsN8XwIZCJ0FsFltb
-         h9glLD+E7xt4OobgWoc6JZBfXamL35QVqKIzdutURzOaZO1KrXt6o7P69HgMN+nPfgD4
-         oNFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kEzbS1TJpZr1zlUaIzJZNjxvOX/ycdroxO9B6D39hfs=;
-        b=QXiNDoO+s4rITuuU3hn+HxVZsFdmCWgi274TqpzDWHgWWBOIKHKYQvX0DTXX1YP5Q9
-         NgA3Z14UQ6GgxoCa8YWCfW+dQFYKnATxBlyUSHBYS1rulyWFofAhWcPdxE2rNJPJoRzW
-         v9SHc7jB2TgTbKnjxmyKCUe82ADF7Mq32/lDcuNBwY/kPyczU89RSgKEl1+EcKvKFL7o
-         u8xQc9BRaU3OFIttIB0UNHTxSY+s7qcWZMRGNtnYPuDnEWXeglPxSsotM1qJ+BDt5vuH
-         TNz6EXU+9kN9cjUzNxHg50fMqbbMdIXJEh0ty5rDn9V3yGUdYEHh4hAQt+1Agi/R0p1l
-         EIOg==
-X-Gm-Message-State: AOAM530dmdc8Ba2iVG0NFQ9WMZeDOZ+t575pmxvBF5XFt//6SLeUdx8W
-	AoJkUqjUePWCWKH5cDlhf0mNHiVZYqa9BKIFp2M7dg==
-X-Google-Smtp-Source: ABdhPJxh5zUiuI3zegBWmp1u5W+iEQWahGQXosx3cw1T/85XuGQ1Dy4mBr13tbY0tFMQnXyVMrg3wK85B+/nchXJ1Jw=
-X-Received: by 2002:a17:90a:2e8c:: with SMTP id r12mr413591pjd.101.1606954085432;
- Wed, 02 Dec 2020 16:08:05 -0800 (PST)
-MIME-Version: 1.0
-References: <20201201213707.541432-1-samitolvanen@google.com> <20201201213707.541432-3-samitolvanen@google.com>
-In-Reply-To: <20201201213707.541432-3-samitolvanen@google.com>
-From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Wed, 2 Dec 2020 16:07:54 -0800
-Message-ID: <CAKwvOdmfbsTN6GtHwvkgJ=12mBhUzmAgSGtnvA-bRw4tYYZ+BQ@mail.gmail.com>
-Subject: Re: [PATCH v8 02/16] kbuild: add support for Clang LTO
+Received: (qmail 26026 invoked from network); 3 Dec 2020 11:26:42 -0000
+Date: Thu, 3 Dec 2020 11:26:23 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1606994790;
+	bh=Z6fRxajiQsjMgIcL2B8U6vdSMQSDFY19TKRTAoS5XwM=;
+	h=From:To:Cc:Subject:References:In-Reply-To:From;
+	b=BmIBlbUTavBbJSA9SMVKb3tOHpXr6pmjMIykJxf8ysFQLdGr4NcG39u+tYjgBM15e
+	 ND0gIZQk/Z9Q2lye0p54KpIoxeRbEo86wBhS+sakJ/LTeGH97qgsHZUNuhciXa3sjH
+	 Sdap/WsTwkwgmaDLJvxtIbvdHONV85FJ/NQJoTHO+D6r6+nGzh+djD8BmVCZPcr1UA
+	 9KjdS0id2HpEqXYn1f4KtDSfcRnH9mLEjtLYqQpbDQNvRQtx3PhNUaVOjUSpg7p1Fx
+	 +aW7XBdMBvjBOcwlwLm9jvoC5FZG3oy1RfqNQMCD7k9DXou+nfkgGL9P6MIG326q2n
+	 FxiM1lHhq2TrA==
+From: Will Deacon <will@kernel.org>
 To: Sami Tolvanen <samitolvanen@google.com>
-Cc: Masahiro Yamada <masahiroy@kernel.org>, Steven Rostedt <rostedt@goodmis.org>, 
-	Will Deacon <will@kernel.org>, Josh Poimboeuf <jpoimboe@redhat.com>, 
-	Peter Zijlstra <peterz@infradead.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	"Paul E. McKenney" <paulmck@kernel.org>, Kees Cook <keescook@chromium.org>, 
-	clang-built-linux <clang-built-linux@googlegroups.com>, 
-	Kernel Hardening <kernel-hardening@lists.openwall.com>, 
-	linux-arch <linux-arch@vger.kernel.org>, 
-	Linux ARM <linux-arm-kernel@lists.infradead.org>, 
-	Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>, 
-	PCI <linux-pci@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc: Masahiro Yamada <masahiroy@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Josh Poimboeuf <jpoimboe@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	clang-built-linux@googlegroups.com,
+	kernel-hardening@lists.openwall.com, linux-arch@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org
+Subject: Re: [PATCH v8 00/16] Add support for Clang LTO
+Message-ID: <20201203112622.GA31188@willie-the-truck>
+References: <20201201213707.541432-1-samitolvanen@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201201213707.541432-1-samitolvanen@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Tue, Dec 1, 2020 at 1:37 PM Sami Tolvanen <samitolvanen@google.com> wrote:
->
-> This change adds build system support for Clang's Link Time
-> Optimization (LTO). With -flto, instead of ELF object files, Clang
-> produces LLVM bitcode, which is compiled into native code at link
-> time, allowing the final binary to be optimized globally. For more
-> details, see:
->
->   https://llvm.org/docs/LinkTimeOptimization.html
->
-> The Kconfig option CONFIG_LTO_CLANG is implemented as a choice,
-> which defaults to LTO being disabled. To use LTO, the architecture
-> must select ARCH_SUPPORTS_LTO_CLANG and support:
->
->   - compiling with Clang,
->   - compiling inline assembly with Clang's integrated assembler,
->   - and linking with LLD.
->
-> While using full LTO results in the best runtime performance, the
-> compilation is not scalable in time or memory. CONFIG_THINLTO
-> enables ThinLTO, which allows parallel optimization and faster
-> incremental builds. ThinLTO is used by default if the architecture
-> also selects ARCH_SUPPORTS_THINLTO:
->
->   https://clang.llvm.org/docs/ThinLTO.html
->
-> To enable LTO, LLVM tools must be used to handle bitcode files. The
-> easiest way is to pass the LLVM=1 option to make:
->
->   $ make LLVM=1 defconfig
->   $ scripts/config -e LTO_CLANG
->   $ make LLVM=1
->
-> Alternatively, at least the following LLVM tools must be used:
->
->   CC=clang LD=ld.lld AR=llvm-ar NM=llvm-nm
->
-> To prepare for LTO support with other compilers, common parts are
-> gated behind the CONFIG_LTO option, and LTO can be disabled for
-> specific files by filtering out CC_FLAGS_LTO.
->
-> Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
-> Reviewed-by: Kees Cook <keescook@chromium.org>
+Hi Sami,
 
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
--- 
-Thanks,
-~Nick Desaulniers
+On Tue, Dec 01, 2020 at 01:36:51PM -0800, Sami Tolvanen wrote:
+> This patch series adds support for building the kernel with Clang's
+> Link Time Optimization (LTO). In addition to performance, the primary
+> motivation for LTO is to allow Clang's Control-Flow Integrity (CFI)
+> to be used in the kernel. Google has shipped millions of Pixel
+> devices running three major kernel versions with LTO+CFI since 2018.
+> 
+> Most of the patches are build system changes for handling LLVM
+> bitcode, which Clang produces with LTO instead of ELF object files,
+> postponing ELF processing until a later stage, and ensuring initcall
+> ordering.
+> 
+> Note that arm64 support depends on Will's memory ordering patches
+> [1]. I will post x86_64 patches separately after we have fixed the
+> remaining objtool warnings [2][3].
+
+I took this series for a spin, with my for-next/lto branch merged in but
+I see a failure during the LTO stage with clang 11.0.5 because it doesn't
+understand the '.arch_extension rcpc' directive we throw out in READ_ONCE().
+
+We actually check that this extension is available before using it in
+the arm64 Kconfig:
+
+	config AS_HAS_LDAPR
+		def_bool $(as-instr,.arch_extension rcpc)
+
+so this shouldn't happen. I then realised, I wasn't passing LLVM_IAS=1
+on my Make command line; with that, then the detection works correctly
+and the LTO step succeeds.
+
+Why is it necessary to pass LLVM_IAS=1 if LTO is enabled? I think it
+would be _much_ better if this was implicit (or if LTO depended on it).
+
+Cheers,
+
+Will
