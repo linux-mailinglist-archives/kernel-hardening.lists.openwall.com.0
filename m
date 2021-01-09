@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-20612-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-20613-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 2CC412ECBCF
-	for <lists+kernel-hardening@lfdr.de>; Thu,  7 Jan 2021 09:39:59 +0100 (CET)
-Received: (qmail 21624 invoked by uid 550); 7 Jan 2021 08:39:51 -0000
+	by mail.lfdr.de (Postfix) with SMTP id ED6592EFC1E
+	for <lists+kernel-hardening@lfdr.de>; Sat,  9 Jan 2021 01:29:28 +0100 (CET)
+Received: (qmail 1619 invoked by uid 550); 9 Jan 2021 00:29:21 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,73 +13,111 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 21604 invoked from network); 7 Jan 2021 08:39:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1610008778;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=b/gjdBCSmSXKkH6UZrD67rlhCNa+Qh7NKibomcVRCXg=;
-	b=GFScFeuiP0gYrwf89SQxpVvkN7S/XrYZeWaNuctCUhlzZJ+/mXobrRkvBx8ZLGeJ2LjUE1
-	o8NCxu2SxB0siULJjJcvRpLvPqKmFDekYvvR/aQ7TGghoMG8YJwSnRG3gmgmKXTU4/xWiP
-	SHXjJp5FcjJdGbwU/KVjm0uk6kOUJ0Y=
-X-MC-Unique: pG8_4YEoNCOpQf0p1tf4Qg-1
+Received: (qmail 1599 invoked from network); 9 Jan 2021 00:29:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=eveSrO3foL1YR94SADi/xGNY6RU/HiTPaoR//1jI2bc=;
+        b=cemTR8rQ+v7aAc1j8X9bSjTtMv/2eIij1J0jQdOW7eNBqbQFCd58aSYpax3rZVT2eY
+         aoIsHA/4koMVUbI+TLf/cwAkcwY2XCmvpLcT//0ZhklFs+Yz+KCOHvj4iDKgepwwDCy2
+         psVcFqYTpa0VlbUiLHsCrmO18jt6/WbjHzn9c=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=b/gjdBCSmSXKkH6UZrD67rlhCNa+Qh7NKibomcVRCXg=;
-        b=ql9gnK3sdclwP6ma8mKkrDfm764y9GMmvGPI05CGVdW2FyMGh4gd7Yisb4Bv1WPtY6
-         5PAKgj5p4X069DWCxPqlJx0hDW4Vx6TW6mpAgmxQWI2E0tg0tMFO6nPh0XnZFBFdY2bD
-         LWoVBgNKa+68oYqNDJN4mUtR3lYjwzwWZc5RY7HdY4OIy+IDICLQ1QvP8f/1blIvKEpZ
-         RhouX/8uZxoFCGK6lEZVuqErDByfwcIeJ4H+DcXEFZMVDZDEPsWd+0SV7B+H/lXtqHdT
-         xtf7FwnebdeXT5eMXMIGXUztsMpNx2DD9760dThQA1JD78lPWH0/RzsdsQ2tblGIOWD8
-         BOQw==
-X-Gm-Message-State: AOAM5329Hbceg1QtC/F4vIP4/3cC5usPQpnbuOcrDlLu/KpPhtjrR9Cz
-	aj/3XYPOuwegjZvu+OLi17rHh1J7Xw32rqbdrwj2z4wCMPVt/ezUcOTz1XHxbO0rUIBOv66m81l
-	6YUr1li9v7H7lOzKfi78dZJUCFi5ppRte/w==
-X-Received: by 2002:a5d:554e:: with SMTP id g14mr7962489wrw.264.1610008775833;
-        Thu, 07 Jan 2021 00:39:35 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJz7UTbth5UPeghaUf4Y/9GWuz3fDS27vvZLBin1zacQw3Tp5n2al3IsoTK+x69AxDSZwlgDNg==
-X-Received: by 2002:a5d:554e:: with SMTP id g14mr7962459wrw.264.1610008775620;
-        Thu, 07 Jan 2021 00:39:35 -0800 (PST)
-Date: Thu, 7 Jan 2021 09:39:32 +0100
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Daurnimator <quae@daurnimator.com>
-Cc: Jens Axboe <axboe@kernel.dk>,
-	Kernel Hardening <kernel-hardening@lists.openwall.com>,
-	Christian Brauner <christian.brauner@ubuntu.com>,
-	io-uring <io-uring@vger.kernel.org>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Stefan Hajnoczi <stefanha@redhat.com>, Jann Horn <jannh@google.com>,
-	Jeff Moyer <jmoyer@redhat.com>, Aleksa Sarai <asarai@suse.de>,
-	Sargun Dhillon <sargun@sargun.me>, linux-kernel@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>
-Subject: Re: [PATCH v6 2/3] io_uring: add IOURING_REGISTER_RESTRICTIONS opcode
-Message-ID: <20210107083932.ho6vo5g5hmdohwqt@steredhat>
-References: <20200827145831.95189-1-sgarzare@redhat.com>
- <20200827145831.95189-3-sgarzare@redhat.com>
- <CAEnbY+fS8FXVeouOxN3uohTvo7fBi5r7TQCGBZUmG3MGJhBrYg@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=eveSrO3foL1YR94SADi/xGNY6RU/HiTPaoR//1jI2bc=;
+        b=eWS7DIQ0K+aY0t6AUH60V0ZhENjqtUk2+TdX649cK3UjTa8OBL5wq7LEKxOAXno3K3
+         4y3IcnCsTXSvL+fdbd4b7u6wTRo0WsqG4bcMPRs4WH1HBvQu94i37FbuuMrfG17nsOci
+         d1j9O8taAu88OD9Y/APacG+tbWeJa/LFsS+knCSEsVzyE8pugLvkxsUW8yuQFLNG/S2i
+         jW9/HS2b9rqBo9BK7+Fas024eNfzlYB2VVLrDY1CUoploaiSaoNKCrqmFgKU5Fp9yV5v
+         C+wsc5owj6RPP7B391NZztfJgdeJKjngbtzwhA58r1HcEvIBgrVyNcXrcGBlv0JMRQw5
+         cojA==
+X-Gm-Message-State: AOAM533t2OeYJg0La3C9qxqrbKfwxYLZ1z+j0dTnpGyCkh4dl5b0U5yv
+	OjXtRmGA/mv3nKEypa0Yo2mfAg==
+X-Google-Smtp-Source: ABdhPJxOK52D16pcAwbT6jFjbq8GC4r4IJlAOsTNR/onet1CRy5aKa4cGbW3hXo1Ls7QfN7irIfQYg==
+X-Received: by 2002:a17:90a:db08:: with SMTP id g8mr6363172pjv.163.1610152148560;
+        Fri, 08 Jan 2021 16:29:08 -0800 (PST)
+From: Kees Cook <keescook@chromium.org>
+To: Steven Rostedt <rostedt@goodmis.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Will Deacon <will@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Cc: Kees Cook <keescook@chromium.org>,
+	clang-built-linux@googlegroups.com,
+	linux-arch@vger.kernel.org,
+	linux-kbuild@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Josh Poimboeuf <jpoimboe@redhat.com>,
+	linux-kernel@vger.kernel.org,
+	Peter Zijlstra <peterz@infradead.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	kernel-hardening@lists.openwall.com,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v9 00/16] Add support for Clang LTO
+Date: Fri,  8 Jan 2021 16:27:13 -0800
+Message-Id: <161015202326.2511797.6087273163265436487.b4-ty@chromium.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20201211184633.3213045-1-samitolvanen@google.com>
+References: <20201211184633.3213045-1-samitolvanen@google.com>
 MIME-Version: 1.0
-In-Reply-To: <CAEnbY+fS8FXVeouOxN3uohTvo7fBi5r7TQCGBZUmG3MGJhBrYg@mail.gmail.com>
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=sgarzare@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jan 04, 2021 at 01:26:41AM +1100, Daurnimator wrote:
->On Fri, 28 Aug 2020 at 00:59, Stefano Garzarella <sgarzare@redhat.com> wrote:
->> +               __u8 register_op; /* IORING_RESTRICTION_REGISTER_OP */
->
->Can you confirm that this intentionally limited the future range of
->IORING_REGISTER opcodes to 0-255?
->
+On Fri, 11 Dec 2020 10:46:17 -0800, Sami Tolvanen wrote:
+> This patch series adds support for building the kernel with Clang's
+> Link Time Optimization (LTO). In addition to performance, the primary
+> motivation for LTO is to allow Clang's Control-Flow Integrity (CFI)
+> to be used in the kernel. Google has shipped millions of Pixel
+> devices running three major kernel versions with LTO+CFI since 2018.
+> 
+> Most of the patches are build system changes for handling LLVM
+> bitcode, which Clang produces with LTO instead of ELF object files,
+> postponing ELF processing until a later stage, and ensuring initcall
+> ordering.
+> 
+> [...]
 
-It was based on io_uring_probe, so we used u8 for opcodes, but we have 
-room to extend it in the future.
+Applied to kspp/lto/v5.11-rc2, thanks!
 
-So, for now, this allow to register restrictions up to 255 
-IORING_REGISTER opcode.
+I'll let 0-day grind on this over the weekend and toss it in -next on
+Monday if there aren't any objections.
+
+[01/16] tracing: move function tracer options to Kconfig
+        https://git.kernel.org/kees/c/3b15cdc15956
+[02/16] kbuild: add support for Clang LTO
+        https://git.kernel.org/kees/c/833174494976
+[03/16] kbuild: lto: fix module versioning
+        https://git.kernel.org/kees/c/6eb20c5338a0
+[04/16] kbuild: lto: limit inlining
+        https://git.kernel.org/kees/c/f6db4eff0691
+[05/16] kbuild: lto: merge module sections
+        https://git.kernel.org/kees/c/d03e46783689
+[06/16] kbuild: lto: add a default list of used symbols
+        https://git.kernel.org/kees/c/81bfbc27b122
+[07/16] init: lto: ensure initcall ordering
+        https://git.kernel.org/kees/c/7918ea64195d
+[08/16] init: lto: fix PREL32 relocations
+        https://git.kernel.org/kees/c/a51d9615ffb5
+[09/16] PCI: Fix PREL32 relocations for LTO
+        https://git.kernel.org/kees/c/dc83615370e7
+[10/16] modpost: lto: strip .lto from module names
+        https://git.kernel.org/kees/c/5c0312ef3ca0
+[11/16] scripts/mod: disable LTO for empty.c
+        https://git.kernel.org/kees/c/3d05432db312
+[12/16] efi/libstub: disable LTO
+        https://git.kernel.org/kees/c/b12eba00cb87
+[13/16] drivers/misc/lkdtm: disable LTO for rodata.o
+        https://git.kernel.org/kees/c/ed02e86f1752
+[14/16] arm64: vdso: disable LTO
+        https://git.kernel.org/kees/c/d73692f0f527
+[15/16] arm64: disable recordmcount with DYNAMIC_FTRACE_WITH_REGS
+        https://git.kernel.org/kees/c/09b812ac146f
+[16/16] arm64: allow LTO to be selected
+        https://git.kernel.org/kees/c/1354b8946c46
+
+-- 
+Kees Cook
 
