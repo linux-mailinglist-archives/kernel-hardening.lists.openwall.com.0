@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-20657-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-20659-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 232F92F7EC9
-	for <lists+kernel-hardening@lfdr.de>; Fri, 15 Jan 2021 16:01:12 +0100 (CET)
-Received: (qmail 19506 invoked by uid 550); 15 Jan 2021 14:59:35 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 2AF992F8467
+	for <lists+kernel-hardening@lfdr.de>; Fri, 15 Jan 2021 19:31:47 +0100 (CET)
+Received: (qmail 11409 invoked by uid 550); 15 Jan 2021 18:31:40 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,254 +13,247 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 18249 invoked from network); 15 Jan 2021 14:59:33 -0000
-From: Alexey Gladkov <gladkov.alexey@gmail.com>
-To: LKML <linux-kernel@vger.kernel.org>,
-	io-uring@vger.kernel.org,
-	Kernel Hardening <kernel-hardening@lists.openwall.com>,
-	Linux Containers <containers@lists.linux-foundation.org>,
-	linux-mm@kvack.org
-Cc: Alexey Gladkov <legion@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Christian Brauner <christian.brauner@ubuntu.com>,
-	"Eric W . Biederman" <ebiederm@xmission.com>,
-	Jann Horn <jannh@google.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Kees Cook <keescook@chromium.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Oleg Nesterov <oleg@redhat.com>
-Subject: [RFC PATCH v3 8/8] kselftests: Add test to check for rlimit changes in different user namespaces
-Date: Fri, 15 Jan 2021 15:57:29 +0100
-Message-Id: <3102e17576584b3bfa5854f457073a42574dec8c.1610722474.git.gladkov.alexey@gmail.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <cover.1610722473.git.gladkov.alexey@gmail.com>
-References: <cover.1610722473.git.gladkov.alexey@gmail.com>
+Received: (qmail 11371 invoked from network); 15 Jan 2021 18:31:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=doIF7YGiAhKmeiwZI9aWnSI+iqxNbrVvLkiRLdsWXwo=;
+        b=WPdEeI0zC9+D3jlTAjWy+d5mggbWi3OY2VUQ/43nSuiyfjKqFEx6T22EPtvWJwurbw
+         fS9acjTUgC7Dq6WJkCW/k/wgwuphYGYLEyF3BfOJNEltwyCo294v+jPalogZjNvZM/Rt
+         fuasjPtoEWd7gP8cPZRsuacpG2Inn3Lahs0xthzwPh1lzIa+k70BK3/A9+tANStEamhN
+         DIQaqnF0NmlcoHX7guomoXZunjHQf6PQqIgKsUwREKXv11OzrhVaS0LjpabOTp10tJDz
+         U1YoJdqBnuI8yxikWBi6UrYvxbN7MGFNj8XLbF/o7DGkOk6M3wBWF3De3DfCNlI1N97B
+         MTGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=doIF7YGiAhKmeiwZI9aWnSI+iqxNbrVvLkiRLdsWXwo=;
+        b=G7UDAGcif5a1amBGOXoRaSNw7fuUqN5fczCNAaZ+2Mm/qVO6ZtSxtrR59maeGQvEgj
+         iaiVrZl9JrW44M/Hz4wYsQPvRPBDU987bsrM6I6rsj0cP9+YZfqYiW5SzSz5VxqpFpGM
+         qvuhCv4F1fysyRNTjTx+YpumwYCtipK8akNKRyPQGv7dHsIKuBmnzqXW0ajF0roHSwo+
+         5l77AwxbHSnf8rgLn0KBoaHi5/ynXXbWIVsa6H7lPjShuCGFj7+aaMzzL8zIgXu7wEID
+         qYOt4Gul5PGix3/Yo9F0goFjyXP6oWKW2FgtceYPAd4+39TWPm9zjQbXF+z2ZN4qm40V
+         3DQQ==
+X-Gm-Message-State: AOAM532Tgvh8ZOPc9bcyz94Oz2Af8OuZBR0pSe4mJDHMknCaE+Mv28mJ
+	2jb232oyWXa0YJKN+ddqRb0HfbKXhuGaepDoZXmV0g==
+X-Google-Smtp-Source: ABdhPJwgqnHrWWmTgRSWdjUFVb+FJ/p8ce+SLZoErtKGscrYZjJMLxMRJWkdYszsALachIQuW5LMv7rhF3d0xR729W8=
+X-Received: by 2002:a2e:9d87:: with SMTP id c7mr5757298ljj.43.1610735487873;
+ Fri, 15 Jan 2021 10:31:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.6.1 (raptor.unsafe.ru [5.9.43.93]); Fri, 15 Jan 2021 14:59:14 +0000 (UTC)
+References: <20201209192839.1396820-1-mic@digikod.net> <20201209192839.1396820-8-mic@digikod.net>
+ <CAG48ez1wbAQwU-eoC9DngHyUM_5F01MJQpRnLaJFvfRUrnXBdA@mail.gmail.com>
+ <aeb3e152-8108-89d2-0577-4b130368f14f@digikod.net> <CAG48ez2HJCFvmFALDYDYnufE755Dqh3JquAMf-1mnzmRrdKaoQ@mail.gmail.com>
+ <9be6481f-9c03-dd32-378f-20bc7c52315c@digikod.net>
+In-Reply-To: <9be6481f-9c03-dd32-378f-20bc7c52315c@digikod.net>
+From: Jann Horn <jannh@google.com>
+Date: Fri, 15 Jan 2021 19:31:01 +0100
+Message-ID: <CAG48ez1O0VTwEiRd3KqexoF78WR+cmP5bGk5Kh5Cs7aPepiDVg@mail.gmail.com>
+Subject: Re: [PATCH v26 07/12] landlock: Support filesystem access-control
+To: =?UTF-8?B?TWlja2HDq2wgU2FsYcO8bg==?= <mic@digikod.net>
+Cc: James Morris <jmorris@namei.org>, "Serge E . Hallyn" <serge@hallyn.com>, 
+	Al Viro <viro@zeniv.linux.org.uk>, Andy Lutomirski <luto@amacapital.net>, 
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>, Arnd Bergmann <arnd@arndb.de>, 
+	Casey Schaufler <casey@schaufler-ca.com>, Jeff Dike <jdike@addtoit.com>, 
+	Jonathan Corbet <corbet@lwn.net>, Kees Cook <keescook@chromium.org>, 
+	Michael Kerrisk <mtk.manpages@gmail.com>, Richard Weinberger <richard@nod.at>, Shuah Khan <shuah@kernel.org>, 
+	Vincent Dagonneau <vincent.dagonneau@ssi.gouv.fr>, 
+	Kernel Hardening <kernel-hardening@lists.openwall.com>, Linux API <linux-api@vger.kernel.org>, 
+	linux-arch <linux-arch@vger.kernel.org>, 
+	"open list:DOCUMENTATION" <linux-doc@vger.kernel.org>, linux-fsdevel <linux-fsdevel@vger.kernel.org>, 
+	kernel list <linux-kernel@vger.kernel.org>, 
+	"open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>, 
+	linux-security-module <linux-security-module@vger.kernel.org>, 
+	"the arch/x86 maintainers" <x86@kernel.org>, =?UTF-8?B?TWlja2HDq2wgU2FsYcO8bg==?= <mic@linux.microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The testcase runs few instances of the program with RLIMIT_NPROC=1 from
-user uid=60000, in different user namespaces.
+On Fri, Jan 15, 2021 at 10:10 AM Micka=C3=ABl Sala=C3=BCn <mic@digikod.net>=
+ wrote:
+> On 14/01/2021 23:43, Jann Horn wrote:
+> > On Thu, Jan 14, 2021 at 7:54 PM Micka=C3=ABl Sala=C3=BCn <mic@digikod.n=
+et> wrote:
+> >> On 14/01/2021 04:22, Jann Horn wrote:
+> >>> On Wed, Dec 9, 2020 at 8:28 PM Micka=C3=ABl Sala=C3=BCn <mic@digikod.=
+net> wrote:
+> >>>> Thanks to the Landlock objects and ruleset, it is possible to identi=
+fy
+> >>>> inodes according to a process's domain.  To enable an unprivileged
+> >>>> process to express a file hierarchy, it first needs to open a direct=
+ory
+> >>>> (or a file) and pass this file descriptor to the kernel through
+> >>>> landlock_add_rule(2).  When checking if a file access request is
+> >>>> allowed, we walk from the requested dentry to the real root, followi=
+ng
+> >>>> the different mount layers.  The access to each "tagged" inodes are
+> >>>> collected according to their rule layer level, and ANDed to create
+> >>>> access to the requested file hierarchy.  This makes possible to iden=
+tify
+> >>>> a lot of files without tagging every inodes nor modifying the
+> >>>> filesystem, while still following the view and understanding the use=
+r
+> >>>> has from the filesystem.
+> >>>>
+> >>>> Add a new ARCH_EPHEMERAL_INODES for UML because it currently does no=
+t
+> >>>> keep the same struct inodes for the same inodes whereas these inodes=
+ are
+> >>>> in use.
+> >>>>
+> >>>> This commit adds a minimal set of supported filesystem access-contro=
+l
+> >>>> which doesn't enable to restrict all file-related actions.  This is =
+the
+> >>>> result of multiple discussions to minimize the code of Landlock to e=
+ase
+> >>>> review.  Thanks to the Landlock design, extending this access-contro=
+l
+> >>>> without breaking user space will not be a problem.  Moreover, seccom=
+p
+> >>>> filters can be used to restrict the use of syscall families which ma=
+y
+> >>>> not be currently handled by Landlock.
+> >>> [...]
+> >>>> +static bool check_access_path_continue(
+> >>>> +               const struct landlock_ruleset *const domain,
+> >>>> +               const struct path *const path, const u32 access_requ=
+est,
+> >>>> +               u64 *const layer_mask)
+> >>>> +{
+> >>> [...]
+> >>>> +       /*
+> >>>> +        * An access is granted if, for each policy layer, at least =
+one rule
+> >>>> +        * encountered on the pathwalk grants the access, regardless=
+ of their
+> >>>> +        * position in the layer stack.  We must then check not-yet-=
+seen layers
+> >>>> +        * for each inode, from the last one added to the first one.
+> >>>> +        */
+> >>>> +       for (i =3D 0; i < rule->num_layers; i++) {
+> >>>> +               const struct landlock_layer *const layer =3D &rule->=
+layers[i];
+> >>>> +               const u64 layer_level =3D BIT_ULL(layer->level - 1);
+> >>>> +
+> >>>> +               if (!(layer_level & *layer_mask))
+> >>>> +                       continue;
+> >>>> +               if ((layer->access & access_request) !=3D access_req=
+uest)
+> >>>> +                       return false;
+> >>>> +               *layer_mask &=3D ~layer_level;
+> >>>
+> >>> Hmm... shouldn't the last 5 lines be replaced by the following?
+> >>>
+> >>> if ((layer->access & access_request) =3D=3D access_request)
+> >>>     *layer_mask &=3D ~layer_level;
+> >>>
+> >>> And then, since this function would always return true, you could
+> >>> change its return type to "void".
+> >>>
+> >>>
+> >>> As far as I can tell, the current version will still, if a ruleset
+> >>> looks like this:
+> >>>
+> >>> /usr read+write
+> >>> /usr/lib/ read
+> >>>
+> >>> reject write access to /usr/lib, right?
+> >>
+> >> If these two rules are from different layers, then yes it would work a=
+s
+> >> intended. However, if these rules are from the same layer the path wal=
+k
+> >> will not stop at /usr/lib but go down to /usr, which grants write
+> >> access.
+> >
+> > I don't see why the code would do what you're saying it does. And an
+> > experiment seems to confirm what I said; I checked out landlock-v26,
+> > and the behavior I get is:
+>
+> There is a misunderstanding, I was responding to your proposition to
+> modify check_access_path_continue(), not about the behavior of landlock-v=
+26.
+>
+> >
+> > user@vm:~/landlock$ dd if=3D/dev/null of=3D/tmp/aaa
+> > 0+0 records in
+> > 0+0 records out
+> > 0 bytes copied, 0.00106365 s, 0.0 kB/s
+> > user@vm:~/landlock$ LL_FS_RO=3D'/lib' LL_FS_RW=3D'/' ./sandboxer dd
+> > if=3D/dev/null of=3D/tmp/aaa
+> > 0+0 records in
+> > 0+0 records out
+> > 0 bytes copied, 0.000491814 s, 0.0 kB/s
+> > user@vm:~/landlock$ LL_FS_RO=3D'/tmp' LL_FS_RW=3D'/' ./sandboxer dd
+> > if=3D/dev/null of=3D/tmp/aaa
+> > dd: failed to open '/tmp/aaa': Permission denied
+> > user@vm:~/landlock$
+> >
+> > Granting read access to /tmp prevents writing to it, even though write
+> > access was granted to /.
+> >
+>
+> It indeed works like this with landlock-v26. However, with your above
+> proposition, it would work like this:
+>
+> $ LL_FS_RO=3D'/tmp' LL_FS_RW=3D'/' ./sandboxer dd if=3D/dev/null of=3D/tm=
+p/aaa
+> 0+0 records in
+> 0+0 records out
+> 0 bytes copied, 0.000187265 s, 0.0 kB/s
+>
+> =E2=80=A6which is not what users would expect I guess. :)
 
-Signed-off-by: Alexey Gladkov <gladkov.alexey@gmail.com>
----
- tools/testing/selftests/Makefile              |   1 +
- tools/testing/selftests/rlimits/.gitignore    |   2 +
- tools/testing/selftests/rlimits/Makefile      |   6 +
- tools/testing/selftests/rlimits/config        |   1 +
- .../selftests/rlimits/rlimits-per-userns.c    | 161 ++++++++++++++++++
- 5 files changed, 171 insertions(+)
- create mode 100644 tools/testing/selftests/rlimits/.gitignore
- create mode 100644 tools/testing/selftests/rlimits/Makefile
- create mode 100644 tools/testing/selftests/rlimits/config
- create mode 100644 tools/testing/selftests/rlimits/rlimits-per-userns.c
+Ah, so we are disagreeing about what the right semantics are. ^^ To
+me, that is exactly the behavior I would expect.
 
-diff --git a/tools/testing/selftests/Makefile b/tools/testing/selftests/Makefile
-index afbab4aeef3c..4dbeb5686f7b 100644
---- a/tools/testing/selftests/Makefile
-+++ b/tools/testing/selftests/Makefile
-@@ -46,6 +46,7 @@ TARGETS += proc
- TARGETS += pstore
- TARGETS += ptrace
- TARGETS += openat2
-+TARGETS += rlimits
- TARGETS += rseq
- TARGETS += rtc
- TARGETS += seccomp
-diff --git a/tools/testing/selftests/rlimits/.gitignore b/tools/testing/selftests/rlimits/.gitignore
-new file mode 100644
-index 000000000000..091021f255b3
---- /dev/null
-+++ b/tools/testing/selftests/rlimits/.gitignore
-@@ -0,0 +1,2 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+rlimits-per-userns
-diff --git a/tools/testing/selftests/rlimits/Makefile b/tools/testing/selftests/rlimits/Makefile
-new file mode 100644
-index 000000000000..03aadb406212
---- /dev/null
-+++ b/tools/testing/selftests/rlimits/Makefile
-@@ -0,0 +1,6 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+CFLAGS += -Wall -O2 -g
-+TEST_GEN_PROGS := rlimits-per-userns
-+
-+include ../lib.mk
-diff --git a/tools/testing/selftests/rlimits/config b/tools/testing/selftests/rlimits/config
-new file mode 100644
-index 000000000000..416bd53ce982
---- /dev/null
-+++ b/tools/testing/selftests/rlimits/config
-@@ -0,0 +1 @@
-+CONFIG_USER_NS=y
-diff --git a/tools/testing/selftests/rlimits/rlimits-per-userns.c b/tools/testing/selftests/rlimits/rlimits-per-userns.c
-new file mode 100644
-index 000000000000..26dc949e93ea
---- /dev/null
-+++ b/tools/testing/selftests/rlimits/rlimits-per-userns.c
-@@ -0,0 +1,161 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/*
-+ * Author: Alexey Gladkov <gladkov.alexey@gmail.com>
-+ */
-+#define _GNU_SOURCE
-+#include <sys/types.h>
-+#include <sys/wait.h>
-+#include <sys/time.h>
-+#include <sys/resource.h>
-+#include <sys/prctl.h>
-+#include <sys/stat.h>
-+
-+#include <unistd.h>
-+#include <stdlib.h>
-+#include <stdio.h>
-+#include <string.h>
-+#include <sched.h>
-+#include <signal.h>
-+#include <limits.h>
-+#include <fcntl.h>
-+#include <errno.h>
-+#include <err.h>
-+
-+#define NR_CHILDS 2
-+
-+static char *service_prog;
-+static uid_t user   = 60000;
-+static uid_t group  = 60000;
-+
-+static void setrlimit_nproc(rlim_t n)
-+{
-+	pid_t pid = getpid();
-+	struct rlimit limit = {
-+		.rlim_cur = n,
-+		.rlim_max = n
-+	};
-+
-+	warnx("(pid=%d): Setting RLIMIT_NPROC=%ld", pid, n);
-+
-+	if (setrlimit(RLIMIT_NPROC, &limit) < 0)
-+		err(EXIT_FAILURE, "(pid=%d): setrlimit(RLIMIT_NPROC)", pid);
-+}
-+
-+static pid_t fork_child(void)
-+{
-+	pid_t pid = fork();
-+
-+	if (pid < 0)
-+		err(EXIT_FAILURE, "fork");
-+
-+	if (pid > 0)
-+		return pid;
-+
-+	pid = getpid();
-+
-+	warnx("(pid=%d): New process starting ...", pid);
-+
-+	if (prctl(PR_SET_PDEATHSIG, SIGKILL) < 0)
-+		err(EXIT_FAILURE, "(pid=%d): prctl(PR_SET_PDEATHSIG)", pid);
-+
-+	signal(SIGUSR1, SIG_DFL);
-+
-+	warnx("(pid=%d): Changing to uid=%d, gid=%d", pid, user, group);
-+
-+	if (setgid(group) < 0)
-+		err(EXIT_FAILURE, "(pid=%d): setgid(%d)", pid, group);
-+	if (setuid(user) < 0)
-+		err(EXIT_FAILURE, "(pid=%d): setuid(%d)", pid, user);
-+
-+	warnx("(pid=%d): Service running ...", pid);
-+
-+	warnx("(pid=%d): Unshare user namespace", pid);
-+	if (unshare(CLONE_NEWUSER) < 0)
-+		err(EXIT_FAILURE, "unshare(CLONE_NEWUSER)");
-+
-+	char *const argv[] = { "service", NULL };
-+	char *const envp[] = { "I_AM_SERVICE=1", NULL };
-+
-+	warnx("(pid=%d): Executing real service ...", pid);
-+
-+	execve(service_prog, argv, envp);
-+	err(EXIT_FAILURE, "(pid=%d): execve", pid);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+	size_t i;
-+	pid_t child[NR_CHILDS];
-+	int wstatus[NR_CHILDS];
-+	int childs = NR_CHILDS;
-+	pid_t pid;
-+
-+	if (getenv("I_AM_SERVICE")) {
-+		pause();
-+		exit(EXIT_SUCCESS);
-+	}
-+
-+	service_prog = argv[0];
-+	pid = getpid();
-+
-+	warnx("(pid=%d) Starting testcase", pid);
-+
-+	/*
-+	 * This rlimit is not a problem for root because it can be exceeded.
-+	 */
-+	setrlimit_nproc(1);
-+
-+	for (i = 0; i < NR_CHILDS; i++) {
-+		child[i] = fork_child();
-+		wstatus[i] = 0;
-+		usleep(250000);
-+	}
-+
-+	while (1) {
-+		for (i = 0; i < NR_CHILDS; i++) {
-+			if (child[i] <= 0)
-+				continue;
-+
-+			errno = 0;
-+			pid_t ret = waitpid(child[i], &wstatus[i], WNOHANG);
-+
-+			if (!ret || (!WIFEXITED(wstatus[i]) && !WIFSIGNALED(wstatus[i])))
-+				continue;
-+
-+			if (ret < 0 && errno != ECHILD)
-+				warn("(pid=%d): waitpid(%d)", pid, child[i]);
-+
-+			child[i] *= -1;
-+			childs -= 1;
-+		}
-+
-+		if (!childs)
-+			break;
-+
-+		usleep(250000);
-+
-+		for (i = 0; i < NR_CHILDS; i++) {
-+			if (child[i] <= 0)
-+				continue;
-+			kill(child[i], SIGUSR1);
-+		}
-+	}
-+
-+	for (i = 0; i < NR_CHILDS; i++) {
-+		if (WIFEXITED(wstatus[i]))
-+			warnx("(pid=%d): pid %d exited, status=%d",
-+				pid, -child[i], WEXITSTATUS(wstatus[i]));
-+		else if (WIFSIGNALED(wstatus[i]))
-+			warnx("(pid=%d): pid %d killed by signal %d",
-+				pid, -child[i], WTERMSIG(wstatus[i]));
-+
-+		if (WIFSIGNALED(wstatus[i]) && WTERMSIG(wstatus[i]) == SIGUSR1)
-+			continue;
-+
-+		warnx("(pid=%d): Test failed", pid);
-+		exit(EXIT_FAILURE);
-+	}
-+
-+	warnx("(pid=%d): Test passed", pid);
-+	exit(EXIT_SUCCESS);
-+}
--- 
-2.29.2
+Imagine that someone wants to write a program that needs to be able to
+load libraries from /usr/lib (including subdirectories) and needs to
+be able to write output to some user-specified output directory. So
+they use something like this to sandbox their program (plus error
+handling):
 
+static void add_fs_rule(int ruleset_fd, char *path, u64 allowed_access) {
+  int fd =3D open(path, O_PATH);
+  struct landlock_path_beneath_attr path_beneath =3D {
+    .parent_fd =3D fd,
+    .allowed_access =3D allowed_access
+  };
+  landlock_add_rule(ruleset_fd, LANDLOCK_RULE_PATH_BENEATH,
+          &path_beneath, 0);
+  close(fd);
+}
+int main(int argc, char **argv) {
+  char *output_dir =3D argv[1];
+  int ruleset_fd =3D landlock_create_ruleset(&ruleset_attr,
+sizeof(ruleset_attr, 0);
+  add_fs_rule(ruleset_fd, "/usr/lib", ACCESS_FS_ROUGHLY_READ);
+  add_fs_rule(ruleset_fd, output_dir,
+LANDLOCK_ACCESS_FS_WRITE_FILE|LANDLOCK_ACCESS_FS_MAKE_REG|LANDLOCK_ACCESS_F=
+S_REMOVE_FILE);
+  prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
+  landlock_enforce_ruleset_current(ruleset_fd, 0);
+}
+
+This will *almost* always work; but if the output directory is
+/usr/lib/x86_64-linux-gnu/ , loading libraries from that directory
+won't work anymore, right? So if userspace wanted this to *always*
+works correctly, it would have to somehow figure out whether there is
+a path upwards from the output directory (under any mount) that will
+encounter /usr/lib, and set different permissions if that is the case.
+That seems unnecessarily messy to me; and I think that this will make
+it harder for generic commandline tools and such to adopt landlock.
+
+
+If you do want to have the ability to deny access to subtrees of trees
+to which access is permitted, I think that that should be made
+explicit in the UAPI - e.g. you could (at a later point, after this
+series has landed) introduce a new EXCLUDE flag for
+landlock_add_rule() that means "I want to deny the access specified by
+this rule", or something like that. (And you'd have to very carefully
+document under which circumstances such rules are actually effective -
+e.g. if someone grants full access to $HOME, but excludes $HOME/.ssh,
+an attacker would still be able to rename $HOME/.ssh to $HOME/old_ssh,
+and then if the program is later restarted and creates the ruleset
+from scratch again, the old SSH folder will be accessible.)
