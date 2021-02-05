@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-20740-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-20742-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 900AB310CC6
-	for <lists+kernel-hardening@lfdr.de>; Fri,  5 Feb 2021 15:57:51 +0100 (CET)
-Received: (qmail 1824 invoked by uid 550); 5 Feb 2021 14:57:44 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 1E954310E2B
+	for <lists+kernel-hardening@lfdr.de>; Fri,  5 Feb 2021 17:52:09 +0100 (CET)
+Received: (qmail 19492 invoked by uid 550); 5 Feb 2021 16:51:52 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,158 +13,144 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 1792 invoked from network); 5 Feb 2021 14:57:44 -0000
-Subject: Re: [PATCH v28 06/12] fs,security: Add sb_delete hook
-To: "Serge E. Hallyn" <serge@hallyn.com>
+Received: (qmail 18400 invoked from network); 5 Feb 2021 16:51:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1612543899; bh=LGQ2+Oq5r94j/3FnA4uP6fw1KLX7JE1Bzu43eSjT32U=; h=Subject:To:Cc:References:From:Date:In-Reply-To:From:Subject:Reply-To; b=USQwPDQXhHJSlng+Tp4g5YMxY/9mcSUoEtcDtXv9MWyjAqZQffzdy4vyCxWyv25zOkd2/3ynrueFDap63mNsYcMWsW1M6v8nyTZ+tPuKU5DQtl3DGyXla8Me+ngW28NYYT3u7kKFXzKIjz/NhKB6ei9szW4QkI2WyVxDzzMmSIo9zyqOVF8sMeNR2u2tjHK+1HiYDIsYV6i8KXLvMgnVgmFkx16LmDIibjQgFU2RA8sVcc/zkV8XyqG9DJYzB/RUw5oYpRG5JFrAUQZSB6r5/9W7xxwk4u8D/fuBWgIe6EpQg7dZlx+EH+y8w3aVLqdRKQElnX5TtLXSa+C/MnyoEA==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1612543899; bh=PutIz4F+929JdtcW4hc5G3lH5xF1EsMD8oioaWMer3+=; h=X-Sonic-MF:Subject:To:From:Date:From:Subject; b=HlHxp31995alnsZBIeToYM99fKFAvLnP+CyqjwBrXYDdWxGxLBrbdwWYR5g8gdDcbILsFE2f8WIdgLw3ZFJFPHHYjnCoE1yRd06M83m4gCYoFPPpm4INK5jKAy2YV+zHHMlzpLHyt5ZF0inwNFGIF2bV+eyHchFmdgHHXrRTHFVcXEiPYXyG6Ss28WgcU+3RP2gQAROyGoOqN9g9yqaFszJRi6BcHRPHXQ7/e6sa/zC4XLeHpfbT80da3h7U83KiTqBFWov+o0pPNLqVe3Us648GlcPN2FWa8qoSP1zJhEPxIPmd+uYSel4HT82t52OwX9CxBUZCT9enICZ8TkfP+w==
+X-YMail-OSG: 4vk6bXoVM1neecdW7wnU5zezuyUc1WRLeXhj8yQJQhIu2KtYXYd28tosTbxPxcR
+ UrgCw4yaZH5U2lQXeyB9yBAIy0rwxN.rJT7pbFlH_AtqnBxj5cnG.H9NPOSFe2OYuI09WiNvdbs2
+ V6ZsZxSe3NZzYQRE7aW.q6amUOkLgLhxcE_N.xJeCoCw5THeoyAbRpRfhoKFsgQ0f_S_zuCP9pDI
+ iv6SkEhIIox2X22.afQptbIGBFMhynIZszfNjOEp4CPeD2QNd..SisHA6FZhKn4DFjwxKWNpuVDZ
+ kWp72CtdaPSsz.yy60I3Q7PjqASg88FlCVRugf6EIWFMfjX2svZD99rHJXWA76xvhClPoJ4h8jzs
+ VbGg9sZe1veNCX2IseMxYvjPG7TS3iAlyFGNJDyZDS2ROlmXKJseGrEmJLhHdK_f1wyNhWYenTFL
+ p.vEWU0FCkk485OYQkxSsIySjwJX3HziHXBljQ67Da8Go2VDDbuaTLqDYoeNKozFXtDebTutEuKS
+ m4R6sugwHTlIHmNHLMUEB4MukcGtof6AJxK6hVFrY2_Z_usb.vKDoGspF.miOiXIkkpyKF.VW_lb
+ HFQgz10VobTqp67nFY7ziF6wqrpnlfnTjDCaoxZMEvPEIvByqPYn1Js8OqcEyszo5ER8GXPMjSQu
+ .5pbKyQXJVDAw7qTUH8sfqAVUxyhpp6SFZoVTA34ZinQD5lM4yaCex7SVzd6MPX7ZtNqjStXWRjA
+ 3gVrp5mkhLCJQf5373a.KVjzC21kcSmwG2iffGadZ6IBEad1A_03oWU6F_pohXulRE9DNDrM6VLF
+ UKGovhVSlImQQwSuWhTh6Lmq6dCeOhbfHAQL14zpjpcAwJi9ZMM3ZyPzN3aeIwolZ64JG2Ltcnxk
+ zTaQkylzVdKB8ucf3x8citpTKu6Nh4NX1o0ER.iTzjmOzJTtldfismsgGS8qN58xgBZi9_QfLhmq
+ BREiYMUUbc.Beqb_JZ9e.hZST5SfMx_OaduvFd77wWJ7lj_0ahrKLBcAQ999bLD5ZK.zewlgxLkP
+ Y0QYpw_.Df9skZxay_VhOgAiZWqBpE01nSxNR4DA.B7d0OoZL_kQW2Yne3hzqOTtSMijAx6HGMnV
+ uRnpV_cB74ovP0roDKjwKs7VHMbUOVJ8.kdXABWnakvCEpdRzQ7QdtQFIIxrYAcuJo0h0DX2N1Yl
+ SKQoDR.5nv5Yw8j705V4sSsa4TQy25DV8XKjZ3KDzRa2gP1k9fL5nhHWE5IUcxupy5Qia4WTKEZ6
+ WcZeInLwPzs4mtVXjfEUwaXxr1gF4d2nOGgNFdcU9hmRHpZEyIX9gFSxgS3hO6MsFhebz4ammkdH
+ nTLC9xxBSsmhbt7jUEk7LXTjoqAKXW3fl1T_uQxkfrnlctFWhXYNXljJe62H8.hubANX4nChN6BD
+ CF6hkABc2X6LT8mr0c5yjOuH5twGJIxj5xwx6aPlZDegHKLF3hp8DlheLlSlfrstu_3U7QE_8ncb
+ yvTDN20SvcJWlyCRNoHmcX5cW02KFFlMNOA.XoSFHTIyrE5OXKsGsMfpsG2sr0R4iHmJmUD_kzzx
+ Y3XLexSfhtTQYgc392fpmJMZmvYHu44aG22h1Dqub3.3ZbAPioptx.h.1A7x4xHbWxF0eB.gQZe3
+ iOjewLa1BzcuyGSDaE6jPBIRg3NQLmO6idWF_Mm8h0y4hmNYHkiOM7NQntJ1TT._NiWPcO6pcvco
+ GW_6kSfSCv_WMG9z.Oy8RpevcEV1PWUtDyGEoNnltM66ZioWI3BhpD67MzNaFgU0RwlJn2RSjHXM
+ dlrYGVHQlpIKAVt1kIaWiXtJf47uCyLyFYM2qbkfYPCZE7chkdX2FfVpENhZqES786vW1gBRJkwb
+ UT_xbrRyZbtrtexASkXzRrpcIaxOafRHAE6a5AIUTisU.ymZJ0Kx.3A_nm.Q.rmA4AIpBIWnRUnP
+ 9T_u.Sfla279vVfjU1.nTx8NkOhfLM_dsOSyck3.ugMwaa.GpwPRdLcM_FAOtNKbUtJmfWI1m.6_
+ UCggP9jn7dDyrtrBInYBJSWaw149dnBOoBxrbA6jR2NJpig8N8b3crUpHvpMFeeeLimbTSweEHXz
+ 40eytbATLle5Lr4lg4BbT6OryZfNaeQA5dlTXfE2aKtexKp.BK_Mrg3ol8h307sT2YjIGNJbTVM6
+ ZjDbouOn5rmeP2Ow9pBCmRS2.aG3PrOGdY0DtcD.rPpaI7XM2grCMtVUYqfOy9nRBuj6OmXrvPI9
+ r9.4rWaDK6Y6BEMqc5of.DnNoVG13zV3FLfAmJADOdR1xcb7P7bkPcKHMY6qQaHhFSGe0nKep3Fd
+ UTSkGH68egJUeP5g73tRe_AyNtLU.Ehkh.Pr_9RChFWr5bnB9hATgvjz_RKnpDjcPtjkXe1YLtSZ
+ qrb6T0ULSROP0UhNH4CCR5JOEr5uRGhp2d9XH70Lt7adSWeck1nbNcP5MZCVGseJ08y4MaRjMB.H
+ pEl_hGwogZz3JgYzELYE6HQaXsNTejvtZNsoUpxpIPZFGLvuclLZLUgmOp4UVudq0eQrQmstgZ5L
+ csMHj8Nqt7HvG9Lg972uTdm_l238fMjwFXi7QbgefiGQ_x4hbkj9HuW3QaCxG1YvihRDvsO3ZPal
+ vjpAZon2p21ONztpiCwJ5Qbl9wAKxfY4FbXUS_bYbZ6TsQenl6aKLVp_hEBBBS5.Ns_PbJjQXQy1
+ XdvLDEprDx13fijlXZgUjRqFk3s19fl6FP96nRoRdsM4ou83TCPV8G9.iyXOe8prjAnj8im3Mf7d
+ g7Z_haPpc9jy4tEXW9B3qrAnA0SFgI4Vr0QoQlb4eBQcs2AU9oBqz2YoOf5uOwfrDuUEjJtQAaJ7
+ 1aS6ztYb8P.3lJ4G_5jzRQzN3R.dv0vOU8wYdFPH6bgNk.fcZDG.oXFiSD8ZNcEAMF1O5szuecOz
+ ubhWC7klruGOUByCHEOLu5G5IAmmoGqEFY5kD.bRt1sg85bDdga.09x5UsJ1iTNpUt7cRr6JeE7t
+ jns5ufY86Upn3G5RytK7MBwPAd2Im9nGsix3wxLqywZEQEqGfPCb5Hxgs.DO16ge1BtOo6CcOYUi
+ qzDYTQYe2PxSUDNoXui.b0OlFcohRJ8HPZMJ4tvhcrENlW7MOjMIlRHf7Rl7Soajft9fSUx_cQwE
+ UW_tfMThJgYk0hh.nQxyatYeq_aiImolN5sKmPQHcdohBJuOvsWPmp.hfMHDDB4P5gUEBCR0D6i7
+ 032.Tkzme5KEjw_HN0_xdtfLleGGskWHL_Kgh84qmt2aYqxl2Mvvv4hbmoPhYnQfGJQ.esw78tvz
+ lpD6k.RyVllO3GP.9udSefpKfb0zpmihyxKkDZCiiG6Yq_WXKQ30weM6XvccpZxN6kRoACK.OJKt
+ ZVC8ivzMNFwRI0y3_5TwaABWt3mCG4tVrFoOXskhasGd7eYB9yQ1SjJoeWE43iWU9E63fSeEIeR.
+ GaeaLCkyYyWwajOjGiRXyrDuKsdplMdvph1UVKx18o0PpedHbTiUaTVCgesF5H70JcJ3QzoweW6U
+ TMdzmG4Dn73nF6LC10W4GYclcCioswdpxT2nQ_Ghu4E93KC7CwO9OrC2uf8uc_LP4XPIQHhSWEER
+ 1q.BDXXoovU5eNr7dAcnyLM9jUlVBjSQSiDmBHe_ZQs1EysOyQKG9nNpPv9ofuq5CLkPTOHkzJcV
+ Lb4RmNeS9NacMDTLkG9nMGFRbpqSasr890GQK9pz8dMT66NXq3iMMsKuJhx_p4RxxjLlIhb7xDwg
+ kWK5u35AstbxTHWdOj7S8o6CmRC2d6t_yGK2DCRoG28hfO0Xsr.UHRDt32PHhHmkIaBW9a41qKwp
+ JdIk1SIhJF.P.7kwtMoLk9t.bx4c0.xG5rAUtJOnn94XD0snqDeknD5vK7YtxrnK58Is5f01Ppti
+ FLDAFMQdGwXSmpLUGwWE1l514TxghjlILmOCZzSnXICRNZXZQ1BXVcwuHhN7Ohj6.e.4gZZozxfm
+ _0qNrzSoOl4pqCtPbct0o1N_5gi.V7jsNTwExH1MBiTdouY8zW_NJhF5CjgbO4vNLIh72gBsosXy
+ SbN_oJqWf5Xoa9KgKGLaLhDacKKaO_RvBVGKbzjEaC_1Smv1WGcjjfBenb4GkN20Kne4mCpTqz1R
+ hIrpyVpVeS5LiT94.tYjEGKD1dG3QR1ZB7Rv_BD2Gmxp_pPGYQUxut9cEUs1Pitl9V.6w0wMzefb
+ BHB.4dwr00aShdirSPJwo1z08wDKfi9lzvUC1IQ8.wHl4LW6Ek_MBo1ApzHrkhrakVdFJAkkF9yr
+ rP7ALgOoJEePXmpg1iqXBq1VV2opUvaY.DQcZsE3d06FzKDjI1MAIVKTjrwAqCajLzhWIci0kbV6
+ 1QZiFwXKZQvON0RnQvz14mhzaokJf0tBnH7G40wr3vR3bBWPk1BPSChm4trk0wqilJdNEO0eTSiq
+ dHHwzCCWXV2N1mUihfIyUHZ0LQq8GcgR.9PT3rKBEu3.wh.6o0gWA6SkenGvTBWhpU.3aKrBLjCL
+ abZkg4OZhoFTUqP6A1IiIPxx9ep3ykt8ITmBEnX0V7XC4QLPZjhxOm7m3BVZ4Ka5IgYgzKH8yuLD
+ eaQmy2dQsU0KF
+X-Sonic-MF: <casey@schaufler-ca.com>
+Subject: Re: [PATCH v28 05/12] LSM: Infrastructure management of the
+ superblock
+To: "Serge E. Hallyn" <serge@hallyn.com>, =?UTF-8?Q?Micka=c3=abl_Sala=c3=bcn?=
+ <mic@digikod.net>
 Cc: James Morris <jmorris@namei.org>, Jann Horn <jannh@google.com>,
  Al Viro <viro@zeniv.linux.org.uk>, Andrew Morton
  <akpm@linux-foundation.org>, Andy Lutomirski <luto@amacapital.net>,
  Anton Ivanov <anton.ivanov@cambridgegreys.com>, Arnd Bergmann
- <arnd@arndb.de>, Casey Schaufler <casey@schaufler-ca.com>,
- Jeff Dike <jdike@addtoit.com>, Jonathan Corbet <corbet@lwn.net>,
- Kees Cook <keescook@chromium.org>, Michael Kerrisk <mtk.manpages@gmail.com>,
- Richard Weinberger <richard@nod.at>, Shuah Khan <shuah@kernel.org>,
+ <arnd@arndb.de>, Jeff Dike <jdike@addtoit.com>,
+ Jonathan Corbet <corbet@lwn.net>, Kees Cook <keescook@chromium.org>,
+ Michael Kerrisk <mtk.manpages@gmail.com>, Richard Weinberger
+ <richard@nod.at>, Shuah Khan <shuah@kernel.org>,
  Vincent Dagonneau <vincent.dagonneau@ssi.gouv.fr>,
  kernel-hardening@lists.openwall.com, linux-api@vger.kernel.org,
  linux-arch@vger.kernel.org, linux-doc@vger.kernel.org,
  linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-kselftest@vger.kernel.org, linux-security-module@vger.kernel.org,
- x86@kernel.org, =?UTF-8?Q?Micka=c3=abl_Sala=c3=bcn?=
- <mic@linux.microsoft.com>
+ x86@kernel.org, John Johansen <john.johansen@canonical.com>,
+ =?UTF-8?Q?Micka=c3=abl_Sala=c3=bcn?= <mic@linux.microsoft.com>,
+ Stephen Smalley <stephen.smalley.work@gmail.com>,
+ Casey Schaufler <casey@schaufler-ca.com>
 References: <20210202162710.657398-1-mic@digikod.net>
- <20210202162710.657398-7-mic@digikod.net>
- <20210205142143.GA18451@mail.hallyn.com>
-From: =?UTF-8?Q?Micka=c3=abl_Sala=c3=bcn?= <mic@digikod.net>
-Message-ID: <92e6a8a6-19da-0b1f-c1cf-01dc0af61299@digikod.net>
-Date: Fri, 5 Feb 2021 15:57:37 +0100
-User-Agent:
+ <20210202162710.657398-6-mic@digikod.net>
+ <20210205141749.GB17981@mail.hallyn.com>
+From: Casey Schaufler <casey@schaufler-ca.com>
+Message-ID: <cb3f290b-e4e6-44b9-9c0d-4f892cc90767@schaufler-ca.com>
+Date: Fri, 5 Feb 2021 08:51:35 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.1
 MIME-Version: 1.0
-In-Reply-To: <20210205142143.GA18451@mail.hallyn.com>
-Content-Type: text/plain; charset=iso-8859-15
+In-Reply-To: <20210205141749.GB17981@mail.hallyn.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+X-Mailer: WebService/1.1.17648 mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo Apache-HttpAsyncClient/4.1.4 (Java/11.0.8)
 
-
-On 05/02/2021 15:21, Serge E. Hallyn wrote:
-> On Tue, Feb 02, 2021 at 05:27:04PM +0100, Mickaël Salaün wrote:
->> From: Mickaël Salaün <mic@linux.microsoft.com>
+On 2/5/2021 6:17 AM, Serge E. Hallyn wrote:
+> On Tue, Feb 02, 2021 at 05:27:03PM +0100, Micka=C3=ABl Sala=C3=BCn wrot=
+e:
+>> From: Casey Schaufler <casey@schaufler-ca.com>
 >>
->> The sb_delete security hook is called when shutting down a superblock,
->> which may be useful to release kernel objects tied to the superblock's
->> lifetime (e.g. inodes).
+>> Move management of the superblock->sb_security blob out of the
+>> individual security modules and into the security infrastructure.
+>> Instead of allocating the blobs from within the modules, the modules
+>> tell the infrastructure how much space is required, and the space is
+>> allocated there.
 >>
->> This new hook is needed by Landlock to release (ephemerally) tagged
->> struct inodes.  This comes from the unprivileged nature of Landlock
->> described in the next commit.
->>
->> Cc: Al Viro <viro@zeniv.linux.org.uk>
->> Cc: James Morris <jmorris@namei.org>
 >> Cc: Kees Cook <keescook@chromium.org>
->> Cc: Serge E. Hallyn <serge@hallyn.com>
-> 
-> One note below, but
-> 
+>> Cc: John Johansen <john.johansen@canonical.com>
+>> Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+>> Signed-off-by: Micka=C3=ABl Sala=C3=BCn <mic@linux.microsoft.com>
+>> Reviewed-by: Stephen Smalley <stephen.smalley.work@gmail.com>
 > Acked-by: Serge Hallyn <serge@hallyn.com>
-> 
->> Signed-off-by: Mickaël Salaün <mic@linux.microsoft.com>
->> Reviewed-by: Jann Horn <jannh@google.com>
->> ---
->>
->> Changes since v22:
->> * Add Reviewed-by: Jann Horn <jannh@google.com>
->>
->> Changes since v17:
->> * Initial patch to replace the direct call to landlock_release_inodes()
->>   (requested by James Morris).
->>   https://lore.kernel.org/lkml/alpine.LRH.2.21.2005150536440.7929@namei.org/
->> ---
->>  fs/super.c                    | 1 +
->>  include/linux/lsm_hook_defs.h | 1 +
->>  include/linux/lsm_hooks.h     | 2 ++
->>  include/linux/security.h      | 4 ++++
->>  security/security.c           | 5 +++++
->>  5 files changed, 13 insertions(+)
->>
->> diff --git a/fs/super.c b/fs/super.c
->> index 2c6cdea2ab2d..c3c5178cde65 100644
->> --- a/fs/super.c
->> +++ b/fs/super.c
->> @@ -454,6 +454,7 @@ void generic_shutdown_super(struct super_block *sb)
->>  		evict_inodes(sb);
->>  		/* only nonzero refcount inodes can have marks */
->>  		fsnotify_sb_delete(sb);
->> +		security_sb_delete(sb);
->>  
->>  		if (sb->s_dio_done_wq) {
->>  			destroy_workqueue(sb->s_dio_done_wq);
->> diff --git a/include/linux/lsm_hook_defs.h b/include/linux/lsm_hook_defs.h
->> index 7aaa753b8608..32472b3849bc 100644
->> --- a/include/linux/lsm_hook_defs.h
->> +++ b/include/linux/lsm_hook_defs.h
->> @@ -59,6 +59,7 @@ LSM_HOOK(int, 0, fs_context_dup, struct fs_context *fc,
->>  LSM_HOOK(int, -ENOPARAM, fs_context_parse_param, struct fs_context *fc,
->>  	 struct fs_parameter *param)
->>  LSM_HOOK(int, 0, sb_alloc_security, struct super_block *sb)
->> +LSM_HOOK(void, LSM_RET_VOID, sb_delete, struct super_block *sb)
->>  LSM_HOOK(void, LSM_RET_VOID, sb_free_security, struct super_block *sb)
->>  LSM_HOOK(void, LSM_RET_VOID, sb_free_mnt_opts, void *mnt_opts)
->>  LSM_HOOK(int, 0, sb_eat_lsm_opts, char *orig, void **mnt_opts)
->> diff --git a/include/linux/lsm_hooks.h b/include/linux/lsm_hooks.h
->> index 970106d98306..e339b201f79b 100644
->> --- a/include/linux/lsm_hooks.h
->> +++ b/include/linux/lsm_hooks.h
->> @@ -108,6 +108,8 @@
->>   *	allocated.
->>   *	@sb contains the super_block structure to be modified.
->>   *	Return 0 if operation was successful.
->> + * @sb_delete:
->> + *	Release objects tied to a superblock (e.g. inodes).
-> 
-> It's customary here to add the line detailing the @sb argument.
+>
+> I wonder how many out of tree modules this will impact :)
 
-What about "@sb contains the super_block structure being released."?
+There are several blobs that have already been converted
+to infrastructure management. Not a peep from out-of-tree
+module developers/maintainers. I can only speculate that
+OOT modules are either less common than we may think, using
+alternative data management models (as does eBPF) or
+sticking with very old kernels. It's also possible that
+they're suffering in silence, which would be sad because
+every module that's worth having should be in the tree.
 
-> 
->>   * @sb_free_security:
->>   *	Deallocate and clear the sb->s_security field.
->>   *	@sb contains the super_block structure to be modified.
->> diff --git a/include/linux/security.h b/include/linux/security.h
->> index c35ea0ffccd9..c41a94e29b62 100644
->> --- a/include/linux/security.h
->> +++ b/include/linux/security.h
->> @@ -288,6 +288,7 @@ void security_bprm_committed_creds(struct linux_binprm *bprm);
->>  int security_fs_context_dup(struct fs_context *fc, struct fs_context *src_fc);
->>  int security_fs_context_parse_param(struct fs_context *fc, struct fs_parameter *param);
->>  int security_sb_alloc(struct super_block *sb);
->> +void security_sb_delete(struct super_block *sb);
->>  void security_sb_free(struct super_block *sb);
->>  void security_free_mnt_opts(void **mnt_opts);
->>  int security_sb_eat_lsm_opts(char *options, void **mnt_opts);
->> @@ -620,6 +621,9 @@ static inline int security_sb_alloc(struct super_block *sb)
->>  	return 0;
->>  }
->>  
->> +static inline void security_sb_delete(struct super_block *sb)
->> +{ }
->> +
->>  static inline void security_sb_free(struct super_block *sb)
->>  { }
->>  
->> diff --git a/security/security.c b/security/security.c
->> index 9f979d4afe6c..1b4a73b2549a 100644
->> --- a/security/security.c
->> +++ b/security/security.c
->> @@ -900,6 +900,11 @@ int security_sb_alloc(struct super_block *sb)
->>  	return rc;
->>  }
->>  
->> +void security_sb_delete(struct super_block *sb)
->> +{
->> +	call_void_hook(sb_delete, sb);
->> +}
->> +
->>  void security_sb_free(struct super_block *sb)
->>  {
->>  	call_void_hook(sb_free_security, sb);
->> -- 
->> 2.30.0
+> Actually
+> if some new incoming module does an rcu callback to free the
+> sb_security, then the security_sb_free will need an update, but
+> that seems unlikely.
+
+We're already doing that for the inode blob, so it's
+really just a small matter of cut-n-paste and s/inode/sb/
+to make that happen.
+
+
