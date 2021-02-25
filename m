@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-20829-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-20831-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id BFD8F324C20
-	for <lists+kernel-hardening@lfdr.de>; Thu, 25 Feb 2021 09:39:20 +0100 (CET)
-Received: (qmail 3865 invoked by uid 550); 25 Feb 2021 08:39:13 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 1419D324F53
+	for <lists+kernel-hardening@lfdr.de>; Thu, 25 Feb 2021 12:40:58 +0100 (CET)
+Received: (qmail 4078 invoked by uid 550); 25 Feb 2021 11:40:51 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,160 +13,115 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 3844 invoked from network); 25 Feb 2021 08:39:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=aGub8j3mcBFEspbVGjAffkFlNTryL5ZvYPFMwGi0YLk=;
-        b=PLb1PKE7ig18Lazwu1wpkB/OirBqhhzt93MoUxb+NNdS+k6i0KGNmteNz2kBBagVVI
-         pF+VrnGce/ftawB8Zn8VTB2XSqmbt8hlqO2pKAR+fO2pzEIteZjJSVzs7lza3d0dQW7J
-         ZL/QaL87TkxoYTcHCZPxXjcboItXDF4ri89aSSUxt5UmWKJtI+bB1jf8JM/T1rLp65P4
-         5hq2NlczVYLdbQ3YJAKPj62iLcoQ/2czL2XAKWgGSjK+sO+78EI1yxOzzofpZwGiarzR
-         cdfX3lMqV0DXSRVMBnHv7GhCUEgNaTWyl+0MzM4RY471CPuDxeaxZK/0zhcjp+Nwhvxi
-         SIAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=aGub8j3mcBFEspbVGjAffkFlNTryL5ZvYPFMwGi0YLk=;
-        b=TNNu8b5OTNuOAUdW5LOVkBploCXF2mKIGkjkqZgo6OsjDjONmmKhAUaUp1aZL2JJav
-         Hz/0ZGlDecJEZu/yeL4TlBLa7E0AkDoL0WN45XQgBUlnz6v5GyH/wCWKo8FHsDh84kSV
-         SrEQit6x+GNfcpob+hym7EfyWrdExb6uAqDpfN/lLcAK7fWzlR9Np9hkzRF58Mle9PH3
-         T9zJsZOj3REkFf0Sdmh+QJPQW6CiW2wBz5IPrHrNG73bOqE+/zfQNozk6cRNuXQaZD7L
-         PGfbRqKbH6D/YokHaKi/zk9hSVDU4UXzgobRLyXXLFHM1eL1P608ARiagPYGNKYVKi3j
-         mu3g==
-X-Gm-Message-State: AOAM530MvtdYGECZ5MJkjryavFiLhRqIjENpg6e6zC2jFL6f+rBxGTOB
-	h9Z9TBFnGeXLTuE8+Rl6ANUVF6DJT7AVNQFCyGY=
-X-Google-Smtp-Source: ABdhPJzU0RgRGY4lum9vzal+oC7Yz2Sazso+8eYxNgS4jciVeAVJfQQQv3bDbUEWQUVkcBvqjXYaYiFexiYf+PFQvJw=
-X-Received: by 2002:a9d:6a45:: with SMTP id h5mr1413414otn.161.1614242340419;
- Thu, 25 Feb 2021 00:39:00 -0800 (PST)
+Received: (qmail 4043 invoked from network); 25 Feb 2021 11:40:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=fm3; bh=kxxVIGD5z7OcPn4Jkx9tSRN0Waf
+	8199Uq/w5oSJ2mXI=; b=GsLnkeKAbBpLPcxtYXHBFmSZxazwIm/lpmrrxpED9PE
+	mDPEL/1M4XLCCj8W8omAiahdigaWFQkN/kYO+jRlOfQ0Nem1HaWYQTyj/Pm8zvQT
+	MjNeuHfpPawHEfe4pQTEb12bbp9xYSzpOZyUMsjZVWIIB3VUY0YzaQ3SvbSUAveL
+	areDKZQs0Cx6eyQJoMKkzT2hvX7OmPUF6Pd2v4bpdVkKDV+sUtV+5Tj1yesNJwCu
+	hffcZcCtpdbRBNSgD8D1yOVy9pFVAtdXZncQ0UAN63dKRMlHLfxsig7WUlfyM5t7
+	8EZ/U/63Ua2OS1ko/T0pp5MhujePej1pVdAIKk/A0+Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=kxxVIG
+	D5z7OcPn4Jkx9tSRN0Waf8199Uq/w5oSJ2mXI=; b=Ju6FrBpeF09eIOl5CTuQF9
+	YvghX5b7ejOIhq8Hv8uRMFhiPZxLIKR03seK+pnnztG6M81z2E1Zvmtbf5ycbYpq
+	CmQa06184XOT0Kv4NgJbteDw4aU9Ez5M0wM8+lhMatcZJUS2qxQBpRTBfd4n4fsB
+	qBY1bwpQYfK9eRigXUFXZ38UdY3BzVDr3p+tzaHO89ycUItiEe4QMBJE5bvi7Ro2
+	eChbGVg7LAnaQUM+331eIQ/zUzB6p+y+J7cFqgQVYwJyK6RjgideKGcPZ+unpMgT
+	VQDJgpB3NsiIDBlRmEE9QMXZal7GijJ89GmX8mJRceUR3RrI+chjZBeYYHCUlGjg
+	==
+X-ME-Sender: <xms:tIw3YNf8Zz3TEpBgBgl2ptQt3RdrMXXjLfRcVrnRuS-LzC7AGTUp5w>
+    <xme:tIw3YLPtmWIw1bOvA2MPreAFShW0WG5-NUoY0QFsruXT1hZTqMtxHmgmU5PgXFCy7
+    74Cf9csfgMpKQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrkeelgdefudcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvuffkfhggtggujgesthdtredttddtvdenucfhrhhomhepifhrvghgucfm
+    jfcuoehgrhgvgheskhhrohgrhhdrtghomheqnecuggftrfgrthhtvghrnhepveeuheejgf
+    ffgfeivddukedvkedtleelleeghfeljeeiueeggeevueduudekvdetnecukfhppeekfedr
+    keeirdejgedrieegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
+    hfrhhomhepghhrvghgsehkrhhorghhrdgtohhm
+X-ME-Proxy: <xmx:tIw3YGhffZkQDneu9QnWpaFUzTj5zmyL-ycN6gVlnt1JV3yFKoXBGA>
+    <xmx:tIw3YG973Ga7qkbOr8etxDVXUGPGN42qKMiCCDBbY8XiF5dAkDlGIg>
+    <xmx:tIw3YJsMXisIP42v8OolyGidpBTYn1jBqfQ0ubZpD0c9zGqP1bEzTQ>
+    <xmx:tYw3YKXldxan8FYaXjDOnSC69OEuXuIwKqfvkbvyC0BgpLBnk0F5Hg>
+Date: Thu, 25 Feb 2021 12:40:33 +0100
+From: Greg KH <greg@kroah.com>
+To: "Lan Zheng (lanzheng)" <lanzheng@cisco.com>
+Cc: Kees Cook <keescook@chromium.org>,
+	"kernel-hardening@lists.openwall.com" <kernel-hardening@lists.openwall.com>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v1 1/1] Kernel Config to make randomize_va_space
+ read-only.
+Message-ID: <YDeMsX6sScUk9D+F@kroah.com>
+References: <FA94F19F-2AB2-4983-8CEC-D89287D91E20@cisco.com>
 MIME-Version: 1.0
-References: <20210222151231.22572-1-romain.perier@gmail.com>
- <20210222151231.22572-17-romain.perier@gmail.com> <20210222124936.03103585@gandalf.local.home>
-In-Reply-To: <20210222124936.03103585@gandalf.local.home>
-From: Romain Perier <romain.perier@gmail.com>
-Date: Thu, 25 Feb 2021 09:38:48 +0100
-Message-ID: <CABgxDo+P4WqdzUz_OY1cVvcScnzZA3b7+Opz53aTf=A-9ZZBtw@mail.gmail.com>
-Subject: Re: [PATCH 16/20] tracing/probe: Manual replacement of the deprecated
- strlcpy() with return values
-To: Steven Rostedt <rostedt@goodmis.org>
-Cc: Kees Cook <keescook@chromium.org>, 
-	Kernel Hardening <kernel-hardening@lists.openwall.com>, Ingo Molnar <mingo@redhat.com>, 
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: multipart/alternative; boundary="000000000000483b7a05bc251507"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <FA94F19F-2AB2-4983-8CEC-D89287D91E20@cisco.com>
 
---000000000000483b7a05bc251507
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Thu, Feb 25, 2021 at 04:42:28AM +0000, Lan Zheng (lanzheng) wrote:
+> From ba2ec52f170a8e69d6c44238bb578f9518a7e3b7 Mon Sep 17 00:00:00 2001
+> From: lanzheng <lanzheng@cisco.com>
+> Date: Tue, 23 Feb 2021 22:49:34 -0500
 
-Le lun. 22 f=C3=A9vr. 2021 =C3=A0 18:49, Steven Rostedt <rostedt@goodmis.or=
-g> a
-=C3=A9crit :
+Why is this here?
 
-> > -     if (unlikely(!maxlen))
-> > -             return -ENOMEM;
->
-> Don't remove the above. You just broke the else side.
->
-> > -
-> > -     if (addr =3D=3D FETCH_TOKEN_COMM)
-> > -             ret =3D strlcpy(dst, current->comm, maxlen);
-> > -     else
-> > +     if (addr =3D=3D FETCH_TOKEN_COMM) {
-> > +             ret =3D strscpy(dst, current->comm, maxlen);
-> > +             if (ret =3D=3D -E2BIG)
-> > +                     return -ENOMEM;
->
-> I'm not sure the above is what we want. current->comm is always nul
-> terminated, and not only that, it will never be bigger than TASK_COMM_LEN=
-.
-> If the "dst" location is smaller than comm (maxlen < TASK_COMM_LEN), it i=
-s
-> still OK to copy a partial string. It should not return -ENOMEM which loo=
-ks
-> to be what happens with this patch.
->
-> In other words, it looks like this patch breaks the current code in more
-> ways than one.
->
-> -- Steve
->
+> Subject: [PATCH] This patch adds a kernel build config knob that disallows
+>  changes to the sysctl variable randomize_va_space.It makes harder for
+>  attacker to disable ASLR and reduces security risks.
 
-Hello,
+I think you need to read the documentation for how to write a good
+changelog text.
 
-Mhhh, *I think* that I had an issue during rebase, I don't remember to have
-removed the "  if (unlikely(!maxlen))"  (sorry for that).
-Well, strscpy always returns a truncated string even in case of possible
-overflow, the function copies what it can in "dst", it will just return
--E2BIG when
-it does not fit or when "count" has a bad value (zero or > INT_MAX). We
-have just to make a difference between "-E2BIG, data has been copied to dst
-and it is truncated" and "-E2BIG, possible wrong size passed as argument".
+>  
+> Signed-off-by: lanzheng <lanzheng@cisco.com>
+> Reviewed-by: Yongkui Han <yonhan@cisco.com>
+> Tested-by: Nirmala Arumugam <niarumug@cisco.com>
+> ---
+>  kernel/sysctl.c  | 4 ++++
+>  security/Kconfig | 8 ++++++++
+>  2 files changed, 12 insertions(+)
+>  
+> diff --git a/kernel/sysctl.c b/kernel/sysctl.c
+> index c9fbdd848138..2aa9bc8044c7 100644
+> --- a/kernel/sysctl.c
+> +++ b/kernel/sysctl.c
+> @@ -2426,7 +2426,11 @@ static struct ctl_table kern_table[] = {
+>                 .procname       = "randomize_va_space",
+>                 .data           = &randomize_va_space,
+>                 .maxlen         = sizeof(int),
+> +#if defined(CONFIG_RANDOMIZE_VA_SPACE_READONLY)
+> +               .mode           = 0444,
+> +#else
+>                 .mode           = 0644,
+> +#endif
+>                 .proc_handler   = proc_dointvec,
+>         },
+>  #endif
+> diff --git a/security/Kconfig b/security/Kconfig
+> index 7561f6f99f1d..18b9dff4648c 100644
+> --- a/security/Kconfig
+> +++ b/security/Kconfig
+> @@ -7,6 +7,14 @@ menu "Security options"
+>  
+>  source "security/keys/Kconfig"
+>  
+> +config RANDOMIZE_VA_SPACE_READONLY
+> +       bool "Disallow change of randomize_va_space"
+> +       default y
 
-I agree that it needs at least to work like before, and I think we can
-preserve the old behaviour even with strscpy (we just need to adapt the
-error handling accordingly).
-I will fix this in v2.
+This should only be "default y" if you can not boot here without this
+option.
 
-Thanks,
-Romain
+But why is this even needed to be an option at all?  What is causing
+this to be turned off?  Can't you keep this from being changed by root
+through other means today?
 
---000000000000483b7a05bc251507
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+thanks,
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">Le=C2=A0lun. 22 f=C3=A9vr. 2021 =C3=
-=A0=C2=A018:49, Steven Rostedt &lt;<a href=3D"mailto:rostedt@goodmis.org">r=
-ostedt@goodmis.org</a>&gt; a =C3=A9crit=C2=A0:<br></div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex">
-&gt; -=C2=A0 =C2=A0 =C2=A0if (unlikely(!maxlen))<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -ENOMEM;<br>
-<br>
-Don&#39;t remove the above. You just broke the else side.<br>
-<br>
-&gt; -<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0if (addr =3D=3D FETCH_TOKEN_COMM)<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ret =3D strlcpy(dst, =
-current-&gt;comm, maxlen);<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0else<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0if (addr =3D=3D FETCH_TOKEN_COMM) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ret =3D strscpy(dst, =
-current-&gt;comm, maxlen);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (ret =3D=3D -E2BIG=
-)<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0return -ENOMEM;<br>
-<br>
-I&#39;m not sure the above is what we want. current-&gt;comm is always nul<=
-br>
-terminated, and not only that, it will never be bigger than TASK_COMM_LEN.<=
-br>
-If the &quot;dst&quot; location is smaller than comm (maxlen &lt; TASK_COMM=
-_LEN), it is<br>
-still OK to copy a partial string. It should not return -ENOMEM which looks=
-<br>
-to be what happens with this patch.<br>
-<br>
-In other words, it looks like this patch breaks the current code in more<br=
->
-ways than one.<br>
-<br>
--- Steve<br></blockquote><div><br></div><div>Hello,</div><div><br></div><di=
-v>Mhhh, *I think* that I had an issue during rebase, I don&#39;t remember t=
-o have removed the &quot;=C2=A0 if (unlikely(!maxlen))&quot;=C2=A0 (sorry f=
-or that).</div><div>Well, strscpy always returns a truncated string even in=
- case of possible overflow, the function copies what it can in &quot;dst&qu=
-ot;, it will just return -E2BIG when</div><div>it does not fit or when &quo=
-t;count&quot; has a bad value (zero or &gt; INT_MAX). We have just to make =
-a difference between &quot;-E2BIG, data has been copied to dst and it is tr=
-uncated&quot; and &quot;-E2BIG, possible wrong size passed as argument&quot=
-;. <br></div><div><br></div><div>I agree that it needs at least to work lik=
-e before, and I think we can preserve the old behaviour even with strscpy (=
-we just need to adapt the error handling accordingly).</div><div>I will fix=
- this in v2.<br></div><div><br></div><div>Thanks,</div><div>Romain<br></div=
-><div>=C2=A0</div></div></div>
-
---000000000000483b7a05bc251507--
+greg k-h
