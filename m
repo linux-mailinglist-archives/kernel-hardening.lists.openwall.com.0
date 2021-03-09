@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-20889-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-20895-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id CCCC4332E6A
-	for <lists+kernel-hardening@lfdr.de>; Tue,  9 Mar 2021 19:41:48 +0100 (CET)
-Received: (qmail 18296 invoked by uid 550); 9 Mar 2021 18:41:40 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 3981E333139
+	for <lists+kernel-hardening@lfdr.de>; Tue,  9 Mar 2021 22:44:18 +0100 (CET)
+Received: (qmail 15953 invoked by uid 550); 9 Mar 2021 21:43:27 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,249 +13,140 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 18261 invoked from network); 9 Mar 2021 18:41:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-	s=badeba3b8450; t=1615315267;
-	bh=KzFmPAXJ1zDKRM2mxpYfcPPElqy1VrJmd3MBZSmX/PU=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=VC87++wuAkCxnzJdXTGwljUEJMFJl77UpPZEj7NMTrg+QaSRIDxNyop0e4onuj9cO
-	 LAAHCcJc1HH/85O2x6aM7FZJJQ4lz8BWYJiPM8J/QNIxUZjmSZBEgEInxE8yrkzzWi
-	 E1SwhOKgt6xT5/1LyZcmHplGDIIkHX+ViN3Vd0bM=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Date: Tue, 9 Mar 2021 19:40:54 +0100
-From: John Wood <john.wood@gmx.com>
-To: Andi Kleen <ak@linux.intel.com>
-Cc: John Wood <john.wood@gmx.com>, Kees Cook <keescook@chromium.org>,
-	Jann Horn <jannh@google.com>, Randy Dunlap <rdunlap@infradead.org>,
-	Jonathan Corbet <corbet@lwn.net>, James Morris <jmorris@namei.org>,
-	Shuah Khan <shuah@kernel.org>, "Serge E. Hallyn" <serge@hallyn.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-security-module@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	kernel-hardening@lists.openwall.com
-Subject: Re: [PATCH v5 7/8] Documentation: Add documentation for the Brute LSM
-Message-ID: <20210309184054.GA3058@ubuntu>
-References: <20210227153013.6747-1-john.wood@gmx.com>
- <20210227153013.6747-8-john.wood@gmx.com>
- <878s78dnrm.fsf@linux.intel.com>
- <20210302183032.GA3049@ubuntu>
- <20210307151920.GR472138@tassilo.jf.intel.com>
- <20210307164520.GA16296@ubuntu>
- <20210307172540.GS472138@tassilo.jf.intel.com>
- <20210307180541.GA17108@ubuntu>
- <20210307224927.GT472138@tassilo.jf.intel.com>
+Received: (qmail 15695 invoked from network); 9 Mar 2021 21:43:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Ir1++GyLBl5f/Xqi2kq3Ks3S4B0/Ta3jdChtS1vi2CQ=;
+        b=PQpY2pYxmPsNBXFkbbyfqSO75eYKbfp34/QOywDWc25NjIe3QuTej3PxF3gjC7fxze
+         b8opA6Cs0pOw/2dA2QtI0IzU+nm/QM09KbOo00JckZNnZste6/TcuqqsPb8jccMu1wnJ
+         hD7dA1q1g2DBqkhqSXzb6rBpP319jcb+bS9hk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Ir1++GyLBl5f/Xqi2kq3Ks3S4B0/Ta3jdChtS1vi2CQ=;
+        b=tzr81UWXjuZZRuNmIp3+wo4LkS7+NsTGvWPnXaQJmw9YwAT5yFBqB+Pk5vwe4omy0+
+         GN44AZUxbEl4dSHe1BYZ0S19GaSBiuA171xifDCJJY9+cCdVcaBdBKLKUxRO7hhjDxqN
+         s0eEReeSMct0rQJD/Ry1ytq+ZcrXWneP29e1JhNPQM1cIp9o7p0nNzPJMszRF0ewnheG
+         oGukHzZDlExpEz2xAASUEvwCvUXk3A685ISQW7tCb7HaYIdH5ank7bCgtVJBaNN0kBPp
+         2ZfZDRpX2vnwWSUjUUyTyg2brpVKGpYBHXGeqNMUj9Foy7/SCdSjxHn1vgIcJqI+0/sz
+         AJdQ==
+X-Gm-Message-State: AOAM5326+MkQIJEFnfmAiCT06/jfTycqnLhfmdLM8wjg7VRwGYPmL+Ka
+	5C7TpSEH+9YgY2VCQkUwVBGORg==
+X-Google-Smtp-Source: ABdhPJwPbX2CP08JIvGDKPgOsOudkdGoKPD7zbVHSsyKSWs27JHzaot43YDrMLue1TNE7gbMQ141PA==
+X-Received: by 2002:a17:90a:cb12:: with SMTP id z18mr6430185pjt.132.1615326191909;
+        Tue, 09 Mar 2021 13:43:11 -0800 (PST)
+From: Kees Cook <keescook@chromium.org>
+To: Thomas Gleixner <tglx@linutronix.de>
+Cc: Kees Cook <keescook@chromium.org>,
+	Elena Reshetova <elena.reshetova@intel.com>,
+	x86@kernel.org,
+	Andy Lutomirski <luto@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Alexander Potapenko <glider@google.com>,
+	Alexander Popov <alex.popov@linux.com>,
+	Ard Biesheuvel <ard.biesheuvel@linaro.org>,
+	Jann Horn <jannh@google.com>,
+	kernel-hardening@lists.openwall.com,
+	linux-hardening@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	Vlastimil Babka <vbabka@suse.cz>,
+	David Hildenbrand <david@redhat.com>,
+	Mike Rapoport <rppt@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Randy Dunlap <rdunlap@infradead.org>
+Subject: [PATCH v5 0/7] Optionally randomize kernel stack offset each syscall
+Date: Tue,  9 Mar 2021 13:42:54 -0800
+Message-Id: <20210309214301.678739-1-keescook@chromium.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210307224927.GT472138@tassilo.jf.intel.com>
-X-Provags-ID: V03:K1:HfpvfEEiAP4shApLpqTyApLPQZeFliyub0f4Ir5fFC3RtuHsJJM
- Fj3lpm4nRiqKO0S+Sk7Cjb6osIJGmtNTHj9uiBSy4OQFFzCKqBQVHU/7KwMn9eGUFjiWRCb
- bI6lrJ5rcVUUze4r+0u6uFzlwlB4zNWU/l7lM1BRrugsgjp5H6cZpCeQrxNpg0bV5gcqTDP
- N/ldbPLlzIqloeJC/btSA==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:YJmaCsKdOZI=:3wNHcDtg5j0QtDsVdhsHVu
- Y8K8xN5Y0jd88ggw4qX4lTA9Tq//EKjwYdACWWdyyjsbdRf+WnmQpoJAqCqNtoCgAwKIvDYlO
- Nzw++1xvfI+dPYDtdpU5lPQgiXMxyJA1dqHvmofWV+QFtYH3veALmNVwZkwkNLdt9Min91FVk
- tCDP7JBMw6TqcULmOIvokxFphiqCW7b05eGjuJ2PUdXyVB4HVCy1KYZMotj1e0CU0QhqFyoaw
- hWy961+XECjaPHLX49NwfCwmxJPjDBZHXFQzr8bNFdTOyazvjuV679vtk1qYt14FNn0Fg6yOd
- NxNm0piakn6Z9myQCmh/i9K8HqBAoiNJTAN8zIoVOJxpYDFDhU67WqcLqbew4dH/CjDihvZFW
- XB2l20iA6VzkGBQJIQvU+FeMReGm5hT/QWnjWMvx9nTDvwZJ/3TU8EbkLfayQSZEPjdyQq77J
- eRirBoXWuMVvthAuMfLaBdtp4zSDvjUoGj0Uy0Gw+FYTW5Zgc16bQd4mXLhgza5h3xDjcyDvG
- dHK/RXJkduhUOP6hcmbb+XLd6uh29g5/LvKsK4DWyv8gf120rpfhKcOZJZDAqtNMr/2ATbTzZ
- aThnhhyKoQVO8rYaveiMMcevD3fRqeta+N8FG/NdEQ9bfVLO+5EilTXxukZpphZFKf+paAjum
- LDL/LVhV+xdYHh7coRn25UTbBnoT/ThkTyo2SHfIwlsyBBtcutC5nhG2exg03HadZlr+Ihxnh
- S1dthiB1E3GjPGzs4G6BiYOEalKSfhCiu5dtt859qGukz1BIw+r80A5US4ecke8Fwe7hldiwt
- FdwpJCF3kPS+styCE+F84u8fj2V3jvaYF8nRM2Pk2XdyUG6X9TVL0mpayJXp/WN50IRJyxYKX
- 5IuY0e9Aq18GHE6p5D5w==
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+
+v5:
+- rebase to v5.12-rc2
+- clean up static branch issues introduced since v4 series
+- adjust comments (Mark Rutland)
+- update kernel-parameters.txt (Randy Dunlap)
+v4: https://lore.kernel.org/lkml/20200622193146.2985288-1-keescook@chromium.org/
+v3: https://lore.kernel.org/lkml/20200406231606.37619-1-keescook@chromium.org/
+v2: https://lore.kernel.org/lkml/20200324203231.64324-1-keescook@chromium.org/
+rfc: https://lore.kernel.org/kernel-hardening/20190329081358.30497-1-elena.reshetova@intel.com/
 
 Hi,
 
-On Sun, Mar 07, 2021 at 02:49:27PM -0800, Andi Kleen wrote:
-> On Sun, Mar 07, 2021 at 07:05:41PM +0100, John Wood wrote:
-> > On Sun, Mar 07, 2021 at 09:25:40AM -0800, Andi Kleen wrote:
-> > > > processes created from it will be killed. If the systemd restart t=
-he network
-> > > > daemon and it will crash again, then the systemd will be killed. I=
- think this
-> > > > way the attack is fully mitigated.
-> > >
-> > > Wouldn't that panic the system? Killing init is usually a panic.
-> >
-> > The mitigation acts only over the process that crashes (network daemon=
-) and the
-> > process that exec() it (systemd). This mitigation don't go up in the p=
-rocesses
-> > tree until reach the init process.
->
-> Most daemons have some supervisor that respawns them when they crash.
-> (maybe read up on "supervisor trees" if you haven't, it's a standard con=
-cept)
->
-> That's usually (but not) always init, as in systemd. There might be some=
-thing
-> inbetween it and init, but likely init would respawn the something in be=
-tween
-> it it. One of the main tasks of init is to respawn things under it.
->
-> If you have a supervisor tree starting from init the kill should eventua=
-lly
-> travel up to init.
+This is a continuation and refactoring of Elena's earlier effort to add
+kernel stack base offset randomization. In the time since the earlier
+discussions, two attacks[1][2] were made public that depended on stack
+determinism, so we're no longer in the position of "this is a good idea
+but we have no examples of attacks". :)
 
-I will try to demostrate that the mitigation don't travel up to init. To d=
-o so I
-will use the following scenario (brute force attack through the execve sys=
-tem
-call):
+Earlier discussions also devolved into debates on entropy sources, which
+is mostly a red herring, given the already low entropy available due
+to stack size. Regardless, entropy can be changed/improved separately
+from this series as needed.
 
-init -------exec()-------> supervisor -------exec()-----> network daemon
-faults =3D 0                 faults =3D 0                     faults =3D 0
-period =3D ---               period =3D ---                   period =3D -=
---
+Earlier discussions also got stuck debating how much syscall overhead
+was too much, but this is also a red herring since the feature itself
+needs to be selectable at boot with no cost for those that don't want it:
+this is solved here with static branches.
 
-Now the network daemon crashes (its stats an updated and also the supervis=
-or
-stats):
+So, here is the latest improved version, made as arch-agnostic as
+possible, with usage added for x86 and arm64. It also includes some small
+static branch clean ups, and addresses some surprise performance issues
+due to the stack canary[3].
 
-init --------------------> supervisor ------------------> network daemon
-faults =3D 0                 faults =3D 1                     faults =3D 1
-period =3D ---               period =3D 10ms                  period =3D 1=
-0ms
+At the very least, the first three patches should land ASAP, the first
+is a minor bug fix for v5.11. The next two are optimizations for static
+branch usage that Peter already Acked.
 
-Then the network daemon is freed and its stats are removed:
+If I can get an Ack from an arm64 maintainer, I think this could all
+land via -tip to make merging easiest.
 
-init --------------------> supervisor
-faults =3D 0                 faults =3D 1
-period =3D ---               period =3D 10ms
+Thanks!
 
-Now the supervisor respawns the daemon (the stats are initialized):
+-Kees
 
-init --------------------> supervisor ------------------> network daemon
-faults =3D 0                 faults =3D 1                     faults =3D 0
-period =3D ---               period =3D 10ms                  period =3D -=
---
+[1] https://a13xp0p0v.github.io/2020/02/15/CVE-2019-18683.html
+[2] https://repositorio-aberto.up.pt/bitstream/10216/125357/2/374717.pdf
+[3] https://lore.kernel.org/lkml/202003281520.A9BFF461@keescook/
 
-The network daemon crashes again:
+Kees Cook (7):
+  mm: Restore init_on_* static branch defaults
+  jump_label: Provide CONFIG-driven build state defaults
+  init_on_alloc: Unpessimize default-on builds
+  stack: Optionally randomize kernel stack offset each syscall
+  x86/entry: Enable random_kstack_offset support
+  arm64: entry: Enable random_kstack_offset support
+  lkdtm: Add REPORT_STACK for checking stack offsets
 
-init --------------------> supervisor ------------------> network daemon
-faults =3D 0                 faults =3D 2                     faults =3D 1
-period =3D ---               period =3D 11ms                  period =3D 1=
-2ms
+ .../admin-guide/kernel-parameters.txt         | 11 +++++
+ Makefile                                      |  4 ++
+ arch/Kconfig                                  | 23 ++++++++++
+ arch/arm64/Kconfig                            |  1 +
+ arch/arm64/kernel/Makefile                    |  5 +++
+ arch/arm64/kernel/syscall.c                   | 10 +++++
+ arch/x86/Kconfig                              |  1 +
+ arch/x86/entry/common.c                       |  3 ++
+ arch/x86/include/asm/entry-common.h           |  8 ++++
+ drivers/misc/lkdtm/bugs.c                     | 17 ++++++++
+ drivers/misc/lkdtm/core.c                     |  1 +
+ drivers/misc/lkdtm/lkdtm.h                    |  1 +
+ include/linux/jump_label.h                    | 19 +++++++++
+ include/linux/mm.h                            | 10 +++--
+ include/linux/randomize_kstack.h              | 42 +++++++++++++++++++
+ init/main.c                                   | 23 ++++++++++
+ mm/page_alloc.c                               |  4 +-
+ 17 files changed, 177 insertions(+), 6 deletions(-)
+ create mode 100644 include/linux/randomize_kstack.h
 
-The network daemon is freed again:
+-- 
+2.25.1
 
-init --------------------> supervisor
-faults =3D 0                 faults =3D 2
-period =3D ---               period =3D 11ms
-
-The supervisor respawns again the daemon:
-
-init --------------------> supervisor ------------------> network daemon
-faults =3D 0                 faults =3D 2                     faults =3D 0
-period =3D ---               period =3D 11ms                  period =3D -=
---
-
-This steps are repeated x number of times until a minimum number of faults
-triggers the brute force attack mitigation. At this moment:
-
-init --------------------> supervisor ------------------> network daemon
-faults =3D 0                 faults =3D 5                     faults =3D 1
-period =3D ---               period =3D 13ms                  period =3D 1=
-5ms
-
-Now the network daemon is freed and the supervisor is killed by the mitiga=
-tion
-method. At this point is importart to note that before send the kill signa=
-l to
-the supervisor its stats are disabled. This means that when the supervisor=
- is
-killed its stats are now not updated. So the init stats are also not updat=
-ed.
-
-init
-faults =3D 0
-period =3D ---
-
-=46rom the point of view of the init process nothing has happened.
-
-> At least that's the theory. Do you have some experiments that show
-> this doesn't happen?
-
-Yes. The kernel selftest try to emulate some scenarios. Basically brute fo=
-rce
-attacks through the execve system call (like the case exposed) and also br=
-ute
-force attacks through the fork system call. Playing with the crossing of s=
-ome
-privilege boundaries.
-
-For example:
-
-In the tests an application execs() another application that crashes. Then
-respawn the application that has crashed and this last crashes again. The
-respawn is executed until the brute force attack through the execve system=
- call
-and then the application that execs() is killed. But any other application=
-s are
-killed. Only the tasks involved in the attack.
->
-> >
-> > Note: I am a kernel newbie and I don't know if the systemd is init. So=
-rry if it
-> > is a stupid question. AFAIK systemd is not the init process (the first=
- process
-> > that is executed) but I am not sure.
->
-> At least the part of systemd that respawns is often (but not always) ini=
-t.
-
-Thanks for the clarification.
-
-> > So, you suggest that the mitigation method for the brute force attack =
-through
-> > the execve system call should be different (not kill the process that =
-exec).
-> > Any suggestions would be welcome to improve this feature.
->
-> If the system is part of some cluster, then panicing on attack or failur=
-e
-> could be a reasonable reaction. Some other system in the cluster should
-> take over. There's also a risk that all the systems get taken
-> out quickly one by one, in this case you might still need something
-> like the below.
->
-> But it's something that would need to be very carefully considered
-> for the environment.
->
-> The other case is when there isn't some fallback, as in a standalone
-> machine.
->
-> It could be only used when the supervisor daemons are aware of it.
-> Often they already have respawn limits, but would need to make sure they
-> trigger before your algorithm trigger. Or maybe some way to opt-out
-> per process.  Then the DoS would be only against that process, but
-> not everything on the machine.
-
-Thanks for the suggestions.
-
-> So I think it needs more work on the user space side for most usages.
->
-
-Anyway, in the case that the supervisor is init then the system will panic=
-. So,
-I think that we can add a prctl to avoid kill the parent task (the task th=
-at
-exec) and only block new fork system calls from this task. When this boole=
-an is
-set, any parent task that is involved in the attack will not be killed. In=
- this
-case, any following forks will be blocked. This way the system will not cr=
-ash.
-
-What do you think?
-
-> -Andi
-
-Thanks for your time and patience.
-John Wood
