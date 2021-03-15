@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-20938-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-20940-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 9A37633C51D
-	for <lists+kernel-hardening@lfdr.de>; Mon, 15 Mar 2021 19:03:24 +0100 (CET)
-Received: (qmail 11496 invoked by uid 550); 15 Mar 2021 18:02:51 -0000
+	by mail.lfdr.de (Postfix) with SMTP id AD94033C52A
+	for <lists+kernel-hardening@lfdr.de>; Mon, 15 Mar 2021 19:03:55 +0100 (CET)
+Received: (qmail 11597 invoked by uid 550); 15 Mar 2021 18:02:54 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,31 +13,31 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 11296 invoked from network); 15 Mar 2021 18:02:50 -0000
+Received: (qmail 11467 invoked from network); 15 Mar 2021 18:02:51 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=DcTnVacz4A0tmKEIIvO2n/EpgXlfdRl1ckINTgAR5oI=;
-        b=PQ3XGnvMsKcXU4s5p+F5dfZF6FA/iSbcSn0nswwcqPExK09KIRLEltkz0Bh8wiwE7N
-         1XkNp1GfB55SBD6zDGJQRjdRpTR4DYjid5msGEofOSSYqbipdCIbWhBqrPM9AWy1UM52
-         l+EaNe1XtG5skHL76gK0sXV38Rb8Lgh4egJtA=
+        bh=yYr9wVtQr+Yv2YCxxAWFJhlutYOKWxR3zpP8Meqzwc0=;
+        b=PJ3T01c5ZmSw41q5MAxkemIUNEX541whNOtK/oVGkgDvEXke5s57A/1q9tzDzo+AEJ
+         17TwxsQhxMpKr12YLaf51slHhYzShk72wq3LA7Tf1jp2ZGhrKU21lUBPzS/02MQjUN4a
+         8BNS0yFQ9mNrfIeZXkahph53aQpbFJsZAfitI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=DcTnVacz4A0tmKEIIvO2n/EpgXlfdRl1ckINTgAR5oI=;
-        b=M6k33OHSUk9V7sdOjYt4SY6rMoXUo9JZUGoMVpV1RbI7ir4pjP/D4r27YUx1Kl4y1m
-         aVfTvWSDJ/5sNnTio168x17Vnmdjf6lfNXaYnMBy18E0GtWaGV/Ox2loEjLfgZ8qydJE
-         Njbx4uqQy2KDcxhTwjJbKh18B6i7/FGFNYAQUGwJDgC4jeC12DrYRB1UdmVYWu8hhOMm
-         dY5bo5KBUv3u/0Jpyf4WTYHSojlQNUIpySXUonHp0Qw2OUlxXxBlHc4ZByCUEG3EvzFY
-         BUUPH8/6FHIR9mJra7UyupK7Vrl3GYgkU8xqU0UQ7GXFzGs+lFriCTumHiIQ8h8kIjQI
-         cAjw==
-X-Gm-Message-State: AOAM533sBhdvMePZ+MjOUOhyANzcckiBxJUabr1ZOHsjXNFJ1GOnAOb1
-	hXm+sYaQniFCGqu5S09Jso0b/g==
-X-Google-Smtp-Source: ABdhPJxy/jBx4lbYUG9dTL/BSOwG++1sLNIRxLhlf/Aak5xk+P2rM72P6uwME362sOaUIYrG0OIg4w==
-X-Received: by 2002:a65:4c86:: with SMTP id m6mr314819pgt.174.1615831358475;
-        Mon, 15 Mar 2021 11:02:38 -0700 (PDT)
+        bh=yYr9wVtQr+Yv2YCxxAWFJhlutYOKWxR3zpP8Meqzwc0=;
+        b=EYzSkLmNeNe5f+iEEVjocn52dJXFRCzaLGnaSldohXOuGKaThb8FcqaiUgqlioBVR9
+         k+94HiOPTDQ3LkBCpTKyD2k0RgKYF6tu2Z3P8MqLYhQqzvLahyeRCk4wib6fsF0tABW9
+         eSNnxe40XD/WMWOw2UeenXFP1bnOMgrpU1/xOJOQ/vLVQifTQYxfF2IQkmDujUwXOsa9
+         TKnCmWV/JMA75OHtmAtLunCZerNOobXQq4jydT7uSMRuktYv7EdH2jSri11EMwY9qUKG
+         94p5qrkX0YPrPtmuZZe24Exkt8F7V3HkHxqfXoLcohh5tvGbb1UPQuETm9Z5mdUr6ZvJ
+         83QQ==
+X-Gm-Message-State: AOAM530+bH2cx9FC9JQw0xX/su3YI5YXCaRBeq4vbE0q2pE64QeGLyfV
+	yUkhw5rrWVt59oD2yeYpFWRK6A==
+X-Google-Smtp-Source: ABdhPJypLz3rt4xSDEfwAQI69keGjt8wki/cYUqoCZg01pG+rs+SU3iIC2Rhxqq4jRLey7oHOmrHHw==
+X-Received: by 2002:a65:6208:: with SMTP id d8mr260022pgv.365.1615831359582;
+        Mon, 15 Mar 2021 11:02:39 -0700 (PDT)
 From: Kees Cook <keescook@chromium.org>
 To: Thomas Gleixner <tglx@linutronix.de>
 Cc: Kees Cook <keescook@chromium.org>,
@@ -63,96 +63,105 @@ Cc: Kees Cook <keescook@chromium.org>,
 	linux-arm-kernel@lists.infradead.org,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v6 4/6] x86/entry: Enable random_kstack_offset support
-Date: Mon, 15 Mar 2021 11:02:27 -0700
-Message-Id: <20210315180229.1224655-5-keescook@chromium.org>
+Subject: [PATCH v6 5/6] arm64: entry: Enable random_kstack_offset support
+Date: Mon, 15 Mar 2021 11:02:28 -0700
+Message-Id: <20210315180229.1224655-6-keescook@chromium.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20210315180229.1224655-1-keescook@chromium.org>
 References: <20210315180229.1224655-1-keescook@chromium.org>
 MIME-Version: 1.0
-X-Patch-Hashes: v=1; h=sha256; g=1a3993b6371bcc7c9fa1576e563a724a70c25875; i=np7yed3mY+gWIWkexmB7CyDLgwsIh0xV2RGaksJc7tI=; m=cc9SLz8pm+mdXOKZLHtRjH7FITDzwHCOKmwFrX1p7io=; p=UyRR1nzRrbUXeUU5ICay1xt2wYZVgu7b/Eh0FjkN2Hc=
-X-Patch-Sig: m=pgp; i=keescook@chromium.org; s=0x0x8972F4DFDC6DC026; b=iQIzBAABCgAdFiEEpcP2jyKd1g9yPm4TiXL039xtwCYFAmBPoTQACgkQiXL039xtwCb9dw/8CDN Ir13NcCLMJOuRm2LpzDYbdgOc9JQ2QokpXPH/jLGBVXWXwV2g8Nk5TYJJcm7X/yj75HbSyNJLBUVU c8QbEGqzcBxjyIZUTKBDrYfApusLejywRj5YCmq1CONO5XBcJTMPuNAo1ZlzyQ0fI+754FraF3eU/ O8qcOD18DBVIsRP7e9ASpSyjqINb46mpEDrlvXa+uJyzGfAGLz+B0NLm6WPK0eaKzRmPC3mUs5gXU 9pL8/JlmcsD3Ne3kzSexmn7+uvYXEcwRagE8A76gkzE69JK3Lq8uIAyFARV2VO8mXZcUD/loxowRK vpn44j3EK04VB/Nf0IEDP6SNkNmSFvdqOSbp8gXcBI+rAJgA91SXLBf+ld9pIsIkGf6+uvY+rKqb7 XT7pyiu/3f7C3m64R7FFFUsWH6waSp2VR4ccIbNM97N6o5FY5keipPsjJNinKedZwOGjmY2O+FMkE nxUr2FjxcwFOBCbAkwJL+rgVv9UPOprPnq+Gxi6axTrDjRe3JoWtapLhbdDjHYLos7Gh5+UhghIj/ vYKfMHbHOOlKyhcrufiMXbcy0dkK6EK9ES3KNDmWu0cpxS2QAPrJvyrC6eCIxT9T0fko/eWgdUhWi ZNc8RzQeH2jVopqqCkmd8L74weZxz2gnh8S5w2OW3/yb5VWZ8VjJWDr3879m6aVE=
+X-Patch-Hashes: v=1; h=sha256; g=ab928f13a74b1e09ed2d4740c77a8520d58ab562; i=6FjHrMJQ1a03WxuPiMt8aIK5MW/T0bayLG0SuUm7Wt4=; m=DW/OKOjAEidoxl6ODEV6zN0c7U/uCvK1t/uZsIkKPaM=; p=MOQyOeWlIC4XP1YdIGtrtyC9k7Ng+ZO0cCzQ0e3ME/8=
+X-Patch-Sig: m=pgp; i=keescook@chromium.org; s=0x0x8972F4DFDC6DC026; b=iQIzBAABCgAdFiEEpcP2jyKd1g9yPm4TiXL039xtwCYFAmBPoTQACgkQiXL039xtwCZ8+hAAok1 EQH02pRdoiRp9m8tbYTx8Kv8urKXluNaNLKQ8VjvRmjYSBNnvpTWI/n09jSnhzsXmY3lP9KFBiiSR vTF18ZmisLjVh1++NAWmL4zJNQExvXHxdxXvrzs6I0wIm+3ULPb+9DxBwwzeFIOlTC0AHfkarOIvI JPzaUMXvv+p+TiFW12lULVfRIkjZeTY8diwqSzXhh0Z+sJFZt0H5C9CzgjNlKMnNDGj2r4ie5i14O 4pSTw5xa/wRNzIDemET+Cl6r5cxlzMmyUnwKxL8cQl2HF2ysqiZFcCqUrsFdHWMiO8p9js8+hJjdr DnVs/0zGx9OvIObQq8Cs6RXEWpOQT91MbY6iWdLYoP1I+4vwxcR7P2bIm8kvDtL/P+YEVghQCMAi/ Nbw7LFXshsWv4OkJT8XZvnuYTdN/6HIL6Pz1V74YC5b4+90rxYBfG6Di9MIxsJk6X3QQh6+yznoDJ YmtysrTNSPGMXjKDJfs3f3yKIpWSePYSb9w6LZMFUww5o0vdipqLGAv4onWHWsatjKjTN7Qi8Qy2v z/gu45senClYLMA4IqByUxpO7K0pVhkjIJ9bCuGqylQg37zdDD/h9fh1xGKCCzDeGBHjt88zBIQy0 1RmtN5iz/6GO6LViI+zmCV5RpDsDtBtZA7ZIuS5jlamNSIEmDoQBVdxK0QuCHdbw=
 Content-Transfer-Encoding: 8bit
 
 Allow for a randomized stack offset on a per-syscall basis, with roughly
-5-6 bits of entropy, depending on compiler and word size. Since the
-method of offsetting uses macros, this cannot live in the common entry
-code (the stack offset needs to be retained for the life of the syscall,
-which means it needs to happen at the actual entry point).
+5 bits of entropy. (And include AAPCS rationale AAPCS thanks to Mark
+Rutland.)
+
+In order to avoid unconditional stack canaries on syscall entry (due to
+the use of alloca()), also disable stack protector to avoid triggering
+needless checks and slowing down the entry path. As there is no general
+way to control stack protector coverage with a function attribute[1],
+this must be disabled at the compilation unit level. This isn't a problem
+here, though, since stack protector was not triggered before: examining
+the resulting syscall.o, there are no changes in canary coverage (none
+before, none now).
+
+[1] a working __attribute__((no_stack_protector)) has been added to GCC
+and Clang but has not been released in any version yet:
+https://gcc.gnu.org/git/gitweb.cgi?p=gcc.git;h=346b302d09c1e6db56d9fe69048acb32fbb97845
+https://reviews.llvm.org/rG4fbf84c1732fca596ad1d6e96015e19760eb8a9b
 
 Signed-off-by: Kees Cook <keescook@chromium.org>
 ---
- arch/x86/Kconfig                    | 1 +
- arch/x86/entry/common.c             | 3 +++
- arch/x86/include/asm/entry-common.h | 8 ++++++++
- 3 files changed, 12 insertions(+)
+ arch/arm64/Kconfig          |  1 +
+ arch/arm64/kernel/Makefile  |  5 +++++
+ arch/arm64/kernel/syscall.c | 10 ++++++++++
+ 3 files changed, 16 insertions(+)
 
-diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index 2792879d398e..4b4ad8ec10d2 100644
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -165,6 +165,7 @@ config X86
- 	select HAVE_ARCH_TRANSPARENT_HUGEPAGE_PUD if X86_64
- 	select HAVE_ARCH_USERFAULTFD_WP         if X86_64 && USERFAULTFD
- 	select HAVE_ARCH_VMAP_STACK		if X86_64
+diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+index 1f212b47a48a..2d0e5f544429 100644
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -146,6 +146,7 @@ config ARM64
+ 	select HAVE_ARCH_MMAP_RND_COMPAT_BITS if COMPAT
+ 	select HAVE_ARCH_PFN_VALID
+ 	select HAVE_ARCH_PREL32_RELOCATIONS
 +	select HAVE_ARCH_RANDOMIZE_KSTACK_OFFSET
- 	select HAVE_ARCH_WITHIN_STACK_FRAMES
- 	select HAVE_ASM_MODVERSIONS
- 	select HAVE_CMPXCHG_DOUBLE
-diff --git a/arch/x86/entry/common.c b/arch/x86/entry/common.c
-index a2433ae8a65e..810983d7c26f 100644
---- a/arch/x86/entry/common.c
-+++ b/arch/x86/entry/common.c
-@@ -38,6 +38,7 @@
- #ifdef CONFIG_X86_64
- __visible noinstr void do_syscall_64(unsigned long nr, struct pt_regs *regs)
- {
-+	add_random_kstack_offset();
- 	nr = syscall_enter_from_user_mode(regs, nr);
+ 	select HAVE_ARCH_SECCOMP_FILTER
+ 	select HAVE_ARCH_STACKLEAK
+ 	select HAVE_ARCH_THREAD_STRUCT_WHITELIST
+diff --git a/arch/arm64/kernel/Makefile b/arch/arm64/kernel/Makefile
+index ed65576ce710..6cc97730790e 100644
+--- a/arch/arm64/kernel/Makefile
++++ b/arch/arm64/kernel/Makefile
+@@ -9,6 +9,11 @@ CFLAGS_REMOVE_ftrace.o = $(CC_FLAGS_FTRACE)
+ CFLAGS_REMOVE_insn.o = $(CC_FLAGS_FTRACE)
+ CFLAGS_REMOVE_return_address.o = $(CC_FLAGS_FTRACE)
  
- 	instrumentation_begin();
-@@ -83,6 +84,7 @@ __visible noinstr void do_int80_syscall_32(struct pt_regs *regs)
- {
- 	unsigned int nr = syscall_32_enter(regs);
- 
-+	add_random_kstack_offset();
- 	/*
- 	 * Subtlety here: if ptrace pokes something larger than 2^32-1 into
- 	 * orig_ax, the unsigned int return value truncates it.  This may
-@@ -102,6 +104,7 @@ static noinstr bool __do_fast_syscall_32(struct pt_regs *regs)
- 	unsigned int nr = syscall_32_enter(regs);
- 	int res;
- 
-+	add_random_kstack_offset();
- 	/*
- 	 * This cannot use syscall_enter_from_user_mode() as it has to
- 	 * fetch EBP before invoking any of the syscall entry work
-diff --git a/arch/x86/include/asm/entry-common.h b/arch/x86/include/asm/entry-common.h
-index 2b87b191b3b8..8e41566e154a 100644
---- a/arch/x86/include/asm/entry-common.h
-+++ b/arch/x86/include/asm/entry-common.h
-@@ -2,6 +2,7 @@
- #ifndef _ASM_X86_ENTRY_COMMON_H
- #define _ASM_X86_ENTRY_COMMON_H
- 
++# Remove stack protector to avoid triggering unneeded stack canary
++# checks due to randomize_kstack_offset.
++CFLAGS_REMOVE_syscall.o	 = -fstack-protector -fstack-protector-strong
++CFLAGS_syscall.o	+= -fno-stack-protector
++
+ # Object file lists.
+ obj-y			:= debug-monitors.o entry.o irq.o fpsimd.o		\
+ 			   entry-common.o entry-fpsimd.o process.o ptrace.o	\
+diff --git a/arch/arm64/kernel/syscall.c b/arch/arm64/kernel/syscall.c
+index b9cf12b271d7..58227a1c207e 100644
+--- a/arch/arm64/kernel/syscall.c
++++ b/arch/arm64/kernel/syscall.c
+@@ -5,6 +5,7 @@
+ #include <linux/errno.h>
+ #include <linux/nospec.h>
+ #include <linux/ptrace.h>
 +#include <linux/randomize_kstack.h>
- #include <linux/user-return-notifier.h>
+ #include <linux/syscalls.h>
  
- #include <asm/nospec-branch.h>
-@@ -70,6 +71,13 @@ static inline void arch_exit_to_user_mode_prepare(struct pt_regs *regs,
- 	 */
- 	current_thread_info()->status &= ~(TS_COMPAT | TS_I386_REGS_POKED);
- #endif
+ #include <asm/daifflags.h>
+@@ -43,6 +44,8 @@ static void invoke_syscall(struct pt_regs *regs, unsigned int scno,
+ {
+ 	long ret;
+ 
++	add_random_kstack_offset();
++
+ 	if (scno < sc_nr) {
+ 		syscall_fn_t syscall_fn;
+ 		syscall_fn = syscall_table[array_index_nospec(scno, sc_nr)];
+@@ -55,6 +58,13 @@ static void invoke_syscall(struct pt_regs *regs, unsigned int scno,
+ 		ret = lower_32_bits(ret);
+ 
+ 	regs->regs[0] = ret;
 +
 +	/*
-+	 * x86_64 stack alignment means 3 bits are ignored, so keep
-+	 * the top 5 bits. x86_32 needs only 2 bits of alignment, so
-+	 * the top 6 bits will be used.
++	 * The AAPCS mandates a 16-byte (i.e. 4-bit) aligned SP at
++	 * function boundaries. We want at least 5 bits of entropy so we
++	 * must randomize at least SP[8:4].
 +	 */
-+	choose_random_kstack_offset(rdtsc() & 0xFF);
++	choose_random_kstack_offset(get_random_int() & 0x1FF);
  }
- #define arch_exit_to_user_mode_prepare arch_exit_to_user_mode_prepare
  
+ static inline bool has_syscall_work(unsigned long flags)
 -- 
 2.25.1
 
