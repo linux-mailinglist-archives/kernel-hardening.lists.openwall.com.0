@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-20934-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-20936-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 9910633C41D
-	for <lists+kernel-hardening@lfdr.de>; Mon, 15 Mar 2021 18:28:46 +0100 (CET)
-Received: (qmail 28399 invoked by uid 550); 15 Mar 2021 17:28:38 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 8243633C51B
+	for <lists+kernel-hardening@lfdr.de>; Mon, 15 Mar 2021 19:03:07 +0100 (CET)
+Received: (qmail 11330 invoked by uid 550); 15 Mar 2021 18:02:50 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,80 +13,139 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 28378 invoked from network); 15 Mar 2021 17:28:37 -0000
+Received: (qmail 10218 invoked from network); 15 Mar 2021 18:02:48 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=5VwZiNoaOawmugGkW3BliGlJHY74MeBZt4r2sMGeVQQ=;
-        b=l7HPfSehLhWpD22iEktgmCx0tfo9/0CXqzTE6AuX6c3/5225P6lXKuk1wJ6XO5mJGB
-         j9LyL7+uH01vGynQcMUX/DSW3aPwjvKsnHDabzLeL8nPJ7VF7NQPm1XuwiOMzrWuKnoG
-         LqkuIan1qCRQ55XWhGn9uzB0DXbKts3oUufc8=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=D9ES74tRjQPkQDGloZkJ7JzGqh/Rg5vOjLPTTzfWrnU=;
+        b=nkyWI5GSq3VOZgbrSe5HgKjUqcwdRVsFgjMiU8cCOXgYni5mOUx2JpvpUeGfEIzjVc
+         /EApzc0zoetCk9N/rKUGLhHwqdDHx/41U8LrjrtmFadM02lCoJ/nZFJdX85vtFgWgnHI
+         h+0okdA6lvkzr6gdZBtYETfjATYKmdov+9h6Q=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=5VwZiNoaOawmugGkW3BliGlJHY74MeBZt4r2sMGeVQQ=;
-        b=Aj4xnHfRL6eVhHiD9x7IXtbCsL8uxUKvdAjWlGm2xfnGaSQ01915vRoMKguhlnOmD4
-         IuyyKdb8Hq3k/TXi/HktkSyVPX1I5Py3uhUGNe1r7PjIRdqcmVvCB25VYO176vL01dm+
-         iL+8rNnZlL+DNPmDLpfmUpvKfyQ00wDSTBDqopUewPHIjAgBNyOHjWheyUqQ6QURmU4m
-         JxDs4C5tvz4yY4D2wowfcXpm2ni9FvE/b4eIQwSSENOejEzSn16hlzRve2BEgnc3wpqz
-         O9KDbZ6SbnaMWBVCZQtXGf6KbzH5CTtIFyIV9JNaeSk8Qxs9F1+J1yOHrIoMMd50+IML
-         seAQ==
-X-Gm-Message-State: AOAM533Y2HjjdDrFkLaAJH//4gEIlpPl8WyNsYbav98+s33Fl4dhFtVU
-	GEmDApjivxjN0+eJUwhUe7jokw==
-X-Google-Smtp-Source: ABdhPJxjnHWrPSehNTyXbsunhO6js/f/y7LcLoTrzXtGC7Of1Nx7WsQ3+07t7nraq6yi5lTJdFnVmQ==
-X-Received: by 2002:a62:3847:0:b029:202:ad05:4476 with SMTP id f68-20020a6238470000b0290202ad054476mr10941066pfa.67.1615829305471;
-        Mon, 15 Mar 2021 10:28:25 -0700 (PDT)
-Date: Mon, 15 Mar 2021 10:28:23 -0700
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=D9ES74tRjQPkQDGloZkJ7JzGqh/Rg5vOjLPTTzfWrnU=;
+        b=erpNTxZLiDc8zqBLXhp+OZ7nHPL/AtewK/E8VUe0w/V1Lpxdk+JrxqzIJph3aGlU+K
+         L1Llz5gFKFV1m5KKh8KPP4P8OOdQzGvIxe0zD81NPzaDtEKhEdmEgLT5do6j6CrIJx9X
+         pVMeX7MnxNuGeUX/QKZglfIfe6P98UWqjEIFsLg0H4HPnt7B4xW4pmXYuw4bdmiqDeNI
+         3hsL2efODHGXDPn3FGR3n5NWVuBWHcHGKnmP3WnZh68aXgzNmS0oma8NgprtckjlBeo9
+         6CewzTywjcCLB9YAwDrj6gtsBgr8FpsIxHAnInp8rmdMJps8BZlNWsfp9AAaJR9lyxDt
+         ysOw==
+X-Gm-Message-State: AOAM532XZOf+j8l1AG8J+KmacTEkkM7zmmHRBHQdnR/qBpKx3ZnYRaEd
+	zFYyortKJKsVHMdgTJuJYm6aSw==
+X-Google-Smtp-Source: ABdhPJwdcjtS5Z2P+DmTf0KAvanjziv2viUkjFPb2OQot1M+A70P++yEN5oAbiQpcrSGAjwehcCvpA==
+X-Received: by 2002:a17:90a:2c09:: with SMTP id m9mr300524pjd.3.1615831356695;
+        Mon, 15 Mar 2021 11:02:36 -0700 (PDT)
 From: Kees Cook <keescook@chromium.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>, stable@vger.kernel.org,
-	Elena Reshetova <elena.reshetova@intel.com>, x86@kernel.org,
+To: Thomas Gleixner <tglx@linutronix.de>
+Cc: Kees Cook <keescook@chromium.org>,
+	Elena Reshetova <elena.reshetova@intel.com>,
+	x86@kernel.org,
 	Andy Lutomirski <luto@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
 	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
 	Alexander Potapenko <glider@google.com>,
 	Alexander Popov <alex.popov@linux.com>,
 	Ard Biesheuvel <ard.biesheuvel@linaro.org>,
-	Jann Horn <jannh@google.com>, kernel-hardening@lists.openwall.com,
-	linux-hardening@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org, Vlastimil Babka <vbabka@suse.cz>,
+	Jann Horn <jannh@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	David Hildenbrand <david@redhat.com>,
 	Mike Rapoport <rppt@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Jonathan Corbet <corbet@lwn.net>,
-	Randy Dunlap <rdunlap@infradead.org>
-Subject: Re: [PATCH v5 1/7] mm: Restore init_on_* static branch defaults
-Message-ID: <202103151027.88B63D0@keescook>
-References: <20210309214301.678739-1-keescook@chromium.org>
- <20210309214301.678739-2-keescook@chromium.org>
- <20210310155602.e005171dbecbc0be442f8aad@linux-foundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel-hardening@lists.openwall.com,
+	linux-hardening@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v6 0/6] Optionally randomize kernel stack offset each syscall
+Date: Mon, 15 Mar 2021 11:02:23 -0700
+Message-Id: <20210315180229.1224655-1-keescook@chromium.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210310155602.e005171dbecbc0be442f8aad@linux-foundation.org>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Mar 10, 2021 at 03:56:02PM -0800, Andrew Morton wrote:
-> On Tue,  9 Mar 2021 13:42:55 -0800 Kees Cook <keescook@chromium.org> wrote:
-> 
-> > Choosing the initial state of static branches changes the assembly layout
-> > (if the condition is expected to be likely, inline, or unlikely, out of
-> > line via a jump). The _TRUE/_FALSE defines for CONFIG_INIT_ON_*_DEFAULT_ON
-> > were accidentally removed. These need to stay so that the CONFIG controls
-> > the pessimization of the resulting static branch NOP/JMP locations.
-> 
-> Changelog doesn't really explain why anyone would want to apply this
-> patch.  This is especially important for -stable patches.
-> 
-> IOW, what is the user visible effect of the bug?
+v6:
+- rearrange jump_label and init_on_* changes (akpm)
+- add slab init_on_* static branches (andreyknvl)
+v5: https://lore.kernel.org/lkml/20210309214301.678739-1-keescook@chromium.org/
+v4: https://lore.kernel.org/lkml/20200622193146.2985288-1-keescook@chromium.org/
+v3: https://lore.kernel.org/lkml/20200406231606.37619-1-keescook@chromium.org/
+v2: https://lore.kernel.org/lkml/20200324203231.64324-1-keescook@chromium.org/
+rfc: https://lore.kernel.org/kernel-hardening/20190329081358.30497-1-elena.reshetova@intel.com/
 
-Yeah, that's a good point, and in writing more details I decided this
-wasn't actually worth a stable patch, and should just get folded into
-later patches.
+Hi,
 
-Thanks for the sanity-check!
+This is a continuation and refactoring of Elena's earlier effort to add
+kernel stack base offset randomization. In the time since the earlier
+discussions, two attacks[1][2] were made public that depended on stack
+determinism, so we're no longer in the position of "this is a good idea
+but we have no examples of attacks". :)
+
+Earlier discussions also devolved into debates on entropy sources, which
+is mostly a red herring, given the already low entropy available due
+to stack size. Regardless, entropy can be changed/improved separately
+from this series as needed.
+
+Earlier discussions also got stuck debating how much syscall overhead
+was too much, but this is also a red herring since the feature itself
+needs to be selectable at boot with no cost for those that don't want it:
+this is solved here with static branches.
+
+So, here is the latest improved version, made as arch-agnostic as
+possible, with usage added for x86 and arm64. It also includes some small
+static branch clean ups, and addresses some surprise performance issues
+due to the stack canary[3].
+
+At the very least, the first two patches can land separately (already
+Acked and Reviewed), since they're kind of "separate", but introduce
+macros that are used in the core stack changes.
+
+If I can get an Ack from an arm64 maintainer, I think this could all
+land via -tip to make merging easiest.
+
+Thanks!
+
+-Kees
+
+[1] https://a13xp0p0v.github.io/2020/02/15/CVE-2019-18683.html
+[2] https://repositorio-aberto.up.pt/bitstream/10216/125357/2/374717.pdf
+[3] https://lore.kernel.org/lkml/202003281520.A9BFF461@keescook/
+
+Kees Cook (6):
+  jump_label: Provide CONFIG-driven build state defaults
+  init_on_alloc: Optimize static branches
+  stack: Optionally randomize kernel stack offset each syscall
+  x86/entry: Enable random_kstack_offset support
+  arm64: entry: Enable random_kstack_offset support
+  lkdtm: Add REPORT_STACK for checking stack offsets
+
+ .../admin-guide/kernel-parameters.txt         | 11 +++++
+ Makefile                                      |  4 ++
+ arch/Kconfig                                  | 23 ++++++++++
+ arch/arm64/Kconfig                            |  1 +
+ arch/arm64/kernel/Makefile                    |  5 +++
+ arch/arm64/kernel/syscall.c                   | 10 +++++
+ arch/x86/Kconfig                              |  1 +
+ arch/x86/entry/common.c                       |  3 ++
+ arch/x86/include/asm/entry-common.h           |  8 ++++
+ drivers/misc/lkdtm/bugs.c                     | 17 ++++++++
+ drivers/misc/lkdtm/core.c                     |  1 +
+ drivers/misc/lkdtm/lkdtm.h                    |  1 +
+ include/linux/jump_label.h                    | 19 +++++++++
+ include/linux/mm.h                            | 10 +++--
+ include/linux/randomize_kstack.h              | 42 +++++++++++++++++++
+ init/main.c                                   | 23 ++++++++++
+ mm/page_alloc.c                               |  4 +-
+ mm/slab.h                                     |  6 ++-
+ 18 files changed, 181 insertions(+), 8 deletions(-)
+ create mode 100644 include/linux/randomize_kstack.h
 
 -- 
-Kees Cook
+2.25.1
+
