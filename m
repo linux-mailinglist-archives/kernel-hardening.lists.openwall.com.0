@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-21004-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-21006-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 1B681342604
-	for <lists+kernel-hardening@lfdr.de>; Fri, 19 Mar 2021 20:19:57 +0100 (CET)
-Received: (qmail 14099 invoked by uid 550); 19 Mar 2021 19:19:50 -0000
+	by mail.lfdr.de (Postfix) with SMTP id EDD0D3427C1
+	for <lists+kernel-hardening@lfdr.de>; Fri, 19 Mar 2021 22:29:15 +0100 (CET)
+Received: (qmail 16102 invoked by uid 550); 19 Mar 2021 21:28:52 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,203 +13,140 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 14075 invoked from network); 19 Mar 2021 19:19:50 -0000
-Subject: Re: [PATCH v30 07/12] landlock: Support filesystem access-control
-To: Kees Cook <keescook@chromium.org>
-Cc: James Morris <jmorris@namei.org>, Jann Horn <jannh@google.com>,
- "Serge E . Hallyn" <serge@hallyn.com>, Al Viro <viro@zeniv.linux.org.uk>,
- Andrew Morton <akpm@linux-foundation.org>,
- Andy Lutomirski <luto@amacapital.net>,
- Anton Ivanov <anton.ivanov@cambridgegreys.com>, Arnd Bergmann
- <arnd@arndb.de>, Casey Schaufler <casey@schaufler-ca.com>,
- David Howells <dhowells@redhat.com>, Jeff Dike <jdike@addtoit.com>,
- Jonathan Corbet <corbet@lwn.net>, Michael Kerrisk <mtk.manpages@gmail.com>,
- Richard Weinberger <richard@nod.at>, Shuah Khan <shuah@kernel.org>,
- Vincent Dagonneau <vincent.dagonneau@ssi.gouv.fr>,
- kernel-hardening@lists.openwall.com, linux-api@vger.kernel.org,
- linux-arch@vger.kernel.org, linux-doc@vger.kernel.org,
- linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-kselftest@vger.kernel.org, linux-security-module@vger.kernel.org,
- x86@kernel.org, =?UTF-8?Q?Micka=c3=abl_Sala=c3=bcn?=
- <mic@linux.microsoft.com>
-References: <20210316204252.427806-1-mic@digikod.net>
- <20210316204252.427806-8-mic@digikod.net> <202103191148.6E819426D@keescook>
-From: =?UTF-8?Q?Micka=c3=abl_Sala=c3=bcn?= <mic@digikod.net>
-Message-ID: <f705f7e8-3ee3-bae9-c283-174fab41629a@digikod.net>
-Date: Fri, 19 Mar 2021 20:19:50 +0100
-User-Agent:
+Received: (qmail 16042 invoked from network); 19 Mar 2021 21:28:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=COYequ/Al4vh0bS6DyJKs6KMlXrnC5mSUzfXzkBff1k=;
+        b=I8TknAyVLcDhMIatOxfg+fdU62BWJHBXwg3Rx8TWavaNLBa3eNY1/bJ+QswJecZL+u
+         dxQZJxpcqrjERo37QE97Ja+SJjY29erRLfmXZqZDZ0A18U3QnAljIYefhpB0s3kMil0o
+         OHt2KyuJ0VnoNR446RaOmtyETkgphZPoeTESE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=COYequ/Al4vh0bS6DyJKs6KMlXrnC5mSUzfXzkBff1k=;
+        b=bxzTa4qYq/ivLS9ZuvlaRAe+9FeqgUWsNVsfcWIv6153nUJ/BEgHea1rU4KxRaHWaG
+         GMGVWTjc6uL9M8aGS7nECUgi6H9pI3PnBshIWoOe5xmWVssXME96cpDdq8+2yHyIfqyc
+         pXWXG5kHVJmcU+jC79grUXI7ud0sMqV/jsUxC63Hdg6ypHnMiQPeE0pX82xyRwjnUWMS
+         FX86YK3tjaVDH3gZ4PzJJR1mFGKDgeVonX0jUbDU/AIzPznq9VUimE088HFJZpJzVtXb
+         aj59EUT6T3lNClvRLJYxirjrY+EJdpnuoJnORWIY0XuZd4NGOpduyxfnwb3U38tpzDM5
+         RitA==
+X-Gm-Message-State: AOAM5315a5BLOT94trxiuePyZaCVjkfU7DDAaxQinKffTf9LhQO3L5Vn
+	5uDi/0US1ilpijPw8pHtqylY8Q==
+X-Google-Smtp-Source: ABdhPJyZr4/GDEamWBieVEFuuZx6Q7tu0xmdbWTaLaDKNdCcZA75rRto0XPpcUkqhpQvA6Nqpe018g==
+X-Received: by 2002:aa7:9081:0:b029:1f9:26c9:1609 with SMTP id i1-20020aa790810000b02901f926c91609mr10885048pfa.54.1616189319323;
+        Fri, 19 Mar 2021 14:28:39 -0700 (PDT)
+From: Kees Cook <keescook@chromium.org>
+To: Thomas Gleixner <tglx@linutronix.de>
+Cc: Kees Cook <keescook@chromium.org>,
+	Elena Reshetova <elena.reshetova@intel.com>,
+	x86@kernel.org,
+	Andy Lutomirski <luto@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Alexander Potapenko <glider@google.com>,
+	Alexander Popov <alex.popov@linux.com>,
+	Ard Biesheuvel <ard.biesheuvel@linaro.org>,
+	Jann Horn <jannh@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	David Hildenbrand <david@redhat.com>,
+	Mike Rapoport <rppt@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel-hardening@lists.openwall.com,
+	linux-hardening@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v7 0/6] Optionally randomize kernel stack offset each syscall
+Date: Fri, 19 Mar 2021 14:28:29 -0700
+Message-Id: <20210319212835.3928492-1-keescook@chromium.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <202103191148.6E819426D@keescook>
-Content-Type: text/plain; charset=iso-8859-15
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 
+v7:
+- fix copy/paste-o from v6 CONFIG additions.
+v6: https://lore.kernel.org/lkml/20210315180229.1224655-1-keescook@chromium.org/
+v5: https://lore.kernel.org/lkml/20210309214301.678739-1-keescook@chromium.org/
+v4: https://lore.kernel.org/lkml/20200622193146.2985288-1-keescook@chromium.org/
+v3: https://lore.kernel.org/lkml/20200406231606.37619-1-keescook@chromium.org/
+v2: https://lore.kernel.org/lkml/20200324203231.64324-1-keescook@chromium.org/
+rfc: https://lore.kernel.org/kernel-hardening/20190329081358.30497-1-elena.reshetova@intel.com/
 
-On 19/03/2021 19:57, Kees Cook wrote:
-> On Tue, Mar 16, 2021 at 09:42:47PM +0100, Mickaël Salaün wrote:
->> From: Mickaël Salaün <mic@linux.microsoft.com>
->>
->> Using Landlock objects and ruleset, it is possible to tag inodes
->> according to a process's domain.  To enable an unprivileged process to
->> express a file hierarchy, it first needs to open a directory (or a file)
->> and pass this file descriptor to the kernel through
->> landlock_add_rule(2).  When checking if a file access request is
->> allowed, we walk from the requested dentry to the real root, following
->> the different mount layers.  The access to each "tagged" inodes are
->> collected according to their rule layer level, and ANDed to create
->> access to the requested file hierarchy.  This makes possible to identify
->> a lot of files without tagging every inodes nor modifying the
->> filesystem, while still following the view and understanding the user
->> has from the filesystem.
->>
->> Add a new ARCH_EPHEMERAL_INODES for UML because it currently does not
->> keep the same struct inodes for the same inodes whereas these inodes are
->> in use.
->>
->> This commit adds a minimal set of supported filesystem access-control
->> which doesn't enable to restrict all file-related actions.  This is the
->> result of multiple discussions to minimize the code of Landlock to ease
->> review.  Thanks to the Landlock design, extending this access-control
->> without breaking user space will not be a problem.  Moreover, seccomp
->> filters can be used to restrict the use of syscall families which may
->> not be currently handled by Landlock.
->>
->> Cc: Al Viro <viro@zeniv.linux.org.uk>
->> Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
->> Cc: James Morris <jmorris@namei.org>
->> Cc: Jann Horn <jannh@google.com>
->> Cc: Jeff Dike <jdike@addtoit.com>
->> Cc: Kees Cook <keescook@chromium.org>
->> Cc: Richard Weinberger <richard@nod.at>
->> Cc: Serge E. Hallyn <serge@hallyn.com>
->> Signed-off-by: Mickaël Salaün <mic@linux.microsoft.com>
->> Link: https://lore.kernel.org/r/20210316204252.427806-8-mic@digikod.net
->> [...]
->> +	spin_lock(&sb->s_inode_list_lock);
->> +	list_for_each_entry(inode, &sb->s_inodes, i_sb_list) {
->> +		struct landlock_object *object;
->> +
->> +		/* Only handles referenced inodes. */
->> +		if (!atomic_read(&inode->i_count))
->> +			continue;
->> +
->> +		/*
->> +		 * Checks I_FREEING and I_WILL_FREE  to protect against a race
->> +		 * condition when release_inode() just called iput(), which
->> +		 * could lead to a NULL dereference of inode->security or a
->> +		 * second call to iput() for the same Landlock object.  Also
->> +		 * checks I_NEW because such inode cannot be tied to an object.
->> +		 */
->> +		spin_lock(&inode->i_lock);
->> +		if (inode->i_state & (I_FREEING | I_WILL_FREE | I_NEW)) {
->> +			spin_unlock(&inode->i_lock);
->> +			continue;
->> +		}
-> 
-> This (and elsewhere here) seems like a lot of inode internals getting
-> exposed. Can any of this be repurposed into helpers? I see this test
-> scattered around the kernel a fair bit:
-> 
-> $ git grep I_FREEING | grep I_WILL_FREE | grep I_NEW | wc -l
-> 9
+Hi,
 
-Dealing with the filesystem is complex. Some helpers could probably be
-added, but with a series dedicated to the filesystem. I can work on that
-once this series is merged.
+This is a continuation and refactoring of Elena's earlier effort to add
+kernel stack base offset randomization. In the time since the earlier
+discussions, two attacks[1][2] were made public that depended on stack
+determinism, so we're no longer in the position of "this is a good idea
+but we have no examples of attacks". :)
 
-> 
->> +static inline u32 get_mode_access(const umode_t mode)
->> +{
->> +	switch (mode & S_IFMT) {
->> +	case S_IFLNK:
->> +		return LANDLOCK_ACCESS_FS_MAKE_SYM;
->> +	case 0:
->> +		/* A zero mode translates to S_IFREG. */
->> +	case S_IFREG:
->> +		return LANDLOCK_ACCESS_FS_MAKE_REG;
->> +	case S_IFDIR:
->> +		return LANDLOCK_ACCESS_FS_MAKE_DIR;
->> +	case S_IFCHR:
->> +		return LANDLOCK_ACCESS_FS_MAKE_CHAR;
->> +	case S_IFBLK:
->> +		return LANDLOCK_ACCESS_FS_MAKE_BLOCK;
->> +	case S_IFIFO:
->> +		return LANDLOCK_ACCESS_FS_MAKE_FIFO;
->> +	case S_IFSOCK:
->> +		return LANDLOCK_ACCESS_FS_MAKE_SOCK;
->> +	default:
->> +		WARN_ON_ONCE(1);
->> +		return 0;
->> +	}
-> 
-> I'm assuming this won't be reachable from userspace.
+Earlier discussions also devolved into debates on entropy sources, which
+is mostly a red herring, given the already low entropy available due
+to stack size. Regardless, entropy can be changed/improved separately
+from this series as needed.
 
-It should not, only a bogus kernel code could.
+Earlier discussions also got stuck debating how much syscall overhead
+was too much, but this is also a red herring since the feature itself
+needs to be selectable at boot with no cost for those that don't want it:
+this is solved here with static branches.
 
-> 
->> [...]
->> index a5d6ef334991..f8e8e980454c 100644
->> --- a/security/landlock/setup.c
->> +++ b/security/landlock/setup.c
->> @@ -11,17 +11,24 @@
->>  
->>  #include "common.h"
->>  #include "cred.h"
->> +#include "fs.h"
->>  #include "ptrace.h"
->>  #include "setup.h"
->>  
->> +bool landlock_initialized __lsm_ro_after_init = false;
->> +
->>  struct lsm_blob_sizes landlock_blob_sizes __lsm_ro_after_init = {
->>  	.lbs_cred = sizeof(struct landlock_cred_security),
->> +	.lbs_inode = sizeof(struct landlock_inode_security),
->> +	.lbs_superblock = sizeof(struct landlock_superblock_security),
->>  };
->>  
->>  static int __init landlock_init(void)
->>  {
->>  	landlock_add_cred_hooks();
->>  	landlock_add_ptrace_hooks();
->> +	landlock_add_fs_hooks();
->> +	landlock_initialized = true;
-> 
-> I think this landlock_initialized is logically separate from the optional
-> DEFINE_LSM "enabled" variable, but I thought I'd double check. :)
+So, here is the latest improved version, made as arch-agnostic as
+possible, with usage added for x86 and arm64. It also includes some small
+static branch clean ups, and addresses some surprise performance issues
+due to the stack canary[3].
 
-An LSM can be marked as enabled (at boot) but not yet initialized.
+At the very least, the first two patches can land separately (already
+Acked and Reviewed), since they're kind of "separate", but introduce
+macros that are used in the core stack changes.
 
-> 
-> It seems like it's used here to avoid releasing superblocks before
-> landlock_init() is called? What is the scenario where that happens?
+If I can get an Ack from an arm64 maintainer, I think this could all
+land via -tip to make merging easiest.
 
-It is a condition for LSM hooks, syscalls and superblock management.
+Thanks!
 
-> 
->>  	pr_info("Up and running.\n");
->>  	return 0;
->>  }
->> diff --git a/security/landlock/setup.h b/security/landlock/setup.h
->> index 9fdbf33fcc33..1daffab1ab4b 100644
->> --- a/security/landlock/setup.h
->> +++ b/security/landlock/setup.h
->> @@ -11,6 +11,8 @@
->>  
->>  #include <linux/lsm_hooks.h>
->>  
->> +extern bool landlock_initialized;
->> +
->>  extern struct lsm_blob_sizes landlock_blob_sizes;
->>  
->>  #endif /* _SECURITY_LANDLOCK_SETUP_H */
->> -- 
->> 2.30.2
->>
-> 
-> The locking and inode semantics are pretty complex, but since, again,
-> it's got significant test and syzkaller coverage, it looks good to me.
-> 
-> With the inode helper cleanup:
-> 
-> Reviewed-by: Kees Cook <keescook@chromium.org>
-> 
+-Kees
+
+[1] https://a13xp0p0v.github.io/2020/02/15/CVE-2019-18683.html
+[2] https://repositorio-aberto.up.pt/bitstream/10216/125357/2/374717.pdf
+[3] https://lore.kernel.org/lkml/202003281520.A9BFF461@keescook/
+
+
+Kees Cook (6):
+  jump_label: Provide CONFIG-driven build state defaults
+  init_on_alloc: Optimize static branches
+  stack: Optionally randomize kernel stack offset each syscall
+  x86/entry: Enable random_kstack_offset support
+  arm64: entry: Enable random_kstack_offset support
+  lkdtm: Add REPORT_STACK for checking stack offsets
+
+ .../admin-guide/kernel-parameters.txt         | 11 +++++
+ Makefile                                      |  4 ++
+ arch/Kconfig                                  | 23 ++++++++++
+ arch/arm64/Kconfig                            |  1 +
+ arch/arm64/kernel/Makefile                    |  5 +++
+ arch/arm64/kernel/syscall.c                   | 10 +++++
+ arch/x86/Kconfig                              |  1 +
+ arch/x86/entry/common.c                       |  3 ++
+ arch/x86/include/asm/entry-common.h           |  8 ++++
+ drivers/misc/lkdtm/bugs.c                     | 17 ++++++++
+ drivers/misc/lkdtm/core.c                     |  1 +
+ drivers/misc/lkdtm/lkdtm.h                    |  1 +
+ include/linux/jump_label.h                    | 19 +++++++++
+ include/linux/mm.h                            | 10 +++--
+ include/linux/randomize_kstack.h              | 42 +++++++++++++++++++
+ init/main.c                                   | 23 ++++++++++
+ mm/page_alloc.c                               |  4 +-
+ mm/slab.h                                     |  6 ++-
+ 18 files changed, 181 insertions(+), 8 deletions(-)
+ create mode 100644 include/linux/randomize_kstack.h
+
+-- 
+2.25.1
+
