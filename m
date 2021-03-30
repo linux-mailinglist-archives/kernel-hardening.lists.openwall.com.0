@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-21088-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-21091-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id E032934F2A5
-	for <lists+kernel-hardening@lfdr.de>; Tue, 30 Mar 2021 22:58:49 +0200 (CEST)
-Received: (qmail 5351 invoked by uid 550); 30 Mar 2021 20:58:09 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 2B29F34F2F4
+	for <lists+kernel-hardening@lfdr.de>; Tue, 30 Mar 2021 23:18:52 +0200 (CEST)
+Received: (qmail 7205 invoked by uid 550); 30 Mar 2021 21:18:45 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,135 +13,136 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 5250 invoked from network); 30 Mar 2021 20:58:08 -0000
+Received: (qmail 7169 invoked from network); 30 Mar 2021 21:18:44 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=uk0/1LocoDticB91SF6FsgWpOKPsEr1Pb6N+E6L28KI=;
-        b=VEbugQSfiOADsXzibGQhy5NOUchekygaO5w+6aKv6mqyA4ZN905sZ3owmH5AiDEAWr
-         y1WGVRmoaiaTXLZw321i7qk6pkHyhNFc2ebrQQ9viIxgTTISjvfl3iT2WLVNayRJuoPG
-         sJuIKeFRY9nWrNFtLzOixlEPRhRvLB5pYBi6Q=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=EHZz0CH2PbVVqRv7QJkmrFjtEJPk2k0V6T7UFiDv3pY=;
+        b=m5ZWm2C5ye+Gw/PfKvTXS0ZJy2ROSkEYIcy/qaB4jD9ugPVMEzxEguXT6k3N5U7lAt
+         woNxovoTLejySpGiX5WR4bTAImGe7paFsUwhtGvII8YvdOcR28l7M471uKkzDdRPwBjI
+         xwqc2eyr6FGUK1Rm5RSnkvoDEkL3uUHdf0Cdo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=uk0/1LocoDticB91SF6FsgWpOKPsEr1Pb6N+E6L28KI=;
-        b=K3lQO9k2R+RIxPXZOm9A67y/xmken0wTl71GbpuFGVnnKVcdLj7pzxReDCimn1SUys
-         74/uCjfLDjdRXkDZrjlZ4rqzI43fla0VYzPjFAfwjNyykFagmKWROn5TIy/OOyHGiuT3
-         QCKiJ0v0tqN+wrNW+ShBTnp+SD0WD7Buj9ptw0EPwYBDz2r1ETikR6+JnhVwGgH+LX0v
-         WFKxUB0je3UjMPzS1YBMgI3nC8fyTILkzY7sEczhZZE7lOjEwkhlO9r8bD7fRN8f9ua3
-         gqfYv5OV0t18QrDswGqnespHUxkjw3WfkGE7cuHpQ91lMg0J4KEEtT70VCAqkBSx1rW2
-         C5Aw==
-X-Gm-Message-State: AOAM5319UFjtcycEYk9eZND77JHh+fTRlmKp0VG+MAk3SSSqBQM2T1Or
-	DrgiLYZ1vabSvm4eHjucMSmTmw==
-X-Google-Smtp-Source: ABdhPJyU4QoLUAtSD+TbLRFmZhWwHD39ZMTbzgcT3JSLcSiG1GLO7ZUHccc4rKehrDRN8oWr8gFqDA==
-X-Received: by 2002:a63:5444:: with SMTP id e4mr38308pgm.426.1617137876539;
-        Tue, 30 Mar 2021 13:57:56 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=EHZz0CH2PbVVqRv7QJkmrFjtEJPk2k0V6T7UFiDv3pY=;
+        b=R/KFpgLG25gM6UuKzsf50FHbJ/LS3wNL/W8yWWN+UP7cixbmULFPT7Q1DsXMAW/rK9
+         fLTVxy0fP5WbzozazMWMFVsd4sxqvgmcv8LfUpnskd+s3K3X9hUVkV5qpEloxRMTQ+bA
+         8lP3B+pCrqkYjNx1puyN6BR1IIztF8cqZ7Nsqp/2TxZoZkQHVIHGJvMvUFh06JD+QCqe
+         anNFs3klQUiyfIMvxTwGipaTwySBYhVs1iR9B0jZeHqqsFHzPfzO4ePI8McXFmVHMvxH
+         /SIl09QMWnbCQRqDlbrIJtlz/BzXp/65coxkLcqV6HcabGIPcY15xGNWsOSSm0IUqMdd
+         iCGQ==
+X-Gm-Message-State: AOAM530nS/jUT6kKhdI/D91vl+Ci85x8hx2i/c7c5i0tm34dz2u1HR+3
+	eniwkr36/75o46xE30TQI8LwFA==
+X-Google-Smtp-Source: ABdhPJxgbdL2qS8YgyYBZ6kjZ8PmLOutdptDj31H1GjVyBTt3EJl64RTCkDi3jsaGMyZuN+KZBCfng==
+X-Received: by 2002:a17:90a:f2d5:: with SMTP id gt21mr257802pjb.197.1617139112859;
+        Tue, 30 Mar 2021 14:18:32 -0700 (PDT)
+Date: Tue, 30 Mar 2021 14:18:31 -0700
 From: Kees Cook <keescook@chromium.org>
-To: Thomas Gleixner <tglx@linutronix.de>
-Cc: Kees Cook <keescook@chromium.org>,
-	Elena Reshetova <elena.reshetova@intel.com>,
-	x86@kernel.org,
-	Andy Lutomirski <luto@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Alexander Potapenko <glider@google.com>,
-	Alexander Popov <alex.popov@linux.com>,
-	Ard Biesheuvel <ard.biesheuvel@linaro.org>,
-	Jann Horn <jannh@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	David Hildenbrand <david@redhat.com>,
-	Mike Rapoport <rppt@linux.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	kernel-hardening@lists.openwall.com,
-	linux-hardening@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v8 6/6] lkdtm: Add REPORT_STACK for checking stack offsets
-Date: Tue, 30 Mar 2021 13:57:50 -0700
-Message-Id: <20210330205750.428816-7-keescook@chromium.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210330205750.428816-1-keescook@chromium.org>
-References: <20210330205750.428816-1-keescook@chromium.org>
+To: Jann Horn <jannh@google.com>
+Cc: Kernel Hardening <kernel-hardening@lists.openwall.com>,
+	Brad Spengler <spender@grsecurity.net>,
+	PaX Team <pageexec@freemail.hu>, linux-hardening@vger.kernel.org
+Subject: Re: two potential randstruct improvements
+Message-ID: <202103301407.C7E9F9F@keescook>
+References: <CAG48ez1Mr1FNCDGFscVg0SpuuA_Z4tn=WJhEqJVWW1rOuRiG2w@mail.gmail.com>
 MIME-Version: 1.0
-X-Patch-Hashes: v=1; h=sha256; g=fb815901a1ccc1d9c4ca5c3e3cd3729b7f382fe2; i=b69wRsxT78r/3tM1mGa7N6ME6+rlXyFg15giRWRwPAQ=; m=aFqgiEE+nAZdug79A1F+fVTg9ZceUb0WPE8cbHqssVg=; p=ZQ32/kILkW5AD3nBZHO0VMTp4prIPkm7+DdhCHX8KdA=
-X-Patch-Sig: m=pgp; i=keescook@chromium.org; s=0x0x8972F4DFDC6DC026; b=iQIzBAABCgAdFiEEpcP2jyKd1g9yPm4TiXL039xtwCYFAmBjkM0ACgkQiXL039xtwCYfLRAAs6I uoWwWDp21BaGNMZo2SuY7bzLTQ4wBsh1OJpZI9l3CnXGSdw3rjz7jQr547uKC02JBkmMzEZ8erZZc OXm9KVlfJUxNAf1Xj1ZCOTuB3x9+E+0QA7hUMrZqjcs42ZBPBNkSPjV9A25U9YqznQ5f+qpoKAWEj hxxEXcX+z7qRe6bJas/EC7OMxjIrCaX9Fzf9HOwub9cZbtwx0dPTxKVeITndj71Nd+oDj/2XxQI+X 9hTzBdUHech+9e7EsTReekwPnRwNq+MAzoYB3JZVfZwT7ewjdvO5Iv6CVMthHmHgut+PjTN00vPS4 OhUYWoQNcsKUhGXXhCoZZ2/MHnjMSsLG8Vpgrb3tQXhiSoeMFXtnamdiasKXt7Jc76LttUOUKyHJo ZHT6pvTFlA8E+uzixb92yFkxiRzqIEGMdMQ3OBJfI2tcnS1KMzsv+Jt1VxL3ySC4aMLFFmM2y1UeI n8OdvXvEabfQwKXEvpIfbAZ6Qm1p7zhujxc9Me7VDJ48cNcSHTtxsNzNXWsEe6PpclfeDU0SglY7l phqtiLzuKHVpdfej4wAJbkaGgOs57NUEso25NbDIc7ZM2syVxWrdxxlP4zgxViiuIq6Yr4W/79kHB 93gnDuL1EJ0D3ib6Nvf+fYfybxPTOR9bKJ+jfn7yAh++prlwwWMuNlPcPXQ0yLfA=
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAG48ez1Mr1FNCDGFscVg0SpuuA_Z4tn=WJhEqJVWW1rOuRiG2w@mail.gmail.com>
 
-For validating the stack offset behavior, report the offset from a given
-process's first seen stack address. A quick way to measure the entropy:
+On Mon, Mar 29, 2021 at 09:26:35AM +0200, Jann Horn wrote:
+> Hi!
+> 
+> I'm currently in the middle of writing a blogpost on some Linux kernel
+> stuff; while working on that I looked at the randstruct version in
+> Linus' tree a bit and noticed two potential areas for improvement. I
+> have no idea whether any of this (still) applies to the PaX/grsecurity
+> version, but since the code originates from there, I figured I should
+> also send this to the original authors.
+> 
+> 
+> === no explicit randomization of padding holes ===
+> The randstruct plugin works by shuffling the list of C struct members.
+> So if you have a struct like this:
+> 
+> struct foo { u32 a; /*4-byte hole*/ u64 b; u64 c; };
+> 
+> randstruct might rearrange it into one of the following layouts:
+> 
+> struct foo { u32 a; /*4-byte hole*/ u64 b; u64 c; };
+> struct foo { u32 a; /*4-byte hole*/ u64 c; u64 b; };
+> struct foo { u64 b; u32 a; /*4-byte hole*/ u64 c; };
+> struct foo { u64 b; u64 c; u32 a; /*4-byte hole*/ };
+> struct foo { u64 c; u32 a; /*4-byte hole*/ u64 b; };
+> struct foo { u64 c; u64 b; u32 a; /*4-byte hole*/ };
+> 
+> So if there is only a single 4-byte member among multiple 8-byte
+> members, the 4-byte member "a" will still always be 8-byte aligned;
+> and if there is a small number of 4-byte members among lots of 8-byte
+> members, it'll probably still end up that way. This means that if an
+> attacker e.g. manages to type-confuse "struct foo" and an array of
+> pointers on a little-endian system, they'll be able to use arithmetic
+> operations on "a" to shift one of the pointers in "a" up and down.
+> This wouldn't be possible if, after the existing randomization, struct
+> members with following padding holes were explicitly randomized with
+> regard to the padding (subject to alignment constraints, of course).
+> (In practice I guess that might be implemented in the existing
+> randstruct plugin by computing padding holes after elements and then
+> randomly inserting dummy members in front of those members, with
+> dummy_size%member_alignment==0 and dummy_size<=padding_size.)
+> 
+> (Yes, I realize that this becomes less interesting if you have a
+> different mitigation that makes type confusion between single-struct
+> allocations and arrays harder.)
 
-for i in $(seq 1 1000); do
-	echo "REPORT_STACK" >/sys/kernel/debug/provoke-crash/DIRECT
-done
-offsets=$(dmesg | grep 'Stack offset' | cut -d: -f3 | sort | uniq -c | sort -n | wc -l)
-echo "$(uname -m) bits of stack entropy: $(echo "obase=2; $offsets" | bc | wc -L)"
+Yup, it would be a nice improvement. It would need some work to reorganize
+the shuffler, which doesn't have a way to insert fields currently. It
+can sort of calculate padding (see partition_struct()), but that likely
+needs improvement too.
 
-Signed-off-by: Kees Cook <keescook@chromium.org>
----
- drivers/misc/lkdtm/bugs.c  | 17 +++++++++++++++++
- drivers/misc/lkdtm/core.c  |  1 +
- drivers/misc/lkdtm/lkdtm.h |  1 +
- 3 files changed, 19 insertions(+)
+Patches welcome! I've opened an issue for this:
+https://github.com/KSPP/linux/issues/122
 
-diff --git a/drivers/misc/lkdtm/bugs.c b/drivers/misc/lkdtm/bugs.c
-index 110f5a8538e9..0e8254d0cf0b 100644
---- a/drivers/misc/lkdtm/bugs.c
-+++ b/drivers/misc/lkdtm/bugs.c
-@@ -134,6 +134,23 @@ noinline void lkdtm_CORRUPT_STACK_STRONG(void)
- 	__lkdtm_CORRUPT_STACK((void *)&data);
- }
- 
-+static pid_t stack_pid;
-+static unsigned long stack_addr;
-+
-+void lkdtm_REPORT_STACK(void)
-+{
-+	volatile uintptr_t magic;
-+	pid_t pid = task_pid_nr(current);
-+
-+	if (pid != stack_pid) {
-+		pr_info("Starting stack offset tracking for pid %d\n", pid);
-+		stack_pid = pid;
-+		stack_addr = (uintptr_t)&magic;
-+	}
-+
-+	pr_info("Stack offset: %d\n", (int)(stack_addr - (uintptr_t)&magic));
-+}
-+
- void lkdtm_UNALIGNED_LOAD_STORE_WRITE(void)
- {
- 	static u8 data[5] __attribute__((aligned(4))) = {1, 2, 3, 4, 5};
-diff --git a/drivers/misc/lkdtm/core.c b/drivers/misc/lkdtm/core.c
-index b2aff4d87c01..8024b6a5cc7f 100644
---- a/drivers/misc/lkdtm/core.c
-+++ b/drivers/misc/lkdtm/core.c
-@@ -110,6 +110,7 @@ static const struct crashtype crashtypes[] = {
- 	CRASHTYPE(EXHAUST_STACK),
- 	CRASHTYPE(CORRUPT_STACK),
- 	CRASHTYPE(CORRUPT_STACK_STRONG),
-+	CRASHTYPE(REPORT_STACK),
- 	CRASHTYPE(CORRUPT_LIST_ADD),
- 	CRASHTYPE(CORRUPT_LIST_DEL),
- 	CRASHTYPE(STACK_GUARD_PAGE_LEADING),
-diff --git a/drivers/misc/lkdtm/lkdtm.h b/drivers/misc/lkdtm/lkdtm.h
-index 5ae48c64df24..99f90d3e5e9c 100644
---- a/drivers/misc/lkdtm/lkdtm.h
-+++ b/drivers/misc/lkdtm/lkdtm.h
-@@ -17,6 +17,7 @@ void lkdtm_LOOP(void);
- void lkdtm_EXHAUST_STACK(void);
- void lkdtm_CORRUPT_STACK(void);
- void lkdtm_CORRUPT_STACK_STRONG(void);
-+void lkdtm_REPORT_STACK(void);
- void lkdtm_UNALIGNED_LOAD_STORE_WRITE(void);
- void lkdtm_SOFTLOCKUP(void);
- void lkdtm_HARDLOCKUP(void);
+> === non-cryptographic RNG used for randomization ===
+> I haven't looked at this in detail; but randstruct uses a
+> non-cryptographic RNG
+> (http://burtleburtle.net/bob/rand/smallprng.html) to derive randomized
+> structs from a 256-bit seed. In theory, this means that an attacker
+> with knowledge of at least 256 bits worth of information about
+> structure layouts in a given build _may_ be able to recover the seed,
+> and from there, the layouts of all other structs.
+> 
+> It might be possible to indirectly determine some amount of
+> information on structure layouts through various side channels; for
+> example:
+> 
+>  - cacheline grouping might change if performance-mode is disabled,
+>    which might be measurable through false sharing effects
+>  - function sizes might change slightly because the encoding of an access
+>    to the first element is shorter, which might be measurable e.g. through
+>    icache and branch predictor state
+> 
+> I don't know whether the amount of information leakage would be enough
+> to actually determine the seed - and I'm not a cryptographer, I have
+> no clue how much output from the RNG you'd actually need to recover
+> the seed (and an attacker would not even be getting raw RNG output,
+> but RNG output after additional modulo operations). But if the goal
+> here is to ensure that an attacker without access to the binary kernel
+> image can't determine struct layouts without a proper leak primitive,
+> even if they know exactly from which sources and with what
+> configuration the kernel was built, then I think this needs a
+> cryptographically secure RNG.
+
+Since the RNG runs on every compilation unit on every randomized
+structure, any performance hit from swapping the RNG could be large.
+That said, folks using randstruct likely don't care. :)
+
+This looks easier to do than the former idea, though. Again, patches
+welcome! Issue captured at: https://github.com/KSPP/linux/issues/123
+
+-Kees
+
 -- 
-2.25.1
-
+Kees Cook
