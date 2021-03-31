@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-21104-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-21106-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 7A8C635089E
-	for <lists+kernel-hardening@lfdr.de>; Wed, 31 Mar 2021 22:56:10 +0200 (CEST)
-Received: (qmail 11593 invoked by uid 550); 31 Mar 2021 20:55:20 -0000
+	by mail.lfdr.de (Postfix) with SMTP id AB15D3509CF
+	for <lists+kernel-hardening@lfdr.de>; Wed, 31 Mar 2021 23:55:17 +0200 (CEST)
+Received: (qmail 26356 invoked by uid 550); 31 Mar 2021 21:55:11 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,46 +13,43 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 11483 invoked from network); 31 Mar 2021 20:55:18 -0000
+Received: (qmail 26333 invoked from network); 31 Mar 2021 21:55:10 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=uk0/1LocoDticB91SF6FsgWpOKPsEr1Pb6N+E6L28KI=;
-        b=nMBirdlJwaYEBDE8wICv0IcZbYumBG5x88i0jDmsPtEGCWerkbUkn/zXjtlou+AAnB
-         CdCWfgp1k4EvjGaJ2pw+8HaBQeHDD+DkwHQbkP6CfxrFShjNk6a9uKNXN3ySmAr3ly/v
-         g28hvtAPNP3f2K6+JoZ04rIfIXHvlInu+TnD0=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=rtsfbkg65ln578BueP2qKUJ2W4TVYylDnpFNvn0AmZY=;
+        b=lFIjHUpJ6J2bChkAW6VFomn72sxkplIQywWFLHMael4kNCA63jvDhP8bxintcnt5bw
+         KQBjDW0tdgan1Mw+ew9YOivDWjvq1y/RLhovgps8HPve8vSaz1UqvITEKhuq5UCgL/Wz
+         NM80b1+1PpQm7Vs1o0Fx6Yx2NIh0Uno3lLAkY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=uk0/1LocoDticB91SF6FsgWpOKPsEr1Pb6N+E6L28KI=;
-        b=RrHDg+JXrMvRBqTpYmz7/757twRh2E99tANCgMfjzHbc9HLQpsdMkSByEg2Edx+Vw7
-         43bjpuHNmfPSiPk51f6SZEGKoisUNt8ECu5cH8Nzm/rxPgtcxEjImuT6luaQSYn9uQEX
-         erl6RthHzvsGNIu/pyCLLjVmYLfTkyfPDAG+BfDd/dtPI1885FxzuMYj+W3HPDUPPx/s
-         oNh883ioWlduiBQ97lbXaqS5UlpawE5muPGH/WISxvG23uQE3k0hTUmJ2qBCdpBuZvQU
-         NMSW9aM3BkK5jhM/aFEXVM0WkkZWZw6e6CzNhwgE5Nad63MKCecfHPnitdOYWpiAiUar
-         sxnA==
-X-Gm-Message-State: AOAM530CdEVUU2+3mwuGtKHvDiKPvx3eCxVi17tlKJJ+8gOYttrOXPwZ
-	UggkJTuhw2zOthLcE8T7EsSLzg==
-X-Google-Smtp-Source: ABdhPJxuZ4BQCPoxOylqJ3K76DbwLF1JG4WceF9FhoFaFhbPpIbgQh3MG6jfYpIbOhAacKq366q+2w==
-X-Received: by 2002:a63:4d0:: with SMTP id 199mr4929010pge.304.1617224106706;
-        Wed, 31 Mar 2021 13:55:06 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=rtsfbkg65ln578BueP2qKUJ2W4TVYylDnpFNvn0AmZY=;
+        b=TV1EUGPQGuccZzynpuvAz64IezqC4kUG7xW00gLGtBbVyQLDbVhKkVpsOUCRcRr7ie
+         dkDVoVX7tOW1Kfr+AyBF+abalvBb5Qc++8NjKXrWoqlWvHKmxJcz/ATqcnD68eNar6x8
+         PB+jRDzQJvL+CyFcTE2jmZcDmgvzUrW7nO//DvLFz2YXYWNS1CLoX9Sp5UE3npQ4jJz3
+         wbM/b3D/QDDgLhtB17vLkiwNAdxDZxn0J0PnN/FCQJUBMMawO3fsW5xvKrvxDyhYzByh
+         JMXeAQPkhBon1IOtV/cT2rzxmL/ret6J91U0T0cD9ZFWCiZSZEdskNyDxUMh5pWmLRdG
+         f6nw==
+X-Gm-Message-State: AOAM533WkhdCtQC2UVL+SJfACSMMOaAVQQoG8KxfS3cjc5F9ScLxumOc
+	T2KRM59vK7dnCZCBHebuH1cTFA==
+X-Google-Smtp-Source: ABdhPJy+ITLzRDWVQZ4QLokxo3xwGBU2j8b+z7YKdSsnEN/k5kQuDOdpvQny/ml71yhjeB4NsIqJiQ==
+X-Received: by 2002:a05:6a00:22c6:b029:201:1166:fdad with SMTP id f6-20020a056a0022c6b02902011166fdadmr4839743pfj.58.1617227698663;
+        Wed, 31 Mar 2021 14:54:58 -0700 (PDT)
+Date: Wed, 31 Mar 2021 14:54:57 -0700
 From: Kees Cook <keescook@chromium.org>
-To: Will Deacon <will@kernel.org>
-Cc: Kees Cook <keescook@chromium.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Elena Reshetova <elena.reshetova@intel.com>,
-	x86@kernel.org,
+To: Thomas Gleixner <tglx@linutronix.de>
+Cc: Elena Reshetova <elena.reshetova@intel.com>, x86@kernel.org,
 	Andy Lutomirski <luto@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
 	Alexander Potapenko <glider@google.com>,
 	Alexander Popov <alex.popov@linux.com>,
 	Ard Biesheuvel <ard.biesheuvel@linaro.org>,
-	Jann Horn <jannh@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
+	Jann Horn <jannh@google.com>, Vlastimil Babka <vbabka@suse.cz>,
 	David Hildenbrand <david@redhat.com>,
 	Mike Rapoport <rppt@linux.ibm.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
@@ -60,88 +57,43 @@ Cc: Kees Cook <keescook@chromium.org>,
 	Randy Dunlap <rdunlap@infradead.org>,
 	kernel-hardening@lists.openwall.com,
 	linux-hardening@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mm@kvack.org,
+	linux-arm-kernel@lists.infradead.org, linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v9 6/6] lkdtm: Add REPORT_STACK for checking stack offsets
-Date: Wed, 31 Mar 2021 13:54:58 -0700
-Message-Id: <20210331205458.1871746-7-keescook@chromium.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210331205458.1871746-1-keescook@chromium.org>
-References: <20210331205458.1871746-1-keescook@chromium.org>
+Subject: Re: [PATCH v8 3/6] stack: Optionally randomize kernel stack offset
+ each syscall
+Message-ID: <202103311453.A840B7FC5@keescook>
+References: <20210330205750.428816-1-keescook@chromium.org>
+ <20210330205750.428816-4-keescook@chromium.org>
+ <87im5769op.ffs@nanos.tec.linutronix.de>
 MIME-Version: 1.0
-X-Patch-Hashes: v=1; h=sha256; g=fb815901a1ccc1d9c4ca5c3e3cd3729b7f382fe2; i=b69wRsxT78r/3tM1mGa7N6ME6+rlXyFg15giRWRwPAQ=; m=aFqgiEE+nAZdug79A1F+fVTg9ZceUb0WPE8cbHqssVg=; p=ZQ32/kILkW5AD3nBZHO0VMTp4prIPkm7+DdhCHX8KdA=
-X-Patch-Sig: m=pgp; i=keescook@chromium.org; s=0x0x8972F4DFDC6DC026; b=iQIzBAABCgAdFiEEpcP2jyKd1g9yPm4TiXL039xtwCYFAmBk4aIACgkQiXL039xtwCbSHQ/9GzS gwvyLm8xntGCfjZejzEAhSquCH/XGhwif40B/hY9NAzXrbKiOwzU378qbpWgxBePgTlGb3sKLB76C BHzMBpf5qbdOAWFHSbdkoLA6VoZ1Kc3Dv9lcZSpDekbhvjLhR4V2Up7yRhqEThy93+6AVcwGzBeac 6QWH01G3TAAqKsFLpV9ZjQOFxfS/obFaV/xK3RDHbKoY2jf6sGJnK2Y9hxRZMfyEnp2BFg0kdKSUr 0z5xDyHM3Xb+7TwBGwqGzP+TwPUBrXWtXKAjslca0S4ZQE/HBo8zsilyPvfhCl2T+esWB9qNJZbtx F6wRFNO6xcNLkF9VMP+8KyI2ikBpFMuEDmouAY3QkyENQiacPe4k9q5vDMvoe3EU/3NbOlJaO/0pw zbKdqFzN5b1HaJ3rgpeElBRbDH+CwqFTApO1mqZoi7KDqHaTym70Phz2P6Sovw36ctUn239DBf3Oi pEGi7NduC0vXBzrKcsFkivSl3imbBCo8t+qK+Ah4Nauc16qTQzMXY/twnQTuci/QVKWeq2BFnxBRK aOqgMXU7IVl7fXQL3QqIPaOez0kfnckLCHLNHqYEqVW1Zzgv+3gmrg12l5NAMYP2S2yWkU60izEcP dZeEdUXsNKOPqT0E3QzWksz9tPpec3mAH42JwcVawRfuRleF4XoNyiqWIrkXk9is=
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87im5769op.ffs@nanos.tec.linutronix.de>
 
-For validating the stack offset behavior, report the offset from a given
-process's first seen stack address. A quick way to measure the entropy:
+On Wed, Mar 31, 2021 at 09:53:26AM +0200, Thomas Gleixner wrote:
+> On Tue, Mar 30 2021 at 13:57, Kees Cook wrote:
+> > +/*
+> > + * Do not use this anywhere else in the kernel. This is used here because
+> > + * it provides an arch-agnostic way to grow the stack with correct
+> > + * alignment. Also, since this use is being explicitly masked to a max of
+> > + * 10 bits, stack-clash style attacks are unlikely. For more details see
+> > + * "VLAs" in Documentation/process/deprecated.rst
+> > + * The asm statement is designed to convince the compiler to keep the
+> > + * allocation around even after "ptr" goes out of scope.
+> 
+> Nit. That explanation of "ptr" might be better placed right at the
+> add_random...() macro.
 
-for i in $(seq 1 1000); do
-	echo "REPORT_STACK" >/sys/kernel/debug/provoke-crash/DIRECT
-done
-offsets=$(dmesg | grep 'Stack offset' | cut -d: -f3 | sort | uniq -c | sort -n | wc -l)
-echo "$(uname -m) bits of stack entropy: $(echo "obase=2; $offsets" | bc | wc -L)"
+Ah, yes! Fixed in v9.
 
-Signed-off-by: Kees Cook <keescook@chromium.org>
----
- drivers/misc/lkdtm/bugs.c  | 17 +++++++++++++++++
- drivers/misc/lkdtm/core.c  |  1 +
- drivers/misc/lkdtm/lkdtm.h |  1 +
- 3 files changed, 19 insertions(+)
+> Other than that.
+> 
+> Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
 
-diff --git a/drivers/misc/lkdtm/bugs.c b/drivers/misc/lkdtm/bugs.c
-index 110f5a8538e9..0e8254d0cf0b 100644
---- a/drivers/misc/lkdtm/bugs.c
-+++ b/drivers/misc/lkdtm/bugs.c
-@@ -134,6 +134,23 @@ noinline void lkdtm_CORRUPT_STACK_STRONG(void)
- 	__lkdtm_CORRUPT_STACK((void *)&data);
- }
- 
-+static pid_t stack_pid;
-+static unsigned long stack_addr;
-+
-+void lkdtm_REPORT_STACK(void)
-+{
-+	volatile uintptr_t magic;
-+	pid_t pid = task_pid_nr(current);
-+
-+	if (pid != stack_pid) {
-+		pr_info("Starting stack offset tracking for pid %d\n", pid);
-+		stack_pid = pid;
-+		stack_addr = (uintptr_t)&magic;
-+	}
-+
-+	pr_info("Stack offset: %d\n", (int)(stack_addr - (uintptr_t)&magic));
-+}
-+
- void lkdtm_UNALIGNED_LOAD_STORE_WRITE(void)
- {
- 	static u8 data[5] __attribute__((aligned(4))) = {1, 2, 3, 4, 5};
-diff --git a/drivers/misc/lkdtm/core.c b/drivers/misc/lkdtm/core.c
-index b2aff4d87c01..8024b6a5cc7f 100644
---- a/drivers/misc/lkdtm/core.c
-+++ b/drivers/misc/lkdtm/core.c
-@@ -110,6 +110,7 @@ static const struct crashtype crashtypes[] = {
- 	CRASHTYPE(EXHAUST_STACK),
- 	CRASHTYPE(CORRUPT_STACK),
- 	CRASHTYPE(CORRUPT_STACK_STRONG),
-+	CRASHTYPE(REPORT_STACK),
- 	CRASHTYPE(CORRUPT_LIST_ADD),
- 	CRASHTYPE(CORRUPT_LIST_DEL),
- 	CRASHTYPE(STACK_GUARD_PAGE_LEADING),
-diff --git a/drivers/misc/lkdtm/lkdtm.h b/drivers/misc/lkdtm/lkdtm.h
-index 5ae48c64df24..99f90d3e5e9c 100644
---- a/drivers/misc/lkdtm/lkdtm.h
-+++ b/drivers/misc/lkdtm/lkdtm.h
-@@ -17,6 +17,7 @@ void lkdtm_LOOP(void);
- void lkdtm_EXHAUST_STACK(void);
- void lkdtm_CORRUPT_STACK(void);
- void lkdtm_CORRUPT_STACK_STRONG(void);
-+void lkdtm_REPORT_STACK(void);
- void lkdtm_UNALIGNED_LOAD_STORE_WRITE(void);
- void lkdtm_SOFTLOCKUP(void);
- void lkdtm_HARDLOCKUP(void);
+Thank you for the reviews!
+
+Do you want to take this via -tip (and leave off the arm64 patch until
+it is acked), or would you rather it go via arm64? (I've sent v9 now...)
+
 -- 
-2.25.1
-
+Kees Cook
