@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-21102-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-21100-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id BB176350890
-	for <lists+kernel-hardening@lfdr.de>; Wed, 31 Mar 2021 22:55:52 +0200 (CEST)
-Received: (qmail 11524 invoked by uid 550); 31 Mar 2021 20:55:19 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 1A7E335088C
+	for <lists+kernel-hardening@lfdr.de>; Wed, 31 Mar 2021 22:55:37 +0200 (CEST)
+Received: (qmail 11321 invoked by uid 550); 31 Mar 2021 20:55:17 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,46 +13,46 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 11347 invoked from network); 31 Mar 2021 20:55:17 -0000
+Received: (qmail 11266 invoked from network); 31 Mar 2021 20:55:16 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9ijlYcKqhmRnIjh3GfaZu6VzSGgGwccaBk76YZfh88U=;
-        b=WPzOZI/7h/nIlJykeZPJIx0pP8kh07MzAyzEZatHRuIhHB97Us6jbJeY/UYOlmqOhI
-         I0ecVNwtacYNG9lms+cBmhaFNl0rIzXFYDD0LRCOvReTo3zRWs7cC3oUH7692A+ZDVVi
-         2gGuQxNlOLAX8UFE9I1BxL/Nh/X2RmBxs4Bxw=
+        bh=UG6lpZSAG8t+NfdJici9YkMGF34rxaYTMGPEmVDXXFs=;
+        b=aJzm5fmcrJV95XWecmZx0aMFMPbB8/eMvLvoygv7WsN8sG+DKBU+yrMDpIaCcI0DyO
+         TJPCxLVlsJD5X2BVQpERBmipuWyTXWjI80givkOpWhWowuPbaTDktfWh+5zRMs1C9It+
+         IYmEwmA2KAs39rl3sJI3Qr4K91d5lCwbDpK10=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9ijlYcKqhmRnIjh3GfaZu6VzSGgGwccaBk76YZfh88U=;
-        b=Si7FKvgWxNkHdMKz+4ViDR48f8ZQoOeIqPxd5tIxyKxJoxgyI6NJpwcq5c1ixeD3Ob
-         goOP4aDhRZuYOFEypnMPOAt0clCa9NgT4ju19C2BGXuKWMwt3ilUfa4zIgKMPNZIIk3A
-         kkEV/monG1CRulG9TuV5Y1tTrFDszDuE8ge6GqpNdu7Pu32TNQ10SpphRUWXn+7jfui5
-         2z9IlTJr35InKqZA+X34z94AXdzP4agQtyHjsA8Qb8yyXiCyD685+2V/4Y9caLHCJAEx
-         9re9c1P7rJbTvp5J5LKeYRzoLRyzrXz5InNM5MtpriE9O4tcO0hRx1qxox8n99OEcH2/
-         XUoQ==
-X-Gm-Message-State: AOAM533RH7GpErqYHfxXEOpY6AYnMPphxRg3fgCD8aFkPsIai42weTsJ
-	UxNAt/qsISgKPSRKyYLlVS8QSQ==
-X-Google-Smtp-Source: ABdhPJwjc+yR/F1HFGbsO3JvcN74Eaz7ocQ4vidQqR9lLlweYVUpN1FMKcKww5c8xRtm5T99yzj42g==
-X-Received: by 2002:a63:4f56:: with SMTP id p22mr4811122pgl.224.1617224106052;
-        Wed, 31 Mar 2021 13:55:06 -0700 (PDT)
+        bh=UG6lpZSAG8t+NfdJici9YkMGF34rxaYTMGPEmVDXXFs=;
+        b=CfL1qlHjpLubmqL0gq1F3SZiLuJZjscPiLJ5DkIADDXLqvTrP7+bgOTxB4GQuu1Bxj
+         EIjFmkT9IScDNYO7jt4E6z3D0ZJjj51/U/NMkFIk8nTpLvGu/NGiTEIh6eSTJqWeG22M
+         XrsacqWUCHKSQJ1tf5tjyO22VSPVgMWtVJr99s1kfJrT48d1P55fT4AdEnqKmGsTtxzg
+         an8SMNn5WLQkMXYmodfD73Tr973xPZ4eqcfDN4txrDIkzOTMSSkoxutC75gRG0FlzMgR
+         TERkZyJwFB8N2/Nf8g1Q8brephjQHtP/DccwtdWVv9jXWhLBwx/TvKzSozO/SU3P5tWF
+         53Zw==
+X-Gm-Message-State: AOAM532aIpKmfxaxsyF95hbqUF2Y+6XNTtCDW4vlTP7CgQx/4LojvuQk
+	pAd+dLwcHnI+4Bqz5YNaQqfk8w==
+X-Google-Smtp-Source: ABdhPJyai6ivznvyQwIH/6qhXxzdrf48me6WrQ8AJmSGz35aHeuFup7Z0tQChRzSQniPWTmzBIVJ+g==
+X-Received: by 2002:a17:90a:9281:: with SMTP id n1mr5262255pjo.146.1617224104097;
+        Wed, 31 Mar 2021 13:55:04 -0700 (PDT)
 From: Kees Cook <keescook@chromium.org>
 To: Will Deacon <will@kernel.org>
 Cc: Kees Cook <keescook@chromium.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Alexander Potapenko <glider@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Mark Rutland <mark.rutland@arm.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Elena Reshetova <elena.reshetova@intel.com>,
 	x86@kernel.org,
 	Andy Lutomirski <luto@kernel.org>,
-	Alexander Potapenko <glider@google.com>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Alexander Popov <alex.popov@linux.com>,
 	Ard Biesheuvel <ard.biesheuvel@linaro.org>,
 	Jann Horn <jannh@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
 	David Hildenbrand <david@redhat.com>,
 	Mike Rapoport <rppt@linux.ibm.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
@@ -63,70 +63,104 @@ Cc: Kees Cook <keescook@chromium.org>,
 	linux-arm-kernel@lists.infradead.org,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v9 1/6] jump_label: Provide CONFIG-driven build state defaults
-Date: Wed, 31 Mar 2021 13:54:53 -0700
-Message-Id: <20210331205458.1871746-2-keescook@chromium.org>
+Subject: [PATCH v9 2/6] init_on_alloc: Optimize static branches
+Date: Wed, 31 Mar 2021 13:54:54 -0700
+Message-Id: <20210331205458.1871746-3-keescook@chromium.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20210331205458.1871746-1-keescook@chromium.org>
 References: <20210331205458.1871746-1-keescook@chromium.org>
 MIME-Version: 1.0
-X-Patch-Hashes: v=1; h=sha256; g=aa54c44d1d71b9550d6015efc734f667917094a1; i=Vishx6UyAXwYzcnoSyP+eBB3iQyx+/i5smsbQfc0cnA=; m=vc4sSYlf+uaSlLSFP5TpbQv56VaSRpBLpRuMltXaB4Q=; p=mNH2Bo/K9vrGz9sBtTDV8UFO0eJ8yv8BbR/DeIaO1es=
-X-Patch-Sig: m=pgp; i=keescook@chromium.org; s=0x0x8972F4DFDC6DC026; b=iQIzBAABCgAdFiEEpcP2jyKd1g9yPm4TiXL039xtwCYFAmBk4aEACgkQiXL039xtwCaqhg/+KwH hAw/wsPS1SeVqGJmKPfdQr82hCM0Ml7SVm9J6WipR0nxoHNTRoTq5fJgQ/HAKX35mqAAL3tYGqBi0 2+4WfT2O7DCmcfB4kxHIAZPP1QJPHiUWqb+fNCgutJ9rorMb8tWzDisghAXGGA5mLJTb+e3za84Mg Tz11kRO6uL8orQe4PDGMbtu4ZCR98bQV+/s0SJ2edzBC6JEfXsZGQR+aVB8IXsP7SLf4m7cqs+xko 0HsCJcGnkdPob7OY3xJ5xX638TmezTLmrLymvZQF/3nSqc6H9sGuaiM3d+AM23zJ3MCY6ZlyJXvV8 GzbL/fy12rUa+H/CHYoxEjJJDyopHQQOf677UExOEVO+E4cujeCRzdKv5dGhmFIcpDsFb7FlVCloU ORxvUCgvTSBkWF3qpl9OVmYHU6SKzdG4TU/awDvK6NojCgqhZpoIKjFDsImZzpta59PWF0iJQY7XJ jEq3UVi32y1V10znVqFCRaTTsYnknmSRGohaJqK9aIN29Ua/iBZooygQSNVS0ae3NR3YEQRHRoEZV kgil7zpFlzwuBxrLHrYvvKq3r0q0H4hsoDpFHgHGDZaTXKU4EXWsZ66xrOPJi0r6R9a8pYf+QDjxC cqQfU25fy65WH6DRJBFFXm3eRu/MP8OcVb83DQXHPhdKGC0lf0O4/2ELWKbU5SbM=
+X-Patch-Hashes: v=1; h=sha256; g=2f4b59272e09d0180c87e3d8378d95ea375990ec; i=7VrM8Pzr5MGi8vAaDOW4xeiDtVYbjHgJsdLlT/sxDXE=; m=OLLKLAHsfNT1d7+pflxMGJuAvSt8GZaetKIXzfk0ilc=; p=cKq4RSNZSRZ+ASTC07w37jURMQB1hxGsdgqU07adDH0=
+X-Patch-Sig: m=pgp; i=keescook@chromium.org; s=0x0x8972F4DFDC6DC026; b=iQIzBAABCgAdFiEEpcP2jyKd1g9yPm4TiXL039xtwCYFAmBk4aEACgkQiXL039xtwCZiNw//V2K WRu9en8BRhcfBhg7mfbT5rLF1PuOIkmx1/JfZ5IK9ehniUEY1eAHGzbl86gYSvwXXQKwYkunQiFpM 9a0wM6tuHC9Lo51OPvGPO3ZvwP/i8/tX40lgXPmHoaV/PCAl8T4A2JUevIfHXXEXhb9UWYkXF8lsO iOBvFSZddS9rsIGRZatDS7jNfRAhSplRLoH9M8kQ34TabEDijskSQOAFNl09MXg+lgvC8UJzBwZrL +VbimAx6SZysNUYpw7pHlFf8hk2NGa0ROuVMmlRaqlH++0m/V3Nx+3UuJdSbcqOw05T7XlM32ajmV ShGwnjuRjvV+jXhZVeDGSYyJttxrBS4YhN1Jn+EtyvR/fpP07JMUS+qQoDux/rYp66kVnz9knlFbp udRVFQzlzPE7sb1qCjOCLEiEu9hvhxYQgeVQxvS/AhBQOrq3wp4QMivwPvIxgQ4L2RY+IMiNuZkFW Y4eNHQGYT8gKrE9efMDQgJcnTQerF2cduSfud74On2vfdjEW8dQd6fZ3CfLroyBCeFp8optFeRfPX pvQzazrUDcdMBrJRB9Vl+eVUa2K9Ur7t9MSCf2g+kYBzK/znMquwZVgRqtW/TRAzoLbFNlvZ+Wswk vsPZjHWCQFZImbj5c4dfBRx6+jZ9/hVvGmaaE9KTpveb9iK/bJ+xPSFNWkUxSwNo=
 Content-Transfer-Encoding: 8bit
 
-As shown in jump_label.h[1], choosing the initial state of static
-branches changes the assembly layout. If the condition is expected to
-be likely it's inline, and if unlikely it is out of line via a jump. A
-few places in the kernel use (or could be using) a CONFIG to choose the
-default state, which would give a small performance benefit to their
-compile-time declared default. Provide the infrastructure to do this.
+The state of CONFIG_INIT_ON_ALLOC_DEFAULT_ON (and ...ON_FREE...) did not
+change the assembly ordering of the static branches: they were always out
+of line. Use the new jump_label macros to check the CONFIG settings to
+default to the "expected" state, which slightly optimizes the resulting
+assembly code.
 
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/linux/jump_label.h?h=v5.11#n398
-
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/lkml/20200324220641.GT2452@worktop.programming.kicks-ass.net/
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Link: https://lore.kernel.org/lkml/CAG_fn=X0DVwqLaHJTO6Jw7TGcMSm77GKHinrd0m_6y0SzWOrFA@mail.gmail.com/
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Link: https://lore.kernel.org/lkml/5d626b9b-5355-be94-e8e2-1be47f880f30@suse.cz
 Signed-off-by: Kees Cook <keescook@chromium.org>
 ---
- include/linux/jump_label.h | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ include/linux/mm.h | 10 ++++++----
+ mm/page_alloc.c    |  4 ++--
+ mm/slab.h          |  6 ++++--
+ 3 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/include/linux/jump_label.h b/include/linux/jump_label.h
-index d92691262f51..05f5554d860f 100644
---- a/include/linux/jump_label.h
-+++ b/include/linux/jump_label.h
-@@ -382,6 +382,21 @@ struct static_key_false {
- 		[0 ... (count) - 1] = STATIC_KEY_FALSE_INIT,	\
- 	}
+diff --git a/include/linux/mm.h b/include/linux/mm.h
+index 77e64e3eac80..2ccd856ac0d1 100644
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -2871,18 +2871,20 @@ static inline void kernel_poison_pages(struct page *page, int numpages) { }
+ static inline void kernel_unpoison_pages(struct page *page, int numpages) { }
+ #endif
  
-+#define _DEFINE_STATIC_KEY_1(name)	DEFINE_STATIC_KEY_TRUE(name)
-+#define _DEFINE_STATIC_KEY_0(name)	DEFINE_STATIC_KEY_FALSE(name)
-+#define DEFINE_STATIC_KEY_MAYBE(cfg, name)			\
-+	__PASTE(_DEFINE_STATIC_KEY_, IS_ENABLED(cfg))(name)
-+
-+#define _DEFINE_STATIC_KEY_RO_1(name)	DEFINE_STATIC_KEY_TRUE_RO(name)
-+#define _DEFINE_STATIC_KEY_RO_0(name)	DEFINE_STATIC_KEY_FALSE_RO(name)
-+#define DEFINE_STATIC_KEY_MAYBE_RO(cfg, name)			\
-+	__PASTE(_DEFINE_STATIC_KEY_RO_, IS_ENABLED(cfg))(name)
-+
-+#define _DECLARE_STATIC_KEY_1(name)	DECLARE_STATIC_KEY_TRUE(name)
-+#define _DECLARE_STATIC_KEY_0(name)	DECLARE_STATIC_KEY_FALSE(name)
-+#define DECLARE_STATIC_KEY_MAYBE(cfg, name)			\
-+	__PASTE(_DECLARE_STATIC_KEY_, IS_ENABLED(cfg))(name)
-+
- extern bool ____wrong_branch_error(void);
+-DECLARE_STATIC_KEY_FALSE(init_on_alloc);
++DECLARE_STATIC_KEY_MAYBE(CONFIG_INIT_ON_ALLOC_DEFAULT_ON, init_on_alloc);
+ static inline bool want_init_on_alloc(gfp_t flags)
+ {
+-	if (static_branch_unlikely(&init_on_alloc))
++	if (static_branch_maybe(CONFIG_INIT_ON_ALLOC_DEFAULT_ON,
++				&init_on_alloc))
+ 		return true;
+ 	return flags & __GFP_ZERO;
+ }
  
- #define static_key_enabled(x)							\
-@@ -482,6 +497,10 @@ extern bool ____wrong_branch_error(void);
+-DECLARE_STATIC_KEY_FALSE(init_on_free);
++DECLARE_STATIC_KEY_MAYBE(CONFIG_INIT_ON_FREE_DEFAULT_ON, init_on_free);
+ static inline bool want_init_on_free(void)
+ {
+-	return static_branch_unlikely(&init_on_free);
++	return static_branch_maybe(CONFIG_INIT_ON_FREE_DEFAULT_ON,
++				   &init_on_free);
+ }
  
- #endif /* CONFIG_JUMP_LABEL */
+ extern bool _debug_pagealloc_enabled_early;
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index 3e4b29ee2b1e..267c04b8911d 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -167,10 +167,10 @@ unsigned long totalcma_pages __read_mostly;
  
-+#define static_branch_maybe(config, x)					\
-+	(IS_ENABLED(config) ? static_branch_likely(x)			\
-+			    : static_branch_unlikely(x))
-+
- /*
-  * Advanced usage; refcount, branch is enabled when: count != 0
-  */
+ int percpu_pagelist_fraction;
+ gfp_t gfp_allowed_mask __read_mostly = GFP_BOOT_MASK;
+-DEFINE_STATIC_KEY_FALSE(init_on_alloc);
++DEFINE_STATIC_KEY_MAYBE(CONFIG_INIT_ON_ALLOC_DEFAULT_ON, init_on_alloc);
+ EXPORT_SYMBOL(init_on_alloc);
+ 
+-DEFINE_STATIC_KEY_FALSE(init_on_free);
++DEFINE_STATIC_KEY_MAYBE(CONFIG_INIT_ON_FREE_DEFAULT_ON, init_on_free);
+ EXPORT_SYMBOL(init_on_free);
+ 
+ static bool _init_on_alloc_enabled_early __read_mostly
+diff --git a/mm/slab.h b/mm/slab.h
+index 076582f58f68..774c7221efdc 100644
+--- a/mm/slab.h
++++ b/mm/slab.h
+@@ -601,7 +601,8 @@ static inline void cache_random_seq_destroy(struct kmem_cache *cachep) { }
+ 
+ static inline bool slab_want_init_on_alloc(gfp_t flags, struct kmem_cache *c)
+ {
+-	if (static_branch_unlikely(&init_on_alloc)) {
++	if (static_branch_maybe(CONFIG_INIT_ON_ALLOC_DEFAULT_ON,
++				&init_on_alloc)) {
+ 		if (c->ctor)
+ 			return false;
+ 		if (c->flags & (SLAB_TYPESAFE_BY_RCU | SLAB_POISON))
+@@ -613,7 +614,8 @@ static inline bool slab_want_init_on_alloc(gfp_t flags, struct kmem_cache *c)
+ 
+ static inline bool slab_want_init_on_free(struct kmem_cache *c)
+ {
+-	if (static_branch_unlikely(&init_on_free))
++	if (static_branch_maybe(CONFIG_INIT_ON_FREE_DEFAULT_ON,
++				&init_on_free))
+ 		return !(c->ctor ||
+ 			 (c->flags & (SLAB_TYPESAFE_BY_RCU | SLAB_POISON)));
+ 	return false;
 -- 
 2.25.1
 
