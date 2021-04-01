@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-21133-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-21134-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 31F273521E1
-	for <lists+kernel-hardening@lfdr.de>; Thu,  1 Apr 2021 23:46:49 +0200 (CEST)
-Received: (qmail 5688 invoked by uid 550); 1 Apr 2021 21:46:37 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 9AA0E3522DA
+	for <lists+kernel-hardening@lfdr.de>; Fri,  2 Apr 2021 00:42:31 +0200 (CEST)
+Received: (qmail 9798 invoked by uid 550); 1 Apr 2021 22:42:23 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,72 +13,110 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 5668 invoked from network); 1 Apr 2021 21:46:36 -0000
+Received: (qmail 9774 invoked from network); 1 Apr 2021 22:42:23 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=usJD8QXCUUQ3yDD19nRhcfJUMWYiKf+EiZNOMzSngU8=;
-        b=G4ChGKwb73jivZgOdREGW7Jl/xK+07gkogP9+1kyu2QispNTwwRqLKZMdl/YtU/+Lt
-         /6pS84xtYTduYfABsJSoN4e+N+/d5AQAGm1DhERFMawsMiwP/sKWF3z+8kShjCvWc2Xx
-         J1qo99Tg1cz6t80SOTCoCClKVew6dbnE2D8Wo=
+        bh=XHU/CSlbR0tXIQ7skc+D9M4sQ8Nf+DFxpytkWh85RTc=;
+        b=Cdeb4TJryjuUvq0PZ22+p9aZ80XrqpLOQqZBbyxQf2b3KNvemF9hZdYHkWk2rvgvr9
+         +SpPIdq+JMo2g9UMPmRHYMNVYDXvm5KREo94cbMizN1C/uol3pIjbIlmE2pjHUirEook
+         l3tfPMZVPC0JP0fRuhcSZ92o1n77ukI4HC3SY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=usJD8QXCUUQ3yDD19nRhcfJUMWYiKf+EiZNOMzSngU8=;
-        b=e3hKhOafXcBmenzgZAps+IWdog7pLAmFoyPzehgS/0loO8VDyvwOIo6sTQNdnzeJPk
-         bZd3Rcmevxhb0XvzKD6M1kvvXF/XWPfidPqWt6hxPmb3BxxZ2SUek1miWn8rHv/uBJzU
-         RIh1wAOmQk0Uy9UsFnqXscVoW2C43JBpUQ0vhhayUj1pC3j7kh25cINvj/Nz83o7QGx4
-         UQYQ3KuboBuBU2QxfPPiufoibaU/KFAbH+JgQBc0RHRsFrU/jUX8bdUeQEgqWX6S9FDH
-         w0rHLN6XX51qUIYDJQMSQwGl54wvjPLS3PpS5Xk8SOJIf6AgTnQDg4nAF4HjjPCIypOa
-         v03g==
-X-Gm-Message-State: AOAM532Ciz4P420pz4rkSM/yIQFUgAvgC9hwBc6p54Bw26+OzpOmTaA2
-	2ELkpdaZ/IE1oNj+qjimqu6C1Q==
-X-Google-Smtp-Source: ABdhPJw2Igjg2dUPUc361qNdAsnz5koMvMjgAifwUOU3txfIVOmKgYERtvxS6R3TbAJ8ajqzLbNIRQ==
-X-Received: by 2002:a63:2f03:: with SMTP id v3mr9286709pgv.408.1617313584551;
-        Thu, 01 Apr 2021 14:46:24 -0700 (PDT)
-Date: Thu, 1 Apr 2021 14:46:23 -0700
+        bh=XHU/CSlbR0tXIQ7skc+D9M4sQ8Nf+DFxpytkWh85RTc=;
+        b=bsjrnH78Zac6tUetmxzKn5C9ir8djDXZRxDoKZ27N4uFVPvDnmOLeJD7UGpZlLDs1e
+         Q/CVw6/tbWSUJpLk+PMfPS0bfqybVhzgantgdx/orl3Memxzujx/RCl7Nj88WNiXGf0s
+         ZBBgByUaW/G8e9rj8VLTjem8No7ai0Lkn0zu3KMCEcpmyzBFT2fETb9HUQ63GGPC5S7b
+         O1cAVU9VSzJH0RhqI2aXgvoIHCT18j0qjmsaY3zI+9jmh4M0ofhcHmY8beXFbSZ2Brx4
+         928JgBKI0qK+oqe0a5oz94UvU8RClyR0ENHel0f5IkM1Lp8N1gXYg4uGhl4lOWdiaDiJ
+         RZhg==
+X-Gm-Message-State: AOAM5321qW9k9yFjshsNmoK/pWSp4dnmMJLTAtc19dnCkdWtT91s+QLO
+	eQTxnDgF2VEL0msTwAQgBCJUCg==
+X-Google-Smtp-Source: ABdhPJy5OYaYtgibg+iSJ6TbNgMEMp0Li4wFRje6LCbJMZHyUSADLtOfsJcpWv8pBVkoh3+T2eGIQA==
+X-Received: by 2002:a65:56cc:: with SMTP id w12mr9470880pgs.354.1617316931239;
+        Thu, 01 Apr 2021 15:42:11 -0700 (PDT)
+Date: Thu, 1 Apr 2021 15:42:08 -0700
 From: Kees Cook <keescook@chromium.org>
-To: Roy Yang <royyang@google.com>
-Cc: akpm@linux-foundation.org, alex.popov@linux.com,
-	ard.biesheuvel@linaro.org, catalin.marinas@arm.com, corbet@lwn.net,
-	david@redhat.com, elena.reshetova@intel.com, glider@google.com,
-	jannh@google.com, kernel-hardening@lists.openwall.com,
-	linux-arm-kernel@lists.infradead.org,
-	linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org, luto@kernel.org, mark.rutland@arm.com,
-	peterz@infradead.org, rdunlap@infradead.org, rppt@linux.ibm.com,
-	tglx@linutronix.de, vbabka@suse.cz, will@kernel.org, x86@kernel.org
-Subject: Re: [PATCH v8 0/6] Optionally randomize kernel stack offset each
- syscall
-Message-ID: <202104011442.B20F2BAFC@keescook>
+To: David Laight <David.Laight@ACULAB.COM>
+Cc: 'Will Deacon' <will@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
+	Elena Reshetova <elena.reshetova@intel.com>,
+	"x86@kernel.org" <x86@kernel.org>,
+	Andy Lutomirski <luto@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Alexander Potapenko <glider@google.com>,
+	Alexander Popov <alex.popov@linux.com>,
+	Ard Biesheuvel <ard.biesheuvel@linaro.org>,
+	Jann Horn <jannh@google.com>, Vlastimil Babka <vbabka@suse.cz>,
+	David Hildenbrand <david@redhat.com>,
+	Mike Rapoport <rppt@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	"kernel-hardening@lists.openwall.com" <kernel-hardening@lists.openwall.com>,
+	"linux-hardening@vger.kernel.org" <linux-hardening@vger.kernel.org>,
+	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+	"linux-mm@kvack.org" <linux-mm@kvack.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v8 3/6] stack: Optionally randomize kernel stack offset
+ each syscall
+Message-ID: <202104011447.2E7F543@keescook>
 References: <20210330205750.428816-1-keescook@chromium.org>
- <20210401191744.1685896-1-royyang@google.com>
+ <20210330205750.428816-4-keescook@chromium.org>
+ <20210401083034.GA8554@willie-the-truck>
+ <61ae9398a03d4fe7868b68c9026d5998@AcuMS.aculab.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210401191744.1685896-1-royyang@google.com>
+In-Reply-To: <61ae9398a03d4fe7868b68c9026d5998@AcuMS.aculab.com>
 
-On Thu, Apr 01, 2021 at 12:17:44PM -0700, Roy Yang wrote:
-> Both Android and Chrome OS really want this feature; For Container-Optimized OS, we have customers
-> interested in the defense too.
+On Thu, Apr 01, 2021 at 11:15:43AM +0000, David Laight wrote:
+> From: Will Deacon
+> > Sent: 01 April 2021 09:31
+> ...
+> > > +/*
+> > > + * These macros must be used during syscall entry when interrupts and
+> > > + * preempt are disabled, and after user registers have been stored to
+> > > + * the stack.
+> > > + */
+> > > +#define add_random_kstack_offset() do {					\
+> > > +	if (static_branch_maybe(CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT,	\
+> > > +				&randomize_kstack_offset)) {		\
+> > > +		u32 offset = __this_cpu_read(kstack_offset);		\
+> > > +		u8 *ptr = __builtin_alloca(KSTACK_OFFSET_MAX(offset));	\
+> > > +		asm volatile("" : "=m"(*ptr) :: "memory");		\
+> > 
+> > Using the "m" constraint here is dangerous if you don't actually evaluate it
+> > inside the asm. For example, if the compiler decides to generate an
+> > addressing mode relative to the stack but with writeback (autodecrement), then
+> > the stack pointer will be off by 8 bytes. Can you use "o" instead?
 
-It's pretty close! There are a couple recent comments that need to be
-addressed, but hopefully it can land if x86 and arm64 maintainers are
-happy v10.
+I see other examples of empty asm, but it's true, none are using "=m" read
+constraints. But, yes, using "o" appears to work happily.
 
-> Change-Id: I1eb1b726007aa8f9c374b934cc1c690fb4924aa3
-> -- 
-> 2.31.0.208.g409f899ff0-goog
+> Is it allowed to use such a mode?
+> It would have to know that the "m" was substituted exactly once.
+> I think there are quite a few examples with 'strange' uses of memory
+> asm arguments.
+> 
+> However, in this case, isn't it enough to ensure the address is 'saved'?
+> So:
+> 	asm volatile("" : "=r"(ptr) );
+> should be enough.
 
-And to let other folks know, I'm guessing this email got sent with git
-send-email to try to get a valid In-Reply-To header, but I guess git
-trashed the Subject and ran hooks to generate a Change-Id UUID.
+It isn't, it seems.
 
-I assume it's from following the "Reply instructions" at the bottom of:
-https://lore.kernel.org/lkml/20210330205750.428816-1-keescook@chromium.org/
-(It seems those need clarification about Subject handling.)
+Here's a comparison:
+
+https://godbolt.org/z/xYGn9GfGY
+
+So, I'll resend with "o", and with raw_cpu_*().
+
+Thanks!
 
 -- 
 Kees Cook
