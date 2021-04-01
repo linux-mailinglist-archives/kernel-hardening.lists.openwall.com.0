@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-21132-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-21133-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 4BC23352139
-	for <lists+kernel-hardening@lfdr.de>; Thu,  1 Apr 2021 23:00:30 +0200 (CEST)
-Received: (qmail 3492 invoked by uid 550); 1 Apr 2021 21:00:23 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 31F273521E1
+	for <lists+kernel-hardening@lfdr.de>; Thu,  1 Apr 2021 23:46:49 +0200 (CEST)
+Received: (qmail 5688 invoked by uid 550); 1 Apr 2021 21:46:37 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,64 +13,72 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 3466 invoked from network); 1 Apr 2021 21:00:22 -0000
-Date: Thu, 1 Apr 2021 16:59:20 -0400
-From: "Theodore Ts'o" <tytso@mit.edu>
+Received: (qmail 5668 invoked from network); 1 Apr 2021 21:46:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=usJD8QXCUUQ3yDD19nRhcfJUMWYiKf+EiZNOMzSngU8=;
+        b=G4ChGKwb73jivZgOdREGW7Jl/xK+07gkogP9+1kyu2QispNTwwRqLKZMdl/YtU/+Lt
+         /6pS84xtYTduYfABsJSoN4e+N+/d5AQAGm1DhERFMawsMiwP/sKWF3z+8kShjCvWc2Xx
+         J1qo99Tg1cz6t80SOTCoCClKVew6dbnE2D8Wo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=usJD8QXCUUQ3yDD19nRhcfJUMWYiKf+EiZNOMzSngU8=;
+        b=e3hKhOafXcBmenzgZAps+IWdog7pLAmFoyPzehgS/0loO8VDyvwOIo6sTQNdnzeJPk
+         bZd3Rcmevxhb0XvzKD6M1kvvXF/XWPfidPqWt6hxPmb3BxxZ2SUek1miWn8rHv/uBJzU
+         RIh1wAOmQk0Uy9UsFnqXscVoW2C43JBpUQ0vhhayUj1pC3j7kh25cINvj/Nz83o7QGx4
+         UQYQ3KuboBuBU2QxfPPiufoibaU/KFAbH+JgQBc0RHRsFrU/jUX8bdUeQEgqWX6S9FDH
+         w0rHLN6XX51qUIYDJQMSQwGl54wvjPLS3PpS5Xk8SOJIf6AgTnQDg4nAF4HjjPCIypOa
+         v03g==
+X-Gm-Message-State: AOAM532Ciz4P420pz4rkSM/yIQFUgAvgC9hwBc6p54Bw26+OzpOmTaA2
+	2ELkpdaZ/IE1oNj+qjimqu6C1Q==
+X-Google-Smtp-Source: ABdhPJw2Igjg2dUPUc361qNdAsnz5koMvMjgAifwUOU3txfIVOmKgYERtvxS6R3TbAJ8ajqzLbNIRQ==
+X-Received: by 2002:a63:2f03:: with SMTP id v3mr9286709pgv.408.1617313584551;
+        Thu, 01 Apr 2021 14:46:24 -0700 (PDT)
+Date: Thu, 1 Apr 2021 14:46:23 -0700
+From: Kees Cook <keescook@chromium.org>
 To: Roy Yang <royyang@google.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>, keescook@chromium.org,
-        akpm@linux-foundation.org, alex.popov@linux.com,
-        ard.biesheuvel@linaro.org, catalin.marinas@arm.com, corbet@lwn.net,
-        david@redhat.com, elena.reshetova@intel.com,
-        Alexander Potapenko <glider@google.com>, Jann Horn <jannh@google.com>,
-        kernel-hardening@lists.openwall.com,
-        linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-mm@kvack.org, luto@kernel.org,
-        mark.rutland@arm.com, peterz@infradead.org, rdunlap@infradead.org,
-        rppt@linux.ibm.com, tglx@linutronix.de, vbabka@suse.cz,
-        will@kernel.org, x86@kernel.org
+Cc: akpm@linux-foundation.org, alex.popov@linux.com,
+	ard.biesheuvel@linaro.org, catalin.marinas@arm.com, corbet@lwn.net,
+	david@redhat.com, elena.reshetova@intel.com, glider@google.com,
+	jannh@google.com, kernel-hardening@lists.openwall.com,
+	linux-arm-kernel@lists.infradead.org,
+	linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org, luto@kernel.org, mark.rutland@arm.com,
+	peterz@infradead.org, rdunlap@infradead.org, rppt@linux.ibm.com,
+	tglx@linutronix.de, vbabka@suse.cz, will@kernel.org, x86@kernel.org
 Subject: Re: [PATCH v8 0/6] Optionally randomize kernel stack offset each
  syscall
-Message-ID: <YGY0KAgMmm4XlaS8@mit.edu>
-References: <CANemeMjOw4sOzMxjdjJcWKD315u+KRn19h687GMbkQdP5Jc_kQ@mail.gmail.com>
+Message-ID: <202104011442.B20F2BAFC@keescook>
+References: <20210330205750.428816-1-keescook@chromium.org>
+ <20210401191744.1685896-1-royyang@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CANemeMjOw4sOzMxjdjJcWKD315u+KRn19h687GMbkQdP5Jc_kQ@mail.gmail.com>
+In-Reply-To: <20210401191744.1685896-1-royyang@google.com>
 
-On Thu, Apr 01, 2021 at 01:49:17PM -0700, Roy Yang wrote:
-> Thanks Ted, Casey and Al Viro. I am sorry for the inconvenience.
-> 
-> I tried to follow the instructions listed under
-> https://lore.kernel.org/lkml/20210330205750.428816-1-keescook@chromium.org/
-> using git-send-email
-> 
-> Thought that will reply to the original thread with the original
-> subject . Let me know what I can do to correct this to avoid
-> confusion.
+On Thu, Apr 01, 2021 at 12:17:44PM -0700, Roy Yang wrote:
+> Both Android and Chrome OS really want this feature; For Container-Optimized OS, we have customers
+> interested in the defense too.
 
-It did chain to the original thread; that's how I was able to figure
-out the context.  However, it looks like in your reply, you set the
-subject to be:
+It's pretty close! There are a couple recent comments that need to be
+addressed, but hopefully it can land if x86 and arm64 maintainers are
+happy v10.
 
-[PATCH] Where we are for this patch?
+> Change-Id: I1eb1b726007aa8f9c374b934cc1c690fb4924aa3
+> -- 
+> 2.31.0.208.g409f899ff0-goog
 
-And the problem is if someone had deleted the original e-mail chain
---- for example, optimizing the kernel stack is not one of the
-subjects that I normally closely track, I had already deleted those
-e-mail chains.  So all I saw (and I suspect all Al saw) was a message
-with the above subject line, and no context.
+And to let other folks know, I'm guessing this email got sent with git
+send-email to try to get a valid In-Reply-To header, but I guess git
+trashed the Subject and ran hooks to generate a Change-Id UUID.
 
-If you had kept the original subject line, then those of us who mostly
-focus on file system stuff would have known that it's an area which is
-covered by other maintainers, and we wouldn't have deleted your query
-and let someone else respond.
+I assume it's from following the "Reply instructions" at the bottom of:
+https://lore.kernel.org/lkml/20210330205750.428816-1-keescook@chromium.org/
+(It seems those need clarification about Subject handling.)
 
-Cheers,
-
-					- Ted
-
-P.S.  I personally find the use "git-send-email" to reply to be so
-much of a pain that I just use a non-google.com address to which I can
-use a traditional threaded mail-reader (such as mutt) and I can send
-e-mail without having to worry about the DMARC nonsense.  :-)
-
+-- 
+Kees Cook
