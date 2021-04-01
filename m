@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-21135-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-21137-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 4A78B35236B
-	for <lists+kernel-hardening@lfdr.de>; Fri,  2 Apr 2021 01:24:21 +0200 (CEST)
-Received: (qmail 11579 invoked by uid 550); 1 Apr 2021 23:24:05 -0000
+	by mail.lfdr.de (Postfix) with SMTP id E358C352370
+	for <lists+kernel-hardening@lfdr.de>; Fri,  2 Apr 2021 01:24:37 +0200 (CEST)
+Received: (qmail 11676 invoked by uid 550); 1 Apr 2021 23:24:06 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,38 +13,38 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 11556 invoked from network); 1 Apr 2021 23:24:03 -0000
+Received: (qmail 11558 invoked from network); 1 Apr 2021 23:24:04 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=WvZ4JPpQqHS2L+8HlT+daZ1S1BgsSu5178qEy4RCC4Y=;
-        b=YZ2XpfpKoroyGz71W+msLoD8z0VD52kPmSJv459/I/wuG/2XcHz3JsBZ/c6p6L2Nn8
-         8H5NsdPVJ6DSqLb594nllbPXtbErOCzCubBserjfdkJSKnhsSr95MVfacSGa+37MzJRK
-         bF/Hk303mqASYIyN0wawBGfZ7oFpoTYBaqvCQ=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=9ijlYcKqhmRnIjh3GfaZu6VzSGgGwccaBk76YZfh88U=;
+        b=WKcAnIleO2ypEZLKdHh37aVTO4tnIydkC5OCyMTVr+JpikHZ2/ZMU3FugvxEly10iU
+         XSYN4IoCMfmYa9AiUhoVcjinurr136nmz9lf7q3gbfnnfDCOVEDSAGVTeituYbklhN9Y
+         yq+0k7ScK7oeFnBPFOBIMf0UvJV0M6vj4GtgI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=WvZ4JPpQqHS2L+8HlT+daZ1S1BgsSu5178qEy4RCC4Y=;
-        b=tyDma6g9q3JpxCCfYI79QGmffSESMbOeV1gmmxdINFkdqcLGsbEDzJ7MQQrhCZAHGS
-         zYydns9wCVGys10QdHphBZsTZ+6IvaIaIkSixTo+fm4EsasWjdqpKjz4OPNZXqOv+gAo
-         zeEw9Dk29jfjtK2BUyGxP2WDhsz0CvZ5BRS+UJBjajNKtfvopLE7a4DGz8DeaKxpAOTt
-         TLq1Y5916Ng4iuKtjYxdwUx8zDVbDnVRGQYcTuw+cmBGQD9mjWCtDmkiIumWXpS7SEkT
-         tXX7h0xZrrKNosrmVvebgfScAasywyxPLLI7fMzcqVdHHS4UwesCDQQk7efUGlccKlMj
-         4hpg==
-X-Gm-Message-State: AOAM532nd3TvS96M1nPon5Q691biiZlBqsv9P+jCagutctQmow2l6J8q
-	EBpIdq7XPRXU1v/VMK9iRvpyRA==
-X-Google-Smtp-Source: ABdhPJxPVVyaaPVouPZCxZu9UN0Ld9Gm94Y/m3EFLAj4GgnjzyBntyxwYP5GLB2Jp9HjhO9Kt5fUBQ==
-X-Received: by 2002:a05:6a00:22c8:b029:222:7cf7:7f5c with SMTP id f8-20020a056a0022c8b02902227cf77f5cmr9512290pfj.8.1617319431829;
-        Thu, 01 Apr 2021 16:23:51 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=9ijlYcKqhmRnIjh3GfaZu6VzSGgGwccaBk76YZfh88U=;
+        b=Qn43bfJtBQW4eqxwt/6zbB2Rchr/K0x4D7f4/FQG8hprDUSR0aE8hqZTll3vCNgxAh
+         kAt+6oeUZ2UD73tMeCLq2tORwTwh8bzDiHwK3Nef7Xv+KkeVLZ1hu7qJ8Dt5eRDaO0vv
+         oEI6beaxTo/a04TInqXO8WBvOEY73fBNAjiaFTISL3mrJkDcC32X2Ch79v0b3NTG3SGj
+         Oil9DhGVyXI/okIugQ3M8HY7euQyjBe/w1daEsIyz7iM3Em+SfLkha4f91QsnfWcPOUx
+         H96ajdEktHJThkYvM0TJPM8rEqRPBXJfGmQOGZP7pnwO6jJ1pFtCnHOxKcm16439Rb/q
+         wCQg==
+X-Gm-Message-State: AOAM533LuS51iJ4tEnojgqTeNpIRpJptaIEGzrlrb+bRkYSzR+oupJHS
+	AaR7EXX2viuIYW/z0ZFru2fajw==
+X-Google-Smtp-Source: ABdhPJwcYRMQryh7JJASN23+Q3HQF6uWuabr3WsRHjWCDIRpgK6DJhS0r2tl16IIlvy5t61K9IC1DA==
+X-Received: by 2002:a62:7b83:0:b029:1f1:5ef3:b4d9 with SMTP id w125-20020a627b830000b02901f15ef3b4d9mr9608204pfc.65.1617319432493;
+        Thu, 01 Apr 2021 16:23:52 -0700 (PDT)
 From: Kees Cook <keescook@chromium.org>
 To: Thomas Gleixner <tglx@linutronix.de>
 Cc: Kees Cook <keescook@chromium.org>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Elena Reshetova <elena.reshetova@intel.com>,
 	x86@kernel.org,
 	Andy Lutomirski <luto@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Will Deacon <will@kernel.org>,
 	Mark Rutland <mark.rutland@arm.com>,
@@ -63,93 +63,70 @@ Cc: Kees Cook <keescook@chromium.org>,
 	linux-arm-kernel@lists.infradead.org,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v10 0/6] Optionally randomize kernel stack offset each syscall
-Date: Thu,  1 Apr 2021 16:23:41 -0700
-Message-Id: <20210401232347.2791257-1-keescook@chromium.org>
+Subject: [PATCH v10 1/6] jump_label: Provide CONFIG-driven build state defaults
+Date: Thu,  1 Apr 2021 16:23:42 -0700
+Message-Id: <20210401232347.2791257-2-keescook@chromium.org>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20210401232347.2791257-1-keescook@chromium.org>
+References: <20210401232347.2791257-1-keescook@chromium.org>
 MIME-Version: 1.0
+X-Patch-Hashes: v=1; h=sha256; g=aa54c44d1d71b9550d6015efc734f667917094a1; i=Vishx6UyAXwYzcnoSyP+eBB3iQyx+/i5smsbQfc0cnA=; m=vc4sSYlf+uaSlLSFP5TpbQv56VaSRpBLpRuMltXaB4Q=; p=mNH2Bo/K9vrGz9sBtTDV8UFO0eJ8yv8BbR/DeIaO1es=
+X-Patch-Sig: m=pgp; i=keescook@chromium.org; s=0x0x8972F4DFDC6DC026; b=iQIzBAABCgAdFiEEpcP2jyKd1g9yPm4TiXL039xtwCYFAmBmVgEACgkQiXL039xtwCbiEBAArOm /EtpeLQvJQ16Bi0gBHOl/CblUQyhrscVrs8xNm/lKfSaeaGIDJaNfx0EZ4L7n2IVkpGYSodLxZlwj ve4GueMybGaAPJWYFy3L+jAe9eYTp3zyYwvQsSRg55iW5msvqK3ZUeJqC/CxPrDdwT05noLV9mDub lAzrVY/pLiXE0HTK9ogAdyiNFQY2yA44UmGTIkmgZ30jl0d4aSVtwsViZeMS8pCrK22xkiccq/bRY 72ASLPxyOBOL00UWKeUmbmdUfNW+BkNlK7IaN+w5QBfiKuQWTf/WdZ+8c5tQWjLE3kJ4DRx8mrBcy 1vYJ1m1ZKfAOe8uV8waSURiUMzfgB/uL5on3W1e6s8SkChf0KGAZMyDGuIflDnvFUy8OIfM8Ak/fg hoYQ2dUXkKa50EdvadntVka+XmxokcSERzN0e9tOQlYfeLiL5TINkkDQFAallIMnHy6ImGd9Yd23F zSvCmvv0683j96kJXsEcfl0wH3LYYCyRS0fIK1ssPxPAViuN0vY1jlIeDn734NiR4+itDg8pTepIM h8ozYc9GPgYBTzXQPG29KmXRHc4es7o4enMoBQ1Gj0PZ5f9c0fr6AUpoe7c1jVtsL4wJD6tUuC9do T40yZwF6fDGX1jsVc/mbC1ug6gurwbG+Xo1xiQ2I1YUyr1MimqrfE4LvelISHwZM=
 Content-Transfer-Encoding: 8bit
 
-Hi!
+As shown in jump_label.h[1], choosing the initial state of static
+branches changes the assembly layout. If the condition is expected to
+be likely it's inline, and if unlikely it is out of line via a jump. A
+few places in the kernel use (or could be using) a CONFIG to choose the
+default state, which would give a small performance benefit to their
+compile-time declared default. Provide the infrastructure to do this.
 
-This should be good to go now. :)
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/linux/jump_label.h?h=v5.11#n398
 
-v10:
-- switch from "m" to "o" constraint (will)
-- switch to raw_cpu_*() (tglx)
-- hooked LKDTM test up to kselftest
-v9: https://lore.kernel.org/lkml/20210331205458.1871746-1-keescook@chromium.org/
-v8: https://lore.kernel.org/lkml/20210330205750.428816-1-keescook@chromium.org/
-v7: https://lore.kernel.org/lkml/20210319212835.3928492-1-keescook@chromium.org/
-v6: https://lore.kernel.org/lkml/20210315180229.1224655-1-keescook@chromium.org/
-v5: https://lore.kernel.org/lkml/20210309214301.678739-1-keescook@chromium.org/
-v4: https://lore.kernel.org/lkml/20200622193146.2985288-1-keescook@chromium.org/
-v3: https://lore.kernel.org/lkml/20200406231606.37619-1-keescook@chromium.org/
-v2: https://lore.kernel.org/lkml/20200324203231.64324-1-keescook@chromium.org/
-rfc: https://lore.kernel.org/kernel-hardening/20190329081358.30497-1-elena.reshetova@intel.com/
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/lkml/20200324220641.GT2452@worktop.programming.kicks-ass.net/
+Signed-off-by: Kees Cook <keescook@chromium.org>
+---
+ include/linux/jump_label.h | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-This is a continuation and refactoring of Elena's earlier effort to add
-kernel stack base offset randomization. In the time since the earlier
-discussions, two attacks[1][2] were made public that depended on stack
-determinism, so we're no longer in the position of "this is a good idea
-but we have no examples of attacks". :)
-
-Earlier discussions also devolved into debates on entropy sources, which
-is mostly a red herring, given the already low entropy available due
-to stack size. Regardless, entropy can be changed/improved separately
-from this series as needed.
-
-Earlier discussions also got stuck debating how much syscall overhead
-was too much, but this is also a red herring since the feature itself
-needs to be selectable at boot with no cost for those that don't want it:
-this is solved here with static branches.
-
-So, here is the latest improved version, made as arch-agnostic as
-possible, with usage added for x86 and arm64. It also includes some small
-static branch clean ups, and addresses some surprise performance issues
-due to the stack canary[3].
-
-Thanks!
-
--Kees
-
-[1] https://a13xp0p0v.github.io/2020/02/15/CVE-2019-18683.html
-[2] https://repositorio-aberto.up.pt/bitstream/10216/125357/2/374717.pdf
-[3] https://lore.kernel.org/lkml/202003281520.A9BFF461@keescook/
-
-Kees Cook (6):
-  jump_label: Provide CONFIG-driven build state defaults
-  init_on_alloc: Optimize static branches
-  stack: Optionally randomize kernel stack offset each syscall
-  x86/entry: Enable random_kstack_offset support
-  arm64: entry: Enable random_kstack_offset support
-  lkdtm: Add REPORT_STACK for checking stack offsets
-
- .../admin-guide/kernel-parameters.txt         | 11 ++++
- Makefile                                      |  4 ++
- arch/Kconfig                                  | 23 ++++++++
- arch/arm64/Kconfig                            |  1 +
- arch/arm64/kernel/Makefile                    |  5 ++
- arch/arm64/kernel/syscall.c                   | 16 ++++++
- arch/x86/Kconfig                              |  1 +
- arch/x86/entry/common.c                       |  3 ++
- arch/x86/include/asm/entry-common.h           | 16 ++++++
- drivers/misc/lkdtm/bugs.c                     | 17 ++++++
- drivers/misc/lkdtm/core.c                     |  1 +
- drivers/misc/lkdtm/lkdtm.h                    |  1 +
- include/linux/jump_label.h                    | 19 +++++++
- include/linux/mm.h                            | 10 ++--
- include/linux/randomize_kstack.h              | 54 +++++++++++++++++++
- init/main.c                                   | 23 ++++++++
- mm/page_alloc.c                               |  4 +-
- mm/slab.h                                     |  6 ++-
- tools/testing/selftests/lkdtm/.gitignore      |  1 +
- tools/testing/selftests/lkdtm/Makefile        |  1 +
- .../testing/selftests/lkdtm/stack-entropy.sh  | 36 +++++++++++++
- 21 files changed, 245 insertions(+), 8 deletions(-)
- create mode 100644 include/linux/randomize_kstack.h
- create mode 100755 tools/testing/selftests/lkdtm/stack-entropy.sh
-
+diff --git a/include/linux/jump_label.h b/include/linux/jump_label.h
+index d92691262f51..05f5554d860f 100644
+--- a/include/linux/jump_label.h
++++ b/include/linux/jump_label.h
+@@ -382,6 +382,21 @@ struct static_key_false {
+ 		[0 ... (count) - 1] = STATIC_KEY_FALSE_INIT,	\
+ 	}
+ 
++#define _DEFINE_STATIC_KEY_1(name)	DEFINE_STATIC_KEY_TRUE(name)
++#define _DEFINE_STATIC_KEY_0(name)	DEFINE_STATIC_KEY_FALSE(name)
++#define DEFINE_STATIC_KEY_MAYBE(cfg, name)			\
++	__PASTE(_DEFINE_STATIC_KEY_, IS_ENABLED(cfg))(name)
++
++#define _DEFINE_STATIC_KEY_RO_1(name)	DEFINE_STATIC_KEY_TRUE_RO(name)
++#define _DEFINE_STATIC_KEY_RO_0(name)	DEFINE_STATIC_KEY_FALSE_RO(name)
++#define DEFINE_STATIC_KEY_MAYBE_RO(cfg, name)			\
++	__PASTE(_DEFINE_STATIC_KEY_RO_, IS_ENABLED(cfg))(name)
++
++#define _DECLARE_STATIC_KEY_1(name)	DECLARE_STATIC_KEY_TRUE(name)
++#define _DECLARE_STATIC_KEY_0(name)	DECLARE_STATIC_KEY_FALSE(name)
++#define DECLARE_STATIC_KEY_MAYBE(cfg, name)			\
++	__PASTE(_DECLARE_STATIC_KEY_, IS_ENABLED(cfg))(name)
++
+ extern bool ____wrong_branch_error(void);
+ 
+ #define static_key_enabled(x)							\
+@@ -482,6 +497,10 @@ extern bool ____wrong_branch_error(void);
+ 
+ #endif /* CONFIG_JUMP_LABEL */
+ 
++#define static_branch_maybe(config, x)					\
++	(IS_ENABLED(config) ? static_branch_likely(x)			\
++			    : static_branch_unlikely(x))
++
+ /*
+  * Advanced usage; refcount, branch is enabled when: count != 0
+  */
 -- 
 2.25.1
 
