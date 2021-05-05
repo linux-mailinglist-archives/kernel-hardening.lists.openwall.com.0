@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-21244-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-21245-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 2F11C373C09
-	for <lists+kernel-hardening@lfdr.de>; Wed,  5 May 2021 15:10:39 +0200 (CEST)
-Received: (qmail 1044 invoked by uid 550); 5 May 2021 13:10:32 -0000
+	by mail.lfdr.de (Postfix) with SMTP id BED7E373C3A
+	for <lists+kernel-hardening@lfdr.de>; Wed,  5 May 2021 15:19:53 +0200 (CEST)
+Received: (qmail 5872 invoked by uid 550); 5 May 2021 13:19:47 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,18 +13,18 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 32753 invoked from network); 5 May 2021 13:10:31 -0000
+Received: (qmail 5840 invoked from network); 5 May 2021 13:19:46 -0000
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
 	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
 	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=RCnOPkMC/G1Vcdql+vcGlBPx7y6AVxksEchUg4RxzkQ=; b=HfZvW5qU94p4oR2x4wqzGUPz2C
-	oUXMRaZvZIiKUS0yu7zzm9G8JgWZKmdwbOIuReAcoiBJNS2SeFYoosJWcnydI27HD4ZLYn9SYeL+W
-	BXZkVVtX1MN8k7232jA7Vj7pPv3nuhhdRuDgOeHiiLjJL1JXEbaWaNfMo7MjFV2tnhF5jbwLGzGt2
-	wmR6p75zHIsBDQ6GkXyT+tVRkvbmuibjXvIdM08ySYeuUagX9MzvqKuyg3r5tV41aIUFmF2iBKqPj
-	xYjLfvxZhXqEqjKGsPw88JEHUSK7oFKjoAGuz41FoVzkFAnbsvnonAkNYrS0LgisF2C8ubNhwx4pz
-	s5bxp44g==;
-Date: Wed, 5 May 2021 15:09:12 +0200
+	bh=098DjoJGnAPT9eohEm8f+BcKiqTmmyQ4t8gfr7TicWI=; b=W/WiWgFI7/UtyDk6pyHlsqYp4K
+	tYY8VbPIiaG2BWw5+Vw/D6CqfT8qaPGMRiSsLCW9RhfQIdPcdRbpLGtWXAufrZDubMi/1ZjoU1Cl1
+	qlEF64APhf9cI9xQJ7mHF64do+531IRURlEmwtEIRT590CGh6fNyOi78tmtxv8zU/Hys5Ve7fEv4U
+	sXaG7AzMeCHPmy3XV3h1yOYGIgvgL8cLVkkWZKxqeyUtXdS4kujL19WYnqA421aSy4AD7xxt3G89S
+	LE/IeGEMKQvnznVqRd72pPp1OJSIELgz6zT8K/HRNelZfqXRikgLOkef6YPUlnlA95kTyqckm7KQ3
+	rkRg0P+A==;
+Date: Wed, 5 May 2021 15:19:18 +0200
 From: Peter Zijlstra <peterz@infradead.org>
 To: Mike Rapoport <rppt@kernel.org>
 Cc: Rick Edgecombe <rick.p.edgecombe@intel.com>, dave.hansen@intel.com,
@@ -32,40 +32,63 @@ Cc: Rick Edgecombe <rick.p.edgecombe@intel.com>, dave.hansen@intel.com,
 	akpm@linux-foundation.org, linux-hardening@vger.kernel.org,
 	kernel-hardening@lists.openwall.com, ira.weiny@intel.com,
 	dan.j.williams@intel.com, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC 3/9] x86/mm/cpa: Add grouped page allocations
-Message-ID: <YJKY+Ccxfe9wD0iP@hirez.programming.kicks-ass.net>
+Subject: Re: [PATCH RFC 5/9] x86, mm: Use cache of page tables
+Message-ID: <YJKbVueq3nqXwnip@hirez.programming.kicks-ass.net>
 References: <20210505003032.489164-1-rick.p.edgecombe@intel.com>
- <20210505003032.489164-4-rick.p.edgecombe@intel.com>
- <YJKKu7kMCtCuel2L@kernel.org>
+ <20210505003032.489164-6-rick.p.edgecombe@intel.com>
+ <YJJcqyrMEJipbevT@hirez.programming.kicks-ass.net>
+ <YJKK5RUMOzv488DO@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YJKKu7kMCtCuel2L@kernel.org>
+In-Reply-To: <YJKK5RUMOzv488DO@kernel.org>
 
-On Wed, May 05, 2021 at 03:08:27PM +0300, Mike Rapoport wrote:
-> On Tue, May 04, 2021 at 05:30:26PM -0700, Rick Edgecombe wrote:
-> > For x86, setting memory permissions on the direct map results in fracturing
-> > large pages. Direct map fracturing can be reduced by locating pages that
-> > will have their permissions set close together.
+On Wed, May 05, 2021 at 03:09:09PM +0300, Mike Rapoport wrote:
+> On Wed, May 05, 2021 at 10:51:55AM +0200, Peter Zijlstra wrote:
+> > On Tue, May 04, 2021 at 05:30:28PM -0700, Rick Edgecombe wrote:
+> > > @@ -54,6 +98,8 @@ void ___pte_free_tlb(struct mmu_gather *tlb, struct page *pte)
+> > >  {
+> > >  	pgtable_pte_page_dtor(pte);
+> > >  	paravirt_release_pte(page_to_pfn(pte));
+> > > +	/* Set Page Table so swap knows how to free it */
+> > > +	__SetPageTable(pte);
+> > >  	paravirt_tlb_remove_table(tlb, pte);
+> > >  }
+> > >  
+> > > @@ -70,12 +116,16 @@ void ___pmd_free_tlb(struct mmu_gather *tlb, pmd_t *pmd)
+> > >  	tlb->need_flush_all = 1;
+> > >  #endif
+> > >  	pgtable_pmd_page_dtor(page);
+> > > +	/* Set Page Table so swap nows how to free it */
+> > > +	__SetPageTable(virt_to_page(pmd));
+> > >  	paravirt_tlb_remove_table(tlb, page);
+> > >  }
+> > >  
+> > >  #if CONFIG_PGTABLE_LEVELS > 3
+> > >  void ___pud_free_tlb(struct mmu_gather *tlb, pud_t *pud)
+> > >  {
+> > > +	/* Set Page Table so swap nows how to free it */
+> > > +	__SetPageTable(virt_to_page(pud));
+> > >  	paravirt_release_pud(__pa(pud) >> PAGE_SHIFT);
+> > >  	paravirt_tlb_remove_table(tlb, virt_to_page(pud));
+> > >  }
+> > > @@ -83,6 +133,8 @@ void ___pud_free_tlb(struct mmu_gather *tlb, pud_t *pud)
+> > >  #if CONFIG_PGTABLE_LEVELS > 4
+> > >  void ___p4d_free_tlb(struct mmu_gather *tlb, p4d_t *p4d)
+> > >  {
+> > > +	/* Set Page Table so swap nows how to free it */
+> > > +	__SetPageTable(virt_to_page(p4d));
+> > >  	paravirt_release_p4d(__pa(p4d) >> PAGE_SHIFT);
+> > >  	paravirt_tlb_remove_table(tlb, virt_to_page(p4d));
+> > >  }
 > > 
-> > Create a simple page cache that allocates pages from huge page size
-> > blocks. Don't guarantee that a page will come from a huge page grouping,
-> > instead fallback to non-grouped pages to fulfill the allocation if
-> > needed. Also, register a shrinker such that the system can ask for the
-> > pages back if needed. Since this is only needed when there is a direct
-> > map, compile it out on highmem systems.
+> > This, to me, seems like a really weird place to __SetPageTable(), why
+> > can't we do that on allocation?
 > 
-> I only had time to skim through the patches, I like the idea of having a
-> simple cache that allocates larger pages with a fallback to basic page
-> size.
-> 
-> I just think it should be more generic and closer to the page allocator.
-> I was thinking about adding a GFP flag that will tell that the allocated
-> pages should be removed from the direct map. Then alloc_pages() could use
-> such cache whenever this GFP flag is specified with a fallback for lower
-> order allocations.
+> We call __ClearPageTable() at pgtable_pxy_page_dtor(), so at least for pte
+> and pmd we need to somehow tell release_pages() what kind of page it was.
 
-That doesn't provide enough information I think. Removing from direct
-map isn't the only consideration, you also want to group them by the
-target protection bits such that we don't get to use 4k pages quite so
-much.
+Hurph, right, but then the added comment is misleading; s/Set/Reset/g.
+Still I'm thinking that if we do these allocators, moving the set/clear
+to the allocator would be the most natural place, perhaps we can remove
+them from the {c,d}tor.
