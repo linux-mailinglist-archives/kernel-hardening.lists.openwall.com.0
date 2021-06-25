@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-21322-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-21324-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 55DDB3B4725
-	for <lists+kernel-hardening@lfdr.de>; Fri, 25 Jun 2021 18:04:53 +0200 (CEST)
-Received: (qmail 7869 invoked by uid 550); 25 Jun 2021 16:04:46 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 6E4193B4761
+	for <lists+kernel-hardening@lfdr.de>; Fri, 25 Jun 2021 18:25:16 +0200 (CEST)
+Received: (qmail 19515 invoked by uid 550); 25 Jun 2021 16:25:08 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,86 +13,203 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 7834 invoked from network); 25 Jun 2021 16:04:45 -0000
-From: Yun Zhou <yun.zhou@windriver.com>
-To: <rostedt@goodmis.org>
-CC: <linux-kernel@vger.kernel.org>, <kernel-hardening@lists.openwall.com>,
-        <ying.xue@windriver.com>, <zhiquan.li@windriver.com>
-Subject: [PATCH 2/2] seq_buf: Make trace_seq_putmem_hex() support data longer than 8
-Date: Fri, 25 Jun 2021 23:53:48 +0800
-Message-ID: <20210625155348.58266-2-yun.zhou@windriver.com>
-X-Mailer: git-send-email 2.26.1
+Received: (qmail 19471 invoked from network); 25 Jun 2021 16:25:07 -0000
+Date: Fri, 25 Jun 2021 12:24:53 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: Yun Zhou <yun.zhou@windriver.com>
+Cc: <linux-kernel@vger.kernel.org>, <kernel-hardening@lists.openwall.com>,
+ <ying.xue@windriver.com>, <zhiquan.li@windriver.com>
+Subject: Re: [PATCH 1/2] seq_buf: fix overflow when length is bigger than 8
+Message-ID: <20210625122453.5e2fe304@oasis.local.home>
 In-Reply-To: <20210625155348.58266-1-yun.zhou@windriver.com>
 References: <20210625155348.58266-1-yun.zhou@windriver.com>
+X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-At present, trace_seq_putmem_hex() can only support data with length
-of 8 or less, which greatly limits its application scope. If we want to
-dump longer data blocks, we need to repeatedly call macro SEQ_PUT_HEX_FIELD.
-I think it is a bit redundant, and multiple function calls also affect
-the performance.
+On Fri, 25 Jun 2021 23:53:47 +0800
+Yun Zhou <yun.zhou@windriver.com> wrote:
 
-This patch is to perfect the commit 6d2289f3faa7 ("tracing: Make
-trace_seq_putmem_hex() more robust").
+> There's two variables being increased in that loop (i and j), and i
+> follows the raw data, and j follows what is being written into the buffer.
+> We should compare 'i' to MAX_MEMHEX_BYTES or compare 'j' to HEX_CHARS.
+> Otherwise, if 'j' goes bigger than HEX_CHARS, it will overflow the
+> destination buffer.
+> 
+> This bug was introduced by commit 6d2289f3faa71dcc ("tracing: Make
+> trace_seq_putmem_hex() more robust")
 
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
----
- lib/seq_buf.c | 29 ++++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 11 deletions(-)
+No it wasn't. The bug was in the original code:
+
+  5e3ca0ec76fce ("ftrace: introduce the "hex" output method")
+
+Which had this:
+
+> static notrace int
+> trace_seq_putmem_hex(struct trace_seq *s, void *mem, size_t len)
+> {
+>         unsigned char hex[HEX_CHARS];
+>         unsigned char *data;
+>         unsigned char byte;
+>         int i, j;
+> 
+>         BUG_ON(len >= HEX_CHARS);
+
+If len is 16 (and HEX_CHARS is 17) the bug wouldn't happen.
+
+> 
+>         data = mem;
+> 
+> #ifdef __BIG_ENDIAN
+>         for (i = 0, j = 0; i < len; i++) {
+> #else
+>         for (i = len-1, j = 0; i >= 0; i--) {
+> #endif
+
+The above starts at len-1 (15) and will iterate 15 times.
+
+>                 byte = data[i];
+> 
+>                 hex[j]   = byte & 0x0f;
+>                 if (hex[j] >= 10)
+>                         hex[j] += 'a' - 10;
+>                 else
+>                         hex[j] += '0';
+>                 j++;
+> 
+>                 hex[j] = byte >> 4;
+>                 if (hex[j] >= 10)
+>                         hex[j] += 'a' - 10;
+>                 else
+>                         hex[j] += '0';
+>                 j++;
+
+j is incremented twice for every loop, and if len was 15, that is 30 times.
+
+Needless to say, once i iterated 9 times, then j would be 18, and one
+more than the size of hex. And boom, it breaks.
+
+
+
+>         }
+>         hex[j] = ' ';
+>         j++;
+> 
+>         return trace_seq_putmem(s, hex, j);
+> }
+
+
+
+> 
+> Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
+> ---
+>  lib/seq_buf.c | 29 +++++++++++------------------
+>  1 file changed, 11 insertions(+), 18 deletions(-)
+> 
+> diff --git a/lib/seq_buf.c b/lib/seq_buf.c
+> index 6aabb609dd87..aa2f666e584e 100644
+> --- a/lib/seq_buf.c
+> +++ b/lib/seq_buf.c
+> @@ -210,7 +210,8 @@ int seq_buf_putmem(struct seq_buf *s, const void *mem, unsigned int len)
+>   * seq_buf_putmem_hex - write raw memory into the buffer in ASCII hex
+>   * @s: seq_buf descriptor
+>   * @mem: The raw memory to write its hex ASCII representation of
+> - * @len: The length of the raw memory to copy (in bytes)
+> + * @len: The length of the raw memory to copy (in bytes).
+> + *       It can be not larger than 8.
+>   *
+>   * This is similar to seq_buf_putmem() except instead of just copying the
+>   * raw memory into the buffer it writes its ASCII representation of it
+> @@ -228,27 +229,19 @@ int seq_buf_putmem_hex(struct seq_buf *s, const void *mem,
+>  
+>  	WARN_ON(s->size == 0);
+>  
+> -	while (len) {
+> -		start_len = min(len, HEX_CHARS - 1);
+> +	start_len = min(len, MAX_MEMHEX_BYTES);
+>  #ifdef __BIG_ENDIAN
+> -		for (i = 0, j = 0; i < start_len; i++) {
+> +	for (i = 0, j = 0; i < start_len; i++) {
+>  #else
+> -		for (i = start_len-1, j = 0; i >= 0; i--) {
+> +	for (i = start_len-1, j = 0; i >= 0; i--) {
+>  #endif
+> -			hex[j++] = hex_asc_hi(data[i]);
+> -			hex[j++] = hex_asc_lo(data[i]);
+> -		}
+> -		if (WARN_ON_ONCE(j == 0 || j/2 > len))
+> -			break;
+> -
+> -		/* j increments twice per loop */
+> -		len -= j / 2;
+> -		hex[j++] = ' ';
+> -
+> -		seq_buf_putmem(s, hex, j);
+> -		if (seq_buf_has_overflowed(s))
+> -			return -1;
+> +		hex[j++] = hex_asc_hi(data[i]);
+> +		hex[j++] = hex_asc_lo(data[i]);
+>  	}
+> +
+> +	seq_buf_putmem(s, hex, j);
+> +	if (seq_buf_has_overflowed(s))
+> +		return -1;
+>  	return 0;
+>  }
+>  
+
+The above is *way* too complex for a backport that should go back to
+the beginning. You were partially, correct, and the proper fix would be:
+
 
 diff --git a/lib/seq_buf.c b/lib/seq_buf.c
-index aa2f666e584e..98580a5c32c0 100644
+index 707453f5d58e..eb68b5b3eb26 100644
 --- a/lib/seq_buf.c
 +++ b/lib/seq_buf.c
-@@ -210,8 +210,7 @@ int seq_buf_putmem(struct seq_buf *s, const void *mem, unsigned int len)
-  * seq_buf_putmem_hex - write raw memory into the buffer in ASCII hex
-  * @s: seq_buf descriptor
-  * @mem: The raw memory to write its hex ASCII representation of
-- * @len: The length of the raw memory to copy (in bytes).
-- *       It can be not larger than 8.
-+ * @len: The length of the raw memory to copy (in bytes)
-  *
-  * This is similar to seq_buf_putmem() except instead of just copying the
-  * raw memory into the buffer it writes its ASCII representation of it
-@@ -229,19 +228,27 @@ int seq_buf_putmem_hex(struct seq_buf *s, const void *mem,
+@@ -229,8 +229,10 @@ int seq_buf_putmem_hex(struct seq_buf *s, const void *mem,
  
  	WARN_ON(s->size == 0);
  
--	start_len = min(len, MAX_MEMHEX_BYTES);
-+	while (len) {
-+		start_len = min(len, MAX_MEMHEX_BYTES);
++	BUILD_BUG_ON(MAX_MEMHEX_BYTES * 2 >= HEX_CHARS);
++
+ 	while (len) {
+-		start_len = min(len, HEX_CHARS - 1);
++		start_len = min(len, MAX_MEMHEX_BYTES - 1);
  #ifdef __BIG_ENDIAN
--	for (i = 0, j = 0; i < start_len; i++) {
-+		for (i = 0, j = 0; i < start_len; i++) {
+ 		for (i = 0, j = 0; i < start_len; i++) {
  #else
--	for (i = start_len-1, j = 0; i >= 0; i--) {
-+		for (i = start_len-1, j = 0; i >= 0; i--) {
- #endif
--		hex[j++] = hex_asc_hi(data[i]);
--		hex[j++] = hex_asc_lo(data[i]);
--	}
-+			hex[j++] = hex_asc_hi(data[i]);
-+			hex[j++] = hex_asc_lo(data[i]);
-+		}
+-- 
+2.29.2
+
+
+That solves the first bug, and is easy to backport.
+
+The second bug, is that data doesn't go forward (as you stated in your
+original patch) which would be:
+
+diff --git a/lib/seq_buf.c b/lib/seq_buf.c
+index eb68b5b3eb26..39b9374d3a1e 100644
+--- a/lib/seq_buf.c
++++ b/lib/seq_buf.c
+@@ -244,13 +244,14 @@ int seq_buf_putmem_hex(struct seq_buf *s, const void *mem,
+ 		if (WARN_ON_ONCE(j == 0 || j/2 > len))
+ 			break;
  
--	seq_buf_putmem(s, hex, j);
--	if (seq_buf_has_overflowed(s))
--		return -1;
-+		/* j increments twice per loop */
-+		len -= j / 2;
-+		hex[j++] = ' ';
+-		/* j increments twice per loop */
+-		len -= j / 2;
+ 		hex[j++] = ' ';
+ 
+ 		seq_buf_putmem(s, hex, j);
+ 		if (seq_buf_has_overflowed(s))
+ 			return -1;
 +
-+		seq_buf_putmem(s, hex, j);
-+		if (seq_buf_has_overflowed(s))
-+			return -1;
-+
++		len -= start_len;
 +		data += start_len;
-+	}
+ 	}
  	return 0;
  }
- 
--- 
-2.26.1
 
+Why are you making it so complicated?
+
+-- Steve
