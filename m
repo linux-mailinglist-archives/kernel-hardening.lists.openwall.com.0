@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-21366-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-21369-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id 894A43FBFB6
-	for <lists+kernel-hardening@lfdr.de>; Tue, 31 Aug 2021 02:03:18 +0200 (CEST)
-Received: (qmail 7944 invoked by uid 550); 31 Aug 2021 00:00:39 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 2E18E3FBFB9
+	for <lists+kernel-hardening@lfdr.de>; Tue, 31 Aug 2021 02:03:47 +0200 (CEST)
+Received: (qmail 8119 invoked by uid 550); 31 Aug 2021 00:00:42 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,12 +13,12 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 7406 invoked from network); 31 Aug 2021 00:00:33 -0000
-X-IronPort-AV: E=McAfee;i="6200,9189,10092"; a="197933738"
+Received: (qmail 7423 invoked from network); 31 Aug 2021 00:00:33 -0000
+X-IronPort-AV: E=McAfee;i="6200,9189,10092"; a="197933744"
 X-IronPort-AV: E=Sophos;i="5.84,364,1620716400"; 
-   d="scan'208";a="197933738"
+   d="scan'208";a="197933744"
 X-IronPort-AV: E=Sophos;i="5.84,364,1620716400"; 
-   d="scan'208";a="530713007"
+   d="scan'208";a="530713019"
 From: Rick Edgecombe <rick.p.edgecombe@intel.com>
 To: dave.hansen@intel.com,
 	luto@kernel.org,
@@ -36,416 +36,516 @@ Cc: Rick Edgecombe <rick.p.edgecombe@intel.com>,
 	ira.weiny@intel.com,
 	dan.j.williams@intel.com,
 	linux-kernel@vger.kernel.org
-Subject: [RFC PATCH v2 16/19] x86/mm: Protect page tables with PKS
-Date: Mon, 30 Aug 2021 16:59:24 -0700
-Message-Id: <20210830235927.6443-17-rick.p.edgecombe@intel.com>
+Subject: [RFC PATCH v2 17/19] x86/mm/cpa: PKS protect direct map page tables
+Date: Mon, 30 Aug 2021 16:59:25 -0700
+Message-Id: <20210830235927.6443-18-rick.p.edgecombe@intel.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20210830235927.6443-1-rick.p.edgecombe@intel.com>
 References: <20210830235927.6443-1-rick.p.edgecombe@intel.com>
 
-Write protect page tables with PKS. Toggle writeability inside the
-pgtable.h defined page table modifiction functions.
+Protecting direct map page tables is a bit more difficult because a page
+table may be needed for a page split as part of setting the PKS
+permission the new page table. So in the case of an empty cache of page
+tables the page table allocator could get into a situation where it cannot
+create any more page tables.
 
-Do not protect the direct map page tables as it is more complicated and
-will come in a later patch.
+Several solutions were looked at:
+
+1. Break the direct map with pages allocated from the large page being
+converted to PKS. This would result in a window where the table could be
+written to right before it was linked into the page tables. It also
+depends on high order pages being available, and so would regress from
+the un-protected behavior in that respect.
+2. Hold some page tables in reserve to be able to break the large page
+for a new 2MB page, but if there are no 2MB page's available we may need
+to add a single page to the cache, in which case we would use up the
+reserve of page tables needed to break a new page, but not get enough
+page tables back to replenish the resereve.
+3. Always map the direct map at 4k when protecting page tables so that
+pages don't need to be broken to map them with a PKS key. This would have
+undesirable performance.
+
+4. Lastly, the strategy employed in this patch, have a separate cache of
+page tables just used for the direct map. Early in boot, squirrel away
+enough page tables to map the direct map at 4k. This comes with the same
+memory overhead of mapping the direct map at 4k, but gets the other
+benefits of mapping the direct map as large pages.
+
+There is also the problem of protecting page tables that are allocated
+during boot. Instead of recording the tables to protect later, create a
+page table traversing infrastructure to walk every page table in init_mm
+and apply protection. This also covers non-direct map odds-and-ends page
+tables that are allocated during boot. The existing page table traversing
+in pagewalk.c cannot be used for this purpose because there are not actual
+vmas for all of the kernel address space.
+
+The algorithm for protecting the direct map page table cache, while also
+allocating from it for direct map splits is described in the comments of
+init_pks_dmap_tables().
 
 Signed-off-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
 ---
- arch/x86/boot/compressed/ident_map_64.c |  5 ++
- arch/x86/include/asm/pgtable.h          | 18 ++++++-
- arch/x86/include/asm/pgtable_64.h       | 33 ++++++++++--
- arch/x86/include/asm/pkeys_common.h     |  1 -
- arch/x86/mm/pgtable.c                   | 71 ++++++++++++++++++++++---
- arch/x86/mm/pkeys.c                     |  1 +
- include/linux/pkeys.h                   |  1 +
- mm/Kconfig                              |  6 +++
- 8 files changed, 123 insertions(+), 13 deletions(-)
+ arch/x86/include/asm/set_memory.h |   2 +
+ arch/x86/mm/init.c                |  89 ++++++++++
+ arch/x86/mm/pat/set_memory.c      | 263 +++++++++++++++++++++++++++++-
+ 3 files changed, 350 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/boot/compressed/ident_map_64.c b/arch/x86/boot/compressed/ident_map_64.c
-index f7213d0943b8..2999be8f9347 100644
---- a/arch/x86/boot/compressed/ident_map_64.c
-+++ b/arch/x86/boot/compressed/ident_map_64.c
-@@ -349,3 +349,8 @@ void do_boot_page_fault(struct pt_regs *regs, unsigned long error_code)
- 	 */
- 	add_identity_map(address, end);
+diff --git a/arch/x86/include/asm/set_memory.h b/arch/x86/include/asm/set_memory.h
+index 1ba2fb45ed05..9f8d0d0ae063 100644
+--- a/arch/x86/include/asm/set_memory.h
++++ b/arch/x86/include/asm/set_memory.h
+@@ -90,6 +90,8 @@ bool kernel_page_present(struct page *page);
+ 
+ extern int kernel_set_to_readonly;
+ 
++void add_dmap_table(unsigned long addr);
++
+ #ifdef CONFIG_X86_64
+ /*
+  * Prevent speculative access to the page by either unmapping
+diff --git a/arch/x86/mm/init.c b/arch/x86/mm/init.c
+index c8933c6d5efd..a91696e3da96 100644
+--- a/arch/x86/mm/init.c
++++ b/arch/x86/mm/init.c
+@@ -6,6 +6,7 @@
+ #include <linux/swapfile.h>
+ #include <linux/swapops.h>
+ #include <linux/kmemleak.h>
++#include <linux/hugetlb.h>
+ #include <linux/sched/task.h>
+ 
+ #include <asm/set_memory.h>
+@@ -26,6 +27,7 @@
+ #include <asm/pti.h>
+ #include <asm/text-patching.h>
+ #include <asm/memtype.h>
++#include <asm/pgalloc.h>
+ 
+ /*
+  * We need to define the tracepoints somewhere, and tlb.c
+@@ -119,6 +121,17 @@ __ref void *alloc_low_pages(unsigned int num)
+ 	if (after_bootmem) {
+ 		unsigned int order;
+ 
++		if (cpu_feature_enabled(X86_FEATURE_PKS_TABLES)) {
++			struct page *page;
++
++			/* 64 bit only allocates order 0 pages */
++			WARN_ON(num != 1);
++
++			page = alloc_table(GFP_ATOMIC | __GFP_ZERO);
++			if (!page)
++				return NULL;
++			return (void *)page_address(page);
++		}
+ 		order = get_order((unsigned long)num << PAGE_SHIFT);
+ 		return (void *)__get_free_pages(GFP_ATOMIC | __GFP_ZERO, order);
+ 	}
+@@ -504,6 +517,79 @@ bool pfn_range_is_mapped(unsigned long start_pfn, unsigned long end_pfn)
+ 	return false;
  }
+ 
++#ifdef CONFIG_PKS_PG_TABLES
++/* Page tables needed in bytes */
++static u64 calc_tables_needed(unsigned int size)
++{
++	unsigned int puds = size >> PUD_SHIFT;
++	unsigned int pmds = size >> PMD_SHIFT;
++
++	/*
++	 * Catch if direct map ever might need more page tables to split
++	 * down to 4k.
++	 */
++	BUILD_BUG_ON(p4d_huge(foo));
++	BUILD_BUG_ON(pgd_huge(foo));
++
++	return (puds + pmds) << PAGE_SHIFT;
++}
++
++/*
++ * If pre boot, reserve large pages from memory that will be mapped. It's ok that this is not
++ * mapped as PKS, other init code in CPA will handle the conversion.
++ */
++static unsigned int __init reserve_pre_boot(u64 start, u64 end)
++{
++	u64 cur = memblock_find_in_range(start, end, HPAGE_SIZE, HPAGE_SIZE);
++	int i;
++
++	if (!cur)
++		return 0;
++	memblock_reserve(cur, HPAGE_SIZE);
++	for (i = 0; i < HPAGE_SIZE; i += PAGE_SIZE)
++		add_dmap_table((unsigned long)__va(cur + i));
++	return HPAGE_SIZE;
++}
++
++/* If post boot, memblock is not available. Just reserve from other memory regions */
++static unsigned int __init reserve_post_boot(void)
++{
++	struct page *page = alloc_table(GFP_KERNEL);
++
++	if (!page)
++		return 0;
++
++	add_dmap_table((unsigned long)page_address(page));
++
++	return PAGE_SIZE;
++}
++
++static void __init reserve_page_tables(u64 start, u64 end)
++{
++	u64 reserve_size = calc_tables_needed(end - start);
++	u64 reserved = 0;
++	u64 cur_reserved;
++
++	while (reserved < reserve_size) {
++		if (after_bootmem)
++			cur_reserved = reserve_post_boot();
++		else
++			cur_reserved = reserve_pre_boot(start, end);
++
++		if (!cur_reserved) {
++			WARN(1, "Could not reserve direct map page tables %llu/%llu\n",
++				reserved,
++				reserve_size);
++			return;
++		}
++
++		reserved += cur_reserved;
++	}
++}
++#else
++static inline void reserve_page_tables(u64 start, u64 end) { }
++#endif
++
+ /*
+  * Setup the direct mapping of the physical memory at PAGE_OFFSET.
+  * This runs before bootmem is initialized and gets pages directly from
+@@ -529,6 +615,9 @@ unsigned long __ref init_memory_mapping(unsigned long start,
+ 
+ 	add_pfn_range_mapped(start >> PAGE_SHIFT, ret >> PAGE_SHIFT);
+ 
++	if (cpu_feature_enabled(X86_FEATURE_PKS_TABLES))
++		reserve_page_tables(start, end);
++
+ 	return ret >> PAGE_SHIFT;
+ }
+ 
+diff --git a/arch/x86/mm/pat/set_memory.c b/arch/x86/mm/pat/set_memory.c
+index dc704e8da032..6acf25999b0f 100644
+--- a/arch/x86/mm/pat/set_memory.c
++++ b/arch/x86/mm/pat/set_memory.c
+@@ -18,6 +18,7 @@
+ #include <linux/libnvdimm.h>
+ #include <linux/vmstat.h>
+ #include <linux/kernel.h>
++#include <linux/pkeys.h>
+ 
+ #include <asm/e820/api.h>
+ #include <asm/processor.h>
+@@ -71,6 +72,68 @@ static DEFINE_SPINLOCK(cpa_lock);
+ #define CPA_PAGES_ARRAY 4
+ #define CPA_NO_CHECK_ALIAS 8 /* Do not search for aliases */
+ 
++static struct page *alloc_regular_dmap_table(void)
++{
++	return alloc_pages(GFP_KERNEL, 0);
++}
 +
 +#ifdef CONFIG_PKS_PG_TABLES
-+void enable_pgtable_write(void) {}
-+void disable_pgtable_write(void) {}
++static LLIST_HEAD(tables_cache);
++static bool dmap_tables_inited;
++
++void add_dmap_table(unsigned long addr)
++{
++	struct llist_node *node = (struct llist_node *)addr;
++
++	enable_pgtable_write();
++	llist_add(node, &tables_cache);
++	disable_pgtable_write();
++}
++
++static struct page *get_pks_table(void)
++{
++	void *ptr = llist_del_first(&tables_cache);
++
++	if (!ptr)
++		return NULL;
++
++	return virt_to_page(ptr);
++}
++
++static struct page *alloc_dmap_table(void)
++{
++	struct page *table;
++
++	if (!pks_tables_inited())
++		return alloc_regular_dmap_table();
++
++	table = get_pks_table();
++	/* Fall back to un-protected table is couldn't get one from cache */
++	if (!table) {
++		if (dmap_tables_inited)
++			WARN(1, "Allocating unprotected direct map table\n");
++		table = alloc_regular_dmap_table();
++	}
++
++	return table;
++}
++
++static void free_dmap_table(struct page *table)
++{
++	add_dmap_table((unsigned long)virt_to_page(table));
++}
++#else /* CONFIG_PKS_PG_TABLES */
++static struct page *alloc_dmap_table(void)
++{
++	return alloc_regular_dmap_table();
++}
++
++static void free_dmap_table(struct page *table)
++{
++	__free_page(table);
++}
 +#endif
-diff --git a/arch/x86/include/asm/pgtable.h b/arch/x86/include/asm/pgtable.h
-index 3505e3b1f40b..871308c40dac 100644
---- a/arch/x86/include/asm/pgtable.h
-+++ b/arch/x86/include/asm/pgtable.h
-@@ -1085,7 +1085,9 @@ static inline pte_t ptep_get_and_clear_full(struct mm_struct *mm,
- static inline void ptep_set_wrprotect(struct mm_struct *mm,
- 				      unsigned long addr, pte_t *ptep)
- {
-+	enable_pgtable_write();
- 	clear_bit(_PAGE_BIT_RW, (unsigned long *)&ptep->pte);
-+	disable_pgtable_write();
- }
- 
- #define flush_tlb_fix_spurious_fault(vma, address) do { } while (0)
-@@ -1135,7 +1137,9 @@ static inline pud_t pudp_huge_get_and_clear(struct mm_struct *mm,
- static inline void pmdp_set_wrprotect(struct mm_struct *mm,
- 				      unsigned long addr, pmd_t *pmdp)
- {
-+	enable_pgtable_write();
- 	clear_bit(_PAGE_BIT_RW, (unsigned long *)pmdp);
-+	disable_pgtable_write();
- }
- 
- #define pud_write pud_write
-@@ -1150,10 +1154,18 @@ static inline pmd_t pmdp_establish(struct vm_area_struct *vma,
- 		unsigned long address, pmd_t *pmdp, pmd_t pmd)
- {
- 	if (IS_ENABLED(CONFIG_SMP)) {
--		return xchg(pmdp, pmd);
-+		pmd_t ret;
 +
-+		enable_pgtable_write();
-+		ret = xchg(pmdp, pmd);
-+		disable_pgtable_write();
+ static inline pgprot_t cachemode2pgprot(enum page_cache_mode pcm)
+ {
+ 	return __pgprot(cachemode2protval(pcm));
+@@ -1076,14 +1139,15 @@ static int split_large_page(struct cpa_data *cpa, pte_t *kpte,
+ 
+ 	if (!debug_pagealloc_enabled())
+ 		spin_unlock(&cpa_lock);
+-	base = alloc_pages(GFP_KERNEL, 0);
++	base = alloc_dmap_table();
 +
-+		return ret;
- 	} else {
- 		pmd_t old = *pmdp;
-+		enable_pgtable_write();
- 		WRITE_ONCE(*pmdp, pmd);
-+		disable_pgtable_write();
- 		return old;
- 	}
+ 	if (!debug_pagealloc_enabled())
+ 		spin_lock(&cpa_lock);
+ 	if (!base)
+ 		return -ENOMEM;
+ 
+ 	if (__split_large_page(cpa, kpte, address, base))
+-		__free_page(base);
++		free_dmap_table(base);
+ 
+ 	return 0;
  }
-@@ -1236,13 +1248,17 @@ static inline p4d_t *user_to_kernel_p4dp(p4d_t *p4dp)
-  */
- static inline void clone_pgd_range(pgd_t *dst, pgd_t *src, int count)
- {
-+	enable_pgtable_write();
- 	memcpy(dst, src, count * sizeof(pgd_t));
-+	disable_pgtable_write();
- #ifdef CONFIG_PAGE_TABLE_ISOLATION
- 	if (!static_cpu_has(X86_FEATURE_PTI))
- 		return;
- 	/* Clone the user space pgd as well */
-+	enable_pgtable_write();
- 	memcpy(kernel_to_user_pgdp(dst), kernel_to_user_pgdp(src),
- 	       count * sizeof(pgd_t));
-+	disable_pgtable_write();
- #endif
+@@ -1096,7 +1160,7 @@ static bool try_to_free_pte_page(pte_t *pte)
+ 		if (!pte_none(pte[i]))
+ 			return false;
+ 
+-	free_page((unsigned long)pte);
++	free_dmap_table(virt_to_page(pte));
+ 	return true;
  }
  
-diff --git a/arch/x86/include/asm/pgtable_64.h b/arch/x86/include/asm/pgtable_64.h
-index 56d0399a0cd1..a287f3c8a0a3 100644
---- a/arch/x86/include/asm/pgtable_64.h
-+++ b/arch/x86/include/asm/pgtable_64.h
-@@ -64,7 +64,9 @@ void set_pte_vaddr_pud(pud_t *pud_page, unsigned long vaddr, pte_t new_pte);
+@@ -1108,7 +1172,7 @@ static bool try_to_free_pmd_page(pmd_t *pmd)
+ 		if (!pmd_none(pmd[i]))
+ 			return false;
  
- static inline void native_set_pte(pte_t *ptep, pte_t pte)
- {
-+	enable_pgtable_write();
- 	WRITE_ONCE(*ptep, pte);
-+	disable_pgtable_write();
+-	free_page((unsigned long)pmd);
++	free_dmap_table(virt_to_page(pmd));
+ 	return true;
  }
  
- static inline void native_pte_clear(struct mm_struct *mm, unsigned long addr,
-@@ -80,7 +82,9 @@ static inline void native_set_pte_atomic(pte_t *ptep, pte_t pte)
- 
- static inline void native_set_pmd(pmd_t *pmdp, pmd_t pmd)
- {
-+	enable_pgtable_write();
- 	WRITE_ONCE(*pmdp, pmd);
-+	disable_pgtable_write();
+@@ -2535,6 +2599,197 @@ void free_grouped_page(struct grouped_page_cache *gpc, struct page *page)
+ 	list_lru_add_node(&gpc->lru, &page->lru, page_to_nid(page));
  }
- 
- static inline void native_pmd_clear(pmd_t *pmd)
-@@ -91,7 +95,12 @@ static inline void native_pmd_clear(pmd_t *pmd)
- static inline pte_t native_ptep_get_and_clear(pte_t *xp)
- {
- #ifdef CONFIG_SMP
--	return native_make_pte(xchg(&xp->pte, 0));
-+	pteval_t pte_val;
+ #endif /* !HIGHMEM */
 +
-+	enable_pgtable_write();
-+	pte_val = xchg(&xp->pte, 0);
-+	disable_pgtable_write();
-+	return native_make_pte(pte_val);
- #else
- 	/* native_local_ptep_get_and_clear,
- 	   but duplicated because of cyclic dependency */
-@@ -104,7 +113,12 @@ static inline pte_t native_ptep_get_and_clear(pte_t *xp)
- static inline pmd_t native_pmdp_get_and_clear(pmd_t *xp)
- {
- #ifdef CONFIG_SMP
--	return native_make_pmd(xchg(&xp->pmd, 0));
-+	pteval_t pte_val;
++#ifdef CONFIG_PKS_PG_TABLES
++#define IS_TABLE_KEY(val) (((val & _PAGE_PKEY_MASK) >> _PAGE_BIT_PKEY_BIT0) == PKS_KEY_PG_TABLES)
 +
-+	enable_pgtable_write();
-+	pte_val = xchg(&xp->pmd, 0);
-+	disable_pgtable_write();
-+	return native_make_pmd(pte_val);
- #else
- 	/* native_local_pmdp_get_and_clear,
- 	   but duplicated because of cyclic dependency */
-@@ -116,7 +130,9 @@ static inline pmd_t native_pmdp_get_and_clear(pmd_t *xp)
- 
- static inline void native_set_pud(pud_t *pudp, pud_t pud)
- {
-+	enable_pgtable_write();
- 	WRITE_ONCE(*pudp, pud);
-+	disable_pgtable_write();
- }
- 
- static inline void native_pud_clear(pud_t *pud)
-@@ -127,7 +143,12 @@ static inline void native_pud_clear(pud_t *pud)
- static inline pud_t native_pudp_get_and_clear(pud_t *xp)
- {
- #ifdef CONFIG_SMP
--	return native_make_pud(xchg(&xp->pud, 0));
-+	pteval_t pte_val;
-+
-+	enable_pgtable_write();
-+	pte_val = xchg(&xp->pud, 0);
-+	disable_pgtable_write();
-+	return native_make_pud(pte_val);
- #else
- 	/* native_local_pudp_get_and_clear,
- 	 * but duplicated because of cyclic dependency
-@@ -144,13 +165,17 @@ static inline void native_set_p4d(p4d_t *p4dp, p4d_t p4d)
- 	pgd_t pgd;
- 
- 	if (pgtable_l5_enabled() || !IS_ENABLED(CONFIG_PAGE_TABLE_ISOLATION)) {
-+		enable_pgtable_write();
- 		WRITE_ONCE(*p4dp, p4d);
-+		disable_pgtable_write();
- 		return;
- 	}
- 
- 	pgd = native_make_pgd(native_p4d_val(p4d));
- 	pgd = pti_set_user_pgtbl((pgd_t *)p4dp, pgd);
-+	enable_pgtable_write();
- 	WRITE_ONCE(*p4dp, native_make_p4d(native_pgd_val(pgd)));
-+	disable_pgtable_write();
- }
- 
- static inline void native_p4d_clear(p4d_t *p4d)
-@@ -160,7 +185,9 @@ static inline void native_p4d_clear(p4d_t *p4d)
- 
- static inline void native_set_pgd(pgd_t *pgdp, pgd_t pgd)
- {
-+	enable_pgtable_write();
- 	WRITE_ONCE(*pgdp, pti_set_user_pgtbl(pgdp, pgd));
-+	disable_pgtable_write();
- }
- 
- static inline void native_pgd_clear(pgd_t *pgd)
-diff --git a/arch/x86/include/asm/pkeys_common.h b/arch/x86/include/asm/pkeys_common.h
-index 079a8be9686b..13f4341c4c0b 100644
---- a/arch/x86/include/asm/pkeys_common.h
-+++ b/arch/x86/include/asm/pkeys_common.h
-@@ -15,5 +15,4 @@
- #define PKR_AD_KEY(pkey)     (PKR_AD_BIT << PKR_PKEY_SHIFT(pkey))
- #define PKR_WD_KEY(pkey)     (PKR_WD_BIT << PKR_PKEY_SHIFT(pkey))
- #define PKR_VALUE(pkey, val) (val << PKR_PKEY_SHIFT(pkey))
--
- #endif /*_ASM_X86_PKEYS_COMMON_H */
-diff --git a/arch/x86/mm/pgtable.c b/arch/x86/mm/pgtable.c
-index 006dc4f81f6d..69b43097c9da 100644
---- a/arch/x86/mm/pgtable.c
-+++ b/arch/x86/mm/pgtable.c
-@@ -8,6 +8,7 @@
- #include <asm/mtrr.h>
- #include <asm/set_memory.h>
- #include <asm/cmdline.h>
-+#include <linux/pkeys.h>
- #include <linux/page-flags.h>
- 
- #ifdef CONFIG_DYNAMIC_PHYSICAL_MASK
-@@ -60,8 +61,11 @@ struct page *alloc_table_node(gfp_t gfp, int node)
- 		return NULL;
- 	__SetPageTable(table);
- 
--	if (gfp & __GFP_ZERO)
-+	if (gfp & __GFP_ZERO) {
-+		enable_pgtable_write();
- 		memset(page_address(table), 0, PAGE_SIZE);
-+		disable_pgtable_write();
-+	}
- 
- 	if (memcg_kmem_enabled() &&
- 	    gfp & __GFP_ACCOUNT &&
-@@ -614,9 +618,12 @@ int ptep_test_and_clear_young(struct vm_area_struct *vma,
- {
- 	int ret = 0;
- 
--	if (pte_young(*ptep))
-+	if (pte_young(*ptep)) {
-+		enable_pgtable_write();
- 		ret = test_and_clear_bit(_PAGE_BIT_ACCESSED,
- 					 (unsigned long *) &ptep->pte);
-+		disable_pgtable_write();
-+	}
- 
- 	return ret;
- }
-@@ -627,9 +634,12 @@ int pmdp_test_and_clear_young(struct vm_area_struct *vma,
- {
- 	int ret = 0;
- 
--	if (pmd_young(*pmdp))
-+	if (pmd_young(*pmdp)) {
-+		enable_pgtable_write();
- 		ret = test_and_clear_bit(_PAGE_BIT_ACCESSED,
- 					 (unsigned long *)pmdp);
-+		disable_pgtable_write();
-+	}
- 
- 	return ret;
- }
-@@ -638,9 +648,12 @@ int pudp_test_and_clear_young(struct vm_area_struct *vma,
- {
- 	int ret = 0;
- 
--	if (pud_young(*pudp))
-+	if (pud_young(*pudp)) {
-+		enable_pgtable_write();
- 		ret = test_and_clear_bit(_PAGE_BIT_ACCESSED,
- 					 (unsigned long *)pudp);
-+		disable_pgtable_write();
-+	}
- 
- 	return ret;
- }
-@@ -649,6 +662,7 @@ int pudp_test_and_clear_young(struct vm_area_struct *vma,
- int ptep_clear_flush_young(struct vm_area_struct *vma,
- 			   unsigned long address, pte_t *ptep)
- {
-+	int ret;
- 	/*
- 	 * On x86 CPUs, clearing the accessed bit without a TLB flush
- 	 * doesn't cause data corruption. [ It could cause incorrect
-@@ -662,7 +676,10 @@ int ptep_clear_flush_young(struct vm_area_struct *vma,
- 	 * shouldn't really matter because there's no real memory
- 	 * pressure for swapout to react to. ]
- 	 */
--	return ptep_test_and_clear_young(vma, address, ptep);
-+	enable_pgtable_write();
-+	ret = ptep_test_and_clear_young(vma, address, ptep);
-+	disable_pgtable_write();
-+	return ret;
- }
- 
- #ifdef CONFIG_TRANSPARENT_HUGEPAGE
-@@ -673,7 +690,9 @@ int pmdp_clear_flush_young(struct vm_area_struct *vma,
- 
- 	VM_BUG_ON(address & ~HPAGE_PMD_MASK);
- 
-+	enable_pgtable_write();
- 	young = pmdp_test_and_clear_young(vma, address, pmdp);
-+	disable_pgtable_write();
- 	if (young)
- 		flush_tlb_range(vma, address, address + HPAGE_PMD_SIZE);
- 
-@@ -923,6 +942,30 @@ int pmd_free_pte_page(pmd_t *pmd, unsigned long addr)
- }
- 
- #ifdef CONFIG_PKS_PG_TABLES
-+static int _pks_protect(struct page *page, unsigned int cnt)
++static bool is_dmap_protected(unsigned long addr)
 +{
-+	set_memory_pks((unsigned long)page_address(page), cnt, PKS_KEY_PG_TABLES);
-+	return 0;
++	pgd_t *pgd;
++	p4d_t *p4d;
++	pud_t *pud;
++	pmd_t *pmd;
++	pte_t *pte;
++
++	pgd = init_mm.pgd + pgd_index(addr);
++	if (!pgd_present(*pgd))
++		return true;
++
++	p4d = p4d_offset(pgd, addr);
++	if (!p4d_present(*p4d) || (p4d_large(*p4d) && IS_TABLE_KEY(p4d_val(*p4d))))
++		return true;
++	else if (p4d_large(*p4d))
++		return false;
++
++	pud = pud_offset(p4d, addr);
++	if (!pud_present(*pud) || (pud_large(*pud) && IS_TABLE_KEY(pud_val(*pud))))
++		return true;
++	else if (pud_large(*pud))
++		return false;
++
++	pmd = pmd_offset(pud, addr);
++	if (!pmd_present(*pmd) || (pmd_large(*pmd) && IS_TABLE_KEY(pmd_val(*pmd))))
++		return true;
++	else if (pmd_large(*pmd))
++		return false;
++
++	pte = pte_offset_kernel(pmd, addr);
++	if (!pte_present(*pte) || IS_TABLE_KEY(pte_val(*pte)))
++		return true;
++
++	return false;
 +}
 +
-+static int _pks_unprotect(struct page *page, unsigned int cnt)
++static void ensure_table_protected(unsigned long pfn, void *vaddr, void *vend)
 +{
-+	set_memory_pks((unsigned long)page_address(page), cnt, 0);
-+	return 0;
++	unsigned long addr_table = (unsigned long)__va(pfn << PAGE_SHIFT);
++
++	if (is_dmap_protected(addr_table))
++		return;
++
++	if (set_memory_pks(addr_table, 1, PKS_KEY_PG_TABLES))
++		pr_warn("Failed to protect page table mapping 0x%pK-0x%pK\n", vaddr, vend);
 +}
 +
-+void enable_pgtable_write(void)
++typedef void (*traverse_cb)(unsigned long pfn, void *vaddr, void *vend);
++
++/*
++ * The pXX_page_vaddr() functions are half way done being renamed to pXX_pgtable(),
++ * leaving no pattern in the names, provide local copies of the missing pXX_pgtable()
++ * implementations for the time being so they can be used in the template below.
++ */
++
++static inline p4d_t *pgd_pgtable(pgd_t pgd)
 +{
-+	if (pks_tables_inited())
-+		pks_mk_readwrite(PKS_KEY_PG_TABLES);
++	return (p4d_t *)pgd_page_vaddr(pgd);
 +}
 +
-+void disable_pgtable_write(void)
-+{
-+	if (pks_tables_inited())
-+		pks_mk_readonly(PKS_KEY_PG_TABLES);
++#define TRAVERSE(upper, lower, ptrs_cnt, upper_size, skip) \
++static void traverse_##upper(upper##_t *upper, traverse_cb cb, unsigned long base) \
++{ \
++	unsigned long cur_addr = base; \
++	upper##_t *cur; \
++\
++	if (skip) { \
++		traverse_##lower((lower##_t *)upper, cb, cur_addr); \
++		return; \
++	} \
++\
++	for (cur = upper; cur < upper + ptrs_cnt; cur++) { \
++		/* \
++		 * Use native_foo_val() instead of foo_none() because pgd_none() always \
++		 * return 0 when in 4 level paging. \
++		 */ \
++		if (native_##upper##_val(*cur) && !upper##_large(*cur)) { \
++			void *vstart = (void *)sign_extend64(cur_addr, __VIRTUAL_MASK_SHIFT); \
++			void *vend = vstart + upper_size - 1; \
++\
++			cb(upper##_pfn(*cur), vstart, vend); \
++			traverse_##lower((lower##_t *)upper##_pgtable(*cur), cb, cur_addr); \
++		} \
++		cur_addr += upper_size; \
++	} \
 +}
 +
- bool pks_tables_inited(void)
- {
- 	return pks_tables_inited_val;
-@@ -930,11 +973,23 @@ bool pks_tables_inited(void)
- 
- static int __init pks_page_init(void)
- {
++static void traverse_pte(pte_t *pte, traverse_cb cb, unsigned long base) { }
++TRAVERSE(pmd, pte, PTRS_PER_PMD, PMD_SIZE, false)
++TRAVERSE(pud, pmd, PTRS_PER_PUD, PUD_SIZE, false)
++TRAVERSE(p4d, pud, PTRS_PER_P4D, P4D_SIZE, !pgtable_l5_enabled())
++TRAVERSE(pgd, p4d, PTRS_PER_PGD, PGDIR_SIZE, false)
++
++static void traverse_mm(struct mm_struct *mm, traverse_cb cb)
++{
++	cb(__pa(mm->pgd) >> PAGE_SHIFT, 0, (void *)-1);
++	traverse_pgd(mm->pgd, cb, 0);
++}
++
++static void free_maybe_reserved(struct page *page)
++{
++	if (PageReserved(page))
++		free_reserved_page(page);
++	else
++		__free_page(page);
++}
++
++struct pks_table_llnode {
++	struct llist_node node;
++	void *table;
++};
++
++/* PKS protect reserved dmap tables */
++static int __init init_pks_dmap_tables(void)
++{
++	static LLIST_HEAD(tables_to_covert);
++	struct pks_table_llnode *cur_entry;
++	struct llist_node *cur, *next;
++	struct pks_table_llnode *tmp;
++	bool fail_to_build_list = false;
++
 +	/*
-+	 * If PKS is not enabled, don't try to enable anything and don't
-+	 * report anything.
++	 * If pks tables failed to initialize, return the pages to the page
++	 * allocator, and don't enable dmap tables.
 +	 */
-+	if (!cpu_feature_enabled(X86_FEATURE_PKS) || !cpu_feature_enabled(X86_FEATURE_PKS_TABLES))
-+		return 0;
-+
- 	pks_tables_inited_val = !init_grouped_page_cache(&gpc_pks, GFP_KERNEL | PGTABLE_HIGHMEM,
--					       NULL, NULL);
-+					       _pks_protect, _pks_unprotect);
- 
--out:
--	return !pks_tables_inited_val;
-+	if (pks_tables_inited_val) {
-+		pr_info("PKS tables initialized\n");
++	if (!pks_tables_inited()) {
++		llist_for_each_safe(cur, next, llist_del_all(&tables_cache))
++			free_maybe_reserved(virt_to_page(cur));
 +		return 0;
 +	}
 +
-+	pr_warn("PKS tables failed to initialize\n");
-+	return 1;
- }
- 
- device_initcall(pks_page_init);
-diff --git a/arch/x86/mm/pkeys.c b/arch/x86/mm/pkeys.c
-index 201004586c2b..48a390722c06 100644
---- a/arch/x86/mm/pkeys.c
-+++ b/arch/x86/mm/pkeys.c
-@@ -302,6 +302,7 @@ static int __init create_initial_pkrs_value(void)
- 
- 	consumer_defaults[PKS_KEY_DEFAULT]          = PKR_RW_BIT;
- 	consumer_defaults[PKS_KEY_PGMAP_PROTECTION] = PKR_AD_BIT;
-+	consumer_defaults[PKS_KEY_PG_TABLES]        = PKR_WD_BIT;
- 
- 	/* Ensure the number of consumers is less than the number of keys */
- 	BUILD_BUG_ON(PKS_KEY_NR_CONSUMERS > PKS_NUM_PKEYS);
-diff --git a/include/linux/pkeys.h b/include/linux/pkeys.h
-index c06b47264c5d..42187a070df4 100644
---- a/include/linux/pkeys.h
-+++ b/include/linux/pkeys.h
-@@ -50,6 +50,7 @@ static inline bool arch_pkeys_enabled(void)
- enum pks_pkey_consumers {
- 	PKS_KEY_DEFAULT = 0, /* Must be 0 for default PTE values */
- 	PKS_KEY_PGMAP_PROTECTION,
-+	PKS_KEY_PG_TABLES,
- 	PKS_KEY_NR_CONSUMERS
- };
- extern u32 pkrs_init_value;
-diff --git a/mm/Kconfig b/mm/Kconfig
-index 4184d0a7531d..0f8e8595a396 100644
---- a/mm/Kconfig
-+++ b/mm/Kconfig
-@@ -845,6 +845,12 @@ config ARCH_ENABLE_SUPERVISOR_PKEYS
- 	def_bool y
- 	depends on PKS_TEST || GENERAL_PKS_USER
- 
-+config PKS_PG_TABLES
-+	bool "PKS write protected page tables"
-+	select GENERAL_PKS_USER
-+	depends on !HIGHMEM && !X86_PAE && SPARSEMEM_VMEMMAP
-+	depends on ARCH_HAS_SUPERVISOR_PKEYS
++	/* Build separate list of tables */
++	llist_for_each_safe(cur, next, llist_del_all(&tables_cache)) {
++		tmp = kmalloc(sizeof(*tmp), GFP_KERNEL);
++		if (!tmp) {
++			fail_to_build_list = true;
++			free_maybe_reserved(virt_to_page(cur));
++			continue;
++		}
++		tmp->table = cur;
++		llist_add(&tmp->node, &tables_to_covert);
++		llist_add(cur, &tables_cache);
++	}
 +
- config PERCPU_STATS
- 	bool "Collect percpu memory statistics"
- 	help
++	if (fail_to_build_list)
++		goto out_err;
++
++	/*
++	 * Tables in tables_cache can now be used, because they are being kept track
++	 * of tables_to_covert.
++	 */
++	dmap_tables_inited = true;
++
++	/*
++	 * PKS protect all tables in tables_to_covert. Some of them are also in tables_cache
++	 * and may get used in this process.
++	 */
++	while ((cur = llist_del_first(&tables_to_covert))) {
++		cur_entry = llist_entry(cur, struct pks_table_llnode, node);
++		set_memory_pks((unsigned long)cur_entry->table, 1, PKS_KEY_PG_TABLES);
++		kfree(cur_entry);
++	}
++
++	/*
++	 * It is safe to traverse while the callback ensure_table_protected() may
++	 * change the page tables, because CPA will only split pages and not merge
++	 * them. Any page used for the splits, will have already been protected in
++	 * a previous step, so they will not be missed if tables are mapped by a
++	 * structure that has already been traversed.
++	 */
++	traverse_mm(&init_mm, &ensure_table_protected);
++
++	return 0;
++out_err:
++	while ((cur = llist_del_first(&tables_to_covert))) {
++		cur_entry = llist_entry(cur, struct pks_table_llnode, node);
++		free_maybe_reserved(virt_to_page(cur));
++		kfree(cur_entry);
++	}
++	pr_warn("Unable to protect direct map page cache, direct map unprotected.\n");
++	return 0;
++}
++
++late_initcall(init_pks_dmap_tables);
++#endif /* CONFIG_PKS_PG_TABLES */
++
+ /*
+  * The testcases use internal knowledge of the implementation that shouldn't
+  * be exposed to the rest of the kernel. Include these directly here.
 -- 
 2.17.1
 
