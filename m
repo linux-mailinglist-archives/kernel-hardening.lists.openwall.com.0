@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-21350-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-21360-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from mother.openwall.net (mother.openwall.net [195.42.179.200])
-	by mail.lfdr.de (Postfix) with SMTP id DA3913F56A7
-	for <lists+kernel-hardening@lfdr.de>; Tue, 24 Aug 2021 05:25:41 +0200 (CEST)
-Received: (qmail 23732 invoked by uid 550); 24 Aug 2021 03:25:34 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 287533FBFB1
+	for <lists+kernel-hardening@lfdr.de>; Tue, 31 Aug 2021 02:02:19 +0200 (CEST)
+Received: (qmail 7469 invoked by uid 550); 31 Aug 2021 00:00:34 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,79 +13,128 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 23709 invoked from network); 24 Aug 2021 03:25:34 -0000
-From: ebiederm@xmission.com (Eric W. Biederman)
-To: "Ma\, XinjianX" <xinjianx.ma@intel.com>
-Cc: Alexey Gladkov <legion@kernel.org>,  "linux-kselftest\@vger.kernel.org" <linux-kselftest@vger.kernel.org>,  lkp <lkp@intel.com>,  "akpm\@linux-foundation.org" <akpm@linux-foundation.org>,  "axboe\@kernel.dk" <axboe@kernel.dk>,  "christian.brauner\@ubuntu.com" <christian.brauner@ubuntu.com>,  "containers\@lists.linux-foundation.org" <containers@lists.linux-foundation.org>,  "jannh\@google.com" <jannh@google.com>,  "keescook\@chromium.org" <keescook@chromium.org>,  "kernel-hardening\@lists.openwall.com" <kernel-hardening@lists.openwall.com>,  "linux-kernel\@vger.kernel.org" <linux-kernel@vger.kernel.org>,  "linux-mm\@kvack.org" <linux-mm@kvack.org>,  "oleg\@redhat.com" <oleg@redhat.com>,  "torvalds\@linux-foundation.org" <torvalds@linux-foundation.org>
-In-Reply-To: <06bb27f1d79243febf9ddc4633c4e084@intel.com> (XinjianX Ma's
-	message of "Tue, 24 Aug 2021 01:19:52 +0000")
-References: <d650b7794e264d5f8aa107644cc9784f@intel.com>
-	<87a6lgysxp.fsf@disp2133>
-	<20210818131117.x7omzb2wkjq7le3s@example.org>
-	<87o89ttqql.fsf@disp2133>
-	<20210819172618.qwrrw4m7wt33wfmz@example.org>
-	<87eeajswfc.fsf_-_@disp2133>
-	<06bb27f1d79243febf9ddc4633c4e084@intel.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-Date: Mon, 23 Aug 2021 22:24:17 -0500
-Message-ID: <87lf4rplsu.fsf@disp2133>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-XM-SPF: eid=1mIN3h-008tKu-MV;;;mid=<87lf4rplsu.fsf@disp2133>;;;hst=in01.mta.xmission.com;;;ip=68.227.160.95;;;frm=ebiederm@xmission.com;;;spf=neutral
-X-XM-AID: U2FsdGVkX1++AiEZW5KIHsfe2U3AKqShPsf05OHNwZw=
-X-SA-Exim-Connect-IP: 68.227.160.95
-X-SA-Exim-Mail-From: ebiederm@xmission.com
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on sa04.xmission.com
-X-Spam-Level: *
-X-Spam-Status: No, score=1.5 required=8.0 tests=ALL_TRUSTED,BAYES_50,
-	DCC_CHECK_NEGATIVE,T_TM2_M_HEADER_IN_MSG,XMSubLong,XM_Body_Dirty_Words
-	autolearn=disabled version=3.4.2
-X-Spam-Report: 
-	* -1.0 ALL_TRUSTED Passed through trusted hosts only via SMTP
-	*  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-	*      [score: 0.4999]
-	*  0.7 XMSubLong Long Subject
-	*  0.0 T_TM2_M_HEADER_IN_MSG BODY: No description available.
-	* -0.0 DCC_CHECK_NEGATIVE Not listed in DCC
-	*      [sa04 1397; Body=1 Fuz1=1 Fuz2=1]
-	*  1.0 XM_Body_Dirty_Words Contains a dirty word
-X-Spam-DCC: XMission; sa04 1397; Body=1 Fuz1=1 Fuz2=1 
-X-Spam-Combo: *;"Ma\, XinjianX" <xinjianx.ma@intel.com>
-X-Spam-Relay-Country: 
-X-Spam-Timing: total 2130 ms - load_scoreonly_sql: 0.06 (0.0%),
-	signal_user_changed: 13 (0.6%), b_tie_ro: 11 (0.5%), parse: 1.43
-	(0.1%), extract_message_metadata: 22 (1.0%), get_uri_detail_list: 1.64
-	(0.1%), tests_pri_-1000: 23 (1.1%), tests_pri_-950: 1.61 (0.1%),
-	tests_pri_-900: 1.32 (0.1%), tests_pri_-90: 386 (18.1%), check_bayes:
-	377 (17.7%), b_tokenize: 9 (0.4%), b_tok_get_all: 7 (0.3%),
-	b_comp_prob: 2.4 (0.1%), b_tok_touch_all: 355 (16.7%), b_finish: 1.17
-	(0.1%), tests_pri_0: 221 (10.4%), check_dkim_signature: 0.65 (0.0%),
-	check_dkim_adsp: 4.7 (0.2%), poll_dns_idle: 1430 (67.2%),
-	tests_pri_10: 4.4 (0.2%), tests_pri_500: 1451 (68.1%), rewrite_mail:
-	0.00 (0.0%)
-Subject: Re: [PATCH] ucounts: Fix regression preventing increasing of rlimits in init_user_ns
-X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
-X-SA-Exim-Scanned: Yes (on in01.mta.xmission.com)
+Received: (qmail 7290 invoked from network); 31 Aug 2021 00:00:30 -0000
+X-IronPort-AV: E=McAfee;i="6200,9189,10092"; a="197933699"
+X-IronPort-AV: E=Sophos;i="5.84,364,1620716400"; 
+   d="scan'208";a="197933699"
+X-IronPort-AV: E=Sophos;i="5.84,364,1620716400"; 
+   d="scan'208";a="530712788"
+From: Rick Edgecombe <rick.p.edgecombe@intel.com>
+To: dave.hansen@intel.com,
+	luto@kernel.org,
+	peterz@infradead.org,
+	x86@kernel.org,
+	akpm@linux-foundation.org,
+	keescook@chromium.org,
+	shakeelb@google.com,
+	vbabka@suse.cz,
+	rppt@kernel.org
+Cc: Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	linux-mm@kvack.org,
+	linux-hardening@vger.kernel.org,
+	kernel-hardening@lists.openwall.com,
+	ira.weiny@intel.com,
+	dan.j.williams@intel.com,
+	linux-kernel@vger.kernel.org
+Subject: [RFC PATCH v2 00/19] PKS write protected page tables
+Date: Mon, 30 Aug 2021 16:59:08 -0700
+Message-Id: <20210830235927.6443-1-rick.p.edgecombe@intel.com>
+X-Mailer: git-send-email 2.17.1
 
-"Ma, XinjianX" <xinjianx.ma@intel.com> writes:
+Hi,
 
->> -----Original Message-----
->> From: Eric W. Biederman <ebiederm@xmission.com>
->> ...
->> Reported-by: kernel test robot lkp@intel.com
-> Sorry, but <> around email address is needed 
-> Reported-by: kernel test robot <lkp@intel.com>
+This is a second RFC for the PKS write protected tables concept. I'm sharing to
+show the progress to interested people. I'd also appreciate any comments,
+especially on the direct map page table protection solution (patch 17).
 
-The change is already tested and pushed out so I really don't want to
-mess with it.  Especially as I am aiming to send it to Linus on
-Wednesday after it has had a chance to pass through linux-next and
-whatever automated tests are there.
+Since v1[1], the improvements are:
+ - Fully handle direct map page tables, and handle hotplug/unplug path.
+ - Create a debug time checker that scans page tables and verifies 
+   their protection.
+ - Fix odds-and-ends kernel page tables that showed up with debug 
+   checker. At this point all of the typical normal page tables should be
+   protected.
+ - Fix toggling of writablility for odds-and-ends page table modifications found
+   that don't use the normal helpers.
+ - Create atomic context grouped page allocator, after finding some page table
+   allocations that are passing GFP_ATOMIC.
+ - Create "soft" mode that warns and disables protection on violation instead
+   of oopsing.
+ - Boot parameters for disabling pks tables
+ - Change PageTable set clear to ctor/dtor (peterz)
+ - Remove VM_BUG_ON_PAGE in alloc_table() (Shakeel Butt) 
+ - PeterZ/Vlastimil had suggested to also build a non-PKS mode for use in  
+   debugging. I skipped it for now because the series was too big.
+ - Rebased to latest PKS core v7 [2]
 
-What does copying and pasting the Reported-by: tag as included in
-your original report cause to break?
+Also, Mike Rapoport has been experimenting[3] with this usage to work on how to
+share caches of permissioned/broken pages between use cases. This RFCv2 still
+uses the "grouped pages" concept, where each usage would maintain its own
+cache, but should be able to integrate with a central solution if something is
+developed.
 
-At this point I suspect that the danger of fat fingering something
-far outweighs whatever benefits might be gained by surrounding the
-email address with <> marks.
+Next I was planning to look into characterizing/tuning the performance, although
+what page allocation scheme is ultimately used will probably impact that.
 
-Eric
+This applies on top of the PKS core v7 series[2] and this patch[4]. Testing is
+still pretty light.
+
+This RFC has been acked by Dave Hansen.
+
+[1] https://lore.kernel.org/lkml/20210505003032.489164-1-rick.p.edgecombe@intel.com/
+[2] https://lore.kernel.org/lkml/20210804043231.2655537-1-ira.weiny@intel.com/
+[3] https://lore.kernel.org/lkml/20210823132513.15836-1-rppt@kernel.org/
+[4] https://lore.kernel.org/lkml/20210818221026.10794-1-rick.p.edgecombe@intel.com/
+
+Rick Edgecombe (19):
+  list: Support getting most recent element in list_lru
+  list: Support list head not in object for list_lru
+  x86/mm/cpa: Add grouped page allocations
+  mm: Explicitly zero page table lock ptr
+  x86, mm: Use cache of page tables
+  x86/mm/cpa: Add perm callbacks to grouped pages
+  x86/cpufeatures: Add feature for pks tables
+  x86/mm/cpa: Add get_grouped_page_atomic()
+  x86/mm: Support GFP_ATOMIC in alloc_table_node()
+  x86/mm: Use alloc_table() for fill_pte(), etc
+  mm/sparsemem: Use alloc_table() for table allocations
+  x86/mm: Use free_table in unmap path
+  mm/debug_vm_page_table: Use setters instead of WRITE_ONCE
+  x86/efi: Toggle table protections when copying
+  x86/mm/cpa: Add set_memory_pks()
+  x86/mm: Protect page tables with PKS
+  x86/mm/cpa: PKS protect direct map page tables
+  x86/mm: Add PKS table soft mode
+  x86/mm: Add PKS table debug checking
+
+ .../admin-guide/kernel-parameters.txt         |   4 +
+ arch/x86/boot/compressed/ident_map_64.c       |   5 +
+ arch/x86/include/asm/cpufeatures.h            |   2 +-
+ arch/x86/include/asm/pgalloc.h                |   6 +-
+ arch/x86/include/asm/pgtable.h                |  31 +-
+ arch/x86/include/asm/pgtable_64.h             |  33 +-
+ arch/x86/include/asm/pkeys_common.h           |   1 -
+ arch/x86/include/asm/set_memory.h             |  24 +
+ arch/x86/mm/init.c                            |  90 +++
+ arch/x86/mm/init_64.c                         |  29 +-
+ arch/x86/mm/pat/set_memory.c                  | 527 +++++++++++++++++-
+ arch/x86/mm/pgtable.c                         | 183 +++++-
+ arch/x86/mm/pkeys.c                           |   4 +
+ arch/x86/platform/efi/efi_64.c                |   8 +
+ include/asm-generic/pgalloc.h                 |  46 +-
+ include/linux/list_lru.h                      |  26 +
+ include/linux/mm.h                            |  16 +-
+ include/linux/pkeys.h                         |   1 +
+ mm/Kconfig                                    |  23 +
+ mm/debug_vm_pgtable.c                         |  36 +-
+ mm/list_lru.c                                 |  38 +-
+ mm/memory.c                                   |   1 +
+ mm/sparse-vmemmap.c                           |  22 +-
+ mm/swap.c                                     |   6 +
+ mm/swap_state.c                               |   5 +
+ .../arch/x86/include/asm/disabled-features.h  |   8 +-
+ 26 files changed, 1123 insertions(+), 52 deletions(-)
+
+-- 
+2.17.1
+
