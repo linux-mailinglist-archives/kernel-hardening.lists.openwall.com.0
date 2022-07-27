@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-21567-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-21569-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from second.openwall.net (second.openwall.net [193.110.157.125])
-	by mail.lfdr.de (Postfix) with SMTP id CA0A055F91C
-	for <lists+kernel-hardening@lfdr.de>; Wed, 29 Jun 2022 09:35:29 +0200 (CEST)
-Received: (qmail 28445 invoked by uid 550); 29 Jun 2022 07:35:20 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 7E9EF582ACB
+	for <lists+kernel-hardening@lfdr.de>; Wed, 27 Jul 2022 18:24:53 +0200 (CEST)
+Received: (qmail 5988 invoked by uid 550); 27 Jul 2022 16:24:42 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,136 +13,161 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 28410 invoked from network); 29 Jun 2022 07:35:19 -0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=JZioiwLiS/aTudu3ZdIMkbQOT2nOWmUr/ShPOGAHOvF1pzK+Hb/xsT5stxk27ruStz4W/yfwtQQtWCfEu8hGRuYInJ1DOzqoNqk+naSy7d+X5s76CeYWK+aOfKd31eCc5m6L4izQBqhfK4U8L9QAT/hTOIwkZH6SaSQx51i3vpcmX16NF++AOTXUb4+T3u0J43AUIGFzC40jw4TCjWCMjnVcj/62kBf5YNlGGjDCX1bRyLJai9PxJ8SYfvuzs56Z+ncjDMaLSqILtMSkJmpzFTIB7Wg+t7Bygci3qtESJucwnAe0+dGyvr7ryj1+XrviLkabwiQbV4fPtqmS8hclVQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AefbEkyJvWDBbSgS8lQMvKbuzWFfTOPvMReMuuTVRt8=;
- b=LVNgcZ2YhH83HujEdLIEc8wy2i/3dvUrD3aIsj/LtIqMCf2rolY/EyN/hBwnN5s0SNA/0Yit7U47/5mnXlISGzSS6YuDM585gxtnXn9TMMJmXAa8qbkCPgtmynoIfB+EwonH/0+PuUvmxUB+K2MqVFxh+5tg71ErssgEg11PHCrrLOI5Aa6mOspDlm/SEzcMAZcuJv5n88nHcTViKKuQemPEkqGBl6x2u+semqPQSpn9tWYUFNOqkgQ3JIMJF0P+zO7/pzFGdtoj7sgP3jj2HLABvowQ6EYxPE7eC4InS3zN3Blm0nA7usXUQfkI+NR150kgnI+YbWa6yZvRwt2iIw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=csgroup.eu; dmarc=pass action=none header.from=csgroup.eu;
- dkim=pass header.d=csgroup.eu; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=csgroup.eu;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AefbEkyJvWDBbSgS8lQMvKbuzWFfTOPvMReMuuTVRt8=;
- b=dCLJPF/uXMMeR6cxOKU7BislDnHL3l+Wt6gX6VtOlsZ8d85VmJmYGn3KUBAnMUU5kLL6MVFf/Cf1CuVlQtB9Wvn14+sgzgh8gyBzQX8pV83R/XcZTYo5cd/8EjNZvz5ERaAF1NSGuSaox2v2Net61jqvbahhXW+HK8pD3bUJ91g7LPajwWaBAAA0zPt4FYv0uPU0g2hozHsO1wd47eMZ6NxBdst/UXEuiwdiwB8D/Ika6H5g/HncLP+0zy/0c+VKaeiKk/Q0igDjefYRr03RHoVp2o1Ydxy2G1v2k0earQApE6Riv2ohcWfCo0vX0hxClYk7Vb9jTxLzzwSZBxrPYQ==
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
-To: "GONG, Ruiqi" <gongruiqi1@huawei.com>, Kees Cook <keescook@chromium.org>,
-	Marco Elver <elver@google.com>
-CC: Xiu Jianfeng <xiujianfeng@huawei.com>,
-	"kernel-hardening@lists.openwall.com" <kernel-hardening@lists.openwall.com>,
-	"linuxppc-dev@lists.ozlabs.org" <linuxppc-dev@lists.ozlabs.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2] stack: Declare {randomize_,}kstack_offset to fix
- Sparse warnings
-Thread-Topic: [PATCH v2] stack: Declare {randomize_,}kstack_offset to fix
- Sparse warnings
-Thread-Index: AQHYi4kwZkw/dESsW0e+vxWYeoL4l61l/mwA
-Date: Wed, 29 Jun 2022 07:35:06 +0000
-Message-ID: <b59a7b51-141e-cc80-eb09-a357d3853c11@csgroup.eu>
-References: <20220629060423.2515693-1-gongruiqi1@huawei.com>
-In-Reply-To: <20220629060423.2515693-1-gongruiqi1@huawei.com>
-Accept-Language: fr-FR, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=csgroup.eu;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: c7f7b0cb-3a87-4f7f-56d8-08da59a1e32d
-x-ms-traffictypediagnostic: PR0P264MB2885:EE_
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- +UOL0iQV2UAyPiA/u1+c6oLXdMHw0xgXVo+1iRjZvalNrPkQTYLeM/uUQXZ2H1tmrHvqFUi/wgw/wht/Hq4ICsZjCzx06l439+IZGJf6VGIVMkgSbcU7IPdf7ZoXqzsSJmWs30FkZS3bJadIZIuRRuAohcBzarp/75e11YDmBukjQ5GxzRVLgUJYaWRf6ux76INGj6SqdWaN6CaRb0cPdyuTwPBd4WfT7985dJQCSseLGyFQHHyqDSjB2R8fC3F5uxufwvvRsxO3zgTf6eYHjC2Tm4VVXoNw+48G1ch5hjaawNyGgqDdp9bYQSoepVItmdXBbKBvKI4x3EVNu5dl7OpodGqwi0WkIZEAClEFXis966MakYj144zVbOMbltt64fFN+XHz2sGXtgAJdGJE0V6Zx0oBUQqgmFyK1zPoOjXoRMOefaobO32oAikD62Ejz7hledhtfzudODYKSeTfLzV+naHfKRe6SJ7bfr+bPLbdDtXJm9vWsaNp04YsZph1VoPZNgQwt3yHw51hQFfJRiUSqr4/nwg8VlnI4ycIYwEaYspOT1ChCBMk3hcoDNjHkliDtlYITJ4dCFsk8gQuCjS6mxtIQWyInan+EJcZBn6dfFWhYujUArNoTN670MRLXlrodzxlKKp66rPBL9zKlunGce4dQiXgBXsVGTzcIh0c4P/4sLqMh4scjWvpyKZdmr8yMBTgbUy0nTDy+wYKenDWftKX9/I/VZpzQ/+Q9Twn9s2HvtjXVnHgKcFkgwbDnTEkTyUmjGZmW3CrCpTXZd8V5lYLA+ODFCA/mrYrAhBFlbYkxgzu5EhXo2T9c5FeMWIOKc4e6uULpGd4I4SOIrIuAXYNKR0JZY36GyL65AKU7byvX1Rfx255pVsmNMFXFcDNv05OSjNUDsWEy0E3Ew==
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MRZP264MB2988.FRAP264.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230016)(4636009)(366004)(346002)(376002)(136003)(39850400004)(396003)(38100700002)(122000001)(186003)(8936002)(36756003)(2906002)(31686004)(5660300002)(83380400001)(316002)(66574015)(110136005)(54906003)(2616005)(64756008)(86362001)(66476007)(966005)(66556008)(6486002)(44832011)(8676002)(31696002)(66946007)(71200400001)(4326008)(38070700005)(91956017)(6506007)(76116006)(6512007)(26005)(478600001)(41300700001)(66446008)(45980500001)(43740500002);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?a1hkWXFRaXliUkZTUnpxdHY1aWNqeWlrSGxtZEpJM2lnczhOMWJXT0ZIY1FE?=
- =?utf-8?B?bUNqeHVIa0V2TDZMa2tiZDFPRUNKRXVvN0s1N0FGMHMyc1kzNDk0bVBWQVZM?=
- =?utf-8?B?WHJxTi9oam9iQlJyOExjL0tYVnRXVU9neEpJL29ib0pOalZoL0Vpa0RyNmZ5?=
- =?utf-8?B?OW41QlQzUUFKSmFkYnJRdWUwZmFJOGR4M1RDK0xoS2ZOM3JiSWxyZFdwNlFp?=
- =?utf-8?B?MVJ3SGZEazdMOXkraGgzRnlLdlZlS0YraXVSNExuQ09DVWxXeDIveXpZU3pY?=
- =?utf-8?B?THkrdDVhZ014ZUQ0TjZmVGc4UkV2Ti9KVkNzM0wzMFo3ejF6dUJHWFYxQ2pq?=
- =?utf-8?B?V3NIaHQ5eklBeDlPQXRoWFFmemN6U1E5MHBpQzc0K1pQLy9Kam5yMzIxMDM1?=
- =?utf-8?B?ZmFFU0dQTDNxVWgxRG5yNnNmdnJLZjRmb1dJOTd4OGtkbnJJZ1VEVGhOWEV3?=
- =?utf-8?B?RDZRQm1hRUVwUVhtZ21YdXllVlFkSStmUU1tQm42MWYxaGxTSmVQM3h5bkYx?=
- =?utf-8?B?ZXcyTG01UllscU1rN2FLWTQ5RHlUS2xPM0h6Tko1dEI3OU1nMkJyWmswSlVQ?=
- =?utf-8?B?aFVyT3pGdEFzK2g2ejdMZ2RWbVg5NHRCb0VTVHJRbWFOQVBBL05LVmsrUTBO?=
- =?utf-8?B?TG4raDZSTjJVMC9uODRJLzJNWE84TTVOaDVSVDdBcm5vdFhGOG5rU2d2N2J2?=
- =?utf-8?B?aVRBYVZwUjEybnNNNjJhWjJSZU1xVFVyRkRRR2tPSGZpWk0yN1J2Vy9xVFNv?=
- =?utf-8?B?dFpuVkgyK0tYK3NKK0xGL1Z2VTFvRHZRRmd0SkJSaWttSlR4T0VjTXBiTkRY?=
- =?utf-8?B?OXZocGdoYXBFajJjOHJkWlAzMis3U1FEd0pkUFdNSm0vU3ZTbXBKWlE3aW5H?=
- =?utf-8?B?VjNJNE1mazhKMVFOYWlIaXIxdmpheHJGekxId1VLY1AvMnVDQ3M1TUpaUDln?=
- =?utf-8?B?S1BIdUJ4WUdYTHZUeFMydnd0S0I3MUlkMkUvejlTVUkwd0hWTHhRRlByYkFI?=
- =?utf-8?B?YUFtRm9YQUJ1R0NLdGpMRHR0UW4yOWl1NGRoS2N3bHBLSDVTaW9qczViWmEz?=
- =?utf-8?B?OTI1Q1lDRUIvaWxlUDZwRWl2RUNSdy9DWEJXaDBuNzNGcDFCcFZKSEhZUitG?=
- =?utf-8?B?bk1wQzd4UjZHRHlxYjMvK1JWYWxna3p5Tm9HaFEzM1dla3cxTFhaT0xUWlQx?=
- =?utf-8?B?VFVEaHV1aFdwMjdjYlFaeFlmWWxaS2ZlU2Q5clZqVUV2YWlkMFlRV1lhTGcw?=
- =?utf-8?B?cVFGaXQzd1NaTlRxcjBKMzdvZk9ycjA1SjdFREVkcGtDOEU5aW9IdWFYeUNo?=
- =?utf-8?B?QTM3TnJsbmQ0aEVPR0RsY0RhODJmU2x1WWNaVVNhcFZ1dUM4cEFMV0liWXp1?=
- =?utf-8?B?TE5nRFdyZlVIVjFZSGNGaCtkUS9TYjQrOVpzcmxqd25ZUS90OGNZT3NaLzBh?=
- =?utf-8?B?TTlHbzJjV1VOZjVFSitDbXU3QURkUjVORUhpeUV0QXpQRkkvUWJrbDE1VkZT?=
- =?utf-8?B?R29qL2swcHIxS2lsc0N1YWNBSTVYSXVSZDJ3ZU5zbTJkcmZkMktQeFFJMmxz?=
- =?utf-8?B?N2NBbVNCdW5xckFjTVg4R1BBeW95cHZyY1hXNXFZbTFJRS9WNDJWOWZhNk1u?=
- =?utf-8?B?Z1ZXemdlcGZwR2NLZ051djZQS0lLVjc1Q1pSUTFmcGR6UjJBSTVlK29LU2tW?=
- =?utf-8?B?TXpPRkVjL1pjeDJXQkpRVkk4WmJEeHdaSm1xOVN0S3VaL0xWSnY2RjJMQlhP?=
- =?utf-8?B?VFhINmV1TTVodEVLOGQ3VkJwQzlHSngrWlF0d1pKdDI0N1pmMi9sUFdNR2Ew?=
- =?utf-8?B?a1Zuc2lFMldjbXV0azJBTEphRXl6VnFCaC8yZ3RnTlpFb21jaXFLY0RiY3FV?=
- =?utf-8?B?cXNxWlAyeXNOZmFIRno1eUJzZ2hKNWdTUTdqMEhWQVhTWkkyc0YrK3ozYXZJ?=
- =?utf-8?B?aVdMdzZxWkJBbHVrbldCL3BsZk9XSjJma0pvTUU1ZVE4bUt1NEhmaGJYTXdQ?=
- =?utf-8?B?MUVDeHhrRUZ4VGR6Z2J5ZVZaWDdXd3lmdWJmZE1aT1llVVRjQWFielE2SUF1?=
- =?utf-8?B?OHRCa2xTZDdUTWJOZ1phbENXRW5oRk9rdjFza09peXdVQTJCUTNCamFGeFV0?=
- =?utf-8?B?MkttRU1ITEFFUWczVVJDNGs5Zy9rSTNvZUNoTWdnMENMN1J5eFVFTVZxY0ox?=
- =?utf-8?Q?QOgbK1V1amk/X5Honr7yOJM=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <F85E99B6A240D6409A99EDAA13F70989@FRAP264.PROD.OUTLOOK.COM>
-Content-Transfer-Encoding: base64
+Delivered-To: moderator for kernel-hardening@lists.openwall.com
+Received: (qmail 1809 invoked from network); 27 Jul 2022 16:17:18 -0000
+Subject: Re: [PATCH] Introduce the pkill_on_warn boot parameter
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+ Petr Mladek <pmladek@suse.com>
+Cc: "Paul E. McKenney" <paulmck@kernel.org>,
+ Alexander Popov <alex.popov@linux.com>, Jonathan Corbet <corbet@lwn.net>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Thomas Gleixner <tglx@linutronix.de>, Peter Zijlstra <peterz@infradead.org>,
+ Joerg Roedel <jroedel@suse.de>, Maciej Rozycki <macro@orcam.me.uk>,
+ Muchun Song <songmuchun@bytedance.com>,
+ Viresh Kumar <viresh.kumar@linaro.org>, Robin Murphy <robin.murphy@arm.com>,
+ Randy Dunlap <rdunlap@infradead.org>, Lu Baolu <baolu.lu@linux.intel.com>,
+ Kees Cook <keescook@chromium.org>, Luis Chamberlain <mcgrof@kernel.org>,
+ Wei Liu <wl@xen.org>, John Ogness <john.ogness@linutronix.de>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>,
+ Christophe Leroy <christophe.leroy@csgroup.eu>, Jann Horn
+ <jannh@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Mark Rutland <mark.rutland@arm.com>, Andy Lutomirski <luto@kernel.org>,
+ Dave Hansen <dave.hansen@linux.intel.com>,
+ Steven Rostedt <rostedt@goodmis.org>, Thomas Garnier <thgarnie@google.com>,
+ Will Deacon <will.deacon@arm.com>, Ard Biesheuvel
+ <ard.biesheuvel@linaro.org>, Laura Abbott <labbott@redhat.com>,
+ David S Miller <davem@davemloft.net>, Borislav Petkov <bp@alien8.de>,
+ Kernel Hardening <kernel-hardening@lists.openwall.com>,
+ linux-hardening@vger.kernel.org,
+ "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, notify@kernel.org
+References: <20210929185823.499268-1-alex.popov@linux.com>
+ <d290202d-a72d-0821-9edf-efbecf6f6cef@linux.com>
+ <20210929194924.GA880162@paulmck-ThinkPad-P17-Gen-1> <YVWAPXSzFNbHz6+U@alley>
+ <CAHk-=widOm3FXMPXXK0cVaoFuy3jCk65=5VweLceQCuWdep=Hg@mail.gmail.com>
+From: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Autocrypt: addr=khoroshilov@ispras.ru; prefer-encrypt=mutual; keydata=
+ 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
+ kK2E04Fb+Zk1eJvHYRc=
+Message-ID: <7c567acd-1cc1-a480-ca5a-d50a9c5a69ef@ispras.ru>
+Date: Wed, 27 Jul 2022 19:17:04 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-X-OriginatorOrg: csgroup.eu
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MRZP264MB2988.FRAP264.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: c7f7b0cb-3a87-4f7f-56d8-08da59a1e32d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Jun 2022 07:35:06.1883
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 9914def7-b676-4fda-8815-5d49fb3b45c8
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: e0NpedwdjljiMYbkqVTV37qVweGrGnDALcVpjf05/WwvRiSaUxj9PLYpak7m5j31z6XR75F/gkOwkaQMM/nj8xPITVSUjxfIi6MdT4aLWdo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR0P264MB2885
+In-Reply-To: <CAHk-=widOm3FXMPXXK0cVaoFuy3jCk65=5VweLceQCuWdep=Hg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 
-DQoNCkxlIDI5LzA2LzIwMjIgw6AgMDg6MDQsIEdPTkcsIFJ1aXFpIGEgw6ljcml0wqA6DQo+IFtW
-b3VzIG5lIHJlY2V2ZXogcGFzIHNvdXZlbnQgZGUgY291cnJpZXJzIGRlIGdvbmdydWlxaTFAaHVh
-d2VpLmNvbS4gRMOpY291dnJleiBwb3VycXVvaSBjZWNpIGVzdCBpbXBvcnRhbnQgw6AgaHR0cHM6
-Ly9ha2EubXMvTGVhcm5BYm91dFNlbmRlcklkZW50aWZpY2F0aW9uIF0NCj4gDQo+IEZpeCB0aGUg
-Zm9sbG93aW5nIFNwYXJzZSB3YXJuaW5ncyB0aGF0IGdvdCBub3RpY2VkIHdoZW4gdGhlIFBQQy1k
-ZXYNCj4gcGF0Y2h3b3JrIHdhcyBjaGVja2luZyBhbm90aGVyIHBhdGNoIChzZWUgdGhlIGxpbmsg
-YmVsb3cpOg0KPiANCj4gaW5pdC9tYWluLmM6ODYyOjE6IHdhcm5pbmc6IHN5bWJvbCAncmFuZG9t
-aXplX2tzdGFja19vZmZzZXQnIHdhcyBub3QgZGVjbGFyZWQuIFNob3VsZCBpdCBiZSBzdGF0aWM/
-DQo+IGluaXQvbWFpbi5jOjg2NDoxOiB3YXJuaW5nOiBzeW1ib2wgJ2tzdGFja19vZmZzZXQnIHdh
-cyBub3QgZGVjbGFyZWQuIFNob3VsZCBpdCBiZSBzdGF0aWM/DQo+IA0KPiBXaGljaCBpbiBmYWN0
-IGFyZSB0cmlnZ2VyZWQgb24gYWxsIGFyY2hpdGVjdHVyZXMgdGhhdCBoYXZlDQo+IEhBVkVfQVJD
-SF9SQU5ET01JWkVfS1NUQUNLX09GRlNFVCBzdXBwb3J0IChmb3IgaW5zdGFuY2VzIHg4NiwgYXJt
-NjQNCj4gZXRjKS4NCj4gDQo+IExpbms6IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL2xrbWwvZTdi
-MGQ2OGItOTE0ZC03MjgzLTgyN2MtMTAxOTg4OTIzOTI5QGh1YXdlaS5jb20vVC8jbTQ5YjJkNDQ5
-MDEyMTQ0NWNlNGJmNzY1MzUwMGFiYTU5ZWVmY2I2N2YNCj4gQ2M6IENocmlzdG9waGUgTGVyb3kg
-PGNocmlzdG9waGUubGVyb3lAY3Nncm91cC5ldT4NCj4gQ2M6IFhpdSBKaWFuZmVuZyA8eGl1amlh
-bmZlbmdAaHVhd2VpLmNvbT4NCj4gU2lnbmVkLW9mZi1ieTogR09ORywgUnVpcWkgPGdvbmdydWlx
-aTFAaHVhd2VpLmNvbT4NCg0KUmV2aWV3ZWQtYnk6IENocmlzdG9waGUgTGVyb3kgPGNocmlzdG9w
-aGUubGVyb3lAY3Nncm91cC5ldT4NCg0KPiAtLS0NCj4gDQo+IHYyOiByZW1vdmUgdW5uZWNlc3Nh
-cnkgI2lmZGVmIGFyb3VuZCB0aGUgaGVhZGVyDQo+IA0KPiAgIGluaXQvbWFpbi5jIHwgMSArDQo+
-ICAgMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspDQo+IA0KPiBkaWZmIC0tZ2l0IGEvaW5p
-dC9tYWluLmMgYi9pbml0L21haW4uYw0KPiBpbmRleCBlMjQ5MDM4N2RiMmIuLmViOWJmN2M1YjI4
-YiAxMDA2NDQNCj4gLS0tIGEvaW5pdC9tYWluLmMNCj4gKysrIGIvaW5pdC9tYWluLmMNCj4gQEAg
-LTk5LDYgKzk5LDcgQEANCj4gICAjaW5jbHVkZSA8bGludXgva2NzYW4uaD4NCj4gICAjaW5jbHVk
-ZSA8bGludXgvaW5pdF9zeXNjYWxscy5oPg0KPiAgICNpbmNsdWRlIDxsaW51eC9zdGFja2RlcG90
-Lmg+DQo+ICsjaW5jbHVkZSA8bGludXgvcmFuZG9taXplX2tzdGFjay5oPg0KPiAgICNpbmNsdWRl
-IDxuZXQvbmV0X25hbWVzcGFjZS5oPg0KPiANCj4gICAjaW5jbHVkZSA8YXNtL2lvLmg+DQo+IC0t
-DQo+IDIuMjUuMQ0KPiA=
+On 01.10.2021 22:59, Linus Torvalds wrote:
+> On Thu, Sep 30, 2021 at 2:15 AM Petr Mladek <pmladek@suse.com> wrote:
+>>
+>> Honestly, I am not sure if panic_on_warn() or the new pkill_on_warn()
+>> work as expected. I wonder who uses it in practice and what is
+>> the experience.
+> 
+> Afaik, there are only two valid uses for panic-on-warn:
+> 
+>  (a) test boxes (particularly VM's) that are literally running things
+> like syzbot and want to report any kernel warnings
+> 
+>  (b) the "interchangeable production machinery" fail-fast kind of situation
+> 
+> So in that (a) case, it's literally that you consider a warning to be
+> a failure case, and just want to stop. Very useful as a way to get
+> notified by syzbot that "oh, that assert can actually trigger".
+> 
+> And the (b) case is more of a "we have 150 million machines, we expect
+> about a thousand of them to fail for any random reason any day
+> _anyway_ - perhaps simply due to hardware failure, and we'd rather
+> take a machine down quickly and then perhaps look at why only much
+> later when we have some pattern to the failures".
+> 
+> You shouldn't expect panic-on-warn to ever be the case for any actual
+> production machine that _matters_. If it is, that production
+> maintainer only has themselves to blame if they set that flag.
+> 
+> But yes, the expectation is that warnings are for "this can't happen,
+> but if it does, it's not necessarily fatal, I want to know about it so
+> that I can think about it".
+> 
+> So it might be a case that you don't handle, but that isn't
+> necessarily _wrong_ to not handle. You are ok returning an error like
+> -ENOSYS for that case, for example, but at the same time you are "If
+> somebody uses this, we should perhaps react to it".
+> 
+> In many cases, a "pr_warn()" is much better. But if you are unsure
+> just _how_ the situation can happen, and want a call trace and
+> information about what process did it, and it really is a "this
+> shouldn't ever happen" situation, a WARN_ON() or a WARN_ON_ONCE() is
+> certainly not wrong.
+> 
+> So think of WARN_ON() as basically an assert, but an assert with the
+> intention to be able to continue so that the assert can actually be
+> reported. BUG_ON() and friends easily result in a machine that is
+> dead. That's unacceptable.
+
+Hi Linus,
+
+Coming back to the discussion of WARN_ON()/pr_warn("WARNING:") semantics.
+
+We see a number of cases where WARNING is used to inform userspace that
+it is doing something wrong, e.g.
+https://elixir.bootlin.com/linux/v5.19-rc8/source/net/can/j1939/socket.c#L181
+https://elixir.bootlin.com/linux/v5.19-rc8/source/drivers/video/fbdev/core/fbmem.c#L1023
+
+It is definitely useful, but it does not make sense in case of fuzzing
+when the userspace should do wrong things and check if kernel behaves
+correctly.
+
+As a result we have warnings with two different intentions:
+- warn that something wrong happens in kernel, but we are able to continue;
+- warn userspace that it is doing something wrong.
+
+During fuzzing we would like to report the former and to ignore the
+latter. Are any ideas how these intentions can be recognized automatically?
+
+Best regards,
+Alexey
+
