@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-21605-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-21608-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from second.openwall.net (second.openwall.net [193.110.157.125])
-	by mail.lfdr.de (Postfix) with SMTP id A7A5E67CC21
-	for <lists+kernel-hardening@lfdr.de>; Thu, 26 Jan 2023 14:28:46 +0100 (CET)
-Received: (qmail 1406 invoked by uid 550); 26 Jan 2023 13:28:37 -0000
+	by mail.lfdr.de (Postfix) with SMTP id C96C567CCA6
+	for <lists+kernel-hardening@lfdr.de>; Thu, 26 Jan 2023 14:50:29 +0100 (CET)
+Received: (qmail 26581 invoked by uid 550); 26 Jan 2023 13:50:22 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,203 +13,166 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 1383 invoked from network); 26 Jan 2023 13:28:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1674739716; x=1706275716;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=QMZoErfyC+e/7CMDuR5fEeg4evQf7dLFcE1ExakYo4w=;
-  b=Fs5OcYtB9resohJ+bs0j+LpS9EeVM65m5kxmsB2iRevQ9mZA9byoF6dg
-   tU8Z/St6sZqpw7asOf3v6haKDBtyskbbSBYPdQlilKCEqfwXehYGdn1kp
-   4bKYTZp0+MNu9JFYfMDTiI6s1NLlZDncUNdYaxWauF+n9Q1QiZ7Ow54Zt
-   vdmLQJM3i3wvckmpahyiaKf494JjqjTrVWSRp+dl8RgkKgIwpRPYARyvx
-   O6NHNpbOKSriJoF44ZvvND/qSdV8JA9pNblsgGIgX247EeLsxWz+PDCNH
-   z0s577vzl71ORB9EWpXCIjZPH8ksMFqXr/J+JrQicYIdMJ6diVws0hafx
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10601"; a="413037642"
-X-IronPort-AV: E=Sophos;i="5.97,248,1669104000"; 
-   d="scan'208";a="413037642"
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10601"; a="771136249"
-X-IronPort-AV: E=Sophos;i="5.97,248,1669104000"; 
-   d="scan'208";a="771136249"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=TnaPaJ+8YZr7ToXe7wDSK83MctrnlyGnEPgW/Bs+rTVhOR/DMUpyi3ZdDrqsg/s6sDbdrJ/ScsOELbu6wcM/TqsPyx3OKuKJabsfNMBB5ieb3LP8GIyLjfBPjaS34u7O/hdgrV2c7EBioX+TfmueWZREC98d3jQPHcBI4ZKqG1LWCWd1q319Wnw+L9o9EJZjmE1NpkdUMSTzum14AkOgZzaaNP/xjy6lM34hZNU62vqHZAxGQP3q5IIv8lU19PADE4qppUAekratiIOTmCOEQJlwS+95EPZIpRz5UPv7fN1+VWV5a8lzRrrO1wYBSTO9TwpUMkBsYSnnt355UMeg1A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QMZoErfyC+e/7CMDuR5fEeg4evQf7dLFcE1ExakYo4w=;
- b=UaifEKqH0f3w0PKPkxAW4FcmmWve9UNAwQAxl8I6SDROxbwsKrT0IeAHz9mM/DTmtrrktxM5ezZN+shG7ZAAfh6Iip9CoP28ib5fAk4sZifwosIkt8jakh74W0cPhX1SZqfWcQeUeu28jMoi8kxghOrzmjrUSomg0ZgNjS/k3RH8J3H93FE9JVuBHWkZjbqvGfyplunedHWdB7CnRSutVwKkeq0horNKf+Wiu3b9+GsJuiMI4o67krdgPfgM7/+9gP2GSDFWQPCSHPaPVgBEwZlCIS3wmTmMxqaISLNfaknL/oqykzxUSLys2JelmQmV6BC3DQEWii4iQiW9cLgySw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-From: "Reshetova, Elena" <elena.reshetova@intel.com>
-To: Leon Romanovsky <leon@kernel.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Shishkin, Alexander"
-	<alexander.shishkin@intel.com>, "Shutemov, Kirill"
-	<kirill.shutemov@intel.com>, "Kuppuswamy, Sathyanarayanan"
-	<sathyanarayanan.kuppuswamy@intel.com>, "Kleen, Andi" <andi.kleen@intel.com>,
-	"Hansen, Dave" <dave.hansen@intel.com>, Thomas Gleixner <tglx@linutronix.de>,
-	Peter Zijlstra <peterz@infradead.org>, "Wunner, Lukas"
-	<lukas.wunner@intel.com>, Mika Westerberg <mika.westerberg@linux.intel.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
-	"Poimboe, Josh" <jpoimboe@redhat.com>, "aarcange@redhat.com"
-	<aarcange@redhat.com>, Cfir Cohen <cfir@google.com>, Marc Orr
-	<marcorr@google.com>, "jbachmann@google.com" <jbachmann@google.com>,
-	"pgonda@google.com" <pgonda@google.com>, "keescook@chromium.org"
-	<keescook@chromium.org>, James Morris <jmorris@namei.org>, Michael Kelley
-	<mikelley@microsoft.com>, "Lange, Jon" <jlange@microsoft.com>,
-	"linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>, "Linux Kernel
- Mailing List" <linux-kernel@vger.kernel.org>, Kernel Hardening
-	<kernel-hardening@lists.openwall.com>
-Subject: RE: Linux guest kernel threat model for Confidential Computing
-Thread-Topic: Linux guest kernel threat model for Confidential Computing
-Thread-Index: AdkwsXY+8ptYLAlAQXCgWg2jZ1ntPwACTigAAAR067AAKubQgAAALAEwAAJJbIAAAYhDQA==
-Date: Thu, 26 Jan 2023 13:28:15 +0000
-Message-ID: <DM8PR11MB57507D9C941D77E148EE9E87E7CF9@DM8PR11MB5750.namprd11.prod.outlook.com>
+Received: (qmail 26552 invoked from network); 26 Jan 2023 13:50:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1674741005;
+	bh=hJnAv06Ctj8m84GdTXHU08N55+6Z6UhZb5afVPxfAI0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=njVesddcTFbXraQe46NyjJdxG2wdeVAFplYs7egIwh8AVxZXK1uD37AMpNQW29mBI
+	 VLd2bj7IuM/NJSUvDeIAriFOLW/lBUzcbESdBccP3XheHwTHfTe8z9tIY/6HDoJQUs
+	 nXKNPeTGKVgJ3Q/Bqn4JWi66J36AN5edOC9X/hBN8/3SxpG7+t4sGjjW9xmrXh0O9z
+	 mTcGlQLi088lqJ0zA7wd1t1lO7QoNSB3/l34RoKvlYzrSChtsDo6Dlxtkw5E67bXoa
+	 BNFsnEpfGFJ3XlH1dQBzpxIAyAGuxy6NbEVh1ALUFc4cqZfI+u7UlCbTpbfMqZpjiT
+	 4tuRA8/KID7Uw==
+Date: Thu, 26 Jan 2023 15:50:00 +0200
+From: Leon Romanovsky <leon@kernel.org>
+To: "Reshetova, Elena" <elena.reshetova@intel.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Shishkin, Alexander" <alexander.shishkin@intel.com>,
+	"Shutemov, Kirill" <kirill.shutemov@intel.com>,
+	"Kuppuswamy, Sathyanarayanan" <sathyanarayanan.kuppuswamy@intel.com>,
+	"Kleen, Andi" <andi.kleen@intel.com>,
+	"Hansen, Dave" <dave.hansen@intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Peter Zijlstra <peterz@infradead.org>,
+	"Wunner, Lukas" <lukas.wunner@intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	"Poimboe, Josh" <jpoimboe@redhat.com>,
+	"aarcange@redhat.com" <aarcange@redhat.com>,
+	Cfir Cohen <cfir@google.com>, Marc Orr <marcorr@google.com>,
+	"jbachmann@google.com" <jbachmann@google.com>,
+	"pgonda@google.com" <pgonda@google.com>,
+	"keescook@chromium.org" <keescook@chromium.org>,
+	James Morris <jmorris@namei.org>,
+	Michael Kelley <mikelley@microsoft.com>,
+	"Lange, Jon" <jlange@microsoft.com>,
+	"linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	Kernel Hardening <kernel-hardening@lists.openwall.com>
+Subject: Re: Linux guest kernel threat model for Confidential Computing
+Message-ID: <Y9KFCC8XkCvduWDp@unreal>
 References: <DM8PR11MB57505481B2FE79C3D56C9201E7CE9@DM8PR11MB5750.namprd11.prod.outlook.com>
  <Y9EkCvAfNXnJ+ATo@kroah.com>
  <DM8PR11MB5750FA4849C3224F597C101AE7CE9@DM8PR11MB5750.namprd11.prod.outlook.com>
  <Y9Jh2x9XJE1KEUg6@unreal>
  <DM8PR11MB5750414F6638169C7097E365E7CF9@DM8PR11MB5750.namprd11.prod.outlook.com>
  <Y9JyW5bUqV7gWmU8@unreal>
-In-Reply-To: <Y9JyW5bUqV7gWmU8@unreal>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DM8PR11MB5750:EE_|DS0PR11MB6469:EE_
-x-ms-office365-filtering-correlation-id: 26e35421-f5e7-4f40-edd4-08daffa12e57
-x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: htuLbgTTpNNeZODWm1sIVKyc9QE70bC6kdrcdMQathg7qmEgv1YTz0cvSVU2veEG8OPLWKXGbBxS3uo7iv+dvm5Jk6mTz6vUbgTEiRHVxMyRxFYmtknZuEA69DrcGHUqE86vJfYPLvmpfmXfO60wSfzIhb5VbP6wtJRUDxkYtQM/yWCXepoTjqsb+/D29mVXxTrYjU+2qgxxHZaORpppphU6cc7v9xmuEUCtSk2pQ39EIFciPHxfOYwVyp/Q+BDU+aRz5t/imEnyxNR0Hqy+VR3jbQaSytIC74KdnoFwue8jy6kgV/HjybFuTjATQRYT4aGKQzM0TRO+s7SdIeLr5C8r/CaAiRH47AhyFaTh5mNiCofm6++6vyJOES6I5RMVm51Em2XJ7onwkVsuYpHWcEQILnYvR/xE17nOSkn0N5M5nHic9U8hyphL4oz1pGR/NMD/rddaQQRutuNEE0+MMoe1EnrMgx6OL4BzFfKymJRC2pTAwJw4gEhJhFJ4S70cKakJdX9OyXJNfal3F+UxdFqbMJLRlc0zTyU/PyCdAUupleHDKoUPfDg4tZJZEffsldPmQumfBz/hcFGi2DxfLCXeFzOyj9xszxmMLnq+k/uTALE2FsAM23tFJ3vmho/CcwjGN8ZR14mLhmDqHHwTTfsNOWztzA2I+BZq5CSqqsbPKLzvpj4lEbZY6WEVE1G+7WN2NyQhmNeOP8IHjvyFAowOlDH+865gsyIN7gYs8rZQEgF6HRPoVoz9/oCIm7lZomFGzNJvca75cnFxUsnpbw==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM8PR11MB5750.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(39860400002)(376002)(346002)(366004)(396003)(136003)(451199018)(64756008)(316002)(54906003)(122000001)(38100700002)(41300700001)(8676002)(76116006)(66556008)(4326008)(66946007)(66476007)(6916009)(5660300002)(7416002)(86362001)(8936002)(38070700005)(52536014)(55016003)(2906002)(33656002)(82960400001)(6506007)(66446008)(9686003)(26005)(186003)(966005)(478600001)(7696005)(83380400001)(71200400001);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Z1l5dFJDZ09JeFVLd1QzcWxGZDVXT2VEWVV2SVVPcTlkN3BzNCtCWiszZ3dF?=
- =?utf-8?B?VThRM0N4ckl4VFVGL1dOcmZERk1sVVZzK1llNnk1QkFnYlRtV3FFVnJjMU4x?=
- =?utf-8?B?RHl0UytiQjZySVVvaEp4YnBXOVdZVFh0d1RLejJpRklHbTRRaFgwUVBDcFRP?=
- =?utf-8?B?UjZDSVoxM0VqcUFoT2RrOUFyUFk5SENTNmRvazFzMmdkeXllelEwVmJVUlln?=
- =?utf-8?B?ZUFqS3ZEaFZUc3U0QTg1aDdRMU1kcTJCazBMQzYzUlNwcGhiVHBlUzhJcEtm?=
- =?utf-8?B?UzFVa3V2bElxeUZZc3k3UE5QTVFGOEJFSE5KMkphNnBuRE5JMTNhaWF4Wk9m?=
- =?utf-8?B?WDNKcU96QUkyTXpjb2cyZEF1aUU4WmVJTU5VdGpBMDhOclpaY0VLUmVIQytn?=
- =?utf-8?B?WmRJemd4ck9zY3JMWTcwMlhXR0lZdmpqQmxZeWl5NCtCRjhZQWN0MXhlck8y?=
- =?utf-8?B?Y1o4Ymdia1RLSmpJdEcxcEs1RklGc3Z5Y2lHQkV3aDZUdVFtYklxeVEvdjJY?=
- =?utf-8?B?YXZBZnRUYVVQQkJjZ1pZZzBzVTI2SjZHUWdCTDFFN1VPNEpJWnBBZDNmd0Mv?=
- =?utf-8?B?VFFTcXVkd3ROb013SC9HcERGcXdPK1Y5UkQ3NG54YXA5cGs2Q2F5TXVwWU5w?=
- =?utf-8?B?RTlEdzdISlZMa2tWcjhsNFJ5K3hwL3hmTVQ5bitSWG95WnBXa3FIb3V2ekZM?=
- =?utf-8?B?WFN1dk5aZUxkZGg0MGV0NFdFUEJ5Y0FHMEpmaWtST3FneWdqVk43YTFhZ3Fo?=
- =?utf-8?B?NWRWeGxXYnhBTXFMQ1piWFlJeEJwb3p5emtRdnlqbFhXM3ViNmJNdHFVOFV1?=
- =?utf-8?B?VE5Rb0pCNmhNT1N2WXU2ZmEvWHRLcGl3S25ReEE4MkF0NW9XOUN3Mk9scVlH?=
- =?utf-8?B?M3JDamM4cjVFU1lhc2NocmoxVFpGbmU2VDF1VHdETVlST3E2QzRnR3Iwc09r?=
- =?utf-8?B?eEszYytQYWxydVI2TU9iak8zUnMzdmU1dmViYkdVbkhLN3lYdkNGTWtWelhJ?=
- =?utf-8?B?emxnZlRuaFYxSXVwWVU3YTBnNnkyOVJjNll6a0JzVnVHWVpDRVJmd25lT0hj?=
- =?utf-8?B?ZURGbE9PcXVRenovU00yZDNRbWZrODhJS2Z5c2pMRnZsUUZET2piaFREWjdR?=
- =?utf-8?B?VEF1bDV1bU4vZlNxQy9GVzdyVktvblZrQzlnWFlrQXcvYU51U2tZT1NzMEVW?=
- =?utf-8?B?bC9YcHM5MHdoeWloWEg1NDBKVlhyK3V5NmJGRjdUdFJBajhBUkpIdEdlV1F0?=
- =?utf-8?B?aTdHSXZwN0ptWFVDeGdndG5RcE1BZUxmdXJwZzFjeGhZeE5NdS9xVlUwVU5k?=
- =?utf-8?B?YjF0NlJEd2tzWUNNRW5mUmtCc3B5aUtyNEwraElGdmxHUjZmalJlZkQzdDZk?=
- =?utf-8?B?czZrVHZYTzNaZHRkVzZNdHM5VU9WcFkzTmc2SW1GZEV5eVByL0hwR0NDYXdo?=
- =?utf-8?B?dUsybmU2cmlWaklRNjR2RmNscDNWZXcwLytXL1VxRCtmNVZkRzFvTW5rOVJT?=
- =?utf-8?B?S0RpVk13Q2FQbVl0UGZxZHJITzliVXlEVVdaeCtmWjYrTE5IckxYWnJRdWd3?=
- =?utf-8?B?S2drOHRZeXdHMTJHQ2E0V29ybmtRSEhEYmZTVWYxZ2toM2hrcENhaUlXT2FZ?=
- =?utf-8?B?SllhT252enVNZDlFMXZ5cFRvQkxaSFJNRWMybDl6QVFqQlFEajFmTW4xUm9i?=
- =?utf-8?B?QjJIRVdJSlVCL1pCZkhuYXJ2QkVCMzBRaVFFRm5vUi9EUWdTNUg4cWhCUFl0?=
- =?utf-8?B?WVhJd3lHNSsvUG5RVjUvTjE0cGdJb2tDbEFWVGpGZ096a0EwVWwwRnYzZ0M3?=
- =?utf-8?B?S0pvT2didGczUVFRemI1ZkthVWkvalVpbnFYbGxpaDdSenV3ejJrMmZTeURh?=
- =?utf-8?B?SytSNVc2TUJlOHZwV0UveWVFVGRLYXJQZStHL2VZTTJkdGRJWnA0QitoYmxE?=
- =?utf-8?B?VytaeDR1c3NiRUZ2b1JzZW9FRGdna1phSHFsMi8vSkpINUJ5NUpBVjFLNVZa?=
- =?utf-8?B?bERMZ1Vpdk5kS2hxZzZZNUVoMVRTZVdmbE9SMGFjSFRZbFczRGdCQ0VWYTN4?=
- =?utf-8?B?Q0V2clcyVHdxOFRyRnBOL0Fsb2lWTEkycGFxaXVNUUdZeXVpM3Uzdk0wcTRa?=
- =?utf-8?Q?qqACWaJBZ7rOU1IevPTSNFXfU?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ <DM8PR11MB57507D9C941D77E148EE9E87E7CF9@DM8PR11MB5750.namprd11.prod.outlook.com>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM8PR11MB5750.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 26e35421-f5e7-4f40-edd4-08daffa12e57
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Jan 2023 13:28:15.8522
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: r93/mkCjSTunVDsUkyosFXVzveTOq+qyF0jyPwqmHqCrtNbqB1uq5e2sPCoAeaKBLHIclCn/E3nQ4xYsWpfDLpiLtd9RnVU9PulONadPIlU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB6469
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <DM8PR11MB57507D9C941D77E148EE9E87E7CF9@DM8PR11MB5750.namprd11.prod.outlook.com>
 
-PiBPbiBUaHUsIEphbiAyNiwgMjAyMyBhdCAxMToyOToyMEFNICswMDAwLCBSZXNoZXRvdmEsIEVs
-ZW5hIHdyb3RlOg0KPiA+ID4gT24gV2VkLCBKYW4gMjUsIDIwMjMgYXQgMDM6Mjk6MDdQTSArMDAw
-MCwgUmVzaGV0b3ZhLCBFbGVuYSB3cm90ZToNCj4gPiA+ID4gUmVwbHlpbmcgb25seSB0byB0aGUg
-bm90LXNvLWZhciBhZGRyZXNzZWQgcG9pbnRzLg0KPiA+ID4gPg0KPiA+ID4gPiA+IE9uIFdlZCwg
-SmFuIDI1LCAyMDIzIGF0IDEyOjI4OjEzUE0gKzAwMDAsIFJlc2hldG92YSwgRWxlbmEgd3JvdGU6
-DQo+ID4gPiA+ID4gPiBIaSBHcmVnLA0KPiA+ID4NCj4gPiA+IDwuLi4+DQo+ID4gPg0KPiA+ID4g
-PiA+ID4gMykgQWxsIHRoZSB0b29scyBhcmUgb3Blbi1zb3VyY2UgYW5kIGV2ZXJ5b25lIGNhbiBz
-dGFydCB1c2luZyB0aGVtIHJpZ2h0DQo+ID4gPiBhd2F5DQo+ID4gPiA+ID4gZXZlbg0KPiA+ID4g
-PiA+ID4gd2l0aG91dCBhbnkgc3BlY2lhbCBIVyAocmVhZG1lIGhhcyBkZXNjcmlwdGlvbiBvZiB3
-aGF0IGlzIG5lZWRlZCkuDQo+ID4gPiA+ID4gPiBUb29scyBhbmQgZG9jdW1lbnRhdGlvbiBpcyBo
-ZXJlOg0KPiA+ID4gPiA+ID4gaHR0cHM6Ly9naXRodWIuY29tL2ludGVsL2NjYy1saW51eC1ndWVz
-dC1oYXJkZW5pbmcNCj4gPiA+ID4gPg0KPiA+ID4gPiA+IEFnYWluLCBhcyBvdXIgZG9jdW1lbnRh
-dGlvbiBzdGF0ZXMsIHdoZW4geW91IHN1Ym1pdCBwYXRjaGVzIGJhc2VkIG9uDQo+ID4gPiA+ID4g
-dGhlc2UgdG9vbHMsIHlvdSBIQVZFIFRPIGRvY3VtZW50IHRoYXQuICBPdGhlcndpc2Ugd2UgdGhp
-bmsgeW91IGFsbCBhcmUNCj4gPiA+ID4gPiBjcmF6eSBhbmQgd2lsbCBnZXQgeW91ciBwYXRjaGVz
-IHJlamVjdGVkLiAgWW91IGFsbCBrbm93IHRoaXMsIHdoeSBpZ25vcmUNCj4gPiA+ID4gPiBpdD8N
-Cj4gPiA+ID4NCj4gPiA+ID4gU29ycnksIEkgZGlkbuKAmXQga25vdyB0aGF0IGZvciBldmVyeSBi
-dWcgdGhhdCBpcyBmb3VuZCBpbiBsaW51eCBrZXJuZWwgd2hlbg0KPiA+ID4gPiB3ZSBhcmUgc3Vi
-bWl0dGluZyBhIGZpeCB0aGF0IHdlIGhhdmUgdG8gbGlzdCB0aGUgd2F5IGhvdyBpdCBoYXMgYmVl
-biBmb3VuZC4NCj4gPiA+ID4gV2Ugd2lsbCBmaXggdGhpcyBpbiB0aGUgZnV0dXJlIHN1Ym1pc3Np
-b25zLCBidXQgc29tZSBidWdzIHdlIGhhdmUgYXJlIGZvdW5kDQo+IGJ5DQo+ID4gPiA+IHBsYWlu
-IGNvZGUgYXVkaXQsIHNvICdodW1hbicgaXMgdGhlIHRvb2wuDQo+ID4gPg0KPiA+ID4gTXkgcHJv
-YmxlbSB3aXRoIHRoYXQgc3RhdGVtZW50IGlzIHRoYXQgYnkgYXBwbHlpbmcgZGlmZmVyZW50IHRo
-cmVhdA0KPiA+ID4gbW9kZWwgeW91ICJpbnZlbnQiIGJ1Z3Mgd2hpY2ggZGlkbid0IGV4aXN0IGlu
-IGEgZmlyc3QgcGxhY2UuDQo+ID4gPg0KPiA+ID4gRm9yIGV4YW1wbGUsIGluIHRoaXMgWzFdIGxh
-dGVzdCBzdWJtaXNzaW9uLCBhdXRob3JzIGxhYmVsZWQgY29ycmVjdA0KPiA+ID4gYmVoYXZpb3Vy
-IGFzICJidWciLg0KPiA+ID4NCj4gPiA+IFsxXSBodHRwczovL2xvcmUua2VybmVsLm9yZy9hbGwv
-MjAyMzAxMTkxNzA2MzMuNDA5NDQtMS0NCj4gPiA+IGFsZXhhbmRlci5zaGlzaGtpbkBsaW51eC5p
-bnRlbC5jb20vDQo+ID4NCj4gPiBIbS4uIERvZXMgZXZlcnlvbmUgdGhpbmsgdGhhdCB3aGVuIGtl
-cm5lbCBkaWVzIHdpdGggdW5oYW5kbGVkIHBhZ2UgZmF1bHQNCj4gPiAoc3VjaCBhcyBpbiB0aGF0
-IGNhc2UpIG9yIGRldGVjdGlvbiBvZiBhIEtBU0FOIG91dCBvZiBib3VuZHMgdmlvbGF0aW9uIChh
-cyBpdCBpcyBpbg0KPiBzb21lDQo+ID4gb3RoZXIgY2FzZXMgd2UgYWxyZWFkeSBoYXZlIGZpeGVz
-IG9yIGludmVzdGlnYXRpbmcpIGl0IHJlcHJlc2VudHMgYSBjb3JyZWN0DQo+IGJlaGF2aW9yIGV2
-ZW4gaWYNCj4gPiB5b3UgZXhwZWN0IHRoYXQgYWxsIHlvdXIgcGNpIEhXIGRldmljZXMgYXJlIHRy
-dXN0ZWQ/DQo+IA0KPiBUaGlzIGlzIGV4YWN0bHkgd2hhdCBJIHNhaWQuIFlvdSBwcmVzZW50ZWQg
-bWUgdGhlIGNhc2VzIHdoaWNoIGV4aXN0IGluDQo+IHlvdXIgaW52ZW50ZWQgd29ybGQuIE1lbnRp
-b25lZCB1bmhhbmRsZWQgcGFnZSBmYXVsdCBkb2Vzbid0IGV4aXN0IGluIHJlYWwNCj4gd29ybGQu
-IElmIFBDSSBkZXZpY2UgZG9lc24ndCB3b3JrLCBpdCBuZWVkcyB0byBiZSByZXBsYWNlZC9ibG9j
-a2VkIGFuZCBub3QNCj4gbGVmdCB0byBiZSBvcGVyYWJsZSBhbmQgYWNjZXNzaWJsZSBmcm9tIHRo
-ZSBrZXJuZWwvdXNlci4NCg0KQ2FuIHdlIHJlYWxseSBhc3N1cmUgY29ycmVjdCBvcGVyYXRpb24g
-b2YgKmFsbCogcGNpIGRldmljZXMgb3V0IHRoZXJlPyANCkhvdyB3b3VsZCBzdWNoIGFuIGF1ZGl0
-IGJlIHBlcmZvcm1lZCBnaXZlbiBhIGh1Z2Ugc2V0IG9mIHRoZW0gYXZhaWxhYmxlPyANCklzbnQg
-aXQgYmV0dGVyIGluc3RlYWQgdG8gbWFrZSBhIHNtYWxsIGZpeCBpbiB0aGUga2VybmVsIGJlaGF2
-aW9yIHRoYXQgd291bGQgZ3VhcmQNCnVzIGZyb20gc3VjaCBwb3RlbnRpYWxseSBub3QgY29ycmVj
-dGx5IG9wZXJhdGluZyBkZXZpY2VzPyANCg0KDQo+IA0KPiA+IFdoYXQgYWJvdXQgYW4gZXJyb3Ig
-aW4gdHdvIGNvbnNlcXVlbnQgcGNpIHJlYWRzPyBXaGF0IGFib3V0IGp1c3Qgc29tZQ0KPiA+IGZh
-aWx1cmUgdGhhdCByZXN1bHRzIGluIGVycm9uZW91cyBpbnB1dD8NCj4gDQo+IFllcywgc29tZSBi
-dWdzIG5lZWQgdG8gYmUgZml4ZWQsIGJ1dCB0aGV5IGFyZSBub3QgcmVsYXRlZCB0byB0cnVzdC9u
-b3QtdHJ1c3QNCj4gZGlzY3Vzc2lvbiBhbmQgUENJIHNwZWMgdmlvbGF0aW9ucy4NCg0KTGV0J3Mg
-Zm9yZ2V0IHRoZSB0cnVzdCBhbmdsZSBoZXJlIChpdCBvbmx5IGFwcGxpZXMgdG8gdGhlIENvbmZp
-ZGVudGlhbCBDb21wdXRpbmcgDQp0aHJlYXQgbW9kZWwgYW5kIHlvdSBjbGVhcmx5IGltcGx5aW5n
-IHRoZSBleGlzdGluZyB0aHJlYXQgbW9kZWwgaW5zdGVhZCkgYW5kIHN0aWNrIGp1c3QgdG8NCnRo
-ZSBub3QtY29ycmVjdGx5IG9wZXJhdGluZyBkZXZpY2UuIFdoYXQgeW91IGFyZSBwcm9wb3Npbmcg
-aXMgdG8gZml4ICp1bmtub3duKiBidWdzDQppbiBtdWx0aXR1ZGUgb2YgcGNpIGRldmljZXMgdGhh
-dCAoaW4gY2FzZSBvZiB0aGlzIHBhcnRpY3VsYXIgTVNJIGJ1ZykgY2FuDQpsZWFkIHRvIHR3byBk
-aWZmZXJlbnQgdmFsdWVzIGJlaW5nIHJlYWQgZnJvbSB0aGUgY29uZmlnIHNwYWNlIGFuZCBrZXJu
-ZWwgaW5jb3JyZWN0bHkNCmhhbmRpbmcgdGhpcyBzaXR1YXRpb24uIElzbid0IGl0IGJldHRlciB0
-byBkbyB0aGUgY2xlYXIgZml4IGluIG9uZSBwbGFjZSB0byBlbnN1cmUgc3VjaA0Kc2l0dWF0aW9u
-ICh0d28gc3Vic2VxdWVudCByZWFkcyB3aXRoIGRpZmZlcmVudCB2YWx1ZXMpIGNhbm5vdCBldmVu
-IGhhcHBlbiBpbiB0aGVvcnk/DQpJbiBzZWN1cml0eSB3ZSBoYXZlIGEgc2F5aW5nIHRoYXQgZml4
-aW5nIGEgcm9vdCBjYXVzZSBvZiB0aGUgcHJvYmxlbSBpcyB0aGUgbW9zdCBlZmZpY2llbnQNCndh
-eSB0byBtaXRpZ2F0ZSB0aGUgcHJvYmxlbS4gVGhlIHJvb3QgY2F1c2UgaGVyZSBpcyBhIGRvdWJs
-ZS1yZWFkIHdpdGggZGlmZmVyZW50IHZhbHVlcywNCnNvIGlmIGl0IGNhbiBiZSBzdWJzdGl0dXRl
-ZCB3aXRoIGFuIGVhc3kgYW5kIGNsZWFyIHBhdGNoIHRoYXQgcHJvYmFibHkgZXZlbiBpbXByb3Zl
-cw0KcGVyZm9ybWFuY2UgYXMgd2UgZG8gb25lIGxlc3MgcGNpIHJlYWQgYW5kIHVzZSBjYWNoZWQg
-dmFsdWUgaW5zdGVhZCwgd2hlcmUgaXMgdGhlDQpwcm9ibGVtIGluIHRoaXMgcGFydGljdWxhciBj
-YXNlPyBJZiB0aGVyZSBhcmUgdGVjaG5pY2FsIGlzc3VlcyB3aXRoIHRoZSBwYXRjaCwgb2YgY291
-cnNlIHdlIA0KbmVlZCB0byBkaXNjdXNzIGl0L2ZpeCBpdCwgYnV0IGl0IHNlZW1zIHdlIGFyZSBh
-cmd1aW5nIGhlcmUgYWJvdXQgd2hlbmV2ZXIgb3Igbm90IHdlIHdhbnQNCnRvIGJlIGZpeGluZyBr
-ZXJuZWwgY29kZSB3aGVuIHdlIG5vdGljZSBzdWNoIGNhc2VzLi4uIA0KDQpCZXN0IFJlZ2FyZHMs
-DQpFbGVuYQ0KIA0KIA0K
+On Thu, Jan 26, 2023 at 01:28:15PM +0000, Reshetova, Elena wrote:
+> > On Thu, Jan 26, 2023 at 11:29:20AM +0000, Reshetova, Elena wrote:
+> > > > On Wed, Jan 25, 2023 at 03:29:07PM +0000, Reshetova, Elena wrote:
+> > > > > Replying only to the not-so-far addressed points.
+> > > > >
+> > > > > > On Wed, Jan 25, 2023 at 12:28:13PM +0000, Reshetova, Elena wrote:
+> > > > > > > Hi Greg,
+> > > >
+> > > > <...>
+> > > >
+> > > > > > > 3) All the tools are open-source and everyone can start using them right
+> > > > away
+> > > > > > even
+> > > > > > > without any special HW (readme has description of what is needed).
+> > > > > > > Tools and documentation is here:
+> > > > > > > https://github.com/intel/ccc-linux-guest-hardening
+> > > > > >
+> > > > > > Again, as our documentation states, when you submit patches based on
+> > > > > > these tools, you HAVE TO document that.  Otherwise we think you all are
+> > > > > > crazy and will get your patches rejected.  You all know this, why ignore
+> > > > > > it?
+> > > > >
+> > > > > Sorry, I didn’t know that for every bug that is found in linux kernel when
+> > > > > we are submitting a fix that we have to list the way how it has been found.
+> > > > > We will fix this in the future submissions, but some bugs we have are found
+> > by
+> > > > > plain code audit, so 'human' is the tool.
+> > > >
+> > > > My problem with that statement is that by applying different threat
+> > > > model you "invent" bugs which didn't exist in a first place.
+> > > >
+> > > > For example, in this [1] latest submission, authors labeled correct
+> > > > behaviour as "bug".
+> > > >
+> > > > [1] https://lore.kernel.org/all/20230119170633.40944-1-
+> > > > alexander.shishkin@linux.intel.com/
+> > >
+> > > Hm.. Does everyone think that when kernel dies with unhandled page fault
+> > > (such as in that case) or detection of a KASAN out of bounds violation (as it is in
+> > some
+> > > other cases we already have fixes or investigating) it represents a correct
+> > behavior even if
+> > > you expect that all your pci HW devices are trusted?
+> > 
+> > This is exactly what I said. You presented me the cases which exist in
+> > your invented world. Mentioned unhandled page fault doesn't exist in real
+> > world. If PCI device doesn't work, it needs to be replaced/blocked and not
+> > left to be operable and accessible from the kernel/user.
+> 
+> Can we really assure correct operation of *all* pci devices out there?
+
+Why do we need to do it in 2022? These *all* pci devices work.
+
+> How would such an audit be performed given a huge set of them available?
+
+Compliance tests?
+https://pcisig.com/developers/compliance-program
+
+> Isnt it better instead to make a small fix in the kernel behavior that would guard
+> us from such potentially not correctly operating devices? 
+
+Like Greg already said, this is a small drop in a ocean which needs to be changed.
+
+However even in mentioned by me case, you are not fixing but hiding real
+problem of having broken device in my machine. It is worst possible solution
+for the users. 
+
+> 
+> 
+> > 
+> > > What about an error in two consequent pci reads? What about just some
+> > > failure that results in erroneous input?
+> > 
+> > Yes, some bugs need to be fixed, but they are not related to trust/not-trust
+> > discussion and PCI spec violations.
+> 
+> Let's forget the trust angle here (it only applies to the Confidential Computing 
+> threat model and you clearly implying the existing threat model instead) and stick just to
+> the not-correctly operating device. What you are proposing is to fix *unknown* bugs
+> in multitude of pci devices that (in case of this particular MSI bug) can
+> lead to two different values being read from the config space and kernel incorrectly
+> handing this situation. 
+
+Let's don't call bug for something which is not.
+
+Random crashes are much more tolerable then "working" device which sends
+random results.
+
+> Isn't it better to do the clear fix in one place to ensure such
+> situation (two subsequent reads with different values) cannot even happen in theory?
+> In security we have a saying that fixing a root cause of the problem is the most efficient
+> way to mitigate the problem. The root cause here is a double-read with different values,
+> so if it can be substituted with an easy and clear patch that probably even improves
+> performance as we do one less pci read and use cached value instead, where is the
+> problem in this particular case? If there are technical issues with the patch, of course we 
+> need to discuss it/fix it, but it seems we are arguing here about whenever or not we want
+> to be fixing kernel code when we notice such cases... 
+
+Not really, we are arguing what is the right thing to do:
+1. Fix a root cause - device
+2. Hide the failure and pretend what everything is perfect despite
+having problematic device.
+
+Thanks
+
+> 
+> Best Regards,
+> Elena
+>  
+>  
