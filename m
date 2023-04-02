@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-21651-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-21652-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from second.openwall.net (second.openwall.net [193.110.157.125])
-	by mail.lfdr.de (Postfix) with SMTP id CAB6E6D3974
-	for <lists+kernel-hardening@lfdr.de>; Sun,  2 Apr 2023 19:33:31 +0200 (CEST)
-Received: (qmail 1258 invoked by uid 550); 2 Apr 2023 17:33:23 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 52FBB6D3982
+	for <lists+kernel-hardening@lfdr.de>; Sun,  2 Apr 2023 19:44:52 +0200 (CEST)
+Received: (qmail 7939 invoked by uid 550); 2 Apr 2023 17:44:44 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,57 +13,62 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 1223 invoked from network); 2 Apr 2023 17:33:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hboeck.de; s=key1;
-	t=1680456791; bh=dUCJahnCeUZyo0kAQXyrirGF9suJedj9yZQ3OoWr6qs=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=oEaX1/ooGJGY/4NRpQ1XB+Rl/p00B9oIkNxC4qNWIeOHohzl0pkNIPiRQvNuFOC2s
-	 uy39nZg1RVbXI45N5p4W8Xsk0AHOpxk0F2CVwvaABTZI5I5f+XjLpewn9+IJyYQ8Uq
-	 b0oUa8q4bAq0QEarpSmD+olgn4BGSvkLbR5iW9jcYnS2mhfrn2PsujPLA9CNU+OULJ
-	 yBi/PQ6kVT04Gaq1JwHlnFQSCN6eWIUAeed+T2qwfEx0ZRfiR4FviSjKBtNZ2esj6M
-	 pFgOk74oYOi4vTv4WSoit4GKsdxfmKHdiVlFqDeR0uevex3VBpqyEWTmSGVYPCQu9Q
-	 xB5UCn9s3VNXg==
-Original-Subject: Re: [PATCH] Restrict access to TIOCLINUX
-Author: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
-Date: Sun, 2 Apr 2023 19:33:10 +0200
-From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
-To: Greg KH <gregkh@linuxfoundation.org>
+Received: (qmail 7901 invoked from network); 2 Apr 2023 17:44:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1680457470;
+	bh=JX9cnHadOm52C+K8rq4b8lvFqWy3LF+IqAp4H3SZns4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=m94dJBrwQrkvwAccWjSq4Yxs8PVoqTjqzG9Qj1oUWosPNIDvB/KC5xVcSx4j+Bqwx
+	 1JH8qjm4OjYTACg7BAMSuPvuIl73FRxaTa/Qxk47gaRvbES8ONSW4OMrrlQeDzdBqK
+	 VbBVEeTAfnSg8MHYhQb++zymNwDOq1qqoUkuaa4o=
+Date: Sun, 2 Apr 2023 19:44:27 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Hanno =?iso-8859-1?Q?B=F6ck?= <hanno@hboeck.de>
 Cc: kernel-hardening@lists.openwall.com
 Subject: Re: [PATCH] Restrict access to TIOCLINUX
-Message-ID: <20230402193310.0e2be5bb.hanno@hboeck.de>
-In-Reply-To: <2023040207-pretender-legislate-2e8b@gregkh>
+Message-ID: <2023040237-empty-etching-c988@gregkh>
 References: <20230402160815.74760f87.hanno@hboeck.de>
-	<2023040232-untainted-duration-daf6@gregkh>
-	<20230402191652.747b6acc.hanno@hboeck.de>
-	<2023040207-pretender-legislate-2e8b@gregkh>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.37; x86_64-pc-linux-gnu)
+ <2023040232-untainted-duration-daf6@gregkh>
+ <20230402191652.747b6acc.hanno@hboeck.de>
+ <2023040207-pretender-legislate-2e8b@gregkh>
+ <20230402193310.0e2be5bb.hanno@hboeck.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230402193310.0e2be5bb.hanno@hboeck.de>
 
-On Sun, 2 Apr 2023 19:23:44 +0200
-Greg KH <gregkh@linuxfoundation.org> wrote:
+On Sun, Apr 02, 2023 at 07:33:10PM +0200, Hanno Böck wrote:
+> On Sun, 2 Apr 2023 19:23:44 +0200
+> Greg KH <gregkh@linuxfoundation.org> wrote:
+> 
+> > > Do you have other proposals how to fix this issue? One could
+> > > introduce an option like for TIOCSTI that allows disabling
+> > > selection features by default.  
+> > 
+> > What exact issue are you trying to fix here?
+> 
+> The fact that the selection features of TIOCLINUX can be used for
+> privilege escalation.
 
-> > Do you have other proposals how to fix this issue? One could
-> > introduce an option like for TIOCSTI that allows disabling
-> > selection features by default. =20
->=20
-> What exact issue are you trying to fix here?
+Only if you had root permissions already, and then go to try to run
+something using su or sudo as someone with less permission, right?
 
-The fact that the selection features of TIOCLINUX can be used for
-privilege escalation.
+And as you already had permissions before, it's not really an
+excalation, or am I missing something?
 
-I already mentioned this in the original patch description, but I think
-the minitty.c example here illustrates this well:
-https://www.openwall.com/lists/oss-security/2023/03/14/3
+> I already mentioned this in the original patch description, but I think
+> the minitty.c example here illustrates this well:
+> https://www.openwall.com/lists/oss-security/2023/03/14/3
+> 
+> Compile it, do
+> sudo -u [anynonprivilegeduser] ./minitty
+> 
+> It'll execute shell code with root permission.
 
-Compile it, do
-sudo -u [anynonprivilegeduser] ./minitty
+That doesn't work if you run it from a user without root permissions to
+start with, right?
 
-It'll execute shell code with root permission.
+thanks,
 
-
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
+greg k-h
