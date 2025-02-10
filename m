@@ -1,10 +1,10 @@
-Return-Path: <kernel-hardening-return-21937-lists+kernel-hardening=lfdr.de@lists.openwall.com>
+Return-Path: <kernel-hardening-return-21939-lists+kernel-hardening=lfdr.de@lists.openwall.com>
 X-Original-To: lists+kernel-hardening@lfdr.de
 Delivered-To: lists+kernel-hardening@lfdr.de
 Received: from second.openwall.net (second.openwall.net [193.110.157.125])
-	by mail.lfdr.de (Postfix) with SMTP id 1C944A2E109
-	for <lists+kernel-hardening@lfdr.de>; Sun,  9 Feb 2025 23:02:42 +0100 (CET)
-Received: (qmail 15664 invoked by uid 550); 9 Feb 2025 22:02:33 -0000
+	by mail.lfdr.de (Postfix) with SMTP id 709F6A2E1E5
+	for <lists+kernel-hardening@lfdr.de>; Mon, 10 Feb 2025 02:11:40 +0100 (CET)
+Received: (qmail 17710 invoked by uid 550); 10 Feb 2025 01:11:29 -0000
 Mailing-List: contact kernel-hardening-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:kernel-hardening@lists.openwall.com>
@@ -13,109 +13,75 @@ List-Unsubscribe: <mailto:kernel-hardening-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:kernel-hardening-subscribe@lists.openwall.com>
 List-ID: <kernel-hardening.lists.openwall.com>
 Delivered-To: mailing list kernel-hardening@lists.openwall.com
-Received: (qmail 15643 invoked from network); 9 Feb 2025 22:02:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739138545; x=1739743345; darn=lists.openwall.com;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZrCBrsBGQ+tCvXOABWtiT76sFUcDv+I/VrUzIQbDTzU=;
-        b=QUiGIUVueNOVL3ayuVigfpENIGjTZlEyjmlf//F7e6y4QkDZH1JA8LRXUasdavzxlx
-         3LC+Up/JBJJ3tPc/iFDNovuB5tg54Q8q0b9e16DbrsU9NSGvnlWltTY6YvqJ2KgBZeAW
-         qcQJKIUL+JnUd9fr1wOZapAeM3JcYw4646Jv90ud54AalnXbMSpZ0rT0OzjoeczyJqAD
-         hs8u75I05ELVJfkpA2RjjEVE7Lljm4PnOvDQWFpg/Ci5xEerz71Erfzq5caYze5xD6v7
-         MhjsX3DXVZc+6SDwqWFfso3GHfVfMluS8SpNZDVN2k8SsI54DlFVn92i9DjGdqeFTR8P
-         JZSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739138545; x=1739743345;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZrCBrsBGQ+tCvXOABWtiT76sFUcDv+I/VrUzIQbDTzU=;
-        b=UsQammuvWXf4h9wnt+TQLwImHo5X+ZHhTY7Mwl3jLrqx54BlJh/Mp6mXVsP6QIg5jb
-         qSzGK0sMJkJwAnc1e54YMj+E7pNBppCTDdtjDpuZHLwayIUuoU2H62Oh3Pa1nMMdx5SR
-         aI1UqBWIkLVVrPAmpUvHKvuNQrPlPesd3LEv6Sfugjp3n7DDTOT3Itm9+P+OSFlyKj6P
-         jqYf9FdDtFezGXwWT4GwBEw+cNZlQX9tiaj1T7g7ZKZLpCRYBM0Tlt12zQpq11PzyHPQ
-         y0bOuNJXsgJAXKOAApZYPZbQNWsiAY09llFInXHVCcQSrlI4L19mB3oF5lYegqH0Xrba
-         rxsQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXBRmo8VzAMoqaabmCct/gPy62UX3kYHGchVWDc+zaW3CN6Rrbj5+IQ0H4mxR4UlLAb3Zpv8KXNm7x1XszZ2Kbt@lists.openwall.com
-X-Gm-Message-State: AOJu0YzxOK9PgapRjbbEiMvSQqKGOFWmJ4EoyUQBE54rXT0F5xWc+T14
-	2DSQRxV8OfW7gcgvwKXBIjnTFl08e++IR+xGr7m0ipYFj0l8Sv9j
-X-Gm-Gg: ASbGncvOyB2YpVd2W7NlcmBlQeqF8MHYndorVdsXw4FJZqmPm4JaiL1pSEMfp2PQb/H
-	yc106ShpwlPpL3hXprdsFmkanCogUQk4mBa/V4KnaazJLQwMmXTsOJtKSAS5fpZuLLZe5yUp1Y9
-	+LDm3RgFYBS5y73dcrVv9GGbshDUHQTi+ufDTDSGOdkqAohpaU5klaWu5kmpiPebs/wAaRLwzhH
-	iTkL9hgfm6QQ572xKFI306UyBHkfcADuup5CZm4QPL6alHWp+CXLHv9wYQOuAGnWUT4EulrjlbF
-	dJB27AclZOpLdf5uHpUJUwG0ofnVEGhFYwcXmq++KheHYH6AD/DPlS5OIZouBJnRIteF+ltd
-X-Google-Smtp-Source: AGHT+IGLh9i/kI8Ha8+Op3DoUswKsdryEtT21pr/+6nTQeWXoWEW/G6p3UUlYi/NxO5jEdod/Gguuw==
-X-Received: by 2002:a05:6000:2ad:b0:38d:e02d:5f4c with SMTP id ffacd0b85a97d-38de02d60b1mr208725f8f.10.1739138545239;
-        Sun, 09 Feb 2025 14:02:25 -0800 (PST)
-From: David Laight <david.laight.linux@gmail.com>
-To: x86@kernel.org,
-	linux-kernel@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Cc: David Laight <david.laight.linux@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Josh Poimboeuf <jpoimboe@redhat.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	linux-arch@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>,
-	kernel-hardening@lists.openwall.com
-Subject: [PATCH v2 1/1] x86: In x86-64 barrier_nospec can always be lfence
-Date: Sun,  9 Feb 2025 22:02:22 +0000
-Message-Id: <20250209220222.212835-1-david.laight.linux@gmail.com>
-X-Mailer: git-send-email 2.39.5
+Received: (qmail 17688 invoked from network); 10 Feb 2025 01:11:28 -0000
+Message-ID: <15734b32cecddde7905d3a97005a0c883383cc74.camel@surriel.com>
+Subject: Re: [PATCH 1/1] x86: In x86-64 barrier_nospec can always be lfence
+From: Rik van Riel <riel@surriel.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>, David Laight
+	 <david.laight.linux@gmail.com>
+Cc: x86@kernel.org, linux-kernel@vger.kernel.org, Thomas Gleixner	
+ <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, Borislav Petkov	
+ <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, "H. Peter Anvin"
+	 <hpa@zytor.com>, Catalin Marinas <catalin.marinas@arm.com>, Mathieu
+ Desnoyers	 <mathieu.desnoyers@efficios.com>, Josh Poimboeuf
+ <jpoimboe@redhat.com>, Andi Kleen <ak@linux.intel.com>, Dan Williams
+ <dan.j.williams@intel.com>, 	linux-arch@vger.kernel.org, Kees Cook
+ <keescook@chromium.org>, 	kernel-hardening@lists.openwall.com, "Paul
+ E.McKenney" <paulmck@kernel.org>
+Date: Sun, 09 Feb 2025 20:09:51 -0500
+In-Reply-To: <CAHk-=wiSnNEWsvDariBQ4O-mz7Nc7LbkdKUQntREVCFWiMe9zw@mail.gmail.com>
+References: <20250209191008.142153-1-david.laight.linux@gmail.com>
+	 <CAHk-=wiQQQ9yo84KCk=Y_61siPsrH=dF9t5LPva0Sbh_RZ0-3Q@mail.gmail.com>
+	 <20250209214047.4552e806@pumpkin>
+	 <CAHk-=wiSnNEWsvDariBQ4O-mz7Nc7LbkdKUQntREVCFWiMe9zw@mail.gmail.com>
+Autocrypt: addr=riel@surriel.com; prefer-encrypt=mutual;
+ keydata=mQENBFIt3aUBCADCK0LicyCYyMa0E1lodCDUBf6G+6C5UXKG1jEYwQu49cc/gUBTTk33A
+ eo2hjn4JinVaPF3zfZprnKMEGGv4dHvEOCPWiNhlz5RtqH3SKJllq2dpeMS9RqbMvDA36rlJIIo47
+ Z/nl6IA8MDhSqyqdnTY8z7LnQHqq16jAqwo7Ll9qALXz4yG1ZdSCmo80VPetBZZPw7WMjo+1hByv/
+ lvdFnLfiQ52tayuuC1r9x2qZ/SYWd2M4p/f5CLmvG9UcnkbYFsKWz8bwOBWKg1PQcaYHLx06sHGdY
+ dIDaeVvkIfMFwAprSo5EFU+aes2VB2ZjugOTbkkW2aPSWTRsBhPHhV6dABEBAAG0HlJpayB2YW4gU
+ mllbCA8cmllbEByZWRoYXQuY29tPokBHwQwAQIACQUCW5LcVgIdIAAKCRDOed6ShMTeg05SB/986o
+ gEgdq4byrtaBQKFg5LWfd8e+h+QzLOg/T8mSS3dJzFXe5JBOfvYg7Bj47xXi9I5sM+I9Lu9+1XVb/
+ r2rGJrU1DwA09TnmyFtK76bgMF0sBEh1ECILYNQTEIemzNFwOWLZZlEhZFRJsZyX+mtEp/WQIygHV
+ WjwuP69VJw+fPQvLOGn4j8W9QXuvhha7u1QJ7mYx4dLGHrZlHdwDsqpvWsW+3rsIqs1BBe5/Itz9o
+ 6y9gLNtQzwmSDioV8KhF85VmYInslhv5tUtMEppfdTLyX4SUKh8ftNIVmH9mXyRCZclSoa6IMd635
+ Jq1Pj2/Lp64tOzSvN5Y9zaiCc5FucXtB9SaWsgdmFuIFJpZWwgPHJpZWxAc3VycmllbC5jb20+iQE
+ +BBMBAgAoBQJSLd2lAhsjBQkSzAMABgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRDOed6ShMTe
+ g4PpB/0ZivKYFt0LaB22ssWUrBoeNWCP1NY/lkq2QbPhR3agLB7ZXI97PF2z/5QD9Fuy/FD/jddPx
+ KRTvFCtHcEzTOcFjBmf52uqgt3U40H9GM++0IM0yHusd9EzlaWsbp09vsAV2DwdqS69x9RPbvE/Ne
+ fO5subhocH76okcF/aQiQ+oj2j6LJZGBJBVigOHg+4zyzdDgKM+jp0bvDI51KQ4XfxV593OhvkS3z
+ 3FPx0CE7l62WhWrieHyBblqvkTYgJ6dq4bsYpqxxGJOkQ47WpEUx6onH+rImWmPJbSYGhwBzTo0Mm
+ G1Nb1qGPG+mTrSmJjDRxrwf1zjmYqQreWVSFEt26tBpSaWsgdmFuIFJpZWwgPHJpZWxAZmIuY29tP
+ okBPgQTAQIAKAUCW5LbiAIbIwUJEswDAAYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQznneko
+ TE3oOUEQgAsrGxjTC1bGtZyuvyQPcXclap11Ogib6rQywGYu6/Mnkbd6hbyY3wpdyQii/cas2S44N
+ cQj8HkGv91JLVE24/Wt0gITPCH3rLVJJDGQxprHTVDs1t1RAbsbp0XTksZPCNWDGYIBo2aHDwErhI
+ omYQ0Xluo1WBtH/UmHgirHvclsou1Ks9jyTxiPyUKRfae7GNOFiX99+ZlB27P3t8CjtSO831Ij0Ip
+ QrfooZ21YVlUKw0Wy6Ll8EyefyrEYSh8KTm8dQj4O7xxvdg865TLeLpho5PwDRF+/mR3qi8CdGbkE
+ c4pYZQO8UDXUN4S+pe0aTeTqlYw8rRHWF9TnvtpcNzZw==
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.54.1 (3.54.1-1.fc41) 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Sender: riel@surriel.com
 
-When barrier_nospec() was added the defintion was copied from the
-one used to synchronise rdtsc.
+On Sun, 2025-02-09 at 13:57 -0800, Linus Torvalds wrote:
+>=20
+> So on x86, both read and write barriers are complete no-ops, because
+> all reads are ordered, and all writes are ordered.
 
-On very old cpu rdtsc was a synchronising instruction.
-When this change X86_FEATURE_LFENCE_RDTSC (and a MFENCE copy) were
-(probably) added so lfence/mfence could be added to synchronise rdtsc.
-For old cpu (I think the code checks XMM2) no barrier was added.
+Given that this thread started with a reference
+to rdtsc, it may be worth keeping in mind that
+rdtsc reads themselves do not always appear to
+be ordered.
 
-I'm not sure why that code was used for barrier_nospec().
-Or why rdtsc ended up being synchronised by barrier_nospec().
-lfence is the right instruction (well as good as you get).
+Paul and I spotted some occasionaly "backwards
+TSC values" from the CSD lock instrumentation code,=C2=A0
+which went away when using ordered TSC reads:
 
-In any case all x86-64 cpu support XMM2 and lfence so there is
-to point using alternative().
-Separate the 32bit and 64bit definitions but leave the barrier
-missing on old 32bit cpu.
+https://lkml.iu.edu/hypermail/linux/kernel/2410.1/03202.html
 
-Signed-off-by: David Laight <david.laight.linux@gmail.com>
+I guess maybe a TSC read does not follow all the same
+rules as a memory read, sometimes?
 
-v2: use a explicit lfence rather than __rmb().
-    Update commit message text w.r.t rdtsc.
-Signed-off-by: David Laight <david.laight.linux@gmail.com>
----
- arch/x86/include/asm/barrier.h | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/arch/x86/include/asm/barrier.h b/arch/x86/include/asm/barrier.h
-index 7b44b3c4cce1..b9af75624cf5 100644
---- a/arch/x86/include/asm/barrier.h
-+++ b/arch/x86/include/asm/barrier.h
-@@ -45,7 +45,11 @@
- 	__mask; })
- 
- /* Prevent speculative execution past this barrier. */
--#define barrier_nospec() alternative("", "lfence", X86_FEATURE_LFENCE_RDTSC)
-+#ifdef CONFIG_X86_32
-+#define barrier_nospec() alternative("", "lfence", X86_FEATURE_XMM2)
-+#else
-+#define barrier_nospec() asm volatile("lfence":::"memory")
-+#endif
- 
- #define __dma_rmb()	barrier()
- #define __dma_wmb()	barrier()
--- 
-2.39.5
-
+--=20
+All Rights Reversed.
